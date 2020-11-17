@@ -3,6 +3,8 @@ package com.trade_accounting.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+
 @Data
 @NoArgsConstructor
 public class Company {
@@ -13,7 +15,7 @@ public class Company {
     private String phone;
     private String fax;
     private String email;
-    private boolean payerVAT;
+    private Boolean payerVAT;
     private String address;
     private String commentToAddress;
     private String leader;
