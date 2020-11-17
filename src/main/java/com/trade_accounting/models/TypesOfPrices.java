@@ -1,4 +1,4 @@
-package com.trade_accounting.models.dto;
+package com.trade_accounting.models;
 
 
 import lombok.Data;
