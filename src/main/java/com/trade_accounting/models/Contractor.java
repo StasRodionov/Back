@@ -25,6 +25,9 @@ public class Contractor {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "inn", unique = true)
+    private String inn;
+
     @Column(name = "sort_number")
     private String sortNumber;
 
