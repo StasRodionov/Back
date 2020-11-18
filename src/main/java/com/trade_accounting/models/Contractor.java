@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,19 +22,27 @@ public class Contractor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "sort_number")
     private String sortNumber;
 
+    @Column(name = "phone")
     private String phone;
 
+    @Column(name = "fax")
     private String fax;
 
+    @Column(name = "email")
     private String email;
 
+    @Column(name = "address")
     private String address;
 
+    @Column(name = "comment_to_address")
     private String commentToAddress;
-    
+
+    @Column(name = "comment")
     private String comment;
 }
