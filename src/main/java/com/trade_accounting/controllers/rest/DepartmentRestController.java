@@ -20,18 +20,18 @@ public class DepartmentRestController {
 
     //Create new department
     @PostMapping
-    public Response<?> saveDepartment(@RequestBody Department department){}
+    public Response<?> addDepartment(@RequestBody Department department){}
 
     //Get department by id
     @GetMapping
-    public Response<Department> getDepartment(@PathVariable(name = "id") long id) {}
+    public Response<Department> getDepartment(@PathVariable(name = "id") Long id) {}
 
-    //Update department by id
+    //Update department
     @PutMapping
     public Response<?> updateDepartment(@RequestBody Department department) {}
 
     //Delete department by id
     @DeleteMapping
-    public Response<?> deleteDepartment(@PathVariable(name = "id") long id) {}
+    public Response<?> deleteDepartment(@PathVariable(name = "id") Long id) {}
 
 }
