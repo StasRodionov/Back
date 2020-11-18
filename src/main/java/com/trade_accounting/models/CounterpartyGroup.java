@@ -20,7 +20,7 @@ public class CounterpartyGroup {
     private long id;
     @Column(name = "Name")
     private String name;
-    @Column(name = "sortNumber")
+    @Column(name = "SortNumber")
     private String sortNumber;
 
 }
