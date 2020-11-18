@@ -17,7 +17,7 @@ public class CounterpartyGroup {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "Name")
     private String name;
     @Column(name = "SortNumber")
