@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "types_of_prices")
-public class TypesOfPrices {
+public class TypesOfPrice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
