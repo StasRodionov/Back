@@ -37,9 +37,7 @@ public class Employee {
 
     private String image;
 
-    private String login;
+    private String email;
 
     private String password;
-    
-    private String email;
 }
