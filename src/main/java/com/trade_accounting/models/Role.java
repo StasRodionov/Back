@@ -25,5 +25,5 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    private Product sortNumber;
+    private String sortNumber;
 }
