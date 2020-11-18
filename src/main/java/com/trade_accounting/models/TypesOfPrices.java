@@ -4,13 +4,22 @@ package com.trade_accounting.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Data
 @NoArgsConstructor
 @Entity
 public class TypesOfPrices {
-    private long id;
+    @Id
+    @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "Name")
     private String name;
-    private long sortNumber;
+    @Column(name = "SortNumber")
+    private Long sortNumber;
 }
