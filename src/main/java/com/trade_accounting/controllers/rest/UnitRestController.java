@@ -20,7 +20,7 @@ public class UnitRestController {
 
     //Create new Unit
     @PostMapping
-    public Response<?> saveUnit(@RequestBody Unit unit){}
+    public Response<?> addUnit(@RequestBody Unit unit){}
 
     //Get Unit by id
     @GetMapping
