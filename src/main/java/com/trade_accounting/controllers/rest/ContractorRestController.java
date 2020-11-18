@@ -25,7 +25,7 @@ public class ContractorRestController {
     }
 
     @GetMapping
-    public Response<Contractor> getContractor(){
+    public Response<Contractor> getContractor(@PathVariable(name = "id") Long id){
         final Contractor contractor = null;
         return contractor != null
                 ? new Response<>(contractor, HttpStatus.OK)
