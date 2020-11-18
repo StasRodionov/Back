@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "position")
+@Table(name = "positions")
 public class Position {
 
     @Id
