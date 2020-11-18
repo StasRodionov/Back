@@ -22,11 +22,11 @@ public class CompanyRestController {
 
     //TODO Company - refactor to DTO
     @PostMapping
-    public Response<?> postCompany(@RequestBody Company company) {}
+    public Response<?> addCompany(@RequestBody Company company) {}
 
     //TODO Company - refactor to DTO
     @PutMapping
-    public Response<?> putCompany(@RequestBody Company company) {}
+    public Response<?> updateCompany(@RequestBody Company company) {}
 
     @DeleteMapping
     public Response<?> deleteCompany(@PathVariable(name = "id") Long id) {}
