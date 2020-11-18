@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+<<<<<<< HEAD
 import javax.persistence.Table;
 
 @Data
@@ -15,6 +16,12 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "unit")
+=======
+
+@Data
+@NoArgsConstructor
+@Entity
+>>>>>>> 1c82963cab0aaa65454b08dcb1815466fc990e81
 public class Unit {
 
     @Id
