@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "unit")
+@Table(name = "units")
 public class Unit {
 
     @Id
