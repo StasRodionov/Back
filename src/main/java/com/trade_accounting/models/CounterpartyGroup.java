@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name ="counterparty_group")
+@Table(name ="counterparty_groups")
 @Data
 public class CounterpartyGroup {
 
