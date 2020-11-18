@@ -21,11 +21,11 @@ public class EmployeeRestController {
 
     //Create new Employee
     @PostMapping
-    public Response<?> saveEmployee(@RequestBody Employee employee){}
+    public Response<?> addEmployee(@RequestBody Employee employee){}
 
     //Get Employee by id
     @GetMapping
-    public Response<Employee> getEmployee(@PathVariable(name = "id") long id) {}
+    public Response<Employee> getEmployee(@PathVariable(name = "id") Long id) {}
 
     //Update Employee
     @PutMapping
@@ -33,5 +33,5 @@ public class EmployeeRestController {
 
     //Delete Employee by id
     @DeleteMapping
-    public Response<?> deleteEmployee(@PathVariable(name = "id") long id) {}
+    public Response<?> deleteEmployee(@PathVariable(name = "id") Long id) {}
 }
