@@ -4,8 +4,7 @@ package com.trade_accounting.controllers.rest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-@RequestMapping("/api/warehouse")
 @RestController
+@RequestMapping("/api/warehouse")
 public class WarehouseRestController {
 }
