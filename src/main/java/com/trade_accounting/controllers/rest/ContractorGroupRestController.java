@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/counterpartygroup")
-public class CounterpartyGroupRestController {
+public class ContractorGroupRestController {
 }
