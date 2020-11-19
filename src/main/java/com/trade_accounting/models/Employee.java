@@ -10,6 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -37,7 +40,9 @@ public class Employee {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "inn", unique = true)
+    @Column(name = "inn")
+    @Size(min = 10, max = 12)
+    @Pattern(regexp = "[0-9]+")
     private String inn;
 
     @Column(name = "description")
@@ -46,9 +51,10 @@ public class Employee {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
+
 }
