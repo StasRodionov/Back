@@ -25,7 +25,7 @@ public class Contractor {
     @Column(name = "name")
     private String name;
 
-    @Pattern(regexp = "^[\\d+]{10,12}$")
+    @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$")
     @Column(name = "inn", unique = true)
     private String inn;
 
