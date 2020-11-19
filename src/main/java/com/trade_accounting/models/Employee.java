@@ -41,8 +41,7 @@ public class Employee {
     private String phone;
 
     @Column(name = "inn")
-    @Size(min = 10, max = 12)
-    @Pattern(regexp = "[0-9]+")
+    @Pattern(regexp = "([0-9]+){12}")
     private String inn;
 
     @Column(name = "description")
