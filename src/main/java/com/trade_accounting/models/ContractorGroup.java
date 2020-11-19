@@ -14,9 +14,9 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name ="counterparty_groups")
+@Table(name ="contractor_groups")
 @Data
-public class CounterpartyGroup {
+public class ContractorGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
