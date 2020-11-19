@@ -15,31 +15,4 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/counterpartygroup")
 public class CounterpartyGroupRestController {
-
-    //Get all counterpartyGroups
-    @GetMapping
-    public Response<List<CounterpartyGroup>> getCounterpartyGroups() {
-
-    }
-
-    //Create new counterpartyGroup
-    @PostMapping
-    public Response<?> addCounterpartyGroup(@RequestBody CounterpartyGroup counterpartyGroup){
-    }
-
-    //Get counterpartyGroup by id
-    @GetMapping
-    public Response<CounterpartyGroup> getCounterpartyGroup(@PathVariable(name = "id") Long id) {
-    }
-
-    //Update counterpartyGroup by id
-    @PutMapping
-    public Response<?> updateCounterpartyGroup(@RequestBody CounterpartyGroup counterpartyGroup) {
-    }
-
-    //Delete counterpartyGroup by id
-    @DeleteMapping
-    public Response<?> deleteCounterpartyGroup(@PathVariable(name = "id") Long id) {
-    }
-
 }
