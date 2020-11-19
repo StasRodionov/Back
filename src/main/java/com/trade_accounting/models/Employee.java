@@ -50,7 +50,7 @@ public class Employee {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
     @Column(name = "password")
