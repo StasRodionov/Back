@@ -1,4 +1,4 @@
-package com.trade_accounting.controller.rest;
+package com.trade_accounting.controllers.rest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
