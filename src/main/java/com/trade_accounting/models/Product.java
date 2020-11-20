@@ -41,7 +41,7 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     private Unit unit;
 
 }
