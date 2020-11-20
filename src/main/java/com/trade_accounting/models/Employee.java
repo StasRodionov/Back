@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,7 +57,6 @@ public class Employee {
     @Column(name = "password")
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "departments_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Department department;
 }
