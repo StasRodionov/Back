@@ -9,9 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -54,5 +58,11 @@ public class Contractor {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ContractorGroup contractorGroup;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "products_contractors",
+    joinColumns = @JoinColumn(name = "contractor_id"),
+    inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private Set<Product> products;
 
 }
