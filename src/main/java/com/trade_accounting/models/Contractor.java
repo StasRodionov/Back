@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,7 +53,6 @@ public class Contractor {
     @Column(name = "comment")
     private String comment;
 
-    @ManyToOne
-    @JoinColumn(name = "type_of_contractors_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private TypeOfContractor typeOfContractor;
 }
