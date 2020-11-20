@@ -10,9 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -61,4 +63,9 @@ public class Contractor {
 
     @OneToOne(fetch = FetchType.LAZY)
     private TypeOfPrice typeOfPrice;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<BankAccount> bankAccounts;
+
+
 }
