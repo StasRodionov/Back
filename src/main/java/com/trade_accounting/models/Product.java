@@ -44,4 +44,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private Unit unit;
 
+    @Column(name = "archive")
+    private Boolean archive = false;
+
 }
