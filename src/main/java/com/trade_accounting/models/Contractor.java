@@ -52,7 +52,7 @@ public class Contractor {
     @Column(name = "comment")
     private String comment;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private ContractorGroup contractorGroup;
 
 }
