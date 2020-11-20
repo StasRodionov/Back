@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -49,4 +51,8 @@ public class Contractor {
 
     @Column(name = "comment")
     private String comment;
+
+    @ManyToOne
+    @JoinColumn(name = "type_of_contractors_id")
+    private TypeOfContractor typeOfContractor;
 }
