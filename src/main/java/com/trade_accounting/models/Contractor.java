@@ -55,4 +55,7 @@ public class Contractor {
     @ManyToOne(fetch = FetchType.LAZY)
     private ContractorGroup contractorGroup;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TypeOfContractor typeOfContractor;
+
 }
