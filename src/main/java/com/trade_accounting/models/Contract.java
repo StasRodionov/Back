@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -31,12 +32,14 @@ public class Contract {
     @Column(name = "contract_date", columnDefinition = "date default current_date")
     private LocalDate contractDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
     private Company company;
 
     //@Column(name = "payment_account")
     //private PaymentAccount paymentAccount;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
