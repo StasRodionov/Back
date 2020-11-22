@@ -36,6 +36,7 @@ public class Contract {
     @ManyToOne(fetch = FetchType.EAGER)
     private Company company;
 
+    //пока класс PaymentAccount не готов,
     //@Column(name = "payment_account")
     //private PaymentAccount paymentAccount;
 
@@ -43,11 +44,11 @@ public class Contract {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
-    @Column(name = "sum", columnDefinition = "Money default 0.0")
+    @Column(name = "sum", columnDefinition = "money default 0.0")
     private BigDecimal sum;
 
     @Column(name = "archive", columnDefinition = "boolean default false")
-    private boolean archive;
+    private Boolean archive;
 
     @Column(name = "comment")
     private String comment;
