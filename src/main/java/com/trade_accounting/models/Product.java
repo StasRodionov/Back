@@ -11,13 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -51,7 +47,7 @@ public class Product {
     @Column(name = "archive")
     private Boolean archive = false;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Contractor> contractors;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Contractor contractor;
 
 }
