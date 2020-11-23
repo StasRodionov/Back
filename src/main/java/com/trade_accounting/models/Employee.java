@@ -10,9 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -61,6 +63,10 @@ public class Employee {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Position position;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Role> roles;
+
 
 
 }
