@@ -48,6 +48,10 @@ public class Product {
     @Column(name = "archive")
     private Boolean archive = false;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Contractor contractor;
+
+
     @ManyToMany(fetch = FetchType.LAZY)
     private Image image;
 
