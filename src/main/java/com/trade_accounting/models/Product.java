@@ -52,9 +52,6 @@ public class Product {
     private Boolean archive = false;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "products_contractors",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "contaractor_id"))
     private Set<Contractor> contractors;
 
 }

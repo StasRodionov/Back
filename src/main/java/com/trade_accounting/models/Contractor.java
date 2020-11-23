@@ -60,9 +60,6 @@ public class Contractor {
     private ContractorGroup contractorGroup;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "products_contractors",
-    joinColumns = @JoinColumn(name = "contractor_id"),
-    inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> products;
 
 }
