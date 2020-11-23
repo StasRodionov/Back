@@ -6,34 +6,41 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "units")
-public class Unit {
+@Table(name = "bank_accounts")
+public class BankAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "short_name")
-    private String shortName;
+    @Column(name = "rcbic")
+    private String rcbic;
 
-    @Column(name = "full_name")
-    private String fullName;
+    @Column(name = "bank")
+    private String bank;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "correspondent_account")
+    private String correspondentAccount;
+
+    @Column(name = "account")
+    private String account;
+
+    @Column(name = "main_account")
+    private Boolean mainAccount;
 
     @Column(name = "sort_number")
     private String sortNumber;
-
-    @OneToMany(mappedBy = "unit", fetch = FetchType.LAZY)
-    private List<Product> products;
 }
+

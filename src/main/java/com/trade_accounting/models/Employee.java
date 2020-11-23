@@ -6,10 +6,15 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.persistence.ManyToMany;
+import java.util.Set;
+
 
 @Data
 @NoArgsConstructor
@@ -37,7 +42,8 @@ public class Employee {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "inn", unique = true)
+    @Column(name = "inn")
+    @Pattern(regexp = "([0-9]+){12}")
     private String inn;
 
     @Column(name = "description")
@@ -46,9 +52,13 @@ public class Employee {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
     @Column(name = "password")
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Role> roles;
+
 }
