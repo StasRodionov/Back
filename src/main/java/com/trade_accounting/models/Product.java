@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
@@ -46,5 +47,8 @@ public class Product {
 
     @Column(name = "archive")
     private Boolean archive = false;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private Image image;
 
 }
