@@ -51,7 +51,6 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
-
     @ManyToMany(fetch = FetchType.LAZY)
     private Image image;
 
