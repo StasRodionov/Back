@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -58,4 +59,6 @@ public class Contractor {
     @ManyToOne(fetch = FetchType.LAZY)
     private TypeOfContractor typeOfContractor;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private TypeOfPrice typeOfPrice;
 }
