@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import java.util.Set;
@@ -67,6 +68,7 @@ public class Employee {
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles;
 
-
+    @OneToOne(fetch = FetchType.LAZY)
+    private Image images;
 
 }
