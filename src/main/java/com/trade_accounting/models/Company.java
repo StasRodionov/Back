@@ -10,10 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.Set;
+import java.util.List;
+
 
 @Data
 @NoArgsConstructor
@@ -72,5 +72,5 @@ public class Company {
     private String stamp;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private Set<BankAccount> bankAccounts;
+    private List<BankAccount> bankAccounts;
 }
