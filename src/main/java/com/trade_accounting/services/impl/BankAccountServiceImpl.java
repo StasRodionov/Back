@@ -2,7 +2,6 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.services.interfaces.BankAccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,10 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class BankAccountServiceImpl implements BankAccountService {
 
-    private BankAccountRepository bankAccountRepository;
+    private final BankAccountRepository bankAccountRepository;
 
-    @Autowired
-    public void setBankAccountRepository(BankAccountRepository bankAccountRepository) {
+    public BankAccountServiceImpl(BankAccountRepository bankAccountRepository) {
         this.bankAccountRepository = bankAccountRepository;
     }
 }
