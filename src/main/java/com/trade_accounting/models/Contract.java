@@ -45,7 +45,7 @@ public class Contract {
     private Contractor contractor;
 
     @Column(name = "amount", columnDefinition = "money default 0.0")
-    private BigDecimal sum;
+    private BigDecimal amount;
 
     @Column(name = "archive", columnDefinition = "boolean default false")
     private Boolean archive;
