@@ -33,7 +33,7 @@ public class Contract {
     private LocalDate contractDate;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
     //пока класс PaymentAccount не готов,
