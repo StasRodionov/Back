@@ -36,9 +36,8 @@ public class Contract {
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
-    //пока класс PaymentAccount не готов,
-    //@Column(name = "payment_account")
-    //private PaymentAccount paymentAccount;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private BankAccount bankAccount;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
