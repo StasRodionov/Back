@@ -81,8 +81,8 @@ public class Company {
     @Column(name = "legal_detail_surname")
     private String legalDetailSurname;
 
-    @Column(name = "legal_detail_name")
-    private String legalDetailName;
+    @Column(name = "legal_detail_firstname")
+    private String legalDetailFirstname;
 
     @Column(name = "legal_detail_patronymic")
     private String legalDetailPatronymic;
