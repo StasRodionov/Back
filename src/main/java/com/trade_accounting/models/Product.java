@@ -65,4 +65,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductGroup productGroup;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private AttributeOfCalculationObject attributeOfCalculationObject;
+
 }
