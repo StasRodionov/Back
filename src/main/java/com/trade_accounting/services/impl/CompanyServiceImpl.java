@@ -33,6 +33,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public void create() {
+        // todo дописать когда будет готов DTO
+    }
+
+    @Override
     public void update() {
         // todo дописать когда будет готов DTO
     }
