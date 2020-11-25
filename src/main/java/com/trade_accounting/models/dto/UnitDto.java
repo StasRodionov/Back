@@ -20,5 +20,4 @@ public class UnitDto {
 
     private String sortNumber;
 
-    private List<Product> products;
 }

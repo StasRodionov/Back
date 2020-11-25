@@ -34,6 +34,4 @@ public class Unit {
     @Column(name = "sort_number")
     private String sortNumber;
 
-    @OneToMany(mappedBy = "unit", fetch = FetchType.LAZY)
-    private List<Product> products;
 }
