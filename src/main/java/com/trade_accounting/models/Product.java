@@ -62,4 +62,7 @@ public class Product {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Image> images;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ProductGroup productGroup;
+
 }
