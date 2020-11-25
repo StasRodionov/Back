@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -51,4 +52,7 @@ public class Contract {
 
     @Column(name = "comment")
     private String comment;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private LegalDetail legalDetail;
 }
