@@ -71,40 +71,4 @@ public class Company {
 
     @Column(name = "stamp")
     private String stamp;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<BankAccount> bankAccounts;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private TypeOfContractor typeOfContractor;
-
-    @Column(name = "legal_detail_surname")
-    private String legalDetailSurname;
-
-    @Column(name = "legal_detail_firstname")
-    private String legalDetailFirstname;
-
-    @Column(name = "legal_detail_patronymic")
-    private String legalDetailPatronymic;
-
-    @Column(name = "legal_detail_reg_address")
-    private String legalDetailRegAddress;
-
-    @Column(name = "legal_detail_comment_to_address")
-    private String legalDetailCommentToAddress;
-
-    @Column(name = "legal_detail_inn")
-    private String legalDetailInn;
-
-    @Column(name = "legal_detail_okpo")
-    private String legalDetailOkpo;
-
-    @Column(name = "legal_detail_ogrnip")
-    private String legalDetailOgrnip;
-
-    @Column(name = "legal_detail_cert_num")
-    private String legalDetailCertNum;
-
-    @Column(name = "legal_detail_cert_date")
-    private String legalDetailCertDate;
 }
