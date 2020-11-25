@@ -10,12 +10,19 @@ import lombok.NoArgsConstructor;
 public class BankAccountDto {
 
     private Long id;
+
     private String rcbic;
+
     private String bank;
+
     private String address;
+
     private String correspondentAccount;
+
     private String account;
+
     private Boolean mainAccount;
+
     private String sortNumber;
 }
 
