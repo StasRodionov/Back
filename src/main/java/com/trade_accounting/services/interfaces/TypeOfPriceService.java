@@ -9,11 +9,11 @@ public interface TypeOfPriceService {
 
     List<TypeOfPriceDto> getAll();
 
-    TypeOfPriceDto getById(@Param("id") Long id);
+    TypeOfPriceDto getById(Long id);
 
-    void create(@Param("t") TypeOfPriceDto typeOfPriceDto);
+    void create(TypeOfPriceDto typeOfPriceDto);
 
     void update(TypeOfPriceDto typeOfPriceDto);
 
-    void deleteById(@Param("id") Long id);
+    void deleteById(Long id);
 }
