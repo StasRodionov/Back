@@ -1,6 +1,5 @@
 package com.trade_accounting.models.dto;
 
-import com.trade_accounting.models.TypeOfContractor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,5 +33,5 @@ public class LegalDetailDto {
 
     private LocalDate dateOfTheCertificate;
 
-    private TypeOfContractor typeOfContractor;
+    private TypeOfContractorDto typeOfContractorDto;
 }
