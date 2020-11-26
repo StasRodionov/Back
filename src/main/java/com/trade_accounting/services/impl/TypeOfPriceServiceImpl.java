@@ -37,9 +37,7 @@ public class TypeOfPriceServiceImpl implements TypeOfPriceService {
 
     @Override
     public void update(TypeOfPriceDto typeOfPriceDto) {
-        TypeOfPrice type = typeOfPriceRepository.getOne(typeOfPriceDto.getId());
-        type.setName(typeOfPriceDto.getName());
-        type.setSortNumber(typeOfPriceDto.getSortNumber());
+        TypeOfPrice type = new TypeOfPrice(typeOfPriceDto.getId(), typeOfPriceDto.getName(), typeOfPriceDto.getSortNumber());
         typeOfPriceRepository.save(type);
     }
 
