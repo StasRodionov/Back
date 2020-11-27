@@ -6,7 +6,6 @@ import com.trade_accounting.repositories.TaxSystemRepository;
 import com.trade_accounting.services.interfaces.TaxSystemService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 
