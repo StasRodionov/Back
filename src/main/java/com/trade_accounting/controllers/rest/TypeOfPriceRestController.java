@@ -24,35 +24,32 @@ public class TypeOfPriceRestController {
         this.service = service;
     }
 
-    @GetMapping(value = "/get/all")
+    @GetMapping
     public ResponseEntity<List<TypeOfPriceDto>> getAll() {
         List<TypeOfPriceDto> typeOfPrices = service.getAll();
-        return typeOfPrices != null ?
-                new ResponseEntity<>(typeOfPrices, HttpStatus.OK) :
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(typeOfPrices, HttpStatus.OK);
+
     }
 
-    @GetMapping(value = "/get/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<TypeOfPriceDto> getById(@PathVariable(name = "id") Long id) {
         TypeOfPriceDto typeOfPriceDto = service.getById(id);
-        return typeOfPriceDto != null
-                ? new ResponseEntity<>(typeOfPriceDto, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(typeOfPriceDto, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody TypeOfPriceDto typeOfPriceDto) {
         service.create(typeOfPriceDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "/update/{id}")
-    public ResponseEntity<?> update(@PathVariable(name = "id") Long id, @RequestBody TypeOfPriceDto typeOfPriceDto) {
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody TypeOfPriceDto typeOfPriceDto) {
         service.update(typeOfPriceDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping
     public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
         service.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
