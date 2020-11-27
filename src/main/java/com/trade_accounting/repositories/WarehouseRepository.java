@@ -13,11 +13,11 @@ import java.util.List;
 public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
 
     @Query("select new com.trade_accounting.models.dto.WarehouseDto(e.id, e.name, e.sortNumber, e.address, " +
-            "e.commentToAddress, e.comment) from warehouses as e")
+            "e.commentToAddress, e.comment) from Warehouse e")
     List<WarehouseDto> getAll();
 
     @Query("select new com.trade_accounting.models.dto.WarehouseDto(e.id, e.name, e.sortNumber, e.address, " +
-            "e.commentToAddress, e.comment) from warehouses as e where e.id =: id")
+            "e.commentToAddress, e.comment) from Warehouse e where e.id =: id")
     WarehouseDto getById(@Param("id") Long id);
 
 }

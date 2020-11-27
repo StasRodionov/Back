@@ -36,4 +36,12 @@ public class Warehouse {
 
     @Column(name = "comment")
     private String comment;
+
+    public Warehouse(String name, String sortNumber, String address, String commentToAddress, String comment) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+        this.address = address;
+        this.commentToAddress = commentToAddress;
+        this.comment = comment;
+    }
 }
