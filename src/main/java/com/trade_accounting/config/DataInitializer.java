@@ -1,8 +1,6 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
-import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import org.springframework.stereotype.Component;
 
