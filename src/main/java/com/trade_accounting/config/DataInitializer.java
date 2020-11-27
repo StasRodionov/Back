@@ -5,9 +5,11 @@ import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.services.interfaces.PositionService;
+import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.services.interfaces.RoleService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
+import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,15 +21,19 @@ public class DataInitializer {
     private final RoleService roleService;
     private final UnitService unitService;
     private final PositionService positionService;
+    private final WarehouseService warehouseService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
                            UnitService unitService,
                            PositionService positionService) {
+                           RoleService roleService,
+                           WarehouseService warehouseService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.unitService = unitService;
         this.positionService = positionService;
+        this.warehouseService = warehouseService;
     }
 
     @PostConstruct
@@ -36,6 +42,7 @@ public class DataInitializer {
         initRoles();
         initUnits();
         initPositions();
+        initWarehouses();
     }
 
     private void initTypeOfPrices() {
@@ -133,4 +140,8 @@ public class DataInitializer {
         positionService.create(new PositionDto("Уборщица", "20"));
     }
 
+
+    private void initWarehouses(){
+        warehouseService.create(new WarehouseDto("Основной склад", "1"));
+    }
 }
