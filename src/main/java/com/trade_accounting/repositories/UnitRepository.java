@@ -12,11 +12,9 @@ import java.util.List;
 @Repository
 public interface UnitRepository extends JpaRepository<Unit, Long> {
 
-    @Query("select new com.trade_accounting.models.dto.UnitDto(e.id, e.shortName, e.fullName, " +
-            "e.sortNumber) from Unit e")
+    @Query("select new com.trade_accounting.models.dto.UnitDto(e.id, e.shortName, e.fullName, e.sortNumber) from Unit e")
     List<UnitDto> getAll();
 
-    @Query("select new com.trade_accounting.models.dto.UnitDto(e.id, e.shortName, e.fullName, " +
-            "e.sortNumber) from Unit e where e.id =: id")
+    @Query("select new com.trade_accounting.models.dto.UnitDto(e.id, e.shortName, e.fullName, e.sortNumber) from Unit e where e.id =: id")
     UnitDto getById(@Param("id") Long id);
 }

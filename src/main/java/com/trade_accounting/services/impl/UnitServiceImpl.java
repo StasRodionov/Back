@@ -31,13 +31,25 @@ public class UnitServiceImpl implements UnitService {
 
     @Override
     public void create(UnitDto unitDto) {
-        unitRepository.save(new Unit(unitDto.getShortName(), unitDto.getFullName(), unitDto.getSortNumber()));
+        unitRepository.save(
+                new Unit(
+                        unitDto.getShortName(),
+                        unitDto.getFullName(),
+                        unitDto.getSortNumber()
+                )
+        );
     }
 
     @Override
     public void update(UnitDto unitDto) {
-        unitRepository.save(new Unit(unitDto.getId(), unitDto.getShortName(),
-                unitDto.getFullName(), unitDto.getSortNumber()));
+        unitRepository.save(
+                new Unit(
+                        unitDto.getId(),
+                        unitDto.getShortName(),
+                        unitDto.getFullName(),
+                        unitDto.getSortNumber()
+                )
+        );
     }
 
     @Override
