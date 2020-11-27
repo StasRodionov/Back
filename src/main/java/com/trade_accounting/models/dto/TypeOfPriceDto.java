@@ -13,5 +13,10 @@ public class TypeOfPriceDto {
 
     private String name;
 
-    private Long sortNumber;
+    private String sortNumber;
+
+    public TypeOfPriceDto(String name, String sortNumber) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+    }
 }
