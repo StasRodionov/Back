@@ -12,10 +12,10 @@ import java.util.List;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    @Query("select new com.trade_accounting.models.dto.RoleDto(r.id, r.name, r.sortNumber) from Role as r")
+    @Query("select new com.trade_accounting.models.dto.RoleDto(r.id, r.name, r.sortNumber) from Role r")
     List<RoleDto> getAll();
 
-    @Query("select new com.trade_accounting.models.dto.RoleDto(r.id, r.name, r.sortNumber) from Role as r where r.id = :id")
+    @Query("select new com.trade_accounting.models.dto.RoleDto(r.id, r.name, r.sortNumber) from Role r where r.id = :id")
     RoleDto getById(@Param("id") Long id);
 
 }

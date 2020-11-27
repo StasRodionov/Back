@@ -26,4 +26,9 @@ public class Role {
     private String name;
 
     private String sortNumber;
+
+    public Role(String name, String sortNumber) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+    }
 }
