@@ -31,4 +31,9 @@ public class Unit {
     @Column(name = "sort_number")
     private String sortNumber;
 
+    public Unit(String shortName, String fullName, String sortNumber) {
+        this.shortName = shortName;
+        this.fullName = fullName;
+        this.sortNumber = sortNumber;
+    }
 }
