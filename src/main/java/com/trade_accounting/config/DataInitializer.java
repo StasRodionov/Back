@@ -11,6 +11,10 @@ public class DataInitializer {
 
     private TypeOfPriceRepository typeOfPriceRepository;
 
+    public DataInitializer(TypeOfPriceRepository typeOfPriceRepository) {
+        this.typeOfPriceRepository = typeOfPriceRepository;
+    }
+
     @PostConstruct
     public void init() {
         initTypeOfPrices();
