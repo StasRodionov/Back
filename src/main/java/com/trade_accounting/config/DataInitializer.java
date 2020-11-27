@@ -14,7 +14,8 @@ public class DataInitializer {
     private final TypeOfPriceService typeOfPriceService;
     private final RoleService roleService;
 
-    public DataInitializer(TypeOfPriceService typeOfPriceService, RoleService roleService) {
+    public DataInitializer(TypeOfPriceService typeOfPriceService,
+                           RoleService roleService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
     }
