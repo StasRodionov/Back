@@ -12,12 +12,10 @@ import java.util.List;
 @Repository
 public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
 
-    @Query("select new com.trade_accounting.models.dto.WarehouseDto(e.id, e.name, e.sortNumber, e.address, " +
-            "e.commentToAddress, e.comment) from Warehouse e")
+    @Query("select new com.trade_accounting.models.dto.WarehouseDto(e.id, e.name, e.sortNumber, e.address, e.commentToAddress, e.comment) from Warehouse e")
     List<WarehouseDto> getAll();
 
-    @Query("select new com.trade_accounting.models.dto.WarehouseDto(e.id, e.name, e.sortNumber, e.address, " +
-            "e.commentToAddress, e.comment) from Warehouse e where e.id =: id")
+    @Query("select new com.trade_accounting.models.dto.WarehouseDto(e.id, e.name, e.sortNumber, e.address, e.commentToAddress, e.comment) from Warehouse e where e.id =: id")
     WarehouseDto getById(@Param("id") Long id);
 
 }

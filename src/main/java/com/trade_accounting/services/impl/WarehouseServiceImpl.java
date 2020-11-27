@@ -31,15 +31,29 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public void create(WarehouseDto warehouseDto) {
-        warehouseRepository.save(new Warehouse(warehouseDto.getName(), warehouseDto.getSortNumber(),
-                warehouseDto.getAddress(), warehouseDto.getCommentToAddress(), warehouseDto.getComment()));
+        warehouseRepository.save(
+                new Warehouse(
+                        warehouseDto.getName(),
+                        warehouseDto.getSortNumber(),
+                        warehouseDto.getAddress(),
+                        warehouseDto.getCommentToAddress(),
+                        warehouseDto.getComment()
+                )
+        );
     }
 
     @Override
     public void update(WarehouseDto warehouseDto) {
-        warehouseRepository.save(new Warehouse(warehouseDto.getId(), warehouseDto.getName(),
-                warehouseDto.getSortNumber(), warehouseDto.getAddress(),
-                warehouseDto.getCommentToAddress(), warehouseDto.getComment()));
+        warehouseRepository.save(
+                new Warehouse(
+                        warehouseDto.getId(),
+                        warehouseDto.getName(),
+                        warehouseDto.getSortNumber(),
+                        warehouseDto.getAddress(),
+                        warehouseDto.getCommentToAddress(),
+                        warehouseDto.getComment()
+                )
+        );
     }
 
     @Override
