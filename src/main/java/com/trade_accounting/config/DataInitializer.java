@@ -4,9 +4,7 @@ import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 
 @Component
@@ -22,7 +20,6 @@ public class DataInitializer {
 
     @PostConstruct
     public void init() {
-
         initTypeOfPrices();
         initUnits();
     }
@@ -92,6 +89,5 @@ public class DataInitializer {
         unitService.create(new UnitDto(null,  "шт", "Штука", "57"));
         unitService.create(new UnitDto(null,  "ящ", "Ящик", "58"));
         unitService.create(new UnitDto(null,  "блок", "Блок сигарет", "59"));
-
     }
 }
