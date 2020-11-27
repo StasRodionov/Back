@@ -29,10 +29,6 @@ public class TypeOfPrice {
     @Column(name = "sort_number")
     private String sortNumber;
 
-    public TypeOfPrice(String name) {
-        this.name = name;
-    }
-
     public TypeOfPrice(String name, String sortNumber) {
         this.name = name;
         this.sortNumber = sortNumber;

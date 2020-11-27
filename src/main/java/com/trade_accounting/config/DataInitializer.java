@@ -10,11 +10,11 @@ public class DataInitializer {
 
     @PostConstruct
     public void init() {
-        initTypeOfPrices("Оптовая цена");
-        initTypeOfPrices("Розничная цена");
+        initTypeOfPrices();
     }
 
-    private void initTypeOfPrices(String name) {
-        new TypeOfPrice(name);
+    private void initTypeOfPrices() {
+        new TypeOfPrice("Оптовая цена","1");
+        new TypeOfPrice("Розничная цена", "2");
     }
 }
