@@ -12,10 +12,10 @@ import java.util.List;
 @Repository
 public interface TypeOfPriceRepository extends JpaRepository<TypeOfPrice, Long> {
 
-    @Query("select new com.trade_accounting.models.dto.TypeOfPriceDto(t.id, t.name, t.sortNumber) from type_of_prices as t")
+    @Query("select new com.trade_accounting.models.dto.TypeOfPriceDto(t.id, t.name, t.sortNumber) from TypeOfPrice as t")
     List<TypeOfPriceDto> getAll();
 
-    @Query("select new com.trade_accounting.models.dto.TypeOfPriceDto(t.id, t.name, t.sortNumber) from type_of_prices as t where t.id = :id")
+    @Query("select new com.trade_accounting.models.dto.TypeOfPriceDto(t.id, t.name, t.sortNumber) from TypeOfPrice as t where t.id = :id")
     TypeOfPriceDto getById(@Param("id") Long id);
 
 }
