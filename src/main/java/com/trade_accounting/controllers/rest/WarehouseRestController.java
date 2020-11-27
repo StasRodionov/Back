@@ -25,7 +25,7 @@ public class WarehouseRestController {
         this.warehouseService = warehouseService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<WarehouseDto>> getAll() {
         List<WarehouseDto> warehouseDtoList = warehouseService.getAll();
         return warehouseDtoList != null
@@ -41,13 +41,13 @@ public class WarehouseRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.create(warehouseDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("")
+    @PutMapping
     public ResponseEntity<HttpStatus> update(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.update(warehouseDto);
         return new ResponseEntity<>(HttpStatus.OK);
