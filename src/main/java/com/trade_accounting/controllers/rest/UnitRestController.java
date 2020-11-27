@@ -27,14 +27,12 @@ public class UnitRestController {
 
     @GetMapping
     public ResponseEntity<List<UnitDto>> getAll() {
-        List<UnitDto> unitDtos = unitService.getAll();
-        return new ResponseEntity<>(unitDtos, HttpStatus.OK);
+        return new ResponseEntity<>(unitService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UnitDto> getById(@PathVariable Long id) {
-        UnitDto unitDto = unitService.getById(id);
-        return new ResponseEntity<>(unitDto, HttpStatus.OK);
+        return new ResponseEntity<>(unitService.getById(id), HttpStatus.OK);
     }
 
     @PostMapping
