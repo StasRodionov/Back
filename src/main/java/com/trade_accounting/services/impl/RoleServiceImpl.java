@@ -31,14 +31,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void create(RoleDto roleDto) {
-        Role role = new Role(roleDto.getName(), roleDto.getSortNumber());
-        roleRepository.save(role);
+        roleRepository.save(new Role(roleDto.getName(), roleDto.getSortNumber()));
     }
 
     @Override
     public void update(RoleDto roleDto) {
-        Role role = new Role(roleDto.getId(), roleDto.getName(), roleDto.getSortNumber());
-        roleRepository.save(role);
+        roleRepository.save(new Role(roleDto.getId(), roleDto.getName(), roleDto.getSortNumber()));
     }
 
     @Override
