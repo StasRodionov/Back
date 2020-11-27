@@ -27,30 +27,26 @@ public class UnitRestController {
 
     @GetMapping
     public ResponseEntity<List<UnitDto>> getAll() {
-        List<UnitDto> unitDtoList = unitService.getAll();
-        return unitDtoList != null
-                ? new ResponseEntity<>(unitDtoList, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<UnitDto> unitDtos = unitService.getAll();
+        return new ResponseEntity<>(unitDtos, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UnitDto> getById(@PathVariable Long id) {
         UnitDto unitDto = unitService.getById(id);
-        return unitDto != null
-                ? new ResponseEntity<>(unitDto, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(unitDto, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody UnitDto unitDto) {
         unitService.create(unitDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody UnitDto unitDto) {
         unitService.update(unitDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
