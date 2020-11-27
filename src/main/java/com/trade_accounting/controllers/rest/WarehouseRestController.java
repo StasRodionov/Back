@@ -28,23 +28,19 @@ public class WarehouseRestController {
     @GetMapping
     public ResponseEntity<List<WarehouseDto>> getAll() {
         List<WarehouseDto> warehouseDtoList = warehouseService.getAll();
-        return warehouseDtoList != null
-                ? new ResponseEntity<>(warehouseDtoList, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(warehouseDtoList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<WarehouseDto> getById(@PathVariable("id") Long id) {
         WarehouseDto warehouseDto = warehouseService.getById(id);
-        return warehouseDto != null
-                ? new ResponseEntity<>(warehouseDto, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(warehouseDto, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.create(warehouseDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
