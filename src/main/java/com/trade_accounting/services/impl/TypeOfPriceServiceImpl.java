@@ -31,12 +31,23 @@ public class TypeOfPriceServiceImpl implements TypeOfPriceService {
 
     @Override
     public void create(TypeOfPriceDto typeOfPriceDto) {
-        typeOfPriceRepository.save(new TypeOfPrice(typeOfPriceDto.getName(), typeOfPriceDto.getSortNumber()));
+        typeOfPriceRepository.save(
+                new TypeOfPrice(
+                        typeOfPriceDto.getName(),
+                        typeOfPriceDto.getSortNumber()
+                )
+        );
     }
 
     @Override
     public void update(TypeOfPriceDto typeOfPriceDto) {
-        typeOfPriceRepository.save(new TypeOfPrice(typeOfPriceDto.getId(), typeOfPriceDto.getName(), typeOfPriceDto.getSortNumber()));
+        typeOfPriceRepository.save(
+                new TypeOfPrice(
+                        typeOfPriceDto.getId(),
+                        typeOfPriceDto.getName(),
+                        typeOfPriceDto.getSortNumber()
+                )
+        );
     }
 
     @Override
