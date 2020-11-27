@@ -13,5 +13,5 @@ public class TypeOfPriceDto {
 
     private String name;
 
-    private Long sortNumber;
+    private String sortNumber;
 }
