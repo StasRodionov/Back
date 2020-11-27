@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.stream.Stream;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +19,9 @@ public class UnitDto {
 
     private String sortNumber;
 
+    public UnitDto(String shortName, String fullName, String sortNumber){
+        this.shortName = shortName;
+        this.fullName = fullName;
+        this.sortNumber = sortNumber;
+    }
 }
