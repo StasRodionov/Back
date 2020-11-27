@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 @Component
 public class DataInitializer {
 
-    private TypeOfPriceService typeOfPriceService;
+    private final TypeOfPriceService typeOfPriceService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService) {
         this.typeOfPriceService = typeOfPriceService;
