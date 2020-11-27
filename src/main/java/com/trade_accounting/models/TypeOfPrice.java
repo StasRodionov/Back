@@ -28,4 +28,9 @@ public class TypeOfPrice {
 
     @Column(name = "sort_number")
     private Long sortNumber;
+
+    public TypeOfPrice(String name, Long sortNumber) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+    }
 }
