@@ -27,14 +27,12 @@ public class WarehouseRestController {
 
     @GetMapping
     public ResponseEntity<List<WarehouseDto>> getAll() {
-        List<WarehouseDto> warehouseDtos = warehouseService.getAll();
-        return new ResponseEntity<>(warehouseDtos, HttpStatus.OK);
+        return new ResponseEntity<>(warehouseService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<WarehouseDto> getById(@PathVariable("id") Long id) {
-        WarehouseDto warehouseDto = warehouseService.getById(id);
-        return new ResponseEntity<>(warehouseDto, HttpStatus.OK);
+        return new ResponseEntity<>(warehouseService.getById(id), HttpStatus.OK);
     }
 
     @PostMapping
