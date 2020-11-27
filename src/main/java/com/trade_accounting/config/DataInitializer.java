@@ -21,7 +21,7 @@ public class DataInitializer {
     }
 
     private void initTypeOfPrices() {
-        typeOfPriceService.create(new TypeOfPriceDto("Оптовая цена","1"));
+        typeOfPriceService.create(new TypeOfPriceDto("Оптовая цена", "1"));
         typeOfPriceService.create(new TypeOfPriceDto("Розничная цена", "2"));
     }
 }
