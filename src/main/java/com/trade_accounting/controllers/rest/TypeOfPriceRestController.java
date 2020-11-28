@@ -49,7 +49,7 @@ public class TypeOfPriceRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
         service.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
