@@ -26,15 +26,13 @@ public class TypeOfPriceRestController {
 
     @GetMapping
     public ResponseEntity<List<TypeOfPriceDto>> getAll() {
-        List<TypeOfPriceDto> typeOfPrices = service.getAll();
-        return new ResponseEntity<>(typeOfPrices, HttpStatus.OK);
+        return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
 
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<TypeOfPriceDto> getById(@PathVariable(name = "id") Long id) {
-        TypeOfPriceDto typeOfPriceDto = service.getById(id);
-        return new ResponseEntity<>(typeOfPriceDto, HttpStatus.OK);
+        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
     @PostMapping
