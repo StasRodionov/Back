@@ -35,14 +35,17 @@ public class ProductGroup {
     @JoinColumn(name="main_group", referencedColumnName = "id")
     private ProductGroup productGroup;
 
-    public ProductGroup(String name, String sortNumber){
+    public ProductGroup(String name, String sortNumber, ProductGroup parentGroup){
         this.name = name;
         this.sortNumber = sortNumber;
+        this.productGroup = parentGroup;
     }
 
-    public ProductGroup(Long id, String name, String sortNumber){
+    public ProductGroup(Long id, String name, String sortNumber, ProductGroup parentGroup){
         this.id = id;
         this.name = name;
         this.sortNumber = sortNumber;
+        this.productGroup = parentGroup;
+
     }
 }

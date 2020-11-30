@@ -15,12 +15,14 @@ public interface ProductGroupRepository extends JpaRepository<ProductGroup, Long
     @Query("select new com.trade_accounting.models.dto.ProductGroupDto(" +
             "pg.id, " +
             "pg.name, " +
-            "pg.sortNumber) from ProductGroup  pg")
+            "pg.sortNumber," +
+            "pg.productGroup.id) from ProductGroup  pg")
     List<ProductGroupDto> getAll();
 
     @Query("select new com.trade_accounting.models.dto.ProductGroupDto(" +
             "pg.id, " +
             "pg.name, " +
-            "pg.sortNumber) from ProductGroup  pg where pg.id = :id")
+            "pg.sortNumber," +
+            "pg.productGroup.id) from ProductGroup  pg where pg.id = :id")
     ProductGroupDto getById(@Param("id") Long id);
 }

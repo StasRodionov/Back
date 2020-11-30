@@ -1,7 +1,5 @@
 package com.trade_accounting.services.interfaces;
 
-import com.trade_accounting.models.ProductGroup;
-import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 
 import java.util.List;
