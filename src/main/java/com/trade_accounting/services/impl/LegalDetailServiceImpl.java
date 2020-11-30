@@ -60,7 +60,7 @@ public class LegalDetailServiceImpl implements LegalDetailService {
                         legalDetailDto.getOgrnip(),
                         legalDetailDto.getNumberOfTheCertificate(),
                         legalDetailDto.getDateOfTheCertificate(),
-                        typeOfContractorRepository.findById(legalDetailDto.getTypeOfContractorDto().getId()).get()
+                        typeOfContractorRepository.getOne(legalDetailDto.getTypeOfContractorDto().getId())
                 )
         );
     }
@@ -80,7 +80,7 @@ public class LegalDetailServiceImpl implements LegalDetailService {
                         legalDetailDto.getOgrnip(),
                         legalDetailDto.getNumberOfTheCertificate(),
                         legalDetailDto.getDateOfTheCertificate(),
-                        typeOfContractorRepository.findById(legalDetailDto.getTypeOfContractorDto().getId()).get()
+                        typeOfContractorRepository.getOne(legalDetailDto.getTypeOfContractorDto().getId())
                 )
         );
 
