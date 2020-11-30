@@ -1,9 +1,11 @@
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
+import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.RoleService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
@@ -19,15 +21,18 @@ public class DataInitializer {
     private final RoleService roleService;
     private final UnitService unitService;
     private final PositionService positionService;
+    private final AttributeOfCalculationObjectService attributeOfCalculationObjectService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
                            UnitService unitService,
-                           PositionService positionService) {
+                           PositionService positionService,
+                           AttributeOfCalculationObjectService attributeOfCalculationObjectService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.unitService = unitService;
         this.positionService = positionService;
+        this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
     }
 
     @PostConstruct
@@ -36,6 +41,7 @@ public class DataInitializer {
         initRoles();
         initUnits();
         initPositions();
+        initAttributeOfCalculationObjects();
     }
 
     private void initTypeOfPrices() {
@@ -131,6 +137,16 @@ public class DataInitializer {
         positionService.create(new PositionDto("Водитель", "18"));
         positionService.create(new PositionDto("Кассир", "19"));
         positionService.create(new PositionDto("Уборщица", "20"));
+    }
+
+    private void initAttributeOfCalculationObjects() {
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Подакцизный товар", "1", false));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Составной предмет расчета", "2", false));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Иной предмет расчета", "3", false));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Работа", "4", true));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Предоставление РИД", "5", true));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Составной предмет расчета", "6", true));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Иной предмет расчета", "7", true));
     }
 
 }
