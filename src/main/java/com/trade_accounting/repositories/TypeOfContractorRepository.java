@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TypeOfContractorRepository extends JpaRepository<TypeOfContractor, Long> {
+
+    TypeOfContractor findByName(String name);
 }
