@@ -27,29 +27,29 @@ public class WarehouseRestController {
 
     @GetMapping
     public ResponseEntity<List<WarehouseDto>> getAll() {
-        return new ResponseEntity<>(warehouseService.getAll(), HttpStatus.OK);
+        return new ResponseEntity.ok(warehouseService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<WarehouseDto> getById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(warehouseService.getById(id), HttpStatus.OK);
+        return new ResponseEntity.ok(warehouseService.getById(id));
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody WarehouseDto warehouseDto) {
+    public ResponseEntity<?> create(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.create(warehouseDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<HttpStatus> update(@RequestBody WarehouseDto warehouseDto) {
+    public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.update(warehouseDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
         warehouseService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity.ok().build();
     }
 }
