@@ -6,13 +6,9 @@ import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.services.interfaces.PositionService;
-import com.trade_accounting.models.dto.WarehouseDto;
-import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.services.interfaces.RoleService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
-import com.trade_accounting.services.interfaces.WarehouseService;
-import com.trade_accounting.services.interfaces.WarehouseService;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
 
@@ -23,25 +19,20 @@ public class DataInitializer {
 
     private final TypeOfPriceService typeOfPriceService;
     private final RoleService roleService;
-    private final WarehouseService warehouseService;
     private final UnitService unitService;
     private final PositionService positionService;
     private final WarehouseService warehouseService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
-                           WarehouseService warehouseService) {
-                           RoleService roleService,
                            UnitService unitService,
-                           PositionService positionService) {
-                           RoleService roleService,
+                           PositionService positionService,
                            WarehouseService warehouseService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
         this.unitService = unitService;
         this.positionService = positionService;
-        this.warehouseService = warehouseService;
     }
 
     @PostConstruct
@@ -51,7 +42,6 @@ public class DataInitializer {
         initWarehouses();
         initUnits();
         initPositions();
-        initWarehouses();
     }
 
     private void initTypeOfPrices() {
@@ -151,10 +141,5 @@ public class DataInitializer {
         positionService.create(new PositionDto("Водитель", "18"));
         positionService.create(new PositionDto("Кассир", "19"));
         positionService.create(new PositionDto("Уборщица", "20"));
-    }
-
-
-    private void initWarehouses(){
-        warehouseService.create(new WarehouseDto("Основной склад", "1"));
     }
 }
