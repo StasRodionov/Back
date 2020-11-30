@@ -4,12 +4,14 @@ import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
+import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.RoleService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
+import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -21,15 +23,19 @@ public class DataInitializer {
     private final RoleService roleService;
     private final UnitService unitService;
     private final PositionService positionService;
+    private final WarehouseService warehouseService;
     private final AttributeOfCalculationObjectService attributeOfCalculationObjectService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
                            UnitService unitService,
                            PositionService positionService,
+                           WarehouseService warehouseService) {
+                           PositionService positionService,
                            AttributeOfCalculationObjectService attributeOfCalculationObjectService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
+        this.warehouseService = warehouseService;
         this.unitService = unitService;
         this.positionService = positionService;
         this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
@@ -39,6 +45,7 @@ public class DataInitializer {
     public void init() {
         initTypeOfPrices();
         initRoles();
+        initWarehouses();
         initUnits();
         initPositions();
         initAttributeOfCalculationObjects();
@@ -52,6 +59,10 @@ public class DataInitializer {
     private void initRoles() {
         roleService.create(new RoleDto("admin", "1"));
         roleService.create(new RoleDto("user", "2"));
+    }
+
+    private void initWarehouses(){
+        warehouseService.create(new WarehouseDto("Основной склад", "1"));
     }
 
     private void initUnits(){
