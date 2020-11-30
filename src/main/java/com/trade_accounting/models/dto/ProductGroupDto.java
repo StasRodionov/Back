@@ -14,4 +14,6 @@ public class ProductGroupDto {
     private String name;
 
     private String sortNumber;
+
+    private Long parentId;
 }
