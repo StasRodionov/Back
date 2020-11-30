@@ -42,14 +42,14 @@ public class WarehouseRestController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.create(warehouseDto);
-        log.info("created object: " + warehouseDto.toString());
+        log.info("created object: {}", warehouseDto.toString());
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.update(warehouseDto);
-        log.info("updated object: " + warehouseDto.toString());
+        log.info("updated object: {}", warehouseDto.toString());
         return ResponseEntity.ok().build();
     }
 
