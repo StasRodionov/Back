@@ -27,7 +27,7 @@ public class WarehouseRestController {
 
     @GetMapping
     public ResponseEntity<List<WarehouseDto>> getAll() {
-        return new ResponseEntity.ok(warehouseService.getAll(), HttpStatus.OK);
+        return new ResponseEntity.ok(warehouseService.getAll());
     }
 
     @GetMapping("/{id}")
