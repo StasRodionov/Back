@@ -31,22 +31,19 @@ public class TaxSystemServiceImpl implements TaxSystemService {
 
     @Override
     public void create(TaxSystemDto dto) {
-        TaxSystem taxSystem = new TaxSystem(
-                null,
+        taxSystemRepository.save(new TaxSystem(
                 dto.getName(),
-                dto.getSortNumber()
+                dto.getSortNumber())
         );
-        taxSystemRepository.save(taxSystem);
     }
 
     @Override
     public void update(TaxSystemDto dto) {
-        TaxSystem taxSystem = new TaxSystem(
+        taxSystemRepository.save(new TaxSystem(
                 dto.getId(),
                 dto.getName(),
-                dto.getSortNumber()
+                dto.getSortNumber())
         );
-        taxSystemRepository.save(taxSystem);
     }
 
     @Override
