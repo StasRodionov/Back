@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,11 +29,11 @@ public class ProductDto {
 
     //    private ContractorDto contractorDto; Пока нет реализации
 
-    private TypeOfPriceDto typeOfPriceDto;
+    private List<TypeOfPriceDto> typeOfPriceDto;
 
     private TaxSystemDto taxSystemDto;
 
-    private ImageDto imageDto;
+    private List<ImageDto> imageDto;
 
     private ProductGroupDto productGroupDto;
 
