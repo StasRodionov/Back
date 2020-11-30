@@ -35,7 +35,7 @@ public class WarehouseRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<WarehouseDto> getById(@PathVariable("id") Long id) {
-        log.info("returned object byId - %d", id);
+        log.info("returned object byId - {}", id);
         return ResponseEntity.ok(warehouseService.getById(id));
     }
 
@@ -56,7 +56,7 @@ public class WarehouseRestController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
         warehouseService.deleteById(id);
-        log.info("deleted object by id - ", id);
+        log.info("deleted object by id - {}", id);
         return ResponseEntity.ok().build();
     }
 }
