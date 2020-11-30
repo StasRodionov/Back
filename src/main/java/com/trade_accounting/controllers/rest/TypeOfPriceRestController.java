@@ -20,8 +20,8 @@ public class TypeOfPriceRestController {
 
     private final TypeOfPriceService typeOfPriceService;
 
-    public TypeOfPriceRestController(TypeOfPriceService service) {
-        this.typeOfPriceService = service;
+    public TypeOfPriceRestController(TypeOfPriceService typeOfPriceService) {
+        this.typeOfPriceService = typeOfPriceService;
     }
 
     @GetMapping
