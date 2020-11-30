@@ -35,7 +35,7 @@ public class WarehouseRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<WarehouseDto> getById(@PathVariable("id") Long id) {
-        log.info("returned object byId - {}", id);
+        log.info("returned object by id - {}", id);
         return ResponseEntity.ok(warehouseService.getById(id));
     }
 
