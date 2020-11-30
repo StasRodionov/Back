@@ -29,12 +29,12 @@ public class UnitRestController {
 
     @GetMapping
     public ResponseEntity<List<UnitDto>> getAll() {
-        return new ResponseEntity<>(unitService.getAll(), HttpStatus.OK);
+        return ResponseEntity.ok(unitService.getAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UnitDto> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(unitService.getById(id), HttpStatus.OK);
+        return ResponseEntity.ok(unitService.getById(id));
     }
 
     @PostMapping
