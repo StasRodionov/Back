@@ -1,11 +1,15 @@
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
+import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
+import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.RoleService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
+import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -16,20 +20,28 @@ public class DataInitializer {
     private final TypeOfPriceService typeOfPriceService;
     private final RoleService roleService;
     private final UnitService unitService;
+    private final PositionService positionService;
+    private final WarehouseService warehouseService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
-                           RoleService roleService, 
-                           UnitService unitService) {
+                           RoleService roleService,
+                           UnitService unitService,
+                           PositionService positionService,
+                           WarehouseService warehouseService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
+        this.warehouseService = warehouseService;
         this.unitService = unitService;
+        this.positionService = positionService;
     }
 
     @PostConstruct
     public void init() {
         initTypeOfPrices();
         initRoles();
+        initWarehouses();
         initUnits();
+        initPositions();
     }
 
     private void initTypeOfPrices() {
@@ -40,6 +52,10 @@ public class DataInitializer {
     private void initRoles() {
         roleService.create(new RoleDto("admin", "1"));
         roleService.create(new RoleDto("user", "2"));
+    }
+
+    private void initWarehouses(){
+        warehouseService.create(new WarehouseDto("Основной склад", "1"));
     }
 
     private void initUnits(){
@@ -104,4 +120,26 @@ public class DataInitializer {
         unitService.create(new UnitDto("блок", "Блок сигарет", "59"));
     }
 
+    private void initPositions(){
+        positionService.create(new PositionDto("Генеральный директор", "1"));
+        positionService.create(new PositionDto("Коммерческий директор", "2"));
+        positionService.create(new PositionDto("Финансовый директор", "3"));
+        positionService.create(new PositionDto("Директор по продажам", "4"));
+        positionService.create(new PositionDto("Технический директор", "5"));
+        positionService.create(new PositionDto("Главный бухгалтер", "6"));
+        positionService.create(new PositionDto("Начальник отдела снабжения", "7"));
+        positionService.create(new PositionDto("Начальник отдела продаж", "8"));
+        positionService.create(new PositionDto("Начальник транспортного отдела", "9"));
+        positionService.create(new PositionDto("Начальник отдела маркетинга", "10"));
+        positionService.create(new PositionDto("Начальник складского комплекса", "11"));
+        positionService.create(new PositionDto("Бухгалтер", "12"));
+        positionService.create(new PositionDto("Менеджер по закупкам", "13"));
+        positionService.create(new PositionDto("Менеджер по продажам", "14"));
+        positionService.create(new PositionDto("Кладовщик", "15"));
+        positionService.create(new PositionDto("Грузчик", "16"));
+        positionService.create(new PositionDto("Маркетолог", "17"));
+        positionService.create(new PositionDto("Водитель", "18"));
+        positionService.create(new PositionDto("Кассир", "19"));
+        positionService.create(new PositionDto("Уборщица", "20"));
+    }
 }

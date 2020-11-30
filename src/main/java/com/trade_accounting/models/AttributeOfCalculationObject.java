@@ -29,4 +29,9 @@ public class AttributeOfCalculationObject {
     @Column(name = "is_service", columnDefinition = "boolean default false")
     private Boolean isService;
 
+    public AttributeOfCalculationObject(String name, String sortNumber, Boolean isService) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+        this.isService = isService;
+    }
 }
