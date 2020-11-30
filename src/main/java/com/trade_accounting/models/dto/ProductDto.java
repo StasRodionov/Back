@@ -27,6 +27,8 @@ public class ProductDto {
 
     private UnitDto unitDto;
 
+    private Boolean archive = false;
+
     //    private ContractorDto contractorDto; Пока нет реализации
 
     private List<TypeOfPriceDto> typeOfPriceDto;
