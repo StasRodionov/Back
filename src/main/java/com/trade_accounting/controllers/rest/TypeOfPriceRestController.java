@@ -19,39 +19,39 @@ import java.util.List;
 @RequestMapping("/api/typeofprice")
 public class TypeOfPriceRestController {
 
-    private final TypeOfPriceService service;
+    private final TypeOfPriceService typeOfPriceService;
 
     public TypeOfPriceRestController(TypeOfPriceService service) {
-        this.service = service;
+        this.typeOfPriceService = service;
     }
 
     @GetMapping
     public ResponseEntity<List<TypeOfPriceDto>> getAll() {
-        return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
+        return ResponseEntity.ok(typeOfPriceService.getAll());
 
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<TypeOfPriceDto> getById(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+        return ResponseEntity.ok(typeOfPriceService.getById(id));
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody TypeOfPriceDto typeOfPriceDto) {
-        service.create(typeOfPriceDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        typeOfPriceService.create(typeOfPriceDto);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody TypeOfPriceDto typeOfPriceDto) {
-        service.update(typeOfPriceDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        typeOfPriceService.update(typeOfPriceDto);
+        return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
-        service.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        typeOfPriceService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 
 }
