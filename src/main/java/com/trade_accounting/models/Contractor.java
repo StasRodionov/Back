@@ -67,5 +67,8 @@ public class Contractor {
     @OneToMany(fetch = FetchType.LAZY)
     private List<BankAccount> bankAccounts;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private LegalDetail legalDetail;
+
 
 }
