@@ -17,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/typeofprice")
+@RequestMapping("/api/type/price")
 public class TypeOfPriceRestController {
 
     private final TypeOfPriceService typeOfPriceService;
@@ -32,7 +32,7 @@ public class TypeOfPriceRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TypeOfPriceDto> getById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<TypeOfPriceDto> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(typeOfPriceService.getById(id));
     }
 
@@ -49,7 +49,7 @@ public class TypeOfPriceRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
         typeOfPriceService.deleteById(id);
         return ResponseEntity.ok().build();
     }
