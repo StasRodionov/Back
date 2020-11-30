@@ -58,7 +58,7 @@ public class WarehouseRestController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
         warehouseService.deleteById(id);
-        log.info("Удален экземпляр с id - {}", id);
+        log.info("Удален экземпляр с id = {}", id);
         return ResponseEntity.ok().build();
     }
 }
