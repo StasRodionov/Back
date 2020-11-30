@@ -11,9 +11,22 @@ import java.util.List;
 @Repository
 public interface AttributeOfCalculationObjectRepository extends JpaRepository<AttributeOfCalculationObject, Long> {
 
-    @Query("select new com.trade_accounting.models.dto.AttributeOfCalculationObjectDto(attribute.id, attribute.name, attribute.sortNumber, attribute.isService) from AttributeOfCalculationObject attribute")
+    @Query("select new com.trade_accounting.models.dto.AttributeOfCalculationObjectDto(" +
+            "attribute.id, " +
+            "attribute.name, " +
+            "attribute.sortNumber, " +
+            "attribute.isService" +
+            ") " +
+            "from AttributeOfCalculationObject attribute")
     List<AttributeOfCalculationObjectDto> getAll();
 
-    @Query("select new com.trade_accounting.models.dto.AttributeOfCalculationObjectDto(attribute.id, attribute.name, attribute.sortNumber, attribute.isService) from AttributeOfCalculationObject attribute where attribute.id = :id")
+    @Query("select new com.trade_accounting.models.dto.AttributeOfCalculationObjectDto(" +
+            "attribute.id, " +
+            "attribute.name, " +
+            "attribute.sortNumber, " +
+            "attribute.isService" +
+            ") " +
+            "from AttributeOfCalculationObject attribute " +
+            "where attribute.id = :id")
     AttributeOfCalculationObjectDto getById(@Param("id") Long id);
 }
