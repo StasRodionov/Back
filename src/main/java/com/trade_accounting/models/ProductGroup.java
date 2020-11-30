@@ -41,6 +41,7 @@ public class ProductGroup {
     }
 
     public ProductGroup(Long id, String name, String sortNumber){
+        this.id = id;
         this.name = name;
         this.sortNumber = sortNumber;
     }
