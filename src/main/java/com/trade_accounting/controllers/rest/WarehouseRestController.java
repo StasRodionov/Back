@@ -1,6 +1,5 @@
 package com.trade_accounting.controllers.rest;
 
-
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @Slf4j
@@ -30,28 +28,28 @@ public class WarehouseRestController {
     @GetMapping
     public ResponseEntity<List<WarehouseDto>> getAll() {
         List<WarehouseDto> warehouseDtos = warehouseService.getAll();
-        log.info("Запрошен список WarehouseDto");
+        log.info("Запрошен список");
         return ResponseEntity.ok(warehouseDtos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<WarehouseDto> getById(@PathVariable("id") Long id) {
         WarehouseDto warehouseDto = warehouseService.getById(id);
-        log.info("Запрошен экземпляр WarehouseDto с id = {}", id);
+        log.info("Запрошен экземпляр с id = {}", id);
         return ResponseEntity.ok(warehouseDto);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.create(warehouseDto);
-        log.info("Записан новый экземпляр WarehouseDto");
+        log.info("Записан новый экземпляр - {}", warehouseDto);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.update(warehouseDto);
-        log.info("Обновлен экземпляр WarehouseDto");
+        log.info("Обновлен экземпляр с id = {}", warehouseDto.getId());
         return ResponseEntity.ok().build();
     }
 
