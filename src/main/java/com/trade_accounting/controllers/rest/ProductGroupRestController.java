@@ -43,21 +43,21 @@ public class ProductGroupRestController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ProductGroupDto productGroupDto) {
         productGroupService.create(productGroupDto);
-        log.info("Записан новый экземпляр ProductGroupDto");
+        log.info("Записан новый экземпляр ProductGroup с id= {}, name= {}", productGroupDto.getId(), productGroupDto.getName());
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody ProductGroupDto productGroupDto) {
         productGroupService.update(productGroupDto);
-        log.info("Обновлен экземпляр ProductGroupDto");
+        log.info("Обновлен экземпляр ProductGroup с id= {}, name= {}", productGroupDto.getId(), productGroupDto.getName());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
         productGroupService.deleteById(id);
-        log.info("Удален экземпляр ProductGroupDto с id= {}", id);
+        log.info("Удален экземпляр ProductGroup с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }
