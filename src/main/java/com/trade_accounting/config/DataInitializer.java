@@ -1,12 +1,14 @@
 package com.trade_accounting.config;
 
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
+import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
+import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.RoleService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
@@ -25,19 +27,22 @@ public class DataInitializer {
     private final PositionService positionService;
     private final WarehouseService warehouseService;
     private final AttributeOfCalculationObjectService attributeOfCalculationObjectService;
+    private final DepartmentService departmentService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
                            UnitService unitService,
                            PositionService positionService,
                            WarehouseService warehouseService,
-                           AttributeOfCalculationObjectService attributeOfCalculationObjectService) {
+                           AttributeOfCalculationObjectService attributeOfCalculationObjectService,
+                           DepartmentService departmentService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
         this.unitService = unitService;
         this.positionService = positionService;
         this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
+        this.departmentService = departmentService;
     }
 
     @PostConstruct
@@ -48,6 +53,7 @@ public class DataInitializer {
         initUnits();
         initPositions();
         initAttributeOfCalculationObjects();
+        initDeparments();
     }
 
     private void initTypeOfPrices() {
@@ -159,6 +165,18 @@ public class DataInitializer {
         attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Подакцизный товар", "7", false));
         attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Составной предмет расчета", "8", false));
         attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Иной предмет расчета", "9", false));
+    }
+
+    private void initDeparments(){
+        departmentService.create(new DepartmentDto("Руководство", "1"));
+        departmentService.create(new DepartmentDto("Отдел бухгалтерии", "2"));
+        departmentService.create(new DepartmentDto("Отдел закупок", "3"));
+        departmentService.create(new DepartmentDto("Отдел продаж", "4"));
+        departmentService.create(new DepartmentDto("Складской комплекс", "5"));
+        departmentService.create(new DepartmentDto("Транспортный отдел", "6"));
+        departmentService.create(new DepartmentDto("Финансовый отдел", "7"));
+        departmentService.create(new DepartmentDto("Отдел маркетинга", "8"));
+        departmentService.create(new DepartmentDto("HR отдел", "9"));
     }
 
 }
