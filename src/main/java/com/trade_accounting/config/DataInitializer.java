@@ -1,10 +1,12 @@
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
+import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.RoleService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
@@ -22,17 +24,20 @@ public class DataInitializer {
     private final UnitService unitService;
     private final PositionService positionService;
     private final WarehouseService warehouseService;
+    private final AttributeOfCalculationObjectService attributeOfCalculationObjectService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
                            UnitService unitService,
                            PositionService positionService,
-                           WarehouseService warehouseService) {
+                           WarehouseService warehouseService,
+                           AttributeOfCalculationObjectService attributeOfCalculationObjectService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
         this.unitService = unitService;
         this.positionService = positionService;
+        this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
     }
 
     @PostConstruct
@@ -42,6 +47,7 @@ public class DataInitializer {
         initWarehouses();
         initUnits();
         initPositions();
+        initAttributeOfCalculationObjects();
     }
 
     private void initTypeOfPrices() {
@@ -142,4 +148,17 @@ public class DataInitializer {
         positionService.create(new PositionDto("Кассир", "19"));
         positionService.create(new PositionDto("Уборщица", "20"));
     }
+
+    private void initAttributeOfCalculationObjects() {
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Услуга", "1", true));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Работа", "2", true));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Предоставление РИД", "3", true));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Составной предмет расчета", "4", true));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Иной предмет расчета", "5", true));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Товар", "6", false));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Подакцизный товар", "7", false));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Составной предмет расчета", "8", false));
+        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Иной предмет расчета", "9", false));
+    }
+
 }
