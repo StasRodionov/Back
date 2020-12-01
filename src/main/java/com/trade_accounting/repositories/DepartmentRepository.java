@@ -13,19 +13,19 @@ import java.util.List;
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
     @Query("select new com.trade_accounting.models.dto.DepartmentDto(" +
-            "department.id, " +
-            "department.name, " +
-            "department.sortNumber" +
+            "d.id, " +
+            "d.name, " +
+            "d.sortNumber" +
             ") " +
-            "from Department department")
+            "from Department d")
     List<DepartmentDto> getAll();
 
     @Query("select new com.trade_accounting.models.dto.DepartmentDto(" +
-            "department.id, " +
-            "department.name, " +
-            "department.sortNumber" +
+            "d.id, " +
+            "d.name, " +
+            "d.sortNumber" +
             ") " +
-            "from Department department " +
-            "where department.id = :id")
+            "from Department d " +
+            "where d.id = :id")
     DepartmentDto getById(@Param("id") Long id);
 }
