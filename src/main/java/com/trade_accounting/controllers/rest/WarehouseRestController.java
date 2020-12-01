@@ -30,7 +30,7 @@ public class WarehouseRestController {
     @GetMapping
     public ResponseEntity<List<WarehouseDto>> getAll() {
         List<WarehouseDto> warehouseDtos = warehouseService.getAll();
-        log.info("Запрошен список WarehouseDto");
+        log.info("Запрошен список");
         return ResponseEntity.ok(warehouseDtos);
     }
 
