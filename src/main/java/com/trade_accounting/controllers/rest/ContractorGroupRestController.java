@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/contractorgroup")
+@RequestMapping("/api/contractor/group")
 public class ContractorGroupRestController {
 }

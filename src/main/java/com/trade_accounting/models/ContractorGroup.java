@@ -28,4 +28,9 @@ public class ContractorGroup {
     @Column(name = "sort_number")
     private String sortNumber;
 
+    public ContractorGroup(String name, String sortNumber){
+        this.name = name;
+        this.sortNumber = sortNumber;
+    }
+
 }
