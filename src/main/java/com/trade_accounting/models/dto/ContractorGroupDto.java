@@ -14,4 +14,9 @@ public class ContractorGroupDto {
     private String name;
 
     private String sortNumber;
+
+    public ContractorGroupDto(String name, String sortNumber) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+    }
 }
