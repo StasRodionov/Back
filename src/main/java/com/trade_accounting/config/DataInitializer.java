@@ -170,13 +170,13 @@ public class DataInitializer {
     private void initDeparments(){
         departmentService.create( new DepartmentDto("Руководство", "1" ));
         departmentService.create( new DepartmentDto("Отдел бухгалтерии", "2" ));
-        departmentService.create( new DepartmentDto("Отдел закупок", "1" ));
-        departmentService.create( new DepartmentDto("Отдел продаж", "1" ));
-        departmentService.create( new DepartmentDto("Складской комплекс", "3" ));
-        departmentService.create( new DepartmentDto("Транспортный отдел", "4" ));
-        departmentService.create( new DepartmentDto("Финансовый отдел", "5" ));
-        departmentService.create( new DepartmentDto("Отдел маркетинга", "6" ));
-        departmentService.create( new DepartmentDto("HR отдел", "7" ));
+        departmentService.create( new DepartmentDto("Отдел закупок", "3" ));
+        departmentService.create( new DepartmentDto("Отдел продаж", "4" ));
+        departmentService.create( new DepartmentDto("Складской комплекс", "5" ));
+        departmentService.create( new DepartmentDto("Транспортный отдел", "6" ));
+        departmentService.create( new DepartmentDto("Финансовый отдел", "7" ));
+        departmentService.create( new DepartmentDto("Отдел маркетинга", "8" ));
+        departmentService.create( new DepartmentDto("HR отдел", "9" ));
     }
 
 }
