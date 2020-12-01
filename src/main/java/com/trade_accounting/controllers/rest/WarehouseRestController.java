@@ -29,29 +29,36 @@ public class WarehouseRestController {
 
     @GetMapping
     public ResponseEntity<List<WarehouseDto>> getAll() {
-        return ResponseEntity.ok(warehouseService.getAll());
+        List<WarehouseDto> warehouseDtos = warehouseService.getAll();
+        log.info("Запрошен список WarehouseDto");
+        return ResponseEntity.ok(warehouseDtos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<WarehouseDto> getById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(warehouseService.getById(id));
+        WarehouseDto warehouseDto = warehouseService.getById(id);
+        log.info("Запрошен экземпляр WarehouseDto с id = {}", id);
+        return ResponseEntity.ok(warehouseDto);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.create(warehouseDto);
+        log.info("Записан новый экземпляр WarehouseDto");
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.update(warehouseDto);
+        log.info("Обновлен экземпляр WarehouseDto");
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
         warehouseService.deleteById(id);
+        log.info("Удален экземпляр с id = {}", id);
         return ResponseEntity.ok().build();
     }
 }
