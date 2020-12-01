@@ -1,13 +1,26 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.ProductGroup;
-import com.trade_accounting.models.dto.*;
-import com.trade_accounting.services.interfaces.*;
+import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
+import com.trade_accounting.models.dto.DepartmentDto;
+import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.ProductGroupDto;
+import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.TypeOfPriceDto;
+import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.models.dto.UnitDto;
+import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
+import com.trade_accounting.services.interfaces.DepartmentService;
+import com.trade_accounting.services.interfaces.PositionService;
+import com.trade_accounting.services.interfaces.ProductGroupService;
+import com.trade_accounting.services.interfaces.RoleService;
+import com.trade_accounting.services.interfaces.TypeOfPriceService;
+import com.trade_accounting.services.interfaces.UnitService;
+import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
+
+
 
 @Component
 public class DataInitializer {
