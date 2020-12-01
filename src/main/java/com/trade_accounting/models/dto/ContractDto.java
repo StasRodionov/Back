@@ -1,10 +1,5 @@
 package com.trade_accounting.models.dto;
 
-import com.trade_accounting.models.BankAccount;
-import com.trade_accounting.models.Company;
-import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.LegalDetail;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -16,11 +11,11 @@ public class ContractDto {
 
     private LocalDate contractDate;
 
-    private Company company;
+    private CompanyDto companyDto;
 
-    private BankAccount bankAccount;
+    private BankAccountDto bankAccountDto;
 
-    private Contractor contractor;
+    private ContractorDto contractorDto;
 
     private BigDecimal amount;
 
@@ -28,5 +23,5 @@ public class ContractDto {
 
     private String comment;
 
-    private LegalDetail legalDetail;
+    private LegalDetailDto legalDetailDto;
 }

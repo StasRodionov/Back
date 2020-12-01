@@ -1,8 +1,6 @@
 package com.trade_accounting.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,11 +18,14 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter @Setter
     private Long id;
 
+    @Getter @Setter
     @Column(name = "name")
     private String name;
 
+    @Getter @Setter
     @Column(name = "sort_number")
     private String sortNumber;
 }
