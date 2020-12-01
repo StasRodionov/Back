@@ -29,7 +29,7 @@ public class ProductDto {
 
     private Boolean archive = false;
 
-    //    private ContractorDto contractorDto; Пока нет реализации
+    private ContractorDto contractorDto;
 
     private List<TypeOfPriceDto> typeOfPriceDto;
 
