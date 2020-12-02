@@ -29,27 +29,35 @@ public class AttributeOfCalculationObjectRestController {
 
     @GetMapping
     public ResponseEntity<List<AttributeOfCalculationObjectDto>> getAll(){
+        log.info("Запрошен список AttributeOfCalculationObjectDto");
         return ResponseEntity.ok(attributeOfCalculationObjectService.getAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AttributeOfCalculationObjectDto> getById(@PathVariable("id") Long id) {
+        log.info("Запрошен экземпляр AttributeOfCalculationObjectDto с id = {}", id);
         return ResponseEntity.ok(attributeOfCalculationObjectService.getById(id));
     }
 
     @PostMapping
-    public void create(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto){
+    public ResponseEntity<?> create(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto){
         attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto);
+        log.info("Записан новый экземпляр AttributeOfCalculationObjectDto");
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public void update(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto){
+    public ResponseEntity<?> update(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto){
         attributeOfCalculationObjectService.update(attributeOfCalculationObjectDto);
+        log.info("Обновлен экземплярAttributeOfCalculationObjectDto");
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id){
+    public ResponseEntity<?> deleteById(@PathVariable("id") Long id){
         attributeOfCalculationObjectService.deleteById(id);
+        log.info("Удален экземпляр с id = {}", id);
+        return ResponseEntity.ok().build();
     }
 
 }
