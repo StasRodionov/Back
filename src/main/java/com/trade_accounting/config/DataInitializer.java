@@ -199,7 +199,7 @@ public class DataInitializer {
         productGroupService.create(new ProductGroupDto("Товарная группа №10", "10", (long) 3));
         productGroupService.create(new ProductGroupDto("Товарная группа №11", "11", (long) 8));
         productGroupService.create(new ProductGroupDto("Товарная группа №12", "12", (long) 4));
-        productGroupService.create(new ProductGroupDto("Товарная группа №13", "13", (long) 8));
+        productGroupService.create(new ProductGroupDto("Товарная группа №13", "13", (long) 9));
         productGroupService.create(new ProductGroupDto("Товарная группа №14", "14", (long) 5));
         productGroupService.create(new ProductGroupDto("Товарная группа №15", "15", (long) 10));
     }
