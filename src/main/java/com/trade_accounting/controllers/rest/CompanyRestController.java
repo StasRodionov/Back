@@ -38,6 +38,12 @@ public class CompanyRestController {
         return ResponseEntity.ok(companyService.getById(id));
     }
 
+    @GetMapping("/{email}")
+    public ResponseEntity<CompanyDto> getByEmail(@PathVariable("email")String email){
+        log.info("Запрошен экземпляр с email = {}", email);
+        return ResponseEntity.ok(companyService.getByEmail(email));
+    }
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody CompanyDto companyDto){
         companyService.create(companyDto);
