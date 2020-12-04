@@ -29,35 +29,35 @@ public class TaxSystemRestController {
     @GetMapping
     public ResponseEntity<List<TaxSystemDto>> getAll() {
         List<TaxSystemDto> taxSystems = taxSystemService.getAll();
-        log.info("Запрошен список TaxSystemDto");
+        log.info("Запрошен список TaxSystem");
         return ResponseEntity.ok(taxSystems);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TaxSystemDto> getById(@PathVariable(name = "id") Long id) {
         TaxSystemDto taxSystem = taxSystemService.getById(id);
-        log.info("Запрошен экземпляр TaxSystemDto с id= {}", id);
+        log.info("Запрошен экземпляр TaxSystem с id= {}", id);
         return ResponseEntity.ok(taxSystem);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody TaxSystemDto taxSystemDto) {
         taxSystemService.create(taxSystemDto);
-        log.info("Записан новый экземпляр TaxSystemDto");
+        log.info("Записан новый экземпляр TaxSystem c id= {}", taxSystemDto.getId());
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody TaxSystemDto taxSystemDto) {
         taxSystemService.update(taxSystemDto);
-        log.info("Обновлен экземпляр TaxSystemDto");
+        log.info("Обновлен экземпляр TaxSystem c id= {}", taxSystemDto.getId());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
         taxSystemService.deleteById(id);
-        log.info("Удален экземпляр TaxSystemDto с id= {}", id);
+        log.info("Удален экземпляр TaxSystem с id= {}", id);
         return ResponseEntity.ok().build();
     }
 
