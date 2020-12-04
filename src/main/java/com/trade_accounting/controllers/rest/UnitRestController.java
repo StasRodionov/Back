@@ -29,30 +29,30 @@ public class UnitRestController {
 
     @GetMapping
     public ResponseEntity<List<UnitDto>> getAll() {
-        return new ResponseEntity<>(unitService.getAll(), HttpStatus.OK);
+        return ResponseEntity.ok(unitService.getAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UnitDto> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(unitService.getById(id), HttpStatus.OK);
+        return ResponseEntity.ok(unitService.getById(id));
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody UnitDto unitDto) {
         unitService.create(unitDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody UnitDto unitDto) {
         unitService.update(unitDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         unitService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
 }
