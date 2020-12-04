@@ -71,4 +71,23 @@ public class Company {
 
     @OneToOne(fetch = FetchType.LAZY)
     private LegalDetail legalDetail;
+
+    public Company(String name, String inn, String sortNumber, String phone, String fax, String email, Boolean payerVat, String address, String commentToAddress, String leader, String leaderManagerPosition, String leaderSignature, String chiefAccountant, String chiefAccountantSignature, String stamp, LegalDetail legalDetail) {
+        this.name = name;
+        this.inn = inn;
+        this.sortNumber = sortNumber;
+        this.phone = phone;
+        this.fax = fax;
+        this.email = email;
+        this.payerVat = payerVat;
+        this.address = address;
+        this.commentToAddress = commentToAddress;
+        this.leader = leader;
+        this.leaderManagerPosition = leaderManagerPosition;
+        this.leaderSignature = leaderSignature;
+        this.chiefAccountant = chiefAccountant;
+        this.chiefAccountantSignature = chiefAccountantSignature;
+        this.stamp = stamp;
+        this.legalDetail = legalDetail;
+    }
 }
