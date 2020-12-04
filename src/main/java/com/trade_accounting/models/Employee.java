@@ -50,9 +50,6 @@ public class Employee {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "image")
-    private String image;
-
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
@@ -69,6 +66,6 @@ public class Employee {
     private Set<Role> roles;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Image images;
+    private Image image;
 
 }
