@@ -29,35 +29,35 @@ public class ImageRestController {
     @GetMapping
     public ResponseEntity<List<ImageDto>> getAll() {
         List<ImageDto> images = imageService.getAll();
-        log.info("Запрошен список ImageDto");
+        log.info("Запрошен список Image");
         return ResponseEntity.ok(images);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ImageDto> getById(@PathVariable(name = "id") Long id) {
         ImageDto image = imageService.getById(id);
-        log.info("Запрошен экземпляр ImageDto с id= {}", id);
+        log.info("Запрошен экземпляр Image с id= {}", id);
         return ResponseEntity.ok(image);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ImageDto imageDto) {
         imageService.create(imageDto);
-        log.info("Записан новый экземпляр ImageDto");
+        log.info("Записан новый экземпляр Image c id= {}", imageDto.getId());
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody ImageDto imageDto) {
         imageService.update(imageDto);
-        log.info("Обновлен экземпляр ImageDto");
+        log.info("Обновлен экземпляр Image с id= {}", imageDto.getId());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
         imageService.deleteById(id);
-        log.info("Удален экземпляр ImageDto с id= {}", id);
+        log.info("Удален экземпляр Image с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }
