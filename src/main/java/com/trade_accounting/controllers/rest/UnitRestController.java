@@ -29,29 +29,36 @@ public class UnitRestController {
 
     @GetMapping
     public ResponseEntity<List<UnitDto>> getAll() {
-        return ResponseEntity.ok(unitService.getAll());
+        List<UnitDto> units = unitService.getAll();
+        log.info("Запрошен список UnitDto");
+        return ResponseEntity.ok(units);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UnitDto> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(unitService.getById(id));
+        UnitDto unit = unitService.getById(id);
+        log.info("Запрошен экземпляр UnitDto с id= {}", id);
+        return ResponseEntity.ok(unit);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody UnitDto unitDto) {
         unitService.create(unitDto);
+        log.info("Записан новый экземпляр {}", unitDto.toString());
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody UnitDto unitDto) {
         unitService.update(unitDto);
+        log.info("Обновлен экземпляр UnitDto с id= {}", unitDto.getId());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         unitService.deleteById(id);
+        log.info("Удален экземпляр UnitDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 
