@@ -1,6 +1,7 @@
 package com.trade_accounting.config;
 
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
+import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
@@ -8,6 +9,7 @@ import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
+import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.RoleService;
@@ -28,6 +30,7 @@ public class DataInitializer {
     private final WarehouseService warehouseService;
     private final AttributeOfCalculationObjectService attributeOfCalculationObjectService;
     private final DepartmentService departmentService;
+    private final ContractorGroupService contractorGroupService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
@@ -35,7 +38,8 @@ public class DataInitializer {
                            PositionService positionService,
                            WarehouseService warehouseService,
                            AttributeOfCalculationObjectService attributeOfCalculationObjectService,
-                           DepartmentService departmentService) {
+                           DepartmentService departmentService,
+                           ContractorGroupService contractorGroupService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -43,6 +47,7 @@ public class DataInitializer {
         this.positionService = positionService;
         this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
         this.departmentService = departmentService;
+        this.contractorGroupService = contractorGroupService;
     }
 
     @PostConstruct
@@ -54,6 +59,7 @@ public class DataInitializer {
         initPositions();
         initAttributeOfCalculationObjects();
         initDeparments();
+        initContractorGroups();
     }
 
     private void initTypeOfPrices() {
@@ -177,6 +183,11 @@ public class DataInitializer {
         departmentService.create(new DepartmentDto("Финансовый отдел", "7"));
         departmentService.create(new DepartmentDto("Отдел маркетинга", "8"));
         departmentService.create(new DepartmentDto("HR отдел", "9"));
+    }
+
+    private void initContractorGroups() {
+        contractorGroupService.create(new ContractorGroupDto("Покупатель", "1"));
+        contractorGroupService.create(new ContractorGroupDto("Поставщик", "2"));
     }
 
 }

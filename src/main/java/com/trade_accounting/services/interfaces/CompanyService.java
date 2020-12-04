@@ -1,20 +1,20 @@
 package com.trade_accounting.services.interfaces;
 
-import com.trade_accounting.models.Company;
+import com.trade_accounting.models.dto.CompanyDto;
 
 import java.util.List;
 
 public interface CompanyService {
 
-    List<Company> getAll();
+    List<CompanyDto> getAll();
 
-    Company getById(Long id);
+    CompanyDto getById(Long id);
 
-    Company getByEmail(String email);
+    CompanyDto getByEmail(String email);
 
-    void create(); //todo добавить в параметры CompanyDTO
+    void create(CompanyDto companyDto);
 
-    void update(); //todo добавить в параметры CompanyDTO
+    void update(CompanyDto companyDto);
 
     void deleteById(Long id);
 }

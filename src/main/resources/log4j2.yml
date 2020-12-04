@@ -5,7 +5,7 @@ Configutation:
   Properties:
     property:
       - name: home_log_path
-        value: src/main/resources/logs
+        value: logs
       - name: archive_log_path
         value: ${home_log_path}/archive
       - name: rest_log_path
