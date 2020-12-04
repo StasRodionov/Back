@@ -23,8 +23,7 @@ public class ProductGroupDto {
     }
 
     public ProductGroupDto(String name, String sortNumber, Long parentId) {
-        this.name = name;
-        this.sortNumber = sortNumber;
+        this(name, sortNumber);
         this.parentId = parentId;
     }
 
