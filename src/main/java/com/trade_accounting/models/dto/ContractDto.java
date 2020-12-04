@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -35,4 +34,26 @@ public class ContractDto {
     private String comment;
 
     private LegalDetailDto legalDetailDto;
+
+    public ContractDto(Long id,
+                       String number,
+                       LocalDate contractDate,
+                       Long companyId,
+                       Long bankAccountId,
+                       Long contractorId,
+                       BigDecimal amount,
+                       Boolean archive,
+                       String comment,
+                       Long legalDetailId) {
+        this.id = id;
+        this.number = number;
+        this.contractDate = contractDate;
+        this.companyDto.setId(companyId);
+        this.bankAccountDto.setId(bankAccountId);
+        this.contractorDto.setId(contractorId);
+        this.amount = amount;
+        this.archive = archive;
+        this.comment = comment;
+        this.legalDetailDto.setId(legalDetailId);
+    }
 }
