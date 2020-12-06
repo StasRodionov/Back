@@ -30,16 +30,16 @@ public class ContractorGroupRestController {
 
     @GetMapping
     public ResponseEntity<List<ContractorGroupDto>> getAll() {
-        List<ContractorGroupDto> contractorGroup = contractorGroupService.getAll();
+        List<ContractorGroupDto> contractorGroupDtos = contractorGroupService.getAll();
         log.info("Запрошен список ContractorGroupDto");
-        return ResponseEntity.ok(contractorGroup);
+        return ResponseEntity.ok(contractorGroupDtos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ContractorGroupDto> getById(@PathVariable(name = "id") Long id) {
-        ContractorGroupDto contractorGroup = contractorGroupService.getById(id);
+        ContractorGroupDto contractorGroupDto = contractorGroupService.getById(id);
         log.info("Запрошен экземпляр ContractorGroupDto с id= {}", id);
-        return ResponseEntity.ok(contractorGroup);
+        return ResponseEntity.ok(contractorGroupDto);
     }
 
     @PostMapping
