@@ -28,20 +28,23 @@ public class CompanyRestController {
 
     @GetMapping
     public ResponseEntity<List<CompanyDto>> getAll(){
+        List<CompanyDto> companyDtos = companyService.getAll();
         log.info("Запрошен список");
-        return ResponseEntity.ok(companyService.getAll());
+        return ResponseEntity.ok(companyDtos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CompanyDto> getById(@PathVariable("id") Long id){
+        CompanyDto companyDto = companyService.getById(id);
         log.info("Запрошен экземпляр с id = {}", id);
-        return ResponseEntity.ok(companyService.getById(id));
+        return ResponseEntity.ok(companyDto);
     }
 
     @GetMapping("/{email}")
     public ResponseEntity<CompanyDto> getByEmail(@PathVariable("email")String email){
+        CompanyDto companyDto = companyService.getByEmail(email);
         log.info("Запрошен экземпляр с email = {}", email);
-        return ResponseEntity.ok(companyService.getByEmail(email));
+        return ResponseEntity.ok(companyDto);
     }
 
     @PostMapping
