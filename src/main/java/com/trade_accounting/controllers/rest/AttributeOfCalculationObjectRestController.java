@@ -29,14 +29,16 @@ public class AttributeOfCalculationObjectRestController {
 
     @GetMapping
     public ResponseEntity<List<AttributeOfCalculationObjectDto>> getAll(){
+        List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtos = attributeOfCalculationObjectService.getAll();
         log.info("Запрошен список AttributeOfCalculationObjectDto");
-        return ResponseEntity.ok(attributeOfCalculationObjectService.getAll());
+        return ResponseEntity.ok(attributeOfCalculationObjectDtos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AttributeOfCalculationObjectDto> getById(@PathVariable("id") Long id) {
+        AttributeOfCalculationObjectDto attributeOfCalculationObjectDto = attributeOfCalculationObjectService.getById(id);
         log.info("Запрошен экземпляр AttributeOfCalculationObjectDto с id = {}", id);
-        return ResponseEntity.ok(attributeOfCalculationObjectService.getById(id));
+        return ResponseEntity.ok(attributeOfCalculationObjectDto);
     }
 
     @PostMapping
