@@ -58,7 +58,7 @@ public class DataInitializer {
         initUnits();
         initPositions();
         initAttributeOfCalculationObjects();
-        initDeparments();
+        initDepartments();
         initContractorGroups();
     }
 
@@ -173,7 +173,7 @@ public class DataInitializer {
         attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Иной предмет расчета", "9", false));
     }
 
-    private void initDeparments(){
+    private void initDepartments(){
         departmentService.create(new DepartmentDto("Руководство", "1"));
         departmentService.create(new DepartmentDto("Отдел бухгалтерии", "2"));
         departmentService.create(new DepartmentDto("Отдел закупок", "3"));
