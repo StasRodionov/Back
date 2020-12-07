@@ -195,6 +195,7 @@ public class DataInitializer {
         contractorGroupService.create(new ContractorGroupDto("Покупатель", "1"));
         contractorGroupService.create(new ContractorGroupDto("Поставщик", "2"));
     }
+
     private void initTypeOfContractors(){
         typeOfContractorService.create(new TypeOfContractorDto("Юридическое лицо","1"));
         typeOfContractorService.create(new TypeOfContractorDto("Индивидуальный предприниматель","2"));
