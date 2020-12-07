@@ -1,6 +1,7 @@
 package com.trade_accounting.config;
 
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
+import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.PositionDto;
@@ -9,6 +10,7 @@ import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
+import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.PositionService;
@@ -31,6 +33,7 @@ public class DataInitializer {
     private final AttributeOfCalculationObjectService attributeOfCalculationObjectService;
     private final DepartmentService departmentService;
     private final ContractorGroupService contractorGroupService;
+    private final CompanyService companyService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
@@ -39,7 +42,8 @@ public class DataInitializer {
                            WarehouseService warehouseService,
                            AttributeOfCalculationObjectService attributeOfCalculationObjectService,
                            DepartmentService departmentService,
-                           ContractorGroupService contractorGroupService) {
+                           ContractorGroupService contractorGroupService,
+                           CompanyService companyService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -48,6 +52,7 @@ public class DataInitializer {
         this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
         this.departmentService = departmentService;
         this.contractorGroupService = contractorGroupService;
+        this.companyService = companyService;
     }
 
     @PostConstruct
@@ -60,6 +65,7 @@ public class DataInitializer {
         initAttributeOfCalculationObjects();
         initDepartments();
         initContractorGroups();
+        initCompanies();
     }
 
     private void initTypeOfPrices() {
@@ -188,6 +194,21 @@ public class DataInitializer {
     private void initContractorGroups() {
         contractorGroupService.create(new ContractorGroupDto("Покупатель", "1"));
         contractorGroupService.create(new ContractorGroupDto("Поставщик", "2"));
+    }
+
+    private void initCompanies() {
+
+        companyService.create(new CompanyDto( "OOO \"Организация №1\"", "7712345678", "1", "749512345678", "810-41-1234567890", "organization1@mail.com",
+                true, "123456, г. Москва, ул. Подвойского, д. 14, стр. 7", "something comment", "Петров Сергей Петрович", "Manager",
+                "leader signature", "Сергеев Петр Сергеевич", "chief signature", "stamp", 1L));
+
+        companyService.create(new CompanyDto( "OOO \"Организация №2\"", "9543564455", "3", "733126789654", "920-12-2365723233", "organization2@mail.com",
+                true, "123498, г. Москва, ул. Тверская, д. 20", "something comment", "Иванова Мария Сергеевна", "Executive director",
+                "leader signature", "Соболев Николай Андреевич", "chief signature", "stamp", 2L));
+
+        companyService.create(new CompanyDto( "OOO \"Организация №3\"", "3453123465", "3", "799123786542", "543-23-1234543221", "organization3@mail.com",
+                true, "432156, г. Самара, ул. Гагарина, д. 18", "something comment", "Сергеева Ксения Андреевна", "Project manager",
+                "leader signature", "Стрелецкая Анастасия Михайловна", "chief signature", "stamp", 5L));
     }
 
 }
