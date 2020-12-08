@@ -28,14 +28,14 @@ public class RoleRestController {
     @GetMapping
     public ResponseEntity<List<RoleDto>> getAll() {
         List<RoleDto> roleDtos = roleService.getAll();
-        log.info("Запрошен список");
+        log.info("Запрошен список RoleDto");
         return ResponseEntity.ok(roleDtos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RoleDto> getById(@PathVariable("id") Long id) {
         RoleDto roleDto = roleService.getById(id);
-        log.info("Запрошен экземпляр с id = {}", id);
+        log.info("Запрошен экземпляр RoleDto с id = {}", id);
         return ResponseEntity.ok(roleDto);
     }
 
@@ -46,17 +46,17 @@ public class RoleRestController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<?> update(@RequestBody RoleDto roleDto) {
         roleService.update(roleDto);
-        log.info("Обновлен экземпляр с id = {}", roleDto.getId());
+        log.info("Обновлен экземпляр RoleDto с id = {}", roleDto.getId());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         roleService.deleteById(id);
-        log.info("Удален экземпляр с id = {}", id);
+        log.info("Удален экземпляр RoleDto с id = {}", id);
         return ResponseEntity.ok().build();
     }
 }
