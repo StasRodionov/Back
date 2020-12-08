@@ -4,8 +4,10 @@ import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
+import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
@@ -13,8 +15,10 @@ import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectServ
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.PositionService;
+import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.RoleService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
+import com.trade_accounting.services.interfaces.TaxSystemService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.services.interfaces.WarehouseService;
@@ -34,6 +38,8 @@ public class DataInitializer {
     private final DepartmentService departmentService;
     private final ContractorGroupService contractorGroupService;
     private final TypeOfContractorService typeOfContractorService;
+    private final TaxSystemService taxSystemService;
+    private final ProductGroupService productGroupService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
@@ -43,6 +49,8 @@ public class DataInitializer {
                            AttributeOfCalculationObjectService attributeOfCalculationObjectService,
                            DepartmentService departmentService,
                            ContractorGroupService contractorGroupService,
+                           TaxSystemService taxSystemService,
+                           ProductGroupService productGroupService,
                            TypeOfContractorService typeOfContractorService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
@@ -53,6 +61,8 @@ public class DataInitializer {
         this.departmentService = departmentService;
         this.contractorGroupService = contractorGroupService;
         this.typeOfContractorService = typeOfContractorService;
+        this.taxSystemService = taxSystemService;
+        this.productGroupService = productGroupService;
     }
 
     @PostConstruct
@@ -66,6 +76,8 @@ public class DataInitializer {
         initDepartments();
         initContractorGroups();
         initTypeOfContractors();
+        initTaxSystems();
+        initProductGroups();
     }
 
     private void initTypeOfPrices() {
@@ -202,4 +214,49 @@ public class DataInitializer {
         typeOfContractorService.create(new TypeOfContractorDto("Физическое лицо","3"));
     }
 
+    private void initTaxSystems(){
+        taxSystemService.create(new TaxSystemDto("ОСН", "1"));
+        taxSystemService.create(new TaxSystemDto("УСН.Доход", "2"));
+        taxSystemService.create(new TaxSystemDto("УСН.Доход-Расход", "3"));
+        taxSystemService.create(new TaxSystemDto("ЕСХН", "4"));
+        taxSystemService.create(new TaxSystemDto("ЕНВД", "5"));
+        taxSystemService.create(new TaxSystemDto("Патент", "6"));
+    }
+
+    private void initProductGroups(){
+        ProductGroupDto productGroupDto1 = new ProductGroupDto("Товарная группа №1", "1" );
+        ProductGroupDto productGroupDto2 = new ProductGroupDto("Товарная группа №2", "2" );
+        ProductGroupDto productGroupDto3 = new ProductGroupDto("Товарная группа №3", "3" );
+        ProductGroupDto productGroupDto4 = new ProductGroupDto("Товарная группа №4", "4" );
+        ProductGroupDto productGroupDto5 = new ProductGroupDto("Товарная группа №5", "5" );
+
+        productGroupService.create(productGroupDto1);
+        productGroupService.create(productGroupDto2);
+        productGroupService.create(productGroupDto3);
+        productGroupService.create(productGroupDto4);
+        productGroupService.create(productGroupDto5);
+
+        ProductGroupDto productGroupDto6 = new ProductGroupDto("Товарная группа №6", "6", productGroupDto1.getId() );
+        ProductGroupDto productGroupDto7 = new ProductGroupDto("Товарная группа №7", "7", productGroupDto6.getId() );
+        ProductGroupDto productGroupDto8 = new ProductGroupDto("Товарная группа №8", "8", productGroupDto2.getId() );
+        ProductGroupDto productGroupDto9 = new ProductGroupDto("Товарная группа №9", "9", productGroupDto7.getId() );
+        ProductGroupDto productGroupDto10 = new ProductGroupDto("Товарная группа №10", "10", productGroupDto3.getId() );
+        ProductGroupDto productGroupDto11 = new ProductGroupDto("Товарная группа №11", "11", productGroupDto8.getId() );
+        ProductGroupDto productGroupDto12 = new ProductGroupDto("Товарная группа №12", "12", productGroupDto4.getId() );
+        ProductGroupDto productGroupDto13 = new ProductGroupDto("Товарная группа №13", "13", productGroupDto9.getId() );
+        ProductGroupDto productGroupDto14 = new ProductGroupDto("Товарная группа №14", "14", productGroupDto5.getId() );
+        ProductGroupDto productGroupDto15 = new ProductGroupDto("Товарная группа №15", "15", productGroupDto10.getId() );
+
+        productGroupService.create(productGroupDto6);
+        productGroupService.create(productGroupDto7);
+        productGroupService.create(productGroupDto8);
+        productGroupService.create(productGroupDto9);
+        productGroupService.create(productGroupDto10);
+        productGroupService.create(productGroupDto11);
+        productGroupService.create(productGroupDto12);
+        productGroupService.create(productGroupDto13);
+        productGroupService.create(productGroupDto14);
+        productGroupService.create(productGroupDto15);
+
+    }
 }
