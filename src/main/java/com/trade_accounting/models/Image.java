@@ -26,4 +26,9 @@ public class Image {
 
     @Column(name = "sort_number")
     private String sortNumber;
+
+    public Image(String imageUrl, String sortNumber) {
+        this.imageUrl = imageUrl;
+        this.sortNumber = sortNumber;
+    }
 }

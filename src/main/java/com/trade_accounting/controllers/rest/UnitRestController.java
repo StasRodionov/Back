@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.services.interfaces.UnitService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/unit")
 public class UnitRestController {
@@ -27,30 +29,37 @@ public class UnitRestController {
 
     @GetMapping
     public ResponseEntity<List<UnitDto>> getAll() {
-        return new ResponseEntity<>(unitService.getAll(), HttpStatus.OK);
+        List<UnitDto> units = unitService.getAll();
+        log.info("Запрошен список UnitDto");
+        return ResponseEntity.ok(units);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UnitDto> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(unitService.getById(id), HttpStatus.OK);
+        UnitDto unit = unitService.getById(id);
+        log.info("Запрошен экземпляр UnitDto с id= {}", id);
+        return ResponseEntity.ok(unit);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody UnitDto unitDto) {
         unitService.create(unitDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        log.info("Записан новый экземпляр {}", unitDto.toString());
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody UnitDto unitDto) {
         unitService.update(unitDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        log.info("Обновлен экземпляр UnitDto с id= {}", unitDto.getId());
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         unitService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        log.info("Удален экземпляр UnitDto с id= {}", id);
+        return ResponseEntity.ok().build();
     }
 
 }

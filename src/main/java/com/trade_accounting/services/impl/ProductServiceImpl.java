@@ -4,16 +4,13 @@ import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.repositories.ContractorRepository;
-import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.repositories.TaxSystemRepository;
-import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.repositories.UnitRepository;
 import com.trade_accounting.services.interfaces.ProductService;
 import org.springframework.stereotype.Service;
@@ -27,8 +24,6 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    private final ImageRepository imageRepository;
-
     private final ProductGroupRepository productGroupRepository;
 
     private final UnitRepository unitRepository;
@@ -37,18 +32,19 @@ public class ProductServiceImpl implements ProductService {
 
     private final ContractorRepository contractorRepository;
 
-    private final TypeOfPriceRepository typeOfPriceRepository;
-
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, ImageRepository imageRepository, ProductGroupRepository productGroupRepository, UnitRepository unitRepository, TaxSystemRepository taxSystemRepository, ContractorRepository contractorRepository, TypeOfPriceRepository typeOfPriceRepository, AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository) {
+    public ProductServiceImpl(ProductRepository productRepository,
+                              ProductGroupRepository productGroupRepository,
+                              UnitRepository unitRepository,
+                              TaxSystemRepository taxSystemRepository,
+                              ContractorRepository contractorRepository,
+                              AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository) {
         this.productRepository = productRepository;
-        this.imageRepository = imageRepository;
         this.productGroupRepository = productGroupRepository;
         this.unitRepository = unitRepository;
         this.taxSystemRepository = taxSystemRepository;
         this.contractorRepository = contractorRepository;
-        this.typeOfPriceRepository = typeOfPriceRepository;
         this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
     }
 

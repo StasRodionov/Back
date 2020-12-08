@@ -14,4 +14,9 @@ public class PositionDto {
     private String name;
 
     private String sortNumber;
+
+    public PositionDto(String name, String sortNumber) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+    }
 }

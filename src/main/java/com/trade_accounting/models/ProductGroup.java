@@ -34,4 +34,11 @@ public class ProductGroup {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="main_group", referencedColumnName = "id")
     private ProductGroup productGroup;
+
+    public ProductGroup(String name, String sortNumber, ProductGroup parentGroup){
+        this.name = name;
+        this.sortNumber = sortNumber;
+        this.productGroup = parentGroup;
+    }
+
 }

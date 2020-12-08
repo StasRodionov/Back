@@ -20,4 +20,9 @@ public class WarehouseDto {
     private String commentToAddress;
 
     private String comment;
+
+    public WarehouseDto(String name, String sortNumber) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+    }
 }

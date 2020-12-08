@@ -27,4 +27,9 @@ public class TypeOfContractor {
 
     @Column(name = "sort_number")
     private String sortNumber;
+
+    public TypeOfContractor(String name, String sortNumber) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+    }
 }

@@ -1,13 +1,5 @@
 package com.trade_accounting.models;
 
-
-import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
-import com.trade_accounting.models.dto.ContractorDto;
-import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.ProductGroupDto;
-import com.trade_accounting.models.dto.TaxSystemDto;
-import com.trade_accounting.models.dto.TypeOfPriceDto;
-import com.trade_accounting.models.dto.UnitDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -113,8 +105,5 @@ public class Product {
         this.taxSystem = taxSystem;
         this.productGroup = productGroup;
         this.attributeOfCalculationObject = attributeOfCalculationObject;
-    }
-
-    public Product(Long id, String name, BigDecimal purchasePrice, String description, BigDecimal weight, BigDecimal volume, Boolean archive, Boolean archive1, Unit one, ProductGroup one1, TaxSystem one2, Contractor one3, AttributeOfCalculationObject one4) {
     }
 }

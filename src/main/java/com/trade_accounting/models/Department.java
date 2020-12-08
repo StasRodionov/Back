@@ -27,4 +27,9 @@ public class Department {
 
     @Column(name = "sort_number")
     private String sortNumber;
+
+    public Department(String name, String sortNumber) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+    }
 }
