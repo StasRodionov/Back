@@ -15,4 +15,6 @@ public interface ProductGroupService {
     void update(ProductGroupDto dto);
 
     void deleteById(Long id);
+
+    ProductGroupDto getByNameAndSortNumber(String name, String sortNumber);
 }

@@ -11,6 +11,7 @@ import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
+import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.DepartmentService;
@@ -236,22 +237,35 @@ public class DataInitializer {
         productGroupService.create(productGroupDto4);
         productGroupService.create(productGroupDto5);
 
+        productGroupDto1 = productGroupService.getByNameAndSortNumber(productGroupDto1.getName(), productGroupDto1.getSortNumber());
+        productGroupDto2 = productGroupService.getByNameAndSortNumber(productGroupDto2.getName(), productGroupDto2.getSortNumber());
+        productGroupDto3 = productGroupService.getByNameAndSortNumber(productGroupDto3.getName(), productGroupDto3.getSortNumber());
+        productGroupDto4 = productGroupService.getByNameAndSortNumber(productGroupDto4.getName(), productGroupDto4.getSortNumber());
+        productGroupDto5 = productGroupService.getByNameAndSortNumber(productGroupDto5.getName(), productGroupDto5.getSortNumber());
+
+
         ProductGroupDto productGroupDto6 = new ProductGroupDto("Товарная группа №6", "6", productGroupDto1.getId() );
+        productGroupService.create(productGroupDto6);
+        productGroupDto6 = productGroupService.getByNameAndSortNumber(productGroupDto6.getName(), productGroupDto6.getSortNumber());
         ProductGroupDto productGroupDto7 = new ProductGroupDto("Товарная группа №7", "7", productGroupDto6.getId() );
+        productGroupService.create(productGroupDto7);
+        productGroupDto7 = productGroupService.getByNameAndSortNumber(productGroupDto7.getName(), productGroupDto7.getSortNumber());
         ProductGroupDto productGroupDto8 = new ProductGroupDto("Товарная группа №8", "8", productGroupDto2.getId() );
+        productGroupService.create(productGroupDto8);
+        productGroupDto8 = productGroupService.getByNameAndSortNumber(productGroupDto8.getName(), productGroupDto8.getSortNumber());
         ProductGroupDto productGroupDto9 = new ProductGroupDto("Товарная группа №9", "9", productGroupDto7.getId() );
+        productGroupService.create(productGroupDto9);
+        productGroupDto9 = productGroupService.getByNameAndSortNumber(productGroupDto9.getName(), productGroupDto9.getSortNumber());
         ProductGroupDto productGroupDto10 = new ProductGroupDto("Товарная группа №10", "10", productGroupDto3.getId() );
+        productGroupService.create(productGroupDto10);
+        productGroupDto10 = productGroupService.getByNameAndSortNumber(productGroupDto10.getName(), productGroupDto10.getSortNumber());
+
         ProductGroupDto productGroupDto11 = new ProductGroupDto("Товарная группа №11", "11", productGroupDto8.getId() );
         ProductGroupDto productGroupDto12 = new ProductGroupDto("Товарная группа №12", "12", productGroupDto4.getId() );
         ProductGroupDto productGroupDto13 = new ProductGroupDto("Товарная группа №13", "13", productGroupDto9.getId() );
         ProductGroupDto productGroupDto14 = new ProductGroupDto("Товарная группа №14", "14", productGroupDto5.getId() );
         ProductGroupDto productGroupDto15 = new ProductGroupDto("Товарная группа №15", "15", productGroupDto10.getId() );
 
-        productGroupService.create(productGroupDto6);
-        productGroupService.create(productGroupDto7);
-        productGroupService.create(productGroupDto8);
-        productGroupService.create(productGroupDto9);
-        productGroupService.create(productGroupDto10);
         productGroupService.create(productGroupDto11);
         productGroupService.create(productGroupDto12);
         productGroupService.create(productGroupDto13);

@@ -25,4 +25,11 @@ public interface ProductGroupRepository extends JpaRepository<ProductGroup, Long
             "pg.sortNumber," +
             "pg.productGroup.id) from ProductGroup  pg where pg.id = :id")
     ProductGroupDto getById(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.ProductGroupDto(" +
+            "pg.id, " +
+            "pg.name, " +
+            "pg.sortNumber," +
+            "pg.productGroup.id) from ProductGroup  pg where pg.name = :name and pg.sortNumber = :sortNumber")
+    ProductGroupDto getByNameAndSortNumber(String name, String sortNumber);
 }
