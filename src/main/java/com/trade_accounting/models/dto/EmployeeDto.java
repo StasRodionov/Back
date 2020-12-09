@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.Pattern;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -40,4 +41,38 @@ public class EmployeeDto {
 
     private ImageDto imageDto;
 
+    public EmployeeDto(Long id,
+                       String lastName,
+                       String firstName,
+                       String middleName,
+                       String sortNumber,
+                       String phone,
+                       @Pattern(regexp = "([0-9]+){12}") String inn,
+                       String description,
+                       String email,
+                       String password,
+                       Long departmentDtoId,
+                       Long positionDtoId,
+                       Long imageDtoId) {
+
+        this.id = id;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.sortNumber = sortNumber;
+        this.phone = phone;
+        this.inn = inn;
+        this.description = description;
+        this.email = email;
+        this.password = password;
+
+        this.departmentDto = new DepartmentDto();
+        this.departmentDto.setId(departmentDtoId);
+
+        this.positionDto = new PositionDto();
+        this.positionDto.setId(positionDtoId);
+
+        this.imageDto = new ImageDto();
+        this.imageDto.setId(imageDtoId);
+    }
 }

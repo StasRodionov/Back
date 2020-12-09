@@ -25,7 +25,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
             "em.password," +
             "em.department.id," +
             "em.position.id," +
-            "em.roles.id," +
             "em.image.id) from Employee em")
     List<EmployeeDto> getAll();
 
@@ -42,7 +41,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
             "em.password," +
             "em.department.id," +
             "em.position.id," +
-            "em.roles.id," +
             "em.image.id) from Employee em " +
             "where em.id = :id")
     EmployeeDto getById(@Param("id") Long id);
