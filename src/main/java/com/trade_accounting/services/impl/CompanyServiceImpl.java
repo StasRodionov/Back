@@ -26,7 +26,7 @@ public class CompanyServiceImpl implements CompanyService {
         List<CompanyDto> companyDtos = companyRepository.getAll();
         for(CompanyDto companyDto : companyDtos) {
             companyDto.setLegalDetailDto(
-                    legalDetailRepository.getById(companyDto.getLegalDetailDto().getId())
+                legalDetailRepository.getById(companyDto.getLegalDetailDto().getId())
             );
         }
         return companyDtos;
@@ -36,13 +36,19 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyDto getById(Long id) {
         CompanyDto companyDto = companyRepository.getById(id);
         companyDto.setLegalDetailDto(
-                legalDetailRepository.getById(companyDto.getLegalDetailDto().getId()));
+                legalDetailRepository.getById(companyDto.getLegalDetailDto().getId())
+        );
         return companyDto;
     }
 
     @Override
     public CompanyDto getByEmail(String email) {
-        return companyRepository.findByEmail(email);
+
+        CompanyDto companyDto = companyRepository.findByEmail(email);
+        companyDto.setLegalDetailDto(
+                legalDetailRepository.getById(companyDto.getLegalDetailDto().getId())
+        );
+        return companyDto;
     }
 
     @Override

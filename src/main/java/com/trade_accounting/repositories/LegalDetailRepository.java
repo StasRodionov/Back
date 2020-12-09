@@ -36,7 +36,7 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.ogrnip, " +
             "e.numberOfTheCertificate, " +
             "e.dateOfTheCertificate, " +
-            "e.typeOfContractor.id) from LegalDetail e where e.id =: id")
+            "e.typeOfContractor.id) from LegalDetail e where e.id = :id")
     LegalDetailDto getById(@Param("id") Long id);
 
 }

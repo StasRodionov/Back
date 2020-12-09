@@ -29,8 +29,8 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
             "e.chiefAccountant, " +
             "e.chiefAccountantSignature, " +
             "e.stamp, " +
-            "e.legalDetail.id) from Company e where e.email =: email")
-    CompanyDto findByEmail(String email);
+            "e.legalDetail.id) from Company e where e.email = :email")
+    CompanyDto findByEmail(@Param("email") String email);
 
     @Query("select new com.trade_accounting.models.dto.CompanyDto(" +
             "e.id, " +
@@ -69,6 +69,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
             "e.chiefAccountant, " +
             "e.chiefAccountantSignature, " +
             "e.stamp, " +
-            "e.legalDetail.id) from Company e where e.id =: id")
+            "e.legalDetail.id) from Company e where e.id = :id")
     CompanyDto getById(@Param("id") Long id);
 }
