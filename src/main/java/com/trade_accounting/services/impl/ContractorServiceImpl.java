@@ -44,12 +44,25 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<ContractorDto> getAll() {
-        return contractorRepository.getAll();
+        List<ContractorDto> contractorDtos = contractorRepository.getAll();
+        for (ContractorDto contractorDto : contractorDtos) {
+            contractorDto.setContractorGroupDto(contractorGroupRepository.getById(contractorDto.getContractorGroupDto().getId()));
+            contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getById(contractorDto.getTypeOfContractorDto().getId()));
+            contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getById(contractorDto.getTypeOfPriceDto().getId()));
+            contractorDto.setLegalDetailDto(legalDetailRepository.getById(contractorDto.getLegalDetailDto().getId()));
+        }
+
+        return contractorDtos;
     }
 
     @Override
     public ContractorDto getById(Long id) {
-        return contractorRepository.getById(id);
+        ContractorDto contractorDto = contractorRepository.getById(id);
+        contractorDto.setContractorGroupDto(contractorGroupRepository.getById(contractorDto.getContractorGroupDto().getId()));
+        contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getById(contractorDto.getTypeOfContractorDto().getId()));
+        contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getById(contractorDto.getTypeOfPriceDto().getId()));
+        contractorDto.setLegalDetailDto(legalDetailRepository.getById(contractorDto.getLegalDetailDto().getId()));
+        return contractorDto;
     }
 
     @Override

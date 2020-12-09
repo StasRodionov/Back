@@ -6,10 +6,12 @@ import com.trade_accounting.models.dto.ContractorDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
 
+@Repository
 public interface ContractorRepository extends JpaRepository<Contractor, Long> {
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
@@ -22,8 +24,13 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long> {
             "e.email," +
             "e.address," +
             "e.commentToAddress," +
-            "e.comment) from Contractor e")
-    List<ContractorDto>getAll();
+            "e.comment, " +
+            "e.contractorGroup.id, " +
+            "e.typeOfContractor.id, " +
+            "e.typeOfPrice.id, " +
+            "e.legalDetail.id) from Contractor e")
+    List<ContractorDto> getAll();
+
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
             "e.id," +
@@ -35,7 +42,11 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long> {
             "e.email," +
             "e.address," +
             "e.commentToAddress," +
-            "e.comment) from Contractor e where e.id = :id")
+            "e.comment, " +
+            "e.contractorGroup.id, " +
+            "e.typeOfContractor.id, " +
+            "e.typeOfPrice.id, " +
+            "e.legalDetail.id) from Contractor e where e.id = :id")
     ContractorDto getById(@Param("id") Long id);
 
 }
