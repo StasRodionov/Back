@@ -35,7 +35,18 @@ public class LegalDetailDto {
 
     private TypeOfContractorDto typeOfContractorDto;
 
-    public LegalDetailDto(Long id, String lastName, String firstName, String middleName, String address, String commentToAddress, String inn, String okpo, String ogrnip, String numberOfTheCertificate, LocalDate dateOfTheCertificate, Long typeOfContractorId) {
+    public LegalDetailDto(Long id,
+                          String lastName,
+                          String firstName,
+                          String middleName,
+                          String address,
+                          String commentToAddress,
+                          String inn,
+                          String okpo,
+                          String ogrnip,
+                          String numberOfTheCertificate,
+                          LocalDate dateOfTheCertificate,
+                          Long typeOfContractorId) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -47,6 +58,7 @@ public class LegalDetailDto {
         this.ogrnip = ogrnip;
         this.numberOfTheCertificate = numberOfTheCertificate;
         this.dateOfTheCertificate = dateOfTheCertificate;
+        this.typeOfContractorDto = new TypeOfContractorDto();
         this.typeOfContractorDto.setId(typeOfContractorId);
     }
 

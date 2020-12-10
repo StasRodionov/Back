@@ -33,15 +33,15 @@ public class CompanyRestController {
         return ResponseEntity.ok(companyDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<CompanyDto> getById(@PathVariable("id") Long id){
         CompanyDto companyDto = companyService.getById(id);
         log.info("Запрошен экземпляр с id = {}", id);
         return ResponseEntity.ok(companyDto);
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<CompanyDto> getByEmail(@PathVariable("email")String email){
+    @GetMapping("/email/{email}")
+    public ResponseEntity<CompanyDto> getByEmail(@PathVariable("email") String email){
         CompanyDto companyDto = companyService.getByEmail(email);
         log.info("Запрошен экземпляр с email = {}", email);
         return ResponseEntity.ok(companyDto);
