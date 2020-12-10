@@ -46,8 +46,16 @@ public class ContractorServiceImpl implements ContractorService {
     public List<ContractorDto> getAll() {
         List<ContractorDto> contractorDtos = contractorRepository.getAll();
         for (ContractorDto contractorDto : contractorDtos) {
+
+            List<BankAccountDto> bankAccounts = new ArrayList<>();
+            ContractorDto contractorDtoBankAccounts = contractorRepository.getById(contractorDto.getId());
+            for (BankAccountDto bankAccountDto : contractorDtoBankAccounts.getBankAccountDto()) {
+                bankAccounts.add(bankAccountRepository.getById(bankAccountDto.getId()));
+            }
+
             contractorDto.setContractorGroupDto(contractorGroupRepository.getById(contractorDto.getContractorGroupDto().getId()));
             contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getById(contractorDto.getTypeOfContractorDto().getId()));
+            contractorDto.setBankAccountDto(bankAccounts);
             contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getById(contractorDto.getTypeOfPriceDto().getId()));
             contractorDto.setLegalDetailDto(legalDetailRepository.getById(contractorDto.getLegalDetailDto().getId()));
         }
@@ -57,10 +65,16 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public ContractorDto getById(Long id) {
+
         ContractorDto contractorDto = contractorRepository.getById(id);
+        List<BankAccountDto> bankAccounts = new ArrayList<>();
+        for (BankAccountDto bankAccountDto : contractorDto.getBankAccountDto()) {
+            bankAccounts.add(bankAccountRepository.getById(bankAccountDto.getId()));
+        }
         contractorDto.setContractorGroupDto(contractorGroupRepository.getById(contractorDto.getContractorGroupDto().getId()));
         contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getById(contractorDto.getTypeOfContractorDto().getId()));
         contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getById(contractorDto.getTypeOfPriceDto().getId()));
+        contractorDto.setBankAccountDto(bankAccounts);
         contractorDto.setLegalDetailDto(legalDetailRepository.getById(contractorDto.getLegalDetailDto().getId()));
         return contractorDto;
     }

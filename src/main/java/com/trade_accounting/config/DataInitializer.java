@@ -69,15 +69,15 @@ public class DataInitializer {
     public void init() {
         initTypeOfPrices();
         initRoles();
-        initWarehouses();
-        initUnits();
-        initPositions();
-        initAttributeOfCalculationObjects();
-        initDepartments();
-        initContractorGroups();
-        initTypeOfContractors();
-        initTaxSystems();
-        initProductGroups();
+//        initWarehouses();
+//        initUnits();
+//        initPositions();
+//        initAttributeOfCalculationObjects();
+//        initDepartments();
+//        initContractorGroups();
+//        initTypeOfContractors();
+//        initTaxSystems();
+//        initProductGroups();
     }
 
     private void initTypeOfPrices() {
