@@ -2,6 +2,7 @@ package com.trade_accounting.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -15,8 +16,10 @@ import java.math.BigDecimal;
  * @param price  - цена (дефолт = 0)
  * @author Sanych
  */
+
 @Data
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "invoice_product")
 public class InvoiceProduct {
@@ -42,4 +45,12 @@ public class InvoiceProduct {
     @Column(name = "price")
     @ColumnDefault("0")
     private BigDecimal price;
+
+    public InvoiceProduct(@NotNull Invoice invoice, @NotNull Product product,
+                          @NotNull BigDecimal amount, @NotNull BigDecimal price) {
+        this.invoice = invoice;
+        this.product = product;
+        this.amount = amount;
+        this.price = price;
+    }
 }

@@ -3,6 +3,7 @@ package com.trade_accounting.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -46,6 +47,7 @@ public class Invoice {
     private Contractor contractor;
 
     @Column(name = "isDone")
+    @ColumnDefault("false")
     private boolean isDone;
 
     public Invoice(@NotNull LocalDateTime date, @NotNull TypeOfInvoice typeOfInvoice,
