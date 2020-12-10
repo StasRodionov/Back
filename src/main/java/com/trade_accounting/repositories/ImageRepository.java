@@ -1,6 +1,7 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.Image;
+import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.ImageDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,9 +12,24 @@ import java.util.List;
 
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Long> {
-    @Query("select new com.trade_accounting.models.dto.ImageDto(i.id, i.imageUrl, i.sortNumber) from Image as i")
+    @Query("select new com.trade_accounting.models.dto.ImageDto(" +
+            "i.id, " +
+            "i.imageUrl, " +
+            "i.sortNumber) from Image as i")
     List<ImageDto> getAll();
 
-    @Query("select new com.trade_accounting.models.dto.ImageDto(i.id, i.imageUrl, i.sortNumber) from Image as i where i.id = :id")
+    @Query("select new com.trade_accounting.models.dto.ImageDto(" +
+            "i.id, " +
+            "i.imageUrl, " +
+            "i.sortNumber) from Image as i where i.id = :id")
     ImageDto getById(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.ImageDto(" +
+            "em.image.id, " +
+            "em.image.imageUrl, " +
+            "em.image.sortNumber" +
+            ") " +
+            "from Employee em " +
+            "where em.id = :id")
+    ImageDto getImageByEmployeeId(@Param("id") Long id);
 }

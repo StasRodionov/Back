@@ -8,14 +8,23 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    @Query("select new com.trade_accounting.models.dto.RoleDto(r.id, r.name, r.sortNumber) from Role r")
+    @Query("select new com.trade_accounting.models.dto.RoleDto(" +
+            "r.id, " +
+            "r.name, " +
+            "r.sortNumber) from Role r")
     List<RoleDto> getAll();
 
-    @Query("select new com.trade_accounting.models.dto.RoleDto(r.id, r.name, r.sortNumber) from Role r where r.id = :id")
+    @Query("select new com.trade_accounting.models.dto.RoleDto(" +
+            "r.id, " +
+            "r.name, " +
+            "r.sortNumber) from Role r where r.id = :id")
     RoleDto getById(@Param("id") Long id);
 
+    @Query("select em.roles from Employee em where em.id = :id")
+    Set<Role> getRolesByEmployeeId(@Param("id") Long id);
 }

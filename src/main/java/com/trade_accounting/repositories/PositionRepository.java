@@ -1,6 +1,7 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.Position;
+import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,6 +29,15 @@ public interface PositionRepository extends JpaRepository<Position, Long> {
             "FROM Position p " +
             "WHERE p.id = :id")
     PositionDto getById(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.PositionDto(" +
+            "em.position.id, " +
+            "em.position.name, " +
+            "em.position.sortNumber" +
+            ") " +
+            "from Employee em " +
+            "where em.id = :id")
+    PositionDto getPositionByEmployeeId(@Param("id") Long id);
 }
 
 
