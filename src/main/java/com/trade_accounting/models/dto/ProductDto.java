@@ -40,5 +40,4 @@ public class ProductDto {
     private ProductGroupDto productGroupDto;
 
     private AttributeOfCalculationObjectDto attributeOfCalculationObjectDto;
-
 }

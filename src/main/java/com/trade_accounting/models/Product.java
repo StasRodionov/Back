@@ -68,4 +68,43 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private AttributeOfCalculationObject attributeOfCalculationObject;
 
+    public Product(String name,
+                   BigDecimal purchasePrice,
+                   String description,
+                   BigDecimal weight,
+                   BigDecimal volume,
+                   Boolean archive,
+                   Unit unit,
+                   ProductGroup productGroup,
+                   TaxSystem taxSystem,
+                   Contractor contractor,
+                   AttributeOfCalculationObject attributeOfCalculationObject) {
+        this.name = name;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.unit = unit;
+        this.archive = archive;
+        this.contractor = contractor;
+        this.taxSystem = taxSystem;
+        this.productGroup = productGroup;
+        this.attributeOfCalculationObject = attributeOfCalculationObject;
+
+    }
+
+    public Product(Long id, String name, BigDecimal purchasePrice, String description, BigDecimal weight, BigDecimal volume, Boolean archive, Unit unit, ProductGroup productGroup, TaxSystem taxSystem, Contractor contractor, AttributeOfCalculationObject attributeOfCalculationObject) {
+        this.id = id;
+        this.name = name;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.unit = unit;
+        this.archive = archive;
+        this.contractor = contractor;
+        this.taxSystem = taxSystem;
+        this.productGroup = productGroup;
+        this.attributeOfCalculationObject = attributeOfCalculationObject;
+    }
 }
