@@ -6,6 +6,7 @@ import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
@@ -16,6 +17,7 @@ import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.RoleService;
+import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
@@ -35,6 +37,7 @@ public class DataInitializer {
     private final AttributeOfCalculationObjectService attributeOfCalculationObjectService;
     private final DepartmentService departmentService;
     private final ContractorGroupService contractorGroupService;
+    private final TypeOfContractorService typeOfContractorService;
     private final TaxSystemService taxSystemService;
     private final ProductGroupService productGroupService;
 
@@ -47,7 +50,8 @@ public class DataInitializer {
                            DepartmentService departmentService,
                            ContractorGroupService contractorGroupService,
                            TaxSystemService taxSystemService,
-                           ProductGroupService productGroupService) {
+                           ProductGroupService productGroupService,
+                           TypeOfContractorService typeOfContractorService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -56,6 +60,7 @@ public class DataInitializer {
         this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
         this.departmentService = departmentService;
         this.contractorGroupService = contractorGroupService;
+        this.typeOfContractorService = typeOfContractorService;
         this.taxSystemService = taxSystemService;
         this.productGroupService = productGroupService;
     }
@@ -70,6 +75,7 @@ public class DataInitializer {
         initAttributeOfCalculationObjects();
         initDepartments();
         initContractorGroups();
+        initTypeOfContractors();
         initTaxSystems();
         initProductGroups();
     }
@@ -200,6 +206,12 @@ public class DataInitializer {
     private void initContractorGroups() {
         contractorGroupService.create(new ContractorGroupDto("Покупатель", "1"));
         contractorGroupService.create(new ContractorGroupDto("Поставщик", "2"));
+    }
+
+    private void initTypeOfContractors(){
+        typeOfContractorService.create(new TypeOfContractorDto("Юридическое лицо","1"));
+        typeOfContractorService.create(new TypeOfContractorDto("Индивидуальный предприниматель","2"));
+        typeOfContractorService.create(new TypeOfContractorDto("Физическое лицо","3"));
     }
 
     private void initTaxSystems(){
