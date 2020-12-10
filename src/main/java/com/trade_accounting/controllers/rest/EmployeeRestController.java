@@ -61,6 +61,4 @@ public class EmployeeRestController {
         log.info("Удален экземпляр EmployeeDto с id = {}", id);
         return ResponseEntity.ok().build();
     }
-
-
 }
