@@ -49,4 +49,18 @@ public class LegalDetailDto {
         this.dateOfTheCertificate = dateOfTheCertificate;
         this.typeOfContractorDto.setId(typeOfContractorId);
     }
+
+    public LegalDetailDto(String lastName, String firstName, String middleName, String address, String commentToAddress, String inn, String okpo, String ogrnip, String numberOfTheCertificate, LocalDate dateOfTheCertificate, Long typeOfContractorId) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.address = address;
+        this.commentToAddress = commentToAddress;
+        this.inn = inn;
+        this.okpo = okpo;
+        this.ogrnip = ogrnip;
+        this.numberOfTheCertificate = numberOfTheCertificate;
+        this.dateOfTheCertificate = dateOfTheCertificate;
+        this.typeOfContractorDto.setId(typeOfContractorId);
+    }
 }

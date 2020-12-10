@@ -1,11 +1,15 @@
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
+import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
@@ -13,14 +17,17 @@ import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectServ
 import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.DepartmentService;
+import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.RoleService;
+import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 
 @Component
 public class DataInitializer {
@@ -34,6 +41,8 @@ public class DataInitializer {
     private final DepartmentService departmentService;
     private final ContractorGroupService contractorGroupService;
     private final CompanyService companyService;
+    private final LegalDetailService legalDetailService;
+    private final TypeOfContractorService typeOfContractorService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
@@ -43,7 +52,9 @@ public class DataInitializer {
                            AttributeOfCalculationObjectService attributeOfCalculationObjectService,
                            DepartmentService departmentService,
                            ContractorGroupService contractorGroupService,
-                           CompanyService companyService) {
+                           CompanyService companyService,
+                           LegalDetailService legalDetailService,
+                           TypeOfContractorService typeOfContractorService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -53,6 +64,8 @@ public class DataInitializer {
         this.departmentService = departmentService;
         this.contractorGroupService = contractorGroupService;
         this.companyService = companyService;
+        this.legalDetailService = legalDetailService;
+        this.typeOfContractorService = typeOfContractorService;
     }
 
     @PostConstruct
@@ -198,17 +211,42 @@ public class DataInitializer {
 
     private void initCompanies() {
 
+        TypeOfContractorDto typeOfContractorDto1 = new TypeOfContractorDto("Бытовой подряд", "1");
+        typeOfContractorService.create(typeOfContractorDto1);
+
+        TypeOfContractorDto typeOfContractorDto2 = new TypeOfContractorDto("Строительный подряд", "2");
+        typeOfContractorService.create(typeOfContractorDto2);
+
+        TypeOfContractorDto typeOfContractorDto3 = new TypeOfContractorDto("Подряд на выполнение проектных и изыскательских работ", "3");
+        typeOfContractorService.create(typeOfContractorDto3);
+
+
+        LegalDetailDto legalDetailDto1 = new LegalDetailDto("Иванов", "Михаил", "Сергеевич", "г. Воронеж,ул Карла Маркса,46", "comment to address",
+                "3664069397", "79271669", "1053600591197","236467", (LocalDate.of(2020, 6, 12)), typeOfContractorDto1.getId());
+        legalDetailService.create(legalDetailDto1);
+
+        LegalDetailDto legalDetailDto2 = new LegalDetailDto("Гордон", "Андрей", "Анатольевич", "г. Москва, ул. Революции, д. 66", "comment to address",
+                "3664069439", "79271647", "1053600591285","432145", (LocalDate.of(2018, 2, 23)), typeOfContractorDto2.getId());
+        legalDetailService.create(legalDetailDto2);
+
+        LegalDetailDto legalDetailDto3 = new LegalDetailDto("Сергеева", "Мария", "Дмитриевна", "г. Краснодар, ул. 40 Лет Октября, д. 16", "comment to address",
+                "3664055588", "70713032", "1033600141277","342145", (LocalDate.of(2022, 4, 5)), typeOfContractorDto3.getId());
+        legalDetailService.create(legalDetailDto3);
+
+
         companyService.create(new CompanyDto( "OOO \"Организация №1\"", "7712345678", "1", "749512345678", "810-41-1234567890", "organization1@mail.com",
                 true, "123456, г. Москва, ул. Подвойского, д. 14, стр. 7", "something comment", "Петров Сергей Петрович", "Manager",
-                "leader signature", "Сергеев Петр Сергеевич", "chief signature", "stamp", 1L));
+                "leader signature", "Сергеев Петр Сергеевич", "chief signature", "stamp", legalDetailDto1.getId()));
 
         companyService.create(new CompanyDto( "OOO \"Организация №2\"", "9543564455", "3", "733126789654", "920-12-2365723233", "organization2@mail.com",
                 true, "123498, г. Москва, ул. Тверская, д. 20", "something comment", "Иванова Мария Сергеевна", "Executive director",
-                "leader signature", "Соболев Николай Андреевич", "chief signature", "stamp", 2L));
+                "leader signature", "Соболев Николай Андреевич", "chief signature", "stamp", legalDetailDto2.getId()));
 
         companyService.create(new CompanyDto( "OOO \"Организация №3\"", "3453123465", "3", "799123786542", "543-23-1234543221", "organization3@mail.com",
                 true, "432156, г. Самара, ул. Гагарина, д. 18", "something comment", "Сергеева Ксения Андреевна", "Project manager",
-                "leader signature", "Стрелецкая Анастасия Михайловна", "chief signature", "stamp", 5L));
+                "leader signature", "Стрелецкая Анастасия Михайловна", "chief signature", "stamp", legalDetailDto3.getId()));
+
+
     }
 
 }
