@@ -29,12 +29,8 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     }
 
     @Override
-    public void create(ProductGroupDto dto) {
-        productGroupRepository.save(new ProductGroup(
-                dto.getName(),
-                dto.getSortNumber(),
-                dto.getParentId() == null ? null : productGroupRepository.getOne(dto.getParentId()))
-        );
+    public void create(ProductGroup productGroup) {
+        productGroupRepository.save(productGroup);
     }
 
     @Override
@@ -52,8 +48,4 @@ public class ProductGroupServiceImpl implements ProductGroupService {
         productGroupRepository.deleteById(id);
     }
 
-    @Override
-    public ProductGroupDto getByNameAndSortNumber(String name, String sortNumber) {
-        return productGroupRepository.getByNameAndSortNumber(name, sortNumber);
-    }
 }

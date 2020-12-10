@@ -1,5 +1,6 @@
 package com.trade_accounting.services.interfaces;
 
+import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.dto.ProductGroupDto;
 
 import java.util.List;
@@ -10,11 +11,10 @@ public interface ProductGroupService {
 
     ProductGroupDto getById(Long id);
 
-    void create(ProductGroupDto dto);
+    void create(ProductGroup dto);
 
     void update(ProductGroupDto dto);
 
     void deleteById(Long id);
 
-    ProductGroupDto getByNameAndSortNumber(String name, String sortNumber);
 }
