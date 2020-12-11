@@ -34,6 +34,15 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     }
 
     @Override
+    public void create(ProductGroupDto dto) {
+        productGroupRepository.save(new ProductGroup(
+                dto.getName(),
+                dto.getSortNumber(),
+                dto.getParentId() == null ? null : productGroupRepository.getOne(dto.getParentId()))
+        );
+    }
+
+    @Override
     public void update(ProductGroupDto dto) {
         productGroupRepository.save(new ProductGroup(
                 dto.getId(),

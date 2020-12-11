@@ -13,6 +13,8 @@ public interface ProductGroupService {
 
     void create(ProductGroup dto);
 
+    void create(ProductGroupDto dto);
+
     void update(ProductGroupDto dto);
 
     void deleteById(Long id);

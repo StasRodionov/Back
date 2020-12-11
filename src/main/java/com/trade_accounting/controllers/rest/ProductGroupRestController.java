@@ -42,9 +42,9 @@ public class ProductGroupRestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ProductGroup productGroup) {
-        productGroupService.create(productGroup);
-        log.info("Записан новый экземпляр ProductGroup с id= {}, name= {}", productGroup.getId(), productGroup.getName());
+    public ResponseEntity<?> create(@RequestBody ProductGroupDto dto) {
+        productGroupService.create(dto);
+        log.info("Записан новый экземпляр ProductGroup с id= {}, name= {}", dto.getId(), dto.getName());
         return ResponseEntity.ok().build();
     }
 
