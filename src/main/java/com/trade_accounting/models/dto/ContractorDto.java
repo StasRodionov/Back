@@ -52,10 +52,7 @@ public class ContractorDto {
                          String address,
                          String commentToAddress,
                          String comment)
-//                         Long contractorGroupDtoId,
-//                         Long typeOfContractorDtoId,
-//                         Long typeOfPriceDtoId,
-//                         Long legalDetailDtoId)
+
                          {
         this.id = id;
         this.name = name;
@@ -68,16 +65,5 @@ public class ContractorDto {
         this.commentToAddress = commentToAddress;
         this.comment = comment;
 
-//        this.contractorGroupDto = new ContractorGroupDto();
-//        this.contractorGroupDto.setId(contractorGroupDtoId);
-//
-//        this.typeOfContractorDto = new TypeOfContractorDto();
-//        this.typeOfContractorDto.setId(typeOfContractorDtoId);
-//
-//        this.typeOfPriceDto = new TypeOfPriceDto();
-//        this.typeOfPriceDto.setId(typeOfPriceDtoId);
-//
-//        this.legalDetailDto = new LegalDetailDto();
-//        this.legalDetailDto.setId(legalDetailDtoId);
     }
 }

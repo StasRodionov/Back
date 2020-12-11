@@ -14,8 +14,10 @@ import com.trade_accounting.services.interfaces.ContractorService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -47,17 +49,14 @@ public class ContractorServiceImpl implements ContractorService {
         List<ContractorDto> contractorDtos = contractorRepository.getAll();
         for (ContractorDto contractorDto : contractorDtos) {
 
-            List<BankAccountDto> bankAccounts = new ArrayList<>();
-            ContractorDto contractorDtoBankAccounts = contractorRepository.getById(contractorDto.getId());
-            for (BankAccountDto bankAccountDto : contractorDtoBankAccounts.getBankAccountDto()) {
-                bankAccounts.add(bankAccountRepository.getById(bankAccountDto.getId()));
-            }
+            contractorDto.setContractorGroupDto(contractorGroupRepository.getContractorGroupByContractorId(contractorDto.getId()));
+            contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getTypeOfContractorByContractorId(contractorDto.getId()));
+            contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getTypeOfPriceByContractorId(contractorDto.getId()));
+            contractorDto.setLegalDetailDto(legalDetailRepository.getLegalDetailByContractorId(contractorDto.getId()));
 
-            contractorDto.setContractorGroupDto(contractorGroupRepository.getById(contractorDto.getContractorGroupDto().getId()));
-            contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getById(contractorDto.getTypeOfContractorDto().getId()));
-            contractorDto.setBankAccountDto(bankAccounts);
-            contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getById(contractorDto.getTypeOfPriceDto().getId()));
-            contractorDto.setLegalDetailDto(legalDetailRepository.getById(contractorDto.getLegalDetailDto().getId()));
+            List<BankAccount> bankAccountList = bankAccountRepository.getBankAccountByContractorId(contractorDto.getId());
+            contractorDto.setBankAccountDto(bankAccountList.stream().map(
+                    bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
         }
 
         return contractorDtos;
@@ -67,15 +66,16 @@ public class ContractorServiceImpl implements ContractorService {
     public ContractorDto getById(Long id) {
 
         ContractorDto contractorDto = contractorRepository.getById(id);
-        List<BankAccountDto> bankAccounts = new ArrayList<>();
-        for (BankAccountDto bankAccountDto : contractorDto.getBankAccountDto()) {
-            bankAccounts.add(bankAccountRepository.getById(bankAccountDto.getId()));
-        }
-        contractorDto.setContractorGroupDto(contractorGroupRepository.getById(contractorDto.getContractorGroupDto().getId()));
-        contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getById(contractorDto.getTypeOfContractorDto().getId()));
-        contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getById(contractorDto.getTypeOfPriceDto().getId()));
-        contractorDto.setBankAccountDto(bankAccounts);
-        contractorDto.setLegalDetailDto(legalDetailRepository.getById(contractorDto.getLegalDetailDto().getId()));
+
+        contractorDto.setContractorGroupDto(contractorGroupRepository.getContractorGroupByContractorId(id));
+        contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getTypeOfContractorByContractorId(id));
+        contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getTypeOfPriceByContractorId(id));
+        contractorDto.setLegalDetailDto(legalDetailRepository.getLegalDetailByContractorId(id));
+
+        List<BankAccount> bankAccountList = bankAccountRepository.getBankAccountByContractorId(id);
+        contractorDto.setBankAccountDto(bankAccountList.stream().map(
+                bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
+
         return contractorDto;
     }
 
@@ -83,8 +83,10 @@ public class ContractorServiceImpl implements ContractorService {
     public void create(ContractorDto contractorDto) {
 
         List<BankAccount> bankAccounts = new ArrayList<>();
-        for (BankAccountDto bankAccountDto : contractorDto.getBankAccountDto()) {
-            bankAccounts.add(bankAccountRepository.getOne(bankAccountDto.getId()));
+        if (contractorDto.getBankAccountDto() != null) {
+            for (BankAccountDto bankAccountDto : contractorDto.getBankAccountDto()) {
+                bankAccounts.add(bankAccountRepository.getOne(bankAccountDto.getId()));
+            }
         }
 
         contractorRepository.save(new Contractor(
@@ -97,11 +99,20 @@ public class ContractorServiceImpl implements ContractorService {
                 contractorDto.getCommentToAddress(),
                 contractorDto.getAddress(),
                 contractorDto.getComment(),
-                contractorGroupRepository.getOne(contractorDto.getContractorGroupDto().getId()),
-                typeOfContractorRepository.getOne(contractorDto.getTypeOfContractorDto().getId()),
-                typeOfPriceRepository.getOne(contractorDto.getTypeOfPriceDto().getId()),
+
+                contractorDto.getContractorGroupDto() != null
+                        ? contractorGroupRepository.getOne(contractorDto.getContractorGroupDto().getId())
+                        : null,
+                contractorDto.getTypeOfContractorDto() != null
+                        ? typeOfContractorRepository.getOne(contractorDto.getTypeOfContractorDto().getId())
+                        : null,
+                contractorDto.getTypeOfPriceDto() != null
+                        ? typeOfPriceRepository.getOne(contractorDto.getTypeOfPriceDto().getId())
+                        : null,
                 bankAccounts,
-                legalDetailRepository.getOne(contractorDto.getLegalDetailDto().getId())
+                contractorDto.getLegalDetailDto() != null
+                        ? legalDetailRepository.getOne(contractorDto.getLegalDetailDto().getId())
+                        : null
 
         ));
     }
@@ -109,8 +120,10 @@ public class ContractorServiceImpl implements ContractorService {
     @Override
     public void update(ContractorDto contractorDto) {
         List<BankAccount> bankAccounts = new ArrayList<>();
-        for (BankAccountDto bankAccountDto : contractorDto.getBankAccountDto()) {
-            bankAccounts.add(bankAccountRepository.getOne(bankAccountDto.getId()));
+        if (contractorDto.getBankAccountDto() != null) {
+            for (BankAccountDto bankAccountDto : contractorDto.getBankAccountDto()) {
+                bankAccounts.add(bankAccountRepository.getOne(bankAccountDto.getId()));
+            }
         }
 
         contractorRepository.save(new Contractor(
@@ -124,11 +137,20 @@ public class ContractorServiceImpl implements ContractorService {
                 contractorDto.getCommentToAddress(),
                 contractorDto.getAddress(),
                 contractorDto.getComment(),
-                contractorGroupRepository.getOne(contractorDto.getContractorGroupDto().getId()),
-                typeOfContractorRepository.getOne(contractorDto.getTypeOfContractorDto().getId()),
-                typeOfPriceRepository.getOne(contractorDto.getTypeOfPriceDto().getId()),
+
+                contractorDto.getContractorGroupDto() != null
+                        ? contractorGroupRepository.getOne(contractorDto.getContractorGroupDto().getId())
+                        : null,
+                contractorDto.getTypeOfContractorDto() != null
+                        ? typeOfContractorRepository.getOne(contractorDto.getTypeOfContractorDto().getId())
+                        : null,
+                contractorDto.getTypeOfPriceDto() != null
+                        ? typeOfPriceRepository.getOne(contractorDto.getTypeOfPriceDto().getId())
+                        : null,
                 bankAccounts,
-                legalDetailRepository.getOne(contractorDto.getLegalDetailDto().getId())
+                contractorDto.getLegalDetailDto() != null
+                        ? legalDetailRepository.getOne(contractorDto.getLegalDetailDto().getId())
+                        : null
 
         ));
     }
@@ -138,4 +160,14 @@ public class ContractorServiceImpl implements ContractorService {
         contractorRepository.deleteById(id);
 
     }
+
+//    @PostConstruct
+//    public void test() {
+//        create(new ContractorDto(null, "Name", "1234567891", "11111", "10-11-12", "156161235", "165651651625@list.ru", "Street", "sdfsfd", "hi"));
+//        List<ContractorDto> contractorDtos = getAll();
+//        getById(1L);
+//        System.out.println(contractorDtos.toString());
+//        deleteById(1L);
+//    }
+
 }
