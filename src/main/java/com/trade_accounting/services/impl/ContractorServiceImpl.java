@@ -55,8 +55,7 @@ public class ContractorServiceImpl implements ContractorService {
             contractorDto.setLegalDetailDto(legalDetailRepository.getLegalDetailByContractorId(contractorDto.getId()));
 
             List<BankAccount> bankAccountList = bankAccountRepository.getBankAccountByContractorId(contractorDto.getId());
-            contractorDto.setBankAccountDto(bankAccountList.stream().map(
-                    bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
+            contractorDto.setBankAccountDto(bankAccountList.stream().map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
         }
 
         return contractorDtos;
@@ -73,8 +72,7 @@ public class ContractorServiceImpl implements ContractorService {
         contractorDto.setLegalDetailDto(legalDetailRepository.getLegalDetailByContractorId(id));
 
         List<BankAccount> bankAccountList = bankAccountRepository.getBankAccountByContractorId(id);
-        contractorDto.setBankAccountDto(bankAccountList.stream().map(
-                bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
+        contractorDto.setBankAccountDto(bankAccountList.stream().map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
 
         return contractorDto;
     }
