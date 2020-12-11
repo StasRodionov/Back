@@ -1,7 +1,6 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.Image;
-import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.ImageDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

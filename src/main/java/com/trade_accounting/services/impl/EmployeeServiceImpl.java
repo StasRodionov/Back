@@ -16,11 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
         }
 
-        Employee employee = new Employee(
+        employeeRepository.save(new Employee(
                 employeeDto.getLastName(),
                 employeeDto.getFirstName(),
                 employeeDto.getMiddleName(),
@@ -106,9 +101,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeDto.getImageDto() != null
                         ? imageRepository.getOne(employeeDto.getImageDto().getId())
                         : null
-        );
-        employeeRepository.save(employee);
-
+        ));
     }
 
     @Override
@@ -150,12 +143,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(id);
 
     }
-
-    /*@PostConstruct
-    public void test(){
-        create(new EmployeeDto(null, "Cruise", "Tom", "DHgh", "1", "156161235", "165651651625", "Yo", "tom@tom.com", "123"));
-        List<EmployeeDto> employeeDtos = getAll();
-        getById(1L);
-        System.out.println(employeeDtos.toString());
-    }*/
 }
