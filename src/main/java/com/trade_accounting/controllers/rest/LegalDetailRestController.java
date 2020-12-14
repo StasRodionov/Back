@@ -17,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("api/legaldetail")
+@RequestMapping("/api/legaldetail")
 public class LegalDetailRestController {
 
     private final LegalDetailService legalDetailService;
