@@ -28,6 +28,15 @@ public interface PositionRepository extends JpaRepository<Position, Long> {
             "FROM Position p " +
             "WHERE p.id = :id")
     PositionDto getById(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.PositionDto(" +
+            "em.position.id, " +
+            "em.position.name, " +
+            "em.position.sortNumber" +
+            ") " +
+            "from Employee em " +
+            "where em.id = :id")
+    PositionDto getPositionByEmployeeId(@Param("id") Long id);
 }
 
 

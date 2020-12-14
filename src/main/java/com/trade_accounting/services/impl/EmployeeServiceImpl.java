@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -43,9 +44,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeDto> getAll() {
         List<EmployeeDto> employeeDtos = employeeRepository.getAll();
         for (EmployeeDto employeeDto : employeeDtos) {
-            employeeDto.setDepartmentDto(departmentRepository.getById(employeeDto.getDepartmentDto().getId()));
-            employeeDto.setPositionDto(positionRepository.getById(employeeDto.getPositionDto().getId()));
-            employeeDto.setImageDto(imageRepository.getById(employeeDto.getImageDto().getId()));
+            employeeDto.setDepartmentDto(departmentRepository.getDepartmentByEmployeeId(employeeDto.getId()));
+            employeeDto.setPositionDto(positionRepository.getPositionByEmployeeId(employeeDto.getId()));
+            employeeDto.setImageDto(imageRepository.getImageByEmployeeId(employeeDto.getId()));
+
+            Set<Role> roles = roleRepository.getRolesByEmployeeId(employeeDto.getId());
+            employeeDto.setRoleDto(roles != null
+                    ? roles.stream().map(role -> roleRepository.getById(role.getId())).collect(Collectors.toSet())
+                    : null);
         }
 
         return employeeDtos;
@@ -54,20 +60,28 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto getById(Long id) {
         EmployeeDto employeeDto = employeeRepository.getById(id);
-        employeeDto.setDepartmentDto(departmentRepository.getById(employeeDto.getDepartmentDto().getId()));
-        employeeDto.setPositionDto(positionRepository.getById(employeeDto.getPositionDto().getId()));
-        employeeDto.setImageDto(imageRepository.getById(employeeDto.getImageDto().getId()));
+        employeeDto.setDepartmentDto(departmentRepository.getDepartmentByEmployeeId(id));
+        employeeDto.setPositionDto(positionRepository.getPositionByEmployeeId(id));
+        employeeDto.setImageDto(imageRepository.getImageByEmployeeId(id));
+
+        Set<Role> roles = roleRepository.getRolesByEmployeeId(id);
+        employeeDto.setRoleDto(roles != null
+                ? roles.stream().map(role -> roleRepository.getById(role.getId())).collect(Collectors.toSet())
+                : null);
+
         return employeeDto;
     }
 
     @Override
     public void create(EmployeeDto employeeDto) {
         Set<Role> roles = new HashSet<>();
-        for (RoleDto roleDto : employeeDto.getRoleDto()) {
-            roles.add(roleRepository.getOne(roleDto.getId()));
+        if (employeeDto.getRoleDto() != null) {
+            for (RoleDto roleDto : employeeDto.getRoleDto()) {
+                roles.add(roleRepository.getOne(roleDto.getId()));
+            }
         }
 
-        Employee employee = new Employee(
+        employeeRepository.save(new Employee(
                 employeeDto.getLastName(),
                 employeeDto.getFirstName(),
                 employeeDto.getMiddleName(),
@@ -77,22 +91,30 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeDto.getDescription(),
                 employeeDto.getEmail(),
                 employeeDto.getPassword(),
-                departmentRepository.getOne(employeeDto.getDepartmentDto().getId()),
-                positionRepository.getOne(employeeDto.getPositionDto().getId()),
+                employeeDto.getDepartmentDto() != null
+                        ? departmentRepository.getOne(employeeDto.getDepartmentDto().getId())
+                        : null,
+                employeeDto.getPositionDto() != null
+                        ? positionRepository.getOne(employeeDto.getDepartmentDto().getId())
+                        : null,
                 roles,
-                imageRepository.getOne(employeeDto.getImageDto().getId())
-        );
-        employeeRepository.save(employee);
-
+                employeeDto.getImageDto() != null
+                        ? imageRepository.getOne(employeeDto.getImageDto().getId())
+                        : null
+        ));
     }
 
     @Override
     public void update(EmployeeDto employeeDto) {
         Set<Role> roles = new HashSet<>();
-        for (RoleDto roleDto : employeeDto.getRoleDto()) {
-            roles.add(roleRepository.getOne(roleDto.getId()));
+        if (employeeDto.getRoleDto() != null) {
+            for (RoleDto roleDto : employeeDto.getRoleDto()) {
+                roles.add(roleRepository.getOne(roleDto.getId()));
+            }
         }
-        employeeRepository.save(new Employee(employeeDto.getId(),
+
+        employeeRepository.save(new Employee(
+                employeeDto.getId(),
                 employeeDto.getLastName(),
                 employeeDto.getFirstName(),
                 employeeDto.getMiddleName(),
@@ -102,10 +124,17 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeDto.getDescription(),
                 employeeDto.getEmail(),
                 employeeDto.getPassword(),
-                departmentRepository.getOne(employeeDto.getDepartmentDto().getId()),
-                positionRepository.getOne(employeeDto.getPositionDto().getId()),
+                employeeDto.getDepartmentDto() != null
+                        ? departmentRepository.getOne(employeeDto.getDepartmentDto().getId())
+                        : null,
+                employeeDto.getPositionDto() != null
+                        ? positionRepository.getOne(employeeDto.getDepartmentDto().getId())
+                        : null,
                 roles,
-                imageRepository.getOne(employeeDto.getImageDto().getId())));
+                employeeDto.getImageDto() != null
+                        ? imageRepository.getOne(employeeDto.getImageDto().getId())
+                        : null
+        ));
 
     }
 
