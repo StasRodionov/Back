@@ -29,11 +29,16 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     }
 
     @Override
+    public void create(ProductGroup productGroup) {
+        productGroupRepository.save(productGroup);
+    }
+
+    @Override
     public void create(ProductGroupDto dto) {
         productGroupRepository.save(new ProductGroup(
                 dto.getName(),
                 dto.getSortNumber(),
-                productGroupRepository.getOne(dto.getParentId()))
+                dto.getParentId() == null ? null : productGroupRepository.getOne(dto.getParentId()))
         );
     }
 
@@ -43,7 +48,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
                 dto.getId(),
                 dto.getName(),
                 dto.getSortNumber(),
-                productGroupRepository.getOne(dto.getParentId()))
+                dto.getParentId() == null ? null : productGroupRepository.getOne(dto.getParentId()))
         );
     }
 
@@ -51,4 +56,5 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     public void deleteById(Long id) {
         productGroupRepository.deleteById(id);
     }
+
 }
