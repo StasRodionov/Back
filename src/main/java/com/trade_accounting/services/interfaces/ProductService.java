@@ -11,14 +11,6 @@ public interface ProductService {
 
     List<ProductDto> getAll();
 
-    List<Image> getProductByImage(Long id);
-
-    List<TypeOfPrice> getProductByTypeOfPrice(Long id);
-
-    List<ImageDto> getProductByImageDto(Long id);
-
-    List<TypeOfPriceDto> getProductByTypeOfPriceDto(Long id);
-
     ProductDto getById(Long id);
 
     void create(ProductDto productDto);

@@ -17,31 +17,20 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select new com.trade_accounting.models.dto.ProductDto(" +
             "p.id, " +
             "p.name, " +
-            "p.description, " +
-            "p.archive, " +
-            "p.purchasePrice, " +
             "p.weight, " +
-            "p.volume) from Product p")
+            "p.volume," +
+            "p.purchasePrice," +
+            "p.description, " +
+            "p.archive) from Product p")
     List<ProductDto> getAll();
 
-    @Query("select new com.trade_accounting.models.dto.ProductDto(p.id, " +
+    @Query("select new com.trade_accounting.models.dto.ProductDto(" +
+            "p.id, " +
             "p.name, " +
-            "p.description, " +
-            "p.archive, " +
-            "p.purchasePrice, " +
             "p.weight, " +
-            "p.volume) from Product p where p.id = :id")
+            "p.volume," +
+            "p.purchasePrice," +
+            "p.description, " +
+            "p.archive) from Product p where p.id = :id")
     ProductDto getById(@Param("id") Long id);
-
-    @Query("select new com.trade_accounting.models.dto.ProductDto(p.images) from Product p where p.id = :id")
-    List<ImageDto> getProductByImageDto(@Param("id") Long id);
-
-    @Query("select new com.trade_accounting.models.dto.ProductDto(p.typeOfPrices) from Product p where p.id = :id")
-    List<TypeOfPriceDto> getProductByTypeOfPriceDto(@Param("id") Long id);
-
-    @Query("select new com.trade_accounting.models.dto.ProductDto(p.images) from Product p where p.id = :id")
-    List<Image> getProductByImage(@Param("id") Long id);
-
-    @Query("select new com.trade_accounting.models.dto.ProductDto(p.typeOfPrices) from Product p where p.id = :id")
-    List<TypeOfPrice> getProductByTypeOfPrice(@Param("id") Long id);
 }
