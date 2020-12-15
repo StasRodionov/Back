@@ -33,4 +33,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "p.description, " +
             "p.archive) from Product p where p.id = :id")
     ProductDto getById(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.TypeOfPriceDto(t.id, t.name, t.sortNumber) from TypeOfPrice t where t.id = :id")
+    List<TypeOfPrice> getAllById(@Param("id") Long id);
+
 }

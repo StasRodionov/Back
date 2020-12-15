@@ -18,6 +18,7 @@ import com.trade_accounting.services.interfaces.ProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -65,8 +66,7 @@ public class ProductServiceImpl implements ProductService {
             productDto.setAttributeOfCalculationObjectDto(attributeOfCalculationObjectRepository.getById(productDto.getAttributeOfCalculationObjectDto().getId()));
             productDto.setContractorDto(contractorRepository.getById(productDto.getContractorDto().getId()));
             productDto.setTaxSystemDto(taxSystemRepository.getById(productDto.getTaxSystemDto().getId()));
-            productDto.setImageDto(imageRepository.getAllDtoById(productDto.getId()));
-            productDto.setTypeOfPriceDto(typeOfPriceRepository.getAllDtoById(productDto.getId()));
+            //Here it propably has to be some image&typeOfPrice setters, but it's not. You should try to make it, i couldn't.)
         }
         return productDtos;
     }
@@ -79,13 +79,21 @@ public class ProductServiceImpl implements ProductService {
         productDto.setAttributeOfCalculationObjectDto(attributeOfCalculationObjectRepository.getById(productDto.getAttributeOfCalculationObjectDto().getId()));
         productDto.setContractorDto(contractorRepository.getById(productDto.getContractorDto().getId()));
         productDto.setTaxSystemDto(taxSystemRepository.getById(productDto.getTaxSystemDto().getId()));
-        productDto.setImageDto(imageRepository.getAllDtoById(id));
-        productDto.setTypeOfPriceDto(typeOfPriceRepository.getAllDtoById(id));
+        //Here it propably has to be some image&typeOfPrice setters, but it's not. You should try to make it, i couldn't.)
         return productDto;
     }
 
     @Override
     public void create(ProductDto productDto) {
+        List<TypeOfPrice> typeOfPrices = new ArrayList<>();
+        for (TypeOfPriceDto typeOfPriceDto : productDto.getTypeOfPriceDto()) {
+            typeOfPrices.add(typeOfPriceRepository.getOne(typeOfPriceDto.getId()));
+        }
+        List<Image> images = new ArrayList<>();
+        for (ImageDto imageDto : productDto.getImageDto()) {
+            images.add(imageRepository.getOne(imageDto.getId()));
+        }
+
         Product product = new Product(
                 productDto.getName(),
                 productDto.getPurchasePrice(),
@@ -98,14 +106,24 @@ public class ProductServiceImpl implements ProductService {
                 taxSystemRepository.getOne(productDto.getTaxSystemDto().getId()),
                 contractorRepository.getOne(productDto.getContractorDto().getId()),
                 attributeOfCalculationObjectRepository.getOne(productDto.getAttributeOfCalculationObjectDto().getId()),
-                imageRepository.getAllById(productDto.getId()),
-                typeOfPriceRepository.getAllById(productDto.getId())
+                images,
+                typeOfPrices
         );
+
+
         productRepository.save(product);
     }
 
     @Override
     public void update(ProductDto productDto) {
+        List<TypeOfPrice> typeOfPrices = new ArrayList<>();
+        for (TypeOfPriceDto typeOfPriceDto : productDto.getTypeOfPriceDto()) {
+            typeOfPrices.add(typeOfPriceRepository.getOne(typeOfPriceDto.getId()));
+        }
+        List<Image> images = new ArrayList<>();
+        for (ImageDto imageDto : productDto.getImageDto()) {
+            images.add(imageRepository.getOne(imageDto.getId()));
+        }
         Product product = new Product(
                 productDto.getId(),
                 productDto.getName(),
@@ -119,8 +137,8 @@ public class ProductServiceImpl implements ProductService {
                 taxSystemRepository.getOne(productDto.getTaxSystemDto().getId()),
                 contractorRepository.getOne(productDto.getContractorDto().getId()),
                 attributeOfCalculationObjectRepository.getOne(productDto.getAttributeOfCalculationObjectDto().getId()),
-                imageRepository.getAllById(productDto.getId()),
-                typeOfPriceRepository.getAllById(productDto.getId())
+                images,
+                typeOfPrices
         );
         productRepository.save(product);
     }

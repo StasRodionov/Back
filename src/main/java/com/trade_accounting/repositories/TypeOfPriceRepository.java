@@ -18,10 +18,7 @@ public interface TypeOfPriceRepository extends JpaRepository<TypeOfPrice, Long> 
     @Query("select new com.trade_accounting.models.dto.TypeOfPriceDto(t.id, t.name, t.sortNumber) from TypeOfPrice t where t.id = :id")
     TypeOfPriceDto getById(@Param("id") Long id);
 
-    @Query("select new com.trade_accounting.models.dto.TypeOfPriceDto(t.id, t.name, t.sortNumber) from TypeOfPrice t inner join Product p on p.id = :id")
-    List<TypeOfPriceDto> getAllDtoById(@Param("id") Long id);
-
-    @Query("select new com.trade_accounting.models.dto.TypeOfPriceDto(t.id, t.name, t.sortNumber) from TypeOfPrice t inner join Product p on p.id = :id")
+    @Query("select new com.trade_accounting.models.TypeOfPrice(t.id, t.name, t.sortNumber) from TypeOfPrice t where t.id = :id")
     List<TypeOfPrice> getAllById(@Param("id") Long id);
 
 }
