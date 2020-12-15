@@ -64,9 +64,9 @@ public class ContractServiceImpl implements ContractService {
         contractDto.setBankAccountDto(
                 bankAccountRepository.getById(contractDto.getBankAccountDto().getId())
         );
-//        contractDto.setContractorDto(
-//                contractorRepository.getById(contractDto.getContractorDto().getId())
-//        );
+        contractDto.setContractorDto(
+                contractorRepository.getById(contractDto.getContractorDto().getId())
+        );
         contractDto.setLegalDetailDto(
                 legalDetailRepository.getById(contractDto.getLegalDetailDto().getId())
         );
