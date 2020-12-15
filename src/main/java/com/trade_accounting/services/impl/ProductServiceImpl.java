@@ -18,8 +18,10 @@ import com.trade_accounting.services.interfaces.ProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -57,29 +59,49 @@ public class ProductServiceImpl implements ProductService {
         this.typeOfPriceRepository = typeOfPriceRepository;
     }
 
+//    @PostConstruct
+//    public void method() {
+//        create(new ProductDto());
+//        update(new ProductDto());
+//        getAll();
+//        getById(1L);
+//        deleteById(1L);
+//    }
+
     @Override
     public List<ProductDto> getAll() {
         List<ProductDto> productDtos = productRepository.getAll();
         for (ProductDto productDto : productDtos) {
-            productDto.setUnitDto(unitRepository.getById(productDto.getUnitDto().getId()));
-            productDto.setProductGroupDto(productGroupRepository.getById(productDto.getProductGroupDto().getId()));
-            productDto.setAttributeOfCalculationObjectDto(attributeOfCalculationObjectRepository.getById(productDto.getAttributeOfCalculationObjectDto().getId()));
-            productDto.setContractorDto(contractorRepository.getById(productDto.getContractorDto().getId()));
-            productDto.setTaxSystemDto(taxSystemRepository.getById(productDto.getTaxSystemDto().getId()));
-            //Here it propably has to be some image&typeOfPrice setters, but it's not. You should try to make it, i couldn't.)
-        }
+            productDto.setUnitDto(unitRepository.getUnitByProductId(productDto.getId()));
+            productDto.setProductGroupDto(productGroupRepository.getProductGroupByProductId(productDto.getId()));
+            productDto.setAttributeOfCalculationObjectDto(
+                    attributeOfCalculationObjectRepository.getAttributeOfCalculationObjectById(productDto.getId()));
+            productDto.setContractorDto(contractorRepository.getContractorById(productDto.getId()));
+            productDto.setTaxSystemDto(taxSystemRepository.getTaxSystemById(productDto.getId()));
+            productDto.setImageDto(imageRepository.getAllById(productDto.getId()).stream()
+                    .map(image -> imageRepository.getById(image.getId()))
+                    .collect(Collectors.toList()));
+            productDto.setTypeOfPriceDto(typeOfPriceRepository.getTypeOfPriceById(productDto.getId()).stream()
+                    .map(typeOfPrice -> typeOfPriceRepository.getById(typeOfPrice.getId()))
+                    .collect(Collectors.toList()));        }
         return productDtos;
     }
 
     @Override
     public ProductDto getById(Long id) {
         ProductDto productDto = productRepository.getById(id);
-        productDto.setUnitDto(unitRepository.getById(productDto.getUnitDto().getId()));
-        productDto.setProductGroupDto(productGroupRepository.getById(productDto.getProductGroupDto().getId()));
-        productDto.setAttributeOfCalculationObjectDto(attributeOfCalculationObjectRepository.getById(productDto.getAttributeOfCalculationObjectDto().getId()));
-        productDto.setContractorDto(contractorRepository.getById(productDto.getContractorDto().getId()));
-        productDto.setTaxSystemDto(taxSystemRepository.getById(productDto.getTaxSystemDto().getId()));
-        //Here it propably has to be some image&typeOfPrice setters, but it's not. You should try to make it, i couldn't.)
+        productDto.setUnitDto(unitRepository.getUnitByProductId(id));
+        productDto.setProductGroupDto(productGroupRepository.getProductGroupByProductId(id));
+        productDto.setAttributeOfCalculationObjectDto(
+                attributeOfCalculationObjectRepository.getAttributeOfCalculationObjectById(id));
+        productDto.setContractorDto(contractorRepository.getContractorById(id));
+        productDto.setTaxSystemDto(taxSystemRepository.getTaxSystemById(id));
+        productDto.setImageDto(imageRepository.getAllById(id).stream()
+                .map(image -> imageRepository.getById(image.getId()))
+                .collect(Collectors.toList()));
+        productDto.setTypeOfPriceDto(typeOfPriceRepository.getTypeOfPriceById(id).stream()
+                .map(typeOfPrice -> typeOfPriceRepository.getById(typeOfPrice.getId()))
+                .collect(Collectors.toList()));
         return productDto;
     }
 
@@ -93,8 +115,7 @@ public class ProductServiceImpl implements ProductService {
         for (ImageDto imageDto : productDto.getImageDto()) {
             images.add(imageRepository.getOne(imageDto.getId()));
         }
-
-        Product product = new Product(
+        productRepository.save(new Product(
                 productDto.getName(),
                 productDto.getPurchasePrice(),
                 productDto.getDescription(),
@@ -108,10 +129,7 @@ public class ProductServiceImpl implements ProductService {
                 attributeOfCalculationObjectRepository.getOne(productDto.getAttributeOfCalculationObjectDto().getId()),
                 images,
                 typeOfPrices
-        );
-
-
-        productRepository.save(product);
+        ));
     }
 
     @Override
@@ -124,23 +142,22 @@ public class ProductServiceImpl implements ProductService {
         for (ImageDto imageDto : productDto.getImageDto()) {
             images.add(imageRepository.getOne(imageDto.getId()));
         }
-        Product product = new Product(
+        productRepository.save(new Product(
                 productDto.getId(),
                 productDto.getName(),
-                productDto.getPurchasePrice(),
-                productDto.getDescription(),
                 productDto.getWeight(),
                 productDto.getVolume(),
-                productDto.getArchive(),
+                productDto.getPurchasePrice(),
+                productDto.getDescription(),
                 unitRepository.getOne(productDto.getUnitDto().getId()),
-                productGroupRepository.getOne(productDto.getProductGroupDto().getId()),
-                taxSystemRepository.getOne(productDto.getTaxSystemDto().getId()),
+                productDto.getArchive(),
                 contractorRepository.getOne(productDto.getContractorDto().getId()),
-                attributeOfCalculationObjectRepository.getOne(productDto.getAttributeOfCalculationObjectDto().getId()),
+                typeOfPrices,
+                taxSystemRepository.getOne(productDto.getTaxSystemDto().getId()),
                 images,
-                typeOfPrices
-        );
-        productRepository.save(product);
+                productGroupRepository.getOne(productDto.getProductGroupDto().getId()),
+                attributeOfCalculationObjectRepository.getOne(productDto.getAttributeOfCalculationObjectDto().getId())
+        ));
     }
 
     @Override

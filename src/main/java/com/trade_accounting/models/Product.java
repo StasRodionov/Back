@@ -100,34 +100,4 @@ public class Product {
         this.images = images;
         this.typeOfPrices = typeOfPrice;
     }
-
-    public Product(Long id,
-                   String name,
-                   BigDecimal purchasePrice,
-                   String description,
-                   BigDecimal weight,
-                   BigDecimal volume,
-                   Boolean archive,
-                   Unit unit,
-                   ProductGroup productGroup,
-                   TaxSystem taxSystem,
-                   Contractor contractor,
-                   AttributeOfCalculationObject attributeOfCalculationObject,
-                   List<Image> images,
-                   List<TypeOfPrice> typeOfPrice) {
-        this.id = id;
-        this.name = name;
-        this.weight = weight;
-        this.volume = volume;
-        this.purchasePrice = purchasePrice;
-        this.description = description;
-        this.unit = unit;
-        this.archive = archive;
-        this.contractor = contractor;
-        this.taxSystem = taxSystem;
-        this.productGroup = productGroup;
-        this.attributeOfCalculationObject = attributeOfCalculationObject;
-        this.images = images;
-        this.typeOfPrices = typeOfPrice;
-    }
 }
