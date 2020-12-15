@@ -46,9 +46,9 @@ public class Invoice {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
-    @Column(name = "isDone")
+    @Column(name = "is_Spend")
     @ColumnDefault("false")
-    private boolean isDone;
+    private boolean isSpend;
 
     public Invoice(@NotNull LocalDateTime date, @NotNull TypeOfInvoice typeOfInvoice,
                    @NotNull Company company, @NotNull Contractor contractor) {
