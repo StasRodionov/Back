@@ -15,4 +15,5 @@ public interface TypeOfContractorService {
 
     void deleteById(Long id);
 
+    TypeOfContractorDto getByName(String name);
 }

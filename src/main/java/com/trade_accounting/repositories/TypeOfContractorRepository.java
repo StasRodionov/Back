@@ -28,4 +28,12 @@ public interface TypeOfContractorRepository extends JpaRepository<TypeOfContract
             "where t.id=:id")
     TypeOfContractorDto getById(@Param("id") Long id);
 
+    @Query("select new com.trade_accounting.models.dto.TypeOfContractorDto(" +
+            "t.id, " +
+            "t.name, " +
+            "t.sortNumber" +
+            ") " +
+            "from TypeOfContractor t " +
+            "where t.name=:name")
+    TypeOfContractorDto getByName(String name);
 }

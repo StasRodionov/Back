@@ -98,4 +98,5 @@ public class CompanyDto {
         this.stamp = stamp;
         this.legalDetailDto.setId(legalDetailId);
     }
+
 }

@@ -75,4 +75,5 @@ public class LegalDetailDto {
         this.dateOfTheCertificate = dateOfTheCertificate;
         this.typeOfContractorDto.setId(typeOfContractorId);
     }
+
 }
