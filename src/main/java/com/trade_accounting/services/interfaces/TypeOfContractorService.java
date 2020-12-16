@@ -1,5 +1,6 @@
 package com.trade_accounting.services.interfaces;
 
+import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface TypeOfContractorService {
 
     void deleteById(Long id);
 
-    TypeOfContractorDto getByName(String name);
+    TypeOfContractor getByName(String name);
 }
