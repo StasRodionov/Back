@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import lombok.extern.slf4j.Slf4j;
@@ -41,9 +42,9 @@ public class ProductGroupRestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ProductGroupDto productGroupDto) {
-        productGroupService.create(productGroupDto);
-        log.info("Записан новый экземпляр ProductGroup с id= {}, name= {}", productGroupDto.getId(), productGroupDto.getName());
+    public ResponseEntity<?> create(@RequestBody ProductGroupDto dto) {
+        productGroupService.create(dto);
+        log.info("Записан новый экземпляр ProductGroup с id= {}, name= {}", dto.getId(), dto.getName());
         return ResponseEntity.ok().build();
     }
 

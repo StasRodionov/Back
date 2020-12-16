@@ -22,10 +22,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
             "em.inn, " +
             "em.description, " +
             "em.email," +
-            "em.password," +
-            "em.department.id," +
-            "em.position.id," +
-            "em.image.id) from Employee em")
+            "em.password) from Employee em")
     List<EmployeeDto> getAll();
 
     @Query("select new com.trade_accounting.models.dto.EmployeeDto(" +
@@ -38,10 +35,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
             "em.inn, " +
             "em.description, " +
             "em.email," +
-            "em.password," +
-            "em.department.id," +
-            "em.position.id," +
-            "em.image.id) from Employee em " +
+            "em.password) from Employee em " +
             "where em.id = :id")
     EmployeeDto getById(@Param("id") Long id);
+
 }

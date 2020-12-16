@@ -28,4 +28,13 @@ public interface ContractorGroupRepository extends JpaRepository<ContractorGroup
             "from ContractorGroup cg " + 
             "where cg.id = :id")
     ContractorGroupDto getById(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.ContractorGroupDto(" +
+            "cg.contractorGroup.id, " +
+            "cg.contractorGroup.name, " +
+            "cg.contractorGroup.sortNumber" +
+            ") " +
+            "from Contractor cg " +
+            "where cg.id = :id")
+    ContractorGroupDto getContractorGroupByContractorId(@Param("id") Long id);
 }

@@ -34,4 +34,7 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
             "ba.sortNumber) from BankAccount ba " +
             "where ba.id = :id")
     BankAccountDto getById(@Param("id") Long id);
+
+    @Query("select ba.bankAccounts from Contractor ba where ba.id = :id")
+    List<BankAccount> getBankAccountByContractorId(@Param("id") Long id);
 }
