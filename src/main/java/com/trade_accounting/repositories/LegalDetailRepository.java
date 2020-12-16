@@ -39,4 +39,18 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.typeOfContractor.id) from LegalDetail e where e.id = :id")
     LegalDetailDto getById(@Param("id") Long id);
 
+    @Query("select new com.trade_accounting.models.dto.LegalDetailDto(" +
+            "e.legalDetail.id, " +
+            "e.legalDetail.lastName, " +
+            "e.legalDetail.firstName, " +
+            "e.legalDetail.middleName, " +
+            "e.legalDetail.address, " +
+            "e.legalDetail.commentToAddress, " +
+            "e.legalDetail.inn, " +
+            "e.legalDetail.okpo, " +
+            "e.legalDetail.ogrnip, " +
+            "e.legalDetail.numberOfTheCertificate, " +
+            "e.legalDetail.dateOfTheCertificate, " +
+            "e.legalDetail.typeOfContractor.id) from Contractor e where e.id = :id")
+    LegalDetailDto getLegalDetailByContractorId(@Param("id") Long id);
 }

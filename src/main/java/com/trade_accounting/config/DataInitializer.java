@@ -1,5 +1,6 @@
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
@@ -13,6 +14,7 @@ import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
+import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
@@ -236,39 +238,41 @@ public class DataInitializer {
     }
 
     private void initProductGroups(){
-        ProductGroupDto productGroupDto1 = new ProductGroupDto("Товарная группа №1", "1" );
-        ProductGroupDto productGroupDto2 = new ProductGroupDto("Товарная группа №2", "2" );
-        ProductGroupDto productGroupDto3 = new ProductGroupDto("Товарная группа №3", "3" );
-        ProductGroupDto productGroupDto4 = new ProductGroupDto("Товарная группа №4", "4" );
-        ProductGroupDto productGroupDto5 = new ProductGroupDto("Товарная группа №5", "5" );
 
-        productGroupService.create(productGroupDto1);
-        productGroupService.create(productGroupDto2);
-        productGroupService.create(productGroupDto3);
-        productGroupService.create(productGroupDto4);
-        productGroupService.create(productGroupDto5);
+        ProductGroup productGroup1 = new ProductGroup("Товарная группа №1", "1" );
+        ProductGroup productGroup2 = new ProductGroup("Товарная группа №2", "2" );
+        ProductGroup productGroup3 = new ProductGroup("Товарная группа №3", "3" );
+        ProductGroup productGroup4 = new ProductGroup("Товарная группа №4", "4" );
+        ProductGroup productGroup5 = new ProductGroup("Товарная группа №5", "5" );
 
-        ProductGroupDto productGroupDto6 = new ProductGroupDto("Товарная группа №6", "6", productGroupDto1.getId() );
-        ProductGroupDto productGroupDto7 = new ProductGroupDto("Товарная группа №7", "7", productGroupDto6.getId() );
-        ProductGroupDto productGroupDto8 = new ProductGroupDto("Товарная группа №8", "8", productGroupDto2.getId() );
-        ProductGroupDto productGroupDto9 = new ProductGroupDto("Товарная группа №9", "9", productGroupDto7.getId() );
-        ProductGroupDto productGroupDto10 = new ProductGroupDto("Товарная группа №10", "10", productGroupDto3.getId() );
-        ProductGroupDto productGroupDto11 = new ProductGroupDto("Товарная группа №11", "11", productGroupDto8.getId() );
-        ProductGroupDto productGroupDto12 = new ProductGroupDto("Товарная группа №12", "12", productGroupDto4.getId() );
-        ProductGroupDto productGroupDto13 = new ProductGroupDto("Товарная группа №13", "13", productGroupDto9.getId() );
-        ProductGroupDto productGroupDto14 = new ProductGroupDto("Товарная группа №14", "14", productGroupDto5.getId() );
-        ProductGroupDto productGroupDto15 = new ProductGroupDto("Товарная группа №15", "15", productGroupDto10.getId() );
+        productGroupService.create(productGroup1);
+        productGroupService.create(productGroup2);
+        productGroupService.create(productGroup3);
+        productGroupService.create(productGroup4);
+        productGroupService.create(productGroup5);
 
-        productGroupService.create(productGroupDto6);
-        productGroupService.create(productGroupDto7);
-        productGroupService.create(productGroupDto8);
-        productGroupService.create(productGroupDto9);
-        productGroupService.create(productGroupDto10);
-        productGroupService.create(productGroupDto11);
-        productGroupService.create(productGroupDto12);
-        productGroupService.create(productGroupDto13);
-        productGroupService.create(productGroupDto14);
-        productGroupService.create(productGroupDto15);
+        ProductGroup productGroup6 = new ProductGroup("Товарная группа №6", "6", productGroup1 );
+        productGroupService.create(productGroup6);
+        ProductGroup productGroup7 = new ProductGroup("Товарная группа №7", "7", productGroup6);
+        productGroupService.create(productGroup7);
+        ProductGroup productGroup8 = new ProductGroup("Товарная группа №8", "8", productGroup2);
+        productGroupService.create(productGroup8);
+        ProductGroup productGroup9 = new ProductGroup("Товарная группа №9", "9", productGroup7);
+        productGroupService.create(productGroup9);
+        ProductGroup productGroup10 = new ProductGroup("Товарная группа №10", "10", productGroup3);
+        productGroupService.create(productGroup10);
+
+        ProductGroup productGroup11 = new ProductGroup("Товарная группа №11", "11", productGroup8);
+        ProductGroup productGroup12 = new ProductGroup("Товарная группа №12", "12", productGroup4);
+        ProductGroup productGroup13 = new ProductGroup("Товарная группа №13", "13", productGroup9);
+        ProductGroup productGroup14 = new ProductGroup("Товарная группа №14", "14", productGroup5);
+        ProductGroup productGroup15 = new ProductGroup("Товарная группа №15", "15", productGroup10);
+
+        productGroupService.create(productGroup11);
+        productGroupService.create(productGroup12);
+        productGroupService.create(productGroup13);
+        productGroupService.create(productGroup14);
+        productGroupService.create(productGroup15);
 
     }
 

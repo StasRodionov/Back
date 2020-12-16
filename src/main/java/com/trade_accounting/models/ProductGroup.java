@@ -36,9 +36,12 @@ public class ProductGroup {
     private ProductGroup productGroup;
 
     public ProductGroup(String name, String sortNumber, ProductGroup parentGroup){
-        this.name = name;
-        this.sortNumber = sortNumber;
+        this(name, sortNumber);
         this.productGroup = parentGroup;
     }
 
+    public ProductGroup(String name, String sortNumber) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+    }
 }
