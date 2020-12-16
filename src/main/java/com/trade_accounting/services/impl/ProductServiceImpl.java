@@ -59,15 +59,6 @@ public class ProductServiceImpl implements ProductService {
         this.typeOfPriceRepository = typeOfPriceRepository;
     }
 
-//    @PostConstruct
-//    public void method() {
-//        create(new ProductDto());
-//        update(new ProductDto());
-//        getAll();
-//        getById(1L);
-//        deleteById(1L);
-//    }
-
     @Override
     public List<ProductDto> getAll() {
         List<ProductDto> productDtos = productRepository.getAll();
@@ -108,13 +99,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void create(ProductDto productDto) {
         List<TypeOfPrice> typeOfPrices = new ArrayList<>();
-        for (TypeOfPriceDto typeOfPriceDto : productDto.getTypeOfPriceDto()) {
-            typeOfPrices.add(typeOfPriceRepository.getOne(typeOfPriceDto.getId()));
+        if(productDto.getTypeOfPriceDto() != null) {
+            for (TypeOfPriceDto typeOfPriceDto : productDto.getTypeOfPriceDto()) {
+                typeOfPrices.add(typeOfPriceRepository.getOne(typeOfPriceDto.getId()));
+            }
         }
+
         List<Image> images = new ArrayList<>();
-        for (ImageDto imageDto : productDto.getImageDto()) {
-            images.add(imageRepository.getOne(imageDto.getId()));
+        if(productDto.getImageDto() != null) {
+            for (ImageDto imageDto : productDto.getImageDto()) {
+                images.add(imageRepository.getOne(imageDto.getId()));
+            }
         }
+
         productRepository.save(new Product(
                 productDto.getName(),
                 productDto.getPurchasePrice(),
@@ -122,11 +119,21 @@ public class ProductServiceImpl implements ProductService {
                 productDto.getWeight(),
                 productDto.getVolume(),
                 productDto.getArchive(),
-                unitRepository.getOne(productDto.getUnitDto().getId()),
-                productGroupRepository.getOne(productDto.getProductGroupDto().getId()),
-                taxSystemRepository.getOne(productDto.getTaxSystemDto().getId()),
-                contractorRepository.getOne(productDto.getContractorDto().getId()),
-                attributeOfCalculationObjectRepository.getOne(productDto.getAttributeOfCalculationObjectDto().getId()),
+                productDto.getUnitDto() != null
+                        ? unitRepository.getOne(productDto.getUnitDto().getId())
+                        : null,
+                productDto.getProductGroupDto() != null
+                        ? productGroupRepository.getOne(productDto.getProductGroupDto().getId())
+                        : null,
+                productDto.getTaxSystemDto() != null
+                        ? taxSystemRepository.getOne(productDto.getTaxSystemDto().getId())
+                        : null,
+                productDto.getContractorDto() != null
+                        ? contractorRepository.getOne(productDto.getContractorDto().getId())
+                        : null,
+                productDto.getAttributeOfCalculationObjectDto() != null
+                        ? attributeOfCalculationObjectRepository.getOne(productDto.getAttributeOfCalculationObjectDto().getId())
+                        : null,
                 images,
                 typeOfPrices
         ));
@@ -135,13 +142,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void update(ProductDto productDto) {
         List<TypeOfPrice> typeOfPrices = new ArrayList<>();
-        for (TypeOfPriceDto typeOfPriceDto : productDto.getTypeOfPriceDto()) {
-            typeOfPrices.add(typeOfPriceRepository.getOne(typeOfPriceDto.getId()));
+        if(productDto.getTypeOfPriceDto() != null) {
+            for (TypeOfPriceDto typeOfPriceDto : productDto.getTypeOfPriceDto()) {
+                typeOfPrices.add(typeOfPriceRepository.getOne(typeOfPriceDto.getId()));
+            }
         }
+
         List<Image> images = new ArrayList<>();
-        for (ImageDto imageDto : productDto.getImageDto()) {
-            images.add(imageRepository.getOne(imageDto.getId()));
+        if(productDto.getImageDto() != null) {
+            for (ImageDto imageDto : productDto.getImageDto()) {
+                images.add(imageRepository.getOne(imageDto.getId()));
+            }
         }
+
         productRepository.save(new Product(
                 productDto.getId(),
                 productDto.getName(),
@@ -149,14 +162,24 @@ public class ProductServiceImpl implements ProductService {
                 productDto.getVolume(),
                 productDto.getPurchasePrice(),
                 productDto.getDescription(),
-                unitRepository.getOne(productDto.getUnitDto().getId()),
+                productDto.getUnitDto() != null
+                        ? unitRepository.getOne(productDto.getUnitDto().getId())
+                        : null,
                 productDto.getArchive(),
-                contractorRepository.getOne(productDto.getContractorDto().getId()),
+                productDto.getContractorDto() != null
+                        ? contractorRepository.getOne(productDto.getContractorDto().getId())
+                        : null,
                 typeOfPrices,
-                taxSystemRepository.getOne(productDto.getTaxSystemDto().getId()),
+                productDto.getTaxSystemDto() != null
+                        ? taxSystemRepository.getOne(productDto.getTaxSystemDto().getId())
+                        : null,
                 images,
-                productGroupRepository.getOne(productDto.getProductGroupDto().getId()),
-                attributeOfCalculationObjectRepository.getOne(productDto.getAttributeOfCalculationObjectDto().getId())
+                productDto.getProductGroupDto() != null
+                        ? productGroupRepository.getOne(productDto.getProductGroupDto().getId())
+                        : null,
+                productDto.getAttributeOfCalculationObjectDto() != null
+                        ? attributeOfCalculationObjectRepository.getOne(productDto.getAttributeOfCalculationObjectDto().getId())
+                        : null
         ));
     }
 

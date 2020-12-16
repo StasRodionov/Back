@@ -51,10 +51,7 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long> {
             "p.contractor.email," +
             "p.contractor.address," +
             "p.contractor.commentToAddress," +
-            "p.contractor.comment, " +
-            "p.contractor.contractorGroup.id, " +
-            "p.contractor.typeOfContractor.id, " +
-            "p.contractor.typeOfPrice.id, " +
-            "p.contractor.legalDetail.id) from Product p where p.id = :id")
+            "p.contractor.comment" +
+            ") from Product p where p.id = :id")
     ContractorDto getContractorById(@Param("id") Long id);
 }
