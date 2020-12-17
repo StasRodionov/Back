@@ -1,21 +1,23 @@
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.Company;
+import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.PositionDto;
-import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
-import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
+import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.DepartmentService;
+import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.RoleService;
@@ -27,6 +29,7 @@ import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 
 @Component
 public class DataInitializer {
@@ -42,6 +45,8 @@ public class DataInitializer {
     private final TypeOfContractorService typeOfContractorService;
     private final TaxSystemService taxSystemService;
     private final ProductGroupService productGroupService;
+    private final CompanyService companyService;
+    private final LegalDetailService legalDetailService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
@@ -53,7 +58,9 @@ public class DataInitializer {
                            ContractorGroupService contractorGroupService,
                            TaxSystemService taxSystemService,
                            ProductGroupService productGroupService,
-                           TypeOfContractorService typeOfContractorService) {
+                           TypeOfContractorService typeOfContractorService,
+                           CompanyService companyService,
+                           LegalDetailService legalDetailService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -65,6 +72,8 @@ public class DataInitializer {
         this.typeOfContractorService = typeOfContractorService;
         this.taxSystemService = taxSystemService;
         this.productGroupService = productGroupService;
+        this.companyService = companyService;
+        this.legalDetailService = legalDetailService;
     }
 
     @PostConstruct
@@ -80,6 +89,7 @@ public class DataInitializer {
         initTypeOfContractors();
         initTaxSystems();
         initProductGroups();
+        initCompanies();
     }
 
     private void initTypeOfPrices() {
@@ -263,4 +273,37 @@ public class DataInitializer {
         productGroupService.create(productGroup15);
 
     }
+
+    private void initCompanies() {
+
+        LegalDetail legalDetail1 = new LegalDetail("Иванов", "Михаил", "Сергеевич", "г. Воронеж,ул Карла Маркса,46",
+                "comment to address", "3664069397", "79271669", "1053600591197",
+                "236467", (LocalDate.of(2020, 6, 12)), typeOfContractorService.getByName("Индивидуальный предприниматель"));
+
+        LegalDetail legalDetail2 = new LegalDetail("Гордон", "Андрей", "Анатольевич", "г. Москва, ул. Революции, д. 66",
+                "comment to address", "3664069439", "79271647", "1053600591285",
+                "432145", (LocalDate.of(2018, 2, 23)), typeOfContractorService.getByName("Юридическое лицо"));
+
+        LegalDetail legalDetail3 = new LegalDetail("Сергеева", "Мария", "Дмитриевна", "г. Краснодар, ул. 40 Лет Октября, д. 16",
+                "comment to address", "3664055588", "70713032", "1033600141277",
+                "342145", (LocalDate.of(2022, 4, 5)), typeOfContractorService.getByName("Физическое лицо"));
+
+        legalDetailService.create(legalDetail1);
+        legalDetailService.create(legalDetail2);
+        legalDetailService.create(legalDetail3);
+
+        companyService.create(new Company("OOO \"Организация №1\"", "7712345678", "1", "749512345678", "810-41-1234567890", "organization1@mail.com",
+                true, "123456, г. Москва, ул. Подвойского, д. 14, стр. 7", "something comment", "Петров Сергей Петрович", "Manager",
+                "leader signature", "Сергеев Петр Сергеевич", "chief signature", "stamp", legalDetail1));
+
+        companyService.create(new Company( "OOO \"Организация №2\"", "9543564455", "3", "733126789654", "920-12-2365723233", "organization2@mail.com",
+                true, "123498, г. Москва, ул. Тверская, д. 20", "something comment", "Иванова Мария Сергеевна", "Executive director",
+                "leader signature", "Соболев Николай Андреевич", "chief signature", "stamp", legalDetail2));
+
+        companyService.create(new Company( "OOO \"Организация №3\"", "3453123465", "3", "799123786542", "543-23-1234543221", "organization3@mail.com",
+                true, "432156, г. Самара, ул. Гагарина, д. 18", "something comment", "Сергеева Ксения Андреевна", "Project manager",
+                "leader signature", "Стрелецкая Анастасия Михайловна", "chief signature", "stamp", legalDetail3));
+
+    }
+
 }

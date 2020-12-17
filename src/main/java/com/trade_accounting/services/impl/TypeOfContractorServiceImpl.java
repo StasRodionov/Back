@@ -55,4 +55,9 @@ public class TypeOfContractorServiceImpl implements TypeOfContractorService {
     public void deleteById(Long id) {
         typeOfContractorRepository.deleteById(id);
     }
+
+    @Override
+    public TypeOfContractor getByName(String name){
+        return typeOfContractorRepository.getByName(name);
+    }
 }
