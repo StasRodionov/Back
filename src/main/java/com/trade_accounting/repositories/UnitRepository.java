@@ -17,4 +17,7 @@ public interface UnitRepository extends JpaRepository<Unit, Long> {
 
     @Query("select new com.trade_accounting.models.dto.UnitDto(e.id, e.shortName, e.fullName, e.sortNumber) from Unit e where e.id = :id")
     UnitDto getById(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.UnitDto(p.unit.id, p.unit.sortNumber, p.unit.fullName, p.unit.shortName) from Product p where p.id = :id")
+    UnitDto getUnitByProductId(@Param("id") Long id);
 }

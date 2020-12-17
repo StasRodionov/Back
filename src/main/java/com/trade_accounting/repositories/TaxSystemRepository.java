@@ -22,4 +22,10 @@ public interface TaxSystemRepository extends JpaRepository<TaxSystem, Long> {
             "ts.name, " +
             "ts.sortNumber) from TaxSystem ts where ts.id = :id")
     TaxSystemDto getById(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.TaxSystemDto(" +
+            "p.taxSystem.id, " +
+            "p.taxSystem.name, " +
+            "p.taxSystem.sortNumber) from Product p where p.id = :id")
+    TaxSystemDto getTaxSystemById(@Param("id") Long id);
 }

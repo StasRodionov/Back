@@ -41,4 +41,17 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long> {
             "e.comment) from Contractor e where e.id = :id")
     ContractorDto getById(@Param("id") Long id);
 
+    @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
+            "p.contractor.id," +
+            "p.contractor.inn," +
+            "p.contractor.name," +
+            "p.contractor.sortNumber," +
+            "p.contractor.phone," +
+            "p.contractor.fax," +
+            "p.contractor.email," +
+            "p.contractor.address," +
+            "p.contractor.commentToAddress," +
+            "p.contractor.comment" +
+            ") from Product p where p.id = :id")
+    ContractorDto getContractorById(@Param("id") Long id);
 }

@@ -29,4 +29,13 @@ public interface AttributeOfCalculationObjectRepository extends JpaRepository<At
             "from AttributeOfCalculationObject attribute " +
             "where attribute.id = :id")
     AttributeOfCalculationObjectDto getById(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.AttributeOfCalculationObjectDto(" +
+            "p.attributeOfCalculationObject.id, " +
+            "p.attributeOfCalculationObject.name, " +
+            "p.attributeOfCalculationObject.sortNumber, " +
+            "p.attributeOfCalculationObject.isService" +
+            ") " +
+            "from Product p where p.id = :id")
+    AttributeOfCalculationObjectDto getAttributeOfCalculationObjectById(@Param("id") Long id);
 }
