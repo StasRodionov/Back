@@ -102,4 +102,9 @@ public class CompanyServiceImpl implements CompanyService {
     public void deleteById(Long id) {
         companyRepository.deleteById(id);
     }
+
+    @Override
+    public void create(Company company) {
+        companyRepository.save(company);
+    }
 }

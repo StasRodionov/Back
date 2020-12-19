@@ -1,6 +1,11 @@
 package com.trade_accounting.models;
 
 
+import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.models.dto.TypeOfPriceDto;
+import com.trade_accounting.repositories.ImageRepository;
+import com.trade_accounting.repositories.ProductRepository;
+import com.trade_accounting.repositories.TypeOfPriceRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -68,4 +73,31 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private AttributeOfCalculationObject attributeOfCalculationObject;
 
+    public Product(String name,
+                   BigDecimal purchasePrice,
+                   String description,
+                   BigDecimal weight,
+                   BigDecimal volume,
+                   Boolean archive,
+                   Unit unit,
+                   ProductGroup productGroup,
+                   TaxSystem taxSystem,
+                   Contractor contractor,
+                   AttributeOfCalculationObject attributeOfCalculationObject,
+                   List<Image> images,
+                   List<TypeOfPrice> typeOfPrice) {
+        this.name = name;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.unit = unit;
+        this.archive = archive;
+        this.contractor = contractor;
+        this.taxSystem = taxSystem;
+        this.productGroup = productGroup;
+        this.attributeOfCalculationObject = attributeOfCalculationObject;
+        this.images = images;
+        this.typeOfPrices = typeOfPrice;
+    }
 }

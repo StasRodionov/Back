@@ -1,11 +1,13 @@
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.Company;
+import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.PositionDto;
-import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -13,6 +15,7 @@ import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
+import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
@@ -309,39 +312,74 @@ public class DataInitializer {
     }
 
     private void initProductGroups(){
-        ProductGroupDto productGroupDto1 = new ProductGroupDto("Товарная группа №1", "1" );
-        ProductGroupDto productGroupDto2 = new ProductGroupDto("Товарная группа №2", "2" );
-        ProductGroupDto productGroupDto3 = new ProductGroupDto("Товарная группа №3", "3" );
-        ProductGroupDto productGroupDto4 = new ProductGroupDto("Товарная группа №4", "4" );
-        ProductGroupDto productGroupDto5 = new ProductGroupDto("Товарная группа №5", "5" );
 
-        productGroupService.create(productGroupDto1);
-        productGroupService.create(productGroupDto2);
-        productGroupService.create(productGroupDto3);
-        productGroupService.create(productGroupDto4);
-        productGroupService.create(productGroupDto5);
+        ProductGroup productGroup1 = new ProductGroup("Товарная группа №1", "1" );
+        ProductGroup productGroup2 = new ProductGroup("Товарная группа №2", "2" );
+        ProductGroup productGroup3 = new ProductGroup("Товарная группа №3", "3" );
+        ProductGroup productGroup4 = new ProductGroup("Товарная группа №4", "4" );
+        ProductGroup productGroup5 = new ProductGroup("Товарная группа №5", "5" );
 
-        ProductGroupDto productGroupDto6 = new ProductGroupDto("Товарная группа №6", "6", productGroupDto1.getId() );
-        ProductGroupDto productGroupDto7 = new ProductGroupDto("Товарная группа №7", "7", productGroupDto6.getId() );
-        ProductGroupDto productGroupDto8 = new ProductGroupDto("Товарная группа №8", "8", productGroupDto2.getId() );
-        ProductGroupDto productGroupDto9 = new ProductGroupDto("Товарная группа №9", "9", productGroupDto7.getId() );
-        ProductGroupDto productGroupDto10 = new ProductGroupDto("Товарная группа №10", "10", productGroupDto3.getId() );
-        ProductGroupDto productGroupDto11 = new ProductGroupDto("Товарная группа №11", "11", productGroupDto8.getId() );
-        ProductGroupDto productGroupDto12 = new ProductGroupDto("Товарная группа №12", "12", productGroupDto4.getId() );
-        ProductGroupDto productGroupDto13 = new ProductGroupDto("Товарная группа №13", "13", productGroupDto9.getId() );
-        ProductGroupDto productGroupDto14 = new ProductGroupDto("Товарная группа №14", "14", productGroupDto5.getId() );
-        ProductGroupDto productGroupDto15 = new ProductGroupDto("Товарная группа №15", "15", productGroupDto10.getId() );
+        productGroupService.create(productGroup1);
+        productGroupService.create(productGroup2);
+        productGroupService.create(productGroup3);
+        productGroupService.create(productGroup4);
+        productGroupService.create(productGroup5);
 
-        productGroupService.create(productGroupDto6);
-        productGroupService.create(productGroupDto7);
-        productGroupService.create(productGroupDto8);
-        productGroupService.create(productGroupDto9);
-        productGroupService.create(productGroupDto10);
-        productGroupService.create(productGroupDto11);
-        productGroupService.create(productGroupDto12);
-        productGroupService.create(productGroupDto13);
-        productGroupService.create(productGroupDto14);
-        productGroupService.create(productGroupDto15);
+        ProductGroup productGroup6 = new ProductGroup("Товарная группа №6", "6", productGroup1 );
+        productGroupService.create(productGroup6);
+        ProductGroup productGroup7 = new ProductGroup("Товарная группа №7", "7", productGroup6);
+        productGroupService.create(productGroup7);
+        ProductGroup productGroup8 = new ProductGroup("Товарная группа №8", "8", productGroup2);
+        productGroupService.create(productGroup8);
+        ProductGroup productGroup9 = new ProductGroup("Товарная группа №9", "9", productGroup7);
+        productGroupService.create(productGroup9);
+        ProductGroup productGroup10 = new ProductGroup("Товарная группа №10", "10", productGroup3);
+        productGroupService.create(productGroup10);
+
+        ProductGroup productGroup11 = new ProductGroup("Товарная группа №11", "11", productGroup8);
+        ProductGroup productGroup12 = new ProductGroup("Товарная группа №12", "12", productGroup4);
+        ProductGroup productGroup13 = new ProductGroup("Товарная группа №13", "13", productGroup9);
+        ProductGroup productGroup14 = new ProductGroup("Товарная группа №14", "14", productGroup5);
+        ProductGroup productGroup15 = new ProductGroup("Товарная группа №15", "15", productGroup10);
+
+        productGroupService.create(productGroup11);
+        productGroupService.create(productGroup12);
+        productGroupService.create(productGroup13);
+        productGroupService.create(productGroup14);
+        productGroupService.create(productGroup15);
 
     }
+
+    private void initCompanies() {
+
+        LegalDetail legalDetail1 = new LegalDetail("Иванов", "Михаил", "Сергеевич", "г. Воронеж,ул Карла Маркса,46",
+                "comment to address", "3664069397", "79271669", "1053600591197",
+                "236467", (LocalDate.of(2020, 6, 12)), typeOfContractorService.getByName("Индивидуальный предприниматель"));
+
+        LegalDetail legalDetail2 = new LegalDetail("Гордон", "Андрей", "Анатольевич", "г. Москва, ул. Революции, д. 66",
+                "comment to address", "3664069439", "79271647", "1053600591285",
+                "432145", (LocalDate.of(2018, 2, 23)), typeOfContractorService.getByName("Юридическое лицо"));
+
+        LegalDetail legalDetail3 = new LegalDetail("Сергеева", "Мария", "Дмитриевна", "г. Краснодар, ул. 40 Лет Октября, д. 16",
+                "comment to address", "3664055588", "70713032", "1033600141277",
+                "342145", (LocalDate.of(2022, 4, 5)), typeOfContractorService.getByName("Физическое лицо"));
+
+        legalDetailService.create(legalDetail1);
+        legalDetailService.create(legalDetail2);
+        legalDetailService.create(legalDetail3);
+
+        companyService.create(new Company("OOO \"Организация №1\"", "7712345678", "1", "749512345678", "810-41-1234567890", "organization1@mail.com",
+                true, "123456, г. Москва, ул. Подвойского, д. 14, стр. 7", "something comment", "Петров Сергей Петрович", "Manager",
+                "leader signature", "Сергеев Петр Сергеевич", "chief signature", "stamp", legalDetail1));
+
+        companyService.create(new Company( "OOO \"Организация №2\"", "9543564455", "3", "733126789654", "920-12-2365723233", "organization2@mail.com",
+                true, "123498, г. Москва, ул. Тверская, д. 20", "something comment", "Иванова Мария Сергеевна", "Executive director",
+                "leader signature", "Соболев Николай Андреевич", "chief signature", "stamp", legalDetail2));
+
+        companyService.create(new Company( "OOO \"Организация №3\"", "3453123465", "3", "799123786542", "543-23-1234543221", "organization3@mail.com",
+                true, "432156, г. Самара, ул. Гагарина, д. 18", "something comment", "Сергеева Ксения Андреевна", "Project manager",
+                "leader signature", "Стрелецкая Анастасия Михайловна", "chief signature", "stamp", legalDetail3));
+
+    }
+
 }

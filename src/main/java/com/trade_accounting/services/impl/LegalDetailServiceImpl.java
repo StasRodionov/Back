@@ -90,4 +90,9 @@ public class LegalDetailServiceImpl implements LegalDetailService {
     public void deleteById(Long id) {
         legalDetailRepository.deleteById(id);
     }
+
+    @Override
+    public void create(LegalDetail legalDetail) {
+        legalDetailRepository.save(legalDetail);
+    }
 }
