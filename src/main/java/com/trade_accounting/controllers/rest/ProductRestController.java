@@ -8,10 +8,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * RestController для ProductDto с реализацией ProductService
+ *
+ * @author Sanych
+ * @see ProductService
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/product")
 public class ProductRestController {
+
     private final ProductService productService;
 
     public ProductRestController(ProductService productService) {
