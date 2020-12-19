@@ -3,6 +3,7 @@ package com.trade_accounting.config;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
+import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.RoleDto;
@@ -14,6 +15,8 @@ import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.DepartmentService;
+import com.trade_accounting.services.interfaces.EmployeeService;
+import com.trade_accounting.services.interfaces.ImageService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.RoleService;
@@ -25,6 +28,7 @@ import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Set;
 
 @Component
 public class DataInitializer {
@@ -40,6 +44,8 @@ public class DataInitializer {
     private final TypeOfContractorService typeOfContractorService;
     private final TaxSystemService taxSystemService;
     private final ProductGroupService productGroupService;
+    private final EmployeeService employeeService;
+    private final ImageService imageService;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
@@ -51,7 +57,9 @@ public class DataInitializer {
                            ContractorGroupService contractorGroupService,
                            TaxSystemService taxSystemService,
                            ProductGroupService productGroupService,
-                           TypeOfContractorService typeOfContractorService) {
+                           TypeOfContractorService typeOfContractorService,
+                           EmployeeService employeeService,
+                           ImageService imageService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -63,6 +71,8 @@ public class DataInitializer {
         this.typeOfContractorService = typeOfContractorService;
         this.taxSystemService = taxSystemService;
         this.productGroupService = productGroupService;
+        this.employeeService = employeeService;
+        this.imageService = imageService;
     }
 
     @PostConstruct
@@ -78,6 +88,81 @@ public class DataInitializer {
         initTypeOfContractors();
         initTaxSystems();
         initProductGroups();
+        initEmployees();
+    }
+
+    private void initEmployees() {
+        employeeService.create(new EmployeeDto(null,
+                "Vasiliev",
+                "Vasya",
+                "Vasilievich",
+                "1",
+                "+7(999)111-22-33",
+                "526317984689",
+                "Some special text about Vasya",
+                "vasyaogon@mail.ru",
+                "12345",
+                departmentService.getById(1L),
+                positionService.getById(1L),
+                (Set<RoleDto>) roleService.getById(1L),
+                imageService.getById(1L)));
+        employeeService.create(new EmployeeDto(null,
+                "Simonova",
+                "Sima",
+                "Semenovna",
+                "2",
+                "+7(999)222-11-33",
+                "526317984678",
+                "Some special text about Sima",
+                "simaogon@mail.ru",
+                "54321",
+                departmentService.getById(2L),
+                positionService.getById(2L),
+                (Set<RoleDto>) roleService.getById(2L),
+                imageService.getById(2L)));
+                ;
+        employeeService.create(new EmployeeDto(null,
+                "Belive",
+                "Vera",
+                "Henrichovna",
+                "3",
+                "+7(999)777-11-33",
+                "526317555678",
+                "Some special text about Vera",
+                "veraogon@mail.ru",
+                "76543",
+                departmentService.getById(3L),
+                positionService.getById(3L),
+                (Set<RoleDto>) roleService.getById(3L),
+                imageService.getById(3L)));
+        employeeService.create(new EmployeeDto(null,
+                "Islentiev",
+                "Karim",
+                "Dmitrievich",
+                "4",
+                "+7(999)222-77-00",
+                "526316666678",
+                "Some special text about Karim",
+                "karimogon@mail.ru",
+                "qwerty",
+                departmentService.getById(4L),
+                positionService.getById(4L),
+                (Set<RoleDto>) roleService.getById(4L),
+                imageService.getById(4L)));
+        employeeService.create(new EmployeeDto(null,
+                "Petko",
+                "Sasha",
+                "",
+                "5",
+                "+7(999)222-00-33",
+                "526317984600",
+                "Some special text about Sasha",
+                "sashaogon@mail.ru",
+                "asdfg",
+                departmentService.getById(5L),
+                positionService.getById(5L),
+                (Set<RoleDto>) roleService.getById(5L),
+                imageService.getById(5L)));
     }
 
     private void initTypeOfPrices() {
