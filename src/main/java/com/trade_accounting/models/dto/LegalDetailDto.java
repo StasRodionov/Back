@@ -1,5 +1,7 @@
 package com.trade_accounting.models.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.trade_accounting.config.LocalDateJsonSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +33,7 @@ public class LegalDetailDto {
 
     private String numberOfTheCertificate;
 
+    @JsonSerialize(using = LocalDateJsonSerializer.class)
     private LocalDate dateOfTheCertificate;
 
     private TypeOfContractorDto typeOfContractorDto;
