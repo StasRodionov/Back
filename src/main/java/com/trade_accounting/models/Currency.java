@@ -33,4 +33,15 @@ public class Currency {
 
     @Column(name = "letter_code")
     private String letterCode;
+
+    public Currency(String shortName, String digitalCode, String letterCode) {
+        this.shortName = shortName;
+        this.digitalCode = digitalCode;
+        this.letterCode = letterCode;
+    }
+
+    public Currency(String shortName, String fullName, String digitalCode, String letterCode){
+        this(shortName, digitalCode, letterCode);
+        this.fullName = fullName;
+    }
 }
