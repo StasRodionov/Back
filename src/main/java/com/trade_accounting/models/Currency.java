@@ -1,0 +1,36 @@
+package com.trade_accounting.models;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "currency")
+@Data
+public class Currency {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "short_name")
+    private String shortName;
+
+    @Column(name = "full_name")
+    private String fullName;
+
+    @Column(name = "digital_code")
+    private String digitalCode;
+
+    @Column(name = "letter_code")
+    private String letterCode;
+}
