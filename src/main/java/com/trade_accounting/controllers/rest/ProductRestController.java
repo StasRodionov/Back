@@ -4,7 +4,14 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.services.interfaces.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -42,21 +49,21 @@ public class ProductRestController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ProductDto dto) {
         productService.create(dto);
-        log.info("Записан новый экземпляр Product с id= {}, name= {}", dto.getId(), dto.getName());
+        log.info("Записан новый экземпляр ProductDto с id= {}, name= {}", dto.getId(), dto.getName());
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody ProductDto productDto) {
         productService.update(productDto);
-        log.info("Обновлен экземпляр Product с id= {}, name= {}", productDto.getId(), productDto.getName());
+        log.info("Обновлен экземпляр ProductDto с id= {}, name= {}", productDto.getId(), productDto.getName());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
         productService.deleteById(id);
-        log.info("Удален экземпляр Product с id= {}", id);
+        log.info("Удален экземпляр ProductDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }
