@@ -14,8 +14,8 @@ import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
+import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
-import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
@@ -31,7 +31,6 @@ import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.Set;
 
 @Component
 public class DataInitializer {
@@ -49,6 +48,7 @@ public class DataInitializer {
     private final ProductGroupService productGroupService;
     private final EmployeeService employeeService;
     private final ImageService imageService;
+    private final RoleRepository roleRepository;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
@@ -62,7 +62,7 @@ public class DataInitializer {
                            ProductGroupService productGroupService,
                            TypeOfContractorService typeOfContractorService,
                            EmployeeService employeeService,
-                           ImageService imageService) {
+                           ImageService imageService, RoleRepository roleRepository) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -76,6 +76,7 @@ public class DataInitializer {
         this.productGroupService = productGroupService;
         this.employeeService = employeeService;
         this.imageService = imageService;
+        this.roleRepository = roleRepository;
     }
 
     @PostConstruct
@@ -107,7 +108,7 @@ public class DataInitializer {
                 "12345",
                 departmentService.getById(1L),
                 positionService.getById(1L),
-                (Set<RoleDto>) roleService.getById(1L),
+                roleRepository.getRolesByEmployeeId(1L),
                 imageService.getById(1L)));
         employeeService.create(new EmployeeDto(null,
                 "Simonova",
@@ -121,9 +122,8 @@ public class DataInitializer {
                 "54321",
                 departmentService.getById(2L),
                 positionService.getById(2L),
-                (Set<RoleDto>) roleService.getById(2L),
+                roleService.getById(2L),
                 imageService.getById(2L)));
-                ;
         employeeService.create(new EmployeeDto(null,
                 "Belive",
                 "Vera",
@@ -134,10 +134,10 @@ public class DataInitializer {
                 "Some special text about Vera",
                 "veraogon@mail.ru",
                 "76543",
-                departmentService.getById(3L),
-                positionService.getById(3L),
-                (Set<RoleDto>) roleService.getById(3L),
-                imageService.getById(3L)));
+                departmentService.getById(5L),
+                positionService.getById(5L),
+                roleService.getById(2L),
+                imageService.getById(5L)));
         employeeService.create(new EmployeeDto(null,
                 "Islentiev",
                 "Karim",
@@ -150,7 +150,7 @@ public class DataInitializer {
                 "qwerty",
                 departmentService.getById(4L),
                 positionService.getById(4L),
-                (Set<RoleDto>) roleService.getById(4L),
+                roleService.getById(1L),
                 imageService.getById(4L)));
         employeeService.create(new EmployeeDto(null,
                 "Petko",
@@ -164,7 +164,7 @@ public class DataInitializer {
                 "asdfg",
                 departmentService.getById(5L),
                 positionService.getById(5L),
-                (Set<RoleDto>) roleService.getById(5L),
+                roleService.getById(2L),
                 imageService.getById(5L)));
     }
 
