@@ -3,6 +3,8 @@ package com.trade_accounting.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,7 +46,8 @@ public class Contract {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
-    @Column(name = "amount", columnDefinition = "money default 0.0")
+    @Column(name = "amount")
+    @ColumnDefault("0")
     private BigDecimal amount;
 
     @Column(name = "archive", columnDefinition = "boolean default false")
