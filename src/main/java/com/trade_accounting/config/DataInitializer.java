@@ -49,7 +49,6 @@ public class DataInitializer {
     private final ProductGroupService productGroupService;
     private final EmployeeService employeeService;
     private final ImageService imageService;
-    private final RoleRepository roleRepository;
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
@@ -63,7 +62,7 @@ public class DataInitializer {
                            ProductGroupService productGroupService,
                            TypeOfContractorService typeOfContractorService,
                            EmployeeService employeeService,
-                           ImageService imageService, RoleRepository roleRepository) {
+                           ImageService imageService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -77,7 +76,6 @@ public class DataInitializer {
         this.productGroupService = productGroupService;
         this.employeeService = employeeService;
         this.imageService = imageService;
-        this.roleRepository = roleRepository;
     }
 
     @PostConstruct
