@@ -31,6 +31,7 @@ import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
 
 @Component
 public class DataInitializer {
@@ -108,7 +109,7 @@ public class DataInitializer {
                 "12345",
                 departmentService.getById(1L),
                 positionService.getById(1L),
-                roleRepository.getRolesByEmployeeId(1L),
+                Collections.singleton(roleService.getById(1L)),
                 imageService.getById(1L)));
         employeeService.create(new EmployeeDto(null,
                 "Simonova",
@@ -122,7 +123,7 @@ public class DataInitializer {
                 "54321",
                 departmentService.getById(2L),
                 positionService.getById(2L),
-                roleService.getById(2L),
+                Collections.singleton(roleService.getById(2L)),
                 imageService.getById(2L)));
         employeeService.create(new EmployeeDto(null,
                 "Belive",
@@ -136,7 +137,7 @@ public class DataInitializer {
                 "76543",
                 departmentService.getById(5L),
                 positionService.getById(5L),
-                roleService.getById(2L),
+                Collections.singleton(roleService.getById(2L)),
                 imageService.getById(5L)));
         employeeService.create(new EmployeeDto(null,
                 "Islentiev",
@@ -150,7 +151,7 @@ public class DataInitializer {
                 "qwerty",
                 departmentService.getById(4L),
                 positionService.getById(4L),
-                roleService.getById(1L),
+                Collections.singleton(roleService.getById(1L)),
                 imageService.getById(4L)));
         employeeService.create(new EmployeeDto(null,
                 "Petko",
@@ -164,7 +165,7 @@ public class DataInitializer {
                 "asdfg",
                 departmentService.getById(5L),
                 positionService.getById(5L),
-                roleService.getById(2L),
+                Collections.singleton(roleService.getById(2L)),
                 imageService.getById(5L)));
     }
 
