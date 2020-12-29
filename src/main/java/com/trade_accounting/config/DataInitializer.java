@@ -54,9 +54,9 @@ public class DataInitializer {
     private final ProductGroupService productGroupService;
     private final CompanyService companyService;
     private final LegalDetailService legalDetailService;
-    private final ContractService contractService;
-    private final ContractorService contractorService;
-    private final BankAccountService bankAccountService;
+    private final ContractService contractService;  // удалить после тестирования
+    private final ContractorService contractorService;  // удалить после тестирования
+    private final BankAccountService bankAccountService;  // удалить после тестирования
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
@@ -84,9 +84,9 @@ public class DataInitializer {
         this.productGroupService = productGroupService;
         this.companyService = companyService;
         this.legalDetailService = legalDetailService;
-        this.contractService = contractService;
-        this.contractorService = contractorService;
-        this.bankAccountService = bankAccountService;
+        this.contractService = contractService;  // удалить после тестирования
+        this.contractorService = contractorService;  // удалить после тестирования
+        this.bankAccountService = bankAccountService;  // удалить после тестирования
     }
 
     @PostConstruct
@@ -103,10 +103,10 @@ public class DataInitializer {
         initTaxSystems();
         initProductGroups();
         initCompanies();
-        initContractContractorBankLegal();
+        initContractContractorBankLegal();  // удалить после тестирования
     }
 
-    //TODO удалить метод после рефакторинга
+    //TODO удалить метод и переменные после тестирования
     private void initContractContractorBankLegal() {
 
         LocalDate contractDate = LocalDate.now();
