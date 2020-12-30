@@ -135,7 +135,7 @@ public class DataInitializer {
                 "76543",
                 departmentService.getById(5L),
                 positionService.getById(5L),
-                Collections.singleton(roleService.getById(3L)),
+                Collections.singleton(roleService.getById(2L)),
                 imageService.getById(5L)));
         employeeService.create(new EmployeeDto(null,
                 "Islentiev",
@@ -149,7 +149,7 @@ public class DataInitializer {
                 "qwerty",
                 departmentService.getById(4L),
                 positionService.getById(4L),
-                Collections.singleton(roleService.getById(4L)),
+                Collections.singleton(roleService.getById(1L)),
                 imageService.getById(4L)));
         employeeService.create(new EmployeeDto(null,
                 "Petko",
@@ -163,7 +163,7 @@ public class DataInitializer {
                 "asdfg",
                 departmentService.getById(5L),
                 positionService.getById(5L),
-                Collections.singleton(roleService.getById(5L)),
+                Collections.singleton(roleService.getById(2L)),
                 imageService.getById(5L)));
     }
 
