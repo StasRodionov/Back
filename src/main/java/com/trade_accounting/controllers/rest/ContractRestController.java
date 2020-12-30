@@ -36,7 +36,7 @@ public class ContractRestController {
     @GetMapping("/{id}")
     ResponseEntity<ContractDto> getById(@PathVariable Long id) {
         ContractDto contractDto = contractService.getById(id);
-        log.info("Запрошен ContractorDto с id= {}", id);
+        log.info("Запрошен ContractDto с id= {}", id);
         return ResponseEntity.ok(contractDto);
     }
 

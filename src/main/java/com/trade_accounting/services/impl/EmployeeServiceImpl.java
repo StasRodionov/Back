@@ -95,7 +95,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                         ? departmentRepository.getOne(employeeDto.getDepartmentDto().getId())
                         : null,
                 employeeDto.getPositionDto() != null
-                        ? positionRepository.getOne(employeeDto.getDepartmentDto().getId())
+                        ? positionRepository.getOne(employeeDto.getPositionDto().getId())
                         : null,
                 roles,
                 employeeDto.getImageDto() != null
@@ -128,7 +128,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                         ? departmentRepository.getOne(employeeDto.getDepartmentDto().getId())
                         : null,
                 employeeDto.getPositionDto() != null
-                        ? positionRepository.getOne(employeeDto.getDepartmentDto().getId())
+                        ? positionRepository.getOne(employeeDto.getPositionDto().getId())
                         : null,
                 roles,
                 employeeDto.getImageDto() != null

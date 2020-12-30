@@ -20,7 +20,7 @@ public class UnitDto {
     public UnitDto(String shortName, String fullName, String sortNumber){
         this.shortName = shortName;
         this.fullName = fullName;
-        this.shortName = sortNumber;
+        this.sortNumber = sortNumber;
     }
 
 }

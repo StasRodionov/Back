@@ -4,6 +4,9 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
+import com.trade_accounting.models.dto.BankAccountDto;
+import com.trade_accounting.models.dto.ContractDto;
+import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
@@ -16,7 +19,11 @@ import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
+import com.trade_accounting.services.interfaces.BankAccountService;
+import com.trade_accounting.services.interfaces.CompanyService;
+import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
+import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.services.interfaces.ImageService;
@@ -31,7 +38,8 @@ import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.Collections;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Component
 public class DataInitializer {
@@ -47,8 +55,11 @@ public class DataInitializer {
     private final TypeOfContractorService typeOfContractorService;
     private final TaxSystemService taxSystemService;
     private final ProductGroupService productGroupService;
-    private final EmployeeService employeeService;
-    private final ImageService imageService;
+    private final CompanyService companyService;
+    private final LegalDetailService legalDetailService;
+    private final ContractService contractService;  // удалить после тестирования
+    private final ContractorService contractorService;  // удалить после тестирования
+    private final BankAccountService bankAccountService;  // удалить после тестирования
 
     public DataInitializer(TypeOfPriceService typeOfPriceService,
                            RoleService roleService,
@@ -61,8 +72,8 @@ public class DataInitializer {
                            TaxSystemService taxSystemService,
                            ProductGroupService productGroupService,
                            TypeOfContractorService typeOfContractorService,
-                           EmployeeService employeeService,
-                           ImageService imageService) {
+                           CompanyService companyService,
+                           LegalDetailService legalDetailService, ContractService contractService, ContractorService contractorService, BankAccountService bankAccountService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -74,8 +85,11 @@ public class DataInitializer {
         this.typeOfContractorService = typeOfContractorService;
         this.taxSystemService = taxSystemService;
         this.productGroupService = productGroupService;
-        this.employeeService = employeeService;
-        this.imageService = imageService;
+        this.companyService = companyService;
+        this.legalDetailService = legalDetailService;
+        this.contractService = contractService;  // удалить после тестирования
+        this.contractorService = contractorService;  // удалить после тестирования
+        this.bankAccountService = bankAccountService;  // удалить после тестирования
     }
 
     @PostConstruct
@@ -91,80 +105,17 @@ public class DataInitializer {
         initTypeOfContractors();
         initTaxSystems();
         initProductGroups();
-        initEmployees();
+        initCompanies();
+        initContractContractorBankLegal();  // удалить после тестирования
     }
 
-    private void initEmployees() {
-        employeeService.create(new EmployeeDto(null,
-                "Vasiliev",
-                "Vasya",
-                "Vasilievich",
-                "1",
-                "+7(999)111-22-33",
-                "526317984689",
-                "Some special text about Vasya",
-                "vasyaogon@mail.ru",
-                "12345",
-                departmentService.getById(1L),
-                positionService.getById(1L),
-                Collections.singleton(roleService.getById(1L)),
-                imageService.getById(1L)));
-        employeeService.create(new EmployeeDto(null,
-                "Simonova",
-                "Sima",
-                "Semenovna",
-                "2",
-                "+7(999)222-11-33",
-                "526317984678",
-                "Some special text about Sima",
-                "simaogon@mail.ru",
-                "54321",
-                departmentService.getById(2L),
-                positionService.getById(2L),
-                Collections.singleton(roleService.getById(2L)),
-                imageService.getById(2L)));
-        employeeService.create(new EmployeeDto(null,
-                "Belive",
-                "Vera",
-                "Henrichovna",
-                "3",
-                "+7(999)777-11-33",
-                "526317555678",
-                "Some special text about Vera",
-                "veraogon@mail.ru",
-                "76543",
-                departmentService.getById(5L),
-                positionService.getById(5L),
-                Collections.singleton(roleService.getById(2L)),
-                imageService.getById(5L)));
-        employeeService.create(new EmployeeDto(null,
-                "Islentiev",
-                "Karim",
-                "Dmitrievich",
-                "4",
-                "+7(999)222-77-00",
-                "526316666678",
-                "Some special text about Karim",
-                "karimogon@mail.ru",
-                "qwerty",
-                departmentService.getById(4L),
-                positionService.getById(4L),
-                Collections.singleton(roleService.getById(1L)),
-                imageService.getById(4L)));
-        employeeService.create(new EmployeeDto(null,
-                "Petko",
-                "Sasha",
-                "",
-                "5",
-                "+7(999)222-00-33",
-                "526317984600",
-                "Some special text about Sasha",
-                "sashaogon@mail.ru",
-                "asdfg",
-                departmentService.getById(5L),
-                positionService.getById(5L),
-                Collections.singleton(roleService.getById(2L)),
-                imageService.getById(5L)));
+    //TODO удалить метод и переменные после тестирования
+    private void initContractContractorBankLegal() {
+
+        LocalDate contractDate = LocalDate.now();
+        bankAccountService.create(new BankAccountDto(1L, "1", "sber", "some place", "1", "1", true, "1"));
+        contractorService.create(new ContractorDto(1L, "Сергей", "1111111111", "", "", "", "", "", "", ""));
+        contractService.create(new ContractDto(1L, "1", contractDate, 1L, 1L, 1L, BigDecimal.valueOf(200), false, "no comments", 1L));
     }
 
     private void initTypeOfPrices() {
@@ -177,11 +128,11 @@ public class DataInitializer {
         roleService.create(new RoleDto("user", "2"));
     }
 
-    private void initWarehouses(){
+    private void initWarehouses() {
         warehouseService.create(new WarehouseDto("Основной склад", "1"));
     }
 
-    private void initUnits(){
+    private void initUnits() {
         unitService.create(new UnitDto("мм", "Миллиметр", "1"));
         unitService.create(new UnitDto("см", "Сантиметр", "2"));
         unitService.create(new UnitDto("дм", "Дециметр", "3"));
@@ -243,7 +194,7 @@ public class DataInitializer {
         unitService.create(new UnitDto("блок", "Блок сигарет", "59"));
     }
 
-    private void initPositions(){
+    private void initPositions() {
         positionService.create(new PositionDto("Генеральный директор", "1"));
         positionService.create(new PositionDto("Коммерческий директор", "2"));
         positionService.create(new PositionDto("Финансовый директор", "3"));
@@ -278,7 +229,7 @@ public class DataInitializer {
         attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Иной предмет расчета", "9", false));
     }
 
-    private void initDepartments(){
+    private void initDepartments() {
         departmentService.create(new DepartmentDto("Руководство", "1"));
         departmentService.create(new DepartmentDto("Отдел бухгалтерии", "2"));
         departmentService.create(new DepartmentDto("Отдел закупок", "3"));
@@ -295,13 +246,13 @@ public class DataInitializer {
         contractorGroupService.create(new ContractorGroupDto("Поставщик", "2"));
     }
 
-    private void initTypeOfContractors(){
-        typeOfContractorService.create(new TypeOfContractorDto("Юридическое лицо","1"));
-        typeOfContractorService.create(new TypeOfContractorDto("Индивидуальный предприниматель","2"));
-        typeOfContractorService.create(new TypeOfContractorDto("Физическое лицо","3"));
+    private void initTypeOfContractors() {
+        typeOfContractorService.create(new TypeOfContractorDto("Юридическое лицо", "1"));
+        typeOfContractorService.create(new TypeOfContractorDto("Индивидуальный предприниматель", "2"));
+        typeOfContractorService.create(new TypeOfContractorDto("Физическое лицо", "3"));
     }
 
-    private void initTaxSystems(){
+    private void initTaxSystems() {
         taxSystemService.create(new TaxSystemDto("ОСН", "1"));
         taxSystemService.create(new TaxSystemDto("УСН.Доход", "2"));
         taxSystemService.create(new TaxSystemDto("УСН.Доход-Расход", "3"));
@@ -310,13 +261,13 @@ public class DataInitializer {
         taxSystemService.create(new TaxSystemDto("Патент", "6"));
     }
 
-    private void initProductGroups(){
+    private void initProductGroups() {
 
-        ProductGroup productGroup1 = new ProductGroup("Товарная группа №1", "1" );
-        ProductGroup productGroup2 = new ProductGroup("Товарная группа №2", "2" );
-        ProductGroup productGroup3 = new ProductGroup("Товарная группа №3", "3" );
-        ProductGroup productGroup4 = new ProductGroup("Товарная группа №4", "4" );
-        ProductGroup productGroup5 = new ProductGroup("Товарная группа №5", "5" );
+        ProductGroup productGroup1 = new ProductGroup("Товарная группа №1", "1");
+        ProductGroup productGroup2 = new ProductGroup("Товарная группа №2", "2");
+        ProductGroup productGroup3 = new ProductGroup("Товарная группа №3", "3");
+        ProductGroup productGroup4 = new ProductGroup("Товарная группа №4", "4");
+        ProductGroup productGroup5 = new ProductGroup("Товарная группа №5", "5");
 
         productGroupService.create(productGroup1);
         productGroupService.create(productGroup2);
@@ -324,7 +275,7 @@ public class DataInitializer {
         productGroupService.create(productGroup4);
         productGroupService.create(productGroup5);
 
-        ProductGroup productGroup6 = new ProductGroup("Товарная группа №6", "6", productGroup1 );
+        ProductGroup productGroup6 = new ProductGroup("Товарная группа №6", "6", productGroup1);
         productGroupService.create(productGroup6);
         ProductGroup productGroup7 = new ProductGroup("Товарная группа №7", "7", productGroup6);
         productGroupService.create(productGroup7);
@@ -371,11 +322,11 @@ public class DataInitializer {
                 true, "123456, г. Москва, ул. Подвойского, д. 14, стр. 7", "something comment", "Петров Сергей Петрович", "Manager",
                 "leader signature", "Сергеев Петр Сергеевич", "chief signature", "stamp", legalDetail1));
 
-        companyService.create(new Company( "OOO \"Организация №2\"", "9543564455", "3", "733126789654", "920-12-2365723233", "organization2@mail.com",
+        companyService.create(new Company("OOO \"Организация №2\"", "9543564455", "3", "733126789654", "920-12-2365723233", "organization2@mail.com",
                 true, "123498, г. Москва, ул. Тверская, д. 20", "something comment", "Иванова Мария Сергеевна", "Executive director",
                 "leader signature", "Соболев Николай Андреевич", "chief signature", "stamp", legalDetail2));
 
-        companyService.create(new Company( "OOO \"Организация №3\"", "3453123465", "3", "799123786542", "543-23-1234543221", "organization3@mail.com",
+        companyService.create(new Company("OOO \"Организация №3\"", "3453123465", "3", "799123786542", "543-23-1234543221", "organization3@mail.com",
                 true, "432156, г. Самара, ул. Гагарина, д. 18", "something comment", "Сергеева Ксения Андреевна", "Project manager",
                 "leader signature", "Стрелецкая Анастасия Михайловна", "chief signature", "stamp", legalDetail3));
 
