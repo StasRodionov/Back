@@ -48,12 +48,16 @@ public class ContractDto {
         this.id = id;
         this.number = number;
         this.contractDate = contractDate;
+        this.companyDto = new CompanyDto();
         this.companyDto.setId(companyId);
+        this.bankAccountDto = new BankAccountDto();
         this.bankAccountDto.setId(bankAccountId);
+        this.contractorDto = new ContractorDto();
         this.contractorDto.setId(contractorId);
         this.amount = amount;
         this.archive = archive;
         this.comment = comment;
+        this.legalDetailDto = new LegalDetailDto();
         this.legalDetailDto.setId(legalDetailId);
     }
 }
