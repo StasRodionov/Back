@@ -8,9 +8,11 @@ import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -23,12 +25,14 @@ import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.ContractorService;
+import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.services.interfaces.ImageService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
+import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.RoleService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
@@ -63,24 +67,29 @@ public class DataInitializer {
     private final BankAccountService bankAccountService;  // удалить после тестирования
     private final EmployeeService employeeService;
     private final ImageService imageService;
+    private final ProductService productService;
+    private final CurrencyService currencyService;
 
-    public DataInitializer(TypeOfPriceService typeOfPriceService,
-                           RoleService roleService,
-                           UnitService unitService,
-                           PositionService positionService,
-                           WarehouseService warehouseService,
-                           AttributeOfCalculationObjectService attributeOfCalculationObjectService,
-                           DepartmentService departmentService,
-                           ContractorGroupService contractorGroupService,
-                           TaxSystemService taxSystemService,
-                           ProductGroupService productGroupService,
-                           TypeOfContractorService typeOfContractorService,
-                           CompanyService companyService,
-                           LegalDetailService legalDetailService,
-                           ContractService contractService,
-                           ContractorService contractorService,
-                           BankAccountService bankAccountService,
-                           EmployeeService employeeService, ImageService imageService) {
+    public DataInitializer(
+            TypeOfPriceService typeOfPriceService,
+            RoleService roleService,
+            UnitService unitService,
+            PositionService positionService,
+            WarehouseService warehouseService,
+            AttributeOfCalculationObjectService attributeOfCalculationObjectService,
+            DepartmentService departmentService,
+            ContractorGroupService contractorGroupService,
+            TaxSystemService taxSystemService,
+            ProductGroupService productGroupService,
+            TypeOfContractorService typeOfContractorService,
+            CompanyService companyService,
+            LegalDetailService legalDetailService,
+            ContractService contractService,
+            ContractorService contractorService,
+            BankAccountService bankAccountService,
+            EmployeeService employeeService,
+            ImageService imageService,
+            ProductService productService, CurrencyService currencyService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -99,6 +108,8 @@ public class DataInitializer {
         this.bankAccountService = bankAccountService;  // удалить после тестирования
         this.employeeService = employeeService;
         this.imageService = imageService;
+        this.productService = productService;
+        this.currencyService = currencyService;
     }
 
     @PostConstruct
@@ -117,7 +128,23 @@ public class DataInitializer {
         initCompanies();
         initEmployees();
         initContractContractorBankLegal();  // удалить после тестирования
+        initProducts();
+        initCurrency();
     }
+
+    private void initCurrency() {
+        currencyService.create(new CurrencyDto("rubles", "Russian Rubles" ,"25", "rub"));
+        currencyService.create(new CurrencyDto("bel rubles", "Bellarusian Rubles","25", "belrub"));
+        currencyService.create(new CurrencyDto("eng dollar","USA Dollars ", "25", "dol"));
+
+    }
+    private void initProducts() {
+        productService.create(new ProductDto(1L, "Яблоки", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("53.123"), "Красные яблоки голден", false));
+        productService.create(new ProductDto(2L, "Бананы", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("153.123"), "Красные бананы голден", false));
+        productService.create(new ProductDto(3L, "Мандарины", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("523.123"), "Красные мандарины голден", false));
+
+    }
+
 
     //TODO удалить метод и переменные после тестирования
     private void initContractContractorBankLegal() {
