@@ -139,9 +139,9 @@ public class DataInitializer {
 
     }
     private void initProducts() {
-        productService.create(new ProductDto(1L, "Яблоки", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("53.123"), "Красные яблоки голден", false));
-        productService.create(new ProductDto(2L, "Бананы", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("153.123"), "Красные бананы голден", false));
-        productService.create(new ProductDto(3L, "Мандарины", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("523.123"), "Красные мандарины голден", false));
+        productService.create(new ProductDto( "Яблоки", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("53.123"), "Красные яблоки голден", false));
+        productService.create(new ProductDto("Бананы", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("153.123"), "Красные бананы голден", false));
+        productService.create(new ProductDto("Мандарины", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("523.123"), "Красные мандарины голден", false));
 
     }
 
