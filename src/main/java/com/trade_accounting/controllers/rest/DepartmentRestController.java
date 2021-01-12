@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/department")
 @Tag(name = "Department Rest Controller", description = "Контроллер с CRUD операциями для работы с подразделениями")
-@Api(value = "Department Rest Controller")
+@Api(tags = "Department Rest Controller")
 public class DepartmentRestController {
 
     private final DepartmentService departmentService;
