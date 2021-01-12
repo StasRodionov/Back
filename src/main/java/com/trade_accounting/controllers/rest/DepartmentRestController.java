@@ -33,7 +33,7 @@ public class DepartmentRestController {
     }
 
     @GetMapping
-    @ApiOperation(value = "getAll",notes = "Получить список всех подразделений", tags = "getAll")
+    @ApiOperation(value = "getAll",notes = "Получить список всех подразделений")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Успешное получение списка подразделений"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
@@ -46,7 +46,7 @@ public class DepartmentRestController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "getById",notes = "Получить информации о подразделении по его Id", tags = "getById")
+    @ApiOperation(value = "getById",notes = "Получить информации о подразделении по его Id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Информация о подразделении найдена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
@@ -59,7 +59,7 @@ public class DepartmentRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create",notes = "Создание информации о новом подразделении", tags = "create")
+    @ApiOperation(value = "create",notes = "Создание информации о новом подразделении")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Информация о подразделении успешно добавлена"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
@@ -73,7 +73,7 @@ public class DepartmentRestController {
     }
 
     @PutMapping
-    @ApiOperation(value = "update", notes = "Обновление данных о подразделении", tags="update")
+    @ApiOperation(value = "update", notes = "Обновление данных о подразделении")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Информация о подразделении успешно обновлена"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
@@ -87,7 +87,7 @@ public class DepartmentRestController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "deleteById", notes = "Удаление информации о подразделении по Id", tags = "delete")
+    @ApiOperation(value = "deleteById", notes = "Удаление информации о подразделении по Id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Информация о подразделении успешно удалена"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
@@ -99,5 +99,4 @@ public class DepartmentRestController {
         log.info("Удален экземпляр DepartmentDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
-
 }
