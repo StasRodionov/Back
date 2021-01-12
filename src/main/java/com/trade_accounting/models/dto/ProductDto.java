@@ -41,6 +41,20 @@ public class ProductDto {
 
     private AttributeOfCalculationObjectDto attributeOfCalculationObjectDto;
 
+    public ProductDto(String name,
+                      BigDecimal weight,
+                      BigDecimal volume,
+                      BigDecimal purchasePrice,
+                      String description,
+                      Boolean archive) {
+        this.name = name;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.archive = archive;
+    }
+
     public ProductDto(Long id,
                       String name,
                       BigDecimal weight,
@@ -48,12 +62,7 @@ public class ProductDto {
                       BigDecimal purchasePrice,
                       String description,
                       Boolean archive) {
+        this(name, weight, volume, purchasePrice, description, archive);
         this.id = id;
-        this.name = name;
-        this.weight = weight;
-        this.volume = volume;
-        this.purchasePrice = purchasePrice;
-        this.description = description;
-        this.archive = archive;
     }
 }
