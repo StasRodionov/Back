@@ -4,6 +4,7 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,7 +56,9 @@ public class EmployeeRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<EmployeeDto> getById(@PathVariable("id") Long id){
+    public ResponseEntity<EmployeeDto> getById(@ApiParam(name = "id",
+            value = "ID переданный в URL по которому необходимо найти работника")
+                                                   @PathVariable(name = "id") Long id){
         EmployeeDto employeeDto = employeeService.getById(id);
         log.info("Запрошен экземпляр EmployeeDto с id = {}", id);
         return ResponseEntity.ok(employeeDto);
@@ -71,7 +74,8 @@ public class EmployeeRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> create(@RequestBody EmployeeDto employeeDto){
+    public ResponseEntity<?> create(@ApiParam(name = "employeeDto", value = "DTO работника, который необходимо создать")
+                                        @RequestBody EmployeeDto employeeDto){
         employeeService.create(employeeDto);
         log.info("Записан новый экземпляр EmployeeDto");
         return ResponseEntity.ok().build();
@@ -86,7 +90,9 @@ public class EmployeeRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> update(@RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<?> update(@ApiParam(name = "employeeDto",
+            value = "DTO работника, c обновленными данными")
+                                        @RequestBody EmployeeDto employeeDto) {
         employeeService.update(employeeDto);
         log.info("Обновлен экземпляр EmployeeDto с id = {}", employeeDto.getId());
         return ResponseEntity.ok().build();
@@ -101,7 +107,9 @@ public class EmployeeRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteById(@ApiParam(name = "id",
+            value = "ID работника, которого необходимо удалить")
+                                            @PathVariable(name = "id") Long id) {
         employeeService.deleteById(id);
         log.info("Удален экземпляр EmployeeDto с id = {}", id);
         return ResponseEntity.ok().build();
