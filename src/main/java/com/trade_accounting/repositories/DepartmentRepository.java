@@ -30,6 +30,15 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
     DepartmentDto getById(@Param("id") Long id);
 
     @Query("select new com.trade_accounting.models.dto.DepartmentDto(" +
+            "d.id, " +
+            "d.name, " +
+            "d.sortNumber" +
+            ") " +
+            "from Department d " +
+            "where d.name = :name")
+    DepartmentDto getByName(@Param("name") String name);
+
+    @Query("select new com.trade_accounting.models.dto.DepartmentDto(" +
             "em.department.id, " +
             "em.department.name, " +
             "em.department.sortNumber" +

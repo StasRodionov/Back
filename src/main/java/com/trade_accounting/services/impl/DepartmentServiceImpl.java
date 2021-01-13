@@ -31,6 +31,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    public DepartmentDto getByName(String name) {
+        return departmentRepository.getByName(name);
+    }
+
+    @Override
     public void create(DepartmentDto departmentDto) {
         departmentRepository.save(
                 new Department(

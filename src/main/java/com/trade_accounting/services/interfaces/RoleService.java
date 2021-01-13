@@ -12,6 +12,8 @@ public interface RoleService {
 
     RoleDto getById(Long id);
 
+    RoleDto getByName(String name);
+
     void create(RoleDto roleDto);
 
     void update(RoleDto roleDto);

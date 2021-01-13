@@ -30,6 +30,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public RoleDto getByName(String name) {
+        return roleRepository.getByName(name);
+    }
+
+    @Override
     public void create(RoleDto roleDto) {
         roleRepository.save(new Role(roleDto.getName(), roleDto.getSortNumber()));
     }
