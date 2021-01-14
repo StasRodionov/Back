@@ -4,6 +4,7 @@ import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 @Slf4j
@@ -33,40 +35,45 @@ public class DepartmentRestController {
     }
 
     @GetMapping
-    @ApiOperation(value = "getAll",notes = "Получить список всех подразделений")
+    @ApiOperation(value = "getAll", notes = "Получить список всех подразделений")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Успешное получение списка подразделений"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
-    public ResponseEntity<List<DepartmentDto>> getAll(){
+    public ResponseEntity<List<DepartmentDto>> getAll() {
         List<DepartmentDto> departmentDtos = departmentService.getAll();
         log.info("Запрошен список DepartmentDto");
         return ResponseEntity.ok(departmentDtos);
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "getById",notes = "Получить информации о подразделении по его Id")
+    @ApiOperation(value = "getById", notes = "Получить информации о подразделении по его Id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Информация о подразделении найдена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
-    public ResponseEntity<DepartmentDto> getById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<DepartmentDto> getById(@ApiParam(
+            name = "id",
+            type = "Long",
+            value = "Переданный ID  в URL по которому необходимо найти подразделение",
+            example = "1",
+            required = true) @PathVariable(name = "id") Long id) {
         DepartmentDto departmentDto = departmentService.getById(id);
         log.info("Запрошен экземпляр DepartmentDto с id = {}", id);
         return ResponseEntity.ok(departmentDto);
     }
 
     @PostMapping
-    @ApiOperation(value = "create",notes = "Создание информации о новом подразделении")
+    @ApiOperation(value = "create", notes = "Создание информации о новом подразделении")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Информация о подразделении успешно добавлена"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
-    public ResponseEntity<?> create(@RequestBody DepartmentDto departmentDto){
+    public ResponseEntity<?> create(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо создать") @RequestBody DepartmentDto departmentDto) {
         departmentService.create(departmentDto);
         log.info("Записан новый экземпляр DepartmentDto");
         return ResponseEntity.ok().build();
@@ -80,7 +87,7 @@ public class DepartmentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
-    public ResponseEntity<?> update(@RequestBody DepartmentDto departmentDto) {
+    public ResponseEntity<?> update(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо обновить") @RequestBody DepartmentDto departmentDto) {
         departmentService.update(departmentDto);
         log.info("Обновлен экземпляр DepartmentDto");
         return ResponseEntity.ok().build();
@@ -94,7 +101,12 @@ public class DepartmentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
-    public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> deleteById(@ApiParam(
+            name = "id",
+            type = "Long",
+            value = "Переданный ID  в URL по которому необходимо удалить подразделение",
+            example = "1",
+            required = true) @PathVariable(name = "id") Long id) {
         departmentService.deleteById(id);
         log.info("Удален экземпляр DepartmentDto с id= {}", id);
         return ResponseEntity.ok().build();
