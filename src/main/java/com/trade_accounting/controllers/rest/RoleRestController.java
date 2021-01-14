@@ -4,6 +4,7 @@ import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.services.interfaces.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 @Slf4j
@@ -54,7 +56,12 @@ public class RoleRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<RoleDto> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<RoleDto> getById(@ApiParam(
+            name = "id",
+            type = "Long",
+            value = "Переданный ID  в URL по которому необходимо найти роль",
+            example = "1",
+            required = true) @PathVariable("id") Long id) {
         RoleDto roleDto = roleService.getById(id);
         log.info("Запрошен экземпляр RoleDto с id = {}", id);
         return ResponseEntity.ok(roleDto);
@@ -69,7 +76,8 @@ public class RoleRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")}
     )
-    public ResponseEntity<?> create(@RequestBody RoleDto roleDto) {
+    public ResponseEntity<?> create(@ApiParam(name = "roleDto",
+            value = "DTO роли, которую необходимо создать") @RequestBody RoleDto roleDto) {
         roleService.create(roleDto);
         log.info("Записан новый экземпляр - {}", roleDto);
         return ResponseEntity.ok().build();
@@ -82,10 +90,11 @@ public class RoleRestController {
             @ApiResponse(code = 201, message = "Запрос принят и данные обновлены"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
-            @ApiResponse(code = 404, message = "Данный контролер не найден")
-            }
+            @ApiResponse(code = 404, message = "Данный контролер не найден")}
     )
-    public ResponseEntity<?> update(@RequestBody RoleDto roleDto) {
+    public ResponseEntity<?> update(@ApiParam(name = "departmentDto",
+            value = "DTO роли, которую необходимо обновить")
+                                    @RequestBody RoleDto roleDto) {
         roleService.update(roleDto);
         log.info("Обновлен экземпляр RoleDto с id = {}", roleDto.getId());
         return ResponseEntity.ok().build();
@@ -98,10 +107,14 @@ public class RoleRestController {
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
-            @ApiResponse(code = 404, message = "Данный контролер не найден")
-            }
+            @ApiResponse(code = 404, message = "Данный контролер не найден")}
     )
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(@ApiParam(
+            name = "id",
+            type = "Long",
+            value = "Переданный ID  в URL по которому необходимо удалить роль",
+            example = "1",
+            required = true) @PathVariable("id") Long id) {
         roleService.deleteById(id);
         log.info("Удален экземпляр RoleDto с id = {}", id);
         return ResponseEntity.ok().build();
