@@ -92,7 +92,7 @@ public class RoleRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")}
     )
-    public ResponseEntity<?> update(@ApiParam(name = "departmentDto",
+    public ResponseEntity<?> update(@ApiParam(name = "roleDto",
             value = "DTO роли, которую необходимо обновить")
                                     @RequestBody RoleDto roleDto) {
         roleService.update(roleDto);
