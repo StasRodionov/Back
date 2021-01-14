@@ -4,6 +4,7 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.services.interfaces.ImageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,7 +56,13 @@ public class ImageRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ImageDto> getById(@PathVariable(name = "id") Long id) {
+
+    public ResponseEntity<ImageDto> getById(@ApiParam(
+            name = "id",
+            type = "Long",
+            value = "Переданный ID  в URL по которому необходимо найти фото",
+            example = "1",
+            required = true) @PathVariable(name = "id") Long id) {
         ImageDto image = imageService.getById(id);
         log.info("Запрошен экземпляр Image с id= {}", id);
         return ResponseEntity.ok(image);
@@ -70,7 +77,8 @@ public class ImageRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> create(@RequestBody ImageDto imageDto) {
+    public ResponseEntity<?> create(@ApiParam(name = "imageDto",
+            value = "DTO фото, который необходимо создать") @RequestBody ImageDto imageDto) {
         imageService.create(imageDto);
         log.info("Записан новый экземпляр Image c id= {}", imageDto.getId());
         return ResponseEntity.ok().build();
@@ -85,7 +93,8 @@ public class ImageRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> update(@RequestBody ImageDto imageDto) {
+    public ResponseEntity<?> update(@ApiParam(name = "imageDto",
+            value = "DTO Image, который необходимо обновить") @RequestBody ImageDto imageDto) {
         imageService.update(imageDto);
         log.info("Обновлен экземпляр Image с id= {}", imageDto.getId());
         return ResponseEntity.ok().build();
@@ -100,7 +109,12 @@ public class ImageRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> deleteById(@ApiParam(
+            name = "id",
+            type = "Long",
+            value = "Переданный ID  в URL по которому необходимо удалить фото",
+            example = "1",
+            required = true) @PathVariable(name = "id") Long id) {
         imageService.deleteById(id);
         log.info("Удален экземпляр Image с id= {}", id);
         return ResponseEntity.ok().build();
