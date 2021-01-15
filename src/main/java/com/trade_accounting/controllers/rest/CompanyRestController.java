@@ -4,6 +4,7 @@ import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.services.interfaces.CompanyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,7 +44,7 @@ public class CompanyRestController {
     )
     public ResponseEntity<List<CompanyDto>> getAll(){
         List<CompanyDto> companyDtos = companyService.getAll();
-        log.info("Запрошен список");
+        log.info("Запрошен список компаний");
         return ResponseEntity.ok(companyDtos);
     }
 
@@ -55,9 +56,11 @@ public class CompanyRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<CompanyDto> getById(@PathVariable("id") Long id){
+    public ResponseEntity<CompanyDto> getById(@ApiParam(name = "id", type = "Long",
+            value = "Переданный в URL id по которому необходимо найти компанию")
+                                                  @PathVariable(name = "id") Long id){
         CompanyDto companyDto = companyService.getById(id);
-        log.info("Запрошен экземпляр с id = {}", id);
+        log.info("Запрошен экземпляр компании с id = {}", id);
         return ResponseEntity.ok(companyDto);
     }
 
@@ -69,7 +72,9 @@ public class CompanyRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<CompanyDto> getByEmail(@PathVariable("email") String email){
+    public ResponseEntity<CompanyDto> getByEmail(@ApiParam(name = "email", type = "String",
+            value = "Переданный в URL email по которому необходимо найти компанию", required = true)
+                                                     @PathVariable(name = "email") String email){
         CompanyDto companyDto = companyService.getByEmail(email);
         log.info("Запрошен экземпляр с email = {}", email);
         return ResponseEntity.ok(companyDto);
@@ -84,9 +89,10 @@ public class CompanyRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> create(@RequestBody CompanyDto companyDto){
+    public ResponseEntity<?> create(@ApiParam(name = "companyDto", value = "DTO компании, которую необходимо создать")
+                                        @RequestBody CompanyDto companyDto){
         companyService.create(companyDto);
-        log.info("Записан новый экземпляр - {}", companyDto);
+        log.info("Записан новый экземпляр компании - {}", companyDto);
         return ResponseEntity.ok().build();
     }
 
@@ -99,9 +105,10 @@ public class CompanyRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> update(@RequestBody CompanyDto companyDto) {
+    public ResponseEntity<?> update(@ApiParam(name = "companyDto", value = "DTO компании, которую необходимо обновить")
+                                        @RequestBody CompanyDto companyDto) {
         companyService.update(companyDto);
-        log.info("Обновлен экземпляр с id = {}", companyDto.getId());
+        log.info("Обновлен экземпляр компании с id = {}", companyDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -114,9 +121,11 @@ public class CompanyRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteById(@ApiParam(name = "id", type = "Long",
+            value = "Переданный в URL id по которому необходимо удалить компанию")
+                                            @PathVariable(name = "id") Long id) {
         companyService.deleteById(id);
-        log.info("Удален экземпляр с id = {}", id);
+        log.info("Удален экземпляр компании с id = {}", id);
         return ResponseEntity.ok().build();
     }
 }
