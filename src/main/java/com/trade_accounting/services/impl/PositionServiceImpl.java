@@ -32,6 +32,11 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
+    public PositionDto getByName(String name) {
+        return positionRepository.getByName(name);
+    }
+
+    @Override
     public void create(PositionDto positionDto) {
         positionRepository.save(
                 new Position(

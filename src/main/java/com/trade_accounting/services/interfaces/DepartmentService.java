@@ -9,6 +9,8 @@ public interface DepartmentService {
 
     DepartmentDto getById(Long id);
 
+    DepartmentDto getByName(String name);
+
     void create(DepartmentDto departmentDto);
 
     void update(DepartmentDto departmentDto);
