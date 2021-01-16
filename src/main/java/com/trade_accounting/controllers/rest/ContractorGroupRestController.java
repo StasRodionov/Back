@@ -6,6 +6,7 @@ import com.trade_accounting.services.interfaces.ContractorGroupService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -58,7 +59,9 @@ public class ContractorGroupRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorGroupDto> getById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<ContractorGroupDto> getById(@ApiParam(name = "id", type = "Long",
+            value = "Переданный в URL id по которому необходимо найти группу")
+                                                      @PathVariable(name = "id") Long id) {
         ContractorGroupDto contractorGroupDto = contractorGroupService.getById(id);
         log.info("Запрошен экземпляр ContractorGroupDto с id= {}", id);
         return ResponseEntity.ok(contractorGroupDto);
@@ -73,7 +76,8 @@ public class ContractorGroupRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> create(@RequestBody ContractorGroupDto contractorGroupDto) {
+    public ResponseEntity<?> create(@ApiParam(name = "ContractorGroupDto", value = "DTO группы, которую необходимо создать")
+                                    @RequestBody ContractorGroupDto contractorGroupDto) {
         contractorGroupService.create(contractorGroupDto);
         log.info("Записан новый экземпляр ContractorGroupDto");
         return ResponseEntity.ok().build();
@@ -88,7 +92,8 @@ public class ContractorGroupRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> update(@RequestBody ContractorGroupDto contractorGroupDto) {
+    public ResponseEntity<?> update(@ApiParam(name = "ContractorGroupDto", value = "DTO группы, которую необходимо обновить")
+                                    @RequestBody ContractorGroupDto contractorGroupDto) {
         contractorGroupService.update(contractorGroupDto);
         log.info("Обновлен экземпляр ContractorGroupDto");
         return ResponseEntity.ok().build();
@@ -103,7 +108,9 @@ public class ContractorGroupRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> deleteById(@ApiParam(name = "id", type = "Long",
+            value = "Переданный в URL id по которому необходимо удалить групу")
+                                        @PathVariable(name = "id") Long id) {
         contractorGroupService.deleteById(id);
         log.info("Удален экземпляр ContractorGroupDto с id= {}", id);
         return ResponseEntity.ok().build();
