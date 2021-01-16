@@ -58,7 +58,9 @@ public class ContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorDto> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<ContractorDto> getById(@ApiParam(name = "id", type = "Long",
+            value = "Переданный в URL id по которому необходимо найти контрагента")
+                                                 @PathVariable("id") Long id) {
         ContractorDto contractorDto = contractorService.getById(id);
         log.info("Запрошен экземпляр ContractorDto с id= {}", id);
         return ResponseEntity.ok(contractorDto);
@@ -73,7 +75,8 @@ public class ContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorDto> create(@RequestBody ContractorDto contractorDto) {
+    public ResponseEntity<ContractorDto> create(@ApiParam(name = "ContractorDto", value = "DTO контрагента, которого необходимо создать")
+                                                @RequestBody ContractorDto contractorDto) {
         contractorService.create(contractorDto);
         log.info("Записан новый экземпляр {}", contractorDto.toString());
         return ResponseEntity.ok().build();
@@ -88,7 +91,8 @@ public class ContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorDto> update(@RequestBody ContractorDto contractorDto) {
+    public ResponseEntity<ContractorDto> update(@ApiParam(name = "ContractorDto", value = "DTO контрагента, которого необходимо обновить")
+                                                @RequestBody ContractorDto contractorDto) {
         contractorService.update(contractorDto);
         log.info("Обновлен экземпляр ContractorDto с id= {}", contractorDto.getId());
         return ResponseEntity.ok().build();
@@ -103,7 +107,9 @@ public class ContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorDto> deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<ContractorDto> deleteById(@ApiParam(name = "id", type = "Long",
+            value = "Переданный в URL id по которому необходимо удалить контрагента")
+                                                    @PathVariable("id") Long id) {
         contractorService.deleteById(id);
         log.info("Удален экземпляр ContractorDto с id= {}", id);
         return ResponseEntity.ok().build();
