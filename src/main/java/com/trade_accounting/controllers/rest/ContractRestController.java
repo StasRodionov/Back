@@ -68,7 +68,7 @@ public class ContractRestController {
     @ApiOperation(value = "create", notes = "Внесение нового контракта")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Контракт создан"),
-            @ApiResponse(code = 201, message = "Запрос принят и компания добавлена"),
+            @ApiResponse(code = 201, message = "Запрос принят и контракт добавлен"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
@@ -85,7 +85,7 @@ public class ContractRestController {
     @ApiOperation(value = "update", notes = "Изменение информации о контракте")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Информация о контракте обновлена"),
-            @ApiResponse(code = 201, message = "Запрос принят и данные о компании обновлены"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные о контракте обновлены"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
