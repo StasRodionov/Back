@@ -24,11 +24,24 @@ public class InvoiceDto {
 
     private boolean isSpend;
 
-    public InvoiceDto(LocalDateTime date, String typeOfInvoice, CompanyDto companyDto, ContractorDto contractorDto) {
+    public InvoiceDto(Long id, LocalDateTime date, String typeOfInvoice, Long companyId, Long contractorId, boolean isSpend) {
+        this.id = id;
         this.date = date;
         this.typeOfInvoice = typeOfInvoice;
-        this.companyDto = companyDto;
-        this.contractorDto = contractorDto;
+        this.companyDto = new CompanyDto();
+        this.companyDto.setId(companyId);
+        this.contractorDto = new ContractorDto();
+        this.contractorDto.setId(contractorId);
+        this.isSpend = isSpend;
+    }
+    public InvoiceDto(LocalDateTime date, String typeOfInvoice, Long companyId, Long contractorId, boolean isSpend) {
+        this.date = date;
+        this.typeOfInvoice = typeOfInvoice;
+        this.companyDto = new CompanyDto();
+        this.companyDto.setId(companyId);
+        this.contractorDto = new ContractorDto();
+        this.contractorDto.setId(contractorId);
+        this.isSpend = isSpend;
     }
 
 }

@@ -16,8 +16,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
             "e.id," +
             "e.date," +
             "e.typeOfInvoice," +
-            "e.company," +
-            "e.contractor," +
+            "e.company.id," +
+            "e.contractor.id," +
             "e.isSpend) from Invoice e")
     List<InvoiceDto> getAll();
 
@@ -26,8 +26,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
             "e.id," +
             "e.date," +
             "e.typeOfInvoice," +
-            "e.company," +
-            "e.contractor," +
+            "e.company.id," +
+            "e.contractor.id," +
             "e.isSpend) from Invoice e where e.id = :id")
     InvoiceDto getById(@Param("id") Long id);
 }
