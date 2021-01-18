@@ -24,7 +24,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "Product Group Rest Controller", description = "CRUD операции с продуктовыми группами")
+@Tag(name = "Product Group Rest Controller", description = "CRUD операции с товарными группами")
 @Api(tags = "Product Group Rest Controller")
 @RequestMapping("/api/productgroup")
 public class ProductGroupRestController {
@@ -36,9 +36,9 @@ public class ProductGroupRestController {
     }
 
     @GetMapping
-    @ApiOperation(value = "getAll", notes = "Получение списка всех продуктовых групп")
+    @ApiOperation(value = "getAll", notes = "Получение списка всех товарных групп")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка продуктовых групп"),
+            @ApiResponse(code = 200, message = "Успешное получение списка товарных групп"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")
@@ -50,15 +50,15 @@ public class ProductGroupRestController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "getById", notes = "Получение продуктовой группы по ее id")
+    @ApiOperation(value = "getById", notes = "Получение товарной группы по ее id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Продуктовая группа успешно найдена"),
+            @ApiResponse(code = 200, message = "Товарная группа успешно найдена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")
     })
     public ResponseEntity<ProductGroupDto> getById(@ApiParam(name = "id", type = "Long",
-            value = "Переданный в URL id по которому необходимо найти продуктовую группу")
+            value = "Переданный в URL id по которому необходимо найти товарную группу")
             @PathVariable(name = "id") Long id) {
         ProductGroupDto productGroup = productGroupService.getById(id);
         log.info("Запрошен экземпляр ProductGroupDto с id= {}", id);
@@ -66,16 +66,16 @@ public class ProductGroupRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Создание новой продуктовой группы")
+    @ApiOperation(value = "create", notes = "Создание новой товарной группы")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Аккаунт продуктовой группы создан"),
-            @ApiResponse(code = 201, message = "Запрос принят и продуктовая группа добавлена"),
+            @ApiResponse(code = 200, message = "Товарная группа записана"),
+            @ApiResponse(code = 201, message = "Запрос принят и товарная группа добавлена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> create(@ApiParam(name = "productGroupDto",
-            value = "DTO продуктовой группы, которую необходимо создать")
+            value = "DTO товарной группы, которую необходимо создать")
                                         @RequestBody ProductGroupDto productGroupDto){
         productGroupService.create(productGroupDto);
         log.info("Записан новый экземпляр ProductGroup с id= {}, name= {}", productGroupDto.getId(),
@@ -84,15 +84,15 @@ public class ProductGroupRestController {
     }
 
     @PutMapping
-    @ApiOperation(value = "update", notes = "Изменение информации о продуктовой группе")
+    @ApiOperation(value = "update", notes = "Изменение информации о товарной группе")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Информация о продуктовой группе обновлена"),
-            @ApiResponse(code = 201, message = "Запрос принят и данные о продуктовой группе обновлены"),
+            @ApiResponse(code = 200, message = "Информация о товарной группе обновлена"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные о товарной группе обновлены"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> update(@ApiParam(name = "ProductGroupDto", value = "DTO продуктовой группы, которую необходимо обновить")
+    public ResponseEntity<?> update(@ApiParam(name = "ProductGroupDto", value = "DTO товарной группы, которую необходимо обновить")
             @RequestBody ProductGroupDto productGroupDto) {
         productGroupService.update(productGroupDto);
         log.info("Обновлен экземпляр ProductGroup с id= {}, name= {}", productGroupDto.getId(), productGroupDto.getName());
@@ -100,16 +100,16 @@ public class ProductGroupRestController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "deleteById", notes = "Удаление продуктовой группы по ее id")
+    @ApiOperation(value = "deleteById", notes = "Удаление товарной группы по ее id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Аккаунт продуктовой группы удален"),
+            @ApiResponse(code = 200, message = "Запись о товарной группе удалена"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> deleteById(@ApiParam(name = "id", type = "Long",
-            value = "Переданный в URL id по которому необходимо удалить продуктовую группу")
+            value = "Переданный в URL id по которому необходимо удалить товарную группу")
             @PathVariable(name = "id") Long id) {
         productGroupService.deleteById(id);
         log.info("Удален экземпляр ProductGroup с id= {}", id);
