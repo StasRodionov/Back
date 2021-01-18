@@ -23,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "Contract Rest Controller", description = "CRUD  операции с контрактами")
+@Tag(name = "Contract Rest Controller", description = "CRUD  операции с договорами")
 @Api(tags = "Contract Rest Controller")
 @RequestMapping("/api/contract")
 public class ContractRestController {
@@ -35,9 +35,9 @@ public class ContractRestController {
     }
 
     @GetMapping
-    @ApiOperation(value = "getAll", notes = "Получение списка всех контрактов")
+    @ApiOperation(value = "getAll", notes = "Получение списка всех договоров")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка контрактов"),
+            @ApiResponse(code = 200, message = "Успешное получение списка договоров"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
@@ -49,15 +49,15 @@ public class ContractRestController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "getById", notes = "Получение контракта по его id")
+    @ApiOperation(value = "getById", notes = "Получение договора по его id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Контракт найден"),
+            @ApiResponse(code = 200, message = "Договор найден"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<ContractDto> getById(@ApiParam(name = "id", type = "Long",
-            value = "Переданный в URL id по которому необходимо найти контракт")
+            value = "Переданный в URL id по которому необходимо найти договор")
                                                    @PathVariable(name = "id") Long id) {
         ContractDto contractDto = contractService.getById(id);
         log.info("Запрошен ContractDto с id= {}", id);
@@ -65,16 +65,16 @@ public class ContractRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Внесение нового контракта")
+    @ApiOperation(value = "create", notes = "Внесение нового договора")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Контракт создан"),
-            @ApiResponse(code = 201, message = "Запрос принят и контракт добавлен"),
+            @ApiResponse(code = 200, message = "Договор создан"),
+            @ApiResponse(code = 201, message = "Запрос принят и договор добавлен"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<ContractDto> create(@ApiParam(name = "contractDto",
-            value = "DTO контракта, который необходимо создать")
+            value = "DTO договора, который необходимо создать")
                                                   @RequestBody ContractDto contractDto) {
         contractService.create(contractDto);
         log.info("Записан новый экземпляр - {}", contractDto.toString());
@@ -82,16 +82,16 @@ public class ContractRestController {
     }
 
     @PutMapping
-    @ApiOperation(value = "update", notes = "Изменение информации о контракте")
+    @ApiOperation(value = "update", notes = "Изменение информации о договоре")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Информация о контракте обновлена"),
-            @ApiResponse(code = 201, message = "Запрос принят и данные о контракте обновлены"),
+            @ApiResponse(code = 200, message = "Информация о договоре обновлена"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные о договоре обновлены"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<ContractDto> update(@ApiParam(name = "contractDto",
-            value = "DTO контракта, который необходимо обновить")
+            value = "DTO договора, который необходимо обновить")
                                                   @RequestBody ContractDto contractDto) {
         contractService.update(contractDto);
         log.info("Обновлен экземпляр ContractDto с id= {}", contractDto.getId());
@@ -99,16 +99,16 @@ public class ContractRestController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "deleteById", notes = "Удаление контракта по его id")
+    @ApiOperation(value = "deleteById", notes = "Удаление договора по его id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Контракт удален"),
+            @ApiResponse(code = 200, message = "Договор удален"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<ContractDto> deleteById(@ApiParam(name = "id", type = "Long",
-            value = "Переданный в URL id по которому необходимо удалить контракт")
+            value = "Переданный в URL id по которому необходимо удалить договор")
                                                       @PathVariable(name = "id") Long id) {
         contractService.deleteById(id);
         log.info("Удален экземпляр ContractDto с id= {}", id);
