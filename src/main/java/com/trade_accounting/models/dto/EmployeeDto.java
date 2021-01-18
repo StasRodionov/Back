@@ -1,14 +1,13 @@
 package com.trade_accounting.models.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.trade_accounting.models.Department;
+import com.trade_accounting.models.Image;
+import com.trade_accounting.models.Position;
+import com.trade_accounting.models.Role;
+
 import javax.validation.constraints.Pattern;
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class EmployeeDto {
 
     private Long id;
@@ -28,39 +27,18 @@ public class EmployeeDto {
 
     private String description;
 
+    private String image;
+
     private String email;
 
     private String password;
 
-    private DepartmentDto departmentDto;
+    private Department department;
 
-    private PositionDto positionDto;
+    private Position position;
 
-    private Set<RoleDto> roleDto;
+    private Set<Role> roles;
 
-    private ImageDto imageDto;
+    private Image images;
 
-    public EmployeeDto(Long id,
-                       String lastName,
-                       String firstName,
-                       String middleName,
-                       String sortNumber,
-                       String phone,
-                       @Pattern(regexp = "([0-9]+){12}") String inn,
-                       String description,
-                       String email,
-                       String password) {
-
-        this.id = id;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.sortNumber = sortNumber;
-        this.phone = phone;
-        this.inn = inn;
-        this.description = description;
-        this.email = email;
-        this.password = password;
-
-    }
 }

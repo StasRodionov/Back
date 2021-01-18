@@ -18,17 +18,17 @@ public class InvoiceDto {
     @NotNull
     private String typeOfInvoice;
     @NotNull
-    private CompanyDto company;
+    private CompanyDto companyDto;
     @NotNull
-    private ContractorDto contractor;
+    private ContractorDto contractorDto;
 
     private boolean isSpend;
 
-    public InvoiceDto(LocalDateTime date, String typeOfInvoice, CompanyDto company, ContractorDto contractor) {
+    public InvoiceDto(LocalDateTime date, String typeOfInvoice, CompanyDto companyDto, ContractorDto contractorDto) {
         this.date = date;
         this.typeOfInvoice = typeOfInvoice;
-        this.company = company;
-        this.contractor = contractor;
+        this.companyDto = companyDto;
+        this.contractorDto = contractorDto;
     }
 
 }
