@@ -1,8 +1,5 @@
 package com.trade_accounting.models.dto;
 
-import com.trade_accounting.models.Company;
-import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.TypeOfInvoice;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
