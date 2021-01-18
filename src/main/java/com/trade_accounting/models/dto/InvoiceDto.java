@@ -19,15 +19,15 @@ public class InvoiceDto {
     @NotNull
     private LocalDateTime date;
     @NotNull
-    private TypeOfInvoice typeOfInvoice;
+    private String typeOfInvoice;
     @NotNull
-    private Company company;
+    private CompanyDto company;
     @NotNull
-    private Contractor contractor;
+    private ContractorDto contractor;
 
     private boolean isSpend;
 
-    public InvoiceDto(LocalDateTime date, TypeOfInvoice typeOfInvoice, Company company, Contractor contractor) {
+    public InvoiceDto(LocalDateTime date, String typeOfInvoice, CompanyDto company, ContractorDto contractor) {
         this.date = date;
         this.typeOfInvoice = typeOfInvoice;
         this.company = company;
