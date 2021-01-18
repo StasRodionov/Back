@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.services.interfaces.WarehouseService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -22,6 +23,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Tag(name = "Warehouse Rest Controller", description = "CRUD операции со складами")
+@Api(tags = "Warehouse Account Rest Controller")
 @RequestMapping("/api/warehouse")
 public class WarehouseRestController {
 
@@ -104,3 +106,4 @@ public class WarehouseRestController {
         return ResponseEntity.ok().build();
     }
 }
+//
