@@ -38,9 +38,9 @@ public class AttributeOfCalculationObjectRestController {
     }
 
     @GetMapping
-    @ApiOperation(value = "getAll", notes = "Получение списка всех объектов")
+    @ApiOperation(value = "getAll", notes = "Получение списка всех Attribute Of Calculation")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка объектов"),
+            @ApiResponse(code = 200, message = "Успешное получение списка Attribute Of Calculation"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
@@ -52,9 +52,9 @@ public class AttributeOfCalculationObjectRestController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "getById", notes = "Получение объекта по id")
+    @ApiOperation(value = "getById", notes = "Получение Attribute Of Calculation по id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Объект найдена"),
+            @ApiResponse(code = 200, message = "Attribute Of Calculation найден"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
@@ -66,10 +66,10 @@ public class AttributeOfCalculationObjectRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Внесение нового объекта")
+    @ApiOperation(value = "create", notes = "Внесение нового Attribute Of Calculation")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Объект создан"),
-            @ApiResponse(code = 201, message = "Запрос принят и объект добавлен"),
+            @ApiResponse(code = 200, message = "Attribute Of Calculation создан"),
+            @ApiResponse(code = 201, message = "Запрос принят и Attribute Of Calculation добавлен"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
@@ -81,10 +81,10 @@ public class AttributeOfCalculationObjectRestController {
     }
 
     @PutMapping
-    @ApiOperation(value = "update", notes = "Изменение информации об объекте")
+    @ApiOperation(value = "update", notes = "Изменение информации об Attribute Of Calculation")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Информация о объекте обновлена"),
-            @ApiResponse(code = 201, message = "Запрос принят и данные об объекте обновлены"),
+            @ApiResponse(code = 200, message = "Информация об Attribute Of Calculation обновлена"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные об Attribute Of Calculation обновлены"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
@@ -98,7 +98,7 @@ public class AttributeOfCalculationObjectRestController {
     @DeleteMapping("/{id}")
     @ApiOperation(value = "deleteById", notes = "Удаление объекта по id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Объект удален"),
+            @ApiResponse(code = 200, message = "Attribute Of Calculation удален"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
