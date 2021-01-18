@@ -75,7 +75,7 @@ public class ContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorDto> create(@ApiParam(name = "ContractorDto", value = "DTO контрагента, которого необходимо создать")
+    public ResponseEntity<ContractorDto> create(@ApiParam(name = "contractorDto", value = "DTO контрагента, которого необходимо создать")
                                                 @RequestBody ContractorDto contractorDto) {
         contractorService.create(contractorDto);
         log.info("Записан новый экземпляр {}", contractorDto.toString());
@@ -91,7 +91,7 @@ public class ContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorDto> update(@ApiParam(name = "ContractorDto", value = "DTO контрагента, которого необходимо обновить")
+    public ResponseEntity<ContractorDto> update(@ApiParam(name = "contractorDto", value = "DTO контрагента, которого необходимо обновить")
                                                 @RequestBody ContractorDto contractorDto) {
         contractorService.update(contractorDto);
         log.info("Обновлен экземпляр ContractorDto с id= {}", contractorDto.getId());
@@ -99,9 +99,9 @@ public class ContractorRestController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "deleteById", notes = "Удаление компании по ее id")
+    @ApiOperation(value = "deleteById", notes = "Удаление контрагента по id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Аккаунт компании удален"),
+            @ApiResponse(code = 200, message = "Контрагент удален"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
