@@ -27,7 +27,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "Contractor Group Rest Controller", description = "CRUD  операции с продрядной группой")
+@Tag(name = "Contractor Group Rest Controller", description = "CRUD  операции с группой контрагентов")
 @Api(tags = "Contractor Group Rest Controller")
 @RequestMapping("/api/contractor/group")
 public class ContractorGroupRestController {
@@ -52,7 +52,7 @@ public class ContractorGroupRestController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "getById", notes = "Получение подрядной группы по ее id")
+    @ApiOperation(value = "getById", notes = "Получение группы контрагентов по ее id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Группа найдена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
@@ -68,7 +68,7 @@ public class ContractorGroupRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Внесение новой подрядной группы")
+    @ApiOperation(value = "create", notes = "Внесение новой группы контрагентов")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Группа создана"),
             @ApiResponse(code = 201, message = "Запрос принят и группа добавлена"),
@@ -100,9 +100,9 @@ public class ContractorGroupRestController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "deleteById", notes = "Удаление компании по ее id")
+    @ApiOperation(value = "deleteById", notes = "Удаление группы по ее id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Аккаунт компании удален"),
+            @ApiResponse(code = 200, message = "Группа удалена"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
