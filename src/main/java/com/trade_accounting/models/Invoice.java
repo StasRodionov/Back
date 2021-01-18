@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
  * @param typeOfInvoce - тип накладной (приход/расход)
  * @param company      - наименование компании
  * @param contractor   - контрагент
- * @param isSpend      - проведена/не проведена
  * @author Sanych
  * @see Invoice#Invoice(LocalDateTime, TypeOfInvoice, Company, Contractor)
  */
@@ -37,7 +36,7 @@ public class Invoice {
 
     @NotNull
     @Column(name = "type_of_invoice")
-    private TypeOfInvoice typeOfInvoice;
+    private String typeOfInvoice;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -51,7 +50,7 @@ public class Invoice {
     @ColumnDefault("false")
     private boolean isSpend;
 
-    public Invoice(@NotNull LocalDateTime date, @NotNull TypeOfInvoice typeOfInvoice,
+    public Invoice(@NotNull LocalDateTime date, @NotNull String typeOfInvoice,
                    @NotNull Company company, @NotNull Contractor contractor) {
         this.date = date;
         this.typeOfInvoice = typeOfInvoice;
