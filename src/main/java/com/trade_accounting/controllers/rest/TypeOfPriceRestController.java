@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -22,6 +23,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Tag(name = "Type of price Controller", description = "CRUD операции с TypeOfPrice")
+@Api(tags = "Type of price Rest Controller")
 @RequestMapping("/api/typeofprice")
 public class TypeOfPriceRestController {
 
