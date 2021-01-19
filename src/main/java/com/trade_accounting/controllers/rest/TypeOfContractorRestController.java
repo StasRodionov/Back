@@ -5,6 +5,7 @@ import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,7 +56,12 @@ public class TypeOfContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<TypeOfContractorDto> getById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<TypeOfContractorDto> getById(@ApiParam(
+            name = "id",
+            type = "Long",
+            value = "Переданный ID  в URL по которому необходимо найти тип контрагента",
+            example = "1",
+            required = true) @PathVariable(name = "id") Long id) {
         TypeOfContractorDto typeOfContractorDto = typeOfContractorService.getById(id);
         log.info("Запрошен экземпляр TypeOfContractorDto с id= {}", id);
         return ResponseEntity.ok(typeOfContractorDto);
@@ -70,7 +76,9 @@ public class TypeOfContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<?> create(@RequestBody TypeOfContractorDto typeOfContractorDto) {
+    public ResponseEntity<?> create(@ApiParam(name = "typeOfContractorDto",
+            value = "DTO типа контрагента, который необходимо создать")
+                                    @RequestBody TypeOfContractorDto typeOfContractorDto) {
         typeOfContractorService.create(typeOfContractorDto);
         log.info("Записан новый экземпляр TypeOfContractorDto");
         return ResponseEntity.ok().build();
@@ -85,7 +93,9 @@ public class TypeOfContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<?> update(@RequestBody TypeOfContractorDto typeOfContractorDto) {
+    public ResponseEntity<?> update(@ApiParam(name = "typeOfContractorDto",
+            value = "DTO типа контрагента, который необходимо обновить")
+                                    @RequestBody TypeOfContractorDto typeOfContractorDto) {
         typeOfContractorService.update(typeOfContractorDto);
         log.info("Обновлен экземпляр TypeOfContractorDto");
         return ResponseEntity.ok().build();
@@ -100,7 +110,12 @@ public class TypeOfContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> deleteById(@ApiParam(
+            name = "id",
+            type = "Long",
+            value = "Переданный ID  в URL по которому необходимо удалить тип контрагента",
+            example = "1",
+            required = true) @PathVariable(name = "id") Long id) {
         typeOfContractorService.deleteById(id);
         log.info("Удален экземпляр TypeOfContractorDto с id= {}", id);
         return ResponseEntity.ok().build();
