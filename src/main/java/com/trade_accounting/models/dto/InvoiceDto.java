@@ -1,5 +1,6 @@
 package com.trade_accounting.models.dto;
 
+import com.trade_accounting.models.TypeOfInvoice;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,19 +25,19 @@ public class InvoiceDto {
 
     private boolean isSpend;
 
-    public InvoiceDto(Long id, LocalDateTime date, String typeOfInvoice, Long companyId, Long contractorId, boolean isSpend) {
+    public InvoiceDto(Long id, LocalDateTime date, TypeOfInvoice typeOfInvoice, Long companyId, Long contractorId, boolean isSpend) {
         this.id = id;
         this.date = date;
-        this.typeOfInvoice = typeOfInvoice;
+        this.typeOfInvoice = typeOfInvoice.toString();
         this.companyDto = new CompanyDto();
         this.companyDto.setId(companyId);
         this.contractorDto = new ContractorDto();
         this.contractorDto.setId(contractorId);
         this.isSpend = isSpend;
     }
-    public InvoiceDto(LocalDateTime date, String typeOfInvoice, Long companyId, Long contractorId, boolean isSpend) {
+    public InvoiceDto(LocalDateTime date, TypeOfInvoice typeOfInvoice, Long companyId, Long contractorId, boolean isSpend) {
         this.date = date;
-        this.typeOfInvoice = typeOfInvoice;
+        this.typeOfInvoice = typeOfInvoice.toString();
         this.companyDto = new CompanyDto();
         this.companyDto.setId(companyId);
         this.contractorDto = new ContractorDto();

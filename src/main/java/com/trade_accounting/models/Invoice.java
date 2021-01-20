@@ -36,7 +36,7 @@ public class Invoice {
 
     @NotNull
     @Column(name = "type_of_invoice")
-    private String typeOfInvoice;
+    private TypeOfInvoice typeOfInvoice;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,7 +50,7 @@ public class Invoice {
     @ColumnDefault("false")
     private boolean isSpend;
 
-    public Invoice(@NotNull LocalDateTime date, @NotNull String typeOfInvoice,
+    public Invoice(@NotNull LocalDateTime date, @NotNull TypeOfInvoice typeOfInvoice,
                    @NotNull Company company, @NotNull Contractor contractor) {
         this.date = date;
         this.typeOfInvoice = typeOfInvoice;

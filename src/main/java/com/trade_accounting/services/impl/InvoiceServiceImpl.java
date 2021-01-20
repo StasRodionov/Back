@@ -18,6 +18,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final CompanyRepository companyRepository;
     private final ContractorRepository contractorRepository;
+    private final Invoice invoice = null;
 
     public InvoiceServiceImpl(InvoiceRepository invoiceRepository, CompanyRepository companyRepository, ContractorRepository contractorRepository) {
         this.invoiceRepository = invoiceRepository;
@@ -52,7 +53,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoiceRepository.save(
                 new Invoice(
                         invoiceDto.getDate(),
-                        invoiceDto.getTypeOfInvoice(),
+                        invoice.getTypeOfInvoice(),
                         companyRepository.getOne(invoiceDto.getCompanyDto().getId()),
                         contractorRepository.getOne(invoiceDto.getContractorDto().getId())));
     }
@@ -63,7 +64,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 new Invoice(
                         invoiceDto.getId(),
                         invoiceDto.getDate(),
-                        invoiceDto.getTypeOfInvoice(),
+                        invoice.getTypeOfInvoice(),
                         companyRepository.getOne(invoiceDto.getCompanyDto().getId()),
                         contractorRepository.getOne(invoiceDto.getContractorDto().getId()),
                         invoiceDto.isSpend()));
