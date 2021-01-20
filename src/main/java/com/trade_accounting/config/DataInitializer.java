@@ -11,8 +11,10 @@ import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
+import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -44,7 +46,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class DataInitializer {
@@ -133,16 +137,98 @@ public class DataInitializer {
     }
 
     private void initCurrency() {
-        currencyService.create(new CurrencyDto("rubles", "Russian Rubles" ,"25", "rub"));
-        currencyService.create(new CurrencyDto("bel rubles", "Bellarusian Rubles","25", "belrub"));
-        currencyService.create(new CurrencyDto("eng dollar","USA Dollars ", "25", "dol"));
+        currencyService.create(new CurrencyDto("rubles", "Russian Rubles", "25", "rub"));
+        currencyService.create(new CurrencyDto("bel rubles", "Bellarusian Rubles", "25", "belrub"));
+        currencyService.create(new CurrencyDto("eng dollar", "USA Dollars ", "25", "dol"));
 
     }
-    private void initProducts() {
-        productService.create(new ProductDto( "Яблоки", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("53.123"), "Красные яблоки голден", false));
-        productService.create(new ProductDto("Бананы", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("153.123"), "Красные бананы голден", false));
-        productService.create(new ProductDto("Мандарины", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("523.123"), "Красные мандарины голден", false));
 
+    private void initProducts() {
+        //productService.create(new ProductDto("Яблоки", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("53.123"), "Красные яблоки голден", false));
+       // productService.create(new ProductDto("Бананы", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("153.123"), "Красные бананы голден", false));
+       // productService.create(new ProductDto("Мандарины", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("523.123"), "Красные мандарины голден", false));
+
+        UnitDto unitDto = new UnitDto(1L,"кг", "Килограмм", "38");
+        unitService.create(unitDto);
+
+        ContractorDto contractorDto = new ContractorDto(1L, "ИП Иванов И.И.", "1234567890", "1","+79876543210",
+                "+79876543210", "mail@mail.ru", "ул. Ленина, д.1", "пл. Ленина", "комментарий");
+        contractorService.create(contractorDto);
+
+        TypeOfPriceDto typeOfPriceDto1 = new TypeOfPriceDto("Оптовая цена", "1");
+        TypeOfPriceDto typeOfPriceDto2 = new TypeOfPriceDto("Розничная цена", "2");
+        List<TypeOfPriceDto> typeOfPriceDto = new ArrayList<>();
+        typeOfPriceDto.add(typeOfPriceDto1);
+        typeOfPriceDto.add(typeOfPriceDto2);
+        typeOfPriceService.create(typeOfPriceDto2);
+
+        TaxSystemDto taxSystemDto = new TaxSystemDto("ОСН", "1");
+        taxSystemService.create(taxSystemDto);
+
+        ImageDto imageDto1 = new ImageDto(1L, "http://imageurl1.com", "1");
+        ImageDto imageDto2 = new ImageDto(2L, "http://imageurl2.com", "2");
+        List<ImageDto> imageDto = new ArrayList<>();
+        imageDto.add(imageDto1);
+        imageDto.add(imageDto2);
+        imageService.create(imageDto1);
+
+        ProductGroupDto productGroupDto = new ProductGroupDto("Товарная группа №1", "1");
+        productGroupService.create(productGroupDto);
+
+        AttributeOfCalculationObjectDto attributeOfCalculationObjectDto = new AttributeOfCalculationObjectDto("Товар", "6", false);
+        attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto);
+
+        for (int i = 0; i < 350; i++) {
+
+            productService.create(new ProductDto(
+                    1L,
+                    "Яблоки",
+                    new BigDecimal("1.0"),
+                    new BigDecimal("1.0"),
+                    new BigDecimal("11.111"),
+                    "Красные яблоки голден",
+                    unitDto,
+                    false,
+                    contractorDto,
+                    typeOfPriceDto,
+                    taxSystemDto,
+                    imageDto,
+                    productGroupDto,
+                    attributeOfCalculationObjectDto
+            ));
+            productService.create(new ProductDto(
+                    2L,
+                    "Бананы",
+                    new BigDecimal("1.0"),
+                    new BigDecimal("1.0"),
+                    new BigDecimal("22.222"),
+                    "Красные Бананы голден",
+                    unitDto,
+                    false,
+                    contractorDto,
+                    typeOfPriceDto,
+                    taxSystemDto,
+                    imageDto,
+                    productGroupDto,
+                    attributeOfCalculationObjectDto
+            ));
+            productService.create(new ProductDto(
+                    3L,
+                    "Мандарины",
+                    new BigDecimal("1.0"),
+                    new BigDecimal("1.0"),
+                    new BigDecimal("33.333"),
+                    "Красные Мандарины голден",
+                    unitDto,
+                    false,
+                    contractorDto,
+                    typeOfPriceDto,
+                    taxSystemDto,
+                    imageDto,
+                    productGroupDto,
+                    attributeOfCalculationObjectDto
+            ));
+        }
     }
 
 
@@ -413,32 +499,32 @@ public class DataInitializer {
 
     private void initCompanies() {
 
-            LegalDetail legalDetail1 = new LegalDetail("Иванов", "Михаил", "Сергеевич", "г. Воронеж,ул Карла Маркса,46",
-                    "comment to address", "3664069397", "79271669", "1053600591197",
-                    "236467", (LocalDate.of(2020, 6, 12)), typeOfContractorService.getByName("Индивидуальный предприниматель"));
+        LegalDetail legalDetail1 = new LegalDetail("Иванов", "Михаил", "Сергеевич", "г. Воронеж,ул Карла Маркса,46",
+                "comment to address", "3664069397", "79271669", "1053600591197",
+                "236467", (LocalDate.of(2020, 6, 12)), typeOfContractorService.getByName("Индивидуальный предприниматель"));
 
-            LegalDetail legalDetail2 = new LegalDetail("Гордон", "Андрей", "Анатольевич", "г. Москва, ул. Революции, д. 66",
-                    "comment to address", "3664069439", "79271647", "1053600591285",
-                    "432145", (LocalDate.of(2018, 2, 23)), typeOfContractorService.getByName("Юридическое лицо"));
+        LegalDetail legalDetail2 = new LegalDetail("Гордон", "Андрей", "Анатольевич", "г. Москва, ул. Революции, д. 66",
+                "comment to address", "3664069439", "79271647", "1053600591285",
+                "432145", (LocalDate.of(2018, 2, 23)), typeOfContractorService.getByName("Юридическое лицо"));
 
-            LegalDetail legalDetail3 = new LegalDetail("Сергеева", "Мария", "Дмитриевна", "г. Краснодар, ул. 40 Лет Октября, д. 16",
-                    "comment to address", "3664055588", "70713032", "1033600141277",
-                    "342145", (LocalDate.of(2022, 4, 5)), typeOfContractorService.getByName("Физическое лицо"));
+        LegalDetail legalDetail3 = new LegalDetail("Сергеева", "Мария", "Дмитриевна", "г. Краснодар, ул. 40 Лет Октября, д. 16",
+                "comment to address", "3664055588", "70713032", "1033600141277",
+                "342145", (LocalDate.of(2022, 4, 5)), typeOfContractorService.getByName("Физическое лицо"));
 
-            legalDetailService.create(legalDetail1);
-            legalDetailService.create(legalDetail2);
-            legalDetailService.create(legalDetail3);
+        legalDetailService.create(legalDetail1);
+        legalDetailService.create(legalDetail2);
+        legalDetailService.create(legalDetail3);
 
         for (int i = 0; i < 110; i++) {
-            companyService.create(new Company("OOO \"Организация №1\"", "7712345"+i, "1", "749512345678", "810-41-1234567890", "organization1@mail.com",
+            companyService.create(new Company("OOO \"Организация №1\"", "7712345" + i, "1", "749512345678", "810-41-1234567890", "organization1@mail.com",
                     true, "123456, г. Москва, ул. Подвойского, д. 14, стр. 7", "something comment", "Петров Сергей Петрович", "Manager",
                     "leader signature", "Сергеев Петр Сергеевич", "chief signature", "stamp", legalDetail1));
 
-            companyService.create(new Company("OOO \"Организация №2\"", "9543564"+i+1, "3", "733126789654", "920-12-2365723233", "organization2@mail.com",
+            companyService.create(new Company("OOO \"Организация №2\"", "9543564" + i + 1, "3", "733126789654", "920-12-2365723233", "organization2@mail.com",
                     true, "123498, г. Москва, ул. Тверская, д. 20", "something comment", "Иванова Мария Сергеевна", "Executive director",
                     "leader signature", "Соболев Николай Андреевич", "chief signature", "stamp", legalDetail2));
 
-            companyService.create(new Company("OOO \"Организация №3\"", "3453123465"+i+2, "3", "799123786542", "543-23-1234543221", "organization3@mail.com",
+            companyService.create(new Company("OOO \"Организация №3\"", "3453123465" + i + 2, "3", "799123786542", "543-23-1234543221", "organization3@mail.com",
                     true, "432156, г. Самара, ул. Гагарина, д. 18", "something comment", "Сергеева Ксения Андреевна", "Project manager",
                     "leader signature", "Стрелецкая Анастасия Михайловна", "chief signature", "stamp", legalDetail3));
         }
