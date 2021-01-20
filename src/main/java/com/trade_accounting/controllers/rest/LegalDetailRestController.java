@@ -41,7 +41,7 @@ public class LegalDetailRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    ResponseEntity<List<LegalDetailDto>> getAll() {
+    public ResponseEntity<List<LegalDetailDto>> getAll() {
         List<LegalDetailDto> legalDetailDtoList = legalDetailService.getAll();
         log.info("Запрошен список LegalDetailDto");
         return ResponseEntity.ok(legalDetailDtoList);
@@ -55,7 +55,7 @@ public class LegalDetailRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    ResponseEntity<LegalDetailDto> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<LegalDetailDto> getById(@PathVariable("id") Long id) {
         LegalDetailDto legalDetailDto = legalDetailService.getById(id);
         log.info("Запрошен экземпляр LegalDetailDto с id= {}", id);
         return ResponseEntity.ok(legalDetailDto);
@@ -70,7 +70,7 @@ public class LegalDetailRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    ResponseEntity<LegalDetailDto> create(@RequestBody LegalDetailDto legalDetailDto) {
+    public ResponseEntity<LegalDetailDto> create(@RequestBody LegalDetailDto legalDetailDto) {
         legalDetailService.create(legalDetailDto);
         log.info("Записан новый экземпляр LegalDetailDto - {}", legalDetailDto);
         return ResponseEntity.ok().build();
@@ -85,7 +85,7 @@ public class LegalDetailRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    ResponseEntity<LegalDetailService> update(@RequestBody LegalDetailDto legalDetailDto) {
+    public ResponseEntity<LegalDetailService> update(@RequestBody LegalDetailDto legalDetailDto) {
         legalDetailService.update(legalDetailDto);
         log.info("Обновлен экземпляр LegalDetailDto - {}", legalDetailDto);
         return ResponseEntity.ok().build();
@@ -100,7 +100,7 @@ public class LegalDetailRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    ResponseEntity<LegalDetailDto> deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<LegalDetailDto> deleteById(@PathVariable("id") Long id) {
         legalDetailService.deleteById(id);
         log.info("Удален экземпляр LegalDetailDto с id= {}", id);
         return ResponseEntity.ok().build();
