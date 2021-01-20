@@ -4,6 +4,7 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,7 +56,9 @@ public class LegalDetailRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<LegalDetailDto> getById(@PathVariable("id") Long id) {
+
+    public ResponseEntity<LegalDetailDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти юридическую информацию о подрядчике")
+                                                  @PathVariable("id") Long id) {
         LegalDetailDto legalDetailDto = legalDetailService.getById(id);
         log.info("Запрошен экземпляр LegalDetailDto с id= {}", id);
         return ResponseEntity.ok(legalDetailDto);
@@ -70,7 +73,8 @@ public class LegalDetailRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<LegalDetailDto> create(@RequestBody LegalDetailDto legalDetailDto) {
+    public ResponseEntity<LegalDetailDto> create(@ApiParam(name = "legalDetailDto", value = "DTO юридической информации о подрядчике, который необходимо создать")
+                                                 @RequestBody LegalDetailDto legalDetailDto) {
         legalDetailService.create(legalDetailDto);
         log.info("Записан новый экземпляр LegalDetailDto - {}", legalDetailDto);
         return ResponseEntity.ok().build();
@@ -85,7 +89,8 @@ public class LegalDetailRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<LegalDetailService> update(@RequestBody LegalDetailDto legalDetailDto) {
+    public ResponseEntity<LegalDetailService> update(@ApiParam(name = "legalDetailDto", value = "DTO юридической информации о подрядчике с обновленными данными")
+                                                     @RequestBody LegalDetailDto legalDetailDto) {
         legalDetailService.update(legalDetailDto);
         log.info("Обновлен экземпляр LegalDetailDto - {}", legalDetailDto);
         return ResponseEntity.ok().build();
@@ -100,7 +105,8 @@ public class LegalDetailRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<LegalDetailDto> deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<LegalDetailDto> deleteById(@ApiParam(name = "id", value = "ID юридической информации о подрядчике, которую необходимо удалить")
+                                                     @PathVariable("id") Long id) {
         legalDetailService.deleteById(id);
         log.info("Удален экземпляр LegalDetailDto с id= {}", id);
         return ResponseEntity.ok().build();
