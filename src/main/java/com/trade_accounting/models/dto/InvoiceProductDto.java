@@ -13,7 +13,8 @@ public class InvoiceProductDto {
 
     private Long id;
 
-    private String invoiceDto; // todo: заменить String на InvoiceDto после реализации InvoiceDto
+    private String invoiceDto;
+    // todo: заменить String на InvoiceDto после реализации InvoiceDto
 
     private ProductDto productDto;
 
@@ -21,7 +22,8 @@ public class InvoiceProductDto {
 
     private BigDecimal price;
 
-    public InvoiceProductDto(String invoiceDto, // todo: заменить String на InvoiceDto после реализации InvoiceDto
+    public InvoiceProductDto(String invoiceDto,
+                             // todo: заменить String на InvoiceDto после реализации InvoiceDto
                              ProductDto productDto,
                              BigDecimal amount,
                              BigDecimal price) {
@@ -32,7 +34,8 @@ public class InvoiceProductDto {
     }
 
     public InvoiceProductDto(Long id,
-                             String invoiceDto, // todo: заменить String на InvoiceDto после реализации InvoiceDto
+                             String invoiceDto,
+                             // todo: заменить String на InvoiceDto после реализации InvoiceDto
                              ProductDto productDto,
                              BigDecimal amount,
                              BigDecimal price) {
