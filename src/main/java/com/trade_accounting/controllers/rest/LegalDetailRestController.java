@@ -23,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "Legal Detail Rest Controller", description = "CRUD  операции с юридической информацией о подрядчике")
+@Tag(name = "Legal Detail Rest Controller", description = "CRUD  операции с юридическими реквизитами")
 @Api(tags = "Legal Detail Rest Controller")
 @RequestMapping("/api/legaldetail")
 public class LegalDetailRestController {
@@ -35,9 +35,9 @@ public class LegalDetailRestController {
     }
 
     @GetMapping
-    @ApiOperation(value = "getAll", notes = "Получение списка всей юридической информации о подрядчиках")
+    @ApiOperation(value = "getAll", notes = "Получение списка всей юридических реквизитов")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка всей юридической информации о подрядчиках"),
+            @ApiResponse(code = 200, message = "Успешное получение списка всех юридических реквизитов"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
@@ -49,15 +49,15 @@ public class LegalDetailRestController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "getById", notes = "Получение юридической информации о подрядчике по id")
+    @ApiOperation(value = "getById", notes = "Получение юридических реквизитов по id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Юридическая информация о подрядчике не найдена"),
+            @ApiResponse(code = 200, message = "Юридические реквизиты не найдены"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
 
-    public ResponseEntity<LegalDetailDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти юридическую информацию о подрядчике")
+    public ResponseEntity<LegalDetailDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти юридические реквизиты")
                                                   @PathVariable("id") Long id) {
         LegalDetailDto legalDetailDto = legalDetailService.getById(id);
         log.info("Запрошен экземпляр LegalDetailDto с id= {}", id);
@@ -65,15 +65,15 @@ public class LegalDetailRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Внесение новой юридической информации о подрядчике")
+    @ApiOperation(value = "create", notes = "Внесение новых юридических реквизитов")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Запись юридической информации о подрядчике создана"),
-            @ApiResponse(code = 201, message = "Запрос принят и юридическая информация о подрядчике добавлена"),
+            @ApiResponse(code = 200, message = "Запись юридических реквизитов создана"),
+            @ApiResponse(code = 201, message = "Запрос принят и юридические реквизиты добавлены"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<LegalDetailDto> create(@ApiParam(name = "legalDetailDto", value = "DTO юридической информации о подрядчике, который необходимо создать")
+    public ResponseEntity<LegalDetailDto> create(@ApiParam(name = "legalDetailDto", value = "DTO юридические реквизиты, которые необходимо создать")
                                                  @RequestBody LegalDetailDto legalDetailDto) {
         legalDetailService.create(legalDetailDto);
         log.info("Записан новый экземпляр LegalDetailDto - {}", legalDetailDto);
@@ -81,15 +81,15 @@ public class LegalDetailRestController {
     }
 
     @PutMapping
-    @ApiOperation(value = "update", notes = "Изменение юридической информации о подрядчике")
+    @ApiOperation(value = "update", notes = "Изменение юридических реквизитов")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Юридическая информация о подрядчике обновлена"),
-            @ApiResponse(code = 201, message = "Запрос принят и юридическая информация о подрядчике обновлена"),
+            @ApiResponse(code = 200, message = "Юридические реквизиты обновлены"),
+            @ApiResponse(code = 201, message = "Запрос принят и юридические реквизиты обновлены"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<LegalDetailService> update(@ApiParam(name = "legalDetailDto", value = "DTO юридической информации о подрядчике с обновленными данными")
+    public ResponseEntity<LegalDetailService> update(@ApiParam(name = "legalDetailDto", value = "DTO юридические реквизиты с обновленными данными")
                                                      @RequestBody LegalDetailDto legalDetailDto) {
         legalDetailService.update(legalDetailDto);
         log.info("Обновлен экземпляр LegalDetailDto - {}", legalDetailDto);
@@ -97,15 +97,15 @@ public class LegalDetailRestController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "deleteById", notes = "Удаление юридической информации о подрядчике по id")
+    @ApiOperation(value = "deleteById", notes = "Удаление юридических реквизитов по id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Юридическая информация о подрядчике удалена"),
+            @ApiResponse(code = 200, message = "Юридические реквизиты удалены"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<LegalDetailDto> deleteById(@ApiParam(name = "id", value = "ID юридической информации о подрядчике, которую необходимо удалить")
+    public ResponseEntity<LegalDetailDto> deleteById(@ApiParam(name = "id", value = "ID юридических реквизитов, которые необходимо удалить")
                                                      @PathVariable("id") Long id) {
         legalDetailService.deleteById(id);
         log.info("Удален экземпляр LegalDetailDto с id= {}", id);
