@@ -49,6 +49,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class DataInitializer {
@@ -145,24 +146,25 @@ public class DataInitializer {
 
     private void initProducts() {
         //productService.create(new ProductDto("Яблоки", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("53.123"), "Красные яблоки голден", false));
-       // productService.create(new ProductDto("Бананы", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("153.123"), "Красные бананы голден", false));
-       // productService.create(new ProductDto("Мандарины", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("523.123"), "Красные мандарины голден", false));
+        // productService.create(new ProductDto("Бананы", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("153.123"), "Красные бананы голден", false));
+        // productService.create(new ProductDto("Мандарины", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("523.123"), "Красные мандарины голден", false));
 
-        UnitDto unitDto = new UnitDto(1L,"кг", "Килограмм", "38");
+        /*UnitDto unitDto = new UnitDto(1L,"кг", "Килограмм", "38");
         unitService.create(unitDto);
 
         ContractorDto contractorDto = new ContractorDto(1L, "ИП Иванов И.И.", "1234567890", "1","+79876543210",
                 "+79876543210", "mail@mail.ru", "ул. Ленина, д.1", "пл. Ленина", "комментарий");
-        contractorService.create(contractorDto);
+        contractorService.create(contractorDto);*/
 
-        TypeOfPriceDto typeOfPriceDto1 = new TypeOfPriceDto("Оптовая цена", "1");
-        TypeOfPriceDto typeOfPriceDto2 = new TypeOfPriceDto("Розничная цена", "2");
-        List<TypeOfPriceDto> typeOfPriceDto = new ArrayList<>();
-        typeOfPriceDto.add(typeOfPriceDto1);
-        typeOfPriceDto.add(typeOfPriceDto2);
-        typeOfPriceService.create(typeOfPriceDto2);
+        //TypeOfPriceDto typeOfPriceDto1 = new TypeOfPriceDto( "Оптовая цена", "1");
+       // TypeOfPriceDto typeOfPriceDto2 = new TypeOfPriceDto(2L, "Розничная цена", "2");
+        //typeOfPriceService.create(typeOfPriceDto2);
+       // List<TypeOfPriceDto> typeOfPriceDto = typeOfPriceService.getAll();
+       // List<TypeOfPriceDto> typeOfPriceDto = new ArrayList<>();
+       // typeOfPriceDto.add(typeOfPriceService.getById(1L));
+        //typeOfPriceDto.add(typeOfPriceService.g(2L));
 
-        TaxSystemDto taxSystemDto = new TaxSystemDto("ОСН", "1");
+        /*TaxSystemDto taxSystemDto = new TaxSystemDto(1L,"ОСН", "1");
         taxSystemService.create(taxSystemDto);
 
         ImageDto imageDto1 = new ImageDto(1L, "http://imageurl1.com", "1");
@@ -172,31 +174,36 @@ public class DataInitializer {
         imageDto.add(imageDto2);
         imageService.create(imageDto1);
 
-        ProductGroupDto productGroupDto = new ProductGroupDto("Товарная группа №1", "1");
+        ProductGroupDto productGroupDto = new ProductGroupDto(1L,"Товарная группа №1", "1", 1L);
         productGroupService.create(productGroupDto);
 
-        AttributeOfCalculationObjectDto attributeOfCalculationObjectDto = new AttributeOfCalculationObjectDto("Товар", "6", false);
-        attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto);
+        AttributeOfCalculationObjectDto attributeOfCalculationObjectDto = new AttributeOfCalculationObjectDto(1L,"Товар", "6", false);
+        attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto);*/
+
+
+
 
         for (int i = 0; i < 350; i++) {
 
-            productService.create(new ProductDto(
-                    1L,
-                    "Яблоки",
-                    new BigDecimal("1.0"),
-                    new BigDecimal("1.0"),
-                    new BigDecimal("11.111"),
-                    "Красные яблоки голден",
-                    unitDto,
-                    false,
-                    contractorDto,
-                    typeOfPriceDto,
-                    taxSystemDto,
-                    imageDto,
-                    productGroupDto,
-                    attributeOfCalculationObjectDto
-            ));
-            productService.create(new ProductDto(
+        productService.create(new ProductDto(
+                // 1L,
+                // "Яблоки",
+                //  new BigDecimal("1.0"),
+                //  new BigDecimal("1.0"),
+                //   new BigDecimal("11.111"),
+                //  "Красные яблоки голден",
+                // unitDto          +++
+                //  false,
+                //contractorDto    +++
+                //typeOfPriceDto
+                //null
+                //   taxSystemDto        +++
+                //imageDto          !!!
+                //imageService.getById(1L)
+                //productGroupDto   +++
+                //attributeOfCalculationObjectDto       +++
+        ));
+           /* productService.create(new ProductDto(
                     2L,
                     "Бананы",
                     new BigDecimal("1.0"),
@@ -227,7 +234,7 @@ public class DataInitializer {
                     imageDto,
                     productGroupDto,
                     attributeOfCalculationObjectDto
-            ));
+            ));*/
         }
     }
 
