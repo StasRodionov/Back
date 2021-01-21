@@ -134,6 +134,20 @@ public class DataInitializer {
         initContractors();
         initProducts();
         initCurrency();
+        initContractors();
+    }
+
+    private void initContractors() {
+        contractorService.create(new ContractorDto("Торговый Дом \"Перекресток\", ЗАО", "7728029110", "1", "8 (495) 232-59-24", "8 (495) 232-59-24", "alena.pechnikova@x5.ru", "109029, г. Москва, ул. Средняя Калитниковская, д. 28, стр. 4", "comment ot address", "comment"));
+        contractorService.create(new ContractorDto("Агроаспект, ООО", "7715277300", "2", "8 (800) 555-55-05", "8 (800) 555-55-05", "inbox@5ka.ru", "127549, г. Москва, Алтуфьевское ш., д. 60", "", ""));
+        contractorService.create(new ContractorDto("Вкусвилл, ООО", "7734675810", "3", "8 (495) 981-13-45", "8 (495) 981-13-45", "info@izbenka.msk.ru", "123592, г. Москва, ул. Кулакова, д. 20, к. 1, пом. V, ком. 1, эт. 10", "", ""));
+        contractorService.create(new ContractorDto("Альфа-М, ООО", "7743931676", "4", "8 (495) 981-31-85", "8 (495) 981-31-85", "zholudeva.ksyusha@mail.ru", "125475, г. Москва, ул. Клинская, д. 12, ПОМЕЩЕНИЕ II (КОМНАТЫ 9-13)", "", ""));
+        contractorService.create(new ContractorDto("Отдохни - 77, ООО", "7737531091", "5", "8 (495) 326-30-00", "8 (495) 326-30-00", "nina.chehovich@msk.nfretail.ru", "115372, г. Москва, ул. Бирюлёвская, д. 38", "", ""));
+        contractorService.create(new ContractorDto("Продмир, ООО", "5009074197", "6", "8 (495) 651-92-52", "8 (495) 651-92-52", "d.gorobtsova@etpgpb.ru", "115516, г. Москва, Кавказский б-р, д. 57", "", ""));
+        contractorService.create(new ContractorDto("Зельгрос, ООО", "5050058510", "7", "8 (495) 741-45-56", "8 (495) 741-45-56", "tatiana.onishchenko@selgros.ru", "117546, г. Москва, ул. Подольских Курсантов, 26, 1", "", ""));
+        contractorService.create(new ContractorDto("Лабиринт-М, ООО", "7727777402", "8", "8 (495) 155-51-56", "8 (495) 155-51-56", "info@krasnoeibeloe.ru", "117042, г. Москва, ул. Южнобутовская, д. 69", "", ""));
+        contractorService.create(new ContractorDto("Эскорт Сервис, ООО", "7705603716", "9", "8 (495) 755-11-16", "8 (495) 755-11-16", "harlanov.aleksandr@escort-servis.ru", "115404, г. Москва, ул. Бирюлёвская, д. 1, к. 3", "", ""));
+        contractorService.create(new ContractorDto("Арома Маркет, ООО", "7710161911", "10", "8 (495) 777-51-95", "8 (495) 777-51-95", "sales11_am@aroma.ru", "121087, г. Москва, Береговой пр-д, д. 5, к. 1", "", ""));
     }
 
     private void initCurrency() {
@@ -224,7 +238,7 @@ public class DataInitializer {
 
         LocalDate contractDate = LocalDate.now();
         bankAccountService.create(new BankAccountDto(1L, "1", "sber", "some place", "1", "1", true, "1"));
-        contractorService.create(new ContractorDto(1L, "Сергей", "1111111111", "", "", "", "", "", "", ""));
+        contractorService.create(new ContractorDto(1L, "Сергей", "1111111111", "0", "555", "555", "info@mail.ru", "City", "", ""));
         contractService.create(new ContractDto(1L, "1", contractDate, 1L, 1L, 1L, BigDecimal.valueOf(200), false, "no comments", 1L));
     }
 

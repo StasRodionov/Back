@@ -42,8 +42,7 @@ public class ContractorDto {
 
     private LegalDetailDto legalDetailDto;
 
-    public ContractorDto(Long id,
-                         String name,
+    public ContractorDto(String name,
                          @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$") String inn,
                          String sortNumber,
                          String phone,
@@ -51,10 +50,7 @@ public class ContractorDto {
                          String email,
                          String address,
                          String commentToAddress,
-                         String comment)
-
-                         {
-        this.id = id;
+                         String comment) {
         this.name = name;
         this.inn = inn;
         this.sortNumber = sortNumber;
@@ -64,6 +60,19 @@ public class ContractorDto {
         this.address = address;
         this.commentToAddress = commentToAddress;
         this.comment = comment;
+    }
 
+    public ContractorDto(Long id,
+                         String name,
+                         @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$") String inn,
+                         String sortNumber,
+                         String phone,
+                         String fax,
+                         String email,
+                         String address,
+                         String commentToAddress,
+                         String comment) {
+        this(name, inn, sortNumber, phone, fax, email, address, commentToAddress, comment);
+        this.id = id;
     }
 }

@@ -94,8 +94,8 @@ public class ContractorServiceImpl implements ContractorService {
                 contractorDto.getPhone(),
                 contractorDto.getFax(),
                 contractorDto.getEmail(),
-                contractorDto.getCommentToAddress(),
                 contractorDto.getAddress(),
+                contractorDto.getCommentToAddress(),
                 contractorDto.getComment(),
 
                 contractorDto.getContractorGroupDto() != null
