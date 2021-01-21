@@ -1,16 +1,20 @@
 package com.trade_accounting.config;
 
 import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.ProductGroup;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
+import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.RoleDto;
@@ -29,6 +33,7 @@ import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.services.interfaces.ImageService;
+import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
@@ -44,6 +49,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Collections;
 
 @Component
@@ -69,6 +76,7 @@ public class DataInitializer {
     private final ImageService imageService;
     private final ProductService productService;
     private final CurrencyService currencyService;
+    private final InvoiceService invoiceService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -89,7 +97,9 @@ public class DataInitializer {
             BankAccountService bankAccountService,
             EmployeeService employeeService,
             ImageService imageService,
-            ProductService productService, CurrencyService currencyService) {
+            ProductService productService,
+            CurrencyService currencyService,
+            InvoiceService invoiceService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -110,6 +120,7 @@ public class DataInitializer {
         this.imageService = imageService;
         this.productService = productService;
         this.currencyService = currencyService;
+        this.invoiceService = invoiceService;
     }
 
     @PostConstruct
@@ -130,6 +141,22 @@ public class DataInitializer {
         initContractContractorBankLegal();  // удалить после тестирования
         initProducts();
         initCurrency();
+        initInvoice();
+    }
+
+    public void initInvoice(){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.EXPENSE , 1L, 1L, false));
+        invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.RECEIPT , 2L, 1L, false));
+        invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.EXPENSE , 3L, 1L, false));
+        invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.EXPENSE , 4L, 1L, false));
+        invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.RECEIPT , 5L, 1L, false));
+
+        invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.EXPENSE , 6L, 1L, false));
+        invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.RECEIPT , 7L, 1L, false));
+        invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.EXPENSE , 8L, 1L, false));
+        invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.RECEIPT , 9L, 1L, false));
+        invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.EXPENSE , 10L, 1L, false));
     }
 
     private void initCurrency() {

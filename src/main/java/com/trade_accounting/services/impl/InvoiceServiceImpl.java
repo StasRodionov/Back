@@ -1,6 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
@@ -18,7 +19,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final CompanyRepository companyRepository;
     private final ContractorRepository contractorRepository;
-    private final Invoice invoice = null;
+    private final Invoice invoice =null;
 
     public InvoiceServiceImpl(InvoiceRepository invoiceRepository, CompanyRepository companyRepository, ContractorRepository contractorRepository) {
         this.invoiceRepository = invoiceRepository;
@@ -51,7 +52,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoiceRepository.save(
                 new Invoice(
                         invoiceDto.getDate(),
-                        invoice.getTypeOfInvoice(),
+                        TypeOfInvoice.valueOf(invoiceDto.getTypeOfInvoice()),
                         companyRepository.getOne(invoiceDto.getCompanyDto().getId()),
                         contractorRepository.getOne(invoiceDto.getContractorDto().getId())));
     }
@@ -62,7 +63,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 new Invoice(
                         invoiceDto.getId(),
                         invoiceDto.getDate(),
-                        invoice.getTypeOfInvoice(),
+                        TypeOfInvoice.valueOf(invoiceDto.getTypeOfInvoice()),
                         companyRepository.getOne(invoiceDto.getCompanyDto().getId()),
                         contractorRepository.getOne(invoiceDto.getContractorDto().getId()),
                         invoiceDto.isSpend()));
