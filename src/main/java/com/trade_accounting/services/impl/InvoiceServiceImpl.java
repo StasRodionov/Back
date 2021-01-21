@@ -32,8 +32,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         List<InvoiceDto> listInvoiceDto = invoiceRepository.getAll();
         for (InvoiceDto invoiceDto : listInvoiceDto) {
             invoiceDto.setCompanyDto(companyRepository.getById(invoiceDto.getCompanyDto().getId()));
-        }
-        for (InvoiceDto invoiceDto : listInvoiceDto) {
             invoiceDto.setContractorDto(contractorRepository.getById(invoiceDto.getContractorDto().getId()));
         }
         return listInvoiceDto;
