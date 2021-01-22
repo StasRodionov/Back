@@ -146,8 +146,7 @@ public class DataInitializer {
 
     private void initProducts() {
 
-        UnitDto unitDto = new UnitDto(1L, "кг", "Килограмм", "38");
-        unitService.create(unitDto);
+        List<UnitDto> unitDtoList = new ArrayList<>(unitService.getAll());
 
         ContractorDto contractorDto1 = new ContractorDto(1L, "ИП Иванов И.И.", "1234567890", "1", "+79876543210",
                 "+79876543210", "mail@mail.ru", "ул. Ленина, д.1", "пл. Ленина", "комментарий");
@@ -179,7 +178,7 @@ public class DataInitializer {
                     new BigDecimal("1.0"),
                     new BigDecimal("11.111"),
                     "Красные яблоки голден",
-                    unitDto,
+                    unitDtoList.get(0),
                     false,
                     contractorDto1,
                     null,
@@ -195,7 +194,7 @@ public class DataInitializer {
                     new BigDecimal("1.0"),
                     new BigDecimal("22.222"),
                     "Красные Бананы голден",
-                    unitDto,
+                    unitDtoList.get(1),
                     false,
                     contractorDto2,
                     null,
@@ -211,7 +210,7 @@ public class DataInitializer {
                     new BigDecimal("1.0"),
                     new BigDecimal("33.333"),
                     "Красные Мандарины голден",
-                    unitDto,
+                    unitDtoList.get(2),
                     false,
                     contractorDto3,
                     null,
