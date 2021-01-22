@@ -159,20 +159,16 @@ public class DataInitializer {
         contractorService.create(contractorDto2);
         contractorService.create(contractorDto3);
 
-        TaxSystemDto taxSystemDto = new TaxSystemDto(1L, "ОСН", "1");
-        taxSystemService.create(taxSystemDto);
+        List<TaxSystemDto> taxSystemDtoList = new ArrayList<>(taxSystemService.getAll());
 
         ImageDto imageDto1 = new ImageDto(1L, "http://imageurl1.com", "1");
         List<ImageDto> imageDto = new ArrayList<>();
         imageDto.add(imageDto1);
         imageService.create(imageDto1);
 
-        ProductGroupDto productGroupDto = new ProductGroupDto(1L, "Товарная группа №1", "1", 1L);
-        productGroupService.create(productGroupDto);
+        List<ProductGroupDto> productGroupDtoList = new ArrayList<>(productGroupService.getAll());
 
-        AttributeOfCalculationObjectDto attributeOfCalculationObjectDto = new AttributeOfCalculationObjectDto(1L, "Товар", "6", false);
-        attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto);
-
+        List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtoList = new ArrayList<>(attributeOfCalculationObjectService.getAll());
 
         for (int i = 0; i < 350; i++) {
 
@@ -187,10 +183,10 @@ public class DataInitializer {
                     false,
                     contractorDto1,
                     null,
-                    taxSystemDto,
+                    taxSystemDtoList.get(0),
                     imageDto,
-                    productGroupDto,
-                    attributeOfCalculationObjectDto
+                    productGroupDtoList.get(0),
+                    attributeOfCalculationObjectDtoList.get(0)
             ));
             productService.create(new ProductDto(
                     null,
@@ -203,10 +199,10 @@ public class DataInitializer {
                     false,
                     contractorDto2,
                     null,
-                    taxSystemDto,
+                    taxSystemDtoList.get(1),
                     imageDto,
-                    productGroupDto,
-                    attributeOfCalculationObjectDto
+                    productGroupDtoList.get(1),
+                    attributeOfCalculationObjectDtoList.get(1)
             ));
             productService.create(new ProductDto(
                     null,
@@ -219,10 +215,10 @@ public class DataInitializer {
                     false,
                     contractorDto3,
                     null,
-                    taxSystemDto,
+                    taxSystemDtoList.get(2),
                     imageDto,
-                    productGroupDto,
-                    attributeOfCalculationObjectDto
+                    productGroupDtoList.get(2),
+                    attributeOfCalculationObjectDtoList.get(2)
             ));
         }
     }
