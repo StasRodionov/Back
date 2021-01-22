@@ -11,7 +11,6 @@ import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
@@ -49,7 +48,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class DataInitializer {
@@ -133,6 +131,7 @@ public class DataInitializer {
         initCompanies();
         initEmployees();
         initContractContractorBankLegal();  // удалить после тестирования
+        initContractors();
         initProducts();
         initCurrency();
     }
@@ -144,26 +143,23 @@ public class DataInitializer {
 
     }
 
+    private void initContractors() {
+        contractorService.create(new ContractorDto(null, "ИП Иванов И.И.", "1234567890", "1", "+79876543210",
+                "+79876543210", "mail@mail.ru", "ул. Ленина, д.1", "пл. Ленина", "комментарий"));
+        contractorService.create(new ContractorDto(null, "ИП Петров П.П.", "2222233333", "1", "+1234567890",
+                "+79876543210", "mail@mail.ru", "ул. Пушкина, д.2", "пл. Ленина", "комментарий"));
+        contractorService.create(new ContractorDto(null, "ИП Сидоров С.С.", "4444455555", "1", "+79876543210",
+                "+79876543210", "mail@mail.ru", "ул. Гоголя, д.3", "пл. Ленина", "комментарий"));
+    }
+
+
     private void initProducts() {
 
         List<UnitDto> unitDtoList = new ArrayList<>(unitService.getAll());
 
-        ContractorDto contractorDto1 = new ContractorDto(1L, "ИП Иванов И.И.", "1234567890", "1", "+79876543210",
-                "+79876543210", "mail@mail.ru", "ул. Ленина, д.1", "пл. Ленина", "комментарий");
-        ContractorDto contractorDto2 = new ContractorDto(2L, "ИП Петров П.П.", "2222233333", "1", "+1234567890",
-                "+79876543210", "mail@mail.ru", "ул. Пушкина, д.2", "пл. Ленина", "комментарий");
-        ContractorDto contractorDto3 = new ContractorDto(3L, "ИП Сидоров С.С.", "4444455555", "1", "+79876543210",
-                "+79876543210", "mail@mail.ru", "ул. Гоголя, д.3", "пл. Ленина", "комментарий");
-        contractorService.create(contractorDto1);
-        contractorService.create(contractorDto2);
-        contractorService.create(contractorDto3);
-
         List<TaxSystemDto> taxSystemDtoList = new ArrayList<>(taxSystemService.getAll());
 
-        ImageDto imageDto1 = new ImageDto(1L, "http://imageurl1.com", "1");
-        List<ImageDto> imageDto = new ArrayList<>();
-        imageDto.add(imageDto1);
-        imageService.create(imageDto1);
+        List<ContractorDto> contractorDtoList = new ArrayList<>(contractorService.getAll());
 
         List<ProductGroupDto> productGroupDtoList = new ArrayList<>(productGroupService.getAll());
 
@@ -180,10 +176,10 @@ public class DataInitializer {
                     "Красные яблоки голден",
                     unitDtoList.get(0),
                     false,
-                    contractorDto1,
+                    contractorDtoList.get(0),
                     null,
                     taxSystemDtoList.get(0),
-                    imageDto,
+                    null,
                     productGroupDtoList.get(0),
                     attributeOfCalculationObjectDtoList.get(0)
             ));
@@ -196,10 +192,10 @@ public class DataInitializer {
                     "Красные Бананы голден",
                     unitDtoList.get(1),
                     false,
-                    contractorDto2,
+                    contractorDtoList.get(1),
                     null,
                     taxSystemDtoList.get(1),
-                    imageDto,
+                    null,
                     productGroupDtoList.get(1),
                     attributeOfCalculationObjectDtoList.get(1)
             ));
@@ -212,10 +208,10 @@ public class DataInitializer {
                     "Красные Мандарины голден",
                     unitDtoList.get(2),
                     false,
-                    contractorDto3,
+                    contractorDtoList.get(1),
                     null,
                     taxSystemDtoList.get(2),
-                    imageDto,
+                    null,
                     productGroupDtoList.get(2),
                     attributeOfCalculationObjectDtoList.get(2)
             ));
