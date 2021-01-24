@@ -24,7 +24,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "Position Rest Controller", description = "CRUD операции с позициями")
+@Tag(name = "Position Rest Controller", description = "CRUD операции с должностями")
 @Api(tags = "Position Rest Controller")
 @RequestMapping("/api/position")
 public class PositionRestController {
@@ -36,9 +36,9 @@ public class PositionRestController {
     }
 
     @GetMapping
-    @ApiOperation(value = "getAll", notes = "Получение списка всех позиций")
+    @ApiOperation(value = "getAll", notes = "Получение списка всех должностей")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка позиций"),
+            @ApiResponse(code = 200, message = "Успешное получение списка должностей"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
@@ -50,15 +50,15 @@ public class PositionRestController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "getById", notes = "Получение позиции по ее id")
+    @ApiOperation(value = "getById", notes = "Получение должности по ее id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Позиция найдена"),
+            @ApiResponse(code = 200, message = "Должность найдена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<PositionDto> getById(@ApiParam(name = "id", type = "Long",
-            value = "Переданный в URL id по которому необходимо найти позицию")
+            value = "Переданный в URL id по которому необходимо найти должность")
                                                @PathVariable(name = "id") Long id) {
         PositionDto positions = positionService.getById(id);
         log.info("Запрошен экземпляр PositionDto с id= {}", id);
@@ -66,15 +66,15 @@ public class PositionRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Внесение новой позиции")
+    @ApiOperation(value = "create", notes = "Внесение новой должности")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Позиция создана"),
-            @ApiResponse(code = 201, message = "Запрос принят и позиция добавлена"),
+            @ApiResponse(code = 200, message = "Должность создана"),
+            @ApiResponse(code = 201, message = "Запрос принят и должность добавлена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> create(@ApiParam(name = "PositionDto", value = "DTO позиции, которую необходимо создать")
+    public ResponseEntity<?> create(@ApiParam(name = "PositionDto", value = "DTO должности, которую необходимо создать")
                                     @RequestBody PositionDto positionDto) {
         positionService.create(positionDto);
         log.info("Записан новый экземпляр PositionDto");
@@ -82,15 +82,15 @@ public class PositionRestController {
     }
 
     @PutMapping
-    @ApiOperation(value = "update", notes = "Изменение информации о позиции")
+    @ApiOperation(value = "update", notes = "Изменение информации о должности")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Информация о позиции обновлена"),
-            @ApiResponse(code = 201, message = "Запрос принят и данные о позиции обновлены"),
+            @ApiResponse(code = 200, message = "Информация о должности обновлена"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные о должности обновлены"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> update(@ApiParam(name = "PositionDto", value = "DTO позиции, которую необходимо обновить")
+    public ResponseEntity<?> update(@ApiParam(name = "PositionDto", value = "DTO должности, которую необходимо обновить")
                                     @RequestBody PositionDto positionDto) {
         positionService.update(positionDto);
         log.info("Обновлен экземпляр PositionDto");
@@ -98,16 +98,16 @@ public class PositionRestController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "deleteById", notes = "Удаление позиции по ее id")
+    @ApiOperation(value = "deleteById", notes = "Удаление должности по ее id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Позиция удалена"),
+            @ApiResponse(code = 200, message = "Должность удалена"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> deleteById(@ApiParam(name = "id", type = "Long",
-            value = "Переданный в URL id по которому необходимо удалить позицию")
+            value = "Переданный в URL id по которому необходимо удалить должность")
                                         @PathVariable(name = "id") Long id) {
         positionService.deleteById(id);
         log.info("Удален экземпляр PositionDto с id= {}", id);
