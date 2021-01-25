@@ -13,6 +13,7 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
+import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
@@ -44,7 +45,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class DataInitializer {
@@ -345,7 +348,6 @@ public class DataInitializer {
         currencyService.create(new CurrencyDto("rubles", "Russian Rubles", "25", "rub"));
         currencyService.create(new CurrencyDto("bel rubles", "Bellarusian Rubles", "25", "belrub"));
         currencyService.create(new CurrencyDto("eng dollar", "USA Dollars ", "25", "dol"));
-
     }
 
 
@@ -559,7 +561,6 @@ public class DataInitializer {
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-//                bankAccountService.getAll(),
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
@@ -576,7 +577,6 @@ public class DataInitializer {
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-//                bankAccountService.getAll(),
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
@@ -592,7 +592,6 @@ public class DataInitializer {
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-//                bankAccountService.getAll(),
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
@@ -608,7 +607,6 @@ public class DataInitializer {
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-//                bankAccountService.getAll(),
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
@@ -625,7 +623,6 @@ public class DataInitializer {
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-//                bankAccountService.getAll(),
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
@@ -641,7 +638,6 @@ public class DataInitializer {
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-//                bankAccountService.getAll(),
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
@@ -657,7 +653,6 @@ public class DataInitializer {
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-//                bankAccountService.getAll(),
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
@@ -673,7 +668,6 @@ public class DataInitializer {
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-//                bankAccountService.getAll(),
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
@@ -690,15 +684,72 @@ public class DataInitializer {
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-//                bankAccountService.getAll(),
                 legalDetailService.getById(1L)));
     }
 
     private void initProducts() {
-        productService.create(new ProductDto("Яблоки", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("53.123"), "Красные яблоки голден", false));
-        productService.create(new ProductDto("Бананы", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("153.123"), "Красные бананы голден", false));
-        productService.create(new ProductDto("Мандарины", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("523.123"), "Красные мандарины голден", false));
 
+        List<UnitDto> unitDtoList = new ArrayList<>(unitService.getAll());
+
+        List<TaxSystemDto> taxSystemDtoList = new ArrayList<>(taxSystemService.getAll());
+
+        List<ContractorDto> contractorDtoList = new ArrayList<>(contractorService.getAll());
+
+        List<ProductGroupDto> productGroupDtoList = new ArrayList<>(productGroupService.getAll());
+
+        List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtoList = new ArrayList<>(attributeOfCalculationObjectService.getAll());
+
+        for (int i = 0; i < 350; i++) {
+
+            productService.create(new ProductDto(
+                    null,
+                    "Яблоки",
+                    new BigDecimal("1.0"),
+                    new BigDecimal("1.0"),
+                    new BigDecimal("11.111"),
+                    "Красные яблоки голден",
+                    unitDtoList.get(0),
+                    false,
+                    contractorDtoList.get(0),
+                    null,
+                    taxSystemDtoList.get(0),
+                    null,
+                    productGroupDtoList.get(0),
+                    attributeOfCalculationObjectDtoList.get(0)
+            ));
+            productService.create(new ProductDto(
+                    null,
+                    "Бананы",
+                    new BigDecimal("1.0"),
+                    new BigDecimal("1.0"),
+                    new BigDecimal("22.222"),
+                    "Красные Бананы голден",
+                    unitDtoList.get(1),
+                    false,
+                    contractorDtoList.get(1),
+                    null,
+                    taxSystemDtoList.get(1),
+                    null,
+                    productGroupDtoList.get(1),
+                    attributeOfCalculationObjectDtoList.get(1)
+            ));
+            productService.create(new ProductDto(
+                    null,
+                    "Мандарины",
+                    new BigDecimal("1.0"),
+                    new BigDecimal("1.0"),
+                    new BigDecimal("33.333"),
+                    "Красные Мандарины голден",
+                    unitDtoList.get(2),
+                    false,
+                    contractorDtoList.get(1),
+                    null,
+                    taxSystemDtoList.get(2),
+                    null,
+                    productGroupDtoList.get(2),
+                    attributeOfCalculationObjectDtoList.get(2)
+            ));
+        }
     }
 
     private void initContracts() {
