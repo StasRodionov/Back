@@ -186,4 +186,22 @@ public class ProductServiceImpl implements ProductService {
     public void deleteById(Long id) {
         productRepository.deleteById(id);
     }
+
+    @Override
+    public List<ProductDto> getAllByProductGroupId(Long id) {
+        List<ProductDto> productDtos = productRepository.getAllByProductGroupId(id);
+        for (ProductDto productDto : productDtos) {
+            productDto.setUnitDto(unitRepository.getUnitByProductId(productDto.getId()));
+            productDto.setAttributeOfCalculationObjectDto(
+                    attributeOfCalculationObjectRepository.getAttributeOfCalculationObjectById(productDto.getId()));
+            productDto.setContractorDto(contractorRepository.getContractorById(productDto.getId()));
+            productDto.setTaxSystemDto(taxSystemRepository.getTaxSystemById(productDto.getId()));
+            productDto.setImageDto(imageRepository.getAllById(productDto.getId()).stream()
+                    .map(image -> imageRepository.getById(image.getId()))
+                    .collect(Collectors.toList()));
+            productDto.setTypeOfPriceDto(typeOfPriceRepository.getTypeOfPriceById(productDto.getId()).stream()
+                    .map(typeOfPrice -> typeOfPriceRepository.getById(typeOfPrice.getId()))
+                    .collect(Collectors.toList()));        }
+        return productDtos;
+    }
 }
