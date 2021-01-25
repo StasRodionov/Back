@@ -1,7 +1,6 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,8 +15,8 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long> {
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
             "e.id," +
-            "e.inn," +
             "e.name," +
+            "e.inn," +
             "e.sortNumber," +
             "e.phone," +
             "e.fax," +
@@ -30,8 +29,8 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long> {
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
             "e.id," +
-            "e.inn," +
             "e.name," +
+            "e.inn," +
             "e.sortNumber," +
             "e.phone," +
             "e.fax," +
@@ -43,8 +42,8 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long> {
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
             "p.contractor.id," +
-            "p.contractor.inn," +
             "p.contractor.name," +
+            "p.contractor.inn," +
             "p.contractor.sortNumber," +
             "p.contractor.phone," +
             "p.contractor.fax," +

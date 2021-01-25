@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
  * @param typeOfInvoce - тип накладной (приход/расход)
  * @param company      - наименование компании
  * @param contractor   - контрагент
- * @param isSpend      - проведена/не проведена
  * @author Sanych
  * @see Invoice#Invoice(LocalDateTime, TypeOfInvoice, Company, Contractor)
  */
