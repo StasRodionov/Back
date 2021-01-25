@@ -1,5 +1,6 @@
 package com.trade_accounting.models.dto;
 
+import com.trade_accounting.models.Invoice;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +13,7 @@ public class InvoiceProductDto {
 
     private Long id;
 
-    private String invoiceDto;
-    // todo: заменить String на InvoiceDto после реализации InvoiceDto
+    private InvoiceDto invoiceDto;
 
     private ProductDto productDto;
 
@@ -21,8 +21,7 @@ public class InvoiceProductDto {
 
     private BigDecimal price;
 
-    public InvoiceProductDto(String invoiceDto,
-                             // todo: заменить String на InvoiceDto после реализации InvoiceDto
+    public InvoiceProductDto(InvoiceDto invoiceDto,
                              ProductDto productDto,
                              BigDecimal amount,
                              BigDecimal price) {
@@ -33,8 +32,7 @@ public class InvoiceProductDto {
     }
 
     public InvoiceProductDto(Long id,
-                             String invoiceDto,
-                             // todo: заменить String на InvoiceDto после реализации InvoiceDto
+                             InvoiceDto invoiceDto,
                              ProductDto productDto,
                              BigDecimal amount,
                              BigDecimal price) {
