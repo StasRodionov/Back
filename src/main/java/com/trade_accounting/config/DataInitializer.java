@@ -1,24 +1,24 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.Company;
-import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
+import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
+import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
-import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.UnitDto;
+import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.BankAccountService;
 import com.trade_accounting.services.interfaces.CompanyService;
@@ -34,8 +34,8 @@ import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.RoleService;
-import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
+import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.services.interfaces.WarehouseService;
@@ -62,9 +62,9 @@ public class DataInitializer {
     private final ProductGroupService productGroupService;
     private final CompanyService companyService;
     private final LegalDetailService legalDetailService;
-    private final ContractService contractService;  // удалить после тестирования
-    private final ContractorService contractorService;  // удалить после тестирования
-    private final BankAccountService bankAccountService;  // удалить после тестирования
+    private final ContractService contractService;
+    private final ContractorService contractorService;
+    private final BankAccountService bankAccountService;
     private final EmployeeService employeeService;
     private final ImageService imageService;
     private final ProductService productService;
@@ -89,7 +89,8 @@ public class DataInitializer {
             BankAccountService bankAccountService,
             EmployeeService employeeService,
             ImageService imageService,
-            ProductService productService, CurrencyService currencyService) {
+            ProductService productService,
+            CurrencyService currencyService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -103,9 +104,9 @@ public class DataInitializer {
         this.productGroupService = productGroupService;
         this.companyService = companyService;
         this.legalDetailService = legalDetailService;
-        this.contractService = contractService;  // удалить после тестирования
-        this.contractorService = contractorService;  // удалить после тестирования
-        this.bankAccountService = bankAccountService;  // удалить после тестирования
+        this.contractService = contractService;
+        this.contractorService = contractorService;
+        this.bankAccountService = bankAccountService;
         this.employeeService = employeeService;
         this.imageService = imageService;
         this.productService = productService;
@@ -115,137 +116,63 @@ public class DataInitializer {
     @PostConstruct
     public void init() {
         initTypeOfPrices();
+        initContractorGroups();
+        initTypeOfContractors();
+        initBankAccounts();
         initRoles();
         initWarehouses();
         initUnits();
         initPositions();
         initAttributeOfCalculationObjects();
         initDepartments();
-        initContractorGroups();
-        initTypeOfContractors();
         initTaxSystems();
         initProductGroups();
+        initCurrency();
+        //initImage
+
+        initLegalDetails();
         initCompanies();
         initEmployees();
-        initContractContractorBankLegal();  // удалить после тестирования
-        initProducts();
-        initCurrency();
         initContractors();
+        initProducts();
+        initContracts();
+        //initInvoice
     }
-
-    private void initContractors() {
-        contractorService.create(new ContractorDto("Торговый Дом \"Перекресток\", ЗАО", "7728029110", "1", "8 (495) 232-59-24", "8 (495) 232-59-24", "alena.pechnikova@x5.ru", "109029, г. Москва, ул. Средняя Калитниковская, д. 28, стр. 4", "comment ot address", "comment"));
-        contractorService.create(new ContractorDto("Агроаспект, ООО", "7715277300", "2", "8 (800) 555-55-05", "8 (800) 555-55-05", "inbox@5ka.ru", "127549, г. Москва, Алтуфьевское ш., д. 60", "", ""));
-        contractorService.create(new ContractorDto("Вкусвилл, ООО", "7734675810", "3", "8 (495) 981-13-45", "8 (495) 981-13-45", "info@izbenka.msk.ru", "123592, г. Москва, ул. Кулакова, д. 20, к. 1, пом. V, ком. 1, эт. 10", "", ""));
-        contractorService.create(new ContractorDto("Альфа-М, ООО", "7743931676", "4", "8 (495) 981-31-85", "8 (495) 981-31-85", "zholudeva.ksyusha@mail.ru", "125475, г. Москва, ул. Клинская, д. 12, ПОМЕЩЕНИЕ II (КОМНАТЫ 9-13)", "", ""));
-        contractorService.create(new ContractorDto("Отдохни - 77, ООО", "7737531091", "5", "8 (495) 326-30-00", "8 (495) 326-30-00", "nina.chehovich@msk.nfretail.ru", "115372, г. Москва, ул. Бирюлёвская, д. 38", "", ""));
-        contractorService.create(new ContractorDto("Продмир, ООО", "5009074197", "6", "8 (495) 651-92-52", "8 (495) 651-92-52", "d.gorobtsova@etpgpb.ru", "115516, г. Москва, Кавказский б-р, д. 57", "", ""));
-        contractorService.create(new ContractorDto("Зельгрос, ООО", "5050058510", "7", "8 (495) 741-45-56", "8 (495) 741-45-56", "tatiana.onishchenko@selgros.ru", "117546, г. Москва, ул. Подольских Курсантов, 26, 1", "", ""));
-        contractorService.create(new ContractorDto("Лабиринт-М, ООО", "7727777402", "8", "8 (495) 155-51-56", "8 (495) 155-51-56", "info@krasnoeibeloe.ru", "117042, г. Москва, ул. Южнобутовская, д. 69", "", ""));
-        contractorService.create(new ContractorDto("Эскорт Сервис, ООО", "7705603716", "9", "8 (495) 755-11-16", "8 (495) 755-11-16", "harlanov.aleksandr@escort-servis.ru", "115404, г. Москва, ул. Бирюлёвская, д. 1, к. 3", "", ""));
-        contractorService.create(new ContractorDto("Арома Маркет, ООО", "7710161911", "10", "8 (495) 777-51-95", "8 (495) 777-51-95", "sales11_am@aroma.ru", "121087, г. Москва, Береговой пр-д, д. 5, к. 1", "", ""));
-    }
-
-    private void initCurrency() {
-        currencyService.create(new CurrencyDto("rubles", "Russian Rubles" ,"25", "rub"));
-        currencyService.create(new CurrencyDto("bel rubles", "Bellarusian Rubles","25", "belrub"));
-        currencyService.create(new CurrencyDto("eng dollar","USA Dollars ", "25", "dol"));
-
-    }
-    private void initProducts() {
-        productService.create(new ProductDto( "Яблоки", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("53.123"), "Красные яблоки голден", false));
-        productService.create(new ProductDto("Бананы", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("153.123"), "Красные бананы голден", false));
-        productService.create(new ProductDto("Мандарины", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("523.123"), "Красные мандарины голден", false));
-
-    }
-
-
-    //TODO удалить метод и переменные после тестирования
-    private void initContractContractorBankLegal() {
-
-        LocalDate contractDate = LocalDate.now();
-        bankAccountService.create(new BankAccountDto(1L, "1", "sber", "some place", "1", "1", true, "1"));
-        contractorService.create(new ContractorDto(1L, "Сергей", "1111111111", "0", "555", "555", "info@mail.ru", "City", "", ""));
-        contractService.create(new ContractDto(1L, "1", contractDate, 1L, 1L, 1L, BigDecimal.valueOf(200), false, "no comments", 1L));
-    }
-
-    private void initEmployees() {
-        employeeService.create(new EmployeeDto(null,
-                "Vasiliev",
-                "Vasya",
-                "Vasilievich",
-                "1",
-                "+7(999)111-22-33",
-                "526317984689",
-                "Some special text about Vasya",
-                "vasyaogon@mail.ru",
-                "12345",
-                departmentService.getByName("Руководство"),
-                positionService.getByName("Генеральный директор"),
-                Collections.singleton(roleService.getByName("admin")),
-                imageService.getById(1L)));
-        employeeService.create(new EmployeeDto(null,
-                "Simonova",
-                "Sima",
-                "Semenovna",
-                "2",
-                "+7(999)222-11-33",
-                "526317984678",
-                "Some special text about Sima",
-                "simaogon@mail.ru",
-                "54321",
-                departmentService.getByName("Отдел бухгалтерии"),
-                positionService.getByName("Коммерческий директор"),
-                Collections.singleton(roleService.getByName("user")),
-                imageService.getById(2L)));
-        employeeService.create(new EmployeeDto(null,
-                "Belive",
-                "Vera",
-                "Henrichovna",
-                "3",
-                "+7(999)777-11-33",
-                "526317555678",
-                "Some special text about Vera",
-                "veraogon@mail.ru",
-                "76543",
-                departmentService.getByName("Складской комплекс"),
-                positionService.getByName("Технический директор"),
-                Collections.singleton(roleService.getByName("user")),
-                imageService.getById(5L)));
-        employeeService.create(new EmployeeDto(null,
-                "Islentiev",
-                "Karim",
-                "Dmitrievich",
-                "4",
-                "+7(999)222-77-00",
-                "526316666678",
-                "Some special text about Karim",
-                "karimogon@mail.ru",
-                "qwerty",
-                departmentService.getByName("Отдел продаж"),
-                positionService.getByName("Директор по продажам"),
-                Collections.singleton(roleService.getByName("admin")),
-                imageService.getById(4L)));
-        employeeService.create(new EmployeeDto(null,
-                "Petko",
-                "Sasha",
-                "",
-                "5",
-                "+7(999)222-00-33",
-                "526317984600",
-                "Some special text about Sasha",
-                "sashaogon@mail.ru",
-                "asdfg",
-                departmentService.getByName("Складской комплекс"),
-                positionService.getByName("Технический директор"),
-                Collections.singleton(roleService.getByName("user")),
-                imageService.getById(5L)));
-    }
-
 
     private void initTypeOfPrices() {
         typeOfPriceService.create(new TypeOfPriceDto("Оптовая цена", "1"));
         typeOfPriceService.create(new TypeOfPriceDto("Розничная цена", "2"));
+    }
+
+    private void initContractorGroups() {
+        contractorGroupService.create(new ContractorGroupDto("Покупатель", "1"));
+        contractorGroupService.create(new ContractorGroupDto("Поставщик", "2"));
+    }
+
+    private void initTypeOfContractors() {
+        typeOfContractorService.create(new TypeOfContractorDto("Юридическое лицо", "1"));
+        typeOfContractorService.create(new TypeOfContractorDto("Индивидуальный предприниматель", "2"));
+        typeOfContractorService.create(new TypeOfContractorDto("Физическое лицо", "3"));
+    }
+
+    private void initBankAccounts() {
+        bankAccountService.create(new BankAccountDto(
+                null,
+                "14593",
+                "Сбербанк",
+                "Москва ул. Ленина",
+                "correspondent account",
+                "account",
+                true,
+                "1"));
+        bankAccountService.create(new BankAccountDto(
+                null, "55320",
+                "Газпромбанк",
+                "Москва ул. Катина",
+                "correspondent account",
+                "account",
+                true,
+                "2"));
     }
 
     private void initRoles() {
@@ -366,17 +293,6 @@ public class DataInitializer {
         departmentService.create(new DepartmentDto("HR отдел", "9"));
     }
 
-    private void initContractorGroups() {
-        contractorGroupService.create(new ContractorGroupDto("Покупатель", "1"));
-        contractorGroupService.create(new ContractorGroupDto("Поставщик", "2"));
-    }
-
-    private void initTypeOfContractors() {
-        typeOfContractorService.create(new TypeOfContractorDto("Юридическое лицо", "1"));
-        typeOfContractorService.create(new TypeOfContractorDto("Индивидуальный предприниматель", "2"));
-        typeOfContractorService.create(new TypeOfContractorDto("Физическое лицо", "3"));
-    }
-
     private void initTaxSystems() {
         taxSystemService.create(new TaxSystemDto("ОСН", "1"));
         taxSystemService.create(new TaxSystemDto("УСН.Доход", "2"));
@@ -425,37 +341,377 @@ public class DataInitializer {
 
     }
 
+    private void initCurrency() {
+        currencyService.create(new CurrencyDto("rubles", "Russian Rubles", "25", "rub"));
+        currencyService.create(new CurrencyDto("bel rubles", "Bellarusian Rubles", "25", "belrub"));
+        currencyService.create(new CurrencyDto("eng dollar", "USA Dollars ", "25", "dol"));
+
+    }
+
+
+    private void initLegalDetails() {
+        legalDetailService.create(new LegalDetailDto(
+                null,
+                "Иванов",
+                "Михаил",
+                "Сергеевич",
+                "г. Воронеж,ул Карла Маркса,46",
+                "comment to address",
+                "3664069397",
+                "79271669",
+                "1053600591197",
+                "236467",
+                LocalDate.of(2020, 6, 12),
+                typeOfContractorService.getById(1L)
+        ));
+        legalDetailService.create(new LegalDetailDto(
+                null,
+                "Гордон",
+                "Андрей",
+                "Анатольевич",
+                "г. Москва, ул. Революции, д. 66",
+                "comment to address",
+                "3664069439",
+                "79271647",
+                "1053600591285",
+                "432145",
+                LocalDate.of(2018, 2, 23),
+                typeOfContractorService.getById(2L)
+        ));
+        legalDetailService.create(new LegalDetailDto(
+                null,
+                "Сергеева",
+                "Мария",
+                "Дмитриевна",
+                "г. Краснодар, ул. 40 Лет Октября, д. 16",
+                "comment to address",
+                "3664055588",
+                "70713032",
+                "1033600141277",
+                "342145",
+                LocalDate.of(2022, 4, 5),
+                typeOfContractorService.getById(3L)
+        ));
+    }
+
     private void initCompanies() {
-
-            LegalDetail legalDetail1 = new LegalDetail("Иванов", "Михаил", "Сергеевич", "г. Воронеж,ул Карла Маркса,46",
-                    "comment to address", "3664069397", "79271669", "1053600591197",
-                    "236467", (LocalDate.of(2020, 6, 12)), typeOfContractorService.getByName("Индивидуальный предприниматель"));
-
-            LegalDetail legalDetail2 = new LegalDetail("Гордон", "Андрей", "Анатольевич", "г. Москва, ул. Революции, д. 66",
-                    "comment to address", "3664069439", "79271647", "1053600591285",
-                    "432145", (LocalDate.of(2018, 2, 23)), typeOfContractorService.getByName("Юридическое лицо"));
-
-            LegalDetail legalDetail3 = new LegalDetail("Сергеева", "Мария", "Дмитриевна", "г. Краснодар, ул. 40 Лет Октября, д. 16",
-                    "comment to address", "3664055588", "70713032", "1033600141277",
-                    "342145", (LocalDate.of(2022, 4, 5)), typeOfContractorService.getByName("Физическое лицо"));
-
-            legalDetailService.create(legalDetail1);
-            legalDetailService.create(legalDetail2);
-            legalDetailService.create(legalDetail3);
-
         for (int i = 0; i < 110; i++) {
-            companyService.create(new Company("OOO \"Организация №1\"", "7712345"+i, "1", "749512345678", "810-41-1234567890", "organization1@mail.com",
-                    true, "123456, г. Москва, ул. Подвойского, д. 14, стр. 7", "something comment", "Петров Сергей Петрович", "Manager",
-                    "leader signature", "Сергеев Петр Сергеевич", "chief signature", "stamp", legalDetail1));
+            companyService.create(new CompanyDto(
+                    null,
+                    "OOO \"Организация №1\"",
+                    "7712345" + i,
+                    String.valueOf(1 + 3 * i),
+                    "749512345678",
+                    "810-41-1234567890",
+                    "organization1@mail.com",
+                    true,
+                    "123456, г. Москва, ул. Подвойского, д. 14, стр. 7",
+                    "something comment",
+                    "Петров Сергей Петрович",
+                    "Manager",
+                    "leader signature",
+                    "Сергеев Петр Сергеевич",
+                    "chief signature",
+                    "stamp",
+                    1L));
 
-            companyService.create(new Company("OOO \"Организация №2\"", "9543564"+i+1, "3", "733126789654", "920-12-2365723233", "organization2@mail.com",
-                    true, "123498, г. Москва, ул. Тверская, д. 20", "something comment", "Иванова Мария Сергеевна", "Executive director",
-                    "leader signature", "Соболев Николай Андреевич", "chief signature", "stamp", legalDetail2));
+            companyService.create(new CompanyDto(
+                    null,
+                    "OOO \"Организация №2\"",
+                    "9543564" + i + 1,
+                    String.valueOf(2 + 3 * i),
+                    "733126789654",
+                    "920-12-2365723233",
+                    "organization2@mail.com",
+                    true,
+                    "123498, г. Москва, ул. Тверская, д. 20",
+                    "something comment",
+                    "Иванова Мария Сергеевна",
+                    "Executive director",
+                    "leader signature",
+                    "Соболев Николай Андреевич",
+                    "chief signature",
+                    "stamp",
+                    2L));
 
-            companyService.create(new Company("OOO \"Организация №3\"", "3453123465"+i+2, "3", "799123786542", "543-23-1234543221", "organization3@mail.com",
-                    true, "432156, г. Самара, ул. Гагарина, д. 18", "something comment", "Сергеева Ксения Андреевна", "Project manager",
-                    "leader signature", "Стрелецкая Анастасия Михайловна", "chief signature", "stamp", legalDetail3));
+            companyService.create(new CompanyDto(
+                    null,
+                    "OOO \"Организация №3\"",
+                    "3453123465" + i + 2,
+                    String.valueOf(3 + 3 * i),
+                    "799123786542",
+                    "543-23-1234543221",
+                    "organization3@mail.com",
+                    true,
+                    "432156, г. Самара, ул. Гагарина, д. 18",
+                    "something comment",
+                    "Сергеева Ксения Андреевна",
+                    "Project manager",
+                    "leader signature",
+                    "Стрелецкая Анастасия Михайловна",
+                    "chief signature",
+                    "stamp",
+                    3L));
         }
     }
 
+    private void initEmployees() {
+        employeeService.create(new EmployeeDto(null,
+                "Vasiliev",
+                "Vasya",
+                "Vasilievich",
+                "1",
+                "+7(999)111-22-33",
+                "526317984689",
+                "Some special text about Vasya",
+                "vasyaogon@mail.ru",
+                "12345",
+                departmentService.getByName("Руководство"),
+                positionService.getByName("Генеральный директор"),
+                Collections.singleton(roleService.getByName("admin")),
+                imageService.getById(1L)));
+        employeeService.create(new EmployeeDto(null,
+                "Simonova",
+                "Sima",
+                "Semenovna",
+                "2",
+                "+7(999)222-11-33",
+                "526317984678",
+                "Some special text about Sima",
+                "simaogon@mail.ru",
+                "54321",
+                departmentService.getByName("Отдел бухгалтерии"),
+                positionService.getByName("Коммерческий директор"),
+                Collections.singleton(roleService.getByName("user")),
+                imageService.getById(2L)));
+        employeeService.create(new EmployeeDto(null,
+                "Belive",
+                "Vera",
+                "Henrichovna",
+                "3",
+                "+7(999)777-11-33",
+                "526317555678",
+                "Some special text about Vera",
+                "veraogon@mail.ru",
+                "76543",
+                departmentService.getByName("Складской комплекс"),
+                positionService.getByName("Технический директор"),
+                Collections.singleton(roleService.getByName("user")),
+                imageService.getById(5L)));
+        employeeService.create(new EmployeeDto(null,
+                "Islentiev",
+                "Karim",
+                "Dmitrievich",
+                "4",
+                "+7(999)222-77-00",
+                "526316666678",
+                "Some special text about Karim",
+                "karimogon@mail.ru",
+                "qwerty",
+                departmentService.getByName("Отдел продаж"),
+                positionService.getByName("Директор по продажам"),
+                Collections.singleton(roleService.getByName("admin")),
+                imageService.getById(4L)));
+        employeeService.create(new EmployeeDto(null,
+                "Petko",
+                "Sasha",
+                "",
+                "5",
+                "+7(999)222-00-33",
+                "526317984600",
+                "Some special text about Sasha",
+                "sashaogon@mail.ru",
+                "asdfg",
+                departmentService.getByName("Складской комплекс"),
+                positionService.getByName("Технический директор"),
+                Collections.singleton(roleService.getByName("user")),
+                imageService.getById(5L)));
+    }
+
+    private void initContractors() {
+        contractorService.create(new ContractorDto(
+                null,
+                "Торговый Дом \"Перекресток\", ЗАО", "7728029110",
+                "1",
+                "8 (495) 232-59-24",
+                "8 (495) 232-59-24",
+                "alena.pechnikova@x5.ru",
+                "109029, г. Москва, ул. Средняя Калитниковская, д. 28, стр. 4",
+                "comment ot address",
+                "comment",
+                contractorGroupService.getById(1L),
+                typeOfContractorService.getById(1L),
+                typeOfPriceService.getById(1L),
+                bankAccountService.getAll(),
+                legalDetailService.getById(1L)
+        ));
+        contractorService.create(new ContractorDto(
+                null,
+                "Агроаспект, ООО",
+                "7715277300", "2",
+                "8 (800) 555-55-05",
+                "8 (800) 555-55-05",
+                "inbox@5ka.ru",
+                "127549, г. Москва, Алтуфьевское ш., д. 60",
+                "",
+                "",
+                contractorGroupService.getById(1L),
+                typeOfContractorService.getById(1L),
+                typeOfPriceService.getById(1L),
+                null,
+//                bankAccountService.getAll(),
+                legalDetailService.getById(1L)));
+        contractorService.create(new ContractorDto(
+                null,
+                "Вкусвилл, ООО",
+                "7734675810",
+                "3",
+                "8 (495) 981-13-45",
+                "8 (495) 981-13-45",
+                "info@izbenka.msk.ru",
+                "123592, г. Москва, ул. Кулакова, д. 20, к. 1, пом. V, ком. 1, эт. 10",
+                "",
+                "",
+                contractorGroupService.getById(1L),
+                typeOfContractorService.getById(1L),
+                typeOfPriceService.getById(1L),
+                null,
+//                bankAccountService.getAll(),
+                legalDetailService.getById(1L)));
+        contractorService.create(new ContractorDto(
+                null,
+                "Альфа-М, ООО", "7743931676",
+                "4",
+                "8 (495) 981-31-85",
+                "8 (495) 981-31-85",
+                "zholudeva.ksyusha@mail.ru",
+                "125475, г. Москва, ул. Клинская, д. 12, ПОМЕЩЕНИЕ II (КОМНАТЫ 9-13)",
+                "",
+                "",
+                contractorGroupService.getById(1L),
+                typeOfContractorService.getById(1L),
+                typeOfPriceService.getById(1L),
+                null,
+//                bankAccountService.getAll(),
+                legalDetailService.getById(1L)));
+        contractorService.create(new ContractorDto(
+                null,
+                "Отдохни - 77, ООО", "7737531091",
+                "5",
+                "8 (495) 326-30-00",
+                "8 (495) 326-30-00",
+                "nina.chehovich@msk.nfretail.ru",
+                "115372, г. Москва, ул. Бирюлёвская, д. 38",
+                "",
+                "",
+                contractorGroupService.getById(1L),
+                typeOfContractorService.getById(1L),
+                typeOfPriceService.getById(1L),
+                null,
+//                bankAccountService.getAll(),
+                legalDetailService.getById(1L)));
+        contractorService.create(new ContractorDto(
+                null,
+                "Продмир, ООО",
+                "5009074197",
+                "6",
+                "8 (495) 651-92-52",
+                "8 (495) 651-92-52",
+                "d.gorobtsova@etpgpb.ru",
+                "115516, г. Москва, Кавказский б-р, д. 57",
+                "",
+                "",
+                contractorGroupService.getById(1L),
+                typeOfContractorService.getById(1L),
+                typeOfPriceService.getById(1L),
+                null,
+//                bankAccountService.getAll(),
+                legalDetailService.getById(1L)));
+        contractorService.create(new ContractorDto(
+                null,
+                "Зельгрос, ООО", "5050058510",
+                "7",
+                "8 (495) 741-45-56",
+                "8 (495) 741-45-56",
+                "tatiana.onishchenko@selgros.ru",
+                "117546, г. Москва, ул. Подольских Курсантов, 26, 1",
+                "",
+                "",
+                contractorGroupService.getById(1L),
+                typeOfContractorService.getById(1L),
+                typeOfPriceService.getById(1L),
+                null,
+//                bankAccountService.getAll(),
+                legalDetailService.getById(1L)));
+        contractorService.create(new ContractorDto(
+                null,
+                "Лабиринт-М, ООО", "7727777402",
+                "8",
+                "8 (495) 155-51-56",
+                "8 (495) 155-51-56",
+                "info@krasnoeibeloe.ru",
+                "117042, г. Москва, ул. Южнобутовская, д. 69",
+                "",
+                "",
+                contractorGroupService.getById(1L),
+                typeOfContractorService.getById(1L),
+                typeOfPriceService.getById(1L),
+                null,
+//                bankAccountService.getAll(),
+                legalDetailService.getById(1L)));
+        contractorService.create(new ContractorDto(
+                null,
+                "Эскорт Сервис, ООО", "7705603716",
+                "9",
+                "8 (495) 755-11-16",
+                "8 (495) 755-11-16",
+                "harlanov.aleksandr@escort-servis.ru",
+                "115404, г. Москва, ул. Бирюлёвская, д. 1, к. 3",
+                "",
+                "",
+                contractorGroupService.getById(1L),
+                typeOfContractorService.getById(1L),
+                typeOfPriceService.getById(1L),
+                null,
+//                bankAccountService.getAll(),
+                legalDetailService.getById(1L)));
+        contractorService.create(new ContractorDto(
+                null,
+                "Арома Маркет, ООО",
+                "7710161911",
+                "10",
+                "8 (495) 777-51-95",
+                "8 (495) 777-51-95",
+                "sales11_am@aroma.ru",
+                "121087, г. Москва, Береговой пр-д, д. 5, к. 1",
+                "",
+                "",
+                contractorGroupService.getById(1L),
+                typeOfContractorService.getById(1L),
+                typeOfPriceService.getById(1L),
+                null,
+//                bankAccountService.getAll(),
+                legalDetailService.getById(1L)));
+    }
+
+    private void initProducts() {
+        productService.create(new ProductDto("Яблоки", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("53.123"), "Красные яблоки голден", false));
+        productService.create(new ProductDto("Бананы", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("153.123"), "Красные бананы голден", false));
+        productService.create(new ProductDto("Мандарины", new BigDecimal("1.0"), new BigDecimal("1.0"), new BigDecimal("523.123"), "Красные мандарины голден", false));
+
+    }
+
+    private void initContracts() {
+        contractService.create(new ContractDto(
+                null,
+                "1",
+                LocalDate.now(),
+                1L,
+                1L,
+                1L,
+                BigDecimal.valueOf(200),
+                false,
+                "no comments",
+                1L));
+    }
 }
