@@ -6,9 +6,13 @@ import com.trade_accounting.repositories.InvoiceProductRepository;
 import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class InvoiceProductServiceImpl implements InvoiceProductService {
 
     private final InvoiceRepository invoiceRepository;
