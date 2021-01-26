@@ -69,6 +69,7 @@ public class ProductRestController {
         return ResponseEntity.ok(productGroup);
     }
 
+    @ApiOperation(value = "getByProductGroupId", notes = "Возвращает товары из определенной группы")
     @GetMapping("/pg/{id}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Товар найден"),
