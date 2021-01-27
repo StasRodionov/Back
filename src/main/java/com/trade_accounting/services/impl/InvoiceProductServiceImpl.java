@@ -9,6 +9,7 @@ import com.trade_accounting.services.interfaces.InvoiceProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Service
@@ -47,7 +48,7 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     }
 
     @Override
-    public void create(InvoiceProductDto invoiceProductDto) {
+    public void create(@NotNull InvoiceProductDto invoiceProductDto) {
         invoiceProductRepository.save(new InvoiceProduct(
                 invoiceRepository.getOne(invoiceProductDto.getInvoiceDto().getId()),
                 productRepository.getOne(invoiceProductDto.getProductDto().getId()),
@@ -57,7 +58,7 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     }
 
     @Override
-    public void update(InvoiceProductDto invoiceProductDto) {
+    public void update(@NotNull InvoiceProductDto invoiceProductDto) {
         invoiceProductRepository.save(new InvoiceProduct(
                 invoiceProductDto.getId(),
                 invoiceRepository.getOne(invoiceProductDto.getInvoiceDto().getId()),
