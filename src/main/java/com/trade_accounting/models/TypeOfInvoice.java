@@ -5,10 +5,14 @@ package com.trade_accounting.models;
  *
  * @param RECEIPT - приход
  * @param EXPENSE - расход
+ * @param POSTING - оприходование
+ * @param WRITE_OFF - списание
  * @author Sanych
  * @see Invoice#typeOfInvoice
  */
 public enum TypeOfInvoice {
     RECEIPT,
-    EXPENSE
+    EXPENSE,
+    POSTING,
+    WRITE_OFF
 }

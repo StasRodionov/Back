@@ -23,9 +23,9 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long> {
             "e.email," +
             "e.address," +
             "e.commentToAddress," +
-            "e.comment) from Contractor e")
+            "e.comment" +
+            ") from Contractor e")
     List<ContractorDto> getAll();
-
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
             "e.id," +
@@ -37,7 +37,8 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long> {
             "e.email," +
             "e.address," +
             "e.commentToAddress," +
-            "e.comment) from Contractor e where e.id = :id")
+            "e.comment" +
+            ") from Contractor e where e.id = :id")
     ContractorDto getById(@Param("id") Long id);
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +

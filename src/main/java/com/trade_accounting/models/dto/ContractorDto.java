@@ -3,6 +3,7 @@ package com.trade_accounting.models.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
@@ -51,9 +52,7 @@ public class ContractorDto {
                          String email,
                          String address,
                          String commentToAddress,
-                         String comment)
-
-                         {
+                         String comment) {
         this.id = id;
         this.name = name;
         this.inn = inn;
@@ -64,6 +63,5 @@ public class ContractorDto {
         this.address = address;
         this.commentToAddress = commentToAddress;
         this.comment = comment;
-
     }
 }

@@ -1,6 +1,5 @@
 package com.trade_accounting.models.dto;
 
-import com.trade_accounting.models.Invoice;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class InvoiceProductDto {
 
@@ -30,14 +30,4 @@ public class InvoiceProductDto {
         this.amount = amount;
         this.price = price;
     }
-
-    public InvoiceProductDto(Long id,
-                             InvoiceDto invoiceDto,
-                             ProductDto productDto,
-                             BigDecimal amount,
-                             BigDecimal price) {
-        this(invoiceDto, productDto, amount, price);
-        this.id = id;
-    }
-
 }
