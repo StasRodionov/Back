@@ -78,7 +78,7 @@ public class ProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<?> create(@ApiParam(name = "productDto", value = "DTO товара, который необходимо создать")
+    public ResponseEntity<ProductDto> create(@ApiParam(name = "productDto", value = "DTO товара, который необходимо создать")
                                         @RequestBody ProductDto productDto) {
         productService.create(productDto);
         log.info("Записан новый экземпляр ProductDto с id= {}, name= {}", productDto.getId(), productDto.getName());
@@ -94,7 +94,7 @@ public class ProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<?> update(@ApiParam(name = "productDto",
+    public ResponseEntity<ProductDto> update(@ApiParam(name = "productDto",
             value = "DTO товара, c обновленными данными")
                                         @RequestBody ProductDto productDto) {
         productService.update(productDto);
@@ -111,7 +111,7 @@ public class ProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<?> deleteById(@ApiParam(name = "id",
+    public ResponseEntity<ProductDto> deleteById(@ApiParam(name = "id",
             value = "ID товара, который необходимо удалить")
                                             @PathVariable(name = "id") Long id) {
         productService.deleteById(id);
