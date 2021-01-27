@@ -69,6 +69,21 @@ public class ProductRestController {
         return ResponseEntity.ok(productGroup);
     }
 
+    @ApiOperation(value = "getByProductGroupId", notes = "Возвращает товары из определенной группы")
+    @GetMapping("/pg/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Товар найден"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<ProductDto>> getByProductGroupId(@ApiParam(name = "id",
+            value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
+            List<ProductDto> productGroups = productService.getAllByProductGroupId(id);
+            log.info("Запрошен список ProductDto");
+            return ResponseEntity.ok(productGroups);
+    }
+
     @ApiOperation(value = "create", notes = "Создает товар на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {
@@ -79,7 +94,7 @@ public class ProductRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<ProductDto> create(@ApiParam(name = "productDto", value = "DTO товара, который необходимо создать")
-                                        @RequestBody ProductDto productDto) {
+                                    @RequestBody ProductDto productDto) {
         productService.create(productDto);
         log.info("Записан новый экземпляр ProductDto с id= {}, name= {}", productDto.getId(), productDto.getName());
         return ResponseEntity.ok().build();
@@ -96,7 +111,7 @@ public class ProductRestController {
     })
     public ResponseEntity<ProductDto> update(@ApiParam(name = "productDto",
             value = "DTO товара, c обновленными данными")
-                                        @RequestBody ProductDto productDto) {
+                                    @RequestBody ProductDto productDto) {
         productService.update(productDto);
         log.info("Обновлен экземпляр ProductDto с id= {}, name= {}", productDto.getId(), productDto.getName());
         return ResponseEntity.ok().build();
@@ -113,7 +128,7 @@ public class ProductRestController {
     })
     public ResponseEntity<ProductDto> deleteById(@ApiParam(name = "id",
             value = "ID товара, который необходимо удалить")
-                                            @PathVariable(name = "id") Long id) {
+                                        @PathVariable(name = "id") Long id) {
         productService.deleteById(id);
         log.info("Удален экземпляр ProductDto с id= {}", id);
         return ResponseEntity.ok().build();
