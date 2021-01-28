@@ -19,7 +19,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final CompanyRepository companyRepository;
     private final ContractorRepository contractorRepository;
-    private final Invoice invoice =null;
 
     public InvoiceServiceImpl(InvoiceRepository invoiceRepository, CompanyRepository companyRepository, ContractorRepository contractorRepository) {
         this.invoiceRepository = invoiceRepository;
