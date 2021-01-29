@@ -162,8 +162,6 @@ public class DataInitializer {
                 invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.EXPENSE, companyDtos.get(i).getId(), contractorDtos.get(j).getId(), false));
             }
         }
-        initContracts();
-        //initInvoice
     }
 
     private void initTypeOfPrices() {
