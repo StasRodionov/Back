@@ -11,6 +11,7 @@ import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
@@ -48,8 +49,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -161,6 +162,8 @@ public class DataInitializer {
                 invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.EXPENSE, companyDtos.get(i).getId(), contractorDtos.get(j).getId(), false));
             }
         }
+        initContracts();
+        //initInvoice
     }
 
     private void initTypeOfPrices() {

@@ -4,6 +4,7 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.services.interfaces.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +30,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @Tag(name = "Product Rest Controller", description = "CRUD операции с товаром")
-@Api(tags = "Product Account Rest Controller")
+@Api(tags = "Product Rest Controller")
 @RequestMapping("/api/product")
 public class ProductRestController {
 
@@ -61,10 +62,26 @@ public class ProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<ProductDto> getById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<ProductDto> getById(@ApiParam(name = "id",
+            value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
         ProductDto productGroup = productService.getById(id);
         log.info("Запрошен экземпляр ProductDto с id= {}", id);
         return ResponseEntity.ok(productGroup);
+    }
+
+    @ApiOperation(value = "getByProductGroupId", notes = "Возвращает товары из определенной группы")
+    @GetMapping("/pg/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Товар найден"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<ProductDto>> getByProductGroupId(@ApiParam(name = "id",
+            value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
+            List<ProductDto> productGroups = productService.getAllByProductGroupId(id);
+            log.info("Запрошен список ProductDto");
+            return ResponseEntity.ok(productGroups);
     }
 
     @ApiOperation(value = "create", notes = "Создает товар на основе переданных данных")
@@ -76,9 +93,10 @@ public class ProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<?> create(@RequestBody ProductDto dto) {
-        productService.create(dto);
-        log.info("Записан новый экземпляр ProductDto с id= {}, name= {}", dto.getId(), dto.getName());
+    public ResponseEntity<ProductDto> create(@ApiParam(name = "productDto", value = "DTO товара, который необходимо создать")
+                                    @RequestBody ProductDto productDto) {
+        productService.create(productDto);
+        log.info("Записан новый экземпляр ProductDto с id= {}, name= {}", productDto.getId(), productDto.getName());
         return ResponseEntity.ok().build();
     }
 
@@ -91,13 +109,15 @@ public class ProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<?> update(@RequestBody ProductDto productDto) {
+    public ResponseEntity<ProductDto> update(@ApiParam(name = "productDto",
+            value = "DTO товара, c обновленными данными")
+                                    @RequestBody ProductDto productDto) {
         productService.update(productDto);
         log.info("Обновлен экземпляр ProductDto с id= {}, name= {}", productDto.getId(), productDto.getName());
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "deleteById", notes = "Удаляет склад на основе переданного ID")
+    @ApiOperation(value = "deleteById", notes = "Удаляет товар на основе переданного ID")
     @DeleteMapping("/{id}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Товар успешно удален"),
@@ -106,7 +126,9 @@ public class ProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<ProductDto> deleteById(@ApiParam(name = "id",
+            value = "ID товара, который необходимо удалить")
+                                        @PathVariable(name = "id") Long id) {
         productService.deleteById(id);
         log.info("Удален экземпляр ProductDto с id= {}", id);
         return ResponseEntity.ok().build();
