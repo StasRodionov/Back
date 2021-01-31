@@ -45,7 +45,7 @@ public class LegalDetailServiceImpl implements LegalDetailService {
 
     @Override
     public void create(LegalDetailDto legalDetailDto) {
-        legalDetailRepository.save(convertToLegalDetail(legalDetailDto));
+        update(legalDetailDto);
     }
 
     @Override

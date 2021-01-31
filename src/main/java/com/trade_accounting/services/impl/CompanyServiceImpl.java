@@ -5,7 +5,10 @@ import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.repositories.CompanyRepository;
+import com.trade_accounting.repositories.LegalDetailRepository;
+import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import org.springframework.stereotype.Service;
@@ -20,20 +23,31 @@ public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
     private final LegalDetailService legalDetailService;
+    private final LegalDetailRepository legalDetailRepository;
+    private final TypeOfContractorRepository typeOfContractorRepository;
 
     public CompanyServiceImpl(CompanyRepository companyRepository,
-                              LegalDetailService legalDetailService) {
+                              LegalDetailService legalDetailService,
+                              LegalDetailRepository legalDetailRepository,
+                              TypeOfContractorRepository typeOfContractorRepository) {
         this.companyRepository = companyRepository;
         this.legalDetailService = legalDetailService;
+        this.legalDetailRepository = legalDetailRepository;
+        this.typeOfContractorRepository = typeOfContractorRepository;
     }
 
     @Override
     public List<CompanyDto> getAll() {
         List<CompanyDto> companyDtos = companyRepository.getAll();
+
         for (CompanyDto companyDto : companyDtos) {
             companyDto.setLegalDetailDto(
                     legalDetailService.getById(companyDto.getLegalDetailDto().getId()));
         }
+        companyDtos.sort((c1, c2) -> {
+            long result = c1.getId() - c2.getId();
+            return (int) (result / Math.abs(result));
+        });
         return companyDtos;
     }
 
@@ -55,12 +69,18 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void create(CompanyDto companyDto) {
-        companyRepository.save(convertToCompany(companyDto));
+        update(companyDto);
     }
 
     @Override
     public void update(CompanyDto companyDto) {
-        companyRepository.save(convertToCompany(companyDto));
+        TypeOfContractor typeOfContractor =
+                typeOfContractorRepository.save(convertToTypeOfContractor(
+                        companyDto.getLegalDetailDto().getTypeOfContractorDto()));
+        LegalDetail legalDetail =
+                legalDetailRepository.save(convertToLegalDetail(
+                        companyDto.getLegalDetailDto(), typeOfContractor));
+        companyRepository.save(convertToCompany(companyDto, legalDetail));
     }
 
     @Override
@@ -73,7 +93,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(company);
     }
 
-    private Company convertToCompany(CompanyDto dto) {
+    private Company convertToCompany(CompanyDto dto, LegalDetail legalDetail) {
         return new Company(
                 dto.getId(),
                 dto.getName(),
@@ -91,21 +111,29 @@ public class CompanyServiceImpl implements CompanyService {
                 dto.getChiefAccountant(),
                 dto.getChiefAccountantSignature(),
                 dto.getStamp(),
-                new LegalDetail(
-                        dto.getLegalDetailDto().getId(),
-                        dto.getLegalDetailDto().getLastName(),
-                        dto.getLegalDetailDto().getFirstName(),
-                        dto.getLegalDetailDto().getMiddleName(),
-                        dto.getLegalDetailDto().getAddress(),
-                        dto.getLegalDetailDto().getCommentToAddress(),
-                        dto.getLegalDetailDto().getInn(),
-                        dto.getLegalDetailDto().getOkpo(),
-                        dto.getLegalDetailDto().getOgrnip(),
-                        dto.getLegalDetailDto().getNumberOfTheCertificate(),
-                        LocalDate.parse(dto.getLegalDetailDto().getDateOfTheCertificate()),
-                        new TypeOfContractor(
-                                dto.getLegalDetailDto().getTypeOfContractorDto().getId(),
-                                dto.getLegalDetailDto().getTypeOfContractorDto().getName(),
-                                dto.getLegalDetailDto().getTypeOfContractorDto().getSortNumber())));
+                legalDetail);
+    }
+
+    private LegalDetail convertToLegalDetail(LegalDetailDto dto, TypeOfContractor typeOfContractor) {
+        return new LegalDetail(
+                dto.getId(),
+                dto.getLastName(),
+                dto.getFirstName(),
+                dto.getMiddleName(),
+                dto.getAddress(),
+                dto.getCommentToAddress(),
+                dto.getInn(),
+                dto.getOkpo(),
+                dto.getOgrnip(),
+                dto.getNumberOfTheCertificate(),
+                LocalDate.parse(dto.getDateOfTheCertificate()),
+                typeOfContractor);
+    }
+
+    private TypeOfContractor convertToTypeOfContractor(TypeOfContractorDto dto) {
+        return new TypeOfContractor(
+                dto.getId(),
+                dto.getName(),
+                dto.getSortNumber());
     }
 }
