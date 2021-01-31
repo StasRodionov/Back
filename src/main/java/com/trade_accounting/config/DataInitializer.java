@@ -1,43 +1,44 @@
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.ProductGroup;
+import com.trade_accounting.models.TypeOfContractor;
+import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
-import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
-import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
-import com.trade_accounting.models.dto.TypeOfContractorDto;
-import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.repositories.CompanyRepository;
+import com.trade_accounting.repositories.ContractorGroupRepository;
+import com.trade_accounting.repositories.ContractorRepository;
+import com.trade_accounting.repositories.LegalDetailRepository;
+import com.trade_accounting.repositories.TypeOfContractorRepository;
+import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.BankAccountService;
-import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.ContractService;
-import com.trade_accounting.services.interfaces.ContractorGroupService;
-import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.services.interfaces.ImageService;
-import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.RoleService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
-import com.trade_accounting.services.interfaces.TypeOfContractorService;
-import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import org.springframework.stereotype.Component;
@@ -52,21 +53,21 @@ import java.util.List;
 @Component
 public class DataInitializer {
 
-    private final TypeOfPriceService typeOfPriceService;
+    private final TypeOfPriceRepository typeOfPriceRepository;
     private final RoleService roleService;
     private final UnitService unitService;
     private final PositionService positionService;
     private final WarehouseService warehouseService;
     private final AttributeOfCalculationObjectService attributeOfCalculationObjectService;
     private final DepartmentService departmentService;
-    private final ContractorGroupService contractorGroupService;
-    private final TypeOfContractorService typeOfContractorService;
+    private final ContractorGroupRepository contractorGroupRepository;
+    private final TypeOfContractorRepository typeOfContractorRepository;
     private final TaxSystemService taxSystemService;
     private final ProductGroupService productGroupService;
-    private final CompanyService companyService;
-    private final LegalDetailService legalDetailService;
+    private final CompanyRepository companyRepository;
+    private final LegalDetailRepository legalDetailRepository;
     private final ContractService contractService;
-    private final ContractorService contractorService;
+    private final ContractorRepository contractorRepository;
     private final BankAccountService bankAccountService;
     private final EmployeeService employeeService;
     private final ImageService imageService;
@@ -74,41 +75,41 @@ public class DataInitializer {
     private final CurrencyService currencyService;
 
     public DataInitializer(
-            TypeOfPriceService typeOfPriceService,
+            TypeOfPriceRepository typeOfPriceRepository,
             RoleService roleService,
             UnitService unitService,
             PositionService positionService,
             WarehouseService warehouseService,
             AttributeOfCalculationObjectService attributeOfCalculationObjectService,
             DepartmentService departmentService,
-            ContractorGroupService contractorGroupService,
+            ContractorGroupRepository contractorGroupRepository,
             TaxSystemService taxSystemService,
             ProductGroupService productGroupService,
-            TypeOfContractorService typeOfContractorService,
-            CompanyService companyService,
-            LegalDetailService legalDetailService,
+            TypeOfContractorRepository typeOfContractorRepository,
+            CompanyRepository companyRepository,
+            LegalDetailRepository legalDetailRepository,
             ContractService contractService,
-            ContractorService contractorService,
+            ContractorRepository contractorRepository,
             BankAccountService bankAccountService,
             EmployeeService employeeService,
             ImageService imageService,
             ProductService productService,
             CurrencyService currencyService) {
-        this.typeOfPriceService = typeOfPriceService;
+        this.typeOfPriceRepository = typeOfPriceRepository;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
         this.unitService = unitService;
         this.positionService = positionService;
         this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
         this.departmentService = departmentService;
-        this.contractorGroupService = contractorGroupService;
-        this.typeOfContractorService = typeOfContractorService;
+        this.contractorGroupRepository = contractorGroupRepository;
+        this.typeOfContractorRepository = typeOfContractorRepository;
         this.taxSystemService = taxSystemService;
         this.productGroupService = productGroupService;
-        this.companyService = companyService;
-        this.legalDetailService = legalDetailService;
+        this.companyRepository = companyRepository;
+        this.legalDetailRepository = legalDetailRepository;
         this.contractService = contractService;
-        this.contractorService = contractorService;
+        this.contractorRepository = contractorRepository;
         this.bankAccountService = bankAccountService;
         this.employeeService = employeeService;
         this.imageService = imageService;
@@ -143,19 +144,19 @@ public class DataInitializer {
     }
 
     private void initTypeOfPrices() {
-        typeOfPriceService.create(new TypeOfPriceDto("Оптовая цена", "1"));
-        typeOfPriceService.create(new TypeOfPriceDto("Розничная цена", "2"));
+        typeOfPriceRepository.save(new TypeOfPrice(null, "Оптовая цена", "1"));
+        typeOfPriceRepository.save(new TypeOfPrice(null, "Розничная цена", "2"));
     }
 
     private void initContractorGroups() {
-        contractorGroupService.create(new ContractorGroupDto("Покупатель", "1"));
-        contractorGroupService.create(new ContractorGroupDto("Поставщик", "2"));
+        contractorGroupRepository.save(new ContractorGroup(null, "Покупатель", "1"));
+        contractorGroupRepository.save(new ContractorGroup(null, "Поставщик", "2"));
     }
 
     private void initTypeOfContractors() {
-        typeOfContractorService.create(new TypeOfContractorDto("Юридическое лицо", "1"));
-        typeOfContractorService.create(new TypeOfContractorDto("Индивидуальный предприниматель", "2"));
-        typeOfContractorService.create(new TypeOfContractorDto("Физическое лицо", "3"));
+        typeOfContractorRepository.save(new TypeOfContractor(null, "Юридическое лицо", "1"));
+        typeOfContractorRepository.save(new TypeOfContractor(null, "Индивидуальный предприниматель", "2"));
+        typeOfContractorRepository.save(new TypeOfContractor(null, "Физическое лицо", "3"));
     }
 
     private void initBankAccounts() {
@@ -350,9 +351,8 @@ public class DataInitializer {
         currencyService.create(new CurrencyDto("eng dollar", "USA Dollars ", "25", "dol"));
     }
 
-
     private void initLegalDetails() {
-        legalDetailService.create(new LegalDetailDto(
+        legalDetailRepository.save(new LegalDetail(
                 null,
                 "Иванов",
                 "Михаил",
@@ -364,9 +364,9 @@ public class DataInitializer {
                 "1053600591197",
                 "236467",
                 LocalDate.of(2020, 6, 12),
-                typeOfContractorService.getById(1L)
+                typeOfContractorRepository.getOne(1L)
         ));
-        legalDetailService.create(new LegalDetailDto(
+        legalDetailRepository.save(new LegalDetail(
                 null,
                 "Гордон",
                 "Андрей",
@@ -378,9 +378,9 @@ public class DataInitializer {
                 "1053600591285",
                 "432145",
                 LocalDate.of(2018, 2, 23),
-                typeOfContractorService.getById(2L)
+                typeOfContractorRepository.getOne(2L)
         ));
-        legalDetailService.create(new LegalDetailDto(
+        legalDetailRepository.save(new LegalDetail(
                 null,
                 "Сергеева",
                 "Мария",
@@ -392,13 +392,13 @@ public class DataInitializer {
                 "1033600141277",
                 "342145",
                 LocalDate.of(2022, 4, 5),
-                typeOfContractorService.getById(3L)
+                typeOfContractorRepository.getOne(3L)
         ));
     }
 
     private void initCompanies() {
         for (int i = 0; i < 110; i++) {
-            companyService.create(new CompanyDto(
+            companyRepository.save(new Company(
                     null,
                     "OOO \"Организация №1\"",
                     "7712345" + i,
@@ -415,9 +415,9 @@ public class DataInitializer {
                     "Сергеев Петр Сергеевич",
                     "chief signature",
                     "stamp",
-                    1L));
+                    legalDetailRepository.getOne(1L)));
 
-            companyService.create(new CompanyDto(
+            companyRepository.save(new Company(
                     null,
                     "OOO \"Организация №2\"",
                     "9543564" + i + 1,
@@ -434,9 +434,9 @@ public class DataInitializer {
                     "Соболев Николай Андреевич",
                     "chief signature",
                     "stamp",
-                    2L));
+                    legalDetailRepository.getOne(2L)));
 
-            companyService.create(new CompanyDto(
+            companyRepository.save(new Company(
                     null,
                     "OOO \"Организация №3\"",
                     "3453123465" + i + 2,
@@ -453,7 +453,7 @@ public class DataInitializer {
                     "Стрелецкая Анастасия Михайловна",
                     "chief signature",
                     "stamp",
-                    3L));
+                    legalDetailRepository.getOne(3L)));
         }
     }
 
@@ -531,7 +531,7 @@ public class DataInitializer {
     }
 
     private void initContractors() {
-        contractorService.create(new ContractorDto(
+        contractorRepository.save(new Contractor(
                 null,
                 "Торговый Дом \"Перекресток\", ЗАО", "7728029110",
                 "1",
@@ -541,13 +541,12 @@ public class DataInitializer {
                 "109029, г. Москва, ул. Средняя Калитниковская, д. 28, стр. 4",
                 "comment ot address",
                 "comment",
-                contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
-                bankAccountService.getAll(),
-                legalDetailService.getById(1L)
-        ));
-        contractorService.create(new ContractorDto(
+                contractorGroupRepository.getOne(1L),
+                typeOfContractorRepository.getOne(1L),
+                typeOfPriceRepository.getOne(1L),
+                null,
+                legalDetailRepository.getOne(1L)));
+        contractorRepository.save(new Contractor(
                 null,
                 "Агроаспект, ООО",
                 "7715277300", "2",
@@ -557,12 +556,12 @@ public class DataInitializer {
                 "127549, г. Москва, Алтуфьевское ш., д. 60",
                 "",
                 "",
-                contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                contractorGroupRepository.getOne(1L),
+                typeOfContractorRepository.getOne(1L),
+                typeOfPriceRepository.getOne(1L),
                 null,
-                legalDetailService.getById(1L)));
-        contractorService.create(new ContractorDto(
+                legalDetailRepository.getOne(1L)));
+        contractorRepository.save(new Contractor(
                 null,
                 "Вкусвилл, ООО",
                 "7734675810",
@@ -573,12 +572,12 @@ public class DataInitializer {
                 "123592, г. Москва, ул. Кулакова, д. 20, к. 1, пом. V, ком. 1, эт. 10",
                 "",
                 "",
-                contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                contractorGroupRepository.getOne(1L),
+                typeOfContractorRepository.getOne(1L),
+                typeOfPriceRepository.getOne(1L),
                 null,
-                legalDetailService.getById(1L)));
-        contractorService.create(new ContractorDto(
+                legalDetailRepository.getOne(1L)));
+        contractorRepository.save(new Contractor(
                 null,
                 "Альфа-М, ООО", "7743931676",
                 "4",
@@ -588,12 +587,12 @@ public class DataInitializer {
                 "125475, г. Москва, ул. Клинская, д. 12, ПОМЕЩЕНИЕ II (КОМНАТЫ 9-13)",
                 "",
                 "",
-                contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                contractorGroupRepository.getOne(1L),
+                typeOfContractorRepository.getOne(1L),
+                typeOfPriceRepository.getOne(1L),
                 null,
-                legalDetailService.getById(1L)));
-        contractorService.create(new ContractorDto(
+                legalDetailRepository.getOne(1L)));
+        contractorRepository.save(new Contractor(
                 null,
                 "Отдохни - 77, ООО", "7737531091",
                 "5",
@@ -603,12 +602,12 @@ public class DataInitializer {
                 "115372, г. Москва, ул. Бирюлёвская, д. 38",
                 "",
                 "",
-                contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                contractorGroupRepository.getOne(1L),
+                typeOfContractorRepository.getOne(1L),
+                typeOfPriceRepository.getOne(1L),
                 null,
-                legalDetailService.getById(1L)));
-        contractorService.create(new ContractorDto(
+                legalDetailRepository.getOne(1L)));
+        contractorRepository.save(new Contractor(
                 null,
                 "Продмир, ООО",
                 "5009074197",
@@ -619,12 +618,12 @@ public class DataInitializer {
                 "115516, г. Москва, Кавказский б-р, д. 57",
                 "",
                 "",
-                contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                contractorGroupRepository.getOne(1L),
+                typeOfContractorRepository.getOne(1L),
+                typeOfPriceRepository.getOne(1L),
                 null,
-                legalDetailService.getById(1L)));
-        contractorService.create(new ContractorDto(
+                legalDetailRepository.getOne(1L)));
+        contractorRepository.save(new Contractor(
                 null,
                 "Зельгрос, ООО", "5050058510",
                 "7",
@@ -634,12 +633,12 @@ public class DataInitializer {
                 "117546, г. Москва, ул. Подольских Курсантов, 26, 1",
                 "",
                 "",
-                contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                contractorGroupRepository.getOne(1L),
+                typeOfContractorRepository.getOne(1L),
+                typeOfPriceRepository.getOne(1L),
                 null,
-                legalDetailService.getById(1L)));
-        contractorService.create(new ContractorDto(
+                legalDetailRepository.getOne(1L)));
+        contractorRepository.save(new Contractor(
                 null,
                 "Лабиринт-М, ООО", "7727777402",
                 "8",
@@ -649,12 +648,12 @@ public class DataInitializer {
                 "117042, г. Москва, ул. Южнобутовская, д. 69",
                 "",
                 "",
-                contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                contractorGroupRepository.getOne(1L),
+                typeOfContractorRepository.getOne(1L),
+                typeOfPriceRepository.getOne(1L),
                 null,
-                legalDetailService.getById(1L)));
-        contractorService.create(new ContractorDto(
+                legalDetailRepository.getOne(1L)));
+        contractorRepository.save(new Contractor(
                 null,
                 "Эскорт Сервис, ООО", "7705603716",
                 "9",
@@ -664,12 +663,12 @@ public class DataInitializer {
                 "115404, г. Москва, ул. Бирюлёвская, д. 1, к. 3",
                 "",
                 "",
-                contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                contractorGroupRepository.getOne(1L),
+                typeOfContractorRepository.getOne(1L),
+                typeOfPriceRepository.getOne(1L),
                 null,
-                legalDetailService.getById(1L)));
-        contractorService.create(new ContractorDto(
+                legalDetailRepository.getOne(1L)));
+        contractorRepository.save(new Contractor(
                 null,
                 "Арома Маркет, ООО",
                 "7710161911",
@@ -680,11 +679,11 @@ public class DataInitializer {
                 "121087, г. Москва, Береговой пр-д, д. 5, к. 1",
                 "",
                 "",
-                contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                contractorGroupRepository.getOne(1L),
+                typeOfContractorRepository.getOne(1L),
+                typeOfPriceRepository.getOne(1L),
                 null,
-                legalDetailService.getById(1L)));
+                legalDetailRepository.getOne(1L)));
     }
 
     private void initProducts() {
@@ -693,7 +692,7 @@ public class DataInitializer {
 
         List<TaxSystemDto> taxSystemDtoList = new ArrayList<>(taxSystemService.getAll());
 
-        List<ContractorDto> contractorDtoList = new ArrayList<>(contractorService.getAll());
+        List<ContractorDto> contractorDtoList = new ArrayList<>(contractorRepository.getAll());
 
         List<ProductGroupDto> productGroupDtoList = new ArrayList<>(productGroupService.getAll());
 
