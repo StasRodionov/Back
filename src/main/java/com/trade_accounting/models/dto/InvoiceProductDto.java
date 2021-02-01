@@ -21,12 +21,12 @@ public class InvoiceProductDto {
 
     private BigDecimal price;
 
-    public InvoiceProductDto(InvoiceDto invoiceDto,
-                             ProductDto productDto,
-                             BigDecimal amount,
-                             BigDecimal price) {
-        this.invoiceDto = invoiceDto;
-        this.productDto = productDto;
+    public InvoiceProductDto(Long id, Long invoiceId, Long productId, BigDecimal amount, BigDecimal price) {
+        this.id = id;
+        this.invoiceDto = new InvoiceDto();
+        this.invoiceDto.setId(invoiceId);
+        this.productDto = new ProductDto();
+        this.productDto.setId(productId);
         this.amount = amount;
         this.price = price;
     }
