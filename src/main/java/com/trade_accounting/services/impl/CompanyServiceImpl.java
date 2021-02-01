@@ -74,13 +74,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void update(CompanyDto companyDto) {
-        TypeOfContractor typeOfContractor =
-                typeOfContractorRepository.save(convertToTypeOfContractor(
-                        companyDto.getLegalDetailDto().getTypeOfContractorDto()));
-        LegalDetail legalDetail =
-                legalDetailRepository.save(convertToLegalDetail(
-                        companyDto.getLegalDetailDto(), typeOfContractor));
-        companyRepository.save(convertToCompany(companyDto, legalDetail));
+        companyRepository.save(convertToCompany(companyDto,
+                legalDetailRepository.save(convertToLegalDetail(companyDto.getLegalDetailDto(),
+                        typeOfContractorRepository.save(convertToTypeOfContractor(
+                                companyDto.getLegalDetailDto().getTypeOfContractorDto()))))));
     }
 
     @Override
