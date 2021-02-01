@@ -13,11 +13,10 @@ import java.time.LocalDateTime;
  * Класс-модель накладной
  *
  * @param date         - дата составления накладной
- * @param typeOfInvoce - тип накладной (приход/расход)
+ * @param typeOfInvoce - тип накладной
  * @param company      - наименование компании
  * @param contractor   - контрагент
  * @author Sanych
- * @see Invoice#Invoice(LocalDateTime, TypeOfInvoice, Company, Contractor)
  */
 @Data
 @NoArgsConstructor
@@ -46,15 +45,11 @@ public class Invoice {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Warehouse warehouse;
+
     @Column(name = "is_Spend")
     @ColumnDefault("false")
     private boolean isSpend;
-
-    public Invoice(@NotNull LocalDateTime date, @NotNull TypeOfInvoice typeOfInvoice,
-                   @NotNull Company company, @NotNull Contractor contractor) {
-        this.date = date;
-        this.typeOfInvoice = typeOfInvoice;
-        this.company = company;
-        this.contractor = contractor;
-    }
 }
