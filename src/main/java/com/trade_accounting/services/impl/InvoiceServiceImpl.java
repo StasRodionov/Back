@@ -54,7 +54,15 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public void create(InvoiceDto invoiceDto) {
-        update(invoiceDto);
+        invoiceRepository.save(
+                new Invoice(
+                        null,
+                        invoiceDto.getDate(),
+                        TypeOfInvoice.valueOf(invoiceDto.getTypeOfInvoice()),
+                        companyRepository.getOne(invoiceDto.getCompanyDto().getId()),
+                        contractorRepository.getOne(invoiceDto.getContractorDto().getId()),
+                        warehouseRepository.getOne(invoiceDto.getWarehouseDto().getId()),
+                        invoiceDto.isSpend()));
     }
 
     @Override
