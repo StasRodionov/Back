@@ -16,7 +16,8 @@ public interface CurrencyRepository extends JpaRepository<Currency, Long> {
             "currency.shortName, " +
             "currency.fullName," +
             "currency.digitalCode, " +
-            "currency.letterCode) from Currency currency")
+            "currency.letterCode, " +
+            "currency.sortNumber) from Currency currency")
     List<CurrencyDto> getAll();
 
     @Query("select new com.trade_accounting.models.dto.CurrencyDto(" +
@@ -24,7 +25,8 @@ public interface CurrencyRepository extends JpaRepository<Currency, Long> {
             "currency.shortName, " +
             "currency.fullName," +
             "currency.digitalCode, " +
-            "currency.letterCode) from Currency currency " +
+            "currency.letterCode, " +
+            "currency.sortNumber) from Currency currency " +
             "where currency.id = :id")
     CurrencyDto getById(@Param("id") Long id);
 }

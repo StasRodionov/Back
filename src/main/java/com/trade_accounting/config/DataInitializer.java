@@ -345,9 +345,9 @@ public class DataInitializer {
     }
 
     private void initCurrency() {
-        currencyService.create(new CurrencyDto("rubles", "Russian Rubles", "25", "rub"));
-        currencyService.create(new CurrencyDto("bel rubles", "Bellarusian Rubles", "25", "belrub"));
-        currencyService.create(new CurrencyDto("eng dollar", "USA Dollars ", "25", "dol"));
+        currencyService.create(new CurrencyDto(null,"rubles", "Russian Rubles", "25", "rub", "1"));
+        currencyService.create(new CurrencyDto(null,"bel rubles", "Bellarusian Rubles", "25", "belrub","2"));
+        currencyService.create(new CurrencyDto(null,"eng dollar", "USA Dollars ", "25", "dol","3"));
     }
 
 
