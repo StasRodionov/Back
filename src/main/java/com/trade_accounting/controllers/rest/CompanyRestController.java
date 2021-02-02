@@ -48,7 +48,7 @@ public class CompanyRestController {
         return ResponseEntity.ok(companyDtos);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     @ApiOperation(value = "getById", notes = "Получение компании по ее id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Компания найдена"),
@@ -64,7 +64,7 @@ public class CompanyRestController {
         return ResponseEntity.ok(companyDto);
     }
 
-    @GetMapping("/email/{email}")
+    @GetMapping("/{email}")
     @ApiOperation(value = "getByEmail", notes = "Получение компании по ее email")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Компания найдена"),
