@@ -70,7 +70,7 @@ public class InvoiceProductRestController {
     @ApiOperation(value = "create", notes = "Добавляет счет-фактуру на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Счет-Фактура успешно добавлена"),
+            @ApiResponse(code = 200, message = "Счет-фактура успешно добавлена"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
