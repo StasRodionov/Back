@@ -35,7 +35,8 @@ public class CurrencyServiceImpl implements CurrencyService {
                 currencyDto.getShortName(),
                 currencyDto.getFullName(),
                 currencyDto.getDigitalCode(),
-                currencyDto.getLetterCode());
+                currencyDto.getLetterCode(),
+                currencyDto.getSortNumber());
         currencyRepository.save(currency);
     }
 
@@ -45,7 +46,8 @@ public class CurrencyServiceImpl implements CurrencyService {
                 currencyDto.getShortName(),
                 currencyDto.getFullName(),
                 currencyDto.getDigitalCode(),
-                currencyDto.getLetterCode());
+                currencyDto.getLetterCode(),
+                currencyDto.getSortNumber());
         currencyRepository.save(currency);
     }
 

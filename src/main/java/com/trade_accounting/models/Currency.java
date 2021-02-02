@@ -34,6 +34,9 @@ public class Currency {
     @Column(name = "letter_code")
     private String letterCode;
 
+    @Column(name = "sort_number")
+    private String sortNumber;
+
     public Currency(String shortName, String digitalCode, String letterCode) {
         this.shortName = shortName;
         this.digitalCode = digitalCode;
