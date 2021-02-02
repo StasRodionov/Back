@@ -149,10 +149,10 @@ public class DataInitializer {
         initContractors();
         initProducts();
         initContracts();
-        initInvoice();
+        initInvoices();
     }
 
-    public void initInvoice(){
+    public void initInvoices(){
         LocalDateTime localDateTime = LocalDateTime.now();
         List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
