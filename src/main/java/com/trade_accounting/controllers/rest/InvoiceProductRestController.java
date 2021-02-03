@@ -23,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "Invoice Product Rest Controller", description = "CRUD операции с счет-фактурами")
+@Tag(name = "Invoice Product Rest Controller", description = "CRUD операции с товарами в накладной")
 @Api(tags = "Invoice Product Rest Controller")
 @RequestMapping("/api/invoice/product")
 public class InvoiceProductRestController {
@@ -34,10 +34,10 @@ public class InvoiceProductRestController {
         this.invoiceProductService = invoiceProductService;
     }
 
-    @ApiOperation(value = "getAll", notes = "Возвращает список всех счет-фактур")
+    @ApiOperation(value = "getAll", notes = "Возвращает список всех товаров в накладной")
     @GetMapping
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка всех счет-фактур"),
+            @ApiResponse(code = 200, message = "Успешное получение списка всех товаров в накладной"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
@@ -48,10 +48,10 @@ public class InvoiceProductRestController {
         return ResponseEntity.ok(invoiceProductDtos);
     }
 
-    @ApiOperation(value = "getById", notes = "Возвращает счет-фактуру по Id")
+    @ApiOperation(value = "getById", notes = "Возвращает товар в накладной по Id")
     @GetMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Счет-фактура найдена"),
+            @ApiResponse(code = 200, message = "Товар в накладной найден"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
@@ -59,7 +59,7 @@ public class InvoiceProductRestController {
     public ResponseEntity<InvoiceProductDto> getById(@ApiParam(
             name = "id",
             type = "Long",
-            value = "Переданный ID  в URL по которому необходимо найти счет-фактуру",
+            value = "Переданный ID  в URL по которому необходимо найти товар в накладной",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         InvoiceProductDto invoiceProductDto = invoiceProductService.getById(id);
@@ -67,26 +67,26 @@ public class InvoiceProductRestController {
         return ResponseEntity.ok(invoiceProductDto);
     }
 
-    @ApiOperation(value = "create", notes = "Добавляет счет-фактуру на основе переданных данных")
+    @ApiOperation(value = "create", notes = "Добавляет товар в накладной на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Счет-фактура успешно добавлена"),
+            @ApiResponse(code = 200, message = "Товар в накладной успешно добавлен"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> create(@ApiParam(name = "invoiceProductDto",
-            value = "DTO счет фактуры, который необходимо создать") @RequestBody InvoiceProductDto invoiceProductDto) {
+            value = "DTO товара в накладной, который необходимо создать") @RequestBody InvoiceProductDto invoiceProductDto) {
         invoiceProductService.create(invoiceProductDto);
         log.info("Записан новый экземпляр InvoiceProduct c id= {}", invoiceProductDto.getId());
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "update", notes = "Обновляет счет-фактуру на основе переданных данных")
+    @ApiOperation(value = "update", notes = "Обновляет товар в накладной на основе переданных данных")
     @PutMapping
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Счет-фактура успешно обновлена"),
+            @ApiResponse(code = 200, message = "Товар в накладной успешно обновлена"),
             @ApiResponse(code = 201, message = "Запрос принят и данные обновлены"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
@@ -99,10 +99,10 @@ public class InvoiceProductRestController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "deleteById", notes = "Удаляет счет-фактуру на основе переданного ID")
+    @ApiOperation(value = "deleteById", notes = "Удаляет товар в накладной на основе переданного ID")
     @DeleteMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Счет-фактура успешно удалена"),
+            @ApiResponse(code = 200, message = "Товар в накладной успешно удален"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
@@ -111,7 +111,7 @@ public class InvoiceProductRestController {
     public ResponseEntity<?> deleteById(@ApiParam(
             name = "id",
             type = "Long",
-            value = "Переданный ID  в URL по которому необходимо удалить счет-фактуру",
+            value = "Переданный ID  в URL по которому необходимо удалить товар в накладной",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         invoiceProductService.deleteById(id);
