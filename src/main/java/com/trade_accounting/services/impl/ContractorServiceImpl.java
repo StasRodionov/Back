@@ -61,6 +61,14 @@ public class ContractorServiceImpl implements ContractorService {
         return contractorDtos;
     }
 
+    public List<ContractorDto> getAll(String stringFilter) {
+        if (stringFilter == null || stringFilter.isEmpty()) {
+            return contractorRepository.getAll();
+        } else {
+            return contractorRepository.search(stringFilter);
+        }
+    }
+
     @Override
     public ContractorDto getById(Long id) {
 
