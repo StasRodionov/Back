@@ -2,6 +2,7 @@ package com.trade_accounting.config;
 
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.TypeOfInvoice;
+import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -156,10 +157,18 @@ public class DataInitializer {
         LocalDateTime localDateTime = LocalDateTime.now();
         List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
+        List<WarehouseDto> warehouseDtos = warehouseService.getAll().stream().limit(3).collect(Collectors.toList());
 
-        for (int i = 0; i < companyDtos.size(); i++) {
-            for (int j = 0; j < contractorDtos.size(); j++) {
-                invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.EXPENSE, companyDtos.get(i).getId(), contractorDtos.get(j).getId(), false));
+        for (CompanyDto companyDto : companyDtos) {
+            for (ContractorDto contractorDto : contractorDtos) {
+                for (WarehouseDto warehouseDto : warehouseDtos) {
+                    invoiceService.create(new InvoiceDto(localDateTime,
+                            TypeOfInvoice.EXPENSE,
+                            companyDto.getId(),
+                            contractorDto.getId(),
+                            warehouseDto.getId(),
+                            false));
+                }
             }
         }
     }
