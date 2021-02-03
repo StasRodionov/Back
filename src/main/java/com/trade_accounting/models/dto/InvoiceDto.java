@@ -22,10 +22,18 @@ public class InvoiceDto {
     private CompanyDto companyDto;
     @NotNull
     private ContractorDto contractorDto;
+    @NotNull
+    private WarehouseDto warehouseDto;
 
     private boolean isSpend;
 
-    public InvoiceDto(Long id, LocalDateTime date, TypeOfInvoice typeOfInvoice, Long companyId, Long contractorId, boolean isSpend) {
+    public InvoiceDto(Long id,
+                      LocalDateTime date,
+                      TypeOfInvoice typeOfInvoice,
+                      Long companyId,
+                      Long contractorId,
+                      Long warehouseId,
+                      boolean isSpend) {
         this.id = id;
         this.date = date;
         this.typeOfInvoice = typeOfInvoice.toString();
@@ -33,16 +41,24 @@ public class InvoiceDto {
         this.companyDto.setId(companyId);
         this.contractorDto = new ContractorDto();
         this.contractorDto.setId(contractorId);
+        this.warehouseDto = new WarehouseDto();
+        this.warehouseDto.setId(warehouseId);
         this.isSpend = isSpend;
     }
-    public InvoiceDto(LocalDateTime date, TypeOfInvoice typeOfInvoice, Long companyId, Long contractorId, boolean isSpend) {
+    public InvoiceDto(LocalDateTime date,
+                      TypeOfInvoice typeOfInvoice,
+                      Long companyId,
+                      Long contractorId,
+                      Long warehouseId,
+                      boolean isSpend) {
         this.date = date;
         this.typeOfInvoice = typeOfInvoice.toString();
         this.companyDto = new CompanyDto();
         this.companyDto.setId(companyId);
         this.contractorDto = new ContractorDto();
         this.contractorDto.setId(contractorId);
+        this.warehouseDto = new WarehouseDto();
+        this.warehouseDto.setId(warehouseId);
         this.isSpend = isSpend;
     }
-
 }
