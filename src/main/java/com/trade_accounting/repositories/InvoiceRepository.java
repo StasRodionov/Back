@@ -18,9 +18,9 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
             "e.typeOfInvoice," +
             "e.company.id," +
             "e.contractor.id," +
+            "e.warehouse.id," +
             "e.isSpend) from Invoice e")
     List<InvoiceDto> getAll();
-
 
     @Query("select new com.trade_accounting.models.dto.InvoiceDto(" +
             "e.id," +
@@ -28,6 +28,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
             "e.typeOfInvoice," +
             "e.company.id," +
             "e.contractor.id," +
+            "e.warehouse.id," +
             "e.isSpend) from Invoice e where e.id = :id")
     InvoiceDto getById(@Param("id") Long id);
 }
