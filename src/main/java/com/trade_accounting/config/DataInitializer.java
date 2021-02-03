@@ -1,6 +1,7 @@
 package com.trade_accounting.config;
 
 import com.trade_accounting.models.ProductGroup;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -10,6 +11,8 @@ import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
@@ -30,6 +33,7 @@ import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.services.interfaces.ImageService;
+import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
@@ -46,8 +50,10 @@ import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class DataInitializer {
@@ -72,6 +78,8 @@ public class DataInitializer {
     private final ImageService imageService;
     private final ProductService productService;
     private final CurrencyService currencyService;
+    private final InvoiceService invoiceService;
+
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -93,7 +101,8 @@ public class DataInitializer {
             EmployeeService employeeService,
             ImageService imageService,
             ProductService productService,
-            CurrencyService currencyService) {
+            CurrencyService currencyService,
+            InvoiceService invoiceService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -114,6 +123,7 @@ public class DataInitializer {
         this.imageService = imageService;
         this.productService = productService;
         this.currencyService = currencyService;
+        this.invoiceService = invoiceService;
     }
 
     @PostConstruct
@@ -139,7 +149,19 @@ public class DataInitializer {
         initContractors();
         initProducts();
         initContracts();
-        //initInvoice
+        initInvoices();
+    }
+
+    public void initInvoices(){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
+        List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
+
+        for (int i = 0; i < companyDtos.size(); i++) {
+            for (int j = 0; j < contractorDtos.size(); j++) {
+                invoiceService.create(new InvoiceDto(localDateTime,TypeOfInvoice.EXPENSE, companyDtos.get(i).getId(), contractorDtos.get(j).getId(), false));
+            }
+        }
     }
 
     private void initTypeOfPrices() {
