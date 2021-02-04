@@ -75,6 +75,7 @@ public class CompanyRestController {
                     @Spec(path = "chiefAccountantSignature", params = "chiefAccountantSignature", spec = Like.class),
                     @Spec(path = "stamp", params = "stamp", spec = Like.class)
             }) Specification<Company> spec) {
+        log.info("Запрошен поиск компаний");
         return ResponseEntity.ok(companyService.search(spec));
     }
 
