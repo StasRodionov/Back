@@ -2,6 +2,10 @@ package com.trade_accounting.util;
 
 public class SortNumberConverter {
 
+    private SortNumberConverter() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static String convert(String sortNumber) {
         int number = Integer.parseInt(sortNumber);
         if (number < 10) return "0000" + sortNumber;
