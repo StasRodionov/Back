@@ -1,9 +1,9 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
+import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,24 +31,12 @@ public class TypeOfContractorServiceImpl implements TypeOfContractorService {
 
     @Override
     public void create(TypeOfContractorDto typeOfContractorDto) {
-
-        typeOfContractorRepository.save(
-                new TypeOfContractor(
-                        typeOfContractorDto.getName(),
-                        typeOfContractorDto.getSortNumber()
-                )
-        );
+        update(typeOfContractorDto);
     }
 
     @Override
     public void update(TypeOfContractorDto typeOfContractorDto) {
-        typeOfContractorRepository.save(
-                new TypeOfContractor(
-                        typeOfContractorDto.getId(),
-                        typeOfContractorDto.getName(),
-                        typeOfContractorDto.getSortNumber()
-                )
-        );
+        typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(typeOfContractorDto));
     }
 
     @Override
