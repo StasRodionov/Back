@@ -345,9 +345,9 @@ public class DataInitializer {
     }
 
     private void initCurrency() {
-        currencyService.create(new CurrencyDto(null,"rubles", "Russian Rubles", "25", "rub", "1"));
-        currencyService.create(new CurrencyDto(null,"bel rubles", "Bellarusian Rubles", "25", "belrub","2"));
-        currencyService.create(new CurrencyDto(null,"eng dollar", "USA Dollars ", "25", "dol","3"));
+        currencyService.create(new CurrencyDto(null, "rubles", "Russian Rubles", "25", "rub", "1"));
+        currencyService.create(new CurrencyDto(null, "bel rubles", "Bellarusian Rubles", "25", "belrub", "2"));
+        currencyService.create(new CurrencyDto(null, "eng dollar", "USA Dollars ", "25", "dol", "3"));
     }
 
     private void initLegalDetails() {
@@ -363,7 +363,7 @@ public class DataInitializer {
                 "1053600591197",
                 "236467",
                 LocalDate.of(2020, 6, 12).toString(),
-                typeOfContractorService.getById(1L)
+                typeOfContractorService.getByName("Юридическое лицо")
         ));
         legalDetailService.create(new LegalDetailDto(
                 null,
@@ -377,7 +377,7 @@ public class DataInitializer {
                 "1053600591285",
                 "432145",
                 LocalDate.of(2018, 2, 23).toString(),
-                typeOfContractorService.getById(2L)
+                typeOfContractorService.getByName("Индивидуальный предприниматель")
         ));
         legalDetailService.create(new LegalDetailDto(
                 null,
@@ -391,7 +391,7 @@ public class DataInitializer {
                 "1033600141277",
                 "342145",
                 LocalDate.of(2022, 4, 5).toString(),
-                typeOfContractorService.getById(3L)
+                typeOfContractorService.getByName("Физическое лицо")
         ));
     }
 
@@ -400,8 +400,8 @@ public class DataInitializer {
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №1\"",
-                    "7712345" + i,
-                    String.valueOf(1 + 3 * i),
+                    "7712345" + String.format("%03d" , i),
+                    String.format("%05d" , 1 + 3 * i),
                     "749512345678",
                     "810-41-1234567890",
                     "organization1@mail.com",
@@ -414,13 +414,25 @@ public class DataInitializer {
                     "Сергеев Петр Сергеевич",
                     "chief signature",
                     "stamp",
-                    legalDetailService.getById(1L)));
+                    new LegalDetailDto(
+                            null,
+                            "Иванов",
+                            "Михаил",
+                            "Сергеевич",
+                            "г. Воронеж,ул Карла Маркса,46",
+                            "comment to address",
+                            "3664069" + String.format("%03d" , i),
+                            "79271669",
+                            "1053600591197",
+                            "236467",
+                            LocalDate.of(2020, 6, 12).toString(),
+                            typeOfContractorService.getByName("Юридическое лицо"))));
 
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №2\"",
-                    "9543564" + i + 1,
-                    String.valueOf(2 + 3 * i),
+                    "9543564" + String.format("%03d" , i),
+                    String.format("%05d" , 2 + 3 * i),
                     "733126789654",
                     "920-12-2365723233",
                     "organization2@mail.com",
@@ -433,13 +445,25 @@ public class DataInitializer {
                     "Соболев Николай Андреевич",
                     "chief signature",
                     "stamp",
-                    legalDetailService.getById(2L)));
+                    new LegalDetailDto(
+                            null,
+                            "Гордон",
+                            "Андрей",
+                            "Анатольевич",
+                            "г. Москва, ул. Революции, д. 66",
+                            "comment to address",
+                            "3664068" + String.format("%03d" , i),
+                            "79271647",
+                            "1053600591285",
+                            "432145",
+                            LocalDate.of(2018, 2, 23).toString(),
+                            typeOfContractorService.getByName("Индивидуальный предприниматель"))));
 
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №3\"",
-                    "3453123465" + i + 2,
-                    String.valueOf(3 + 3 * i),
+                    "3453123" + String.format("%03d" , i),
+                    String.format("%05d" , 3 + 3 * i),
                     "799123786542",
                     "543-23-1234543221",
                     "organization3@mail.com",
@@ -452,7 +476,19 @@ public class DataInitializer {
                     "Стрелецкая Анастасия Михайловна",
                     "chief signature",
                     "stamp",
-                    legalDetailService.getById(3L)));
+                    new LegalDetailDto(
+                            null,
+                            "Сергеева",
+                            "Мария",
+                            "Дмитриевна",
+                            "г. Краснодар, ул. 40 Лет Октября, д. 16",
+                            "comment to address",
+                            "3664055" + String.format("%03d" , i),
+                            "70713032",
+                            "1033600141277",
+                            "342145",
+                            LocalDate.of(2022, 4, 5).toString(),
+                            typeOfContractorService.getByName("Физическое лицо"))));
         }
     }
 

@@ -57,7 +57,7 @@ public class TypeOfContractorServiceImpl implements TypeOfContractorService {
     }
 
     @Override
-    public TypeOfContractor getByName(String name){
+    public TypeOfContractorDto getByName(String name){
         return typeOfContractorRepository.getByName(name);
     }
 }

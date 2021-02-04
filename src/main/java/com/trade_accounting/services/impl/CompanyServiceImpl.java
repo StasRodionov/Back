@@ -1,20 +1,17 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Company;
-import com.trade_accounting.models.LegalDetail;
-import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.dto.CompanyDto;
-import com.trade_accounting.models.dto.LegalDetailDto;
-import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
+import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -44,10 +41,7 @@ public class CompanyServiceImpl implements CompanyService {
             companyDto.setLegalDetailDto(
                     legalDetailService.getById(companyDto.getLegalDetailDto().getId()));
         }
-        companyDtos.sort((c1, c2) -> {
-            long result = c1.getId() - c2.getId();
-            return (int) (result / Math.abs(result));
-        });
+        companyDtos.sort(Comparator.comparing(CompanyDto::getSortNumber));
         return companyDtos;
     }
 
@@ -74,9 +68,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void update(CompanyDto companyDto) {
-        companyRepository.save(convertToCompany(companyDto,
-                legalDetailRepository.save(convertToLegalDetail(companyDto.getLegalDetailDto(),
-                        typeOfContractorRepository.save(convertToTypeOfContractor(
+        companyRepository.save(ModelDtoConverter.convertToCompany(companyDto,
+                legalDetailRepository.save(ModelDtoConverter.convertToLegalDetail(companyDto.getLegalDetailDto(),
+                        typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(
                                 companyDto.getLegalDetailDto().getTypeOfContractorDto()))))));
     }
 
@@ -88,49 +82,5 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void create(Company company) {
         companyRepository.save(company);
-    }
-
-    private Company convertToCompany(CompanyDto dto, LegalDetail legalDetail) {
-        return new Company(
-                dto.getId(),
-                dto.getName(),
-                dto.getInn(),
-                dto.getSortNumber(),
-                dto.getPhone(),
-                dto.getFax(),
-                dto.getEmail(),
-                dto.getPayerVat(),
-                dto.getAddress(),
-                dto.getCommentToAddress(),
-                dto.getLeader(),
-                dto.getLeaderManagerPosition(),
-                dto.getLeaderSignature(),
-                dto.getChiefAccountant(),
-                dto.getChiefAccountantSignature(),
-                dto.getStamp(),
-                legalDetail);
-    }
-
-    private LegalDetail convertToLegalDetail(LegalDetailDto dto, TypeOfContractor typeOfContractor) {
-        return new LegalDetail(
-                dto.getId(),
-                dto.getLastName(),
-                dto.getFirstName(),
-                dto.getMiddleName(),
-                dto.getAddress(),
-                dto.getCommentToAddress(),
-                dto.getInn(),
-                dto.getOkpo(),
-                dto.getOgrnip(),
-                dto.getNumberOfTheCertificate(),
-                LocalDate.parse(dto.getDateOfTheCertificate()),
-                typeOfContractor);
-    }
-
-    private TypeOfContractor convertToTypeOfContractor(TypeOfContractorDto dto) {
-        return new TypeOfContractor(
-                dto.getId(),
-                dto.getName(),
-                dto.getSortNumber());
     }
 }
