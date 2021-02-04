@@ -5,9 +5,13 @@ import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.services.interfaces.CompanyService;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -15,6 +19,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
     private final LegalDetailRepository legalDetailRepository;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public CompanyServiceImpl(CompanyRepository companyRepository, LegalDetailRepository legalDetailRepository) {
         this.companyRepository = companyRepository;
@@ -30,6 +35,12 @@ public class CompanyServiceImpl implements CompanyService {
             );
         }
         return companyDtos;
+    }
+
+    @Override
+    public List<CompanyDto> search(Specification<Company> spec) {
+        return companyRepository.findAll(spec).stream()
+                .map(this::convertToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -106,5 +117,12 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void create(Company company) {
         companyRepository.save(company);
+    }
+
+    private CompanyDto convertToDto(Company company) {
+        CompanyDto companyDto = modelMapper.map(company, CompanyDto.class);
+        companyDto.setLegalDetailDto(legalDetailRepository.getById(company.getLegalDetail().getId()));
+
+        return companyDto;
     }
 }

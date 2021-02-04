@@ -3,6 +3,7 @@ package com.trade_accounting.repositories;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.dto.CompanyDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CompanyRepository extends JpaRepository<Company, Long> {
+public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpecificationExecutor<Company> {
 
     @Query("select new com.trade_accounting.models.dto.CompanyDto(" +
             "e.id, " +
