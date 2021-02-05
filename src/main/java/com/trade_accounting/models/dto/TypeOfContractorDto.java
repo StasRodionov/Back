@@ -14,9 +14,4 @@ public class TypeOfContractorDto {
     private String name;
 
     private String sortNumber;
-
-    public TypeOfContractorDto(String name, String sortNumber) {
-        this.name = name;
-        this.sortNumber = sortNumber;
-    }
 }

@@ -49,6 +49,21 @@ public class ContractorRestController {
         log.info("Запрошен список ContractorDto");
         return ResponseEntity.ok(contractorDtoList);
     }
+    @GetMapping("/search/{searchTerm}")
+    @ApiOperation(value = "getFiltered", notes = "Получение списка некоторых контрагентов")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение отф. списка контрагентов"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<ContractorDto>> getAll(@ApiParam(name = "searchTerm",
+            value = "Переданный в URL searchTerm, по которому необходимо найти контрагента")
+                                                          @PathVariable(name = "searchTerm") String searchTerm) {
+        List<ContractorDto> contractorDtoList = contractorService.getAll(searchTerm);
+        log.info("Запрошен список ContractorDto");
+        return ResponseEntity.ok(contractorDtoList);
+    }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "getById", notes = "Получение контрагента по id")
@@ -58,9 +73,9 @@ public class ContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorDto> getById(@ApiParam(name = "id", type = "Long",
+    public ResponseEntity<ContractorDto> getById(@ApiParam(name = "id",
             value = "Переданный в URL id по которому необходимо найти контрагента")
-                                                 @PathVariable("id") Long id) {
+                                                 @PathVariable(name = "id") Long id) {
         ContractorDto contractorDto = contractorService.getById(id);
         log.info("Запрошен экземпляр ContractorDto с id= {}", id);
         return ResponseEntity.ok(contractorDto);

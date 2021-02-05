@@ -28,6 +28,24 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long> {
     List<ContractorDto> getAll();
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
+            "c.id," +
+            "c.name," +
+            "c.inn," +
+            "c.sortNumber," +
+            "c.phone," +
+            "c.fax," +
+            "c.email," +
+            "c.address," +
+            "c.commentToAddress," +
+            "c.comment" +
+            ") from Contractor c" +
+            " where lower(c.name) like lower(concat('%', :searchTerm, '%')) " +
+            "      or c.inn like concat('%', :searchTerm, '%')")
+    List<ContractorDto> search(@Param("searchTerm") String searchTerm);
+
+
+
+    @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
             "e.id," +
             "e.name," +
             "e.inn," +
