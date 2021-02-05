@@ -4,6 +4,7 @@ import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.WarehouseService;
+import com.trade_accounting.util.SortNumberConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         warehouseRepository.save(
                 new Warehouse(
                         warehouseDto.getName(),
-                        warehouseDto.getSortNumber(),
+                        SortNumberConverter.convert(warehouseDto.getSortNumber()),
                         warehouseDto.getAddress(),
                         warehouseDto.getCommentToAddress(),
                         warehouseDto.getComment()
@@ -48,7 +49,7 @@ public class WarehouseServiceImpl implements WarehouseService {
                 new Warehouse(
                         warehouseDto.getId(),
                         warehouseDto.getName(),
-                        warehouseDto.getSortNumber(),
+                        SortNumberConverter.convert(warehouseDto.getSortNumber()),
                         warehouseDto.getAddress(),
                         warehouseDto.getCommentToAddress(),
                         warehouseDto.getComment()
