@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Company;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.services.interfaces.CompanyService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +52,31 @@ public class CompanyRestController {
         List<CompanyDto> companyDtos = companyService.getAll();
         log.info("Запрошен список компаний");
         return ResponseEntity.ok(companyDtos);
+    }
+
+    @GetMapping("/search")
+    @ApiOperation(value = "search", notes = "Получение списка компаний по заданным параметрам")
+    public ResponseEntity<List<CompanyDto>> getAll(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "name", params = "name", spec = Like.class),
+                    @Spec(path = "inn", params = "inn", spec = Like.class),
+                    @Spec(path = "sortNumber", params = "sortNumber", spec = Like.class),
+                    @Spec(path = "phone", params = "phone", spec = Like.class),
+                    @Spec(path = "fax", params = "fax", spec = Like.class),
+                    @Spec(path = "email", params = "email", spec = Like.class),
+                    @Spec(path = "payerVat", params = "payerVat", spec = Equal.class),
+                    @Spec(path = "address", params = "address", spec = Like.class),
+                    @Spec(path = "commentToAddress", params = "commentToAddress", spec = Like.class),
+                    @Spec(path = "leader", params = "leader", spec = Like.class),
+                    @Spec(path = "leaderManagerPosition", params = "leaderManagerPosition", spec = Like.class),
+                    @Spec(path = "leaderSignature", params = "leaderSignature", spec = Like.class),
+                    @Spec(path = "chiefAccountant", params = "chiefAccountant", spec = Like.class),
+                    @Spec(path = "chiefAccountantSignature", params = "chiefAccountantSignature", spec = Like.class),
+                    @Spec(path = "stamp", params = "stamp", spec = Like.class)
+            }) Specification<Company> spec) {
+        log.info("Запрошен поиск компаний");
+        return ResponseEntity.ok(companyService.search(spec));
     }
 
     @GetMapping("/{id}")
