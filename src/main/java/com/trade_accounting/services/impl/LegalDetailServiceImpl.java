@@ -5,6 +5,8 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.LegalDetailService;
+import com.trade_accounting.services.interfaces.TypeOfContractorService;
+import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,75 +17,45 @@ import java.util.List;
 public class LegalDetailServiceImpl implements LegalDetailService {
 
     private final LegalDetailRepository legalDetailRepository;
-
+    private final TypeOfContractorService typeOfContractorService;
     private final TypeOfContractorRepository typeOfContractorRepository;
 
-    public LegalDetailServiceImpl(LegalDetailRepository legalDetailRepository, TypeOfContractorRepository typeOfContractorRepository) {
+    public LegalDetailServiceImpl(LegalDetailRepository legalDetailRepository,
+                                  TypeOfContractorService typeOfContractorService,
+                                  TypeOfContractorRepository typeOfContractorRepository) {
         this.legalDetailRepository = legalDetailRepository;
+        this.typeOfContractorService = typeOfContractorService;
         this.typeOfContractorRepository = typeOfContractorRepository;
     }
-
 
     @Override
     public List<LegalDetailDto> getAll() {
         List<LegalDetailDto> listLegalDetailDto = legalDetailRepository.getAll();
-        for(LegalDetailDto legalDetailDto : listLegalDetailDto) {
+        for (LegalDetailDto legalDetailDto : listLegalDetailDto) {
             legalDetailDto.setTypeOfContractorDto(
-                    typeOfContractorRepository
-                            .getById(legalDetailDto.getTypeOfContractorDto().getId()));
+                    typeOfContractorService.getById(legalDetailDto.getTypeOfContractorDto().getId()));
         }
         return listLegalDetailDto;
-
     }
 
     @Override
     public LegalDetailDto getById(Long id) {
         LegalDetailDto legalDetailDto = legalDetailRepository.getById(id);
         legalDetailDto.setTypeOfContractorDto(
-                typeOfContractorRepository
-                        .getById(legalDetailDto.getTypeOfContractorDto().getId()));
+                typeOfContractorService.getById(legalDetailDto.getTypeOfContractorDto().getId()));
         return legalDetailDto;
-
     }
 
     @Override
     public void create(LegalDetailDto legalDetailDto) {
-        legalDetailRepository.save(
-                new LegalDetail(
-                        legalDetailDto.getLastName(),
-                        legalDetailDto.getFirstName(),
-                        legalDetailDto.getMiddleName(),
-                        legalDetailDto.getAddress(),
-                        legalDetailDto.getCommentToAddress(),
-                        legalDetailDto.getInn(),
-                        legalDetailDto.getOkpo(),
-                        legalDetailDto.getOgrnip(),
-                        legalDetailDto.getNumberOfTheCertificate(),
-                        legalDetailDto.getDateOfTheCertificate(),
-                        typeOfContractorRepository.getOne(legalDetailDto.getTypeOfContractorDto().getId())
-                )
-        );
+        update(legalDetailDto);
     }
 
     @Override
     public void update(LegalDetailDto legalDetailDto) {
-        legalDetailRepository.save(
-                new LegalDetail(
-                        legalDetailDto.getId(),
-                        legalDetailDto.getLastName(),
-                        legalDetailDto.getFirstName(),
-                        legalDetailDto.getMiddleName(),
-                        legalDetailDto.getAddress(),
-                        legalDetailDto.getCommentToAddress(),
-                        legalDetailDto.getInn(),
-                        legalDetailDto.getOkpo(),
-                        legalDetailDto.getOgrnip(),
-                        legalDetailDto.getNumberOfTheCertificate(),
-                        legalDetailDto.getDateOfTheCertificate(),
-                        typeOfContractorRepository.getOne(legalDetailDto.getTypeOfContractorDto().getId())
-                )
-        );
-
+        legalDetailRepository.save(ModelDtoConverter.convertToLegalDetail(legalDetailDto,
+                typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(
+                        legalDetailDto.getTypeOfContractorDto()))));
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.trade_accounting.config;
 
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.TypeOfInvoice;
-import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -12,7 +11,6 @@ import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
@@ -50,8 +48,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -174,19 +172,19 @@ public class DataInitializer {
     }
 
     private void initTypeOfPrices() {
-        typeOfPriceService.create(new TypeOfPriceDto("Оптовая цена", "1"));
-        typeOfPriceService.create(new TypeOfPriceDto("Розничная цена", "2"));
+        typeOfPriceService.create(new TypeOfPriceDto(null, "Оптовая цена", "1"));
+        typeOfPriceService.create(new TypeOfPriceDto(null, "Розничная цена", "2"));
     }
 
     private void initContractorGroups() {
-        contractorGroupService.create(new ContractorGroupDto("Покупатель", "1"));
-        contractorGroupService.create(new ContractorGroupDto("Поставщик", "2"));
+        contractorGroupService.create(new ContractorGroupDto(null, "Покупатель", "1"));
+        contractorGroupService.create(new ContractorGroupDto(null, "Поставщик", "2"));
     }
 
     private void initTypeOfContractors() {
-        typeOfContractorService.create(new TypeOfContractorDto("Юридическое лицо", "1"));
-        typeOfContractorService.create(new TypeOfContractorDto("Индивидуальный предприниматель", "2"));
-        typeOfContractorService.create(new TypeOfContractorDto("Физическое лицо", "3"));
+        typeOfContractorService.create(new TypeOfContractorDto(null, "Юридическое лицо", "1"));
+        typeOfContractorService.create(new TypeOfContractorDto(null, "Индивидуальный предприниматель", "2"));
+        typeOfContractorService.create(new TypeOfContractorDto(null, "Физическое лицо", "3"));
     }
 
     private void initBankAccounts() {
@@ -376,11 +374,10 @@ public class DataInitializer {
     }
 
     private void initCurrency() {
-        currencyService.create(new CurrencyDto(null,"rubles", "Russian Rubles", "25", "rub", "1"));
-        currencyService.create(new CurrencyDto(null,"bel rubles", "Bellarusian Rubles", "25", "belrub","2"));
-        currencyService.create(new CurrencyDto(null,"eng dollar", "USA Dollars ", "25", "dol","3"));
+        currencyService.create(new CurrencyDto(null, "rubles", "Russian Rubles", "25", "rub", "1"));
+        currencyService.create(new CurrencyDto(null, "bel rubles", "Bellarusian Rubles", "25", "belrub", "2"));
+        currencyService.create(new CurrencyDto(null, "eng dollar", "USA Dollars ", "25", "dol", "3"));
     }
-
 
     private void initLegalDetails() {
         legalDetailService.create(new LegalDetailDto(
@@ -394,8 +391,8 @@ public class DataInitializer {
                 "79271669",
                 "1053600591197",
                 "236467",
-                LocalDate.of(2020, 6, 12),
-                typeOfContractorService.getById(1L)
+                LocalDate.of(2020, 6, 12).toString(),
+                typeOfContractorService.getByName("Юридическое лицо")
         ));
         legalDetailService.create(new LegalDetailDto(
                 null,
@@ -408,8 +405,8 @@ public class DataInitializer {
                 "79271647",
                 "1053600591285",
                 "432145",
-                LocalDate.of(2018, 2, 23),
-                typeOfContractorService.getById(2L)
+                LocalDate.of(2018, 2, 23).toString(),
+                typeOfContractorService.getByName("Индивидуальный предприниматель")
         ));
         legalDetailService.create(new LegalDetailDto(
                 null,
@@ -422,8 +419,8 @@ public class DataInitializer {
                 "70713032",
                 "1033600141277",
                 "342145",
-                LocalDate.of(2022, 4, 5),
-                typeOfContractorService.getById(3L)
+                LocalDate.of(2022, 4, 5).toString(),
+                typeOfContractorService.getByName("Физическое лицо")
         ));
     }
 
@@ -432,8 +429,8 @@ public class DataInitializer {
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №1\"",
-                    "7712345" + i,
-                    String.valueOf(1 + 3 * i),
+                    "7712345" + String.format("%03d" , i),
+                    String.format("%05d" , 1 + 3 * i),
                     "749512345678",
                     "810-41-1234567890",
                     "organization1@mail.com",
@@ -446,13 +443,25 @@ public class DataInitializer {
                     "Сергеев Петр Сергеевич",
                     "chief signature",
                     "stamp",
-                    1L));
+                    new LegalDetailDto(
+                            null,
+                            "Иванов",
+                            "Михаил",
+                            "Сергеевич",
+                            "г. Воронеж,ул Карла Маркса,46",
+                            "comment to address",
+                            "3664069" + String.format("%03d" , i),
+                            "79271669",
+                            "1053600591197",
+                            "236467",
+                            LocalDate.of(2020, 6, 12).toString(),
+                            typeOfContractorService.getByName("Юридическое лицо"))));
 
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №2\"",
-                    "9543564" + i + 1,
-                    String.valueOf(2 + 3 * i),
+                    "9543564" + String.format("%03d" , i),
+                    String.format("%05d" , 2 + 3 * i),
                     "733126789654",
                     "920-12-2365723233",
                     "organization2@mail.com",
@@ -465,13 +474,25 @@ public class DataInitializer {
                     "Соболев Николай Андреевич",
                     "chief signature",
                     "stamp",
-                    2L));
+                    new LegalDetailDto(
+                            null,
+                            "Гордон",
+                            "Андрей",
+                            "Анатольевич",
+                            "г. Москва, ул. Революции, д. 66",
+                            "comment to address",
+                            "3664068" + String.format("%03d" , i),
+                            "79271647",
+                            "1053600591285",
+                            "432145",
+                            LocalDate.of(2018, 2, 23).toString(),
+                            typeOfContractorService.getByName("Индивидуальный предприниматель"))));
 
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №3\"",
-                    "3453123465" + i + 2,
-                    String.valueOf(3 + 3 * i),
+                    "3453123" + String.format("%03d" , i),
+                    String.format("%05d" , 3 + 3 * i),
                     "799123786542",
                     "543-23-1234543221",
                     "organization3@mail.com",
@@ -484,7 +505,19 @@ public class DataInitializer {
                     "Стрелецкая Анастасия Михайловна",
                     "chief signature",
                     "stamp",
-                    3L));
+                    new LegalDetailDto(
+                            null,
+                            "Сергеева",
+                            "Мария",
+                            "Дмитриевна",
+                            "г. Краснодар, ул. 40 Лет Октября, д. 16",
+                            "comment to address",
+                            "3664055" + String.format("%03d" , i),
+                            "70713032",
+                            "1033600141277",
+                            "342145",
+                            LocalDate.of(2022, 4, 5).toString(),
+                            typeOfContractorService.getByName("Физическое лицо"))));
         }
     }
 
@@ -575,9 +608,8 @@ public class DataInitializer {
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
-                bankAccountService.getAll(),
-                legalDetailService.getById(1L)
-        ));
+                null,
+                legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Агроаспект, ООО",
