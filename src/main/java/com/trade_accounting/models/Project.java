@@ -33,4 +33,10 @@ public class Project {
 
     @Column(name = "description")
     private String description;
+
+    public Project(String name, String code, String description) {
+        this.name = name;
+        this.code = code;
+        this.description = description;
+    }
 }

@@ -20,7 +20,7 @@ public class PaymentDto {
 
     private Long id;
 
-    private TypeOfPayment typeOfPayment;
+    private String typeOfPayment;
 
     @NotNull
     private String number;
@@ -28,18 +28,44 @@ public class PaymentDto {
     private LocalDateTime time;
 
     @NotNull
-    private Company company;
+    private CompanyDto companyDto;
 
     @NotNull
-    private Contractor contractor;
+    private ContractorDto contractorDto;
 
-    private Contract contract;
+    private ContractDto contractDto;
 
     //Переделать в enum
     @NotNull
     private String costItem;
 
-    private Project project;
+    private ProjectDto projectDto;
 
     private BigDecimal sum;
+
+    public PaymentDto(Long id,
+                      TypeOfPayment typeOfPayment,
+                      String number,
+                      LocalDateTime time,
+                      Long companyId,
+                      Long contractorId,
+                      Long contractId,
+                      String costItem,
+                      Long projectId,
+                      BigDecimal sum) {
+        this.id = id;
+        this.typeOfPayment = typeOfPayment.toString();
+        this.number = number;
+        this.time = time;
+        this.companyDto = new CompanyDto();
+        this.companyDto.setId(companyId);
+        this.contractorDto = new ContractorDto();
+        this.contractorDto.setId(contractorId);
+        this.contractDto = new ContractDto();
+        this.contractDto.setId(contractId);
+        this.costItem = costItem;
+        this.projectDto = new ProjectDto();
+        this.projectDto.setId(projectId);
+        this.sum = sum;
+    }
 }
