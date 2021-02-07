@@ -40,17 +40,14 @@ public class Payments {
     @Column(name = "time")
     private LocalDateTime time;
 
-    @Column(name = "company")
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
-    @Column(name = "contractor")
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
-    @Column(name = "contract")
     @ManyToOne(fetch = FetchType.LAZY)
     private Contract contract;
 
@@ -59,7 +56,6 @@ public class Payments {
     @NotNull
     private String costItem;
 
-    @Column(name = "project")
     @ManyToOne(fetch = FetchType.LAZY)
     private Project project;
 
