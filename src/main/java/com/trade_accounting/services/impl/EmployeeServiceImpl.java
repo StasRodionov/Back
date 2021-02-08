@@ -143,4 +143,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(id);
 
     }
+
+    @Override
+    public EmployeeDto getByEmail(String email) {
+        return employeeRepository.getByEmail(email);
+    }
+
 }

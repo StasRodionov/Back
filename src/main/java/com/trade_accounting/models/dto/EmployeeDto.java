@@ -3,13 +3,17 @@ package com.trade_accounting.models.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.validation.constraints.Pattern;
+import java.util.Collection;
 import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeDto {
+public class EmployeeDto implements UserDetails {
 
     private Long id;
 
@@ -61,6 +65,30 @@ public class EmployeeDto {
         this.description = description;
         this.email = email;
         this.password = password;
-
     }
+
+
+    @Override
+    public boolean isEnabled() { return true; }
+
+    @Override
+    public boolean isCredentialsNonExpired() { return true; }
+
+    @Override
+    public boolean isAccountNonLocked() { return true; }
+
+    @Override
+    public boolean isAccountNonExpired() { return true; }
+
+    @Override
+    public String getUsername() { return email; }
+
+    @Override
+    public String getPassword() { return password; }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roleDto;
+    }
+
 }
