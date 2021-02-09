@@ -22,6 +22,7 @@ import com.trade_accounting.models.dto.WarehouseDto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ModelDtoConverter {
@@ -103,7 +104,7 @@ public class ModelDtoConverter {
 
     public static Contractor convertToContractor(ContractorDto dto, ContractorGroup contractorGroup,
                                                  TypeOfContractor typeOfContractor, TypeOfPrice typeOfPrice,
-                                                 List<BankAccount> bankAccount, LegalDetail legalDetail){
+                                                 List<BankAccount> bankAccount, LegalDetail legalDetail) {
         return new Contractor(
                 dto.getId(),
                 dto.getName(),
@@ -123,7 +124,7 @@ public class ModelDtoConverter {
         );
     }
 
-    public static ContractorGroup convertToContractorGroup(ContractorGroupDto dto){
+    public static ContractorGroup convertToContractorGroup(ContractorGroupDto dto) {
         return new ContractorGroup(
                 dto.getId(),
                 dto.getName(),
@@ -131,7 +132,7 @@ public class ModelDtoConverter {
         );
     }
 
-    public static TypeOfPrice convertToTypeOfPrice(TypeOfPriceDto dto){
+    public static TypeOfPrice convertToTypeOfPrice(TypeOfPriceDto dto) {
         return new TypeOfPrice(
                 dto.getId(),
                 dto.getName(),
@@ -139,7 +140,7 @@ public class ModelDtoConverter {
         );
     }
 
-    public static BankAccount convertToBankAccount(BankAccountDto dto){
+    public static BankAccount convertToBankAccount(BankAccountDto dto) {
         return new BankAccount(
                 dto.getId(),
                 dto.getRcbic(),
@@ -152,4 +153,20 @@ public class ModelDtoConverter {
         );
     }
 
+    public static List<BankAccount> convertToListOfBankAccount(List<BankAccountDto> list){
+        List<BankAccount> bankAccountList = new ArrayList<>();
+        for (BankAccountDto bankAccountDto : list) {
+            bankAccountList.add(new BankAccount(
+                    bankAccountDto.getId(),
+                    bankAccountDto.getRcbic(),
+                    bankAccountDto.getBank(),
+                    bankAccountDto.getAddress(),
+                    bankAccountDto.getCorrespondentAccount(),
+                    bankAccountDto.getAccount(),
+                    bankAccountDto.getMainAccount(),
+                    bankAccountDto.getSortNumber()
+            ));
+        }
+        return bankAccountList;
+    }
 }
