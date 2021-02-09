@@ -3,11 +3,12 @@ package com.trade_accounting.models.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleDto {
+public class RoleDto implements GrantedAuthority {
 
     private Long id;
 
@@ -18,5 +19,11 @@ public class RoleDto {
     public RoleDto(String name, String sortNumber) {
         this.name = name;
         this.sortNumber = sortNumber;
+    }
+
+
+    @Override
+    public String getAuthority() {
+        return name;
     }
 }

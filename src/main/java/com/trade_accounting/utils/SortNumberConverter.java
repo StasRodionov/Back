@@ -1,4 +1,4 @@
-package com.trade_accounting.util;
+package com.trade_accounting.utils;
 
 public class SortNumberConverter {
 
