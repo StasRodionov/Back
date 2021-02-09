@@ -61,6 +61,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> getAll() {
         List<ProductDto> productDtos = productRepository.getAll();
+
         for (ProductDto productDto : productDtos) {
             productDto.setUnitDto(unitRepository.getUnitByProductId(productDto.getId()));
             productDto.setProductGroupDto(productGroupRepository.getProductGroupByProductId(productDto.getId()));
@@ -73,8 +74,14 @@ public class ProductServiceImpl implements ProductService {
                     .collect(Collectors.toList()));
             productDto.setTypeOfPriceDto(typeOfPriceRepository.getTypeOfPriceById(productDto.getId()).stream()
                     .map(typeOfPrice -> typeOfPriceRepository.getById(typeOfPrice.getId()))
-                    .collect(Collectors.toList()));        }
+                    .collect(Collectors.toList()));
+        }
         return productDtos;
+    }
+
+    @Override
+    public List<ProductDto> getAllLite() {
+        return productRepository.getAll();
     }
 
     @Override
@@ -98,14 +105,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void create(ProductDto productDto) {
         List<TypeOfPrice> typeOfPrices = new ArrayList<>();
-        if(productDto.getTypeOfPriceDto() != null) {
+        if (productDto.getTypeOfPriceDto() != null) {
             for (TypeOfPriceDto typeOfPriceDto : productDto.getTypeOfPriceDto()) {
                 typeOfPrices.add(typeOfPriceRepository.getOne(typeOfPriceDto.getId()));
             }
         }
 
         List<Image> images = new ArrayList<>();
-        if(productDto.getImageDto() != null) {
+        if (productDto.getImageDto() != null) {
             for (ImageDto imageDto : productDto.getImageDto()) {
                 images.add(imageRepository.getOne(imageDto.getId()));
             }
@@ -141,14 +148,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void update(ProductDto productDto) {
         List<TypeOfPrice> typeOfPrices = new ArrayList<>();
-        if(productDto.getTypeOfPriceDto() != null) {
+        if (productDto.getTypeOfPriceDto() != null) {
             for (TypeOfPriceDto typeOfPriceDto : productDto.getTypeOfPriceDto()) {
                 typeOfPrices.add(typeOfPriceRepository.getOne(typeOfPriceDto.getId()));
             }
         }
 
         List<Image> images = new ArrayList<>();
-        if(productDto.getImageDto() != null) {
+        if (productDto.getImageDto() != null) {
             for (ImageDto imageDto : productDto.getImageDto()) {
                 images.add(imageRepository.getOne(imageDto.getId()));
             }
@@ -201,7 +208,8 @@ public class ProductServiceImpl implements ProductService {
                     .collect(Collectors.toList()));
             productDto.setTypeOfPriceDto(typeOfPriceRepository.getTypeOfPriceById(productDto.getId()).stream()
                     .map(typeOfPrice -> typeOfPriceRepository.getById(typeOfPrice.getId()))
-                    .collect(Collectors.toList()));        }
+                    .collect(Collectors.toList()));
+        }
         return productDtos;
     }
 }

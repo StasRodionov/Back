@@ -54,6 +54,20 @@ public class ProductRestController {
         return ResponseEntity.ok(productGroups);
     }
 
+    @ApiOperation(value = "getAllLite", notes = "Возвращает список всех товаров (лёгкое дто)")
+    @GetMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка всех товаров"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<ProductDto>> getAll() {
+        List<ProductDto> productGroups = productService.getAll();
+        log.info("Запрошен список ProductDto");
+        return ResponseEntity.ok(productGroups);
+    }
+
     @ApiOperation(value = "getById", notes = "Возвращает определенный товар по Id")
     @GetMapping("/{id}")
     @ApiResponses(value = {
