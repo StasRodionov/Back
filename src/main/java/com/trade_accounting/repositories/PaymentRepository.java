@@ -20,7 +20,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
             "e.company.id," +
             "e.contractor.id," +
             "e.contract.id," +
-            "e.costItem," +
             "e.project.id," +
             "e.sum"+
             ") from Payment e")
@@ -34,7 +33,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
             "e.company.id," +
             "e.contractor.id," +
             "e.contract.id," +
-            "e.costItem," +
             "e.project.id," +
             "e.sum"+
             ") from Payment e")

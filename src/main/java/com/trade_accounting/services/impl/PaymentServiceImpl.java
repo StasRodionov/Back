@@ -72,7 +72,6 @@ public class PaymentServiceImpl implements PaymentService {
                         companyRepository.getOne(paymentDto.getCompanyDto().getId()),
                         contractorRepository.getOne(paymentDto.getContractorDto().getId()),
                         contractRepository.getOne(paymentDto.getContractDto().getId()),
-                        paymentDto.getCostItem(),
                         projectRepository.getOne(paymentDto.getContractDto().getId()),
                         paymentDto.getSum()
                 )
@@ -90,7 +89,6 @@ public class PaymentServiceImpl implements PaymentService {
                         companyRepository.getOne(paymentDto.getCompanyDto().getId()),
                         contractorRepository.getOne(paymentDto.getContractorDto().getId()),
                         contractRepository.getOne(paymentDto.getContractDto().getId()),
-                        paymentDto.getCostItem(),
                         projectRepository.getOne(paymentDto.getContractDto().getId()),
                         paymentDto.getSum()
                 )

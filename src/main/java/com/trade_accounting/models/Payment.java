@@ -51,11 +51,6 @@ public class Payment {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contract contract;
 
-    //Переделать в enum
-    @Column(name = "cost_item")
-    @NotNull
-    private String costItem;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Project project;
 

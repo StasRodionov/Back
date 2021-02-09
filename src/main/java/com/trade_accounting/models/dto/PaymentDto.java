@@ -35,10 +35,6 @@ public class PaymentDto {
 
     private ContractDto contractDto;
 
-    //Переделать в enum
-    @NotNull
-    private String costItem;
-
     private ProjectDto projectDto;
 
     private BigDecimal sum;
@@ -50,7 +46,6 @@ public class PaymentDto {
                       Long companyId,
                       Long contractorId,
                       Long contractId,
-                      String costItem,
                       Long projectId,
                       BigDecimal sum) {
         this.id = id;
@@ -63,7 +58,6 @@ public class PaymentDto {
         this.contractorDto.setId(contractorId);
         this.contractDto = new ContractDto();
         this.contractDto.setId(contractId);
-        this.costItem = costItem;
         this.projectDto = new ProjectDto();
         this.projectDto.setId(projectId);
         this.sum = sum;
