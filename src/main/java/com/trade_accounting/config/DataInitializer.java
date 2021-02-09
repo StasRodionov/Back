@@ -1,7 +1,9 @@
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.TypeOfInvoice;
+import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -13,9 +15,11 @@ import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
+import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
@@ -34,9 +38,11 @@ import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.services.interfaces.ImageService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
+import com.trade_accounting.services.interfaces.PaymentService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
+import com.trade_accounting.services.interfaces.ProjectService;
 import com.trade_accounting.services.interfaces.RoleService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
@@ -78,6 +84,8 @@ public class DataInitializer {
     private final ProductService productService;
     private final CurrencyService currencyService;
     private final InvoiceService invoiceService;
+    private final ProjectService projectService;
+    private final PaymentService paymentService;
 
 
     public DataInitializer(
@@ -101,7 +109,9 @@ public class DataInitializer {
             ImageService imageService,
             ProductService productService,
             CurrencyService currencyService,
-            InvoiceService invoiceService) {
+            InvoiceService invoiceService,
+            ProjectService projectService,
+            PaymentService paymentService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -123,6 +133,8 @@ public class DataInitializer {
         this.productService = productService;
         this.currencyService = currencyService;
         this.invoiceService = invoiceService;
+        this.projectService = projectService;
+        this.paymentService = paymentService;
     }
 
     @PostConstruct
@@ -149,6 +161,41 @@ public class DataInitializer {
         initProducts();
         initContracts();
         initInvoices();
+        initProject();
+        initPayment();
+    }
+
+    public void initProject(){
+        projectService.create(new ProjectDto(null, "name", "0000", "description"));
+    }
+
+    public void initPayment(){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
+        List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
+        List<ProjectDto> projectDtos = projectService.getAll().stream().limit(3).collect(Collectors.toList());
+        List<ContractDto> contractDtos = contractService.getAll().stream().limit(3).collect(Collectors.toList());
+        int count = 1;
+        for (CompanyDto companyDto: companyDtos) {
+            for (ContractorDto contractorDto: contractorDtos) {
+                for (ContractDto contractDto: contractDtos) {
+                    for (ProjectDto projectDto : projectDtos) {
+                        paymentService.create(new PaymentDto(
+                                null,
+                                TypeOfPayment.INCOMING,
+                                "0000" + count,
+                                localDateTime,
+                                companyDto.getId(),
+                                contractorDto.getId(),
+                                contractDto.getId(),
+                                projectDto.getId(),
+                                new BigDecimal("100.00")
+                                ));
+                        count ++;
+                    }
+                }
+            }
+        }
     }
 
     public void initInvoices(){
