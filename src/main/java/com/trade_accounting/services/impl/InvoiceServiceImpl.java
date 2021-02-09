@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.fasterxml.jackson.databind.util.ArrayIterator;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Invoice;
@@ -19,6 +20,7 @@ import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -113,10 +115,10 @@ public class InvoiceServiceImpl implements InvoiceService {
                         contractorRepository.save(ModelDtoConverter.convertToContractor(invoiceDto.getContractorDto(),
                                 contractorGroupRepository.save(ModelDtoConverter.convertToContractorGroup(invoiceDto.getContractorDto().getContractorGroupDto())),
                                 ModelDtoConverter.convertToTypeOfContractor(invoiceDto.getContractorDto().getLegalDetailDto().getTypeOfContractorDto()),
-                                typeOfPriceRepository.save(ModelDtoConverter.convertToTypeOfPrice(invoiceDto.getContractorDto().getTypeOfPriceDto(),
+                                typeOfPriceRepository.save(ModelDtoConverter.convertToTypeOfPrice(invoiceDto.getContractorDto().getTypeOfPriceDto())),
                                         bankAccountRepository.saveAll(ModelDtoConverter.convertToListOfBankAccount(invoiceDto.getContractorDto().getBankAccountDto())),
                                                 legalDetailRepository.save(ModelDtoConverter.convertToLegalDetail(invoiceDto.getContractorDto().getLegalDetailDto(),
-                                                        ModelDtoConverter.convertToTypeOfContractor(invoiceDto.getContractorDto().getLegalDetailDto().getTypeOfContractorDto()))))))),
+                                                        ModelDtoConverter.convertToTypeOfContractor(invoiceDto.getContractorDto().getLegalDetailDto().getTypeOfContractorDto()))))),
                         warehouseRepository.save(ModelDtoConverter.convertToWarehouse(invoiceDto.getWarehouseDto()))));
     }
 
