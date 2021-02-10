@@ -152,7 +152,6 @@ public class DataInitializer {
     }
 
     public void initInvoices(){
-        LocalDateTime localDateTime = LocalDateTime.now();
         List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
         List<WarehouseDto> warehouseDtos = warehouseService.getAll().stream().limit(3).collect(Collectors.toList());
@@ -160,11 +159,13 @@ public class DataInitializer {
         for (CompanyDto companyDto : companyDtos) {
             for (ContractorDto contractorDto : contractorDtos) {
                 for (WarehouseDto warehouseDto : warehouseDtos) {
-                    invoiceService.create(new InvoiceDto(localDateTime,
-                            TypeOfInvoice.EXPENSE,
-                            companyDto.getId(),
-                            contractorDto.getId(),
-                            warehouseDto.getId(),
+                    invoiceService.create(new InvoiceDto(
+                            null,
+                            LocalDateTime.now().toString(),
+                            TypeOfInvoice.EXPENSE.name(),
+                            companyDto,
+                            contractorDto,
+                            warehouseDto,
                             false));
                 }
             }
