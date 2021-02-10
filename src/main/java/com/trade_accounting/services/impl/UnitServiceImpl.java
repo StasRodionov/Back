@@ -4,7 +4,7 @@ import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.repositories.UnitRepository;
 import com.trade_accounting.services.interfaces.UnitService;
-import com.trade_accounting.util.SortNumberConverter;
+import com.trade_accounting.utils.SortNumberConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

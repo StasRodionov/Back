@@ -2,6 +2,7 @@ package com.trade_accounting.services.impl;
 
 import com.fasterxml.jackson.databind.util.ArrayIterator;
 import com.trade_accounting.models.BankAccount;
+import com.trade_accounting.models.Company;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.TypeOfInvoice;
@@ -107,19 +108,19 @@ public class InvoiceServiceImpl implements InvoiceService {
                         invoiceDto.isSpend()));*/
 
         invoiceRepository.save(ModelDtoConverter.convertToInvoice(invoiceDto,
-                TypeOfInvoice.valueOf(invoiceDto.getTypeOfInvoice()),
-                        companyRepository.save(ModelDtoConverter.convertToCompany(invoiceDto.getCompanyDto(),
-                                legalDetailRepository.save(ModelDtoConverter.convertToLegalDetail(invoiceDto.getCompanyDto().getLegalDetailDto(),
-                                        typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(
-                                                invoiceDto.getCompanyDto().getLegalDetailDto().getTypeOfContractorDto())))))),
-                        contractorRepository.save(ModelDtoConverter.convertToContractor(invoiceDto.getContractorDto(),
-                                contractorGroupRepository.save(ModelDtoConverter.convertToContractorGroup(invoiceDto.getContractorDto().getContractorGroupDto())),
-                                ModelDtoConverter.convertToTypeOfContractor(invoiceDto.getContractorDto().getLegalDetailDto().getTypeOfContractorDto()),
-                                typeOfPriceRepository.save(ModelDtoConverter.convertToTypeOfPrice(invoiceDto.getContractorDto().getTypeOfPriceDto())),
-                                        bankAccountRepository.saveAll(ModelDtoConverter.convertToListOfBankAccount(invoiceDto.getContractorDto().getBankAccountDto())),
-                                                legalDetailRepository.save(ModelDtoConverter.convertToLegalDetail(invoiceDto.getContractorDto().getLegalDetailDto(),
-                                                        ModelDtoConverter.convertToTypeOfContractor(invoiceDto.getContractorDto().getLegalDetailDto().getTypeOfContractorDto()))))),
-                        warehouseRepository.save(ModelDtoConverter.convertToWarehouse(invoiceDto.getWarehouseDto()))));
+                (invoiceDto.getTypeOfInvoice() == null) ? null : TypeOfInvoice.valueOf(invoiceDto.getTypeOfInvoice()),
+                (invoiceDto.getCompanyDto() == null) ? null : companyRepository.save(ModelDtoConverter.convertToCompany(invoiceDto.getCompanyDto(),
+                        (invoiceDto.getCompanyDto().getLegalDetailDto() == null) ? null : legalDetailRepository.save(ModelDtoConverter.convertToLegalDetail(invoiceDto.getCompanyDto().getLegalDetailDto(),
+                                (invoiceDto.getCompanyDto().getLegalDetailDto().getTypeOfContractorDto() == null) ? null : typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(
+                                        invoiceDto.getCompanyDto().getLegalDetailDto().getTypeOfContractorDto())))))),
+                (invoiceDto.getContractorDto() == null) ? null : contractorRepository.save(ModelDtoConverter.convertToContractor(invoiceDto.getContractorDto(),
+                        (invoiceDto.getContractorDto().getContractorGroupDto() == null) ? null : contractorGroupRepository.save(ModelDtoConverter.convertToContractorGroup(invoiceDto.getContractorDto().getContractorGroupDto())),
+                        (invoiceDto.getContractorDto().getTypeOfContractorDto() == null) ? null : typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(invoiceDto.getContractorDto().getTypeOfContractorDto())),
+                        (invoiceDto.getContractorDto().getTypeOfPriceDto() == null ) ? null : typeOfPriceRepository.save(ModelDtoConverter.convertToTypeOfPrice(invoiceDto.getContractorDto().getTypeOfPriceDto())),
+                        (invoiceDto.getContractorDto().getBankAccountDto() == null) ? null : bankAccountRepository.saveAll(ModelDtoConverter.convertToListOfBankAccount(invoiceDto.getContractorDto().getBankAccountDto())),
+                        (invoiceDto.getContractorDto().getLegalDetailDto() == null) ? null : legalDetailRepository.save(ModelDtoConverter.convertToLegalDetail(invoiceDto.getContractorDto().getLegalDetailDto(),
+                                (invoiceDto.getContractorDto().getLegalDetailDto().getTypeOfContractorDto() == null) ? null : typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(invoiceDto.getContractorDto().getLegalDetailDto().getTypeOfContractorDto())))))),
+                (invoiceDto.getWarehouseDto() == null) ? null : warehouseRepository.save(ModelDtoConverter.convertToWarehouse(invoiceDto.getWarehouseDto()))));
     }
 
     @Override
