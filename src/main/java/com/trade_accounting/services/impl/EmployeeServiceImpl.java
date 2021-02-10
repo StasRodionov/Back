@@ -99,7 +99,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                         : null,
                 roles,
                 employeeDto.getImageDto() != null
-                        ? imageRepository.getOne(employeeDto.getImageDto().getId())
+                        ? imageRepository.findByImageUrl(employeeDto.getImageDto().getImageUrl())
                         : null
         ));
     }
@@ -132,7 +132,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                         : null,
                 roles,
                 employeeDto.getImageDto() != null
-                        ? imageRepository.getOne(employeeDto.getImageDto().getId())
+                        ? imageRepository.findByImageUrl(employeeDto.getImageDto().getImageUrl())
                         : null
         ));
 
@@ -143,4 +143,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(id);
 
     }
+
 }

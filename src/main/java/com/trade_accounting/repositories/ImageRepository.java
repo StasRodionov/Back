@@ -34,4 +34,6 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Query("select p.images from Product p where p.id = :id")
     List<Image> getAllById(@Param("id") Long id);
+
+    Image findByImageUrl( String imageUrl);
 }
