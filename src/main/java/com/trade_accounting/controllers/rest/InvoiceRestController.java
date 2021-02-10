@@ -47,7 +47,7 @@ public class InvoiceRestController {
         return ResponseEntity.ok(invoiceDtoList);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     @ApiOperation(value = "getById", notes = "Получение накладной по ее id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Накладная найдена"),

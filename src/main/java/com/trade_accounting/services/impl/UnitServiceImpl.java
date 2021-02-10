@@ -4,6 +4,7 @@ import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.repositories.UnitRepository;
 import com.trade_accounting.services.interfaces.UnitService;
+import com.trade_accounting.util.SortNumberConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +36,7 @@ public class UnitServiceImpl implements UnitService {
                 new Unit(
                         unitDto.getShortName(),
                         unitDto.getFullName(),
-                        unitDto.getSortNumber()
+                        SortNumberConverter.convert(unitDto.getSortNumber())
                 )
         );
     }
@@ -47,7 +48,7 @@ public class UnitServiceImpl implements UnitService {
                         unitDto.getId(),
                         unitDto.getShortName(),
                         unitDto.getFullName(),
-                        unitDto.getSortNumber()
+                        SortNumberConverter.convert(unitDto.getSortNumber())
                 )
         );
     }
