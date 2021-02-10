@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
 @Slf4j
+@Service
 @Transactional
 public class PaymentServiceImpl implements PaymentService {
 
