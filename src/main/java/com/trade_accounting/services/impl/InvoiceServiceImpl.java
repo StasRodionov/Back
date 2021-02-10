@@ -1,10 +1,5 @@
 package com.trade_accounting.services.impl;
 
-import com.fasterxml.jackson.databind.util.ArrayIterator;
-import com.trade_accounting.models.BankAccount;
-import com.trade_accounting.models.Company;
-import com.trade_accounting.models.ContractorGroup;
-import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.BankAccountRepository;
@@ -21,9 +16,7 @@ import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
