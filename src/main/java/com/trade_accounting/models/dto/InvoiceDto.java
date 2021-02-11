@@ -15,7 +15,7 @@ public class InvoiceDto {
 
     private Long id;
     @NotNull
-    private LocalDateTime date;
+    private String date;
     @NotNull
     private String typeOfInvoice;
     @NotNull
@@ -35,23 +35,7 @@ public class InvoiceDto {
                       Long warehouseId,
                       boolean isSpend) {
         this.id = id;
-        this.date = date;
-        this.typeOfInvoice = typeOfInvoice.toString();
-        this.companyDto = new CompanyDto();
-        this.companyDto.setId(companyId);
-        this.contractorDto = new ContractorDto();
-        this.contractorDto.setId(contractorId);
-        this.warehouseDto = new WarehouseDto();
-        this.warehouseDto.setId(warehouseId);
-        this.isSpend = isSpend;
-    }
-    public InvoiceDto(LocalDateTime date,
-                      TypeOfInvoice typeOfInvoice,
-                      Long companyId,
-                      Long contractorId,
-                      Long warehouseId,
-                      boolean isSpend) {
-        this.date = date;
+        this.date = date.toString();
         this.typeOfInvoice = typeOfInvoice.toString();
         this.companyDto = new CompanyDto();
         this.companyDto.setId(companyId);

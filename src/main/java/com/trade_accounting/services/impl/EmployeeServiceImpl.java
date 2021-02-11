@@ -1,8 +1,10 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
@@ -99,7 +101,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                         : null,
                 roles,
                 employeeDto.getImageDto() != null
-                        ? imageRepository.getOne(employeeDto.getImageDto().getId())
+                        ? imageRepository.getByImageUrl(employeeDto.getImageDto().getImageUrl())
                         : null
         ));
     }
@@ -132,7 +134,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                         : null,
                 roles,
                 employeeDto.getImageDto() != null
-                        ? imageRepository.getOne(employeeDto.getImageDto().getId())
+                        ? imageRepository.getByImageUrl(employeeDto.getImageDto().getImageUrl())
                         : null
         ));
 
@@ -148,5 +150,4 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getByEmail(String email) {
         return employeeRepository.getByEmail(email);
     }
-
 }
