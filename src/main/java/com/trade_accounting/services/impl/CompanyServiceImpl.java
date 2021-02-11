@@ -6,15 +6,13 @@ import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.CompanyService;
-import org.modelmapper.ModelMapper;
-import org.springframework.data.jpa.domain.Specification;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.utils.ModelDtoConverter;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +23,6 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final LegalDetailService legalDetailService;
     private final LegalDetailRepository legalDetailRepository;
-    private final ModelMapper modelMapper = new ModelMapper();
     private final TypeOfContractorRepository typeOfContractorRepository;
 
     public CompanyServiceImpl(CompanyRepository companyRepository,
@@ -53,7 +50,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<CompanyDto> search(Specification<Company> spec) {
         return companyRepository.findAll(spec).stream()
-                .map(this::convertToDto).collect(Collectors.toList());
+                .map(ModelDtoConverter::convertToCompanyDto).collect(Collectors.toList());
     }
 
     @Override
@@ -93,12 +90,5 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void create(Company company) {
         companyRepository.save(company);
-    }
-
-    private CompanyDto convertToDto(Company company) {
-        CompanyDto companyDto = modelMapper.map(company, CompanyDto.class);
-        companyDto.setLegalDetailDto(legalDetailRepository.getById(company.getLegalDetail().getId()));
-
-        return companyDto;
     }
 }

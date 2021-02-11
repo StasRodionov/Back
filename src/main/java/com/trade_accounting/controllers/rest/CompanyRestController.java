@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
@@ -59,21 +60,21 @@ public class CompanyRestController {
     public ResponseEntity<List<CompanyDto>> getAll(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
-                    @Spec(path = "name", params = "name", spec = Like.class),
-                    @Spec(path = "inn", params = "inn", spec = Like.class),
-                    @Spec(path = "sortNumber", params = "sortNumber", spec = Like.class),
-                    @Spec(path = "phone", params = "phone", spec = Like.class),
-                    @Spec(path = "fax", params = "fax", spec = Like.class),
-                    @Spec(path = "email", params = "email", spec = Like.class),
+                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+                    @Spec(path = "inn", params = "inn", spec = LikeIgnoreCase.class),
+                    @Spec(path = "sortNumber", params = "sortNumber", spec = LikeIgnoreCase.class),
+                    @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
+                    @Spec(path = "fax", params = "fax", spec = LikeIgnoreCase.class),
+                    @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
                     @Spec(path = "payerVat", params = "payerVat", spec = Equal.class),
-                    @Spec(path = "address", params = "address", spec = Like.class),
-                    @Spec(path = "commentToAddress", params = "commentToAddress", spec = Like.class),
-                    @Spec(path = "leader", params = "leader", spec = Like.class),
-                    @Spec(path = "leaderManagerPosition", params = "leaderManagerPosition", spec = Like.class),
-                    @Spec(path = "leaderSignature", params = "leaderSignature", spec = Like.class),
-                    @Spec(path = "chiefAccountant", params = "chiefAccountant", spec = Like.class),
-                    @Spec(path = "chiefAccountantSignature", params = "chiefAccountantSignature", spec = Like.class),
-                    @Spec(path = "stamp", params = "stamp", spec = Like.class)
+                    @Spec(path = "address", params = "address", spec = LikeIgnoreCase.class),
+                    @Spec(path = "commentToAddress", params = "commentToAddress", spec = LikeIgnoreCase.class),
+                    @Spec(path = "leader", params = "leader", spec = LikeIgnoreCase.class),
+                    @Spec(path = "leaderManagerPosition", params = "leaderManagerPosition", spec = LikeIgnoreCase.class),
+                    @Spec(path = "leaderSignature", params = "leaderSignature", spec = LikeIgnoreCase.class),
+                    @Spec(path = "chiefAccountant", params = "chiefAccountant", spec = LikeIgnoreCase.class),
+                    @Spec(path = "chiefAccountantSignature", params = "chiefAccountantSignature", spec = LikeIgnoreCase.class),
+                    @Spec(path = "stamp", params = "stamp", spec = LikeIgnoreCase.class)
             }) Specification<Company> spec) {
         log.info("Запрошен поиск компаний");
         return ResponseEntity.ok(companyService.search(spec));

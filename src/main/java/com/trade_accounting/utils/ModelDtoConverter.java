@@ -19,6 +19,7 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
+import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,7 +28,19 @@ import java.util.List;
 
 public class ModelDtoConverter {
 
+    private static final ModelMapper modelMapper = new ModelMapper();
+
     private ModelDtoConverter() {
+    }
+
+    public static CompanyDto convertToCompanyDto(Company company) {
+        CompanyDto companyDto = modelMapper.map(company, CompanyDto.class);
+        companyDto.setLegalDetailDto(modelMapper.map(company.getLegalDetail(), LegalDetailDto.class));
+
+        companyDto.getLegalDetailDto().setTypeOfContractorDto(
+                modelMapper.map(company.getLegalDetail().getTypeOfContractor(), TypeOfContractorDto.class));
+
+        return companyDto;
     }
 
     public static Company convertToCompany(CompanyDto dto, LegalDetail legalDetail) {
@@ -153,7 +166,7 @@ public class ModelDtoConverter {
         );
     }
 
-    public static List<BankAccount> convertToListOfBankAccount(List<BankAccountDto> list){
+    public static List<BankAccount> convertToListOfBankAccount(List<BankAccountDto> list) {
         List<BankAccount> bankAccountList = new ArrayList<>();
         for (BankAccountDto bankAccountDto : list) {
             bankAccountList.add(new BankAccount(
