@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 
+import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,12 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Currency;
 import java.util.List;
 
 @Slf4j
@@ -120,5 +126,19 @@ public class CurrencyRestController {
         return ResponseEntity.ok().build();
     }
 
-
+    @GetMapping("/search")
+    @ApiOperation(value = "search", notes = "Получение списка валют по заданным параметрам")
+    public ResponseEntity<List<CurrencyDto>> getAll(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "shortName", params = "shortName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "fullName", params = "fullName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "sortNumber", params = "sortNumber", spec = Like.class),
+                    @Spec(path = "digitalCode", params = "digitalCode", spec = Like.class),
+                    @Spec(path = "letterCode", params = "letterCode", spec = LikeIgnoreCase.class),
+                    @Spec(path = "sortNumber", params = "sortNumber", spec = Like.class),
+            }) Specification<Currency> spec) {
+        log.info("Запрошен поиск валют");
+        return ResponseEntity.ok(currencyService.search(spec));
+    }
 }
