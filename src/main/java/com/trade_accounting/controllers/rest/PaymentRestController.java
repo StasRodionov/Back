@@ -49,7 +49,7 @@ public class PaymentRestController {
         return ResponseEntity.ok(paymentDtoList);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     @ApiOperation(value = "getById", notes = "Получение платежа по его id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Платеж найден"),
