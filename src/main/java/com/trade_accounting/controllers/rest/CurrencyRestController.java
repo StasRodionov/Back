@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
@@ -130,14 +131,14 @@ public class CurrencyRestController {
     public ResponseEntity<List<CurrencyDto>> getAll(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
-                    @Spec(path = "shortName", params = "shortName", spec = Like.class),
-                    @Spec(path = "fullName", params = "fullName", spec = Like.class),
+                    @Spec(path = "shortName", params = "shortName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "fullName", params = "fullName", spec = LikeIgnoreCase.class),
                     @Spec(path = "sortNumber", params = "sortNumber", spec = Like.class),
                     @Spec(path = "digitalCode", params = "digitalCode", spec = Like.class),
-                    @Spec(path = "letterCode", params = "letterCode", spec = Like.class),
+                    @Spec(path = "letterCode", params = "letterCode", spec = LikeIgnoreCase.class),
                     @Spec(path = "sortNumber", params = "sortNumber", spec = Like.class),
             }) Specification<Currency> spec) {
-        log.info("Запрошен поиск компаний");
+        log.info("Запрошен поиск валют");
         return ResponseEntity.ok(currencyService.search(spec));
     }
 }
