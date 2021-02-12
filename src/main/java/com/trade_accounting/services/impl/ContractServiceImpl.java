@@ -8,6 +8,7 @@ import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.services.interfaces.ContractService;
+import com.trade_accounting.utils.SortNumberConverter;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -76,7 +77,7 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void create(ContractDto contractDto) {
         contractRepository.save(new Contract(
-                contractDto.getNumber(),
+                SortNumberConverter.convert(contractDto.getNumber()),
                 contractDto.getContractDate(),
                 companyRepository.getOne(contractDto.getCompanyDto().getId()),
                 bankAccountRepository.getOne(contractDto.getBankAccountDto().getId()),
@@ -92,7 +93,7 @@ public class ContractServiceImpl implements ContractService {
     public void update(ContractDto contractDto) {
         contractRepository.save(new Contract(
                 contractDto.getId(),
-                contractDto.getNumber(),
+                SortNumberConverter.convert(contractDto.getNumber()),
                 contractDto.getContractDate(),
                 companyRepository.getOne(contractDto.getCompanyDto().getId()),
                 bankAccountRepository.getOne(contractDto.getBankAccountDto().getId()),
