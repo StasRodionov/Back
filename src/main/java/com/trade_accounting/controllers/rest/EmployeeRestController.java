@@ -1,5 +1,8 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import io.swagger.annotations.Api;
@@ -9,6 +12,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -46,6 +57,22 @@ public class EmployeeRestController {
         List<EmployeeDto> employeeDtos = employeeService.getAll();
         log.info("Запрошен список EmployeeDto");
         return ResponseEntity.ok(employeeDtos);
+    }
+
+    @GetMapping("/search")
+    @ApiOperation(value = "search", notes = "Получение списка работников по заданным параметрам")
+    public ResponseEntity<List<EmployeeDto>> getAll(
+            @And({
+                    @Spec(path = "lastName", params = "lastName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "firstName", params = "firstName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "middleName", params = "middleName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
+                    @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
+                    @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
+                    @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class)
+            }) Specification<Employee> spec) {
+        log.info("Запрошен поиск работника");
+        return ResponseEntity.ok(employeeService.search(spec));
     }
 
     @GetMapping("/{id}")

@@ -4,6 +4,7 @@ import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.TypeOfContractor;
@@ -14,8 +15,13 @@ import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.DepartmentDto;
+import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
@@ -25,6 +31,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ModelDtoConverter {
 
@@ -62,6 +70,24 @@ public class ModelDtoConverter {
                 dto.getChiefAccountantSignature(),
                 dto.getStamp(),
                 legalDetail);
+    }
+
+    public static EmployeeDto convertToEmployeeDto(Employee employee) {
+        EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
+        if (employee.getDepartment() != null) {
+            employeeDto.setDepartmentDto(modelMapper.map(employee.getDepartment(), DepartmentDto.class));
+        }
+        if (employee.getPosition() != null) {
+            employeeDto.setPositionDto((modelMapper.map(employee.getPosition(), PositionDto.class)));
+        }
+        if (employee.getRoles() != null) {
+            employeeDto.setRoleDto(employee.getRoles().stream()
+                    .map(role -> modelMapper.map(role, RoleDto.class)).collect(Collectors.toSet()));
+        }
+        if (employee.getImage() != null) {
+            employeeDto.setImageDto(modelMapper.map(employee.getImage(), ImageDto.class));
+        }
+        return employeeDto;
     }
 
     public static LegalDetail convertToLegalDetail(LegalDetailDto dto, TypeOfContractor typeOfContractor) {

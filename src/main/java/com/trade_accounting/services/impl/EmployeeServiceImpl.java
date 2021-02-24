@@ -12,6 +12,8 @@ import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.interfaces.EmployeeService;
+import com.trade_accounting.utils.ModelDtoConverter;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +59,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         return employeeDtos;
+    }
+
+    @Override
+    public List<EmployeeDto> search(Specification<Employee> specification) {
+        return employeeRepository.findAll(specification).stream()
+                .map(ModelDtoConverter::convertToEmployeeDto).collect(Collectors.toList());
     }
 
     @Override
