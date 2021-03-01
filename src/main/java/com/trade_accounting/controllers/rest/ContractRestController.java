@@ -44,7 +44,6 @@ public class ContractRestController {
     )
     public ResponseEntity<List<ContractDto>> getAll() {
         List<ContractDto> contracts = contractService.getAll();
-        log.info("Запрошен список ContractDto");
         return ResponseEntity.ok(contracts);
     }
 

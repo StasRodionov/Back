@@ -8,6 +8,7 @@ import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.services.interfaces.ContractService;
+import com.trade_accounting.utils.ModelDtoConverter;
 import com.trade_accounting.utils.SortNumberConverter;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,9 @@ public class ContractServiceImpl implements ContractService {
             contractDto.setCompanyDto(
                     companyRepository.getById(contractDto.getCompanyDto().getId())
             );
+            contractDto.getCompanyDto().
+                    setBankAccountDto(ModelDtoConverter.convertToListBankAccountDto(
+                            bankAccountRepository.getBankAccountByCompanyId(contractDto.getCompanyDto().getId())));
             contractDto.setBankAccountDto(
                     bankAccountRepository.getById(contractDto.getBankAccountDto().getId())
             );
@@ -62,6 +66,9 @@ public class ContractServiceImpl implements ContractService {
         contractDto.setCompanyDto(
                 companyRepository.getById(contractDto.getCompanyDto().getId())
         );
+        contractDto.getCompanyDto().
+                setBankAccountDto(ModelDtoConverter.convertToListBankAccountDto(
+                        bankAccountRepository.getBankAccountByCompanyId(contractDto.getCompanyDto().getId())));
         contractDto.setBankAccountDto(
                 bankAccountRepository.getById(contractDto.getBankAccountDto().getId())
         );
