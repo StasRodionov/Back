@@ -31,7 +31,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ModelDtoConverter {
@@ -88,6 +87,23 @@ public class ModelDtoConverter {
             employeeDto.setImageDto(modelMapper.map(employee.getImage(), ImageDto.class));
         }
         return employeeDto;
+    }
+
+    public static InvoiceDto convertToInvoiceDto(Invoice invoice) {
+
+        InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
+
+        if (invoice.getCompany() != null) {
+            invoiceDto.setCompanyDto(modelMapper.map(invoice.getCompany(), CompanyDto.class));
+        }
+        if (invoice.getContractor() != null) {
+            invoiceDto.setContractorDto((modelMapper.map(invoice.getContractor(), ContractorDto.class)));
+        }
+
+        if (invoice.getWarehouse() != null) {
+            invoiceDto.setWarehouseDto(modelMapper.map(invoice.getWarehouse(), WarehouseDto.class));
+        }
+        return invoiceDto;
     }
 
     public static LegalDetail convertToLegalDetail(LegalDetailDto dto, TypeOfContractor typeOfContractor) {

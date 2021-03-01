@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.BankAccountRepository;
@@ -13,10 +14,12 @@ import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.utils.ModelDtoConverter;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -50,6 +53,12 @@ public class InvoiceServiceImpl implements InvoiceService {
         this.contractorGroupRepository = contractorGroupRepository;
         this.typeOfPriceRepository = typeOfPriceRepository;
         this.bankAccountRepository = bankAccountRepository;
+    }
+
+    @Override
+    public List<InvoiceDto> search(Specification<Invoice> specification) {
+        return invoiceRepository.findAll(specification).stream()
+                .map(ModelDtoConverter::convertToInvoiceDto).collect(Collectors.toList());
     }
 
     @Override
@@ -109,7 +118,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 (invoiceDto.getContractorDto() == null) ? null : contractorRepository.save(ModelDtoConverter.convertToContractor(invoiceDto.getContractorDto(),
                         (invoiceDto.getContractorDto().getContractorGroupDto() == null) ? null : contractorGroupRepository.save(ModelDtoConverter.convertToContractorGroup(invoiceDto.getContractorDto().getContractorGroupDto())),
                         (invoiceDto.getContractorDto().getTypeOfContractorDto() == null) ? null : typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(invoiceDto.getContractorDto().getTypeOfContractorDto())),
-                        (invoiceDto.getContractorDto().getTypeOfPriceDto() == null ) ? null : typeOfPriceRepository.save(ModelDtoConverter.convertToTypeOfPrice(invoiceDto.getContractorDto().getTypeOfPriceDto())),
+                        (invoiceDto.getContractorDto().getTypeOfPriceDto() == null) ? null : typeOfPriceRepository.save(ModelDtoConverter.convertToTypeOfPrice(invoiceDto.getContractorDto().getTypeOfPriceDto())),
                         (invoiceDto.getContractorDto().getBankAccountDto() == null) ? null : bankAccountRepository.saveAll(ModelDtoConverter.convertToListOfBankAccount(invoiceDto.getContractorDto().getBankAccountDto())),
                         (invoiceDto.getContractorDto().getLegalDetailDto() == null) ? null : legalDetailRepository.save(ModelDtoConverter.convertToLegalDetail(invoiceDto.getContractorDto().getLegalDetailDto(),
                                 (invoiceDto.getContractorDto().getLegalDetailDto().getTypeOfContractorDto() == null) ? null : typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(invoiceDto.getContractorDto().getLegalDetailDto().getTypeOfContractorDto())))))),
