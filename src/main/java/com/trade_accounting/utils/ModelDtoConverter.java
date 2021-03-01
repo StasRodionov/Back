@@ -50,7 +50,7 @@ public class ModelDtoConverter {
         return companyDto;
     }
 
-    public static Company convertToCompany(CompanyDto dto, LegalDetail legalDetail) {
+    public static Company convertToCompany(CompanyDto dto, LegalDetail legalDetail, List<BankAccount> bankAccounts) {
         return new Company(
                 dto.getId(),
                 dto.getName(),
@@ -68,7 +68,7 @@ public class ModelDtoConverter {
                 dto.getChiefAccountant(),
                 dto.getChiefAccountantSignature(),
                 dto.getStamp(),
-                legalDetail);
+                legalDetail, bankAccounts);
     }
 
     public static EmployeeDto convertToEmployeeDto(Employee employee) {

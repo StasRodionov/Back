@@ -503,7 +503,24 @@ public class DataInitializer {
                             "1053600591197",
                             "236467",
                             LocalDate.of(2020, 6, 12).toString(),
-                            typeOfContractorService.getByName("Юридическое лицо"))));
+                            typeOfContractorService.getByName("Юридическое лицо")),
+                    List.of(new BankAccountDto(
+                            null,
+                            "14593",
+                            "Сбербанк",
+                            "Москва ул. Ленина",
+                            "correspondent account",
+                            "account",
+                            true,
+                            "1"), new BankAccountDto(
+                            null, "55320",
+                            "Газпромбанк",
+                            "Москва ул. Катина",
+                            "correspondent account",
+                            "account",
+                            true,
+                            "2"))
+            ));
 
             companyService.create(new CompanyDto(
                     null,
@@ -534,7 +551,24 @@ public class DataInitializer {
                             "1053600591285",
                             "432145",
                             LocalDate.of(2018, 2, 23).toString(),
-                            typeOfContractorService.getByName("Индивидуальный предприниматель"))));
+                            typeOfContractorService.getByName("Индивидуальный предприниматель")),
+                    List.of(new BankAccountDto(
+                            null,
+                            "14593",
+                            "Сбербанк",
+                            "Москва ул. Ленина",
+                            "correspondent account",
+                            "account",
+                            true,
+                            "1"), new BankAccountDto(
+                            null, "55320",
+                            "Газпромбанк",
+                            "Москва ул. Катина",
+                            "correspondent account",
+                            "account",
+                            true,
+                            "2"))
+            ));
 
             companyService.create(new CompanyDto(
                     null,
@@ -565,7 +599,23 @@ public class DataInitializer {
                             "1033600141277",
                             "342145",
                             LocalDate.of(2022, 4, 5).toString(),
-                            typeOfContractorService.getByName("Физическое лицо"))));
+                            typeOfContractorService.getByName("Физическое лицо")),
+                    List.of(new BankAccountDto(
+                            null,
+                            "14593",
+                            "Сбербанк",
+                            "Москва ул. Ленина",
+                            "correspondent account",
+                            "account",
+                            true,
+                            "1"), new BankAccountDto(
+                            null, "55320",
+                            "Газпромбанк",
+                            "Москва ул. Катина",
+                            "correspondent account",
+                            "account",
+                            true,
+                            "2"))));
         }
     }
 

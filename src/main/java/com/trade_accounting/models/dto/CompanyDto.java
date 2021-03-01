@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,6 +44,8 @@ public class CompanyDto {
     private String stamp;
 
     private LegalDetailDto legalDetailDto;
+
+    private List<BankAccountDto> bankAccountDto;
 
     public CompanyDto(Long id,
                       String name,
