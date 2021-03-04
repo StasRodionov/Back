@@ -208,6 +208,19 @@ public class ModelDtoConverter {
         );
     }
 
+    public static BankAccountDto convertToBankAccountDto(BankAccount bankAccount){
+        return new BankAccountDto(
+                bankAccount.getId(),
+                bankAccount.getRcbic(),
+                bankAccount.getBank(),
+                bankAccount.getAddress(),
+                bankAccount.getCorrespondentAccount(),
+                bankAccount.getAccount(),
+                bankAccount.getMainAccount(),
+                bankAccount.getSortNumber()
+        );
+    }
+
     public static List<BankAccount> convertToListOfBankAccount(List<BankAccountDto> list) {
         List<BankAccount> bankAccountList = new ArrayList<>();
         for (BankAccountDto bankAccountDto : list) {
@@ -223,21 +236,5 @@ public class ModelDtoConverter {
             ));
         }
         return bankAccountList;
-    }
-
-    public static List<BankAccountDto> convertToListBankAccountDto(List<BankAccount> bankAccounts){
-        List<BankAccountDto> dtos = new ArrayList<>();
-        for (BankAccount bankAccount: bankAccounts){
-            dtos.add(new BankAccountDto(
-                    bankAccount.getId(),
-                    bankAccount.getRcbic(),
-                    bankAccount.getBank(),
-                    bankAccount.getAddress(),
-                    bankAccount.getCorrespondentAccount(),
-                    bankAccount.getAccount(),
-                    bankAccount.getMainAccount(),
-                    bankAccount.getSortNumber()));
-        }
-        return dtos;
     }
 }

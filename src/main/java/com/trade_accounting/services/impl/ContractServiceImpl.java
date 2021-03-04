@@ -1,6 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Contract;
+import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
@@ -13,7 +14,9 @@ import com.trade_accounting.utils.SortNumberConverter;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -45,8 +48,9 @@ public class ContractServiceImpl implements ContractService {
                     companyRepository.getById(contractDto.getCompanyDto().getId())
             );
             contractDto.getCompanyDto().
-                    setBankAccountDto(ModelDtoConverter.convertToListBankAccountDto(
-                            bankAccountRepository.getBankAccountByCompanyId(contractDto.getCompanyDto().getId())));
+                    setBankAccountDto(bankAccountRepository.getBankAccountByCompanyId(contractDto.getCompanyDto().getId())
+                    .stream().map(bankAccount -> ModelDtoConverter.convertToBankAccountDto(bankAccount))
+                            .collect(Collectors.toList()));
             contractDto.setBankAccountDto(
                     bankAccountRepository.getById(contractDto.getBankAccountDto().getId())
             );
@@ -67,8 +71,9 @@ public class ContractServiceImpl implements ContractService {
                 companyRepository.getById(contractDto.getCompanyDto().getId())
         );
         contractDto.getCompanyDto().
-                setBankAccountDto(ModelDtoConverter.convertToListBankAccountDto(
-                        bankAccountRepository.getBankAccountByCompanyId(contractDto.getCompanyDto().getId())));
+                setBankAccountDto(bankAccountRepository.getBankAccountByCompanyId(contractDto.getCompanyDto().getId())
+                        .stream().map(bankAccount -> ModelDtoConverter.convertToBankAccountDto(bankAccount))
+                        .collect(Collectors.toList()));
         contractDto.setBankAccountDto(
                 bankAccountRepository.getById(contractDto.getBankAccountDto().getId())
         );

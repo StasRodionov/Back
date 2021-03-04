@@ -241,16 +241,16 @@ public class DataInitializer {
                 "14593",
                 "Сбербанк",
                 "Москва ул. Ленина",
-                "correspondent account",
-                "account",
+                "30101643600000000957",
+                "42605998100001234567",
                 true,
                 "1"));
         bankAccountService.create(new BankAccountDto(
                 null, "55320",
                 "Газпромбанк",
                 "Москва ул. Катина",
-                "correspondent account",
-                "account",
+                "30101643600000000123",
+                "40702643100007654321",
                 true,
                 "2"));
     }
@@ -509,15 +509,15 @@ public class DataInitializer {
                             "14593",
                             "Сбербанк",
                             "Москва ул. Ленина",
-                            "correspondent account",
-                            "account",
+                            "30101643600000000957",
+                            "42605998100001234567",
                             true,
                             "1"), new BankAccountDto(
                             null, "55320",
                             "Газпромбанк",
                             "Москва ул. Катина",
-                            "correspondent account",
-                            "account",
+                            "30101643600000000123",
+                            "40702643100007654321",
                             true,
                             "2"))
             ));
@@ -557,15 +557,15 @@ public class DataInitializer {
                             "14593",
                             "Сбербанк",
                             "Москва ул. Ленина",
-                            "correspondent account",
-                            "account",
+                            "30101643600000000957",
+                            "42605998100001234567",
                             true,
                             "1"), new BankAccountDto(
                             null, "55320",
                             "Газпромбанк",
                             "Москва ул. Катина",
-                            "correspondent account",
-                            "account",
+                            "30101643600000000123",
+                            "40702643100007654321",
                             true,
                             "2"))
             ));
@@ -605,15 +605,15 @@ public class DataInitializer {
                             "14593",
                             "Сбербанк",
                             "Москва ул. Ленина",
-                            "correspondent account",
-                            "account",
+                            "30101643600000000957",
+                            "40702643100007654321",
                             true,
                             "1"), new BankAccountDto(
                             null, "55320",
                             "Газпромбанк",
                             "Москва ул. Катина",
-                            "correspondent account",
-                            "account",
+                            "30101643600000000123",
+                            "42605998100001234567",
                             true,
                             "2"))));
         }
@@ -919,11 +919,11 @@ public class DataInitializer {
                 "1",
                 LocalDate.now(),
                 1L,
-                1L,
+                3L,
                 1L,
                 BigDecimal.valueOf(200),
                 false,
                 "no comments",
-                1L));
+                4L));
     }
 }

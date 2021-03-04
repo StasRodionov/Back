@@ -49,7 +49,9 @@ public class CompanyServiceImpl implements CompanyService {
             companyDto.setLegalDetailDto(
                     legalDetailService.getById(companyDto.getLegalDetailDto().getId()));
             List<BankAccount> bankAccounts = bankAccountRepository.getBankAccountByCompanyId(companyDto.getId());
-            companyDto.setBankAccountDto(bankAccounts.stream().map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
+            companyDto.setBankAccountDto(bankAccounts.stream()
+                    .map(bankAccount -> ModelDtoConverter.convertToBankAccountDto(bankAccount))
+                    .collect(Collectors.toList()));
         }
         companyDtos.sort(Comparator.comparing(CompanyDto::getSortNumber));
         return companyDtos;
@@ -67,7 +69,9 @@ public class CompanyServiceImpl implements CompanyService {
         companyDto.setLegalDetailDto(
                 legalDetailService.getById(companyDto.getLegalDetailDto().getId()));
         List<BankAccount> bankAccounts = bankAccountRepository.getBankAccountByCompanyId(companyDto.getId());
-        companyDto.setBankAccountDto(bankAccounts.stream().map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
+        companyDto.setBankAccountDto(bankAccounts.stream()
+                .map(bankAccount -> ModelDtoConverter.convertToBankAccountDto(bankAccount))
+                .collect(Collectors.toList()));
         return companyDto;
     }
 
@@ -77,7 +81,9 @@ public class CompanyServiceImpl implements CompanyService {
         companyDto.setLegalDetailDto(
                 legalDetailService.getById(companyDto.getLegalDetailDto().getId()));
         List<BankAccount> bankAccounts = bankAccountRepository.getBankAccountByCompanyId(companyDto.getId());
-        companyDto.setBankAccountDto(bankAccounts.stream().map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
+        companyDto.setBankAccountDto(bankAccounts.stream()
+                .map(bankAccount -> ModelDtoConverter.convertToBankAccountDto(bankAccount))
+                .collect(Collectors.toList()));
         return companyDto;
     }
 
