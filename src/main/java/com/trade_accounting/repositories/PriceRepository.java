@@ -16,6 +16,4 @@ public interface PriceRepository extends JpaRepository<Price, Long> {
             "from Product product inner join product.prices as price where product.id = :id")
     List<PriceDto> getPricesDtoByProductId(Long id);
 
-    @Query("select p.prices from Product p where p.id = :id")
-    List<Price> getPricesByProductId(Long id);
 }
