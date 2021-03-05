@@ -1,25 +1,11 @@
 package com.trade_accounting.models;
 
 
-import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.TypeOfPriceDto;
-import com.trade_accounting.repositories.ImageRepository;
-import com.trade_accounting.repositories.ProductRepository;
-import com.trade_accounting.repositories.TypeOfPriceRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -58,8 +44,8 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<TypeOfPrice> typeOfPrices;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Price> prices;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private TaxSystem taxSystem;
@@ -85,7 +71,7 @@ public class Product {
                    Contractor contractor,
                    AttributeOfCalculationObject attributeOfCalculationObject,
                    List<Image> images,
-                   List<TypeOfPrice> typeOfPrice) {
+                   List<Price> prices) {
         this.name = name;
         this.weight = weight;
         this.volume = volume;
@@ -98,6 +84,6 @@ public class Product {
         this.productGroup = productGroup;
         this.attributeOfCalculationObject = attributeOfCalculationObject;
         this.images = images;
-        this.typeOfPrices = typeOfPrice;
+        this.prices = prices;
     }
 }

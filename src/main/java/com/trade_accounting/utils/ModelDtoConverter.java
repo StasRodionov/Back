@@ -1,30 +1,7 @@
 package com.trade_accounting.utils;
 
-import com.trade_accounting.models.BankAccount;
-import com.trade_accounting.models.Company;
-import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.ContractorGroup;
-import com.trade_accounting.models.Employee;
-import com.trade_accounting.models.Invoice;
-import com.trade_accounting.models.LegalDetail;
-import com.trade_accounting.models.TypeOfContractor;
-import com.trade_accounting.models.TypeOfInvoice;
-import com.trade_accounting.models.TypeOfPrice;
-import com.trade_accounting.models.Warehouse;
-import com.trade_accounting.models.dto.BankAccountDto;
-import com.trade_accounting.models.dto.CompanyDto;
-import com.trade_accounting.models.dto.ContractorDto;
-import com.trade_accounting.models.dto.ContractorGroupDto;
-import com.trade_accounting.models.dto.DepartmentDto;
-import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.InvoiceDto;
-import com.trade_accounting.models.dto.LegalDetailDto;
-import com.trade_accounting.models.dto.PositionDto;
-import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.TypeOfContractorDto;
-import com.trade_accounting.models.dto.TypeOfPriceDto;
-import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.models.*;
+import com.trade_accounting.models.dto.*;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
@@ -38,6 +15,14 @@ public class ModelDtoConverter {
     private static final ModelMapper modelMapper = new ModelMapper();
 
     private ModelDtoConverter() {
+    }
+
+    public static PriceDto convertToPriceDto(Price price) {
+        return modelMapper.map(price, PriceDto.class);
+    }
+
+    public static Price convertToPrice(PriceDto priceDto){
+        return modelMapper.map(priceDto, Price.class);
     }
 
     public static CompanyDto convertToCompanyDto(Company company) {
