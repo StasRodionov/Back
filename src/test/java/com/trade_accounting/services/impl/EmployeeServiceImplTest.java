@@ -29,8 +29,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -79,9 +79,12 @@ class EmployeeServiceImplTest {
 
         List<EmployeeDto> employees = employeeService.getAll();
 
+        assertNotNull(employees, "failure - expected that a list of employeeDto not null");
+        assertTrue(employees.size() > 0, "failure - expected that a list of employeeDto greater than 0");
+
         for(EmployeeDto employee : employees) {
             assertTrue(
-                    employeeDtoIsFullInited(employee),
+                    employeeDtoIsCorrectlyInited(employee),
                     String.format(
                             "failure - expected that all " +
                             "required fields of employeeDto not null: " +
@@ -99,9 +102,12 @@ class EmployeeServiceImplTest {
         List<EmployeeDto> employees = employeeService
                 .search(SpecificationStubs.getEmployeeSpecificationStub());
 
+        assertNotNull(employees, "failure - expected that a list of employeeDto not null");
+        assertTrue(employees.size() > 0, "failure - expected that a list of employeeDto greater than 0");
+
         for(EmployeeDto employee : employees) {
             assertTrue(
-                    employeeDtoIsFullInited(employee),
+                    employeeDtoIsCorrectlyInited(employee),
                     String.format(
                             "failure - expected that all " +
                             "required fields of employeeDto not null: " +
@@ -119,6 +125,7 @@ class EmployeeServiceImplTest {
         List<EmployeeDto> employees = employeeService
                 .search(SpecificationStubs.getEmployeeSpecificationStub());
 
+        assertNotNull(employees, "failure - expected that a list of employeeDto not null");
         assertEquals(0, employees.size(), "failure - expected that size of list of employeeDto equals 0");
     }
 
@@ -145,7 +152,7 @@ class EmployeeServiceImplTest {
         EmployeeDto employee = employeeService.getById(1L);
 
         assertTrue(
-                employeeDtoIsFullInited(employee),
+                employeeDtoIsCorrectlyInited(employee),
                 "failure - excepted that all required fields of employeeDto not null."
         );
     }
@@ -197,7 +204,7 @@ class EmployeeServiceImplTest {
 
         EmployeeDto employee = employeeService.getByEmail("email@email.ru");
 
-        assertTrue(employeeDtoIsFullInited(employee));
+        assertTrue(employeeDtoIsCorrectlyInited(employee));
     }
 
 
@@ -297,7 +304,7 @@ class EmployeeServiceImplTest {
         ).collect(Collectors.toSet());
     }
 
-    boolean employeeDtoIsFullInited(EmployeeDto employee) {
+    boolean employeeDtoIsCorrectlyInited(EmployeeDto employee) {
         return employee != null
                 && employee.getId() != null
                 && employee.getLastName() != null
