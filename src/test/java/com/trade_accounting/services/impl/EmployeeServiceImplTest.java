@@ -55,21 +55,11 @@ class EmployeeServiceImplTest {
     @InjectMocks
     private EmployeeServiceImpl employeeService;
 
-
     //Tests
     @Test
     void getAll_shouldReturnListFilledEmployeeDto() {
         when(employeeRepository.getAll())
                 .thenReturn(getListEmployeeDtoFromRepo());
-
-        when(departmentRepository.getDepartmentByEmployeeId(anyLong()))
-                .thenReturn(getDepartmentDtoFromRepo(1L));
-
-        when(positionRepository.getPositionByEmployeeId(anyLong()))
-                .thenReturn(getPositionDtoFromRepo(1L));
-
-        when(imageRepository.getImageByEmployeeId(anyLong()))
-                .thenReturn(getImageDtoFromRepo(1L));
 
         when(roleRepository.getRolesByEmployeeId(anyLong()))
                 .thenReturn(getRolesSetFromRepo());
@@ -80,17 +70,10 @@ class EmployeeServiceImplTest {
         List<EmployeeDto> employees = employeeService.getAll();
 
         assertNotNull(employees, "failure - expected that a list of employeeDto not null");
-        assertTrue(employees.size() > 0, "failure - expected that a list of employeeDto greater than 0");
+        assertTrue(employees.size() > 0, "failure - expected that a size of list of employeeDto greater than 0");
 
         for(EmployeeDto employee : employees) {
-            assertTrue(
-                    employeeDtoIsCorrectlyInited(employee),
-                    String.format(
-                            "failure - expected that all " +
-                            "required fields of employeeDto not null: " +
-                            "fail in employeeDto with id %s", employee.getId()
-                    )
-            );
+            employeeDtoIsCorrectlyInited(employee);
         }
     }
 
@@ -106,14 +89,7 @@ class EmployeeServiceImplTest {
         assertTrue(employees.size() > 0, "failure - expected that a list of employeeDto greater than 0");
 
         for(EmployeeDto employee : employees) {
-            assertTrue(
-                    employeeDtoIsCorrectlyInited(employee),
-                    String.format(
-                            "failure - expected that all " +
-                            "required fields of employeeDto not null: " +
-                            "fail in employeeDto with id %s", employee.getId()
-                    )
-            );
+            employeeDtoIsCorrectlyInited(employee);
         }
     }
 
@@ -134,15 +110,6 @@ class EmployeeServiceImplTest {
         when(employeeRepository.getById(anyLong()))
                 .thenReturn(getEmployeeDtoFromRepo(1L));
 
-        when(departmentRepository.getDepartmentByEmployeeId(anyLong()))
-                .thenReturn(getDepartmentDtoFromRepo(1L));
-
-        when(positionRepository.getPositionByEmployeeId(anyLong()))
-                .thenReturn(getPositionDtoFromRepo(1L));
-
-        when(imageRepository.getImageByEmployeeId(anyLong()))
-                .thenReturn(getImageDtoFromRepo(1L));
-
         when(roleRepository.getRolesByEmployeeId(anyLong()))
                 .thenReturn(getRolesSetFromRepo());
 
@@ -151,10 +118,8 @@ class EmployeeServiceImplTest {
 
         EmployeeDto employee = employeeService.getById(1L);
 
-        assertTrue(
-                employeeDtoIsCorrectlyInited(employee),
-                "failure - excepted that all required fields of employeeDto not null."
-        );
+        assertNotNull(employee, "failure - expected that employee not null.");
+        employeeDtoIsCorrectlyInited(employee);
     }
 
     //TODO add test for getById method if employee not found after adding exception handlers
@@ -204,7 +169,19 @@ class EmployeeServiceImplTest {
 
         EmployeeDto employee = employeeService.getByEmail("email@email.ru");
 
-        assertTrue(employeeDtoIsCorrectlyInited(employee));
+        assertNotNull(employee, "failure - expected that employee not null.");
+
+        employeeDtoIsCorrectlyInited(employee);
+    }
+
+    void employeeDtoIsCorrectlyInited(EmployeeDto employee) {
+        assertNotNull(employee, "Fail in passed employee");
+        assertNotNull(employee.getId(), "Fail in field 'id' of employee");
+        assertNotNull(employee.getLastName(), "Fail in field 'lastName' of employee");
+        assertNotNull(employee.getSortNumber(), "Fail in field 'sortNumber' of employee");
+        assertNotNull(employee.getEmail(), "Fail in field 'email' of employee");
+        assertNotNull(employee.getRoleDto(), "Fail in field 'roleDto' of employee");
+        assertTrue(employee.getRoleDto().size() > 0, "Expected that size of EmployeeDto role list greater than 0");
     }
 
 
@@ -302,15 +279,5 @@ class EmployeeServiceImplTest {
                 getRoleFromRepo(2L),
                 getRoleFromRepo(3L)
         ).collect(Collectors.toSet());
-    }
-
-    boolean employeeDtoIsCorrectlyInited(EmployeeDto employee) {
-        return employee != null
-                && employee.getId() != null
-                && employee.getLastName() != null
-                && employee.getSortNumber() != null
-                && employee.getEmail() != null
-                && employee.getPassword() != null
-                && employee.getRoleDto() != null;
     }
 }
