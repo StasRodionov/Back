@@ -14,4 +14,9 @@ public class PriceDto {
     private Long id;
     private TypeOfPriceDto typeOfPriceDto;
     private BigDecimal value;
+
+    public PriceDto(Long id, BigDecimal value) {
+        this.id = id;
+        this.value = value;
+    }
 }

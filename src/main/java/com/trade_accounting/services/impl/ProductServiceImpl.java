@@ -66,9 +66,7 @@ public class ProductServiceImpl implements ProductService {
             productDto.setImageDto(imageRepository.getAllById(productDto.getId()).stream()
                     .map(image -> imageRepository.getById(image.getId()))
                     .collect(Collectors.toList()));
-            productDto.setPriceDtos(priceRepository.getPricesByProductId(productDto.getId()).stream()
-                    .map(ModelDtoConverter::convertToPriceDto)
-                    .collect(Collectors.toList()));
+            productDto.setPriceDtos(priceRepository.getPricesDtoByProductId(productDto.getId()));
         }
         return productDtos;
     }
@@ -90,9 +88,7 @@ public class ProductServiceImpl implements ProductService {
         productDto.setImageDto(imageRepository.getAllById(id).stream()
                 .map(image -> imageRepository.getById(image.getId()))
                 .collect(Collectors.toList()));
-        productDto.setPriceDtos(priceRepository.getPricesByProductId(id).stream()
-                .map(ModelDtoConverter::convertToPriceDto)
-                .collect(Collectors.toList()));
+        productDto.setPriceDtos(priceRepository.getPricesDtoByProductId(id));
         return productDto;
     }
 
@@ -200,9 +196,7 @@ public class ProductServiceImpl implements ProductService {
             productDto.setImageDto(imageRepository.getAllById(productDto.getId()).stream()
                     .map(image -> imageRepository.getById(image.getId()))
                     .collect(Collectors.toList()));
-            productDto.setPriceDtos(priceRepository.getPricesByProductId(productDto.getId()).stream()
-                    .map(ModelDtoConverter::convertToPriceDto)
-                    .collect(Collectors.toList()));
+            productDto.setPriceDtos(priceRepository.getPricesDtoByProductId(productDto.getId()));
         }
         return productDtos;
     }

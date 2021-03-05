@@ -12,8 +12,9 @@ import java.util.List;
 @Repository
 public interface PriceRepository extends JpaRepository<Price, Long> {
 
-   // @Query("SELECT new com.trade_accounting.models.dto.PriceDto(p.id, p.product, p.typeOfPrice) from Price p")
-   // List<PriceDto> getPricesByProductId(Long id);
+    @Query("SELECT new com.trade_accounting.models.dto.PriceDto(price.id, price.value) " +
+            "from Product product inner join product.prices as price where product.id = :id")
+    List<PriceDto> getPricesDtoByProductId(Long id);
 
     @Query("select p.prices from Product p where p.id = :id")
     List<Price> getPricesByProductId(Long id);
