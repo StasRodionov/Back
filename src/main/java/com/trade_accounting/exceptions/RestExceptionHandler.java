@@ -7,14 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class RestExceptionHandler {
-
     @ExceptionHandler({NotFoundEntityException.class})
-    public ResponseEntity<ExceptionResponse> handleNotFoundExceptions(NotFoundEntityException ex) {
-        HttpStatus status = HttpStatus.NOT_FOUND;
-
-        ExceptionResponse response =
-                new ExceptionResponse(status, ex.getMessage());
-
-        return new ResponseEntity<>(response, status);
+    public ResponseEntity<String> handleNotFoundExceptions(NotFoundEntityException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
