@@ -1,11 +1,6 @@
 package com.trade_accounting.models;
 
 
-import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.TypeOfPriceDto;
-import com.trade_accounting.repositories.ImageRepository;
-import com.trade_accounting.repositories.ProductRepository;
-import com.trade_accounting.repositories.TypeOfPriceRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

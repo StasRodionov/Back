@@ -106,6 +106,30 @@ public class ModelDtoConverter {
         return invoiceDto;
     }
 
+    public static ContractorDto convertToContractorDto(Contractor contractor) {
+
+        ContractorDto contractorDto = modelMapper.map(contractor, ContractorDto.class);
+
+        if (contractor.getContractorGroup() != null) {
+            contractorDto.setContractorGroupDto(modelMapper.map(contractor.getContractorGroup(), ContractorGroupDto.class));
+        }
+        if (contractor.getTypeOfContractor() != null) {
+            contractorDto.setTypeOfContractorDto((modelMapper.map(contractor.getTypeOfContractor(), TypeOfContractorDto.class)));
+        }
+
+        if (contractor.getTypeOfPrice() != null) {
+            contractorDto.setTypeOfPriceDto(modelMapper.map(contractor.getTypeOfPrice(), TypeOfPriceDto.class));
+        }
+//        if (contractor.getBankAccounts() != null) {
+//            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(),  null));
+//        }
+        if (contractor.getLegalDetail() != null) {
+            contractorDto.setLegalDetailDto(modelMapper.map(contractor.getLegalDetail(), LegalDetailDto.class));
+        }
+
+        return contractorDto;
+    }
+
     public static LegalDetail convertToLegalDetail(LegalDetailDto dto, TypeOfContractor typeOfContractor) {
         return new LegalDetail(
                 dto.getId(),
