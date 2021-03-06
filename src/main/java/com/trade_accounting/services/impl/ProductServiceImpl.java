@@ -1,12 +1,20 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Image;
-import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProductDto;
-import com.trade_accounting.repositories.*;
+import com.trade_accounting.models.dto.ProductPriceDto;
+import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
+import com.trade_accounting.repositories.ContractorRepository;
+import com.trade_accounting.repositories.ImageRepository;
+import com.trade_accounting.repositories.ProductGroupRepository;
+import com.trade_accounting.repositories.ProductPriceRepository;
+import com.trade_accounting.repositories.ProductRepository;
+import com.trade_accounting.repositories.TaxSystemRepository;
+import com.trade_accounting.repositories.TypeOfPriceRepository;
+import com.trade_accounting.repositories.UnitRepository;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
