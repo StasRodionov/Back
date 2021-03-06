@@ -45,7 +45,7 @@ public class Product {
     private Contractor contractor;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Price> prices;
+    private List<ProductPrice> productPrices;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private TaxSystem taxSystem;
@@ -71,7 +71,7 @@ public class Product {
                    Contractor contractor,
                    AttributeOfCalculationObject attributeOfCalculationObject,
                    List<Image> images,
-                   List<Price> prices) {
+                   List<ProductPrice> productPrices) {
         this.name = name;
         this.weight = weight;
         this.volume = volume;
@@ -84,6 +84,6 @@ public class Product {
         this.productGroup = productGroup;
         this.attributeOfCalculationObject = attributeOfCalculationObject;
         this.images = images;
-        this.prices = prices;
+        this.productPrices = productPrices;
     }
 }

@@ -17,12 +17,12 @@ public class ModelDtoConverter {
     private ModelDtoConverter() {
     }
 
-    public static PriceDto convertToPriceDto(Price price) {
-        return modelMapper.map(price, PriceDto.class);
+    public static ProductPriceDto convertToPriceDto(ProductPrice productPrice) {
+        return modelMapper.map(productPrice, ProductPriceDto.class);
     }
 
-    public static Price convertToPrice(PriceDto priceDto){
-        return modelMapper.map(priceDto, Price.class);
+    public static ProductPrice convertToPrice(ProductPriceDto productPriceDto){
+        return modelMapper.map(productPriceDto, ProductPrice.class);
     }
 
     public static CompanyDto convertToCompanyDto(Company company) {

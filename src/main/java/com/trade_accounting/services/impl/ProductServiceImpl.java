@@ -1,10 +1,10 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Image;
-import com.trade_accounting.models.Price;
+import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.PriceDto;
+import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.repositories.*;
 import com.trade_accounting.services.interfaces.ProductService;
@@ -34,14 +34,14 @@ public class ProductServiceImpl implements ProductService {
 
     private final ImageRepository imageRepository;
 
-    private final PriceRepository priceRepository;
+    private final ProductPriceRepository productPriceRepository;
 
     public ProductServiceImpl(ProductRepository productRepository,
                               ProductGroupRepository productGroupRepository,
                               UnitRepository unitRepository,
                               TaxSystemRepository taxSystemRepository,
                               ContractorRepository contractorRepository,
-                              AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository, ImageRepository imageRepository, TypeOfPriceRepository typeOfPriceRepository, PriceRepository priceRepository) {
+                              AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository, ImageRepository imageRepository, TypeOfPriceRepository typeOfPriceRepository, ProductPriceRepository productPriceRepository) {
         this.productRepository = productRepository;
         this.productGroupRepository = productGroupRepository;
         this.unitRepository = unitRepository;
@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
         this.contractorRepository = contractorRepository;
         this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
         this.imageRepository = imageRepository;
-        this.priceRepository = priceRepository;
+        this.productPriceRepository = productPriceRepository;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
             productDto.setImageDto(imageRepository.getAllById(productDto.getId()).stream()
                     .map(image -> imageRepository.getById(image.getId()))
                     .collect(Collectors.toList()));
-            productDto.setPriceDtos(priceRepository.getPricesDtoByProductId(productDto.getId()));
+            productDto.setProductPriceDtos(productPriceRepository.getPricesDtoByProductId(productDto.getId()));
         }
         return productDtos;
     }
@@ -88,15 +88,15 @@ public class ProductServiceImpl implements ProductService {
         productDto.setImageDto(imageRepository.getAllById(id).stream()
                 .map(image -> imageRepository.getById(image.getId()))
                 .collect(Collectors.toList()));
-        productDto.setPriceDtos(priceRepository.getPricesDtoByProductId(id));
+        productDto.setProductPriceDtos(productPriceRepository.getPricesDtoByProductId(id));
         return productDto;
     }
 
     @Override
     public void create(ProductDto productDto) {
-        List<Price> prices = new ArrayList<>();
-        if (productDto.getPriceDtos() != null){
-            prices = productDto.getPriceDtos().stream()
+        List<ProductPrice> productPrices = new ArrayList<>();
+        if (productDto.getProductPriceDtos() != null){
+            productPrices = productDto.getProductPriceDtos().stream()
                     .map(ModelDtoConverter::convertToPrice).collect(Collectors.toList());
         }
 
@@ -131,16 +131,16 @@ public class ProductServiceImpl implements ProductService {
                         ? attributeOfCalculationObjectRepository.getOne(productDto.getAttributeOfCalculationObjectDto().getId())
                         : null,
                 images,
-                prices
+                productPrices
         ));
     }
 
     @Override
     public void update(ProductDto productDto) {
-        List<Price> prices = new ArrayList<>();
-        if (productDto.getPriceDtos() != null) {
-            for (PriceDto priceDto : productDto.getPriceDtos()) {
-                prices.add(priceRepository.getOne(priceDto.getId()));
+        List<ProductPrice> productPrices = new ArrayList<>();
+        if (productDto.getProductPriceDtos() != null) {
+            for (ProductPriceDto productPriceDto : productDto.getProductPriceDtos()) {
+                productPrices.add(productPriceRepository.getOne(productPriceDto.getId()));
             }
         }
 
@@ -165,7 +165,7 @@ public class ProductServiceImpl implements ProductService {
                 productDto.getContractorDto() != null
                         ? contractorRepository.getOne(productDto.getContractorDto().getId())
                         : null,
-                prices,
+                productPrices,
                 productDto.getTaxSystemDto() != null
                         ? taxSystemRepository.getOne(productDto.getTaxSystemDto().getId())
                         : null,
@@ -196,7 +196,7 @@ public class ProductServiceImpl implements ProductService {
             productDto.setImageDto(imageRepository.getAllById(productDto.getId()).stream()
                     .map(image -> imageRepository.getById(image.getId()))
                     .collect(Collectors.toList()));
-            productDto.setPriceDtos(priceRepository.getPricesDtoByProductId(productDto.getId()));
+            productDto.setProductPriceDtos(productPriceRepository.getPricesDtoByProductId(productDto.getId()));
         }
         return productDtos;
     }
