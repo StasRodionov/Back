@@ -2,6 +2,7 @@ package com.trade_accounting.services.interfaces;
 
 import com.trade_accounting.models.dto.ImageDto;
 
+import java.io.File;
 import java.util.List;
 
 public interface ImageService {
@@ -15,4 +16,8 @@ public interface ImageService {
     void update(ImageDto imageDto);
 
     void deleteById(Long id);
+
+    String upload(byte[] content, String fileName);
+
+    File download(String path);
 }

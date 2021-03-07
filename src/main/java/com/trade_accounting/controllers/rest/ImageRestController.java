@@ -77,11 +77,15 @@ public class ImageRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> create(@ApiParam(name = "imageDto",
+    public ResponseEntity<ImageDto> create(@ApiParam(name = "imageDto",
             value = "DTO фото, который необходимо создать") @RequestBody ImageDto imageDto) {
+
+        String path = imageService.upload(imageDto.getContent(), imageDto.getFileName());
+        imageDto.setImageUrl(path);
+
         imageService.create(imageDto);
         log.info("Записан новый экземпляр Image c id= {}", imageDto.getId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(imageDto);
     }
 
     @ApiOperation(value = "update", notes = "Обновляет фото на основе переданных данных")
