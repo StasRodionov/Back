@@ -114,7 +114,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                 (invoiceDto.getCompanyDto() == null) ? null : companyRepository.save(ModelDtoConverter.convertToCompany(invoiceDto.getCompanyDto(),
                         (invoiceDto.getCompanyDto().getLegalDetailDto() == null) ? null : legalDetailRepository.save(ModelDtoConverter.convertToLegalDetail(invoiceDto.getCompanyDto().getLegalDetailDto(),
                                 (invoiceDto.getCompanyDto().getLegalDetailDto().getTypeOfContractorDto() == null) ? null : typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(
-                                        invoiceDto.getCompanyDto().getLegalDetailDto().getTypeOfContractorDto())))))),
+                                        invoiceDto.getCompanyDto().getLegalDetailDto().getTypeOfContractorDto())))), bankAccountRepository.saveAll(ModelDtoConverter.convertToListOfBankAccount(invoiceDto.getCompanyDto().getBankAccountDto())))),
                 (invoiceDto.getContractorDto() == null) ? null : contractorRepository.save(ModelDtoConverter.convertToContractor(invoiceDto.getContractorDto(),
                         (invoiceDto.getContractorDto().getContractorGroupDto() == null) ? null : contractorGroupRepository.save(ModelDtoConverter.convertToContractorGroup(invoiceDto.getContractorDto().getContractorGroupDto())),
                         (invoiceDto.getContractorDto().getTypeOfContractorDto() == null) ? null : typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(invoiceDto.getContractorDto().getTypeOfContractorDto())),
