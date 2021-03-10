@@ -1,8 +1,17 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.dto.ContractorDto;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.services.interfaces.ContractorService;
 import lombok.extern.slf4j.Slf4j;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 
 import io.swagger.annotations.Api;
@@ -49,6 +58,21 @@ public class ContractorRestController {
         log.info("Запрошен список ContractorDto");
         return ResponseEntity.ok(contractorDtoList);
     }
+
+    @GetMapping("/lite")
+    @ApiOperation(value = "getAllLite", notes = "Получение лёгкого списка всех контрагентов")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение лёгкого списка контрагентов"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<ContractorDto>> getAllLite() {
+        List<ContractorDto> contractorDtoList = contractorService.getAllLite();
+        log.info("Запрошен список ContractorDto (Лёгкое ДТО)");
+        return ResponseEntity.ok(contractorDtoList);
+    }
+
     @GetMapping("/search/{searchTerm}")
     @ApiOperation(value = "getFiltered", notes = "Получение списка некоторых контрагентов")
     @ApiResponses(value = {
@@ -63,6 +87,30 @@ public class ContractorRestController {
         List<ContractorDto> contractorDtoList = contractorService.getAll(searchTerm);
         log.info("Запрошен список ContractorDto");
         return ResponseEntity.ok(contractorDtoList);
+    }
+//create
+    @GetMapping("/searchContractor")
+    @ApiOperation(value = "searchContractor", notes = "Получение списка контрактов по заданным параметрам")
+    public ResponseEntity<List<ContractorDto>> getAll(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+                    @Spec(path = "inn", params = "inn", spec = LikeIgnoreCase.class),
+                    @Spec(path = "sortNumber", params = "sortNumber", spec = LikeIgnoreCase.class),
+                    @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
+                    @Spec(path = "fax", params = "fax", spec = LikeIgnoreCase.class),
+                    @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
+                    @Spec(path = "address", params = "address", spec = LikeIgnoreCase.class),
+                    @Spec(path = "commentToAddress", params = "commentToAddress", spec = LikeIgnoreCase.class),
+                    @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "contractor.contractorGroup", params = "contractorGroupDto", spec = Like.class),
+//                    @Spec(path = "contractor.typeOfContractor", params = "typeOfContractorDto", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "contractor.typeOfPrice", params = "typeOfPriceDto", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "contractor.bankAccounts", params = "bankAccountsDto", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "contractor.legalDetail", params = "legalDetail", spec = Equal.class),
+            }) Specification<Contractor> spec) {
+        log.info("Запрошен поиск контрактов contractor");
+        return ResponseEntity.ok(contractorService.searchContractor(spec));
     }
 
     @GetMapping("/{id}")

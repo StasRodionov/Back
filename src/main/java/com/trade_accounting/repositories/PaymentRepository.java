@@ -37,4 +37,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
             "e.sum"+
             ") from Payment e")
     PaymentDto getById(@Param("id") Long id);
+
+    void deleteAllByContractId(@Param("id") Long id);
 }

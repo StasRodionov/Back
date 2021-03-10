@@ -7,6 +7,7 @@ import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPrice;
@@ -21,6 +22,7 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
@@ -38,6 +40,18 @@ public class ModelDtoConverter {
     private static final ModelMapper modelMapper = new ModelMapper();
 
     private ModelDtoConverter() {
+    }
+
+    public static ProductPriceDto convertToProductPriceDto(ProductPrice productPrice) {
+        return modelMapper.map(productPrice, ProductPriceDto.class);
+    }
+
+    public static ProductPrice convertToProductPrice(ProductPriceDto productPriceDto){
+        return modelMapper.map(productPriceDto, ProductPrice.class);
+    }
+
+    public static TypeOfPriceDto convertToTypeOfPriceDto(TypeOfPrice typeOfPrice){
+        return modelMapper.map(typeOfPrice, TypeOfPriceDto.class);
     }
 
     public static CompanyDto convertToCompanyDto(Company company) {
@@ -104,6 +118,30 @@ public class ModelDtoConverter {
             invoiceDto.setWarehouseDto(modelMapper.map(invoice.getWarehouse(), WarehouseDto.class));
         }
         return invoiceDto;
+    }
+
+    public static ContractorDto convertToContractorDto(Contractor contractor) {
+
+        ContractorDto contractorDto = modelMapper.map(contractor, ContractorDto.class);
+
+        if (contractor.getContractorGroup() != null) {
+            contractorDto.setContractorGroupDto(modelMapper.map(contractor.getContractorGroup(), ContractorGroupDto.class));
+        }
+        if (contractor.getTypeOfContractor() != null) {
+            contractorDto.setTypeOfContractorDto((modelMapper.map(contractor.getTypeOfContractor(), TypeOfContractorDto.class)));
+        }
+
+        if (contractor.getTypeOfPrice() != null) {
+            contractorDto.setTypeOfPriceDto(modelMapper.map(contractor.getTypeOfPrice(), TypeOfPriceDto.class));
+        }
+//        if (contractor.getBankAccounts() != null) {
+//            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(),  null));
+//        }
+        if (contractor.getLegalDetail() != null) {
+            contractorDto.setLegalDetailDto(modelMapper.map(contractor.getLegalDetail(), LegalDetailDto.class));
+        }
+
+        return contractorDto;
     }
 
     public static LegalDetail convertToLegalDetail(LegalDetailDto dto, TypeOfContractor typeOfContractor) {

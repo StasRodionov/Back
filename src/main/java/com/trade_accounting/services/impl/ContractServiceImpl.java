@@ -8,6 +8,7 @@ import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
+import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.utils.ModelDtoConverter;
 import com.trade_accounting.utils.SortNumberConverter;
@@ -27,17 +28,20 @@ public class ContractServiceImpl implements ContractService {
     private final BankAccountRepository bankAccountRepository;
     private final ContractorRepository contractorRepository;
     private final LegalDetailRepository legalDetailRepository;
+    private final PaymentRepository paymentRepository;
 
     public ContractServiceImpl(ContractRepository contractRepository,
                                CompanyRepository companyRepository,
                                BankAccountRepository bankAccountRepository,
                                ContractorRepository contractorRepository,
-                               LegalDetailRepository legalDetailRepository) {
+                               LegalDetailRepository legalDetailRepository, 
+                               PaymentRepository paymentRepository) {
         this.contractRepository = contractRepository;
         this.companyRepository = companyRepository;
         this.bankAccountRepository = bankAccountRepository;
         this.contractorRepository = contractorRepository;
         this.legalDetailRepository = legalDetailRepository;
+        this.paymentRepository = paymentRepository;
     }
 
     @Override
@@ -119,6 +123,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public void deleteById(Long id) {
+        paymentRepository.deleteAllByContractId(id);
         contractRepository.deleteById(id);
     }
 }
