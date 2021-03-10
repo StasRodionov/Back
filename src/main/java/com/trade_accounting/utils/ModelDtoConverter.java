@@ -7,6 +7,7 @@ import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPrice;
@@ -21,6 +22,7 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
@@ -38,6 +40,14 @@ public class ModelDtoConverter {
     private static final ModelMapper modelMapper = new ModelMapper();
 
     private ModelDtoConverter() {
+    }
+
+    public static ProductPriceDto convertToPriceDto(ProductPrice productPrice) {
+        return modelMapper.map(productPrice, ProductPriceDto.class);
+    }
+
+    public static ProductPrice convertToPrice(ProductPriceDto productPriceDto){
+        return modelMapper.map(productPriceDto, ProductPrice.class);
     }
 
     public static CompanyDto convertToCompanyDto(Company company) {
