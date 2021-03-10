@@ -1,25 +1,16 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Employee;
-import com.trade_accounting.models.Image;
-import com.trade_accounting.models.Role;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
-import com.trade_accounting.repositories.ImageRepository;
-import com.trade_accounting.repositories.PositionRepository;
-import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.interfaces.EmployeeService;
-import com.trade_accounting.utils.ModelDtoConverter;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,135 +18,67 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final DepartmentRepository departmentRepository;
-    private final PositionRepository positionRepository;
-    private final RoleRepository roleRepository;
-    private final ImageRepository imageRepository;
+    private final DtoMapper dtoMapper;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository,
-                               DepartmentRepository departmentRepository,
-                               PositionRepository positionRepository,
-                               RoleRepository roleRepository,
-                               ImageRepository imageRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, DtoMapper dtoMapper) {
         this.employeeRepository = employeeRepository;
-        this.departmentRepository = departmentRepository;
-        this.positionRepository = positionRepository;
-        this.roleRepository = roleRepository;
-        this.imageRepository = imageRepository;
+        this.dtoMapper = dtoMapper;
     }
+
 
     @Override
     public List<EmployeeDto> getAll() {
-        List<EmployeeDto> employeeDtos = employeeRepository.getAll();
-        for (EmployeeDto employeeDto : employeeDtos) {
-            employeeDto.setDepartmentDto(departmentRepository.getDepartmentByEmployeeId(employeeDto.getId()));
-            employeeDto.setPositionDto(positionRepository.getPositionByEmployeeId(employeeDto.getId()));
-            employeeDto.setImageDto(imageRepository.getImageByEmployeeId(employeeDto.getId()));
-
-            Set<Role> roles = roleRepository.getRolesByEmployeeId(employeeDto.getId());
-            employeeDto.setRoleDto(roles != null
-                    ? roles.stream().map(role -> roleRepository.getById(role.getId())).collect(Collectors.toSet())
-                    : null);
-        }
-
-        return employeeDtos;
+        return employeeRepository.findAll().stream()
+                .map(dtoMapper::employeeToEmployeeDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<EmployeeDto> search(Specification<Employee> specification) {
         return employeeRepository.findAll(specification).stream()
-                .map(ModelDtoConverter::convertToEmployeeDto).collect(Collectors.toList());
+                .map(dtoMapper::employeeToEmployeeDto).collect(Collectors.toList());
     }
 
     @Override
     public EmployeeDto getById(Long id) {
-        EmployeeDto employeeDto = employeeRepository.getById(id);
-        employeeDto.setDepartmentDto(departmentRepository.getDepartmentByEmployeeId(id));
-        employeeDto.setPositionDto(positionRepository.getPositionByEmployeeId(id));
-        employeeDto.setImageDto(imageRepository.getImageByEmployeeId(id));
+        Optional<Employee> emp = employeeRepository.findById(id);
 
-        Set<Role> roles = roleRepository.getRolesByEmployeeId(id);
-        employeeDto.setRoleDto(roles != null
-                ? roles.stream().map(role -> roleRepository.getById(role.getId())).collect(Collectors.toSet())
-                : null);
+        if(emp.isEmpty()) {
+            // По идее тут notFondEntityException
+            return new EmployeeDto();
+        }
 
-        return employeeDto;
+        return dtoMapper.employeeToEmployeeDto(emp.get());
     }
 
     @Override
     public void create(EmployeeDto employeeDto) {
-        Set<Role> roles = new HashSet<>();
-        if (employeeDto.getRoleDto() != null) {
-            for (RoleDto roleDto : employeeDto.getRoleDto()) {
-                roles.add(roleRepository.getOne(roleDto.getId()));
-            }
-        }
-
-        employeeRepository.save(new Employee(
-                employeeDto.getLastName(),
-                employeeDto.getFirstName(),
-                employeeDto.getMiddleName(),
-                employeeDto.getSortNumber(),
-                employeeDto.getPhone(),
-                employeeDto.getInn(),
-                employeeDto.getDescription(),
-                employeeDto.getEmail(),
-                employeeDto.getPassword(),
-                employeeDto.getDepartmentDto() != null
-                        ? departmentRepository.getOne(employeeDto.getDepartmentDto().getId())
-                        : null,
-                employeeDto.getPositionDto() != null
-                        ? positionRepository.getOne(employeeDto.getPositionDto().getId())
-                        : null,
-                roles,
-                employeeDto.getImageDto() != null
-                        ? imageRepository.getByImageUrl(employeeDto.getImageDto().getImageUrl())
-                        : null
-        ));
+        Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
+        employeeRepository.save(employee);
     }
 
     @Override
     public void update(EmployeeDto employeeDto) {
-        Set<Role> roles = new HashSet<>();
-        if (employeeDto.getRoleDto() != null) {
-            for (RoleDto roleDto : employeeDto.getRoleDto()) {
-                roles.add(roleRepository.getOne(roleDto.getId()));
-            }
+        if(!employeeRepository.existsById(employeeDto.getId())) {
+            //По идеи тут NotFoundEntityException
         }
-
-        employeeRepository.save(new Employee(
-                employeeDto.getId(),
-                employeeDto.getLastName(),
-                employeeDto.getFirstName(),
-                employeeDto.getMiddleName(),
-                employeeDto.getSortNumber(),
-                employeeDto.getPhone(),
-                employeeDto.getInn(),
-                employeeDto.getDescription(),
-                employeeDto.getEmail(),
-                employeeDto.getPassword(),
-                employeeDto.getDepartmentDto() != null
-                        ? departmentRepository.getOne(employeeDto.getDepartmentDto().getId())
-                        : null,
-                employeeDto.getPositionDto() != null
-                        ? positionRepository.getOne(employeeDto.getPositionDto().getId())
-                        : null,
-                roles,
-                employeeDto.getImageDto() != null
-                        ? imageRepository.getByImageUrl(employeeDto.getImageDto().getImageUrl())
-                        : null
-        ));
-
+        Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
+        employeeRepository.save(employee);
     }
 
     @Override
     public void deleteById(Long id) {
         employeeRepository.deleteById(id);
-
     }
 
     @Override
     public EmployeeDto getByEmail(String email) {
-        return employeeRepository.getByEmail(email);
+        Optional<Employee> employee = employeeRepository.findByEmail(email);
+        if(employee.isEmpty()) {
+            // throw new NotFoundEntityException("Сотрудник с email: " + email + " не найден.");
+            return new EmployeeDto();
+        }
+
+        return dtoMapper.employeeToEmployeeDto(employee.get());
     }
 }

@@ -57,13 +57,25 @@ public class Employee {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+            CascadeType.REFRESH,
+            CascadeType.MERGE,
+            CascadeType.DETACH
+    })
     private Department department;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+            CascadeType.REFRESH,
+            CascadeType.MERGE,
+            CascadeType.DETACH
+    })
     private Position position;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.REFRESH,
+            CascadeType.MERGE,
+            CascadeType.DETACH
+    })
     private Set<Role> roles;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

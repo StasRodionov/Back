@@ -33,19 +33,23 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                    .cors()
-                .and()
-                    .csrf().disable()
-                    .exceptionHandling()
-                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                .and()
-                    .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-                    .anyRequest().authenticated()
-                .and()
-                    .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                    .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/**").permitAll();
+//        http
+//                    .cors()
+//                .and()
+//                    .csrf().disable()
+//                    .exceptionHandling()
+//                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+//                .and()
+//                    .authorizeRequests()
+//                    .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+//                    .anyRequest().authenticated()
+//                .and()
+//                    .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+//                    .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+//                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
 
