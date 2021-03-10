@@ -96,7 +96,12 @@ public class ProductServiceImpl implements ProductService {
         productDto.setImageDto(imageRepository.getAllById(id).stream()
                 .map(image -> imageRepository.getById(image.getId()))
                 .collect(Collectors.toList()));
-        productDto.setProductPriceDtos(productPriceRepository.getPricesDtoByProductId(id));
+        List<ProductPriceDto> list = productPriceRepository.getPricesDtoByProductId(id);
+        list.forEach(productPriceDto -> {
+            ProductPrice productPrice = productPriceRepository.getOne(productPriceDto.getId());
+            productPriceDto.setTypeOfPriceDto(ModelDtoConverter.convertToTypeOfPriceDto(productPrice.getTypeOfPrice()));
+        });
+        productDto.setProductPriceDtos(list);
         return productDto;
     }
 
@@ -105,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductPrice> productPrices = new ArrayList<>();
         if (productDto.getProductPriceDtos() != null){
             productPrices = productDto.getProductPriceDtos().stream()
-                    .map(ModelDtoConverter::convertToPrice).collect(Collectors.toList());
+                    .map(ModelDtoConverter::convertToProductPrice).collect(Collectors.toList());
         }
 
 
@@ -148,7 +153,14 @@ public class ProductServiceImpl implements ProductService {
         List<ProductPrice> productPrices = new ArrayList<>();
         if (productDto.getProductPriceDtos() != null) {
             for (ProductPriceDto productPriceDto : productDto.getProductPriceDtos()) {
-                productPrices.add(productPriceRepository.getOne(productPriceDto.getId()));
+                ProductPrice productPrice;
+                if (productPriceDto.getId() == null) {
+                    productPrice = productPriceRepository.saveAndFlush(ModelDtoConverter.convertToProductPrice(productPriceDto));
+                } else {
+                    productPrice = productPriceRepository.getOne(productPriceDto.getId());
+                    productPrice.setValue(productPriceDto.getValue());
+                }
+                productPrices.add(productPrice);
             }
         }
 
@@ -207,5 +219,10 @@ public class ProductServiceImpl implements ProductService {
             productDto.setProductPriceDtos(productPriceRepository.getPricesDtoByProductId(productDto.getId()));
         }
         return productDtos;
+    }
+
+    @Override
+    public List<ProductDto> getAllLiteByProductGroupId(Long id) {
+        return productRepository.getAllByProductGroupId(id);
     }
 }
