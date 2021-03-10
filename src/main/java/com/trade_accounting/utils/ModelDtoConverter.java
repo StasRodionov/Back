@@ -7,6 +7,7 @@ import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPrice;
@@ -21,6 +22,7 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
@@ -40,6 +42,14 @@ public class ModelDtoConverter {
     private ModelDtoConverter() {
     }
 
+    public static ProductPriceDto convertToPriceDto(ProductPrice productPrice) {
+        return modelMapper.map(productPrice, ProductPriceDto.class);
+    }
+
+    public static ProductPrice convertToPrice(ProductPriceDto productPriceDto){
+        return modelMapper.map(productPriceDto, ProductPrice.class);
+    }
+
     public static CompanyDto convertToCompanyDto(Company company) {
         CompanyDto companyDto = modelMapper.map(company, CompanyDto.class);
         companyDto.setLegalDetailDto(modelMapper.map(company.getLegalDetail(), LegalDetailDto.class));
@@ -50,7 +60,7 @@ public class ModelDtoConverter {
         return companyDto;
     }
 
-    public static Company convertToCompany(CompanyDto dto, LegalDetail legalDetail) {
+    public static Company convertToCompany(CompanyDto dto, LegalDetail legalDetail, List<BankAccount> bankAccounts) {
         return new Company(
                 dto.getId(),
                 dto.getName(),
@@ -68,7 +78,7 @@ public class ModelDtoConverter {
                 dto.getChiefAccountant(),
                 dto.getChiefAccountantSignature(),
                 dto.getStamp(),
-                legalDetail);
+                legalDetail, bankAccounts);
     }
 
     public static EmployeeDto convertToEmployeeDto(Employee employee) {
@@ -104,6 +114,30 @@ public class ModelDtoConverter {
             invoiceDto.setWarehouseDto(modelMapper.map(invoice.getWarehouse(), WarehouseDto.class));
         }
         return invoiceDto;
+    }
+
+    public static ContractorDto convertToContractorDto(Contractor contractor) {
+
+        ContractorDto contractorDto = modelMapper.map(contractor, ContractorDto.class);
+
+        if (contractor.getContractorGroup() != null) {
+            contractorDto.setContractorGroupDto(modelMapper.map(contractor.getContractorGroup(), ContractorGroupDto.class));
+        }
+        if (contractor.getTypeOfContractor() != null) {
+            contractorDto.setTypeOfContractorDto((modelMapper.map(contractor.getTypeOfContractor(), TypeOfContractorDto.class)));
+        }
+
+        if (contractor.getTypeOfPrice() != null) {
+            contractorDto.setTypeOfPriceDto(modelMapper.map(contractor.getTypeOfPrice(), TypeOfPriceDto.class));
+        }
+//        if (contractor.getBankAccounts() != null) {
+//            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(),  null));
+//        }
+        if (contractor.getLegalDetail() != null) {
+            contractorDto.setLegalDetailDto(modelMapper.map(contractor.getLegalDetail(), LegalDetailDto.class));
+        }
+
+        return contractorDto;
     }
 
     public static LegalDetail convertToLegalDetail(LegalDetailDto dto, TypeOfContractor typeOfContractor) {
@@ -205,6 +239,19 @@ public class ModelDtoConverter {
                 dto.getAccount(),
                 dto.getMainAccount(),
                 dto.getSortNumber()
+        );
+    }
+
+    public static BankAccountDto convertToBankAccountDto(BankAccount bankAccount){
+        return new BankAccountDto(
+                bankAccount.getId(),
+                bankAccount.getRcbic(),
+                bankAccount.getBank(),
+                bankAccount.getAddress(),
+                bankAccount.getCorrespondentAccount(),
+                bankAccount.getAccount(),
+                bankAccount.getMainAccount(),
+                bankAccount.getSortNumber()
         );
     }
 

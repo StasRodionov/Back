@@ -1,7 +1,10 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
+import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
@@ -12,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,15 +28,17 @@ public class CompanyServiceImpl implements CompanyService {
     private final LegalDetailService legalDetailService;
     private final LegalDetailRepository legalDetailRepository;
     private final TypeOfContractorRepository typeOfContractorRepository;
+    private final BankAccountRepository bankAccountRepository;
 
     public CompanyServiceImpl(CompanyRepository companyRepository,
                               LegalDetailService legalDetailService,
                               LegalDetailRepository legalDetailRepository,
-                              TypeOfContractorRepository typeOfContractorRepository) {
+                              TypeOfContractorRepository typeOfContractorRepository, BankAccountRepository bankAccountRepository) {
         this.companyRepository = companyRepository;
         this.legalDetailService = legalDetailService;
         this.legalDetailRepository = legalDetailRepository;
         this.typeOfContractorRepository = typeOfContractorRepository;
+        this.bankAccountRepository = bankAccountRepository;
     }
 
     @Override
@@ -42,6 +48,10 @@ public class CompanyServiceImpl implements CompanyService {
         for (CompanyDto companyDto : companyDtos) {
             companyDto.setLegalDetailDto(
                     legalDetailService.getById(companyDto.getLegalDetailDto().getId()));
+            List<BankAccount> bankAccounts = bankAccountRepository.getBankAccountByCompanyId(companyDto.getId());
+            companyDto.setBankAccountDto(bankAccounts.stream()
+                    .map(bankAccount -> ModelDtoConverter.convertToBankAccountDto(bankAccount))
+                    .collect(Collectors.toList()));
         }
         companyDtos.sort(Comparator.comparing(CompanyDto::getSortNumber));
         return companyDtos;
@@ -58,6 +68,10 @@ public class CompanyServiceImpl implements CompanyService {
         CompanyDto companyDto = companyRepository.getById(id);
         companyDto.setLegalDetailDto(
                 legalDetailService.getById(companyDto.getLegalDetailDto().getId()));
+        List<BankAccount> bankAccounts = bankAccountRepository.getBankAccountByCompanyId(companyDto.getId());
+        companyDto.setBankAccountDto(bankAccounts.stream()
+                .map(bankAccount -> ModelDtoConverter.convertToBankAccountDto(bankAccount))
+                .collect(Collectors.toList()));
         return companyDto;
     }
 
@@ -66,6 +80,10 @@ public class CompanyServiceImpl implements CompanyService {
         CompanyDto companyDto = companyRepository.findByEmail(email);
         companyDto.setLegalDetailDto(
                 legalDetailService.getById(companyDto.getLegalDetailDto().getId()));
+        List<BankAccount> bankAccounts = bankAccountRepository.getBankAccountByCompanyId(companyDto.getId());
+        companyDto.setBankAccountDto(bankAccounts.stream()
+                .map(bankAccount -> ModelDtoConverter.convertToBankAccountDto(bankAccount))
+                .collect(Collectors.toList()));
         return companyDto;
     }
 
@@ -79,7 +97,8 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(ModelDtoConverter.convertToCompany(companyDto,
                 legalDetailRepository.save(ModelDtoConverter.convertToLegalDetail(companyDto.getLegalDetailDto(),
                         typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(
-                                companyDto.getLegalDetailDto().getTypeOfContractorDto()))))));
+                                companyDto.getLegalDetailDto().getTypeOfContractorDto())))),
+                bankAccountRepository.saveAll(ModelDtoConverter.convertToListOfBankAccount(companyDto.getBankAccountDto()))));
     }
 
     @Override

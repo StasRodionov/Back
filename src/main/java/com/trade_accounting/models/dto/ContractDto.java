@@ -17,6 +17,8 @@ public class ContractDto {
 
     private String number;
 
+    //private String contractDate; //добавил поле во фронте есть
+
     private LocalDate contractDate;
 
     @NotNull
@@ -47,6 +49,7 @@ public class ContractDto {
                        Long legalDetailId) {
         this.id = id;
         this.number = number;
+       // this.contractDate = contractDate; //добавил
         this.contractDate = contractDate;
         this.companyDto = new CompanyDto();
         this.companyDto.setId(companyId);

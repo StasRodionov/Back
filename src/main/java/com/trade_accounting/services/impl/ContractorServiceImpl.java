@@ -11,10 +11,11 @@ import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
+import com.trade_accounting.utils.ModelDtoConverter;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +43,12 @@ public class ContractorServiceImpl implements ContractorService {
         this.typeOfPriceRepository = typeOfPriceRepository;
         this.bankAccountRepository = bankAccountRepository;
         this.legalDetailRepository = legalDetailRepository;
+    }
+//добавил
+    @Override
+    public List<ContractorDto> searchContractor(Specification<Contractor> specification) {
+        return contractorRepository.findAll(specification).stream()
+                .map(ModelDtoConverter::convertToContractorDto).collect(Collectors.toList());
     }
 
     @Override
