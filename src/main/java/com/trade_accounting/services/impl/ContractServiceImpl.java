@@ -34,7 +34,8 @@ public class ContractServiceImpl implements ContractService {
                                CompanyRepository companyRepository,
                                BankAccountRepository bankAccountRepository,
                                ContractorRepository contractorRepository,
-                               LegalDetailRepository legalDetailRepository, PaymentRepository paymentRepository) {
+                               LegalDetailRepository legalDetailRepository, 
+                               PaymentRepository paymentRepository) {
         this.contractRepository = contractRepository;
         this.companyRepository = companyRepository;
         this.bankAccountRepository = bankAccountRepository;
