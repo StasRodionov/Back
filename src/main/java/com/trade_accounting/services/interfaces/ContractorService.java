@@ -8,6 +8,7 @@ public interface ContractorService {
 
     List<ContractorDto> getAll();
     List<ContractorDto> getAll(String searchTerm);
+    List<ContractorDto> getAllLite();
 
     ContractorDto getById(Long id);
 

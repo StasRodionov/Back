@@ -27,6 +27,6 @@ public interface ProductGroupRepository extends JpaRepository<ProductGroup, Long
             "pg.productGroup.id) from ProductGroup  pg where pg.id = :id")
     ProductGroupDto getById(@Param("id") Long id);
 
-    @Query("select new com.trade_accounting.models.dto.ProductGroupDto(p.productGroup.id,  p.productGroup.name, p.productGroup.sortNumber, p.productGroup.id) from Product p where p.id = :id")
+    @Query("select new com.trade_accounting.models.dto.ProductGroupDto(p.productGroup.id,  p.productGroup.name, p.productGroup.sortNumber, p.productGroup.productGroup.id) from Product p where p.id = :id")
     ProductGroupDto getProductGroupByProductId(@Param("id") Long id);
 }
