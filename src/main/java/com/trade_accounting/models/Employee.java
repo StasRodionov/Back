@@ -29,7 +29,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable=false)
     private String lastName;
 
     @Column(name = "first_name")
@@ -38,7 +38,7 @@ public class Employee {
     @Column(name = "middle_name")
     private String middleName;
 
-    @Column(name = "sort_number")
+    @Column(name = "sort_number", nullable=false)
     private String sortNumber;
 
     @Column(name = "phone")
@@ -54,7 +54,7 @@ public class Employee {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
