@@ -80,7 +80,7 @@ public class ImageRestController {
     public ResponseEntity<ImageDto> create(@ApiParam(name = "imageDto",
             value = "DTO фото, который необходимо создать") @RequestBody ImageDto imageDto) {
 
-        String path = imageService.upload(imageDto.getContent(), imageDto.getFileName());
+        String path = imageService.saveImage(imageDto.getContent(), imageDto.getFileName());
         imageDto.setImageUrl(path);
 
         imageService.create(imageDto);

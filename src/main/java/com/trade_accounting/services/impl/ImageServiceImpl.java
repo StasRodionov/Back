@@ -57,13 +57,18 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public String upload(byte[] content, String name) {
+    public String saveImage(byte[] content, String name) {
+        File uploadDir = new File("upload/images/");
+
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
         OutputStream outputStream = null;
         File tmp;
-
         try {
             FileName fileName = new FileName(name);
-            tmp = File.createTempFile("_image.", fileName.getExtension());
+            tmp = File.createTempFile(fileName.getPrefix(), fileName.getSuffix(), uploadDir);
             outputStream = new FileOutputStream(tmp);
             outputStream.write(content);
 
@@ -77,7 +82,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public File download(String path) {
+    public File loadImage(String path) {
         return null;
     }
 
@@ -92,9 +97,13 @@ public class ImageServiceImpl implements ImageService {
             return name;
         }
 
-        String getExtension() {
+        String getSuffix() {
             int index = name.lastIndexOf('.');
             return name.substring(index);
+        }
+        String getPrefix() {
+            int index = name.lastIndexOf('.') + 1;
+            return name.substring(0, index);
         }
     }
 }
