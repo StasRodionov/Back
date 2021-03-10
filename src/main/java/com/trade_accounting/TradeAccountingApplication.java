@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class TradeAccountingApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(TradeAccountingApplication.class, args);
     }
-
 }
