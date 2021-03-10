@@ -1,8 +1,17 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.dto.ContractorDto;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.services.interfaces.ContractorService;
 import lombok.extern.slf4j.Slf4j;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 
 import io.swagger.annotations.Api;
@@ -63,6 +72,30 @@ public class ContractorRestController {
         List<ContractorDto> contractorDtoList = contractorService.getAll(searchTerm);
         log.info("Запрошен список ContractorDto");
         return ResponseEntity.ok(contractorDtoList);
+    }
+//create
+    @GetMapping("/searchContractor")
+    @ApiOperation(value = "searchContractor", notes = "Получение списка контрактов по заданным параметрам")
+    public ResponseEntity<List<ContractorDto>> getAll(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+                    @Spec(path = "inn", params = "inn", spec = LikeIgnoreCase.class),
+                    @Spec(path = "sortNumber", params = "sortNumber", spec = LikeIgnoreCase.class),
+                    @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
+                    @Spec(path = "fax", params = "fax", spec = LikeIgnoreCase.class),
+                    @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
+                    @Spec(path = "address", params = "address", spec = LikeIgnoreCase.class),
+                    @Spec(path = "commentToAddress", params = "commentToAddress", spec = LikeIgnoreCase.class),
+                    @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "contractor.contractorGroup", params = "contractorGroupDto", spec = Like.class),
+//                    @Spec(path = "contractor.typeOfContractor", params = "typeOfContractorDto", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "contractor.typeOfPrice", params = "typeOfPriceDto", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "contractor.bankAccounts", params = "bankAccountsDto", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "contractor.legalDetail", params = "legalDetail", spec = Equal.class),
+            }) Specification<Contractor> spec) {
+        log.info("Запрошен поиск контрактов contractor");
+        return ResponseEntity.ok(contractorService.searchContractor(spec));
     }
 
     @GetMapping("/{id}")
