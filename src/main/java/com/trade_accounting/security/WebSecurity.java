@@ -21,7 +21,7 @@ import static com.trade_accounting.config.SecurityConstants.SIGN_UP_URL;
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    private EmployeeDetailsServiceImpl userDetailsService;
+    private final EmployeeDetailsServiceImpl userDetailsService;
     // private BCryptPasswordEncoder bCryptPasswordEncoder; // #bookmark #encrypt.password
 
     // public WebSecurity(UserDetailsServiceImpl userService, BCryptPasswordEncoder bCryptPasswordEncoder) { // #bookmark #encrypt.password
@@ -32,8 +32,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //Security disabled
+//        http
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/**").permitAll();
+
+        //Security enabled
         http
-                    .cors()
+                .cors()
                 .and()
                     .csrf().disable()
                     .exceptionHandling()

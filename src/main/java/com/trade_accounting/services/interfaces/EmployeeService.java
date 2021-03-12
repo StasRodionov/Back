@@ -5,6 +5,7 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EmployeeService {
 

@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
@@ -56,4 +57,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
             "where em.email = :email")
     EmployeeDto getByEmail(@Param("email") String email);
 
+    Optional<Employee> findByEmail(String email);
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Long> {
@@ -35,5 +36,5 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     @Query("select p.images from Product p where p.id = :id")
     List<Image> getAllById(@Param("id") Long id);
 
-    Image getByImageUrl(String imageUrl);
+    Optional<Image> findByImageUrl(String imageUrl);
 }
