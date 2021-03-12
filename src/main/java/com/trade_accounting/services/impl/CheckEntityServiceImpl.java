@@ -89,7 +89,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         for(RoleDto role : roles) {
             boolean isRoleFilled = role != null && role.getId() != null;
 
-            if(isRoleFilled && roleRepository.existsById(role.getId())) {
+            if(isRoleFilled && !roleRepository.existsById(role.getId())) {
                 throw new BadRequestException(
                         String.format("Роли с id %d не существует.", role.getId())
                 );

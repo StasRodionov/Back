@@ -47,7 +47,7 @@ public class Employee implements UserDetails {
     private String phone;
 
     @Column(name = "inn")
-    @Pattern(regexp = "([0-9]+){12}")
+    @Pattern(regexp = "[0-9]{12}")
     private String inn;
 
     @Column(name = "description")

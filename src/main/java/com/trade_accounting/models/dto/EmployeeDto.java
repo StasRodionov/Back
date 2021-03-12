@@ -27,7 +27,7 @@ public class EmployeeDto {
 
     private String phone;
 
-    @Pattern(regexp = "([0-9]+){12}")
+    @Pattern(regexp = "[0-9]{12}")
     private String inn;
 
     private String description;
