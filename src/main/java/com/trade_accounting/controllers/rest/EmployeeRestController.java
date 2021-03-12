@@ -124,6 +124,7 @@ public class EmployeeRestController {
     public ResponseEntity<?> update(@ApiParam(name = "employeeDto",
             value = "DTO работника, c обновленными данными")
                                         @RequestBody EmployeeDto employeeDto) {
+        checkEntityService.checkExistsEmployeeById(employeeDto.getId());
         checkEntityService.checkForBadEmployee(employeeDto);
         employeeService.update(employeeDto);
         log.info("Обновлен экземпляр EmployeeDto с id = {}", employeeDto.getId());

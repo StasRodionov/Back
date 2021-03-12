@@ -1,10 +1,12 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Employee;
-import com.trade_accounting.models.Image;
-import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
@@ -33,8 +35,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final DtoMapper dtoMapper;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, DtoMapper dtoMapper) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository,
+                               PositionRepository positionRepository,
+                               DepartmentRepository departmentRepository,
+                               ImageRepository imageRepository,
+                               RoleRepository roleRepository,
+                               DtoMapper dtoMapper) {
         this.employeeRepository = employeeRepository;
+        this.positionRepository = positionRepository;
+        this.departmentRepository = departmentRepository;
+        this.imageRepository = imageRepository;
+        this.roleRepository = roleRepository;
         this.dtoMapper = dtoMapper;
     }
 
@@ -61,17 +72,47 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void create(EmployeeDto employeeDto) {
         Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
 
-        Position position;
-        Image image;
-        Set<Role> roles;
+        DepartmentDto department = employeeDto.getDepartmentDto();
+        PositionDto position = employeeDto.getPositionDto();
+        ImageDto image = employeeDto.getImageDto();
+        Set<RoleDto> setOfRoleDto = employeeDto.getRoleDto();
+
+        if(department != null) {
+            employee.setDepartment(
+                    departmentRepository.findById(department.getId()).orElse(null)
+            );
+        }
+
+        if(position != null) {
+            employee.setPosition(
+                    positionRepository.findById(position.getId()).orElse(null)
+            );
+        }
+
+        if(image != null) {
+            employee.setImage(
+                    imageRepository.findById(image.getId()).orElse(null)
+            );
+        }
+
+        if(setOfRoleDto != null) {
+            Set<Role> roles = setOfRoleDto.stream()
+                    .map(role ->
+                            role != null
+                                    ? roleRepository.findById(role.getId()).orElse(null)
+                                    : null)
+                    .collect(Collectors.toSet());
+
+            employee.setRoles(roles);
+        }
+
 
         employeeRepository.save(employee);
     }
 
     @Override
     public void update(EmployeeDto employeeDto) {
-        Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
-        employeeRepository.save(employee);
+        create(employeeDto);
     }
 
     @Override

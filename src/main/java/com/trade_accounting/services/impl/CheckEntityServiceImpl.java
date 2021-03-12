@@ -2,17 +2,13 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.exceptions.BadRequestException;
 import com.trade_accounting.exceptions.NotFoundEntityException;
-import com.trade_accounting.models.Department;
-import com.trade_accounting.models.Employee;
-import com.trade_accounting.models.Image;
-import com.trade_accounting.models.Position;
-import com.trade_accounting.models.Role;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.DepartmentRepository;
+import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
@@ -27,17 +23,19 @@ import java.util.Set;
 @Transactional
 public class CheckEntityServiceImpl implements CheckEntityService {
     private final UnitRepository unitRepository;
+    private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
     private final PositionRepository positionRepository;
     private final ImageRepository imageRepository;
     private final RoleRepository roleRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
-                                  DepartmentRepository departmentRepository,
+                                  EmployeeRepository employeeRepository, DepartmentRepository departmentRepository,
                                   PositionRepository positionRepository,
                                   ImageRepository imageRepository,
                                   RoleRepository roleRepository) {
         this.unitRepository = unitRepository;
+        this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
         this.positionRepository = positionRepository;
         this.imageRepository = imageRepository;
@@ -49,6 +47,13 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsUnitById(Long unitId) {
         if(!unitRepository.existsById(unitId)) {
             throw new NotFoundEntityException("Ед. измерения с id=" + unitId + ", не найдена");
+        }
+    }
+
+    @Override
+    public void checkExistsEmployeeById(Long employeeId) {
+        if(!employeeRepository.existsById(employeeId)) {
+            throw new NotFoundEntityException("Сотрудника с id=" + employeeId + ", не наден");
         }
     }
 
