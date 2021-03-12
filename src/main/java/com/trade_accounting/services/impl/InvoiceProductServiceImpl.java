@@ -42,6 +42,11 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     @Override
     public List<InvoiceProductDto> getByInvoiceId(Long id) {
         List<InvoiceProductDto> invoiceProductList = invoiceProductRepository.getByInvoiceId(id);
+        for (InvoiceProductDto invoiceProductDto: invoiceProductList){
+            invoiceProductDto.setInvoiceDto(invoiceRepository.getById(invoiceProductDto.getInvoiceDto().getId()));
+            invoiceProductDto.setProductDto(productRepository.getById(invoiceProductDto.getProductDto().getId()));
+        }
+        System.out.println(invoiceProductList);
         return invoiceProductList;
     }
 
