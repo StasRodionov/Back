@@ -3,6 +3,8 @@ package com.trade_accounting.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
+import java.util.Collection;
 import java.util.Set;
 
 @Data
@@ -23,8 +26,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "employees")
-public class Employee {
-
+public class Employee implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -57,25 +59,13 @@ public class Employee {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {
-            CascadeType.REFRESH,
-            CascadeType.MERGE,
-            CascadeType.DETACH
-    })
+    @ManyToOne(fetch = FetchType.LAZY)
     private Department department;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {
-            CascadeType.REFRESH,
-            CascadeType.MERGE,
-            CascadeType.DETACH
-    })
+    @ManyToOne(fetch = FetchType.LAZY)
     private Position position;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {
-            CascadeType.REFRESH,
-            CascadeType.MERGE,
-            CascadeType.DETACH
-    })
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -107,5 +97,35 @@ public class Employee {
         this.position = position;
         this.roles = roles;
         this.image = image;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmail();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

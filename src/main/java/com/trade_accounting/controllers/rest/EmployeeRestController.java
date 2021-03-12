@@ -4,6 +4,7 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,9 +41,11 @@ import java.util.List;
 public class EmployeeRestController {
 
     private final EmployeeService employeeService;
+    private final CheckEntityService checkEntityService;
 
-    public EmployeeRestController(EmployeeService employeeService) {
+    public EmployeeRestController(EmployeeService employeeService, CheckEntityService checkEntityService) {
         this.employeeService = employeeService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -103,6 +106,7 @@ public class EmployeeRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "employeeDto", value = "DTO работника, который необходимо создать")
                                         @RequestBody EmployeeDto employeeDto){
+        checkEntityService.checkForBadEmployee(employeeDto);
         employeeService.create(employeeDto);
         log.info("Записан новый экземпляр EmployeeDto");
         return ResponseEntity.ok().build();
@@ -120,6 +124,7 @@ public class EmployeeRestController {
     public ResponseEntity<?> update(@ApiParam(name = "employeeDto",
             value = "DTO работника, c обновленными данными")
                                         @RequestBody EmployeeDto employeeDto) {
+        checkEntityService.checkForBadEmployee(employeeDto);
         employeeService.update(employeeDto);
         log.info("Обновлен экземпляр EmployeeDto с id = {}", employeeDto.getId());
         return ResponseEntity.ok().build();

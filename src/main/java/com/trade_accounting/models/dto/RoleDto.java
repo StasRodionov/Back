@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleDto implements GrantedAuthority {
+public class RoleDto {
 
     private Long id;
 
@@ -19,11 +19,5 @@ public class RoleDto implements GrantedAuthority {
     public RoleDto(String name, String sortNumber) {
         this.name = name;
         this.sortNumber = sortNumber;
-    }
-
-
-    @Override
-    public String getAuthority() {
-        return name;
     }
 }

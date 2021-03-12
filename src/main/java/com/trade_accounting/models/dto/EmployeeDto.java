@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeDto implements UserDetails {
+public class EmployeeDto {
 
     private Long id;
 
@@ -66,29 +66,4 @@ public class EmployeeDto implements UserDetails {
         this.email = email;
         this.password = password;
     }
-
-
-    @Override
-    public boolean isEnabled() { return true; }
-
-    @Override
-    public boolean isCredentialsNonExpired() { return true; }
-
-    @Override
-    public boolean isAccountNonLocked() { return true; }
-
-    @Override
-    public boolean isAccountNonExpired() { return true; }
-
-    @Override
-    public String getUsername() { return email; }
-
-    @Override
-    public String getPassword() { return password; }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roleDto;
-    }
-
 }
