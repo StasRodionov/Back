@@ -32,4 +32,5 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.warehouse.id," +
             "e.isSpend) from Invoice e where e.id = :id")
     InvoiceDto getById(@Param("id") Long id);
+
 }
