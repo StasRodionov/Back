@@ -91,7 +91,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         if(image != null) {
             employee.setImage(
-                    imageRepository.findById(image.getId()).orElse(null)
+                    imageRepository.findByImageUrl(image.getImageUrl()).orElse(null)
             );
         }
 
