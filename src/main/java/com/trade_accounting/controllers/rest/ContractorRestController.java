@@ -55,11 +55,13 @@ public class ContractorRestController {
     )
     public ResponseEntity<List<ContractorDto>> getAll() {
         List<ContractorDto> contractorDtoList = contractorService.getAll();
-        log.info("Запрошен список ContractorDto");
+        log.info("Запрошен список ContractorDto getAll");
         return ResponseEntity.ok(contractorDtoList);
+        //return ResponseEntity.ok(contractorService.getAll());
+
     }
     @GetMapping("/search/{searchTerm}")
-    @ApiOperation(value = "getFiltered", notes = "Получение списка некоторых контрагентов")
+    @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых контрагентов")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Успешное получение отф. списка контрагентов"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
@@ -70,10 +72,10 @@ public class ContractorRestController {
             value = "Переданный в URL searchTerm, по которому необходимо найти контрагента")
                                                           @PathVariable(name = "searchTerm") String searchTerm) {
         List<ContractorDto> contractorDtoList = contractorService.getAll(searchTerm);
-        log.info("Запрошен список ContractorDto");
+        log.info("Запрошен список ContractorDto searchTerm");
         return ResponseEntity.ok(contractorDtoList);
     }
-//create
+
     @GetMapping("/searchContractor")
     @ApiOperation(value = "searchContractor", notes = "Получение списка контрактов по заданным параметрам")
     public ResponseEntity<List<ContractorDto>> getAll(
@@ -94,7 +96,7 @@ public class ContractorRestController {
 //                    @Spec(path = "contractor.bankAccounts", params = "bankAccountsDto", spec = LikeIgnoreCase.class),
 //                    @Spec(path = "contractor.legalDetail", params = "legalDetail", spec = Equal.class),
             }) Specification<Contractor> spec) {
-        log.info("Запрошен поиск контрактов contractor");
+        log.info("Запрошен фильтр по поиску контрактов contractor");
         return ResponseEntity.ok(contractorService.searchContractor(spec));
     }
 

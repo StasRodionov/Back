@@ -53,6 +53,7 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<ContractorDto> getAll() {
+
         List<ContractorDto> contractorDtos = contractorRepository.getAll();
         for (ContractorDto contractorDto : contractorDtos) {
 
@@ -62,17 +63,20 @@ public class ContractorServiceImpl implements ContractorService {
             contractorDto.setLegalDetailDto(legalDetailRepository.getLegalDetailByContractorId(contractorDto.getId()));
 
             List<BankAccount> bankAccountList = bankAccountRepository.getBankAccountByContractorId(contractorDto.getId());
-            contractorDto.setBankAccountDto(bankAccountList.stream().map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
+            contractorDto.setBankAccountDto(bankAccountList.stream()
+                    .map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
         }
-
         return contractorDtos;
+
+
     }
 
-    public List<ContractorDto> getAll(String stringFilter) {
-        if (stringFilter == null || stringFilter.isEmpty()) {
+    public List<ContractorDto> getAll(String searchTerm) {
+
+        if (searchTerm.equals("null") || searchTerm.isEmpty()) { //.equals("")
             return contractorRepository.getAll();
         } else {
-            return contractorRepository.search(stringFilter);
+            return contractorRepository.search(searchTerm);
         }
     }
 

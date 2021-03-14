@@ -16,17 +16,17 @@ import java.util.List;
 public interface ContractorRepository extends JpaRepository<Contractor, Long>, JpaSpecificationExecutor<Contractor> {
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
-            "e.id," +
-            "e.name," +
-            "e.inn," +
-            "e.sortNumber," +
-            "e.phone," +
-            "e.fax," +
-            "e.email," +
-            "e.address," +
-            "e.commentToAddress," +
-            "e.comment" +
-            ") from Contractor e")
+            "c.id," +
+            "c.name," +
+            "c.inn," +
+            "c.sortNumber," +
+            "c.phone," +
+            "c.fax," +
+            "c.email," +
+            "c.address," +
+            "c.commentToAddress," +
+            "c.comment" +
+            ") from Contractor c")
     List<ContractorDto> getAll();
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
@@ -42,10 +42,11 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long>, J
             "c.comment" +
             ") from Contractor c" +
             " where lower(c.name) like lower(concat('%', :searchTerm, '%')) " +
-            "      or c.inn like concat('%', :searchTerm, '%')")
+            "      or c.inn like concat('%', :searchTerm, '%')" +
+            "      or c.phone like concat('%',  :searchTerm, '%')" +
+            "      or c.comment like concat('%', :searchTerm, '%')"
+    )
     List<ContractorDto> search(@Param("searchTerm") String searchTerm);
-
-
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
             "e.id," +
