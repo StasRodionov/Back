@@ -20,4 +20,6 @@ public interface ProductService {
     List<ProductDto> getAllByProductGroupId(Long id);
 
     List<ProductDto> getAllLiteByProductGroupId(Long id);
+
+    List<ProductDto> getAllByContractorId(Long id);
 }
