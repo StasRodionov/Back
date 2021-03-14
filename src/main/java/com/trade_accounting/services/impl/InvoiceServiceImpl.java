@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,22 +46,15 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<InvoiceDto> getAll() {
-        List<InvoiceDto> listInvoiceDto = invoiceRepository.getAll();
-        for (InvoiceDto invoiceDto : listInvoiceDto) {
-            invoiceDto.setCompanyDto(companyRepository.getById(invoiceDto.getCompanyDto().getId()));
-            invoiceDto.setContractorDto(contractorRepository.getById(invoiceDto.getContractorDto().getId()));
-            invoiceDto.setWarehouseDto(warehouseRepository.getById(invoiceDto.getWarehouseDto().getId()));
-        }
-        return listInvoiceDto;
+        return invoiceRepository.findAll().stream()
+                .map(dtoMapper::invoiceToInvoiceDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public InvoiceDto getById(Long id) {
-        InvoiceDto invoiceDto = invoiceRepository.getById(id);
-        invoiceDto.setCompanyDto(companyRepository.getById(invoiceDto.getCompanyDto().getId()));
-        invoiceDto.setContractorDto(contractorRepository.getById(invoiceDto.getContractorDto().getId()));
-        invoiceDto.setWarehouseDto(warehouseRepository.getById(invoiceDto.getWarehouseDto().getId()));
-        return invoiceDto;
+        Optional<Invoice> invoice = invoiceRepository.findById(id);
+        return dtoMapper.invoiceToInvoiceDto(invoice.orElse(new Invoice()));
     }
 
     @Override
