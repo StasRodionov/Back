@@ -95,9 +95,9 @@ public class InvoiceRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<Invoice> create(@ApiParam(name = "invoiceDto", value = "DTO накладной, которую необходимо создать")
+    public ResponseEntity<InvoiceDto> create(@ApiParam(name = "invoiceDto", value = "DTO накладной, которую необходимо создать")
                                     @RequestBody InvoiceDto invoiceDto) {
-        Invoice invoiceDto1 = invoiceService.create(invoiceDto);
+        InvoiceDto invoiceDto1 = invoiceService.create(invoiceDto);
         log.info("Записан новый экземпляр накладной - {}", invoiceDto);
         return ResponseEntity.ok().body(invoiceDto1);
     }
