@@ -1,10 +1,8 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Employee;
-import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
@@ -13,6 +11,7 @@ import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.utils.ModelDtoConverter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,7 +94,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeDto.getLastName(),
                 employeeDto.getFirstName(),
                 employeeDto.getMiddleName(),
-                employeeDto.getSortNumber(),
+                StringUtils.EMPTY,
                 employeeDto.getPhone(),
                 employeeDto.getInn(),
                 employeeDto.getDescription(),
@@ -128,7 +127,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeDto.getLastName(),
                 employeeDto.getFirstName(),
                 employeeDto.getMiddleName(),
-                employeeDto.getSortNumber(),
+                StringUtils.EMPTY,
                 employeeDto.getPhone(),
                 employeeDto.getInn(),
                 employeeDto.getDescription(),

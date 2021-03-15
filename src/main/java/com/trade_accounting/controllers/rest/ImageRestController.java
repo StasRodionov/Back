@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,6 +49,7 @@ public class ImageRestController {
         return ResponseEntity.ok(images);
     }
 
+    @SneakyThrows
     @ApiOperation(value = "getById", notes = "Возвращает определенное фото по Id")
     @GetMapping("/{id}")
     @ApiResponses(value = {
@@ -63,9 +65,11 @@ public class ImageRestController {
             value = "Переданный ID  в URL по которому необходимо найти фото",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        ImageDto image = imageService.getById(id);
+
+        ImageDto imageDto = imageService.getById(id);
+
         log.info("Запрошен экземпляр Image с id= {}", id);
-        return ResponseEntity.ok(image);
+        return ResponseEntity.ok(imageDto);
     }
 
     @ApiOperation(value = "create", notes = "Добавляет фото на основе переданных данных")
@@ -79,9 +83,6 @@ public class ImageRestController {
     )
     public ResponseEntity<ImageDto> create(@ApiParam(name = "imageDto",
             value = "DTO фото, который необходимо создать") @RequestBody ImageDto imageDto) {
-
-        String path = imageService.saveImage(imageDto.getContent(), imageDto.getFileName());
-        imageDto.setImageUrl(path);
 
         imageService.create(imageDto);
         log.info("Записан новый экземпляр Image c id= {}", imageDto.getId());
@@ -97,7 +98,7 @@ public class ImageRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> update(@ApiParam(name = "imageDto",
+    public ResponseEntity<ImageDto> update(@ApiParam(name = "imageDto",
             value = "DTO Image, который необходимо обновить") @RequestBody ImageDto imageDto) {
         imageService.update(imageDto);
         log.info("Обновлен экземпляр Image с id= {}", imageDto.getId());

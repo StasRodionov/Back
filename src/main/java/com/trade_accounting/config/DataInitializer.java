@@ -1,6 +1,5 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
@@ -13,7 +12,6 @@ import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
@@ -157,7 +155,6 @@ public class DataInitializer {
 
         initLegalDetails();
         initCompanies();
-        initImages();
         initEmployees();
         initContractors();
         initProducts();
@@ -620,25 +617,6 @@ public class DataInitializer {
                             "2"))));
         }
     }
-
-    private void initImages() {
-        imageService.create(new ImageDto(1L,
-                "C:\\Command PROJECTS\\trade_back\\upload\\images\\pexels-photo-936119.jpeg",
-                null));
-        imageService.create(new ImageDto(2L,
-                "C:\\Command PROJECTS\\trade_back\\upload\\images\\pexels-photo-1839564.jpeg",
-                null));
-        imageService.create(new ImageDto(3L,
-                "C:\\Command PROJECTS\\trade_back\\upload\\images\\pexels-photo-2552128.jpeg",
-                null));
-        imageService.create(new ImageDto(4L,
-                "C:\\Command PROJECTS\\trade_back\\upload\\images\\pexels-photo-3078404.jpeg",
-                null));
-        imageService.create(new ImageDto(5L,
-                "C:\\Command PROJECTS\\trade_back\\upload\\images\\pexels-photo-3116381.jpeg",
-                null));
-    }
-
     private void initEmployees() {
         employeeService.create(new EmployeeDto(null,
                 "Vasiliev",
@@ -653,7 +631,7 @@ public class DataInitializer {
                 departmentService.getByName("Руководство"),
                 positionService.getByName("Генеральный директор"),
                 Collections.singleton(roleService.getByName("admin")),
-                imageService.getById(1L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Simonova",
                 "Sima",
@@ -667,7 +645,7 @@ public class DataInitializer {
                 departmentService.getByName("Отдел бухгалтерии"),
                 positionService.getByName("Коммерческий директор"),
                 Collections.singleton(roleService.getByName("user")),
-                imageService.getById(2L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Belive",
                 "Vera",
@@ -681,7 +659,7 @@ public class DataInitializer {
                 departmentService.getByName("Складской комплекс"),
                 positionService.getByName("Технический директор"),
                 Collections.singleton(roleService.getByName("user")),
-                imageService.getById(3L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Islentiev",
                 "Karim",
@@ -695,7 +673,7 @@ public class DataInitializer {
                 departmentService.getByName("Отдел продаж"),
                 positionService.getByName("Директор по продажам"),
                 Collections.singleton(roleService.getByName("admin")),
-                imageService.getById(4L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Petko",
                 "Sasha",
@@ -709,7 +687,7 @@ public class DataInitializer {
                 departmentService.getByName("Складской комплекс"),
                 positionService.getByName("Технический директор"),
                 Collections.singleton(roleService.getByName("user")),
-                imageService.getById(5L)));
+                null));
     }
 
     private void initContractors() {

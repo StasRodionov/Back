@@ -1,5 +1,6 @@
 package com.trade_accounting.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,10 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "images")
 public class Image {
@@ -25,12 +26,6 @@ public class Image {
 
     @Column(name = "sort_number")
     private String sortNumber;
-
-    @Transient
-    private byte[] content;
-
-    @Transient
-    private String fileName;
 
     public Image(String imageUrl, String sortNumber) {
         this.imageUrl = imageUrl;

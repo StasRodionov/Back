@@ -1,13 +1,12 @@
 package com.trade_accounting.models.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Transient;
-
 @Data
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 public class ImageDto {
 
     private Long id;
@@ -16,10 +15,8 @@ public class ImageDto {
 
     private String sortNumber;
 
-    @Transient
-    private byte[] content;
+    private String content;
 
-    @Transient
     private String fileName;
 
     public ImageDto(Long id, String imageUrl, String sortNumber) {
