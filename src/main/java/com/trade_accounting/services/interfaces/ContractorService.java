@@ -11,6 +11,7 @@ public interface ContractorService {
     List<ContractorDto> searchContractor(Specification<Contractor> specification);
 
     List<ContractorDto> getAll(String searchTerm);
+    List<ContractorDto> getAllLite();
 
     List<ContractorDto> getAll();
 

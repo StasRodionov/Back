@@ -68,6 +68,11 @@ public class ContractorServiceImpl implements ContractorService {
         return contractorDtos;
     }
 
+    @Override
+    public List<ContractorDto> getAllLite() {
+        return contractorRepository.getAll();
+    }
+
     public List<ContractorDto> getAll(String stringFilter) {
         if (stringFilter == null || stringFilter.isEmpty()) {
             return contractorRepository.getAll();

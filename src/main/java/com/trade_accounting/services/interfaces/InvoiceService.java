@@ -14,9 +14,9 @@ public interface InvoiceService {
 
     InvoiceDto getById(Long id);
 
-    void create(InvoiceDto invoiceDto);
+    InvoiceDto create(InvoiceDto invoiceDto);
 
-    void update(InvoiceDto invoiceDto);
+    InvoiceDto update(InvoiceDto invoiceDto);
 
     void deleteById(Long id);
 }

@@ -15,5 +15,4 @@ public interface ProductPriceRepository extends JpaRepository<ProductPrice, Long
     @Query("SELECT new com.trade_accounting.models.dto.ProductPriceDto(price.id, price.value) " +
             "from Product product inner join product.productPrices as price where product.id = :id")
     List<ProductPriceDto> getPricesDtoByProductId(Long id);
-
 }

@@ -862,11 +862,11 @@ public class DataInitializer {
 
             productService.create(new ProductDto(
                     null,
-                    "Яблоки",
+                    "Яблоки" + i,
                     new BigDecimal("1.0"),
                     new BigDecimal("1.0"),
                     new BigDecimal("11.111"),
-                    "Красные яблоки голден",
+                    "Красные яблоки голден" + i,
                     unitDtoList.get(0),
                     false,
                     contractorDtoList.get(0),
@@ -878,11 +878,11 @@ public class DataInitializer {
             ));
             productService.create(new ProductDto(
                     null,
-                    "Бананы",
+                    "Бананы" + i,
                     new BigDecimal("1.0"),
                     new BigDecimal("1.0"),
                     new BigDecimal("22.222"),
-                    "Красные Бананы голден",
+                    "Красные Бананы голден" + i,
                     unitDtoList.get(1),
                     false,
                     contractorDtoList.get(1),
@@ -894,11 +894,11 @@ public class DataInitializer {
             ));
             productService.create(new ProductDto(
                     null,
-                    "Мандарины",
+                    "Мандарины" + i,
                     new BigDecimal("1.0"),
                     new BigDecimal("1.0"),
                     new BigDecimal("33.333"),
-                    "Красные Мандарины голден",
+                    "Красные Мандарины голден" + i,
                     unitDtoList.get(2),
                     false,
                     contractorDtoList.get(1),

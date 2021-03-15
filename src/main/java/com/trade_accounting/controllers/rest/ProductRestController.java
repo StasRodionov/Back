@@ -98,6 +98,37 @@ public class ProductRestController {
             return ResponseEntity.ok(productGroups);
     }
 
+    @ApiOperation(value = "getByContractorId", notes = "Возвращает товары из определенной группы")
+    @GetMapping("/cnt/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Товар найден"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<ProductDto>> getAllByContractorId(@ApiParam(name = "id",
+            value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
+            List<ProductDto> productGroups = productService.getAllByContractorId(id);
+            log.info("Запрошен список ProductDto");
+            return ResponseEntity.ok(productGroups);
+    }
+
+    @ApiOperation(value = "getLiteByProductGroupId", notes = "Возвращает товары из определенной группы (лёгкое дто)")
+    @GetMapping("lite/pg/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Товар найден"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<ProductDto>> getLiteByProductGroupId(
+            @ApiParam(name = "id", value = "ID группы товаров, переданный в URL, по которому необходимо найти товары")
+            @PathVariable(name = "id") Long id) {
+        List<ProductDto> productGroups = productService.getAllLiteByProductGroupId(id);
+        log.info("Запрошен список ProductDto (Легкое Дто) принадлежащих гуруппе с id = {}", id);
+        return ResponseEntity.ok(productGroups);
+    }
+
     @ApiOperation(value = "create", notes = "Создает товар на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {

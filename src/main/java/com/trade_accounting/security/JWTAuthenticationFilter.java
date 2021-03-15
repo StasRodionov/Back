@@ -3,7 +3,7 @@ package com.trade_accounting.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.Employee;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,8 +38,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                                 HttpServletResponse res) throws AuthenticationException {
 
         try {
-            EmployeeDto creds = new ObjectMapper()
-                     .readValue(req.getInputStream(), EmployeeDto.class);
+            Employee creds = new ObjectMapper()
+                     .readValue(req.getInputStream(), Employee.class);
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -59,12 +59,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication auth) throws IOException {
 
         String token = JWT.create()
-                .withSubject(((EmployeeDto) auth.getPrincipal()).getUsername())
+                .withSubject(((Employee) auth.getPrincipal()).getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SECRET.getBytes()));
 
         String body =
-                "{ \"email\":\"" + ((EmployeeDto) auth.getPrincipal()).getUsername() + "\"," +
+                "{ \"email\":\"" + ((Employee) auth.getPrincipal()).getUsername() + "\"," +
                 "\"token\":\"" + token + "\" }";
         // later: refactor to use Object with email and token fields (and some others, if needed)
 
