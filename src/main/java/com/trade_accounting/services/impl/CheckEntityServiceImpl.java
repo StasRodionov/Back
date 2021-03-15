@@ -13,6 +13,7 @@ import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.repositories.UnitRepository;
+import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,18 +29,20 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final PositionRepository positionRepository;
     private final ImageRepository imageRepository;
     private final RoleRepository roleRepository;
+    private final WarehouseRepository warehouseRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository, DepartmentRepository departmentRepository,
                                   PositionRepository positionRepository,
                                   ImageRepository imageRepository,
-                                  RoleRepository roleRepository) {
+                                  RoleRepository roleRepository, WarehouseRepository warehouseRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
         this.positionRepository = positionRepository;
         this.imageRepository = imageRepository;
         this.roleRepository = roleRepository;
+        this.warehouseRepository = warehouseRepository;
     }
 
 
@@ -53,7 +56,14 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     @Override
     public void checkExistsEmployeeById(Long employeeId) {
         if(!employeeRepository.existsById(employeeId)) {
-            throw new NotFoundEntityException("Сотрудника с id=" + employeeId + ", не наден");
+            throw new NotFoundEntityException("Сотрудника с id=" + employeeId + ", не найдено");
+        }
+    }
+
+    @Override
+    public void checkExistsWarehouseById(Long warehouseId) {
+        if(!warehouseRepository.existsById(warehouseId)) {
+            throw new NotFoundEntityException("Склада с id=" + warehouseId + ", не найдено");
         }
     }
 

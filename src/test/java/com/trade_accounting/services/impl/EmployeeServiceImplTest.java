@@ -15,11 +15,9 @@ import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -34,7 +32,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -77,6 +74,17 @@ class EmployeeServiceImplTest {
         for(EmployeeDto employee : employees) {
             employeeDtoIsCorrectlyInited(employee);
         }
+    }
+
+    @Test
+    void getAll_shouldReturnEmptyListEmployeeDto() {
+        when(employeeRepository.findAll())
+                .thenReturn(new ArrayList<>());
+
+        List<EmployeeDto> employees = employeeService.getAll();
+
+        assertNotNull(employees, "failure - expected that a list of employeeDto not null");
+        assertEquals(0, employees.size(), "failure - expected that size of list of employeeDto equals 0");
     }
 
     @Test
@@ -135,7 +143,7 @@ class EmployeeServiceImplTest {
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        employeeService.create(
+        employeeService.update(
                 getFullEmployeeDto(1L)
         );
 
@@ -212,14 +220,6 @@ class EmployeeServiceImplTest {
         employee.setImageDto(getImageDtoFromRepo(id));
 
         return employee;
-    }
-
-    List<EmployeeDto> getListEmployeeDtoFromRepo() {
-        return Stream.of(
-                getEmployeeDtoFromRepo(1L),
-                getEmployeeDtoFromRepo(2L),
-                getEmployeeDtoFromRepo(3L)
-        ).collect(Collectors.toList());
     }
 
     Employee getEmployeeFromRepo(Long id) {

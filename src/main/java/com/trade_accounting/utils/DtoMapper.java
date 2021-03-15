@@ -5,11 +5,13 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.WarehouseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -52,4 +54,9 @@ public interface DtoMapper {
     ImageDto imageToImageDto(Image image);
 
     Image imageDtoToImage(ImageDto image);
+
+    //Warehouse
+    WarehouseDto warehouseToWarehouseDto(Warehouse warehouse);
+
+    Warehouse warehouseDtoToWarehouse(WarehouseDto warehouse);
 }
