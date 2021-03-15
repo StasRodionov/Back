@@ -8,6 +8,7 @@ import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContractorDto;
@@ -17,6 +18,7 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -94,7 +96,12 @@ public interface DtoMapper {
 
     Contractor contractorDtoToContractor(ContractorDto contractorDto);
 
-    //WareHouse
+    //Unit
+    UnitDto unitToUnitDto(Unit unit);
+
+    Unit unitDtoToUnit(UnitDto unit);
+
+    //Warehouse
     WarehouseDto warehouseToWareHouseDto (Warehouse warehouse);
 
     Warehouse warehouseDtoToWareHouse (WarehouseDto warehouseDto);

@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.UnitDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.UnitService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,9 +30,11 @@ import java.util.List;
 public class UnitRestController {
 
     private final UnitService unitService;
+    private final CheckEntityService checkEntityService;
 
-    public UnitRestController(UnitService unitService) {
+    public UnitRestController(UnitService unitService, CheckEntityService checkEntityService) {
         this.unitService = unitService;
+        this.checkEntityService = checkEntityService;
     }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех единиц измерения")
@@ -60,6 +63,7 @@ public class UnitRestController {
             name = "id",
             type = "Long",
             value = "ID переданный в URL по которому необходимо найти единицу измерения") @PathVariable Long id) {
+        checkEntityService.checkExistsUnitById(id);
         UnitDto unit = unitService.getById(id);
         log.info("Запрошен экземпляр UnitDto с id= {}", id);
         return ResponseEntity.ok(unit);
@@ -94,6 +98,7 @@ public class UnitRestController {
     public ResponseEntity<?> update(@ApiParam(
             name = "unitDto",
             value = "DTO единицы измерения, которую необходимо обновить") @RequestBody UnitDto unitDto) {
+        checkEntityService.checkExistsUnitById(unitDto.getId());
         unitService.update(unitDto);
         log.info("Обновлен экземпляр UnitDto с id= {}", unitDto.getId());
         return ResponseEntity.ok().build();
