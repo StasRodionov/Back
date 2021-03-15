@@ -108,7 +108,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void create(ProductDto productDto) {
         List<ProductPrice> productPrices = new ArrayList<>();
-        if (productDto.getProductPriceDtos() != null){
+        if (productDto.getProductPriceDtos() != null) {
             productPrices = productDto.getProductPriceDtos().stream()
                     .map(ModelDtoConverter::convertToProductPrice).collect(Collectors.toList());
         }
@@ -224,5 +224,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> getAllLiteByProductGroupId(Long id) {
         return productRepository.getAllByProductGroupId(id);
+    }
+
+    @Override
+    public List<ProductDto> getAllByContractorId(Long id) {
+        List<ProductDto> productDtos = productRepository.getAllByContractorId(id);
+        for (ProductDto productDto : productDtos) {
+            productDto.setUnitDto(unitRepository.getUnitByProductId(productDto.getId()));
+            productDto.setAttributeOfCalculationObjectDto(
+                    attributeOfCalculationObjectRepository.getAttributeOfCalculationObjectById(productDto.getId()));
+            productDto.setContractorDto(contractorRepository.getContractorById(productDto.getId()));
+            productDto.setTaxSystemDto(taxSystemRepository.getTaxSystemById(productDto.getId()));
+            productDto.setImageDto(imageRepository.getAllById(productDto.getId()).stream()
+                    .map(image -> imageRepository.getById(image.getId()))
+                    .collect(Collectors.toList()));
+            productDto.setProductPriceDtos(productPriceRepository.getPricesDtoByProductId(productDto.getId()));
+        }
+        return productDtos;
     }
 }
