@@ -88,9 +88,8 @@ public interface DtoMapper {
 
     Contractor contractorDtoToContractor(ContractorDto contractorDto);
 
-    //WareHouse
-    WarehouseDto warehouseToWareHouseDto (Warehouse warehouse);
+    //Warehouse
+    WarehouseDto warehouseToWarehouseDto(Warehouse warehouse);
 
-    Warehouse warehouseDtoToWareHouse (WarehouseDto warehouseDto);
-
+    Warehouse warehouseDtoToWarehouse(WarehouseDto warehouseDto);
 }
