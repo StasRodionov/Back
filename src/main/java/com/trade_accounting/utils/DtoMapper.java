@@ -1,14 +1,20 @@
 package com.trade_accounting.utils;
 
+import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
+import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.WarehouseDto;
@@ -55,8 +61,36 @@ public interface DtoMapper {
 
     Image imageDtoToImage(ImageDto image);
 
-    //Warehouse
-    WarehouseDto warehouseToWarehouseDto(Warehouse warehouse);
+    //**************************************************************************************************
+    //Invoice
 
-    Warehouse warehouseDtoToWarehouse(WarehouseDto warehouse);
+    @Mappings({
+            @Mapping(source = "company", target = "companyDto"),
+            @Mapping(source = "contractor", target = "contractorDto"),
+            @Mapping(source = "warehouse", target = "warehouseDto"),
+    })
+    InvoiceDto invoiceToInvoiceDto(Invoice invoice);
+
+    @Mappings({
+            @Mapping(source = "companyDto", target = "company"),
+            @Mapping(source = "contractorDto", target = "contractor"),
+            @Mapping(source = "warehouseDto", target = "warehouse"),
+    })
+    Invoice invoiceDtoToInvoice(InvoiceDto emp);
+
+    //Company
+    CompanyDto companyToCompanyDto(Company company);
+
+    Company companyDtoToCompany(CompanyDto companyDto);
+
+    //Contractor
+    ContractorDto contractorToContractorDto(Contractor contractor);
+
+    Contractor contractorDtoToContractor(ContractorDto contractorDto);
+
+    //WareHouse
+    WarehouseDto warehouseToWareHouseDto (Warehouse warehouse);
+
+    Warehouse warehouseDtoToWareHouse (WarehouseDto warehouseDto);
+
 }
