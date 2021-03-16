@@ -16,7 +16,7 @@ public interface ImageService {
 
     void deleteById(Long id);
 
-    String uploadImage(byte[] content, String fileName);
+    String saveImageToFile(byte[] content, String fileName);
 
-    String downloadImage(String path);
+    String getImageFromFile(String path);
 }

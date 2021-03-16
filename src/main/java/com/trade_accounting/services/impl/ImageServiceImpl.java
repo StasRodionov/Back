@@ -5,7 +5,6 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.services.interfaces.ImageService;
 import lombok.SneakyThrows;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +35,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageDto getById(Long id) {
         ImageDto imageDto = imageRepository.getById(id);
-        String content = downloadImage(imageDto.getImageUrl());
+        String content = getImageFromFile(imageDto.getImageUrl());
         String fileName = Paths.get(imageDto.getImageUrl()).getFileName().toString();
         imageDto.setContent(content);
         imageDto.setFileName(fileName);
@@ -46,7 +45,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageDto create(ImageDto imageDto) {
         byte[] content = Base64.getDecoder().decode(imageDto.getContent());
-        String path = uploadImage(content, imageDto.getFileName());
+        String path = saveImageToFile(content, imageDto.getFileName());
         imageDto.setImageUrl(path);
 
         Image image = imageRepository.save(new Image(path, imageDto.getSortNumber()));
@@ -75,32 +74,25 @@ public class ImageServiceImpl implements ImageService {
 
     @SneakyThrows
     @Override
-    public String uploadImage(byte[] content, String name) {
+    public String saveImageToFile(byte[] content, String name) {
         File uploadDir = new File(UPLOAD_DIR);
 
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
         }
-
-        OutputStream outputStream = null;
-        File file;
-        try {
-            file = new File(UPLOAD_DIR + name);
-            outputStream = new FileOutputStream(file, false);
-            outputStream.write(content);
+        File file = new File(UPLOAD_DIR + name);
+        try (OutputStream out = new FileOutputStream(file, false)) {
+            out.write(content);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
-
-        } finally {
-            IOUtils.closeQuietly(outputStream);
         }
         return file.getPath();
     }
 
     @SneakyThrows
     @Override
-    public String downloadImage(String path) {
+    public String getImageFromFile(String path) {
         return Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get(path)));
     }
 }
