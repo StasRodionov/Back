@@ -6,6 +6,7 @@ import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.Warehouse;
@@ -15,6 +16,7 @@ import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
+import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.WarehouseDto;
@@ -41,10 +43,29 @@ public interface DtoMapper {
     })
     Employee employeeDtoToEmployee(EmployeeDto emp);
 
+
+
     //Department
     DepartmentDto departmentToDepartmentDto(Department department);
 
     Department departmentDtoToDepartment(DepartmentDto department);
+
+    //Payment
+    @Mappings({
+            @Mapping(source = "company", target = "companyDto"),
+            @Mapping(source = "contractor", target = "contractorDto"),
+            @Mapping(source = "contract", target = "contractDto"),
+            @Mapping(source = "project", target = "projectDto")
+    })
+    PaymentDto paymentToPaymentDto(Payment payment);
+
+    @Mappings({
+            @Mapping(source = "companyDto", target = "company"),
+            @Mapping(source = "contractorDto", target = "contractor"),
+            @Mapping(source = "contractDto", target = "contract"),
+            @Mapping(source = "projectDto", target = "project")
+    })
+    Payment paymentDtoToPayment(PaymentDto paymentDto);
 
     //Position
     PositionDto positionToPositionDto(Position position);
