@@ -5,6 +5,7 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.ProductPrice;
@@ -274,5 +275,9 @@ public class ModelDtoConverter {
             ));
         }
         return bankAccountList;
+    }
+
+    public static Image convertToImage(ImageDto imageDto) {
+        return modelMapper.map(imageDto, Image.class);
     }
 }

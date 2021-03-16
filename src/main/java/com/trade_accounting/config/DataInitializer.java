@@ -13,6 +13,7 @@ import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
@@ -152,7 +153,7 @@ public class DataInitializer {
         initTaxSystems();
         initProductGroups();
         initCurrency();
-        //initImage
+        initImage();
 
         initLegalDetails();
         initCompanies();
@@ -425,6 +426,14 @@ public class DataInitializer {
         currencyService.create(new CurrencyDto(null, "rubles", "Russian Rubles", "25", "rub", "1"));
         currencyService.create(new CurrencyDto(null, "bel rubles", "Bellarusian Rubles", "25", "belrub", "2"));
         currencyService.create(new CurrencyDto(null, "eng dollar", "USA Dollars ", "25", "dol", "3"));
+    }
+
+    private void initImage() {
+        imageService.create(new ImageDto(null, "images\\product_images\\1.png", null, "1"));
+        imageService.create(new ImageDto(null, "images\\product_images\\2.png", null, "2"));
+        imageService.create(new ImageDto(null, "images\\product_images\\3.png", null, "3"));
+        imageService.create(new ImageDto(null, "images\\product_images\\4.png", null, "4"));
+        imageService.create(new ImageDto(null, "images\\product_images\\5.png", null, "5"));
     }
 
     private void initLegalDetails() {
