@@ -7,6 +7,7 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.Position;
+import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -16,6 +17,7 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import org.mapstruct.Mapper;
@@ -98,5 +100,16 @@ public interface DtoMapper {
     WarehouseDto warehouseToWareHouseDto (Warehouse warehouse);
 
     Warehouse warehouseDtoToWareHouse (WarehouseDto warehouseDto);
+
+    //ProductGroup
+    @Mappings({
+            @Mapping(source = "productGroup.id", target = "parentId")
+    })
+    ProductGroupDto productGroupToProductGroupDto(ProductGroup productGroup);
+
+    @Mappings({
+            @Mapping(source = "parentId", target = "productGroup.id")
+    })
+    ProductGroup productGroupDtoToProductGroup(ProductGroupDto productGroupDto);
 
 }
