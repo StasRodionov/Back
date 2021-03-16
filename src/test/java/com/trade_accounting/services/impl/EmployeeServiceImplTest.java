@@ -190,7 +190,6 @@ class EmployeeServiceImplTest {
         assertNotNull(employee, "Fail in passed employee");
         assertNotNull(employee.getId(), "Fail in field 'id' of employee");
         assertNotNull(employee.getLastName(), "Fail in field 'lastName' of employee");
-        assertNotNull(employee.getSortNumber(), "Fail in field 'sortNumber' of employee");
         assertNotNull(employee.getEmail(), "Fail in field 'email' of employee");
         assertNotNull(employee.getRoleDto(), "Fail in field 'roleDto' of employee");
         assertTrue(employee.getRoleDto().size() > 0, "Expected that size of EmployeeDto role list greater than 0");
