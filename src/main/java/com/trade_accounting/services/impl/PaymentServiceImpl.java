@@ -61,10 +61,6 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentDto create(PaymentDto paymentDto) {
         Payment payment = dtoMapper.paymentDtoToPayment(paymentDto);
 
-        payment.setTypeOfPayment(
-                TypeOfPayment.valueOf(paymentDto.getTypeOfPayment())
-        );
-
         payment.setCompany(
                 companyRepository.findById(
                         paymentDto.getCompanyDto().getId()
