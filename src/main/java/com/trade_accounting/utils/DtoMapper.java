@@ -104,8 +104,22 @@ public interface DtoMapper {
     Contract contractDtoToContract(ContractDto contractDto);
 
     //Contractor
+    @Mappings({
+            @Mapping(source = "contractorGroup", target = "contractorGroupDto"),
+            @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
+            @Mapping(source = "typeOfPrice", target = "typeOfPriceDto"),
+            @Mapping(source = "bankAccounts", target = "bankAccountDto"),
+            @Mapping(source = "legalDetail", target = "legalDetailDto")
+    })
     ContractorDto contractorToContractorDto(Contractor contractor);
 
+    @Mappings({
+            @Mapping(source = "contractorGroupDto", target = "contractorGroup"),
+            @Mapping(source = "typeOfContractorDto", target = "typeOfContractor"),
+            @Mapping(source = "typeOfPriceDto", target = "typeOfPrice"),
+            @Mapping(source = "bankAccountDto", target = "bankAccounts"),
+            @Mapping(source = "legalDetailDto", target = "legalDetail")
+    })
     Contractor contractorDtoToContractor(ContractorDto contractorDto);
 
     //ContractorGroup
@@ -136,7 +150,8 @@ public interface DtoMapper {
             @Mapping(source = "departmentDto", target = "department"),
             @Mapping(source = "positionDto", target = "position"),
             @Mapping(source = "roleDto", target = "roles"),
-            @Mapping(source = "imageDto", target = "image")
+            @Mapping(source = "imageDto", target = "image"),
+            @Mapping(target = "authorities", ignore = true)
     })
     Employee employeeDtoToEmployee(EmployeeDto emp);
 
@@ -168,7 +183,7 @@ public interface DtoMapper {
     InvoiceProductDto invoiceProductToInvoiceProductDto(InvoiceProduct invoiceProduct);
 
     @Mappings({
-            @Mapping(source = "invoiceDto", target = "invoiceDto"),
+            @Mapping(source = "invoiceDto", target = "invoice"),
             @Mapping(source = "productDto", target = "product")
     })
     InvoiceProduct invoiceProductDtoToInvoiceProduct(InvoiceProductDto invoiceProductDto);
@@ -180,7 +195,7 @@ public interface DtoMapper {
     LegalDetailDto legalDetailToLegalDetailDto(LegalDetail legalDetail);
 
     @Mappings({
-            @Mapping(source = "typeOfContractor", target = "typeOfContractorDto")
+            @Mapping(source = "typeOfContractorDto", target = "typeOfContractor")
     })
     LegalDetail legalDetailDtoToLegalDetail(LegalDetailDto legalDetailDto);
 
@@ -208,6 +223,7 @@ public interface DtoMapper {
 
     //Product
     @Mappings({
+            @Mapping(source = "unit", target = "unitDto"),
             @Mapping(source = "contractor", target = "contractorDto"),
             @Mapping(source = "productPrices", target = "productPriceDtos"),
             @Mapping(source = "taxSystem", target = "taxSystemDto"),
@@ -218,6 +234,7 @@ public interface DtoMapper {
     ProductDto productToProductDto(Product product);
 
     @Mappings({
+            @Mapping(source = "unitDto", target = "unit"),
             @Mapping(source = "contractorDto", target = "contractor"),
             @Mapping(source = "productPriceDtos", target = "productPrices"),
             @Mapping(source = "taxSystemDto", target = "taxSystem"),
