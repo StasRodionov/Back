@@ -1,6 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Payment;
+import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
@@ -59,6 +60,10 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentDto create(PaymentDto paymentDto) {
         Payment payment = dtoMapper.paymentDtoToPayment(paymentDto);
+
+        payment.setTypeOfPayment(
+                TypeOfPayment.valueOf(paymentDto.getTypeOfPayment())
+        );
 
         payment.setCompany(
                 companyRepository.findById(
