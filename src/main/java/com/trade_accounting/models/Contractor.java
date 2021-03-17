@@ -30,7 +30,7 @@ public class Contractor {
     @Column(name = "name")
     private String name;
 
-    @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$")
+  // @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$")
     @Column(name = "inn", unique = true)
     private String inn;
 
@@ -70,33 +70,4 @@ public class Contractor {
     @OneToOne(fetch = FetchType.LAZY)
     private LegalDetail legalDetail;
 
-    public Contractor(String name,
-                      @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$") String inn,
-                      String sortNumber,
-                      String phone,
-                      String fax,
-                      String email,
-                      String address,
-                      String commentToAddress,
-                      String comment,
-                      ContractorGroup contractorGroup,
-                      TypeOfContractor typeOfContractor,
-                      TypeOfPrice typeOfPrice,
-                      List<BankAccount> bankAccounts,
-                      LegalDetail legalDetail) {
-        this.name = name;
-        this.inn = inn;
-        this.sortNumber = sortNumber;
-        this.phone = phone;
-        this.fax = fax;
-        this.email = email;
-        this.address = address;
-        this.commentToAddress = commentToAddress;
-        this.comment = comment;
-        this.contractorGroup = contractorGroup;
-        this.typeOfContractor = typeOfContractor;
-        this.typeOfPrice = typeOfPrice;
-        this.bankAccounts = bankAccounts;
-        this.legalDetail = legalDetail;
-    }
 }

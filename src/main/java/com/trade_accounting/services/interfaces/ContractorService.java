@@ -7,12 +7,14 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.List;
 
 public interface ContractorService {
+    List<ContractorDto> getAll();
 
-    List<ContractorDto> searchContractor(Specification<Contractor> specification);
+    List<ContractorDto> getAllString();
 
     List<ContractorDto> getAll(String searchTerm);
 
-    List<ContractorDto> getAll();
+    List<ContractorDto> searchContractor(
+            Specification<Contractor> specification);
 
     ContractorDto getById(Long id);
 

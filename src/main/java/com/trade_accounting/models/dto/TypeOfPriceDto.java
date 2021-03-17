@@ -19,4 +19,8 @@ public class TypeOfPriceDto {
         this.name = name;
         this.sortNumber = sortNumber;
     }
+
+    public TypeOfPriceDto(String name) {
+        this.name = name;
+    }
 }

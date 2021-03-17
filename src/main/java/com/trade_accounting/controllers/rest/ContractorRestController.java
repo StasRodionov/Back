@@ -1,26 +1,21 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.dto.ContractorDto;
-import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.services.interfaces.ContractorService;
-import lombok.extern.slf4j.Slf4j;
-import net.kaczmarzyk.spring.data.jpa.domain.Equal;
-import net.kaczmarzyk.spring.data.jpa.domain.Like;
-import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
+import lombok.extern.slf4j.Slf4j;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,11 +50,26 @@ public class ContractorRestController {
     )
     public ResponseEntity<List<ContractorDto>> getAll() {
         List<ContractorDto> contractorDtoList = contractorService.getAll();
-        log.info("Запрошен список ContractorDto getAll");
+        log.info("Запрошен список ContractorDto через getAll");
         return ResponseEntity.ok(contractorDtoList);
         //return ResponseEntity.ok(contractorService.getAll());
 
     }
+
+    @GetMapping("/getAllString")
+    @ApiOperation(value = "getAllString", notes = "Получение списка всех контрагентов String")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка контрагентов"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<ContractorDto>> getAllString() {
+        log.info("Запрошен список ContractorDto через getAllString");
+        return ResponseEntity.ok(contractorService.getAllString());
+
+    }
+
     @GetMapping("/search/{searchTerm}")
     @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых контрагентов")
     @ApiResponses(value = {

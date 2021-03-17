@@ -12,6 +12,7 @@ import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.ModelDtoConverter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 public class ContractorServiceImpl implements ContractorService {
@@ -67,14 +69,19 @@ public class ContractorServiceImpl implements ContractorService {
                     .map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
         }
         return contractorDtos;
+    }
 
-
+    @Override //create
+    public List<ContractorDto> getAllString() {
+        log.info("получение списка Contractor через метод getAllString");
+        return contractorRepository.getAllString();
     }
 
     public List<ContractorDto> getAll(String searchTerm) {
 
         if (searchTerm.equals("null") || searchTerm.isEmpty()) { //.equals("")
-            return contractorRepository.getAll();
+            log.info("обновление списка Contractor через метод - getAllString");
+            return contractorRepository.getAllString();
         } else {
             return contractorRepository.search(searchTerm);
         }
@@ -107,30 +114,30 @@ public class ContractorServiceImpl implements ContractorService {
         }
 
         contractorRepository.save(new Contractor(
-                contractorDto.getName(),
-                contractorDto.getInn(),
-                contractorDto.getSortNumber(),
-                contractorDto.getPhone(),
-                contractorDto.getFax(),
-                contractorDto.getEmail(),
-                contractorDto.getAddress(),
-                contractorDto.getCommentToAddress(),
-                contractorDto.getComment(),
+            contractorDto.getId(),
+            contractorDto.getName(),
+            contractorDto.getInn(),
+            contractorDto.getSortNumber(),
+            contractorDto.getPhone(),
+            contractorDto.getFax(),
+            contractorDto.getEmail(),
+            contractorDto.getAddress(),
+            contractorDto.getCommentToAddress(),
+            contractorDto.getComment(),
 
-                contractorDto.getContractorGroupDto() != null
-                        ? contractorGroupRepository.getOne(contractorDto.getContractorGroupDto().getId())
-                        : null,
-                contractorDto.getTypeOfContractorDto() != null
-                        ? typeOfContractorRepository.getOne(contractorDto.getTypeOfContractorDto().getId())
-                        : null,
-                contractorDto.getTypeOfPriceDto() != null
-                        ? typeOfPriceRepository.getOne(contractorDto.getTypeOfPriceDto().getId())
-                        : null,
-                bankAccounts,
-                contractorDto.getLegalDetailDto() != null
-                        ? legalDetailRepository.getOne(contractorDto.getLegalDetailDto().getId())
-                        : null
-
+            contractorDto.getContractorGroupDto() != null
+                    ? contractorGroupRepository.getOne(contractorDto.getContractorGroupDto().getId())
+                    : null,
+            contractorDto.getTypeOfContractorDto() != null
+                    ? typeOfContractorRepository.getOne(contractorDto.getTypeOfContractorDto().getId())
+                    : null,
+            contractorDto.getTypeOfPriceDto() != null
+                    ? typeOfPriceRepository.getOne(contractorDto.getTypeOfPriceDto().getId())
+                    : null,
+            bankAccounts,
+            contractorDto.getLegalDetailDto() != null
+                    ? legalDetailRepository.getOne(contractorDto.getLegalDetailDto().getId())
+                    : null
         ));
     }
 
@@ -144,30 +151,30 @@ public class ContractorServiceImpl implements ContractorService {
         }
 
         contractorRepository.save(new Contractor(
-                contractorDto.getId(),
-                contractorDto.getName(),
-                contractorDto.getInn(),
-                contractorDto.getSortNumber(),
-                contractorDto.getPhone(),
-                contractorDto.getFax(),
-                contractorDto.getEmail(),
-                contractorDto.getAddress(),
-                contractorDto.getCommentToAddress(),
-                contractorDto.getComment(),
+            contractorDto.getId(),
+            contractorDto.getName(),
+            contractorDto.getInn(),
+            contractorDto.getSortNumber(),
+            contractorDto.getPhone(),
+            contractorDto.getFax(),
+            contractorDto.getEmail(),
+            contractorDto.getAddress(),
+            contractorDto.getCommentToAddress(),
+            contractorDto.getComment(),
 
-                contractorDto.getContractorGroupDto() != null
-                        ? contractorGroupRepository.getOne(contractorDto.getContractorGroupDto().getId())
-                        : null,
-                contractorDto.getTypeOfContractorDto() != null
-                        ? typeOfContractorRepository.getOne(contractorDto.getTypeOfContractorDto().getId())
-                        : null,
-                contractorDto.getTypeOfPriceDto() != null
-                        ? typeOfPriceRepository.getOne(contractorDto.getTypeOfPriceDto().getId())
-                        : null,
-                bankAccounts,
-                contractorDto.getLegalDetailDto() != null
-                        ? legalDetailRepository.getOne(contractorDto.getLegalDetailDto().getId())
-                        : null
+            contractorDto.getContractorGroupDto() != null
+                    ? contractorGroupRepository.getOne(contractorDto.getContractorGroupDto().getId())
+                    : null,
+            contractorDto.getTypeOfContractorDto() != null
+                    ? typeOfContractorRepository.getOne(contractorDto.getTypeOfContractorDto().getId())
+                    : null,
+            contractorDto.getTypeOfPriceDto() != null
+                    ? typeOfPriceRepository.getOne(contractorDto.getTypeOfPriceDto().getId())
+                    : null,
+            bankAccounts,
+            contractorDto.getLegalDetailDto() != null
+                    ? legalDetailRepository.getOne(contractorDto.getLegalDetailDto().getId())
+                    : null
 
         ));
     }
