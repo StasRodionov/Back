@@ -95,4 +95,10 @@ public class ImageServiceImpl implements ImageService {
     public String getImageFromFile(String path) {
         return Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get(path)));
     }
+
+    @SneakyThrows
+    @Override
+    public void deleteImageFile(String path) {
+        Files.deleteIfExists(Paths.get(path));
+    }
 }

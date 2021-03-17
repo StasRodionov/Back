@@ -19,4 +19,6 @@ public interface ImageService {
     String saveImageToFile(byte[] content, String fileName);
 
     String getImageFromFile(String path);
+
+    void deleteImageFile(String path);
 }
