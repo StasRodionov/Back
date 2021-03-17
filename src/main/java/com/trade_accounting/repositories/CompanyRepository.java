@@ -9,29 +9,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpecificationExecutor<Company> {
 
-    @Query("select new com.trade_accounting.models.dto.CompanyDto(" +
-            "e.id, " +
-            "e.name, " +
-            "e.inn, " +
-            "e.sortNumber, " +
-            "e.phone, " +
-            "e.fax, " +
-            "e.email, " +
-            "e.payerVat, " +
-            "e.address, " +
-            "e.commentToAddress, " +
-            "e.leader, " +
-            "e.leaderManagerPosition, " +
-            "e.leaderSignature, " +
-            "e.chiefAccountant, " +
-            "e.chiefAccountantSignature, " +
-            "e.stamp, " +
-            "e.legalDetail.id) from Company e where e.email = :email")
-    CompanyDto findByEmail(@Param("email") String email);
+    Optional<Company> findByEmail(String email);
 
     @Query("select new com.trade_accounting.models.dto.CompanyDto(" +
             "e.id, " +
