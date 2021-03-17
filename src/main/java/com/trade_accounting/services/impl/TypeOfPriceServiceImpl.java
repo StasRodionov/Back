@@ -33,28 +33,23 @@ public class TypeOfPriceServiceImpl implements TypeOfPriceService {
 
     @Override
     public TypeOfPriceDto getById(Long id) {
-        return typeOfPriceRepository.getById(id);
-    }
-
-    @Override
-    public void create(TypeOfPriceDto typeOfPriceDto) {
-        typeOfPriceRepository.save(
-                new TypeOfPrice(
-                        typeOfPriceDto.getName(),
-                        typeOfPriceDto.getSortNumber()
-                )
+        return dtoMapper.typeOfPriceToTypeOfPriceDto(
+                typeOfPriceRepository.findById(id).orElse(new TypeOfPrice())
         );
     }
 
     @Override
-    public void update(TypeOfPriceDto typeOfPriceDto) {
-        typeOfPriceRepository.save(
-                new TypeOfPrice(
-                        typeOfPriceDto.getId(),
-                        typeOfPriceDto.getName(),
-                        typeOfPriceDto.getSortNumber()
-                )
+    public TypeOfPriceDto create(TypeOfPriceDto typeOfPriceDto) {
+        TypeOfPrice savedTypeOfPrice = typeOfPriceRepository.save(
+            dtoMapper.typeOfPriceDtoToTypeOfPrice(typeOfPriceDto)
         );
+
+        return dtoMapper.typeOfPriceToTypeOfPriceDto(savedTypeOfPrice);
+    }
+
+    @Override
+    public TypeOfPriceDto update(TypeOfPriceDto typeOfPriceDto) {
+        return create(typeOfPriceDto);
     }
 
     @Override
