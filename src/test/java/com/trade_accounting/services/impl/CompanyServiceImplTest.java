@@ -1,7 +1,9 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.repositories.BankAccountRepository;
@@ -153,8 +155,8 @@ class CompanyServiceImplTest {
         );
 
         verify(companyRepository).save(any(Company.class));
-        verify(legalDetailRepository).findById(anyLong());
-        verify(bankAccountRepository, times(3)).findById(anyLong());
+        verify(legalDetailRepository).save(any(LegalDetail.class));
+        verify(bankAccountRepository, times(3)).save(any(BankAccount.class));
     }
 
     @Test
