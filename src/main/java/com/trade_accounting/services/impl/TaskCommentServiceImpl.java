@@ -6,7 +6,7 @@ import com.trade_accounting.models.dto.TaskCommentDTO;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
-import com.trade_accounting.services.interfaces.SearchableService;
+import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.utils.ModelDtoConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,14 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 @Transactional
-public class TaskCommentService implements SearchableService<TaskCommentDTO, TaskComment> {
+public class TaskCommentServiceImpl implements TaskCommentService {
 
     public final TaskCommentRepository commentRepository;
     public final TaskRepository taskRepository;
@@ -50,18 +49,27 @@ public class TaskCommentService implements SearchableService<TaskCommentDTO, Tas
     }
 
     @Override
-    public void create(TaskCommentDTO dto) {
-        var entity = ModelDtoConverter.toTaskCommentEntity(dto);
-
-        entity.setPublisher(employeeRepository.getOne(dto.getPublisherId()));
-        entity.setTask(taskRepository.getOne(dto.getTaskId()));
+    public TaskCommentDTO create(TaskCommentDTO dto) {
+        var notFoundMessageFormat = "Задача с id: %d не найдена.";
 
         var taskOption = taskRepository.findById(dto.getTaskId());
 
         if (taskOption.isPresent()) {
-            commentRepository.save(entity);
-            taskOption.get().getTaskComments().add(entity);
+            var commentEntity = ModelDtoConverter.toTaskCommentEntity(dto);
+
+            commentEntity.setPublisher(employeeRepository.getOne(dto.getPublisherId()));
+            commentEntity.setTask(taskRepository.getOne(dto.getTaskId()));
+
+            var saved = commentRepository.save(commentEntity);
+
+            var task = taskOption.get();
+            task.getTaskComments().add(commentEntity);
+
+            return ModelDtoConverter.toTaskCommentDTO(saved);
+        } else {
+            throw new NotFoundEntityException(String.format(notFoundMessageFormat, dto.getPublisherId()));
         }
+
     }
 
     public void createAll(Collection<TaskCommentDTO> dtos) {
@@ -81,8 +89,8 @@ public class TaskCommentService implements SearchableService<TaskCommentDTO, Tas
     }
 
     @Override
-    public void update(TaskCommentDTO dto) {
-        this.create(dto);
+    public TaskCommentDTO update(TaskCommentDTO dto) {
+        return this.create(dto);
     }
 
     @Override

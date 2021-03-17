@@ -2,7 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.TaskCommentDTO;
-import com.trade_accounting.services.interfaces.SearchableService;
+import com.trade_accounting.services.interfaces.TaskCommentService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -13,7 +13,6 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,25 +28,25 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collection;
 
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/taskcomment")
-public class TaskCommentController {
+@RequestMapping("api/task_comments")
+public class TaskCommentRestController {
 
-    @Qualifier("TaskCommentService")
-    private final SearchableService<TaskCommentDTO, TaskComment> commentService;
+    private final TaskCommentService commentService;
 
     @ApiOperation(value = "getAll", notes = "Получение списка всех комментариев")
     @GetMapping
-    public ResponseEntity<Iterable<TaskCommentDTO>> getAll() {
+    public ResponseEntity<Collection<TaskCommentDTO>> getAll() {
         return ResponseEntity.ok(commentService.getAll());
     }
 
     @ApiOperation(value = "search", notes = "Получение списка комментариев по заданному фильтру")
     @GetMapping(value = "search")
-    public ResponseEntity<Iterable<TaskCommentDTO>> search(
+    public ResponseEntity<Collection<TaskCommentDTO>> search(
             @And({
                     @Spec(path = "id", params = "comment_id", spec = Equal.class),
                     @Spec(path = "commentContent", params = "comment", spec = LikeIgnoreCase.class),
@@ -80,16 +79,16 @@ public class TaskCommentController {
     )
     @PostMapping(consumes = MediaType.ALL_VALUE)
     public ResponseEntity<Void> create(@RequestBody TaskCommentDTO dto) {
-        commentService.create(dto);
+        var created = commentService.create(dto);
 
-        URI userURI = ServletUriComponentsBuilder
+        URI commentURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(dto.getId())
+                .buildAndExpand(created.getId())
                 .normalize()
                 .toUri();
 
-        return ResponseEntity.created(userURI).build();
+        return ResponseEntity.created(commentURI).build();
     }
 
     @ApiOperation(value = "update", notes = "Обновление комментария")

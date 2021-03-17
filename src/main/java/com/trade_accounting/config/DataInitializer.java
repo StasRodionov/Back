@@ -1,6 +1,5 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
@@ -28,8 +27,8 @@ import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
-import com.trade_accounting.services.impl.TaskCommentService;
-import com.trade_accounting.services.impl.TaskService;
+import com.trade_accounting.services.impl.TaskCommentServiceImpl;
+import com.trade_accounting.services.impl.TaskServiceImpl;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.BankAccountService;
 import com.trade_accounting.services.interfaces.CompanyService;
@@ -57,11 +56,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
-import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -94,8 +90,8 @@ public class DataInitializer {
     private final InvoiceService invoiceService;
     private final ProjectService projectService;
     private final PaymentService paymentService;
-    private final TaskService taskService;
-    private final TaskCommentService commentService;
+    private final TaskServiceImpl taskService;
+    private final TaskCommentServiceImpl commentService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -121,8 +117,8 @@ public class DataInitializer {
             InvoiceService invoiceService,
             ProjectService projectService,
             PaymentService paymentService,
-            TaskService taskService,
-            TaskCommentService commentService
+            TaskServiceImpl taskService,
+            TaskCommentServiceImpl commentService
     ) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;

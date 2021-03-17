@@ -6,7 +6,7 @@ import com.trade_accounting.models.dto.TaskDTO;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
-import com.trade_accounting.services.interfaces.SearchableService;
+import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.utils.ModelDtoConverter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @AllArgsConstructor
-public class TaskService implements SearchableService<TaskDTO, Task> {
+public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
@@ -58,7 +58,7 @@ public class TaskService implements SearchableService<TaskDTO, Task> {
     }
 
     @Override
-    public void create(TaskDTO dto) {
+    public TaskDTO create(TaskDTO dto) {
         String exceptionMessage = "Связанный с задачей пользователь с id: %d не найден";
 
         var taskEntity = ModelDtoConverter.toTaskEntity(dto);
@@ -74,9 +74,12 @@ public class TaskService implements SearchableService<TaskDTO, Task> {
         taskEntity.setTaskEmployee(employeeRepository.getOne(dto.getEmployeeId()));
         taskEntity.setTaskAuthor(employeeRepository.getOne(dto.getTaskAuthorId()));
 
-        taskRepository.save(taskEntity);
+        var saved = taskRepository.save(taskEntity);
+
+        return ModelDtoConverter.toTaskDTO(saved);
     }
 
+    @Override
     public void createAll(Collection<TaskDTO> tasks) {
         var entities = tasks
                 .stream()
@@ -95,8 +98,8 @@ public class TaskService implements SearchableService<TaskDTO, Task> {
     }
 
     @Override
-    public void update(TaskDTO dto) {
-        this.create(dto);
+    public TaskDTO update(TaskDTO dto) {
+        return this.create(dto);
     }
 
     @Override

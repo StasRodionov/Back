@@ -9,9 +9,9 @@ public interface Service<T> {
 
     Optional<T> getById(Long id);
 
-    void create(T taskDTO);
+    T create(T taskDTO);
 
-    void update(T taskDTO);
+    T update(T taskDTO);
 
     void deleteById(Long id);
 }

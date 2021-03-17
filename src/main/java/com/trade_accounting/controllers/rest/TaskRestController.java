@@ -2,7 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.dto.TaskDTO;
-import com.trade_accounting.services.interfaces.SearchableService;
+import com.trade_accounting.services.interfaces.TaskService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -13,7 +13,6 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,25 +28,25 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collection;
 
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/task")
-public class TaskController {
+@RequestMapping("api/tasks")
+public class TaskRestController {
 
-    @Qualifier("TaskService")
-    private final SearchableService<TaskDTO, Task> taskService;
+    private final TaskService taskService;
 
-    @ApiOperation(value = "getById", notes = "Получение списка всех задач")
+    @ApiOperation(value = "getAll", notes = "Получение списка всех задач")
     @GetMapping
-    public ResponseEntity<Iterable<TaskDTO>> getAll() {
+    public ResponseEntity<Collection<TaskDTO>> getAll() {
         return ResponseEntity.ok(taskService.getAll());
     }
 
     @ApiOperation(value = "search", notes = "Получение списка задач по заданному фильтру")
     @GetMapping(value = "search")
-    public ResponseEntity<Iterable<TaskDTO>> search(@And({
+    public ResponseEntity<Collection<TaskDTO>> search(@And({
             @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
             @Spec(path = "taskEmployee.id", params = "employeeId", spec = Equal.class),
             @Spec(path = "taskAuthor.id", params = "taskAuthorId", spec = Equal.class),
@@ -80,16 +79,16 @@ public class TaskController {
     )
     @PostMapping(consumes = MediaType.ALL_VALUE)
     public ResponseEntity<Void> create(@RequestBody TaskDTO dto) {
-        taskService.create(dto);
+        var created = taskService.create(dto);
 
-        URI userURI = ServletUriComponentsBuilder
+        URI taskURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(dto.getId())
+                .buildAndExpand(created.getId())
                 .normalize()
                 .toUri();
 
-        return ResponseEntity.created(userURI).build();
+        return ResponseEntity.created(taskURI).build();
     }
 
     @ApiOperation(value = "update", notes = "Обновление задачи")
