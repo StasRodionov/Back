@@ -40,7 +40,7 @@ public class Employee implements UserDetails {
     @Column(name = "middle_name")
     private String middleName;
 
-    @Column(name = "sort_number", nullable=false)
+    @Column(name = "sort_number")
     private String sortNumber;
 
     @Column(name = "phone")

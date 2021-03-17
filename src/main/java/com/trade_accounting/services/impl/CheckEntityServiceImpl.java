@@ -13,6 +13,7 @@ import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.repositories.UnitRepository;
+import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,18 +29,20 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final PositionRepository positionRepository;
     private final ImageRepository imageRepository;
     private final RoleRepository roleRepository;
+    private final WarehouseRepository warehouseRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository, DepartmentRepository departmentRepository,
                                   PositionRepository positionRepository,
                                   ImageRepository imageRepository,
-                                  RoleRepository roleRepository) {
+                                  RoleRepository roleRepository, WarehouseRepository warehouseRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
         this.positionRepository = positionRepository;
         this.imageRepository = imageRepository;
         this.roleRepository = roleRepository;
+        this.warehouseRepository = warehouseRepository;
     }
 
 
@@ -53,7 +56,14 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     @Override
     public void checkExistsEmployeeById(Long employeeId) {
         if(!employeeRepository.existsById(employeeId)) {
-            throw new NotFoundEntityException("Сотрудника с id=" + employeeId + ", не наден");
+            throw new NotFoundEntityException("Сотрудника с id=" + employeeId + ", не найдено");
+        }
+    }
+
+    @Override
+    public void checkExistsWarehouseById(Long warehouseId) {
+        if(!warehouseRepository.existsById(warehouseId)) {
+            throw new NotFoundEntityException("Склада с id=" + warehouseId + ", не найдено");
         }
     }
 
@@ -67,6 +77,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         boolean isDepartmentFilled = department != null && department.getId() != null;
         boolean isPositionFilled = position != null && position.getId() != null;
         boolean isImageFilled = image != null && image.getId() != null;
+        boolean rolesFilled = roles != null && !roles.isEmpty();
 
         if(isDepartmentFilled && !departmentRepository.existsById(department.getId())) {
             throw new BadRequestException(
@@ -86,13 +97,15 @@ public class CheckEntityServiceImpl implements CheckEntityService {
             );
         }
 
-        for(RoleDto role : roles) {
-            boolean isRoleFilled = role != null && role.getId() != null;
+        if(rolesFilled) {
+            for (RoleDto role : roles) {
+                boolean isRoleFilled = role != null && role.getId() != null;
 
-            if(isRoleFilled && !roleRepository.existsById(role.getId())) {
-                throw new BadRequestException(
-                        String.format("Роли с id %d не существует.", role.getId())
-                );
+                if (isRoleFilled && !roleRepository.existsById(role.getId())) {
+                    throw new BadRequestException(
+                            String.format("Роли с id %d не существует.", role.getId())
+                    );
+                }
             }
         }
     }
