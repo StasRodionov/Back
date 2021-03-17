@@ -15,21 +15,23 @@ import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -52,20 +54,17 @@ class EmployeeServiceImplTest {
     @Mock
     private ImageRepository imageRepository;
 
+    @Spy
+    private DtoMapperImpl dtoMapper;
+
     @InjectMocks
     private EmployeeServiceImpl employeeService;
 
     //Tests
     @Test
     void getAll_shouldReturnListFilledEmployeeDto() {
-        when(employeeRepository.getAll())
-                .thenReturn(getListEmployeeDtoFromRepo());
-
-        when(roleRepository.getRolesByEmployeeId(anyLong()))
-                .thenReturn(getRolesSetFromRepo());
-
-        when(roleRepository.getById(anyLong()))
-                .thenReturn(getRoleDtoFromRepo(1L));
+        when(employeeRepository.findAll())
+                .thenReturn(getListEmployeeFromRepo());
 
         List<EmployeeDto> employees = employeeService.getAll();
 
@@ -75,6 +74,17 @@ class EmployeeServiceImplTest {
         for(EmployeeDto employee : employees) {
             employeeDtoIsCorrectlyInited(employee);
         }
+    }
+
+    @Test
+    void getAll_shouldReturnEmptyListEmployeeDto() {
+        when(employeeRepository.findAll())
+                .thenReturn(new ArrayList<>());
+
+        List<EmployeeDto> employees = employeeService.getAll();
+
+        assertNotNull(employees, "failure - expected that a list of employeeDto not null");
+        assertEquals(0, employees.size(), "failure - expected that size of list of employeeDto equals 0");
     }
 
     @Test
@@ -107,14 +117,10 @@ class EmployeeServiceImplTest {
 
     @Test
     void getById_shouldReturnFilledEmployeeDto() {
-        when(employeeRepository.getById(anyLong()))
-                .thenReturn(getEmployeeDtoFromRepo(1L));
+        Optional<Employee> employeeFromRepo = Optional.of(getEmployeeFromRepo(1L));
 
-        when(roleRepository.getRolesByEmployeeId(anyLong()))
-                .thenReturn(getRolesSetFromRepo());
-
-        when(roleRepository.getById(anyLong()))
-                .thenReturn(getRoleDtoFromRepo(1L));
+        when(employeeRepository.findById(anyLong()))
+                .thenReturn(employeeFromRepo);
 
         EmployeeDto employee = employeeService.getById(1L);
 
@@ -122,50 +128,43 @@ class EmployeeServiceImplTest {
         employeeDtoIsCorrectlyInited(employee);
     }
 
-    //TODO add test for getById method if employee not found after adding exception handlers
-
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         employeeService.create(
                 getFullEmployeeDto(1L)
         );
 
-        verify(employeeRepository).existsById(1L);
-        verify(roleRepository, times(3)).getOne(anyLong());
+        verify(roleRepository, times(3)).findById(anyLong());
         verify(employeeRepository).save(any(Employee.class));
-        verify(departmentRepository).getOne(anyLong());
-        verify(positionRepository).getOne(anyLong());
-        verify(imageRepository).getByImageUrl(anyString());
+        verify(departmentRepository).findById(anyLong());
+        verify(positionRepository).findById(anyLong());
+        verify(imageRepository).findByImageUrl(anyString());
     }
-
-    //TODO add test for create method if employee already exists after adding exception handlers
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        employeeService.create(
+        employeeService.update(
                 getFullEmployeeDto(1L)
         );
 
-        verify(employeeRepository).existsById(1L);
-        verify(roleRepository, times(3)).getOne(anyLong());
+        verify(roleRepository, times(3)).findById(anyLong());
         verify(employeeRepository).save(any(Employee.class));
-        verify(departmentRepository).getOne(anyLong());
-        verify(positionRepository).getOne(anyLong());
-        verify(imageRepository).getByImageUrl(anyString());
+        verify(departmentRepository).findById(anyLong());
+        verify(positionRepository).findById(anyLong());
+        verify(imageRepository).findByImageUrl(anyString());
     }
 
-    //TODO add test for update method if employee still not exists after adding exception handlers
-
     @Test
-    void deleteById() {
+    void deleteById_shouldPassInstructionsSuccessfulDelete() {
         employeeService.deleteById(1L);
         verify(employeeRepository).deleteById(1L);
     }
 
     @Test
-    void getByEmail() {
-        when(employeeRepository.getByEmail(anyString()))
-                .thenReturn(getEmployeeDtoFromRepo(1L));
+    void getByEmail_shouldReturnFilledEmployeeDto() {
+        Optional<Employee> employeeFromRepo = Optional.of(getEmployeeFromRepo(1L));
+        when(employeeRepository.findByEmail(anyString()))
+                .thenReturn(employeeFromRepo);
 
         EmployeeDto employee = employeeService.getByEmail("email@email.ru");
 
@@ -174,11 +173,23 @@ class EmployeeServiceImplTest {
         employeeDtoIsCorrectlyInited(employee);
     }
 
+    @Test
+    void getByEmail_shouldReturnEmptyEmployeeDto() {
+        Optional<Employee> employeeFromRepo = Optional.empty();
+        when(employeeRepository.findByEmail(anyString()))
+                .thenReturn(employeeFromRepo);
+
+        EmployeeDto employee = employeeService.getByEmail("email@email.ru");
+
+        assertEquals(new EmployeeDto(), employee, "failure - expected that employee was empty");
+    }
+
+
+
     void employeeDtoIsCorrectlyInited(EmployeeDto employee) {
         assertNotNull(employee, "Fail in passed employee");
         assertNotNull(employee.getId(), "Fail in field 'id' of employee");
         assertNotNull(employee.getLastName(), "Fail in field 'lastName' of employee");
-        assertNotNull(employee.getSortNumber(), "Fail in field 'sortNumber' of employee");
         assertNotNull(employee.getEmail(), "Fail in field 'email' of employee");
         assertNotNull(employee.getRoleDto(), "Fail in field 'roleDto' of employee");
         assertTrue(employee.getRoleDto().size() > 0, "Expected that size of EmployeeDto role list greater than 0");
@@ -208,14 +219,6 @@ class EmployeeServiceImplTest {
         employee.setImageDto(getImageDtoFromRepo(id));
 
         return employee;
-    }
-
-    List<EmployeeDto> getListEmployeeDtoFromRepo() {
-        return Stream.of(
-                getEmployeeDtoFromRepo(1L),
-                getEmployeeDtoFromRepo(2L),
-                getEmployeeDtoFromRepo(3L)
-        ).collect(Collectors.toList());
     }
 
     Employee getEmployeeFromRepo(Long id) {

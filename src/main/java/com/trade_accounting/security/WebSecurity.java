@@ -21,7 +21,7 @@ import static com.trade_accounting.config.SecurityConstants.SIGN_UP_URL;
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    private EmployeeDetailsServiceImpl userDetailsService;
+    private final EmployeeDetailsServiceImpl userDetailsService;
     // private BCryptPasswordEncoder bCryptPasswordEncoder; // #bookmark #encrypt.password
 
     // public WebSecurity(UserDetailsServiceImpl userService, BCryptPasswordEncoder bCryptPasswordEncoder) { // #bookmark #encrypt.password
@@ -32,20 +32,27 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //Security disabled
         http
-                    .cors()
-                .and()
-                    .csrf().disable()
-                    .exceptionHandling()
-                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                .and()
-                    .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-                    .anyRequest().authenticated()
-                .and()
-                    .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                    .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/**").permitAll();
+
+        //Security enabled
+//        http
+//                .cors()
+//                .and()
+//                    .csrf().disable()
+//                    .exceptionHandling()
+//                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+//                .and()
+//                    .authorizeRequests()
+//                    .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+//                    .anyRequest().authenticated()
+//                .and()
+//                    .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+//                    .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+//                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
 
