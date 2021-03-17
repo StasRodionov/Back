@@ -6,5 +6,6 @@ import com.trade_accounting.models.dto.EmployeeDto;
 public interface CheckEntityService {
     void checkExistsUnitById(Long unitId);
     void checkExistsEmployeeById(Long employeeId);
+    void checkExistsWarehouseById(Long warehouseId);
     void checkForBadEmployee(EmployeeDto employee);
 }
