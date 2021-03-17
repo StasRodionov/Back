@@ -75,8 +75,11 @@ public class CompanyServiceImpl implements CompanyService {
 
         company.setBankAccounts(
                 companyDto.getBankAccountDto().stream()
-                .map(bankAccount -> bankAccountRepository
-                        .findById(bankAccount.getId()).orElse(null))
+                .map(
+                        bankAccount -> bankAccountRepository
+                        .findById(bankAccount.getId())
+                        .orElse(null)
+                )
                 .collect(Collectors.toList())
         );
 
