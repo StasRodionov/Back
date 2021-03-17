@@ -39,12 +39,24 @@ public class TaskCommentRestController {
     private final TaskCommentService commentService;
 
     @ApiOperation(value = "getAll", notes = "Получение списка всех комментариев")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка всех комментариев"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
     @GetMapping
     public ResponseEntity<Collection<TaskCommentDTO>> getAll() {
         return ResponseEntity.ok(commentService.getAll());
     }
 
     @ApiOperation(value = "search", notes = "Получение списка комментариев по заданному фильтру")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка всех комментариев с учётом фильтра"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
     @GetMapping(value = "search")
     public ResponseEntity<Collection<TaskCommentDTO>> search(
             @And({

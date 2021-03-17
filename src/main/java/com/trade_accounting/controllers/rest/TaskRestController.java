@@ -39,12 +39,24 @@ public class TaskRestController {
     private final TaskService taskService;
 
     @ApiOperation(value = "getAll", notes = "Получение списка всех задач")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка задач"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
     @GetMapping
     public ResponseEntity<Collection<TaskDTO>> getAll() {
         return ResponseEntity.ok(taskService.getAll());
     }
 
     @ApiOperation(value = "search", notes = "Получение списка задач по заданному фильтру")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка задач с учётом фильтра"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
     @GetMapping(value = "search")
     public ResponseEntity<Collection<TaskDTO>> search(@And({
             @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
@@ -58,7 +70,7 @@ public class TaskRestController {
 
     @ApiOperation(value = "getById", notes = "Получение задачи по её id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка задач"),
+            @ApiResponse(code = 200, message = "Успешное задачи"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
