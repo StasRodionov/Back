@@ -13,12 +13,14 @@ import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.interfaces.EmployeeService;
-import com.trade_accounting.services.interfaces.ImageService;
 import com.trade_accounting.utils.DtoMapper;
+import lombok.SneakyThrows;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -33,7 +35,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentRepository departmentRepository;
     private final ImageRepository imageRepository;
     private final RoleRepository roleRepository;
-    private final ImageService imageService;
 
     private final DtoMapper dtoMapper;
 
@@ -42,13 +43,12 @@ public class EmployeeServiceImpl implements EmployeeService {
                                DepartmentRepository departmentRepository,
                                ImageRepository imageRepository,
                                RoleRepository roleRepository,
-                               ImageService imageService, DtoMapper dtoMapper) {
+                               DtoMapper dtoMapper) {
         this.employeeRepository = employeeRepository;
         this.positionRepository = positionRepository;
         this.departmentRepository = departmentRepository;
         this.imageRepository = imageRepository;
         this.roleRepository = roleRepository;
-        this.imageService = imageService;
         this.dtoMapper = dtoMapper;
     }
 
@@ -118,13 +118,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         create(employeeDto);
     }
 
+    @SneakyThrows
     @Override
     public void deleteById(Long id) {
-        Employee employee = employeeRepository.findById(id).orElse(new Employee());
-        employeeRepository.deleteById(id);
-        if (employee.getImage() != null) {
-            imageService.deleteImageFile(employee.getImage().getImageUrl());
+        Optional<ImageDto> optional = Optional.ofNullable(imageRepository.getImageByEmployeeId(id));
+        if (optional.isPresent()) {
+            Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
+            imageRepository.deleteById(optional.get().getId());
         }
+        employeeRepository.deleteById(id);
     }
 
     @Override
