@@ -3,6 +3,7 @@ package com.trade_accounting.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,11 +29,11 @@ public class Task {
     private long id;
 
     @NotNull
-    @Column( columnDefinition="VARCHAR(1024)")
+    @Type(type = "text")
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
     @NotNull
+    @OneToOne(fetch = FetchType.LAZY)
     private Employee taskEmployee;
 
     @OneToOne(fetch = FetchType.LAZY)

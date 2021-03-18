@@ -1,6 +1,5 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.TaskCommentDTO;
 import com.trade_accounting.repositories.EmployeeRepository;
@@ -13,7 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,12 +21,13 @@ import java.util.stream.Collectors;
 @Transactional
 public class TaskCommentServiceImpl implements TaskCommentService {
 
-    public final TaskCommentRepository commentRepository;
-    public final TaskRepository taskRepository;
-    public final EmployeeRepository employeeRepository;
+    private final TaskCommentRepository commentRepository;
+    private final TaskRepository taskRepository;
+    private final EmployeeRepository employeeRepository;
+    private final CheckEntityServiceImpl checkEntityService;
 
     @Override
-    public Collection<TaskCommentDTO> search(Specification<TaskComment> specification) {
+    public List<TaskCommentDTO> search(Specification<TaskComment> specification) {
         return commentRepository.findAll(specification)
                 .stream()
                 .map(ModelDtoConverter::toTaskCommentDTO)
@@ -35,7 +35,7 @@ public class TaskCommentServiceImpl implements TaskCommentService {
     }
 
     @Override
-    public Collection<TaskCommentDTO> getAll() {
+    public List<TaskCommentDTO> getAll() {
         return commentRepository.findAll()
                 .stream()
                 .map(ModelDtoConverter::toTaskCommentDTO)
@@ -50,29 +50,21 @@ public class TaskCommentServiceImpl implements TaskCommentService {
 
     @Override
     public TaskCommentDTO create(TaskCommentDTO dto) {
-        var notFoundMessageFormat = "Задача с id: %d не найдена.";
+        checkEntityService.checkExistsTaskById(dto.getTaskId());
+        var task = taskRepository.findById(dto.getTaskId()).get();
 
-        var taskOption = taskRepository.findById(dto.getTaskId());
+        var commentEntity = ModelDtoConverter.toTaskCommentEntity(dto);
 
-        if (taskOption.isPresent()) {
-            var commentEntity = ModelDtoConverter.toTaskCommentEntity(dto);
+        commentEntity.setPublisher(employeeRepository.getOne(dto.getPublisherId()));
+        commentEntity.setTask(taskRepository.getOne(dto.getTaskId()));
 
-            commentEntity.setPublisher(employeeRepository.getOne(dto.getPublisherId()));
-            commentEntity.setTask(taskRepository.getOne(dto.getTaskId()));
+        var saved = commentRepository.save(commentEntity);
+        task.getTaskComments().add(commentEntity);
 
-            var saved = commentRepository.save(commentEntity);
-
-            var task = taskOption.get();
-            task.getTaskComments().add(commentEntity);
-
-            return ModelDtoConverter.toTaskCommentDTO(saved);
-        } else {
-            throw new NotFoundEntityException(String.format(notFoundMessageFormat, dto.getPublisherId()));
-        }
-
+        return ModelDtoConverter.toTaskCommentDTO(saved);
     }
 
-    public void createAll(Collection<TaskCommentDTO> dtos) {
+    public void createAll(List<TaskCommentDTO> dtos) {
         dtos.forEach(dto -> {
             var entity = ModelDtoConverter.toTaskCommentEntity(dto);
             entity.setTask(taskRepository.getOne(dto.getTaskId()));
@@ -95,16 +87,13 @@ public class TaskCommentServiceImpl implements TaskCommentService {
 
     @Override
     public void deleteById(Long id) {
-        var notFoundMessageFormat = "Задача с id: %d не найдена.";
-
-        commentRepository.findById(id).ifPresentOrElse(
-                taskComment -> {
-                    taskComment.getTask().getTaskComments().remove(taskComment);
-                    commentRepository.deleteById(id);
-                },
-                () -> {
-                    throw new NotFoundEntityException(String.format(notFoundMessageFormat, id));
-                });
-
+        checkEntityService.checkExistsTaskCommentById(id);
+        commentRepository.findById(id).ifPresent(taskComment -> {
+            var task = taskComment.getTask();
+            if (task != null) {
+                task.getTaskComments().remove(taskComment);
+            }
+            commentRepository.deleteById(id);
+        });
     }
 }

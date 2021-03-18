@@ -3,6 +3,7 @@ package com.trade_accounting.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,8 @@ public class TaskComment {
     private Long id;
 
     @NotNull
-    @Column(name = "comment", columnDefinition="VARCHAR(1024)")
+    @Type(type = "text")
+    @Column(name = "comment")
     private String commentContent;
 
     @NotNull

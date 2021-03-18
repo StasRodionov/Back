@@ -1,11 +1,11 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.dto.TaskDTO;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.utils.ModelDtoConverter;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,9 +27,10 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
     private final TaskCommentRepository commentRepository;
+    private final CheckEntityService checkEntityService;
 
     @Override
-    public Collection<TaskDTO> search(Specification<Task> specification) {
+    public List<TaskDTO> search(Specification<Task> specification) {
         return taskRepository.findAll(specification).stream()
                 .map(ModelDtoConverter::toTaskDTO)
                 .peek(dto -> dto.setCommentCount(commentRepository.countTaskCommentByTaskId(dto.getId())))
@@ -37,7 +38,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Collection<TaskDTO> getAll() {
+    public List<TaskDTO> getAll() {
         return taskRepository.findAll()
                 .stream()
                 .map(ModelDtoConverter::toTaskDTO)
@@ -59,17 +60,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO create(TaskDTO dto) {
-        String exceptionMessage = "Связанный с задачей пользователь с id: %d не найден";
-
         var taskEntity = ModelDtoConverter.toTaskEntity(dto);
 
-        if (!employeeRepository.existsById(dto.getEmployeeId())) {
-            throw new NotFoundEntityException(String.format(exceptionMessage, dto.getEmployeeId()));
-        }
-
-        if (!employeeRepository.existsById(dto.getTaskAuthorId())) {
-            throw new NotFoundEntityException(String.format(exceptionMessage, dto.getEmployeeId()));
-        }
+        checkEntityService.checkExistsEmployeeById(dto.getEmployeeId());
+        checkEntityService.checkExistsEmployeeById(dto.getTaskAuthorId());
 
         taskEntity.setTaskEmployee(employeeRepository.getOne(dto.getEmployeeId()));
         taskEntity.setTaskAuthor(employeeRepository.getOne(dto.getTaskAuthorId()));
@@ -80,7 +74,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void createAll(Collection<TaskDTO> tasks) {
+    public void createAll(List<TaskDTO> tasks) {
         var entities = tasks
                 .stream()
                 .map(dto -> {
@@ -104,12 +98,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteById(Long id) {
-        var notFoundMessageFormat = "Задача с id: %d не найдена.";
-
-        if (!taskRepository.existsById(id)) {
-            throw new NotFoundEntityException(String.format(notFoundMessageFormat, id));
-        }
-
+        checkEntityService.checkExistsTaskById(id);
         taskRepository.deleteById(id);
     }
 

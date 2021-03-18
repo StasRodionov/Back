@@ -29,6 +29,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 
 @Slf4j
 @AllArgsConstructor
@@ -46,7 +47,7 @@ public class TaskRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @GetMapping
-    public ResponseEntity<Collection<TaskDTO>> getAll() {
+    public ResponseEntity<List<TaskDTO>> getAll() {
         return ResponseEntity.ok(taskService.getAll());
     }
 
@@ -58,7 +59,7 @@ public class TaskRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @GetMapping(value = "search")
-    public ResponseEntity<Collection<TaskDTO>> search(@And({
+    public ResponseEntity<List<TaskDTO>> search(@And({
             @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
             @Spec(path = "taskEmployee.id", params = "employeeId", spec = Equal.class),
             @Spec(path = "taskAuthor.id", params = "taskAuthorId", spec = Equal.class),
