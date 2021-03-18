@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -64,6 +63,7 @@ public class TaskCommentRestController {
                     @Spec(path = "id", params = "comment_id", spec = Equal.class),
                     @Spec(path = "commentContent", params = "comment", spec = LikeIgnoreCase.class),
                     @Spec(path = "publisher.id", params = "publisher_id", spec = Equal.class),
+                    @Spec(path = "task.id", params = "task_id", spec = Equal.class),
                     @Spec(path = "creationDateTime", params = {"lower_date", "upper_date"}, spec = Between.class),
             }) Specification<TaskComment> spec) {
         return ResponseEntity.ok(commentService.search(spec));
