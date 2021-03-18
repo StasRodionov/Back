@@ -1,12 +1,10 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,14 +38,16 @@ public class TypeOfContractorServiceImpl implements TypeOfContractorService {
     }
 
     @Override
-    public void create(TypeOfContractorDto typeOfContractorDto) {
+    public TypeOfContractorDto create(TypeOfContractorDto typeOfContractorDto) {
         TypeOfContractor typeOfContractor = dtoMapper.typeOfContractorDtoToTypeOfContractor(typeOfContractorDto);
         typeOfContractorRepository.save(typeOfContractor);
+        return typeOfContractorDto;
     }
 
     @Override
-    public void update(TypeOfContractorDto typeOfContractorDto) {
+    public TypeOfContractorDto update(TypeOfContractorDto typeOfContractorDto) {
         create(typeOfContractorDto);
+        return typeOfContractorDto;
     }
 
     @Override
