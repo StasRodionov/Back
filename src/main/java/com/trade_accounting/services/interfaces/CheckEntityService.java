@@ -8,4 +8,6 @@ public interface CheckEntityService {
     void checkExistsEmployeeById(Long employeeId);
     void checkExistsWarehouseById(Long warehouseId);
     void checkForBadEmployee(EmployeeDto employee);
+    void checkExistsTaskById(Long taskId);
+    void checkExistsTaskCommentById(Long taskCommentId);
 }

@@ -14,4 +14,14 @@ public class ImageDto {
     private String imageUrl;
 
     private String sortNumber;
+
+    private String content;
+
+    private String fileName;
+
+    public ImageDto(Long id, String imageUrl, String sortNumber) {
+        this.id = id;
+        this.imageUrl = imageUrl;
+        this.sortNumber = sortNumber;
+    }
 }

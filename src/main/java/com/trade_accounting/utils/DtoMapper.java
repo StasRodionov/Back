@@ -267,7 +267,6 @@ public interface DtoMapper {
     })
     ProductPrice productPriceDtoToProductPrice(ProductPriceDto productPriceDto);
 
-
     //Project
     ProjectDto projectToProjectDto(Project project);
 
