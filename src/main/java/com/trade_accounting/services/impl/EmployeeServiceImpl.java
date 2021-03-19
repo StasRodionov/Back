@@ -14,10 +14,13 @@ import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.utils.DtoMapper;
+import lombok.SneakyThrows;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -115,8 +118,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         create(employeeDto);
     }
 
+    @SneakyThrows
     @Override
     public void deleteById(Long id) {
+        Optional<ImageDto> optional = Optional.ofNullable(imageRepository.getImageByEmployeeId(id));
+        if (optional.isPresent()) {
+            Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
+            imageRepository.deleteById(optional.get().getId());
+        }
         employeeRepository.deleteById(id);
     }
 

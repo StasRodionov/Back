@@ -1,6 +1,5 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
@@ -618,7 +617,6 @@ public class DataInitializer {
                             "2"))));
         }
     }
-
     private void initEmployees() {
         employeeService.create(new EmployeeDto(null,
                 "Vasiliev",
@@ -633,7 +631,7 @@ public class DataInitializer {
                 departmentService.getByName("Руководство"),
                 positionService.getByName("Генеральный директор"),
                 Collections.singleton(roleService.getByName("admin")),
-                imageService.getById(1L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Simonova",
                 "Sima",
@@ -647,7 +645,7 @@ public class DataInitializer {
                 departmentService.getByName("Отдел бухгалтерии"),
                 positionService.getByName("Коммерческий директор"),
                 Collections.singleton(roleService.getByName("user")),
-                imageService.getById(2L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Belive",
                 "Vera",
@@ -661,7 +659,7 @@ public class DataInitializer {
                 departmentService.getByName("Складской комплекс"),
                 positionService.getByName("Технический директор"),
                 Collections.singleton(roleService.getByName("user")),
-                imageService.getById(5L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Islentiev",
                 "Karim",
@@ -675,7 +673,7 @@ public class DataInitializer {
                 departmentService.getByName("Отдел продаж"),
                 positionService.getByName("Директор по продажам"),
                 Collections.singleton(roleService.getByName("admin")),
-                imageService.getById(4L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Petko",
                 "Sasha",
@@ -689,7 +687,7 @@ public class DataInitializer {
                 departmentService.getByName("Складской комплекс"),
                 positionService.getByName("Технический директор"),
                 Collections.singleton(roleService.getByName("user")),
-                imageService.getById(5L)));
+                null));
     }
 
     private void initContractors() {
