@@ -1,5 +1,6 @@
 package com.trade_accounting.services.interfaces;
 
+import com.trade_accounting.models.Image;
 import com.trade_accounting.models.dto.ImageDto;
 import lombok.SneakyThrows;
 
@@ -11,14 +12,12 @@ public interface ImageService {
 
     ImageDto getById(Long id);
 
-    void create(ImageDto imageDto);
-
-    void update(ImageDto imageDto);
+    Image create(ImageDto imageDto);
 
     void deleteById(Long id);
 
     @SneakyThrows
-    String uploadImage(byte[] content, String name);
+    String uploadImage(byte[] content, String imageDir, String fileName);
 
     @SneakyThrows
     byte[] downloadImage(String path);

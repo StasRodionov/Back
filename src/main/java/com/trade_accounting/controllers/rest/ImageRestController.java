@@ -84,7 +84,7 @@ public class ImageRestController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "update", notes = "Обновляет фото на основе переданных данных")
+    /*@ApiOperation(value = "update", notes = "Обновляет фото на основе переданных данных")
     @PutMapping
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Фото успешно обновлено"),
@@ -98,7 +98,7 @@ public class ImageRestController {
         imageService.update(imageDto);
         log.info("Обновлен экземпляр Image с id= {}", imageDto.getId());
         return ResponseEntity.ok().build();
-    }
+    }*/
 
     @ApiOperation(value = "deleteById", notes = "Удаляет фото на основе переданного ID")
     @DeleteMapping("/{id}")

@@ -21,7 +21,9 @@ import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,9 +81,12 @@ public class ProductServiceImpl implements ProductService {
                     attributeOfCalculationObjectRepository.getAttributeOfCalculationObjectById(productDto.getId()));
             productDto.setContractorDto(contractorRepository.getContractorById(productDto.getId()));
             productDto.setTaxSystemDto(taxSystemRepository.getTaxSystemById(productDto.getId()));
-            productDto.setImageDtoList(imageRepository.getAllByProductId(productDto.getId()).stream()
-                    .map(image -> imageRepository.getById(image.getId()))
-                    .collect(Collectors.toList()));
+            productDto.setImageDtoList(imageRepository.getAllByProductId(productDto.getId())
+                    .stream().map(image -> {
+                        ImageDto imageDto = ModelDtoConverter.convertToImageDto(image);
+                        imageDto.setContent(imageService.downloadImage(image.getImageUrl()));
+                        return imageDto;
+                    }).collect(Collectors.toList()));
             productDto.setProductPriceDtos(productPriceRepository.getPricesDtoByProductId(productDto.getId()));
         }
         return productDtos;
@@ -102,7 +107,11 @@ public class ProductServiceImpl implements ProductService {
         productDto.setContractorDto(contractorRepository.getContractorById(id));
         productDto.setTaxSystemDto(taxSystemRepository.getTaxSystemById(id));
         productDto.setImageDtoList(imageRepository.getAllByProductId(id)
-                .stream().peek(image -> image.setContent(imageService.downloadImage(image.getImageUrl()))).collect(Collectors.toList()));
+                .stream().map(image -> {
+                    ImageDto imageDto = ModelDtoConverter.convertToImageDto(image);
+                    imageDto.setContent(imageService.downloadImage(image.getImageUrl()));
+                    return imageDto;
+                }).collect(Collectors.toList()));
 
         List<ProductPriceDto> list = productPriceRepository.getPricesDtoByProductId(id);
         list.forEach(productPriceDto -> {
@@ -177,9 +186,7 @@ public class ProductServiceImpl implements ProductService {
             for (ImageDto imageDto : productDto.getImageDtoList()) {
                 Image image;
                 if (imageDto.getId() == null) {
-                    imageDto.setImageUrl("product_images\\" + imageDto.getImageUrl());
-                    imageDto.setImageUrl(imageService.uploadImage(imageDto.getContent(), imageDto.getImageUrl()));
-                    image = imageRepository.saveAndFlush(ModelDtoConverter.convertToImage(imageDto));
+                    image = imageService.create(imageDto);
                 } else {
                     image = imageRepository.getOne(imageDto.getId());
                 }
@@ -230,7 +237,7 @@ public class ProductServiceImpl implements ProductService {
             productDto.setContractorDto(contractorRepository.getContractorById(productDto.getId()));
             productDto.setTaxSystemDto(taxSystemRepository.getTaxSystemById(productDto.getId()));
             productDto.setImageDtoList(imageRepository.getAllByProductId(productDto.getId()).stream()
-                    .map(image -> imageRepository.getById(image.getId()))
+                    .map(image -> imageService.getById(image.getId()))
                     .collect(Collectors.toList()));
             productDto.setProductPriceDtos(productPriceRepository.getPricesDtoByProductId(productDto.getId()));
         }
@@ -252,7 +259,7 @@ public class ProductServiceImpl implements ProductService {
             productDto.setContractorDto(contractorRepository.getContractorById(productDto.getId()));
             productDto.setTaxSystemDto(taxSystemRepository.getTaxSystemById(productDto.getId()));
             productDto.setImageDtoList(imageRepository.getAllByProductId(productDto.getId()).stream()
-                    .map(image -> imageRepository.getById(image.getId()))
+                    .map(image -> imageService.getById(image.getId()))
                     .collect(Collectors.toList()));
             productDto.setProductPriceDtos(productPriceRepository.getPricesDtoByProductId(productDto.getId()));
         }

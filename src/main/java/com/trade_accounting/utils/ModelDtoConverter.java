@@ -278,6 +278,12 @@ public class ModelDtoConverter {
     }
 
     public static Image convertToImage(ImageDto imageDto) {
+
         return modelMapper.map(imageDto, Image.class);
+
+    }
+
+    public static ImageDto convertToImageDto(Image image) {
+        return modelMapper.map(image, ImageDto.class);
     }
 }

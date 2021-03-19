@@ -4,17 +4,16 @@ import com.trade_accounting.models.Image;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.services.interfaces.ImageService;
+import com.trade_accounting.utils.ModelDtoConverter;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,23 +33,22 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public ImageDto getById(Long id) {
-        ImageDto imageDto = imageRepository.getById(id);
-        imageDto.setContent(downloadImage(imageDto.getImageUrl()));
+        Image image = imageRepository.getOne(id);
+        ImageDto imageDto = ModelDtoConverter.convertToImageDto(image);
+        imageDto.setContent(downloadImage(image.getImageUrl()));
         return imageDto;
     }
 
     @Override
-    public void create(ImageDto imageDto) {
-        imageRepository.save(
-                new Image(imageDto.getImageUrl(), imageDto.getSortNumber()));
+    public Image create(ImageDto imageDto) {
+        String url = uploadImage(imageDto.getContent(),
+                "product_images\\",
+                String.valueOf(new Date().getTime()));
+        Image image = ModelDtoConverter.convertToImage(imageDto);
+        image.setImageUrl(url);
+        return imageRepository.saveAndFlush(image);
     }
 
-    @Override
-    public void update(ImageDto imageDto) {
-        imageRepository.save(
-                new Image(imageDto.getId(), imageDto.getImageUrl(), imageDto.getSortNumber())
-        );
-    }
 
     @Override
     public void deleteById(Long id) {
@@ -60,21 +58,21 @@ public class ImageServiceImpl implements ImageService {
 
     @SneakyThrows
     @Override
-    public String uploadImage(byte[] content, String name) {
-        File uploadDir = new File(UPLOAD_DIR);
+    public String uploadImage(byte[] content, String imageDir, String fileName) {
 
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
+
+        Path path = Paths.get(UPLOAD_DIR + imageDir);
+        if (!Files.exists(path)){
+            Files.createDirectories(path);
         }
 
+        path = Paths.get(path.toString() + File.separator + fileName);
 
-        File file = new File(UPLOAD_DIR + name);
-        try (OutputStream outputStream =  new FileOutputStream(file, false);){
-            outputStream.write(content);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (content != null) {
+            Files.write(path, content);
         }
-        return file.getPath();
+
+        return path.toString();
     }
 
     @SneakyThrows

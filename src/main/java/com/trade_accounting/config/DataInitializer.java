@@ -429,11 +429,11 @@ public class DataInitializer {
     }
 
     private void initImage() {
-        imageService.create(new ImageDto(null, "images\\product_images\\1.png", null, "1"));
-        imageService.create(new ImageDto(null, "images\\product_images\\2.png", null, "2"));
-        imageService.create(new ImageDto(null, "images\\product_images\\3.png", null, "3"));
-        imageService.create(new ImageDto(null, "images\\product_images\\4.png", null, "4"));
-        imageService.create(new ImageDto(null, "images\\product_images\\5.png", null, "5"));
+        imageService.create(new ImageDto(null,  null, "1"));
+        imageService.create(new ImageDto(null,  null, "2"));
+        imageService.create(new ImageDto(null,  null, "3"));
+        imageService.create(new ImageDto(null,  null, "4"));
+        imageService.create(new ImageDto(null,  null, "5"));
     }
 
     private void initLegalDetails() {
