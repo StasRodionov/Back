@@ -4,10 +4,12 @@ import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -15,41 +17,41 @@ public class AttributeOfCalculationObjectServiceImpl implements AttributeOfCalcu
 
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
 
-    public AttributeOfCalculationObjectServiceImpl(AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository) {
+    private final DtoMapper dtoMapper;
+
+    public AttributeOfCalculationObjectServiceImpl(AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository, DtoMapper dtoMapper) {
         this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override
     public List<AttributeOfCalculationObjectDto> getAll() {
-        return attributeOfCalculationObjectRepository.getAll();
+        return attributeOfCalculationObjectRepository.findAll().stream()
+                .map(dtoMapper::attributeOfCalculationObjectToAttributeOfCalculationObjectDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public AttributeOfCalculationObjectDto getById(Long id) {
-        return attributeOfCalculationObjectRepository.getById(id);
-    }
-
-    @Override
-    public void create(AttributeOfCalculationObjectDto attribute) {
-        attributeOfCalculationObjectRepository.save(
-                new AttributeOfCalculationObject(
-                        attribute.getName(),
-                        attribute.getSortNumber(),
-                        attribute.getIsService()
-                )
+        return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
+                attributeOfCalculationObjectRepository.findById(id).orElse(new AttributeOfCalculationObject())
         );
     }
 
     @Override
-    public void update(AttributeOfCalculationObjectDto attribute) {
-        attributeOfCalculationObjectRepository.save(
-                new AttributeOfCalculationObject(
-                        attribute.getId(),
-                        attribute.getName(),
-                        attribute.getSortNumber(),
-                        attribute.getIsService()
-                )
+    public AttributeOfCalculationObjectDto create(AttributeOfCalculationObjectDto attribute) {
+        AttributeOfCalculationObject savedAttribute = attributeOfCalculationObjectRepository.save(
+                dtoMapper.attributeOfCalculationObjectDtoToAttributeOfCalculationObject(attribute)
         );
+
+        return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
+                savedAttribute
+        );
+    }
+
+    @Override
+    public AttributeOfCalculationObjectDto update(AttributeOfCalculationObjectDto attribute) {
+        return create(attribute);
     }
 
     @Override
