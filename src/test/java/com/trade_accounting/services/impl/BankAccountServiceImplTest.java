@@ -38,7 +38,13 @@ class BankAccountServiceImplTest {
     @Test
     void getAll_shouldReturnListFilledBankAccountDto() {
         when(bankAccountRepository.findAll())
-                .thenReturn(getListBankAccountFromRepo());
+                .thenReturn(
+                        Stream.of(
+                                ModelStubs.getBankAccount(1L),
+                                ModelStubs.getBankAccount(2L),
+                                ModelStubs.getBankAccount(3L)
+                        ).collect(Collectors.toList())
+                );
 
         List<BankAccountDto> bankAccounts = bankAccountService.getAll();
 
@@ -63,7 +69,9 @@ class BankAccountServiceImplTest {
 
     @Test
     void getById_shouldReturnFilledBankAccountDto() {
-        Optional<BankAccount> bankAccountFromRepo = Optional.of(getBankAccountFromRepo(1L));
+        Optional<BankAccount> bankAccountFromRepo = Optional.of(
+                ModelStubs.getBankAccount(1L)
+        );
 
         when(bankAccountRepository.findById(anyLong()))
                 .thenReturn(bankAccountFromRepo);
@@ -77,7 +85,7 @@ class BankAccountServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         bankAccountService.create(
-                getBankAccountDto(1L)
+                DtoStubs.getBankAccountDto(1L)
         );
 
         verify(bankAccountRepository).save(any(BankAccount.class));
@@ -86,7 +94,7 @@ class BankAccountServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         bankAccountService.update(
-                getBankAccountDto(1L)
+                DtoStubs.getBankAccountDto(1L)
         );
 
         verify(bankAccountRepository).save(any(BankAccount.class));
@@ -99,8 +107,8 @@ class BankAccountServiceImplTest {
     }
 
     void bankAccountDtoIsCorrectlyInited(BankAccountDto bankAccount) {
+        //TODO Добавить not null полей
         assertNotNull(bankAccount, "Fail in passed employee");
         assertNotNull(bankAccount.getId(), "Fail in field 'id' of bankAccount");
-        assertNotNull(bankAccount.getName(), "Fail in field 'name' of bankAccount");
     }
 }
