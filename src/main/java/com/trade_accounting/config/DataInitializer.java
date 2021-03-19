@@ -1,6 +1,5 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
@@ -21,11 +20,15 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.TaskCommentDto;
+import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.services.impl.TaskCommentServiceImpl;
+import com.trade_accounting.services.impl.TaskServiceImpl;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.BankAccountService;
 import com.trade_accounting.services.interfaces.CompanyService;
@@ -58,6 +61,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Component
@@ -86,7 +90,8 @@ public class DataInitializer {
     private final InvoiceService invoiceService;
     private final ProjectService projectService;
     private final PaymentService paymentService;
-
+    private final TaskServiceImpl taskService;
+    private final TaskCommentServiceImpl commentService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -111,7 +116,10 @@ public class DataInitializer {
             CurrencyService currencyService,
             InvoiceService invoiceService,
             ProjectService projectService,
-            PaymentService paymentService) {
+            PaymentService paymentService,
+            TaskServiceImpl taskService,
+            TaskCommentServiceImpl commentService
+    ) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -135,6 +143,8 @@ public class DataInitializer {
         this.invoiceService = invoiceService;
         this.projectService = projectService;
         this.paymentService = paymentService;
+        this.taskService = taskService;
+        this.commentService = commentService;
     }
 
     @PostConstruct
@@ -163,6 +173,9 @@ public class DataInitializer {
         initInvoices();
         initProject();
         initPayment();
+
+        initTasks();
+        initTaskComments();
     }
 
     public void initProject(){
@@ -618,7 +631,6 @@ public class DataInitializer {
                             "2"))));
         }
     }
-
     private void initEmployees() {
         employeeService.create(new EmployeeDto(null,
                 "Vasiliev",
@@ -633,7 +645,7 @@ public class DataInitializer {
                 departmentService.getByName("Руководство"),
                 positionService.getByName("Генеральный директор"),
                 Collections.singleton(roleService.getByName("admin")),
-                imageService.getById(1L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Simonova",
                 "Sima",
@@ -647,7 +659,7 @@ public class DataInitializer {
                 departmentService.getByName("Отдел бухгалтерии"),
                 positionService.getByName("Коммерческий директор"),
                 Collections.singleton(roleService.getByName("user")),
-                imageService.getById(2L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Belive",
                 "Vera",
@@ -661,7 +673,7 @@ public class DataInitializer {
                 departmentService.getByName("Складской комплекс"),
                 positionService.getByName("Технический директор"),
                 Collections.singleton(roleService.getByName("user")),
-                imageService.getById(5L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Islentiev",
                 "Karim",
@@ -675,7 +687,7 @@ public class DataInitializer {
                 departmentService.getByName("Отдел продаж"),
                 positionService.getByName("Директор по продажам"),
                 Collections.singleton(roleService.getByName("admin")),
-                imageService.getById(4L)));
+                null));
         employeeService.create(new EmployeeDto(null,
                 "Petko",
                 "Sasha",
@@ -689,7 +701,7 @@ public class DataInitializer {
                 departmentService.getByName("Складской комплекс"),
                 positionService.getByName("Технический директор"),
                 Collections.singleton(roleService.getByName("user")),
-                imageService.getById(5L)));
+                null));
     }
 
     private void initContractors() {
@@ -925,5 +937,62 @@ public class DataInitializer {
                 false,
                 "no comments",
                 4L));
+    }
+
+    private void initTasks() {
+        Random rnd = new Random();
+        String descriptionFormat = "Описание задачи номер %d.";
+
+        var employeeIds = employeeService.getAll().stream().mapToLong(EmployeeDto::getId).toArray();
+        var idCount = employeeIds.length;
+
+        var tasks = new ArrayList<TaskDto>();
+        TaskDto dto;
+        for (int i = 0; i < 20; i++) {
+            dto = new TaskDto();
+
+            dto.setDescription(String.format(descriptionFormat, i));
+            dto.setEmployeeId(employeeIds[rnd.nextInt(idCount)]);
+            dto.setTaskAuthorId(employeeIds[rnd.nextInt(idCount)]);
+            dto.setCreationDateTime(LocalDateTime.now().minusDays(rnd.nextInt(100)));
+            dto.setDeadlineDateTime(LocalDateTime.now().plusDays(rnd.nextInt(100)));
+            dto.setCompleted(rnd.nextBoolean());
+
+            tasks.add(dto);
+        }
+
+        taskService.createAll(tasks);
+    }
+
+    private void initTaskComments() {
+        Random rnd = new Random();
+        String commentFormat = "Комментарий к задаче %d. Комментарий номер %d";
+
+        var tasks = taskService.getAll()
+                .stream()
+                .filter(task -> rnd.nextBoolean())
+                .collect(Collectors.toList());
+
+        var employeeIds = employeeService.getAll()
+                .stream()
+                .mapToLong(EmployeeDto::getId)
+                .toArray();
+
+        var commentDTOs = new ArrayList<TaskCommentDto>();
+
+        for (TaskDto dto : tasks) {
+            var commentCount = rnd.nextInt(5);
+            for (int i = 0; i < commentCount; i++) {
+                var commentDTO = new TaskCommentDto();
+                commentDTO.setCommentContent(String.format(commentFormat, dto.getId(), i));
+                commentDTO.setPublisherId(employeeIds[rnd.nextInt(employeeIds.length)]);
+                commentDTO.setPublishedDateTime(dto.getCreationDateTime().plusHours(rnd.nextInt(25)));
+                commentDTO.setTaskId(dto.getId());
+                commentDTOs.add(commentDTO);
+            }
+        }
+
+        commentService.createAll(commentDTOs);
+
     }
 }

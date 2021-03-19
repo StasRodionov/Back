@@ -82,7 +82,8 @@ public class EmployeeRestController {
     )
     public ResponseEntity<EmployeeDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти работника")
-                                                   @PathVariable(name = "id") Long id){
+                                                   @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsEmployeeById(id);
         EmployeeDto employeeDto = employeeService.getById(id);
         log.info("Запрошен экземпляр EmployeeDto с id = {}", id);
         return ResponseEntity.ok(employeeDto);
