@@ -82,16 +82,14 @@ class TypeOfContractorServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        typeOfContractorService.create(dtoMapper.typeOfContractorToTypeOfContractorDto(
-                ModelStubs.getTypeOfContractor(1L)));
+        typeOfContractorService.create(DtoStubs.getTypeOfContractorDto(1L));
 
         verify(typeOfContractorRepository).save(any(TypeOfContractor.class));
     }
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        typeOfContractorService.update(dtoMapper.typeOfContractorToTypeOfContractorDto(
-                ModelStubs.getTypeOfContractor(1L)));
+        typeOfContractorService.update(DtoStubs.getTypeOfContractorDto(1L));
 
         verify(typeOfContractorRepository).save(any(TypeOfContractor.class));
     }
