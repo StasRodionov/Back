@@ -1,8 +1,6 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Company;
 import com.trade_accounting.models.TaxSystem;
-import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.repositories.TaxSystemRepository;
 import com.trade_accounting.utils.DtoMapperImpl;
@@ -20,7 +18,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -85,15 +85,23 @@ class TaxSystemServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
+        taxSystemService.create(DtoStubs.getTaxSystemDto(1L));
 
+        verify(taxSystemRepository).save(any(TaxSystem.class));
     }
 
     @Test
-    void update() {
+    void update_shouldPassInstructionsSuccessfulUpdate() {
+        taxSystemService.update(DtoStubs.getTaxSystemDto(1L));
+
+        verify(taxSystemRepository).save(any(TaxSystem.class));
     }
 
     @Test
-    void deleteById() {
+    void deleteById_shouldPassInstructionsSuccessfulDelete() {
+        taxSystemService.deleteById(1L);
+
+        verify(taxSystemRepository).deleteById(anyLong());
     }
 
     private void taxSystemDtoIsCorrectlyInited(TaxSystemDto taxSystemDto) {
