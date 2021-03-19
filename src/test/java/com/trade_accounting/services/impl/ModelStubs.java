@@ -5,6 +5,7 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.Department;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Project;
@@ -95,6 +96,8 @@ public class ModelStubs {
     public static ContractorGroup getContractorGroup(Long id) {
         return new ContractorGroup(id, "name", "00001");
     }
+
+    public static Department getDepartment(Long id){ return new Department(id, "name", "00001");}
 
     public static TypeOfContractor getTypeOfContractor(Long id) {
         return new TypeOfContractor(id, "name", "00001");
