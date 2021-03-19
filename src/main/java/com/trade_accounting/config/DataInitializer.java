@@ -20,11 +20,15 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.TaskCommentDTO;
+import com.trade_accounting.models.dto.TaskDTO;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.services.impl.TaskCommentServiceImpl;
+import com.trade_accounting.services.impl.TaskServiceImpl;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.BankAccountService;
 import com.trade_accounting.services.interfaces.CompanyService;
@@ -57,6 +61,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Component
@@ -85,7 +90,8 @@ public class DataInitializer {
     private final InvoiceService invoiceService;
     private final ProjectService projectService;
     private final PaymentService paymentService;
-
+    private final TaskServiceImpl taskService;
+    private final TaskCommentServiceImpl commentService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -110,7 +116,10 @@ public class DataInitializer {
             CurrencyService currencyService,
             InvoiceService invoiceService,
             ProjectService projectService,
-            PaymentService paymentService) {
+            PaymentService paymentService,
+            TaskServiceImpl taskService,
+            TaskCommentServiceImpl commentService
+    ) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -134,6 +143,8 @@ public class DataInitializer {
         this.invoiceService = invoiceService;
         this.projectService = projectService;
         this.paymentService = paymentService;
+        this.taskService = taskService;
+        this.commentService = commentService;
     }
 
     @PostConstruct
@@ -162,6 +173,9 @@ public class DataInitializer {
         initInvoices();
         initProject();
         initPayment();
+
+        initTasks();
+        initTaskComments();
     }
 
     public void initProject(){
@@ -923,5 +937,62 @@ public class DataInitializer {
                 false,
                 "no comments",
                 4L));
+    }
+
+    private void initTasks() {
+        Random rnd = new Random();
+        String descriptionFormat = "Описание задачи номер %d.";
+
+        var employeeIds = employeeService.getAll().stream().mapToLong(EmployeeDto::getId).toArray();
+        var idCount = employeeIds.length;
+
+        var tasks = new ArrayList<TaskDTO>();
+        TaskDTO dto;
+        for (int i = 0; i < 20; i++) {
+            dto = new TaskDTO();
+
+            dto.setDescription(String.format(descriptionFormat, i));
+            dto.setEmployeeId(employeeIds[rnd.nextInt(idCount)]);
+            dto.setTaskAuthorId(employeeIds[rnd.nextInt(idCount)]);
+            dto.setCreationDateTime(LocalDateTime.now().minusDays(rnd.nextInt(100)));
+            dto.setDeadlineDateTime(LocalDateTime.now().plusDays(rnd.nextInt(100)));
+            dto.setCompleted(rnd.nextBoolean());
+
+            tasks.add(dto);
+        }
+
+        taskService.createAll(tasks);
+    }
+
+    private void initTaskComments() {
+        Random rnd = new Random();
+        String commentFormat = "Комментарий к задаче %d. Комментарий номер %d";
+
+        var tasks = taskService.getAll()
+                .stream()
+                .filter(task -> rnd.nextBoolean())
+                .collect(Collectors.toList());
+
+        var employeeIds = employeeService.getAll()
+                .stream()
+                .mapToLong(EmployeeDto::getId)
+                .toArray();
+
+        var commentDTOs = new ArrayList<TaskCommentDTO>();
+
+        for (TaskDTO dto : tasks) {
+            var commentCount = rnd.nextInt(5);
+            for (int i = 0; i < commentCount; i++) {
+                var commentDTO = new TaskCommentDTO();
+                commentDTO.setCommentContent(String.format(commentFormat, dto.getId(), i));
+                commentDTO.setPublisherId(employeeIds[rnd.nextInt(employeeIds.length)]);
+                commentDTO.setPublishedDateTime(dto.getCreationDateTime().plusHours(rnd.nextInt(25)));
+                commentDTO.setTaskId(dto.getId());
+                commentDTOs.add(commentDTO);
+            }
+        }
+
+        commentService.createAll(commentDTOs);
+
     }
 }
