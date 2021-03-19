@@ -128,6 +128,5 @@ class AttributeOfCalculationObjectServiceImplTest {
     void attributeOfCalculationObjectDtoIsCorrectlyInited(AttributeOfCalculationObjectDto attributeOfCalculationObject) {
         assertNotNull(attributeOfCalculationObject, "Fail in passed employee");
         assertNotNull(attributeOfCalculationObject.getId(), "Fail in field 'id' of attributeOfCalculationObject");
-        assertNotNull(attributeOfCalculationObject.getName(), "Fail in field 'name' of attributeOfCalculationObject");
     }
 }
