@@ -16,9 +16,9 @@ public interface CompanyService {
 
     CompanyDto getByEmail(String email);
 
-    void create(CompanyDto companyDto);
+    CompanyDto create(CompanyDto companyDto);
 
-    void update(CompanyDto companyDto);
+    CompanyDto update(CompanyDto companyDto);
 
     void deleteById(Long id);
 

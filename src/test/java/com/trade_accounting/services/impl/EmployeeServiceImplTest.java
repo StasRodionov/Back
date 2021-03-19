@@ -1,25 +1,15 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
-import com.trade_accounting.models.Image;
-import com.trade_accounting.models.Position;
-import com.trade_accounting.models.Role;
-import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.PositionDto;
-import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -30,11 +20,9 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -67,7 +55,13 @@ class EmployeeServiceImplTest {
     @Test
     void getAll_shouldReturnListFilledEmployeeDto() {
         when(employeeRepository.findAll())
-                .thenReturn(getListEmployeeFromRepo());
+                .thenReturn(
+                        Stream.of(
+                                ModelStubs.getEmployee(1L),
+                                ModelStubs.getEmployee(2L),
+                                ModelStubs.getEmployee(1L)
+                        ).collect(Collectors.toList())
+                );
 
         List<EmployeeDto> employees = employeeService.getAll();
 
@@ -80,9 +74,26 @@ class EmployeeServiceImplTest {
     }
 
     @Test
+    void getAll_shouldReturnEmptyListEmployeeDto() {
+        when(employeeRepository.findAll())
+                .thenReturn(new ArrayList<>());
+
+        List<EmployeeDto> employees = employeeService.getAll();
+
+        assertNotNull(employees, "failure - expected that a list of employeeDto not null");
+        assertEquals(0, employees.size(), "failure - expected that size of list of employeeDto equals 0");
+    }
+
+    @Test
     void search_shouldReturnListFilledEmployeeDto() {
         when(employeeRepository.findAll(Mockito.<Specification<Employee>>any()))
-                .thenReturn(getListEmployeeFromRepo());
+                .thenReturn(
+                        Stream.of(
+                                ModelStubs.getEmployee(1L),
+                                ModelStubs.getEmployee(2L),
+                                ModelStubs.getEmployee(3L)
+                        ).collect(Collectors.toList())
+                );
 
         List<EmployeeDto> employees = employeeService
                 .search(SpecificationStubs.getEmployeeSpecificationStub());
@@ -109,7 +120,9 @@ class EmployeeServiceImplTest {
 
     @Test
     void getById_shouldReturnFilledEmployeeDto() {
-        Optional<Employee> employeeFromRepo = Optional.of(getEmployeeFromRepo(1L));
+        Optional<Employee> employeeFromRepo = Optional.of(
+                ModelStubs.getEmployee(1L)
+        );
 
         when(employeeRepository.findById(anyLong()))
                 .thenReturn(employeeFromRepo);
@@ -123,7 +136,7 @@ class EmployeeServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         employeeService.create(
-                getFullEmployeeDto(1L)
+            DtoStubs.getEmployeeDto(1L)
         );
 
         verify(roleRepository, times(3)).findById(anyLong());
@@ -135,8 +148,8 @@ class EmployeeServiceImplTest {
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        employeeService.create(
-                getFullEmployeeDto(1L)
+        employeeService.update(
+            DtoStubs.getEmployeeDto(1L)
         );
 
         verify(roleRepository, times(3)).findById(anyLong());
@@ -154,7 +167,10 @@ class EmployeeServiceImplTest {
 
     @Test
     void getByEmail_shouldReturnFilledEmployeeDto() {
-        Optional<Employee> employeeFromRepo = Optional.of(getEmployeeFromRepo(1L));
+        Optional<Employee> employeeFromRepo = Optional.of(
+                ModelStubs.getEmployee(1L)
+        );
+
         when(employeeRepository.findByEmail(anyString()))
                 .thenReturn(employeeFromRepo);
 
@@ -168,6 +184,7 @@ class EmployeeServiceImplTest {
     @Test
     void getByEmail_shouldReturnEmptyEmployeeDto() {
         Optional<Employee> employeeFromRepo = Optional.empty();
+
         when(employeeRepository.findByEmail(anyString()))
                 .thenReturn(employeeFromRepo);
 
@@ -182,106 +199,8 @@ class EmployeeServiceImplTest {
         assertNotNull(employee, "Fail in passed employee");
         assertNotNull(employee.getId(), "Fail in field 'id' of employee");
         assertNotNull(employee.getLastName(), "Fail in field 'lastName' of employee");
-        assertNotNull(employee.getSortNumber(), "Fail in field 'sortNumber' of employee");
         assertNotNull(employee.getEmail(), "Fail in field 'email' of employee");
         assertNotNull(employee.getRoleDto(), "Fail in field 'roleDto' of employee");
-        assertTrue(employee.getRoleDto().size() > 0, "Expected that size of EmployeeDto role list greater than 0");
-    }
-
-
-    //Util methods
-    EmployeeDto getEmployeeDtoFromRepo(Long id) {
-        return new EmployeeDto(id,
-                        "LastName",
-                        "FirstName",
-                        "MiddleName",
-                        String.valueOf(id),
-                        String.valueOf(id).repeat(11),
-                        String.valueOf(id).repeat(12),
-                        "Description",
-                        "email@email.com",
-                        "password");
-    }
-
-    EmployeeDto getFullEmployeeDto(Long id) {
-        EmployeeDto employee = getEmployeeDtoFromRepo(id);
-
-        employee.setDepartmentDto(getDepartmentDtoFromRepo(id));
-        employee.setPositionDto(getPositionDtoFromRepo(id));
-        employee.setRoleDto(getRoleDtoSetFromRepo());
-        employee.setImageDto(getImageDtoFromRepo(id));
-
-        return employee;
-    }
-
-    List<EmployeeDto> getListEmployeeDtoFromRepo() {
-        return Stream.of(
-                getEmployeeDtoFromRepo(1L),
-                getEmployeeDtoFromRepo(2L),
-                getEmployeeDtoFromRepo(3L)
-        ).collect(Collectors.toList());
-    }
-
-    Employee getEmployeeFromRepo(Long id) {
-        return new Employee(
-                id,
-                "LastName",
-                "FirstName",
-                "MiddleName",
-                String.valueOf(id),
-                String.valueOf(id).repeat(11),
-                String.valueOf(id).repeat(12),
-                "Description",
-                "email@email.com",
-                "password",
-                new Department(id, "dep name", String.valueOf(id)),
-                new Position(id, "pos name", String.valueOf(id)),
-                getRolesSetFromRepo(),
-                new Image(id, "img url", String.valueOf(id))
-        );
-    }
-
-    List<Employee> getListEmployeeFromRepo() {
-        return Stream.of(
-                getEmployeeFromRepo(1L),
-                getEmployeeFromRepo(2L),
-                getEmployeeFromRepo(3L)
-        ).collect(Collectors.toList());
-    }
-
-    DepartmentDto getDepartmentDtoFromRepo(Long id) {
-        return new DepartmentDto(id, "Department name", String.valueOf(id));
-    }
-
-    PositionDto getPositionDtoFromRepo(Long id) {
-        return new PositionDto(id, "Position name", String.valueOf(id));
-    }
-
-    ImageDto getImageDtoFromRepo(Long id) {
-        return new ImageDto(id, "imageUrl", String.valueOf(id));
-    }
-
-    RoleDto getRoleDtoFromRepo(Long id) {
-        return new RoleDto(id, "ROLE_USER", String.valueOf(id));
-    }
-
-    Set<RoleDto> getRoleDtoSetFromRepo() {
-        return Stream.of(
-                getRoleDtoFromRepo(1L),
-                getRoleDtoFromRepo(2L),
-                getRoleDtoFromRepo(3L)
-        ).collect(Collectors.toSet());
-    }
-
-    Role getRoleFromRepo(Long id) {
-        return new Role(id, "ROLE_USER", String.valueOf(id));
-    }
-
-    Set<Role> getRolesSetFromRepo() {
-        return Stream.of(
-                getRoleFromRepo(1L),
-                getRoleFromRepo(2L),
-                getRoleFromRepo(3L)
-        ).collect(Collectors.toSet());
+        assertTrue(employee.getRoleDto().size() >= 1, "Expected that size of EmployeeDto role list greater than 0");
     }
 }

@@ -11,5 +11,4 @@ class TradeAccountingApplicationTests {
     void contextLoads() {
 
     }
-
 }

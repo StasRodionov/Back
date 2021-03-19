@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,9 +29,11 @@ import java.util.List;
 public class WarehouseRestController {
 
     private final WarehouseService warehouseService;
+    private final CheckEntityService checkEntityService;
 
-    public WarehouseRestController(WarehouseService warehouseService) {
+    public WarehouseRestController(WarehouseService warehouseService, CheckEntityService checkEntityService) {
         this.warehouseService = warehouseService;
+        this.checkEntityService = checkEntityService;
     }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех складов")
@@ -56,6 +59,7 @@ public class WarehouseRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<WarehouseDto> getById(@PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsWarehouseById(id);
         WarehouseDto warehouseDto = warehouseService.getById(id);
         log.info("Запрошен экземпляр WarehouseDto с id = {}", id);
         return ResponseEntity.ok(warehouseDto);
@@ -86,6 +90,7 @@ public class WarehouseRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto) {
+        checkEntityService.checkExistsWarehouseById(warehouseDto.getId());
         warehouseService.update(warehouseDto);
         log.info("Обновлен экземпляр WarehouseDto с id = {}", warehouseDto.getId());
         return ResponseEntity.ok().build();

@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.services.interfaces.ContractService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,14 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Conjunction;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Or;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +55,33 @@ public class ContractRestController {
         List<ContractDto> contracts = contractService.getAll();
         log.info("Запрошен список ContractDto");
         return ResponseEntity.ok(contracts);
+    }
+
+    @GetMapping("/search")
+    @ApiOperation(value = "search", notes = "Получение списка договоров по заданным параметрам")
+    public ResponseEntity<List<ContractDto>> search(
+            @Conjunction(value = {
+                    @Or ({@Spec(path = "bankAccount.bank", params = "bankAccount",spec = LikeIgnoreCase.class),
+                            @Spec(path = "bankAccount.account", params = "bankAccount", spec = Like.class)}),
+
+                    @Or({@Spec(path = "legalDetail.firstName", params = "legalDetails", spec = LikeIgnoreCase.class),
+                            @Spec(path = "legalDetail.lastName", params = "legalDetails", spec = LikeIgnoreCase.class),
+                            @Spec(path = "legalDetail.middleName", params = "legalDetails", spec = LikeIgnoreCase.class)
+                    }
+                            )},
+                    and = {
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                            @Spec(path = "amount", params = "amount", spec = Equal.class),
+                            @Spec(path = "contractor.name", params = "contractor", spec = LikeIgnoreCase.class),
+                            @Spec(path = "contractDate", params = "contractDate", spec = Equal.class),
+                            @Spec(path = "company.name", params = "company", spec = LikeIgnoreCase.class),
+                            @Spec(path = "archive", params = "archive", spec = Equal.class),
+                            @Spec(path = "number", params = "number", spec = Like.class),
+                            @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
+            }) Specification<Contract> specification
+    ) {
+        log.info("Запрошен список контрактов по параметрам");
+        return ResponseEntity.ok(contractService.search(specification));
     }
 
     @GetMapping("/{id}")
