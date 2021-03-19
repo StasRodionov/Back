@@ -12,13 +12,8 @@ public interface ImageService {
 
     ImageDto getById(Long id);
 
-    Image create(ImageDto imageDto);
+    Image create(ImageDto imageDto, String imageDir);
 
     void deleteById(Long id);
 
-    @SneakyThrows
-    String uploadImage(byte[] content, String imageDir, String fileName);
-
-    @SneakyThrows
-    byte[] downloadImage(String path);
 }

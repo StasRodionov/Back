@@ -429,11 +429,11 @@ public class DataInitializer {
     }
 
     private void initImage() {
-        imageService.create(new ImageDto(null,  null, "1"));
-        imageService.create(new ImageDto(null,  null, "2"));
-        imageService.create(new ImageDto(null,  null, "3"));
-        imageService.create(new ImageDto(null,  null, "4"));
-        imageService.create(new ImageDto(null,  null, "5"));
+        imageService.create(new ImageDto(null,  null, "1"), "employees");
+        imageService.create(new ImageDto(null,  null, "2"), "employees");
+        imageService.create(new ImageDto(null,  null, "3"), "employees");
+        imageService.create(new ImageDto(null,  null, "4"), "employees");
+        imageService.create(new ImageDto(null,  null, "5"), "employees");
     }
 
     private void initLegalDetails() {
@@ -871,7 +871,7 @@ public class DataInitializer {
 
         for (int i = 0; i < 350; i++) {
 
-            productService.create(new ProductDto(
+            productService.save(new ProductDto(
                     null,
                     "Яблоки" + i,
                     new BigDecimal("1.0"),
@@ -887,7 +887,7 @@ public class DataInitializer {
                     productGroupDtoList.get(0),
                     attributeOfCalculationObjectDtoList.get(0)
             ));
-            productService.create(new ProductDto(
+            productService.save(new ProductDto(
                     null,
                     "Бананы" + i,
                     new BigDecimal("1.0"),
@@ -903,7 +903,7 @@ public class DataInitializer {
                     productGroupDtoList.get(1),
                     attributeOfCalculationObjectDtoList.get(1)
             ));
-            productService.create(new ProductDto(
+            productService.save(new ProductDto(
                     null,
                     "Мандарины" + i,
                     new BigDecimal("1.0"),

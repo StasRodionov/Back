@@ -50,41 +50,58 @@ import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.repositories.ImageRepository;
+import lombok.SneakyThrows;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface DtoMapper {
+public abstract class DtoMapper {
+
+    private static final String UPLOAD_DIR = "images";
+
+    @Autowired
+    private ImageRepository imageRepository;
 
     //AttributeOfCalculationObjectDto
-    AttributeOfCalculationObjectDto
+    public abstract AttributeOfCalculationObjectDto
     attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
             AttributeOfCalculationObject attributeOfCalculationObject
     );
 
-    AttributeOfCalculationObject
+    public abstract AttributeOfCalculationObject
     attributeOfCalculationObjectDtoToAttributeOfCalculationObject(
             AttributeOfCalculationObjectDto attributeOfCalculationObjectDto
     );
 
     //BankAccount
-    BankAccountDto bankAccountToBankAccountDto(BankAccount bankAccount);
+    public abstract BankAccountDto bankAccountToBankAccountDto(BankAccount bankAccount);
 
-    BankAccount bankAccountDtoToBankAccount(BankAccountDto bankAccountDto);
+    public abstract BankAccount bankAccountDtoToBankAccount(BankAccountDto bankAccountDto);
 
     //Company
     @Mappings({
             @Mapping(source = "bankAccounts", target = "bankAccountDto"),
             @Mapping(source = "legalDetail", target = "legalDetailDto")
     })
-    CompanyDto companyToCompanyDto(Company company);
+    public abstract CompanyDto companyToCompanyDto(Company company);
 
     @Mappings({
             @Mapping(source = "bankAccountDto", target = "bankAccounts"),
             @Mapping(source = "legalDetailDto", target = "legalDetail")
     })
-    Company companyDtoToCompany(CompanyDto companyDto);
+    public abstract Company companyDtoToCompany(CompanyDto companyDto);
 
     //Contract
     @Mappings({
@@ -93,7 +110,7 @@ public interface DtoMapper {
             @Mapping(source = "contractor", target = "contractorDto"),
             @Mapping(source = "legalDetail", target = "legalDetailDto")
     })
-    ContractDto contractToContractDto(Contract contract);
+    public abstract ContractDto contractToContractDto(Contract contract);
 
     @Mappings({
             @Mapping(source = "companyDto", target = "company"),
@@ -101,7 +118,7 @@ public interface DtoMapper {
             @Mapping(source = "contractorDto", target = "contractor"),
             @Mapping(source = "legalDetailDto", target = "legalDetail")
     })
-    Contract contractDtoToContract(ContractDto contractDto);
+    public abstract Contract contractDtoToContract(ContractDto contractDto);
 
     //Contractor
     @Mappings({
@@ -111,7 +128,7 @@ public interface DtoMapper {
             @Mapping(source = "bankAccounts", target = "bankAccountDto"),
             @Mapping(source = "legalDetail", target = "legalDetailDto")
     })
-    ContractorDto contractorToContractorDto(Contractor contractor);
+    public abstract ContractorDto contractorToContractorDto(Contractor contractor);
 
     @Mappings({
             @Mapping(source = "contractorGroupDto", target = "contractorGroup"),
@@ -120,22 +137,22 @@ public interface DtoMapper {
             @Mapping(source = "bankAccountDto", target = "bankAccounts"),
             @Mapping(source = "legalDetailDto", target = "legalDetail")
     })
-    Contractor contractorDtoToContractor(ContractorDto contractorDto);
+    public abstract Contractor contractorDtoToContractor(ContractorDto contractorDto);
 
     //ContractorGroup
-    ContractorGroupDto contractorGroupToContractorGroupDto(ContractorGroup contractorGroup);
+    public abstract ContractorGroupDto contractorGroupToContractorGroupDto(ContractorGroup contractorGroup);
 
-    ContractorGroup contractorGroupDtoToContractorGroup(ContractorGroupDto contractorGroupDto);
+    public abstract ContractorGroup contractorGroupDtoToContractorGroup(ContractorGroupDto contractorGroupDto);
 
     //Currency
-    CurrencyDto currencyToCurrencyDto(Currency currency);
+    public abstract CurrencyDto currencyToCurrencyDto(Currency currency);
 
-    Currency currencyDtoToCurrency(CurrencyDto currencyDto);
+    public abstract Currency currencyDtoToCurrency(CurrencyDto currencyDto);
 
     //Department
-    DepartmentDto departmentToDepartmentDto(Department department);
+    public abstract DepartmentDto departmentToDepartmentDto(Department department);
 
-    Department departmentDtoToDepartment(DepartmentDto department);
+    public abstract Department departmentDtoToDepartment(DepartmentDto department);
 
     // Employee
     @Mappings({
@@ -144,7 +161,7 @@ public interface DtoMapper {
             @Mapping(source = "roles", target = "roleDto"),
             @Mapping(source = "image", target = "imageDto")
     })
-    EmployeeDto employeeToEmployeeDto(Employee emp);
+    public abstract EmployeeDto employeeToEmployeeDto(Employee emp);
 
     @Mappings({
             @Mapping(source = "departmentDto", target = "department"),
@@ -153,12 +170,64 @@ public interface DtoMapper {
             @Mapping(source = "imageDto", target = "image"),
             @Mapping(target = "authorities", ignore = true)
     })
-    Employee employeeDtoToEmployee(EmployeeDto emp);
+    public abstract Employee employeeDtoToEmployee(EmployeeDto emp);
 
     //Image
-    ImageDto imageToImageDto(Image image);
+    public ImageDto imageToImageDto(Image image) {
+        ImageDto imageDto = new ImageDto();
+        imageDto.setContent(downloadImage(image.getImageUrl()));
+        imageDto.setId(image.getId());
+        imageDto.setSortNumber(image.getSortNumber());
+        return imageDto;
+    }
 
-    Image imageDtoToImage(ImageDto image);
+    public Image imageDtoToImage(ImageDto imageDto, String imageDir) {
+        Image image = new Image();
+        if (imageDto.getId() == null) {
+            String url = uploadImage(imageDto.getContent(), imageDir, String.valueOf(new Date().getTime()));
+            image.setImageUrl(url);
+            image = imageRepository.saveAndFlush(image);
+        } else {
+            image = imageRepository.getOne(imageDto.getId());
+        }
+        return image;
+    }
+
+    public List<Image> toImage(Collection<ImageDto> imageDtos, String imageDir) {
+        if ( imageDtos == null ) {
+            return null;
+        }
+        List<Image> list = new ArrayList<>(imageDtos.size());
+        for ( ImageDto imageDto : imageDtos ) {
+            list.add(imageDtoToImage(imageDto, imageDir));
+        }
+        return list;
+    }
+
+    public abstract List<ImageDto> toImageDto(Collection<Image> images);
+
+    @SneakyThrows
+    public String uploadImage(byte[] content, String imageDir, String fileName) {
+        Path path = Paths.get(UPLOAD_DIR + File.separator + imageDir);
+        if (!Files.exists(path)) {
+            Files.createDirectories(path);
+        }
+        path = Paths.get(path.toString() + File.separator + fileName);
+        if (content != null) {
+            Files.write(path, content);
+        }
+        return path.toString();
+    }
+
+    @SneakyThrows
+    public byte[] downloadImage(String url) {
+        Path path = Paths.get(url);
+        if (Files.exists(path)){
+            return Files.readAllBytes(path);
+        } else {
+            return null;
+        }
+    }
 
     //Invoice
     @Mappings({
@@ -166,38 +235,38 @@ public interface DtoMapper {
             @Mapping(source = "contractor", target = "contractorDto"),
             @Mapping(source = "warehouse", target = "warehouseDto"),
     })
-    InvoiceDto invoiceToInvoiceDto(Invoice invoice);
+    public abstract InvoiceDto invoiceToInvoiceDto(Invoice invoice);
 
     @Mappings({
             @Mapping(source = "companyDto", target = "company"),
             @Mapping(source = "contractorDto", target = "contractor"),
             @Mapping(source = "warehouseDto", target = "warehouse"),
     })
-    Invoice invoiceDtoToInvoice(InvoiceDto emp);
+    public abstract Invoice invoiceDtoToInvoice(InvoiceDto emp);
 
     //InvoiceProduct
     @Mappings({
             @Mapping(source = "invoice", target = "invoiceDto"),
             @Mapping(source = "product", target = "productDto")
     })
-    InvoiceProductDto invoiceProductToInvoiceProductDto(InvoiceProduct invoiceProduct);
+    public abstract InvoiceProductDto invoiceProductToInvoiceProductDto(InvoiceProduct invoiceProduct);
 
     @Mappings({
             @Mapping(source = "invoiceDto", target = "invoice"),
             @Mapping(source = "productDto", target = "product")
     })
-    InvoiceProduct invoiceProductDtoToInvoiceProduct(InvoiceProductDto invoiceProductDto);
+    public abstract InvoiceProduct invoiceProductDtoToInvoiceProduct(InvoiceProductDto invoiceProductDto);
 
     //LegalDetail
     @Mappings({
             @Mapping(source = "typeOfContractor", target = "typeOfContractorDto")
     })
-    LegalDetailDto legalDetailToLegalDetailDto(LegalDetail legalDetail);
+    public abstract LegalDetailDto legalDetailToLegalDetailDto(LegalDetail legalDetail);
 
     @Mappings({
             @Mapping(source = "typeOfContractorDto", target = "typeOfContractor")
     })
-    LegalDetail legalDetailDtoToLegalDetail(LegalDetailDto legalDetailDto);
+    public abstract LegalDetail legalDetailDtoToLegalDetail(LegalDetailDto legalDetailDto);
 
     //Payment
     @Mappings({
@@ -206,7 +275,7 @@ public interface DtoMapper {
             @Mapping(source = "contract", target = "contractDto"),
             @Mapping(source = "project", target = "projectDto")
     })
-    PaymentDto paymentToPaymentDto(Payment payment);
+    public abstract PaymentDto paymentToPaymentDto(Payment payment);
 
     @Mappings({
             @Mapping(source = "companyDto", target = "company"),
@@ -214,12 +283,12 @@ public interface DtoMapper {
             @Mapping(source = "contractDto", target = "contract"),
             @Mapping(source = "projectDto", target = "project")
     })
-    Payment paymentDtoToPayment(PaymentDto paymentDto);
+    public abstract Payment paymentDtoToPayment(PaymentDto paymentDto);
 
     //Position
-    PositionDto positionToPositionDto(Position position);
+    public abstract PositionDto positionToPositionDto(Position position);
 
-    Position positionDtoToPosition(PositionDto position);
+    public abstract Position positionDtoToPosition(PositionDto position);
 
     //Product
     @Mappings({
@@ -227,79 +296,79 @@ public interface DtoMapper {
             @Mapping(source = "contractor", target = "contractorDto"),
             @Mapping(source = "productPrices", target = "productPriceDtos"),
             @Mapping(source = "taxSystem", target = "taxSystemDto"),
-            @Mapping(source = "images", target = "imageDto"),
             @Mapping(source = "productGroup", target = "productGroupDto"),
             @Mapping(source = "attributeOfCalculationObject", target = "attributeOfCalculationObjectDto")
     })
-    ProductDto productToProductDto(Product product);
+    public abstract ProductDto productToProductDto(Product product);
 
     @Mappings({
             @Mapping(source = "unitDto", target = "unit"),
             @Mapping(source = "contractorDto", target = "contractor"),
             @Mapping(source = "productPriceDtos", target = "productPrices"),
             @Mapping(source = "taxSystemDto", target = "taxSystem"),
-            @Mapping(source = "imageDto", target = "images"),
             @Mapping(source = "productGroupDto", target = "productGroup"),
             @Mapping(source = "attributeOfCalculationObjectDto", target = "attributeOfCalculationObject")
     })
-    Product productDtoToProduct(ProductDto productDto);
+    public abstract Product productDtoToProduct(ProductDto productDto);
+
+    public abstract List<ProductDto> toProductDto(Collection<Product> products);
 
     //ProductGroup
     //На момент написания не известно работает или нет из-за рекурсии
     @Mappings({
             @Mapping(source = "productGroup.id", target = "parentId")
     })
-    ProductGroupDto productGroupToProductGroupDto(ProductGroup productGroup);
+    public abstract ProductGroupDto productGroupToProductGroupDto(ProductGroup productGroup);
 
     @Mappings({
             @Mapping(source = "parentId", target = "productGroup.id")
     })
-    ProductGroup productGroupDtoToProductGroup(ProductGroupDto productGroupDto);
+    public abstract ProductGroup productGroupDtoToProductGroup(ProductGroupDto productGroupDto);
 
     //ProductPrice
     @Mappings({
             @Mapping(source = "typeOfPrice", target = "typeOfPriceDto")
     })
-    ProductPriceDto productPriceToProductPriceDto(ProductPrice productPrice);
+    public abstract ProductPriceDto productPriceToProductPriceDto(ProductPrice productPrice);
 
     @Mappings({
             @Mapping(source = "typeOfPriceDto", target = "typeOfPrice")
     })
-    ProductPrice productPriceDtoToProductPrice(ProductPriceDto productPriceDto);
+    public abstract ProductPrice productPriceDtoToProductPrice(ProductPriceDto productPriceDto);
 
 
     //Project
-    ProjectDto projectToProjectDto(Project project);
+    public abstract ProjectDto projectToProjectDto(Project project);
 
-    Project projectDtoToProject(ProjectDto projectDto);
+    public abstract Project projectDtoToProject(ProjectDto projectDto);
 
     //Role
-    RoleDto roleToRoleDto(Role role);
+    public abstract RoleDto roleToRoleDto(Role role);
 
-    Role roleDtoToRole(RoleDto role);
+    public abstract Role roleDtoToRole(RoleDto role);
 
     //TaxSystem
-    TaxSystemDto taxSystemToTaxSystemDto(TaxSystem taxSystem);
+    public abstract TaxSystemDto taxSystemToTaxSystemDto(TaxSystem taxSystem);
 
-    TaxSystem taxSystemDtoToTaxSystem(TaxSystemDto taxSystemDto);
+    public abstract TaxSystem taxSystemDtoToTaxSystem(TaxSystemDto taxSystemDto);
 
     //TypeOfContractor
-    TypeOfContractorDto typeOfContractorToTypeOfContractorDto(TypeOfContractor typeOfContractor);
+    public abstract TypeOfContractorDto typeOfContractorToTypeOfContractorDto(TypeOfContractor typeOfContractor);
 
-    TypeOfContractor typeOfContractorDtoToTypeOfContractor(TypeOfContractorDto typeOfContractorDto);
+    public abstract TypeOfContractor typeOfContractorDtoToTypeOfContractor(TypeOfContractorDto typeOfContractorDto);
 
     //TypeOfPrice
-    TypeOfPriceDto typeOfPriceToTypeOfPriceDto(TypeOfPrice typeOfPrice);
+    public abstract TypeOfPriceDto typeOfPriceToTypeOfPriceDto(TypeOfPrice typeOfPrice);
 
-    TypeOfPrice typeOfPriceDtoToTypeOfPrice(TypeOfPriceDto typeOfPriceDto);
+    public abstract TypeOfPrice typeOfPriceDtoToTypeOfPrice(TypeOfPriceDto typeOfPriceDto);
 
     //Unit
-    UnitDto unitToUnitDto(Unit unit);
+    public abstract UnitDto unitToUnitDto(Unit unit);
 
-    Unit unitDtoToUnit(Unit unit);
+    public abstract Unit unitDtoToUnit(Unit unit);
 
     //Warehouse
-    WarehouseDto warehouseToWarehouseDto(Warehouse warehouse);
+    public abstract WarehouseDto warehouseToWarehouseDto(Warehouse warehouse);
 
-    Warehouse warehouseDtoToWarehouse(WarehouseDto warehouseDto);
+    public abstract Warehouse warehouseDtoToWarehouse(WarehouseDto warehouseDto);
 }
