@@ -8,6 +8,7 @@ import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Project;
+import com.trade_accounting.models.Role;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.TypeOfPrice;
@@ -113,5 +114,9 @@ public class ModelStubs {
                 "numberOfCertifacate", LocalDate.now(),
                 getTypeOfContractor(id)
         );
+    }
+
+    public static Role getRole(Long id) {
+        return new Role(id, "name", "00001");
     }
 }
