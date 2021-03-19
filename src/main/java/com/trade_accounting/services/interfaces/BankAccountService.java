@@ -10,9 +10,9 @@ public interface BankAccountService {
 
     BankAccountDto getById(Long id);
 
-    void create(BankAccountDto dto);
+    BankAccountDto create(BankAccountDto dto);
 
-    void update(BankAccountDto dto);
+    BankAccountDto update(BankAccountDto dto);
 
     void deleteById(Long id);
 }
