@@ -10,9 +10,9 @@ public interface AttributeOfCalculationObjectService {
 
     AttributeOfCalculationObjectDto getById(Long id);
 
-    void create(AttributeOfCalculationObjectDto attribute);
+    AttributeOfCalculationObjectDto create(AttributeOfCalculationObjectDto attribute);
 
-    void update(AttributeOfCalculationObjectDto attribute);
+    AttributeOfCalculationObjectDto update(AttributeOfCalculationObjectDto attribute);
 
     void deleteById(Long id);
 }
