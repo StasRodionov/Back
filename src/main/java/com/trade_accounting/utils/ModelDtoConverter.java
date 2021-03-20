@@ -5,10 +5,11 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Employee;
-import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.ProductPrice;
+import com.trade_accounting.models.Task;
+import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPrice;
@@ -25,6 +26,8 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.TaskCommentDTO;
+import com.trade_accounting.models.dto.TaskDTO;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
@@ -277,13 +280,50 @@ public class ModelDtoConverter {
         return bankAccountList;
     }
 
-    public static Image convertToImage(ImageDto imageDto) {
-
-        return modelMapper.map(imageDto, Image.class);
-
+    public static TaskDTO toTaskDTO(Task entity) {
+        return new TaskDTO(
+                entity.getId(),
+                entity.getDescription(),
+                entity.getTaskEmployee().getId(),
+                entity.getTaskAuthor().getId(),
+                entity.getCreationDateTime(),
+                entity.getDeadlineDateTime(),
+                entity.isCompleted(),
+                0
+        );
     }
 
-    public static ImageDto convertToImageDto(Image image) {
-        return modelMapper.map(image, ImageDto.class);
+    public static Task toTaskEntity(TaskDTO dto) {
+        var entity = new Task();
+
+        entity.setId(dto.getId());
+        entity.setDescription(dto.getDescription());
+        entity.setCreationDateTime(dto.getCreationDateTime());
+        entity.setDeadlineDateTime(dto.getDeadlineDateTime());
+        entity.setCompleted(dto.isCompleted());
+
+        return entity;
+    }
+
+    public static TaskCommentDTO toTaskCommentDTO(TaskComment entity) {
+        var dto = new TaskCommentDTO();
+
+        dto.setId(entity.getId());
+        dto.setCommentContent(entity.getCommentContent());
+        dto.setPublisherId(entity.getPublisher().getId());
+        dto.setPublishedDateTime(entity.getPublishedDateTime());
+        dto.setTaskId(entity.getTask().getId());
+
+        return dto;
+    }
+
+    public static TaskComment toTaskCommentEntity(TaskCommentDTO dto) {
+        var entity = new TaskComment();
+
+        entity.setId(dto.getId());
+        entity.setCommentContent(dto.getCommentContent());
+        entity.setPublishedDateTime(dto.getPublishedDateTime());
+
+        return entity;
     }
 }

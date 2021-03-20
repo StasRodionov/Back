@@ -63,9 +63,11 @@ public class ImageRestController {
             value = "Переданный ID  в URL по которому необходимо найти фото",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        ImageDto image = imageService.getById(id);
+
+        ImageDto imageDto = imageService.getById(id);
+
         log.info("Запрошен экземпляр Image с id= {}", id);
-        return ResponseEntity.ok(image);
+        return ResponseEntity.ok(imageDto);
     }
 
 

@@ -336,7 +336,6 @@ public abstract class DtoMapper {
     })
     public abstract ProductPrice productPriceDtoToProductPrice(ProductPriceDto productPriceDto);
 
-
     //Project
     public abstract ProjectDto projectToProjectDto(Project project);
 

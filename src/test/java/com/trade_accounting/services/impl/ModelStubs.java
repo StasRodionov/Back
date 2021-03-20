@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
@@ -20,6 +21,10 @@ import java.util.stream.Stream;
 
 public class ModelStubs {
     //TODO Вынести заглушки моделей из классов сервисов сюда
+
+    public static AttributeOfCalculationObject getAttributeOfCalculationObject(Long id) {
+        return new AttributeOfCalculationObject(id, "name", "00001", true);
+    }
 
     public static Payment getPayment(Long id) {
         return new Payment(
