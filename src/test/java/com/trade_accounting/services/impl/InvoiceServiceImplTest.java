@@ -1,13 +1,8 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.Invoice;
-import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.InvoiceDto;
-import com.trade_accounting.repositories.CompanyRepository;
-import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.InvoiceRepository;
-import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,15 +28,6 @@ class InvoiceServiceImplTest {
 
     @Mock
     private InvoiceRepository invoiceRepository;
-
-    @Mock
-    private CompanyRepository companyRepository;
-
-    @Mock
-    private ContractorRepository contractorRepository;
-
-    @Mock
-    private WarehouseRepository warehouseRepository;
 
     @Spy
     private DtoMapperImpl dtoMapper;
