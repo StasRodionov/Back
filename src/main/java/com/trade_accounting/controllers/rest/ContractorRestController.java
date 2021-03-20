@@ -55,11 +55,26 @@ public class ContractorRestController {
     )
     public ResponseEntity<List<ContractorDto>> getAll() {
         List<ContractorDto> contractorDtoList = contractorService.getAll();
-        log.info("Запрошен список ContractorDto getAll");
+        log.info("Запрошен список ContractorDto через getAll");
         return ResponseEntity.ok(contractorDtoList);
         //return ResponseEntity.ok(contractorService.getAll());
 
     }
+
+    @GetMapping("/getAllContractorDto")
+    @ApiOperation(value = "getAllContractorDto", notes = "Получение списка некоторых контрагентов")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение отф. списка контрагентов"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<ContractorDto>> getAllContractorDto() {
+        log.info("Запрошен список ContractorDto getAllContractorDto     ");
+        return ResponseEntity.ok(contractorService.getAllContractorDto());
+
+    }
+
     @GetMapping("/search/{searchTerm}")
     @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых контрагентов")
     @ApiResponses(value = {

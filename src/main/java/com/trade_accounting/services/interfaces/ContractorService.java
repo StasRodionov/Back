@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ContractorService {
 
+    List<ContractorDto> getAllContractorDto ();
+
     List<ContractorDto> searchContractor(Specification<Contractor> specification);
 
     List<ContractorDto> getAll(String searchTerm);

@@ -44,7 +44,8 @@ public class ContractorServiceImpl implements ContractorService {
         this.bankAccountRepository = bankAccountRepository;
         this.legalDetailRepository = legalDetailRepository;
     }
-//добавил
+
+    //добавил
     @Override
     public List<ContractorDto> searchContractor(Specification<Contractor> specification) {
         return contractorRepository.findAll(specification).stream()
@@ -56,7 +57,6 @@ public class ContractorServiceImpl implements ContractorService {
 
         List<ContractorDto> contractorDtos = contractorRepository.getAll();
         for (ContractorDto contractorDto : contractorDtos) {
-
             contractorDto.setContractorGroupDto(contractorGroupRepository.getContractorGroupByContractorId(contractorDto.getId()));
             contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getTypeOfContractorByContractorId(contractorDto.getId()));
             contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getTypeOfPriceByContractorId(contractorDto.getId()));
@@ -67,14 +67,16 @@ public class ContractorServiceImpl implements ContractorService {
                     .map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
         }
         return contractorDtos;
+    }
 
-
+    @Override
+    public List<ContractorDto> getAllContractorDto() {
+        return contractorRepository.getAllContractorDto();
     }
 
     public List<ContractorDto> getAll(String searchTerm) {
-
         if (searchTerm.equals("null") || searchTerm.isEmpty()) { //.equals("")
-            return contractorRepository.getAll();
+            return contractorRepository.getAllContractorDto();
         } else {
             return contractorRepository.search(searchTerm);
         }
@@ -107,6 +109,7 @@ public class ContractorServiceImpl implements ContractorService {
         }
 
         contractorRepository.save(new Contractor(
+                contractorDto.getId(),
                 contractorDto.getName(),
                 contractorDto.getInn(),
                 contractorDto.getSortNumber(),
@@ -177,14 +180,4 @@ public class ContractorServiceImpl implements ContractorService {
         contractorRepository.deleteById(id);
 
     }
-
-//    @PostConstruct
-//    public void test() {
-//        create(new ContractorDto(null, "Name", "1234567891", "11111", "10-11-12", "156161235", "165651651625@list.ru", "Street", "sdfsfd", "hi"));
-//        List<ContractorDto> contractorDtos = getAll();
-//        getById(1L);
-//        System.out.println(contractorDtos.toString());
-//        deleteById(1L);
-//    }
-
 }

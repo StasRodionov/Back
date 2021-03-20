@@ -34,14 +34,21 @@ public class ContractorDto {
     private String comment;
 
     private ContractorGroupDto contractorGroupDto;
+    private String contractorGroup;
 
     private TypeOfContractorDto typeOfContractorDto;
+    private String typeOfContractor;
 
     private TypeOfPriceDto typeOfPriceDto;
+    private String typeOfPrice;
 
     private List<BankAccountDto> bankAccountDto;
+    private Integer bankAccount;
 
     private LegalDetailDto legalDetailDto;
+    private String legalDetail;
+
+
 
     public ContractorDto(Long id,
                          String name,
@@ -64,4 +71,70 @@ public class ContractorDto {
         this.commentToAddress = commentToAddress;
         this.comment = comment;
     }
+
+
+
+    public ContractorDto(Long id, String name,
+                         @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$") String inn,
+                         String sortNumber, String phone, String fax, String email,
+                         String address, String commentToAddress, String comment,
+                         String contractorGroup,
+                         String typeOfContractor,
+                         String typeOfPrice,
+                         //String bankAccount,
+                         Integer bankAccount,
+                         String legalDetail
+    ) {
+        this.id = id;
+        this.name = name;
+        this.inn = inn;
+        this.sortNumber = sortNumber;
+        this.phone = phone;
+        this.fax = fax;
+        this.email = email;
+        this.address = address;
+        this.commentToAddress = commentToAddress;
+        this.comment = comment;
+        this.contractorGroup = contractorGroup;
+        this.typeOfContractor = typeOfContractor;
+        this.typeOfPrice = typeOfPrice;
+        this.bankAccount = bankAccount;
+        this.legalDetail = legalDetail;
+    }
+
+    public ContractorDto(Long id, String name,
+                         @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$") String inn,
+                         String sortNumber, String phone, String fax,
+                         String email, String address, String commentToAddress,
+                         String comment,
+                         ContractorGroupDto contractorGroupDto,
+                         TypeOfContractorDto typeOfContractorDto,
+                         TypeOfPriceDto typeOfPriceDto,
+                         Integer bankAccount,
+                         LegalDetailDto legalDetailDto
+
+    ) {
+        this.id = id;
+        this.name = name;
+        this.inn = inn;
+        this.sortNumber = sortNumber;
+        this.phone = phone;
+        this.fax = fax;
+        this.email = email;
+        this.address = address;
+        this.commentToAddress = commentToAddress;
+        this.comment = comment;
+        this.contractorGroupDto = contractorGroupDto;
+        this.contractorGroup = contractorGroup;
+        this.typeOfContractorDto = typeOfContractorDto;
+        this.typeOfContractor = typeOfContractor;
+        this.typeOfPriceDto = typeOfPriceDto;
+        this.typeOfPrice = typeOfPrice;
+        this.bankAccountDto = bankAccountDto;
+        this.bankAccount = bankAccount;
+        this.legalDetailDto = legalDetailDto;
+        this.legalDetail = legalDetail;
+    }
+
+
 }

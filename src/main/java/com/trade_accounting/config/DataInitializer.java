@@ -137,7 +137,7 @@ public class DataInitializer {
         this.paymentService = paymentService;
     }
 
-    @PostConstruct
+   // @PostConstruct
     public void init() {
         initTypeOfPrices();
         initContractorGroups();
@@ -645,7 +645,8 @@ public class DataInitializer {
     private void initContractors() {
         contractorService.create(new ContractorDto(
                 null,
-                "Торговый Дом \"Перекресток\", ЗАО", "7728029110",
+                "Торговый Дом \"Перекресток\", ЗАО",
+                "7728029110",
                 "1",
                 "8 (495) 232-59-24",
                 "8 (495) 232-59-24",
@@ -656,12 +657,13 @@ public class DataInitializer {
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                0,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Агроаспект, ООО",
-                "7715277300", "2",
+                "7715277300",
+                "2",
                 "8 (800) 555-55-05",
                 "8 (800) 555-55-05",
                 "inbox@5ka.ru",
@@ -671,7 +673,7 @@ public class DataInitializer {
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                0,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
@@ -687,11 +689,12 @@ public class DataInitializer {
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                0,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Альфа-М, ООО", "7743931676",
+                "Альфа-М, ООО",
+                "7743931676",
                 "4",
                 "8 (495) 981-31-85",
                 "8 (495) 981-31-85",
@@ -702,11 +705,12 @@ public class DataInitializer {
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                0,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Отдохни - 77, ООО", "7737531091",
+                "Отдохни - 77, ООО",
+                "7737531091",
                 "5",
                 "8 (495) 326-30-00",
                 "8 (495) 326-30-00",
@@ -717,7 +721,7 @@ public class DataInitializer {
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                0,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
@@ -733,11 +737,12 @@ public class DataInitializer {
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                0,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Зельгрос, ООО", "5050058510",
+                "Зельгрос, ООО",
+                "5050058510",
                 "7",
                 "8 (495) 741-45-56",
                 "8 (495) 741-45-56",
@@ -748,11 +753,12 @@ public class DataInitializer {
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                0,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Лабиринт-М, ООО", "7727777402",
+                "Лабиринт-М, ООО",
+                "7727777402",
                 "8",
                 "8 (495) 155-51-56",
                 "8 (495) 155-51-56",
@@ -763,11 +769,12 @@ public class DataInitializer {
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                0,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Эскорт Сервис, ООО", "7705603716",
+                "Эскорт Сервис, ООО",
+                "7705603716",
                 "9",
                 "8 (495) 755-11-16",
                 "8 (495) 755-11-16",
@@ -778,7 +785,7 @@ public class DataInitializer {
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                0,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
@@ -794,7 +801,7 @@ public class DataInitializer {
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                0,
                 legalDetailService.getById(1L)));
     }
 
@@ -810,7 +817,7 @@ public class DataInitializer {
 
         List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtoList = new ArrayList<>(attributeOfCalculationObjectService.getAll());
 
-        for (int i = 0; i < 350; i++) {
+        for (int i = 0; i < 3; i++) {
 
             productService.create(new ProductDto(
                     null,
@@ -825,7 +832,7 @@ public class DataInitializer {
                     null,
                     taxSystemDtoList.get(0),
                     null,
-                    productGroupDtoList.get(0),
+                    productGroupDtoList.get(1),
                     attributeOfCalculationObjectDtoList.get(0)
             ));
             productService.create(new ProductDto(
