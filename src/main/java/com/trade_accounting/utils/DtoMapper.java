@@ -207,7 +207,7 @@ public abstract class DtoMapper {
     public abstract List<ImageDto> toImageDto(Collection<Image> images);
 
     @SneakyThrows
-    public String uploadImage(byte[] content, String imageDir, String fileName) {
+    private String uploadImage(byte[] content, String imageDir, String fileName) {
         Path path = Paths.get(UPLOAD_DIR + File.separator + imageDir);
         if (!Files.exists(path)) {
             Files.createDirectories(path);
@@ -220,7 +220,7 @@ public abstract class DtoMapper {
     }
 
     @SneakyThrows
-    public byte[] downloadImage(String url) {
+    private byte[] downloadImage(String url) {
         Path path = Paths.get(url);
         if (Files.exists(path)){
             return Files.readAllBytes(path);
