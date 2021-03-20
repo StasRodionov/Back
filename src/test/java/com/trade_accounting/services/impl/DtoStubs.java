@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.AttributeOfCalculationObject;
+import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.utils.DtoMapper;
@@ -17,6 +19,12 @@ public class DtoStubs {
     public static TypeOfContractorDto getTypeOfContractorDto(Long id){
         return dtoMapper.typeOfContractorToTypeOfContractorDto(
                 ModelStubs.getTypeOfContractor(id)
+        );
+    }
+
+    public static AttributeOfCalculationObjectDto getAttributeOfCalculationObjectDto(Long id) {
+        return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
+                ModelStubs.getAttributeOfCalculationObject(id)
         );
     }
 }
