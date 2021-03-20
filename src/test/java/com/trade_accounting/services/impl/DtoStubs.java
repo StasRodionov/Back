@@ -3,6 +3,7 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.utils.DtoMapper;
 import org.mapstruct.factory.Mappers;
 
@@ -18,6 +19,12 @@ public class DtoStubs {
     public static AttributeOfCalculationObjectDto getAttributeOfCalculationObjectDto(Long id) {
         return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
                 ModelStubs.getAttributeOfCalculationObject(id)
+        );
+    }
+
+    public static InvoiceDto getInvoiceDto(Long id) {
+        return dtoMapper.invoiceToInvoiceDto(
+                ModelStubs.getInvoice(id)
         );
     }
 }
