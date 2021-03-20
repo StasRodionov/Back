@@ -38,7 +38,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 //                .authorizeRequests()
 //                .antMatchers("/**").permitAll();
 
-//        Security enabled
+        //Security enabled
         http
                 .cors()
                 .and()
