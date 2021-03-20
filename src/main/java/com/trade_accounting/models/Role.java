@@ -3,6 +3,7 @@ package com.trade_accounting.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +31,10 @@ public class Role {
     public Role(String name, String sortNumber) {
         this.name = name;
         this.sortNumber = sortNumber;
+    }
+
+    @Override
+    public String getAuthority() {
+        return getName();
     }
 }

@@ -10,9 +10,13 @@ public interface ImageService {
 
     ImageDto getById(Long id);
 
-    void create(ImageDto imageDto);
+    ImageDto create(ImageDto imageDto);
 
-    void update(ImageDto imageDto);
+    ImageDto update(ImageDto imageDto);
 
     void deleteById(Long id);
+
+    String saveImageToFile(byte[] content, String fileName);
+
+    String getImageFromFile(String path);
 }

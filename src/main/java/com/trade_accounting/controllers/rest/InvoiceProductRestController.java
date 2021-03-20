@@ -66,6 +66,24 @@ public class InvoiceProductRestController {
         log.info("Запрошен экземпляр InvoiceProduct с id= {}", id);
         return ResponseEntity.ok(invoiceProductDto);
     }
+    @ApiOperation(value = "getByInvoiceId", notes = "Возвращает список товаров в накладной по Invoice.id")
+    @GetMapping("/invoice_product/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Товар в накладной найден"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<InvoiceProductDto>> getByInvoiceId(@ApiParam(
+            name = "id",
+            type = "Long",
+            value = "Переданный ID  в URL по которому необходимо список товаров в накладной",
+            example = "1",
+            required = true) @PathVariable(name = "id") Long id) {
+        List<InvoiceProductDto> invoiceProductDtoList = invoiceProductService.getByInvoiceId(id);
+        log.info("Запрошен список InvoiceProduct с Invoice.id= {}", id);
+        return ResponseEntity.ok(invoiceProductDtoList);
+    }
 
     @ApiOperation(value = "create", notes = "Добавляет товар в накладной на основе переданных данных")
     @PostMapping

@@ -7,12 +7,17 @@ import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
+import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.services.interfaces.ContractService;
+import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.ModelDtoConverter;
 import com.trade_accounting.utils.SortNumberConverter;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,17 +28,23 @@ public class ContractServiceImpl implements ContractService {
     private final BankAccountRepository bankAccountRepository;
     private final ContractorRepository contractorRepository;
     private final LegalDetailRepository legalDetailRepository;
+    private final PaymentRepository paymentRepository;
+    private final DtoMapper dtoMapper;
 
     public ContractServiceImpl(ContractRepository contractRepository,
                                CompanyRepository companyRepository,
                                BankAccountRepository bankAccountRepository,
                                ContractorRepository contractorRepository,
-                               LegalDetailRepository legalDetailRepository) {
+                               LegalDetailRepository legalDetailRepository, 
+                               PaymentRepository paymentRepository,
+                               DtoMapper dtoMapper) {
         this.contractRepository = contractRepository;
         this.companyRepository = companyRepository;
         this.bankAccountRepository = bankAccountRepository;
         this.contractorRepository = contractorRepository;
         this.legalDetailRepository = legalDetailRepository;
+        this.paymentRepository = paymentRepository;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override
@@ -43,6 +54,10 @@ public class ContractServiceImpl implements ContractService {
             contractDto.setCompanyDto(
                     companyRepository.getById(contractDto.getCompanyDto().getId())
             );
+            contractDto.getCompanyDto().
+                    setBankAccountDto(bankAccountRepository.getBankAccountByCompanyId(contractDto.getCompanyDto().getId())
+                    .stream().map(bankAccount -> ModelDtoConverter.convertToBankAccountDto(bankAccount))
+                            .collect(Collectors.toList()));
             contractDto.setBankAccountDto(
                     bankAccountRepository.getById(contractDto.getBankAccountDto().getId())
             );
@@ -57,11 +72,20 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
+    public List<ContractDto> search(Specification<Contract> specification) {
+        return contractRepository.findAll(specification).stream().map(dtoMapper::contractToContractDto).collect(Collectors.toList());
+    }
+
+    @Override
     public ContractDto getById(Long id) {
         ContractDto contractDto = contractRepository.getById(id);
         contractDto.setCompanyDto(
                 companyRepository.getById(contractDto.getCompanyDto().getId())
         );
+        contractDto.getCompanyDto().
+                setBankAccountDto(bankAccountRepository.getBankAccountByCompanyId(contractDto.getCompanyDto().getId())
+                        .stream().map(bankAccount -> ModelDtoConverter.convertToBankAccountDto(bankAccount))
+                        .collect(Collectors.toList()));
         contractDto.setBankAccountDto(
                 bankAccountRepository.getById(contractDto.getBankAccountDto().getId())
         );
@@ -107,6 +131,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public void deleteById(Long id) {
+        paymentRepository.deleteAllByContractId(id);
         contractRepository.deleteById(id);
     }
 }

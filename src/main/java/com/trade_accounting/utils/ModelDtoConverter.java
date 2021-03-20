@@ -7,6 +7,9 @@ import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.ProductPrice;
+import com.trade_accounting.models.Task;
+import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPrice;
@@ -21,7 +24,10 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.TaskCommentDTO;
+import com.trade_accounting.models.dto.TaskDTO;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
@@ -40,6 +46,18 @@ public class ModelDtoConverter {
     private ModelDtoConverter() {
     }
 
+    public static ProductPriceDto convertToProductPriceDto(ProductPrice productPrice) {
+        return modelMapper.map(productPrice, ProductPriceDto.class);
+    }
+
+    public static ProductPrice convertToProductPrice(ProductPriceDto productPriceDto){
+        return modelMapper.map(productPriceDto, ProductPrice.class);
+    }
+
+    public static TypeOfPriceDto convertToTypeOfPriceDto(TypeOfPrice typeOfPrice){
+        return modelMapper.map(typeOfPrice, TypeOfPriceDto.class);
+    }
+
     public static CompanyDto convertToCompanyDto(Company company) {
         CompanyDto companyDto = modelMapper.map(company, CompanyDto.class);
         companyDto.setLegalDetailDto(modelMapper.map(company.getLegalDetail(), LegalDetailDto.class));
@@ -50,7 +68,7 @@ public class ModelDtoConverter {
         return companyDto;
     }
 
-    public static Company convertToCompany(CompanyDto dto, LegalDetail legalDetail) {
+    public static Company convertToCompany(CompanyDto dto, LegalDetail legalDetail, List<BankAccount> bankAccounts) {
         return new Company(
                 dto.getId(),
                 dto.getName(),
@@ -68,7 +86,7 @@ public class ModelDtoConverter {
                 dto.getChiefAccountant(),
                 dto.getChiefAccountantSignature(),
                 dto.getStamp(),
-                legalDetail);
+                legalDetail, bankAccounts);
     }
 
     public static EmployeeDto convertToEmployeeDto(Employee employee) {
@@ -232,6 +250,19 @@ public class ModelDtoConverter {
         );
     }
 
+    public static BankAccountDto convertToBankAccountDto(BankAccount bankAccount){
+        return new BankAccountDto(
+                bankAccount.getId(),
+                bankAccount.getRcbic(),
+                bankAccount.getBank(),
+                bankAccount.getAddress(),
+                bankAccount.getCorrespondentAccount(),
+                bankAccount.getAccount(),
+                bankAccount.getMainAccount(),
+                bankAccount.getSortNumber()
+        );
+    }
+
     public static List<BankAccount> convertToListOfBankAccount(List<BankAccountDto> list) {
         List<BankAccount> bankAccountList = new ArrayList<>();
         for (BankAccountDto bankAccountDto : list) {
@@ -247,5 +278,52 @@ public class ModelDtoConverter {
             ));
         }
         return bankAccountList;
+    }
+
+    public static TaskDTO toTaskDTO(Task entity) {
+        return new TaskDTO(
+                entity.getId(),
+                entity.getDescription(),
+                entity.getTaskEmployee().getId(),
+                entity.getTaskAuthor().getId(),
+                entity.getCreationDateTime(),
+                entity.getDeadlineDateTime(),
+                entity.isCompleted(),
+                0
+        );
+    }
+
+    public static Task toTaskEntity(TaskDTO dto) {
+        var entity = new Task();
+
+        entity.setId(dto.getId());
+        entity.setDescription(dto.getDescription());
+        entity.setCreationDateTime(dto.getCreationDateTime());
+        entity.setDeadlineDateTime(dto.getDeadlineDateTime());
+        entity.setCompleted(dto.isCompleted());
+
+        return entity;
+    }
+
+    public static TaskCommentDTO toTaskCommentDTO(TaskComment entity) {
+        var dto = new TaskCommentDTO();
+
+        dto.setId(entity.getId());
+        dto.setCommentContent(entity.getCommentContent());
+        dto.setPublisherId(entity.getPublisher().getId());
+        dto.setPublishedDateTime(entity.getPublishedDateTime());
+        dto.setTaskId(entity.getTask().getId());
+
+        return dto;
+    }
+
+    public static TaskComment toTaskCommentEntity(TaskCommentDTO dto) {
+        var entity = new TaskComment();
+
+        entity.setId(dto.getId());
+        entity.setCommentContent(dto.getCommentContent());
+        entity.setPublishedDateTime(dto.getPublishedDateTime());
+
+        return entity;
     }
 }

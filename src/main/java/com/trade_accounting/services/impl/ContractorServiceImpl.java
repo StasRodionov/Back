@@ -44,8 +44,7 @@ public class ContractorServiceImpl implements ContractorService {
         this.bankAccountRepository = bankAccountRepository;
         this.legalDetailRepository = legalDetailRepository;
     }
-
-    //добавил
+//добавил
     @Override
     public List<ContractorDto> searchContractor(Specification<Contractor> specification) {
         return contractorRepository.findAll(specification).stream()
@@ -54,29 +53,32 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<ContractorDto> getAll() {
-
         List<ContractorDto> contractorDtos = contractorRepository.getAll();
         for (ContractorDto contractorDto : contractorDtos) {
+
             contractorDto.setContractorGroupDto(contractorGroupRepository.getContractorGroupByContractorId(contractorDto.getId()));
             contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getTypeOfContractorByContractorId(contractorDto.getId()));
             contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getTypeOfPriceByContractorId(contractorDto.getId()));
             contractorDto.setLegalDetailDto(legalDetailRepository.getLegalDetailByContractorId(contractorDto.getId()));
 
             List<BankAccount> bankAccountList = bankAccountRepository.getBankAccountByContractorId(contractorDto.getId());
-            contractorDto.setBankAccountDto(bankAccountList.stream()
-                    .map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
+            contractorDto.setBankAccountDto(bankAccountList.stream().map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
         }
+
         return contractorDtos;
     }
-
+    @Override
+    public List<ContractorDto> getAllLite() {
+        return contractorRepository.getAll();
+    }
     @Override
     public List<ContractorDto> getAllContractorDto() {
         return contractorRepository.getAllContractorDto();
     }
 
     public List<ContractorDto> getAll(String searchTerm) {
-        if (searchTerm.equals("null") || searchTerm.isEmpty()) { //.equals("")
-            return contractorRepository.getAllContractorDto();
+        if (searchTerm.equals("null") || searchTerm.isEmpty()) {
+            return contractorRepository.getAll();
         } else {
             return contractorRepository.search(searchTerm);
         }
@@ -109,7 +111,6 @@ public class ContractorServiceImpl implements ContractorService {
         }
 
         contractorRepository.save(new Contractor(
-                contractorDto.getId(),
                 contractorDto.getName(),
                 contractorDto.getInn(),
                 contractorDto.getSortNumber(),

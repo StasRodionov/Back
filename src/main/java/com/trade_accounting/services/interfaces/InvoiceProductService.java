@@ -9,6 +9,8 @@ public interface InvoiceProductService {
 
     List<InvoiceProductDto> getAll();
 
+    List<InvoiceProductDto> getByInvoiceId(Long id);
+
     InvoiceProductDto getById(Long id);
 
     void create(InvoiceProductDto invoiceProductDto);

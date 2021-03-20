@@ -115,5 +115,4 @@ public class ProductGroupRestController {
         log.info("Удален экземпляр ProductGroup с id= {}", id);
         return ResponseEntity.ok().build();
     }
-
 }
