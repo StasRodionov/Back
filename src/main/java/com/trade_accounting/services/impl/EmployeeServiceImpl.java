@@ -122,7 +122,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteById(Long id) {
         Optional<ImageDto> optional = Optional.ofNullable(imageRepository.getImageByEmployeeId(id));
         if (optional.isPresent()) {
-            Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
+            //Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
             imageRepository.deleteById(optional.get().getId());
         }
         employeeRepository.deleteById(id);

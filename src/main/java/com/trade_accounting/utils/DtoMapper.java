@@ -174,6 +174,9 @@ public abstract class DtoMapper {
 
     //Image
     public ImageDto imageToImageDto(Image image) {
+        if (image == null){
+            return null;
+        }
         ImageDto imageDto = new ImageDto();
         imageDto.setContent(downloadImage(image.getImageUrl()));
         imageDto.setId(image.getId());
