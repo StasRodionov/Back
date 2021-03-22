@@ -6,6 +6,7 @@ import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
+import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.utils.DtoMapper;
 import org.mapstruct.factory.Mappers;
@@ -35,9 +36,19 @@ public class DtoStubs {
         );
     }
 
+    public static ContractDto getContractDto(Long id){
+        return dtoMapper.contractToContractDto(ModelStubs.getContract(id));
+    }
+
     public static TaxSystemDto getTaxSystemDto(Long id){
         return dtoMapper.taxSystemToTaxSystemDto(
                 ModelStubs.getTaxSystem(id)
+        );
+    }
+
+    public static InvoiceDto getInvoiceDto(Long id) {
+        return dtoMapper.invoiceToInvoiceDto(
+                ModelStubs.getInvoice(id)
         );
     }
 
