@@ -87,7 +87,7 @@ public class ContractServiceImplTest {
 
     @Test
     void getByIdShouldReturnCorrectContractDto() {
-        when(contractRepository.findById(anyLong())).thenReturn(Optional.of(ModelStubs.getContract(1L)));
+        when(contractRepository.getOne(anyLong())).thenReturn(ModelStubs.getContract(1L));
 
         ContractDto contractDto = contractService.getById(1L);
 
@@ -105,7 +105,7 @@ public class ContractServiceImplTest {
 
     @Test
     void update_shouldPassInstructionsSuccessfulCreate() {
-        contractService.update(
+        contractService.save(
                 DtoStubs.getContractDto(1L)
         );
 
