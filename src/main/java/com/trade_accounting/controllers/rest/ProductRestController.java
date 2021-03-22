@@ -40,10 +40,11 @@ public class ProductRestController {
         this.productService = productService;
     }
 
-    @ApiOperation(value = "getAll", notes = "Возвращает список всех товаров")
-    @GetMapping
+
+    @ApiOperation(value = "getAll", notes = "Возвращает список всех товаров (лёгкое дто)")
+    @GetMapping()
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка всех товаров"),
+            @ApiResponse(code = 200, message = "Успешное получение списка всех товаров (лёгкое дто)"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
@@ -51,20 +52,6 @@ public class ProductRestController {
     public ResponseEntity<List<ProductDto>> getAll() {
         List<ProductDto> productGroups = productService.getAll();
         log.info("Запрошен список ProductDto");
-        return ResponseEntity.ok(productGroups);
-    }
-
-    @ApiOperation(value = "getAllLite", notes = "Возвращает список всех товаров (лёгкое дто)")
-    @GetMapping("/lite")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка всех товаров (лёгкое дто)"),
-            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
-            @ApiResponse(code = 403, message = "Операция запрещена"),
-            @ApiResponse(code = 404, message = "Данный контроллер не найден")
-    })
-    public ResponseEntity<List<ProductDto>> getAllLite() {
-        List<ProductDto> productGroups = productService.getAllLite();
-        log.info("Запрошен список ProductDto (лёгкое дто)");
         return ResponseEntity.ok(productGroups);
     }
 
@@ -124,7 +111,7 @@ public class ProductRestController {
     public ResponseEntity<List<ProductDto>> getLiteByProductGroupId(
             @ApiParam(name = "id", value = "ID группы товаров, переданный в URL, по которому необходимо найти товары")
             @PathVariable(name = "id") Long id) {
-        List<ProductDto> productGroups = productService.getAllLiteByProductGroupId(id);
+        List<ProductDto> productGroups = productService.getAllByProductGroupId(id);
         log.info("Запрошен список ProductDto (Легкое Дто) принадлежащих гуруппе с id = {}", id);
         return ResponseEntity.ok(productGroups);
     }
@@ -140,7 +127,7 @@ public class ProductRestController {
     })
     public ResponseEntity<ProductDto> create(@ApiParam(name = "productDto", value = "DTO товара, который необходимо создать")
                                     @RequestBody ProductDto productDto) {
-        productService.create(productDto);
+        productService.save(productDto);
         log.info("Записан новый экземпляр ProductDto с id= {}, name= {}", productDto.getId(), productDto.getName());
         return ResponseEntity.ok().build();
     }
@@ -157,7 +144,7 @@ public class ProductRestController {
     public ResponseEntity<ProductDto> update(@ApiParam(name = "productDto",
             value = "DTO товара, c обновленными данными")
                                     @RequestBody ProductDto productDto) {
-        productService.update(productDto);
+        productService.save(productDto);
         log.info("Обновлен экземпляр ProductDto с id= {}, name= {}", productDto.getId(), productDto.getName());
         return ResponseEntity.ok().build();
     }
