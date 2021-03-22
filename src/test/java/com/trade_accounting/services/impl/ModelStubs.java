@@ -12,6 +12,7 @@ import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Project;
+import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
@@ -104,6 +105,10 @@ public class ModelStubs {
 
     public static ContractorGroup getContractorGroup(Long id) {
         return new ContractorGroup(id, "name", "00001");
+    }
+
+    public static TaxSystem getTaxSystem(Long id) {
+        return new TaxSystem(id, "name", "00001");
     }
 
     public static TypeOfContractor getTypeOfContractor(Long id) {
