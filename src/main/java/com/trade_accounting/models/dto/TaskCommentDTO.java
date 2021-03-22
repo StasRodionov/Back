@@ -4,19 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImageDto {
+public class TaskCommentDTO {
 
     private Long id;
 
-    private byte[] content;
+    private String commentContent;
 
-    private String sortNumber;
+    private Long publisherId;
 
-    public ImageDto(Long id, String sortNumber) {
-        this.id = id;
-        this.sortNumber = sortNumber;
-    }
+    private LocalDateTime publishedDateTime;
+
+    private Long taskId;
 }

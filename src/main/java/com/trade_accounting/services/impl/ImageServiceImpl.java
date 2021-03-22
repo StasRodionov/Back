@@ -4,6 +4,7 @@ import com.trade_accounting.models.Image;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.services.interfaces.ImageService;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,10 +13,14 @@ import java.util.List;
 @Service
 @Transactional
 public class ImageServiceImpl implements ImageService {
+
     private final ImageRepository imageRepository;
 
-    public ImageServiceImpl(ImageRepository imageRepository) {
+    private final DtoMapper dtoMapper;
+
+    public ImageServiceImpl(ImageRepository imageRepository, DtoMapper dtoMapper) {
         this.imageRepository = imageRepository;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override
@@ -25,26 +30,18 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public ImageDto getById(Long id) {
-        return imageRepository.getById(id);
+        return dtoMapper.imageToImageDto(imageRepository.getOne(id));
     }
 
     @Override
-    public void create(ImageDto imageDto) {
-        imageRepository.save(
-                new Image(imageDto.getImageUrl(), imageDto.getSortNumber()));
+    public Image create(ImageDto imageDto, String imageDir) {
+        return imageRepository.saveAndFlush(dtoMapper.imageDtoToImage(imageDto, imageDir));
     }
 
-    @Override
-    public void update(ImageDto imageDto) {
-        imageRepository.save(
-                new Image(imageDto.getId(), imageDto.getImageUrl(), imageDto.getSortNumber())
-        );
-    }
 
     @Override
     public void deleteById(Long id) {
         imageRepository.deleteById(id);
     }
-
 
 }
