@@ -10,9 +10,9 @@ public interface TypeOfContractorService {
 
     TypeOfContractorDto getById(Long id);
 
-    void create(TypeOfContractorDto typeOfContractorDto);
+    TypeOfContractorDto create(TypeOfContractorDto typeOfContractorDto);
 
-    void update(TypeOfContractorDto typeOfContractorDto);
+    TypeOfContractorDto update(TypeOfContractorDto typeOfContractorDto);
 
     void deleteById(Long id);
 

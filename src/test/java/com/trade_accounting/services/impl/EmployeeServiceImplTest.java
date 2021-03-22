@@ -138,7 +138,7 @@ class EmployeeServiceImplTest {
         verify(employeeRepository).save(any(Employee.class));
         verify(departmentRepository).findById(anyLong());
         verify(positionRepository).findById(anyLong());
-        verify(imageRepository).findByImageUrl(anyString());
+        verify(imageRepository).getOne(anyLong());
     }
 
     @Test
@@ -151,7 +151,7 @@ class EmployeeServiceImplTest {
         verify(employeeRepository).save(any(Employee.class));
         verify(departmentRepository).findById(anyLong());
         verify(positionRepository).findById(anyLong());
-        verify(imageRepository).findByImageUrl(anyString());
+        verify(imageRepository).getOne(anyLong());
     }
 
     @Test
@@ -257,7 +257,7 @@ class EmployeeServiceImplTest {
     }
 
     ImageDto getImageDtoFromRepo(Long id) {
-        return new ImageDto(id, "imageUrl", String.valueOf(id));
+        return new ImageDto(id, null, String.valueOf(id));
     }
 
     RoleDto getRoleDtoFromRepo(Long id) {
