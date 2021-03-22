@@ -9,9 +9,9 @@ public interface TaxSystemService {
 
     TaxSystemDto getById(Long id);
 
-    void create(TaxSystemDto dto);
+    TaxSystemDto create(TaxSystemDto dto);
 
-    void update(TaxSystemDto dto);
+    TaxSystemDto update(TaxSystemDto dto);
 
     void deleteById(Long id);
 
