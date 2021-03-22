@@ -13,9 +13,9 @@ public interface ProductGroupService {
 
     void create(ProductGroup dto);
 
-    void create(ProductGroupDto dto);
+    ProductGroupDto create(ProductGroupDto dto);
 
-    void update(ProductGroupDto dto);
+    ProductGroupDto update(ProductGroupDto dto);
 
     void deleteById(Long id);
 
