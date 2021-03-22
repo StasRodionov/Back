@@ -33,5 +33,4 @@ public class DtoStubs {
                 ModelStubs.getTaxSystem(id)
         );
     }
-
 }
