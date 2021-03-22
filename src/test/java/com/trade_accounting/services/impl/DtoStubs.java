@@ -52,12 +52,6 @@ public class DtoStubs {
         );
     }
 
-    public static InvoiceDto getInvoiceDto(Long id) {
-        return dtoMapper.invoiceToInvoiceDto(
-                ModelStubs.getInvoice(id)
-        );
-    }
-
     public static InvoiceProductDto getInvoiceProductDto(Long id) {
         return dtoMapper.invoiceProductToInvoiceProductDto(ModelStubs.getInvoiceProduct(id));
     }
