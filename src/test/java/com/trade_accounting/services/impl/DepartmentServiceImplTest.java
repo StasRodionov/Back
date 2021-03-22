@@ -1,10 +1,8 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Department;
-import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.repositories.DepartmentRepository;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,14 +11,15 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.persistence.Id;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -60,9 +59,7 @@ class DepartmentServiceImplTest {
     @Test
     void getAll_shouldReturnEmptyListDepartmentDto() {
         when(departmentRepository.findAll())
-                .thenReturn(
-                        new ArrayList<>()
-                );
+                .thenReturn(new ArrayList<>());
 
         List<DepartmentDto> departments = departmentService.getAll();
 
@@ -71,23 +68,60 @@ class DepartmentServiceImplTest {
     }
 
     @Test
-    void getById() {
+    void getById_shouldReturnFilledDepartmentDto() {
+        Optional<Department> departmentRepo = Optional.of(ModelStubs.getDepartment(1L));
+
+        when(departmentRepository.findById(anyLong()))
+                .thenReturn(departmentRepo);
+
+        DepartmentDto departmentDto = departmentService.getById(1L);
+
+        departmentDtoIsCorrectlyInited(departmentDto);
     }
 
     @Test
-    void getByName() {
+    void getByName_shouldReturnFilledDepartmentDto() {
+        Optional<Department> departmentRepo = Optional.of(ModelStubs.getDepartment(1L));
+
+        when(departmentRepository.findByName(anyString()))
+                .thenReturn(departmentRepo);
+
+        DepartmentDto departmentDto = departmentService.getByName("name");
+
+        departmentDtoIsCorrectlyInited(departmentDto);
     }
 
     @Test
-    void create() {
+    void getByName_shouldReturnEmptyDepartmentDto(){
+        Optional<Department> departmentRepo = Optional.empty();
+
+        when(departmentRepository.findByName(anyString()))
+                .thenReturn(departmentRepo);
+
+        DepartmentDto departmentDto = departmentService.getByName("name");
+
+        assertEquals(new DepartmentDto(), departmentDto, "failure - expected that department was empty");
     }
 
     @Test
-    void update() {
+    void create_shouldPassInstructionsSuccessfulCreate() {
+        departmentService.create(DtoStubs.getDepartmentDto(1L));
+
+        verify(departmentRepository).save(any(Department.class));
     }
 
     @Test
-    void deleteById() {
+    void update_shouldPassInstructionsSuccessfulUpdate() {
+        departmentService.update(DtoStubs.getDepartmentDto(1L));
+
+        verify(departmentRepository).save(any(Department.class));
+    }
+
+    @Test
+    void deleteById_shouldPassInstructionsSuccessfulDelete() {
+        departmentService.deleteById(1L);
+
+        verify(departmentRepository).deleteById(1L);
     }
 
     void departmentDtoIsCorrectlyInited(DepartmentDto departmentDto) {

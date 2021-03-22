@@ -9,6 +9,7 @@ import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
+import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPayment;
@@ -36,6 +37,8 @@ public class ModelStubs {
                 BigDecimal.ONE
         );
     }
+
+    public static Position getPosition(Long id){ return new Position(id,"name","00001");}
 
     public static Company getCompany(Long id) {
         return new Company(

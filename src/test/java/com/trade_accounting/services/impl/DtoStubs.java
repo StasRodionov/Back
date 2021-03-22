@@ -2,6 +2,7 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.utils.DtoMapper;
@@ -30,7 +31,11 @@ public class DtoStubs {
 
     public static DepartmentDto getDepartmentDto(Long id){
         return dtoMapper.departmentToDepartmentDto(
-                ModelStubs.getDepartment(id)
-        );
+                ModelStubs.getDepartment(id));
+    }
+
+    public static PositionDto getPositionDto(Long id){
+        return dtoMapper.positionToPositionDto(
+            ModelStubs.getPosition(id));
     }
 }
