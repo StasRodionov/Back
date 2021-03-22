@@ -257,7 +257,7 @@ class EmployeeServiceImplTest {
     }
 
     ImageDto getImageDtoFromRepo(Long id) {
-        return new ImageDto(id, "imageUrl", String.valueOf(id));
+        return new ImageDto(id, null, String.valueOf(id));
     }
 
     RoleDto getRoleDtoFromRepo(Long id) {

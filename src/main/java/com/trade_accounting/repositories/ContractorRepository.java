@@ -98,6 +98,8 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long>, J
     )
     List<ContractorDto> search(@Param("searchTerm") String searchTerm);
 
+
+
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
             "e.id," +
             "e.name," +
@@ -137,7 +139,8 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long>, J
             "p.contractor.email," +
             "p.contractor.address," +
             "p.contractor.commentToAddress," +
-            "p.contractor.comment" +
+            "p.contractor.comment," +
+            "p.contractor.typeOfPrice.id " +
             ") from Product p where p.id = :id")
     ContractorDto getContractorById(@Param("id") Long id);
 

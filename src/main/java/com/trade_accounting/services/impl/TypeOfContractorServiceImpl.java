@@ -1,42 +1,52 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
-import com.trade_accounting.utils.ModelDtoConverter;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class TypeOfContractorServiceImpl implements TypeOfContractorService {
 
     private final TypeOfContractorRepository typeOfContractorRepository;
+    private final DtoMapper dtoMapper;
 
-    public TypeOfContractorServiceImpl(TypeOfContractorRepository typeOfContractorRepository) {
+    public TypeOfContractorServiceImpl(TypeOfContractorRepository typeOfContractorRepository, DtoMapper dtoMapper) {
         this.typeOfContractorRepository = typeOfContractorRepository;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override
     public List<TypeOfContractorDto> getAll() {
-        return typeOfContractorRepository.getAll();
+        return typeOfContractorRepository.findAll().stream()
+                .map(dtoMapper::typeOfContractorToTypeOfContractorDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public TypeOfContractorDto getById(Long id) {
-        return typeOfContractorRepository.getById(id);
+        Optional<TypeOfContractor> typeOfContractor = typeOfContractorRepository.findById(id);
+        return dtoMapper.typeOfContractorToTypeOfContractorDto(typeOfContractor.orElse(new TypeOfContractor()));
     }
 
     @Override
-    public void create(TypeOfContractorDto typeOfContractorDto) {
-        update(typeOfContractorDto);
+    public TypeOfContractorDto create(TypeOfContractorDto typeOfContractorDto) {
+        TypeOfContractor typeOfContractor = dtoMapper.typeOfContractorDtoToTypeOfContractor(typeOfContractorDto);
+        return dtoMapper.typeOfContractorToTypeOfContractorDto(
+                typeOfContractorRepository.save(typeOfContractor));
     }
 
     @Override
-    public void update(TypeOfContractorDto typeOfContractorDto) {
-        typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(typeOfContractorDto));
+    public TypeOfContractorDto update(TypeOfContractorDto typeOfContractorDto) {
+        return create(typeOfContractorDto);
     }
 
     @Override
@@ -46,6 +56,7 @@ public class TypeOfContractorServiceImpl implements TypeOfContractorService {
 
     @Override
     public TypeOfContractorDto getByName(String name){
-        return typeOfContractorRepository.getByName(name);
+        Optional<TypeOfContractor> typeOfContractor = typeOfContractorRepository.findByName(name);
+        return dtoMapper.typeOfContractorToTypeOfContractorDto(typeOfContractor.orElse(new TypeOfContractor()));
     }
 }

@@ -11,17 +11,12 @@ public class ImageDto {
 
     private Long id;
 
-    private String imageUrl;
+    private byte[] content;
 
     private String sortNumber;
 
-    private String content;
-
-    private String fileName;
-
-    public ImageDto(Long id, String imageUrl, String sortNumber) {
+    public ImageDto(Long id, String sortNumber) {
         this.id = id;
-        this.imageUrl = imageUrl;
         this.sortNumber = sortNumber;
     }
 }
