@@ -31,7 +31,8 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<ContractDto> getAll() {
-        return contractRepository.findAll().stream().map(dtoMapper::contractToContractDto).collect(Collectors.toList());
+//        return contractRepository.findAll().stream().map(dtoMapper::contractToContractDto).collect(Collectors.toList());
+        return dtoMapper.toContractDtoList(contractRepository.findAll());
     }
 
     @Override
