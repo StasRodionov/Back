@@ -7,19 +7,13 @@ public interface ProductService {
 
     List<ProductDto> getAll();
 
-    List<ProductDto> getAllLite();
-
     ProductDto getById(Long id);
 
-    void create(ProductDto productDto);
-
-    void update(ProductDto productDto);
+    void save(ProductDto productDto);
 
     void deleteById(Long id);
 
     List<ProductDto> getAllByProductGroupId(Long id);
-
-    List<ProductDto> getAllLiteByProductGroupId(Long id);
 
     List<ProductDto> getAllByContractorId(Long id);
 }
