@@ -8,9 +8,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TypeOfContractorRepository extends JpaRepository<TypeOfContractor, Long> {
+
+    Optional<TypeOfContractor> findByName(String name);
     @Query("select new com.trade_accounting.models.dto.TypeOfContractorDto(" +
             "t.id, " +
             "t.name, " +
