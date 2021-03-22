@@ -33,22 +33,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final PositionRepository positionRepository;
     private final DepartmentRepository departmentRepository;
-    private final ImageRepository imageRepository;
     private final RoleRepository roleRepository;
+    private final ImageRepository imageRepository;
 
     private final DtoMapper dtoMapper;
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository,
                                PositionRepository positionRepository,
                                DepartmentRepository departmentRepository,
-                               ImageRepository imageRepository,
                                RoleRepository roleRepository,
-                               DtoMapper dtoMapper) {
+                               ImageRepository imageRepository, DtoMapper dtoMapper) {
         this.employeeRepository = employeeRepository;
         this.positionRepository = positionRepository;
         this.departmentRepository = departmentRepository;
-        this.imageRepository = imageRepository;
         this.roleRepository = roleRepository;
+        this.imageRepository = imageRepository;
         this.dtoMapper = dtoMapper;
     }
 
@@ -77,7 +76,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         DepartmentDto department = employeeDto.getDepartmentDto();
         PositionDto position = employeeDto.getPositionDto();
-        ImageDto image = employeeDto.getImageDto();
+        ImageDto imageDto = employeeDto.getImageDto();
         Set<RoleDto> setOfRoleDto = employeeDto.getRoleDto();
 
         if(department != null) {
@@ -92,9 +91,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             );
         }
 
-        if(image != null) {
+        if(imageDto != null) {
             employee.setImage(
-                    imageRepository.findByImageUrl(image.getImageUrl()).orElse(null)
+                    imageRepository.getOne(imageDto.getId())
             );
         }
 
@@ -123,7 +122,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteById(Long id) {
         Optional<ImageDto> optional = Optional.ofNullable(imageRepository.getImageByEmployeeId(id));
         if (optional.isPresent()) {
-            Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
+            //Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
             imageRepository.deleteById(optional.get().getId());
         }
         employeeRepository.deleteById(id);

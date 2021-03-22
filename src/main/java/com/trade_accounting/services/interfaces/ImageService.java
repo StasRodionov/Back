@@ -1,6 +1,8 @@
 package com.trade_accounting.services.interfaces;
 
+import com.trade_accounting.models.Image;
 import com.trade_accounting.models.dto.ImageDto;
+import lombok.SneakyThrows;
 
 import java.util.List;
 
@@ -10,13 +12,8 @@ public interface ImageService {
 
     ImageDto getById(Long id);
 
-    ImageDto create(ImageDto imageDto);
-
-    ImageDto update(ImageDto imageDto);
+    Image create(ImageDto imageDto, String imageDir);
 
     void deleteById(Long id);
 
-    String saveImageToFile(byte[] content, String fileName);
-
-    String getImageFromFile(String path);
 }
