@@ -85,7 +85,7 @@ public class InvoiceProductRestController {
         return ResponseEntity.ok(invoiceProductDtoList);
     }
 
-    @ApiOperation(value = "create", notes = "Добавляет товар в накладной на основе переданных данных")
+    @ApiOperation(value = "save", notes = "Добавляет товар в накладной на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Товар в накладной успешно добавлен"),

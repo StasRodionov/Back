@@ -66,7 +66,7 @@ public class DepartmentRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Создание информации о новом подразделении")
+    @ApiOperation(value = "save", notes = "Создание информации о новом подразделении")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Информация о подразделении успешно добавлена"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),

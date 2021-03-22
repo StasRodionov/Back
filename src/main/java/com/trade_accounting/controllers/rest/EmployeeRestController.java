@@ -91,7 +91,7 @@ public class EmployeeRestController {
 
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Регистрация нового работника")
+    @ApiOperation(value = "save", notes = "Регистрация нового работника")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Работник успешно зарегестрирован"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),

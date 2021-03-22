@@ -87,7 +87,7 @@ public class InvoiceRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Добавление новой накладной")
+    @ApiOperation(value = "save", notes = "Добавление новой накладной")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Накладная создана"),
             @ApiResponse(code = 201, message = "Запрос принят и накладная добавлена"),

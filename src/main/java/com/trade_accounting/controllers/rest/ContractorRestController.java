@@ -88,7 +88,7 @@ public class ContractorRestController {
         log.info("Запрошен список ContractorDto");
         return ResponseEntity.ok(contractorDtoList);
     }
-//create
+//save
     @GetMapping("/searchContractor")
     @ApiOperation(value = "searchContractor", notes = "Получение списка контрактов по заданным параметрам")
     public ResponseEntity<List<ContractorDto>> getAll(
@@ -130,7 +130,7 @@ public class ContractorRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Внесение нового контрагента")
+    @ApiOperation(value = "save", notes = "Внесение нового контрагента")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Контрагент создан"),
             @ApiResponse(code = 201, message = "Запрос принят и контрагент добавлен"),

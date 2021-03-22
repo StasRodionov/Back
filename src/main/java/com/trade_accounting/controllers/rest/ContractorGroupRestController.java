@@ -68,7 +68,7 @@ public class ContractorGroupRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Внесение новой группы контрагентов")
+    @ApiOperation(value = "save", notes = "Внесение новой группы контрагентов")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Группа создана"),
             @ApiResponse(code = 201, message = "Запрос принят и группа добавлена"),

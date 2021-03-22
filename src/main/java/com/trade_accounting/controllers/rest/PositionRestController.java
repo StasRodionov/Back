@@ -66,7 +66,7 @@ public class PositionRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Внесение новой должности")
+    @ApiOperation(value = "save", notes = "Внесение новой должности")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Должность создана"),
             @ApiResponse(code = 201, message = "Запрос принят и должность добавлена"),

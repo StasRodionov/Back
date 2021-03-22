@@ -66,7 +66,7 @@ public class PaymentRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Добавление нового платежа")
+    @ApiOperation(value = "save", notes = "Добавление нового платежа")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Платеж создан"),
             @ApiResponse(code = 201, message = "Запрос принят и платеж добавлен"),

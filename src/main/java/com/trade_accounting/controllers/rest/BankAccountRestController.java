@@ -64,7 +64,7 @@ public class BankAccountRestController {
         return ResponseEntity.ok(bankAccount);
     }
 
-    @ApiOperation(value = "create", notes = "Создает банковский аккаунт на основе переданных данных")
+    @ApiOperation(value = "save", notes = "Создает банковский аккаунт на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Аккаунт успешно создан"),

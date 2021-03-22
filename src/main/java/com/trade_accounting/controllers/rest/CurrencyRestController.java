@@ -74,7 +74,7 @@ public class CurrencyRestController {
         return ResponseEntity.ok(currency);
     }
 
-    @ApiOperation(value = "create", notes = "Создает валюту на основе передданых данных")
+    @ApiOperation(value = "save", notes = "Создает валюту на основе передданых данных")
     @PostMapping
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Валюта успешно добавлена"),

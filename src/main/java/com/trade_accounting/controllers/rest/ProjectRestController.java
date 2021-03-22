@@ -65,7 +65,7 @@ public class ProjectRestController {
         return ResponseEntity.ok(projectDto);
     }
 
-    @ApiOperation(value = "create", notes = "Создает проект на основе переданных данных")
+    @ApiOperation(value = "save", notes = "Создает проект на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Проект успешно создан"),

@@ -61,7 +61,7 @@ public class TypeOfPriceRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Создает вид цен на основе переданных данных")
+    @ApiOperation(value = "save", notes = "Создает вид цен на основе переданных данных")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Вид цен успешно создан"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),

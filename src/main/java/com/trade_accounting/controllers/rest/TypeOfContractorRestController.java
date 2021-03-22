@@ -67,7 +67,7 @@ public class TypeOfContractorRestController {
         return ResponseEntity.ok(typeOfContractorDto);
     }
 
-    @ApiOperation(value = "create", notes = "Создает тип контрагента на основе переданных данных")
+    @ApiOperation(value = "save", notes = "Создает тип контрагента на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Тип контрагента успешно создан"),

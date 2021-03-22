@@ -64,7 +64,7 @@ public class TaxSystemRestController {
         return ResponseEntity.ok(taxSystem);
     }
 
-    @ApiOperation(value = "create", notes = "Регистрация новой налоговой системы")
+    @ApiOperation(value = "save", notes = "Регистрация новой налоговой системы")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Налоговая система успешно зарегистрирована"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),

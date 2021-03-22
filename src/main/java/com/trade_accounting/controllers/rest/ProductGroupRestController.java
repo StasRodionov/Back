@@ -66,7 +66,7 @@ public class ProductGroupRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Создание новой товарной группы")
+    @ApiOperation(value = "save", notes = "Создание новой товарной группы")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Товарная группа записана"),
             @ApiResponse(code = 201, message = "Запрос принят и товарная группа добавлена"),

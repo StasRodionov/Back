@@ -67,7 +67,7 @@ public class RoleRestController {
         return ResponseEntity.ok(roleDto);
     }
 
-    @ApiOperation(value = "create", notes = "Создает роль на основе переданных данных")
+    @ApiOperation(value = "save", notes = "Создает роль на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Роль успешно создана"),

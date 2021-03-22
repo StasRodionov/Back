@@ -14,9 +14,7 @@ public interface ContractService {
 
     ContractDto getById(Long id);
 
-    void create(ContractDto contractDto);
-
-    void update(ContractDto contractDto);
+    void save(ContractDto contractDto);
 
     void deleteById(Long id);
 }

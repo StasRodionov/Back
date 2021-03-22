@@ -181,7 +181,7 @@ public class ContractorServiceImpl implements ContractorService {
 
 //    @PostConstruct
 //    public void test() {
-//        create(new ContractorDto(null, "Name", "1234567891", "11111", "10-11-12", "156161235", "165651651625@list.ru", "Street", "sdfsfd", "hi"));
+//        save(new ContractorDto(null, "Name", "1234567891", "11111", "10-11-12", "156161235", "165651651625@list.ru", "Street", "sdfsfd", "hi"));
 //        List<ContractorDto> contractorDtos = getAll();
 //        getById(1L);
 //        System.out.println(contractorDtos.toString());

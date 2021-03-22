@@ -83,7 +83,7 @@ public class TaskRestController {
                 .orElseGet(ResponseEntity.notFound()::build);
     }
 
-    @ApiOperation(value = "create", notes = "Создание новой задачи")
+    @ApiOperation(value = "save", notes = "Создание новой задачи")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Задача создана"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),

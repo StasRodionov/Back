@@ -2,15 +2,9 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.dto.ContractDto;
-import com.trade_accounting.repositories.BankAccountRepository;
-import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
-import com.trade_accounting.repositories.ContractorRepository;
-import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PaymentRepository;
-import com.trade_accounting.services.interfaces.ContractService;
 
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -102,7 +96,7 @@ public class ContractServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        contractService.create(
+        contractService.save(
                 DtoStubs.getContractDto(1L)
         );
 

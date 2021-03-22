@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,27 +32,21 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<ContractDto> getAll() {
-//        return contractRepository.findAll().stream().map(dtoMapper::contractToContractDto).collect(Collectors.toList());
         return dtoMapper.toContractDtoList(contractRepository.findAll());
     }
 
     @Override
     public List<ContractDto> search(Specification<Contract> specification) {
-        return contractRepository.findAll(specification).stream().map(dtoMapper::contractToContractDto).collect(Collectors.toList());
+        return dtoMapper.toContractDtoList(contractRepository.findAll(specification));
     }
 
     @Override
     public ContractDto getById(Long id) {
-        return contractRepository.findById(id).map(dtoMapper::contractToContractDto).get();
+        return dtoMapper.contractToContractDto(contractRepository.getOne(id));
     }
 
     @Override
-    public void create(ContractDto contractDto) {
-        contractRepository.save(dtoMapper.contractDtoToContract(contractDto));
-    }
-
-    @Override
-    public void update(ContractDto contractDto) {
+    public void save(ContractDto contractDto) {
         contractRepository.save(dtoMapper.contractDtoToContract(contractDto));
     }
 

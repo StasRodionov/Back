@@ -65,7 +65,7 @@ public class LegalDetailRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Внесение новых юридических реквизитов")
+    @ApiOperation(value = "save", notes = "Внесение новых юридических реквизитов")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Запись юридических реквизитов создана"),
             @ApiResponse(code = 201, message = "Запрос принят и юридические реквизиты добавлены"),

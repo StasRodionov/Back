@@ -66,7 +66,7 @@ public class AttributeOfCalculationObjectRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Внесение нового Attribute Of Calculation")
+    @ApiOperation(value = "save", notes = "Внесение нового Attribute Of Calculation")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Attribute Of Calculation создан"),
             @ApiResponse(code = 201, message = "Запрос принят и Attribute Of Calculation добавлен"),

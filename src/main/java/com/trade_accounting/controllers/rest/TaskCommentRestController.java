@@ -83,7 +83,7 @@ public class TaskCommentRestController {
                 .orElseGet(ResponseEntity.notFound()::build);
     }
 
-    @ApiOperation(value = "create", notes = "Создание нового комментария")
+    @ApiOperation(value = "save", notes = "Создание нового комментария")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Комментарий создан"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),

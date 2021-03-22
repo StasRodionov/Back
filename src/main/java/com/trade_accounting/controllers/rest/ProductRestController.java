@@ -116,7 +116,7 @@ public class ProductRestController {
         return ResponseEntity.ok(productGroups);
     }
 
-    @ApiOperation(value = "create", notes = "Создает товар на основе переданных данных")
+    @ApiOperation(value = "save", notes = "Создает товар на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Товар успешно создан"),

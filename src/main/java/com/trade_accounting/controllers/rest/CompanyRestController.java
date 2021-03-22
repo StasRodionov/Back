@@ -113,7 +113,7 @@ public class CompanyRestController {
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Внесение новой компании")
+    @ApiOperation(value = "save", notes = "Внесение новой компании")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Аккаунт компании создан"),
             @ApiResponse(code = 201, message = "Запрос принят и компания добавлена"),

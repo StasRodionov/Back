@@ -65,7 +65,7 @@ public class WarehouseRestController {
         return ResponseEntity.ok(warehouseDto);
     }
 
-    @ApiOperation(value = "create", notes = "Создает склад на основе переданных данных")
+    @ApiOperation(value = "save", notes = "Создает склад на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Склад успешно создан"),

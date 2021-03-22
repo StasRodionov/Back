@@ -65,7 +65,7 @@ public class UnitRestController {
         return ResponseEntity.ok(unit);
     }
 
-    @ApiOperation(value = "create", notes = "Регистрация новой единицы измерения")
+    @ApiOperation(value = "save", notes = "Регистрация новой единицы измерения")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Единица измерения успешно создана"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
