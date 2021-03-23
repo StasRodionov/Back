@@ -6,56 +6,73 @@ import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
-import com.trade_accounting.utils.ModelDtoConverter;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class LegalDetailServiceImpl implements LegalDetailService {
 
     private final LegalDetailRepository legalDetailRepository;
-    private final TypeOfContractorService typeOfContractorService;
     private final TypeOfContractorRepository typeOfContractorRepository;
+
+    private final DtoMapper dtoMapper;
 
     public LegalDetailServiceImpl(LegalDetailRepository legalDetailRepository,
                                   TypeOfContractorService typeOfContractorService,
-                                  TypeOfContractorRepository typeOfContractorRepository) {
+                                  TypeOfContractorRepository typeOfContractorRepository, DtoMapper dtoMapper) {
         this.legalDetailRepository = legalDetailRepository;
-        this.typeOfContractorService = typeOfContractorService;
         this.typeOfContractorRepository = typeOfContractorRepository;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override
     public List<LegalDetailDto> getAll() {
-        List<LegalDetailDto> listLegalDetailDto = legalDetailRepository.getAll();
-        for (LegalDetailDto legalDetailDto : listLegalDetailDto) {
-            legalDetailDto.setTypeOfContractorDto(
-                    typeOfContractorService.getById(legalDetailDto.getTypeOfContractorDto().getId()));
-        }
-        return listLegalDetailDto;
+        return legalDetailRepository.findAll().stream()
+                .map(dtoMapper::legalDetailToLegalDetailDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public LegalDetailDto getById(Long id) {
-        LegalDetailDto legalDetailDto = legalDetailRepository.getById(id);
-        legalDetailDto.setTypeOfContractorDto(
-                typeOfContractorService.getById(legalDetailDto.getTypeOfContractorDto().getId()));
-        return legalDetailDto;
+        return dtoMapper.legalDetailToLegalDetailDto(
+                legalDetailRepository.findById(id).orElse(new LegalDetail())
+        );
     }
 
     @Override
-    public void create(LegalDetailDto legalDetailDto) {
-        update(legalDetailDto);
+    public LegalDetailDto create(LegalDetailDto legalDetailDto) {
+        LegalDetail legalDetail = dtoMapper.legalDetailDtoToLegalDetail(legalDetailDto);
+
+        legalDetail.setTypeOfContractor(
+                typeOfContractorRepository.save(
+                        dtoMapper.typeOfContractorDtoToTypeOfContractor(
+                                legalDetailDto.getTypeOfContractorDto()
+                        )
+                ));
+
+        return dtoMapper.legalDetailToLegalDetailDto(
+                legalDetailRepository.save(legalDetail)
+        );
     }
 
     @Override
-    public void update(LegalDetailDto legalDetailDto) {
-        legalDetailRepository.save(ModelDtoConverter.convertToLegalDetail(legalDetailDto,
-                typeOfContractorRepository.save(ModelDtoConverter.convertToTypeOfContractor(
-                        legalDetailDto.getTypeOfContractorDto()))));
+    public LegalDetailDto update(LegalDetailDto legalDetailDto) {
+        LegalDetail legalDetail = dtoMapper.legalDetailDtoToLegalDetail(legalDetailDto);
+
+        legalDetail.setTypeOfContractor(
+                typeOfContractorRepository.findById(
+                        legalDetailDto.getTypeOfContractorDto().getId()
+                ).orElse(null)
+        );
+
+        return dtoMapper.legalDetailToLegalDetailDto(
+                legalDetailRepository.save(legalDetail)
+        );
     }
 
     @Override
