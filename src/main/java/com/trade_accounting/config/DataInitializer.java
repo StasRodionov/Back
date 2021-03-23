@@ -935,7 +935,7 @@ public class DataInitializer {
     }
 
     private void initContracts() {
-        contractService.create(new ContractDto(
+        contractService.save(new ContractDto(
                 null,
                 "1",
                 LocalDate.now(),

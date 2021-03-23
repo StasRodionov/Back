@@ -124,6 +124,8 @@ public abstract class DtoMapper {
     })
     public abstract Contract contractDtoToContract(ContractDto contractDto);
 
+    public abstract List<ContractDto> toContractDtoList (List<Contract> contracts);
+
     //Contractor
     @Mappings({
             @Mapping(source = "contractorGroup", target = "contractorGroupDto"),

@@ -4,9 +4,11 @@ import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.repositories.TaxSystemRepository;
 import com.trade_accounting.services.interfaces.TaxSystemService;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -14,36 +16,37 @@ import java.util.List;
 public class TaxSystemServiceImpl implements TaxSystemService {
 
     private final TaxSystemRepository taxSystemRepository;
+    private final DtoMapper dtoMapper;
 
-    public TaxSystemServiceImpl(TaxSystemRepository taxSystemRepository) {
+    public TaxSystemServiceImpl(TaxSystemRepository taxSystemRepository, DtoMapper dtoMapper) {
         this.taxSystemRepository = taxSystemRepository;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override
     public List<TaxSystemDto> getAll() {
-        return taxSystemRepository.getAll();
+        return taxSystemRepository.findAll().stream()
+                .map(dtoMapper::taxSystemToTaxSystemDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public TaxSystemDto getById(Long id) {
-        return taxSystemRepository.getById(id);
+        return dtoMapper.taxSystemToTaxSystemDto(
+                taxSystemRepository.findById(id).orElse(new TaxSystem()));
     }
 
     @Override
-    public void create(TaxSystemDto dto) {
-        taxSystemRepository.save(new TaxSystem(
-                dto.getName(),
-                dto.getSortNumber())
-        );
+    public TaxSystemDto create(TaxSystemDto taxSystemDto) {
+        TaxSystem taxSystem = dtoMapper.taxSystemDtoToTaxSystem(taxSystemDto);
+        return dtoMapper.taxSystemToTaxSystemDto(
+                taxSystemRepository.save(taxSystem));
     }
 
     @Override
-    public void update(TaxSystemDto dto) {
-        taxSystemRepository.save(new TaxSystem(
-                dto.getId(),
-                dto.getName(),
-                dto.getSortNumber())
-        );
+    public TaxSystemDto update(TaxSystemDto taxSystemDto) {
+        return create(taxSystemDto);
+
     }
 
     @Override
