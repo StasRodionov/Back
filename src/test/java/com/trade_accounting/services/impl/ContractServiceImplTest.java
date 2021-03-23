@@ -5,6 +5,9 @@ import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
