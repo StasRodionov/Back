@@ -7,13 +7,17 @@ import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Department;
+import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Project;
+import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TypeOfContractor;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.TypeOfPrice;
+import com.trade_accounting.models.Warehouse;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -107,6 +111,10 @@ public class ModelStubs {
 
     public static Department getDepartment(Long id){ return new Department(id, "name", "00001");}
 
+    public static TaxSystem getTaxSystem(Long id) {
+        return new TaxSystem(id, "name", "00001");
+    }
+
     public static TypeOfContractor getTypeOfContractor(Long id) {
         return new TypeOfContractor(id, "name", "00001");
     }
@@ -123,6 +131,18 @@ public class ModelStubs {
                 "32432423", "okpo", "ogrnip",
                 "numberOfCertifacate", LocalDate.now(),
                 getTypeOfContractor(id)
+        );
+    }
+
+    public static Invoice getInvoice(Long id) {
+        return new Invoice(
+                id,
+                LocalDateTime.now(),
+                TypeOfInvoice.RECEIPT,
+                getCompany(id),
+                getContractor(id),
+                new Warehouse(),
+                Boolean.TRUE
         );
     }
 }

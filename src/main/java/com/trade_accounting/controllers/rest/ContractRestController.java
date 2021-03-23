@@ -112,7 +112,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> create(@ApiParam(name = "contractDto",
             value = "DTO договора, который необходимо создать")
                                                   @RequestBody ContractDto contractDto) {
-        contractService.create(contractDto);
+        contractService.save(contractDto);
         log.info("Записан новый экземпляр - {}", contractDto.toString());
         return ResponseEntity.ok().build();
     }
@@ -129,7 +129,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> update(@ApiParam(name = "contractDto",
             value = "DTO договора, который необходимо обновить")
                                                   @RequestBody ContractDto contractDto) {
-        contractService.update(contractDto);
+        contractService.save(contractDto);
         log.info("Обновлен экземпляр ContractDto с id= {}", contractDto.getId());
         return ResponseEntity.ok().build();
     }
