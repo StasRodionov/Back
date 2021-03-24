@@ -122,20 +122,33 @@ public abstract class DtoMapper {
 
     //Contractor
     @Mappings({
-            @Mapping(source = "contractorGroup", target = "contractorGroupDto"),
-            @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
-            @Mapping(source = "typeOfPrice", target = "typeOfPriceDto"),
-            @Mapping(source = "bankAccounts", target = "bankAccountDto"),
-            @Mapping(source = "legalDetail", target = "legalDetailDto")
+//            @Mapping(source = "contractorGroup", target = "contractorGroupDto"),
+//            @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
+//            @Mapping(source = "typeOfPrice", target = "typeOfPriceDto"),
+//            @Mapping(source = "legalDetail", target = "legalDetailDto"),
+//            @Mapping(source = "bankAccounts", target = "bankAccountDto")
+            @Mapping(source = "contractorGroup.name", target = "contractorGroupName"),
+            @Mapping(source = "typeOfContractor.name", target = "typeOfContractorName"),
+            @Mapping(source = "typeOfPrice.name", target = "typeOfPriceName"),
+            @Mapping(source = "legalDetail.inn", target = "legalDetailInn"),
+            @Mapping(source = "bankAccounts", target = "bankAccountDto")
     })
     public abstract ContractorDto contractorToContractorDto(Contractor contractor);
 
     @Mappings({
-            @Mapping(source = "contractorGroupDto", target = "contractorGroup"),
-            @Mapping(source = "typeOfContractorDto", target = "typeOfContractor"),
-            @Mapping(source = "typeOfPriceDto", target = "typeOfPrice"),
-            @Mapping(source = "bankAccountDto", target = "bankAccounts"),
-            @Mapping(source = "legalDetailDto", target = "legalDetail")
+//            @Mapping(source = "contractorGroupDto", target = "contractorGroup"),
+//            @Mapping(source = "typeOfContractorDto", target = "typeOfContractor"),
+//            @Mapping(source = "typeOfPriceDto", target = "typeOfPrice"),
+//            @Mapping(source = "bankAccountDto", target = "bankAccounts"),
+//            @Mapping(source = "legalDetailDto", target = "legalDetail")
+            @Mapping(source = "contractorGroupName", target = "contractorGroup.name"),
+            @Mapping(source = "typeOfContractorName", target = "typeOfContractor.name"),
+            @Mapping(source = "typeOfPriceName", target = "typeOfPrice.name"),
+            @Mapping(source = "legalDetailInn", target = "legalDetail.inn"),
+            @Mapping(source = "bankAccountDto", target = "bankAccounts")
+
+
+
     })
     public abstract Contractor contractorDtoToContractor(ContractorDto contractorDto);
 

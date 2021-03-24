@@ -250,6 +250,7 @@ public class ModelDtoConverter {
         );
     }
 
+
     public static BankAccountDto convertToBankAccountDto(BankAccount bankAccount){
         return new BankAccountDto(
                 bankAccount.getId(),

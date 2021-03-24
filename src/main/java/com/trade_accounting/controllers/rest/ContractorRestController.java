@@ -57,24 +57,7 @@ public class ContractorRestController {
         List<ContractorDto> contractorDtoList = contractorService.getAll();
         log.info("Запрошен список ContractorDto через getAll");
         return ResponseEntity.ok(contractorDtoList);
-        //return ResponseEntity.ok(contractorService.getAll());
-
     }
-
-    @GetMapping("/getAllContractorDto")
-    @ApiOperation(value = "getAllContractorDto", notes = "Получение списка некоторых контрагентов")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение отф. списка контрагентов"),
-            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
-            @ApiResponse(code = 403, message = "Операция запрещена"),
-            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
-    )
-    public ResponseEntity<List<ContractorDto>> getAllContractorDto() {
-        log.info("Запрошен список ContractorDto getAllContractorDto     ");
-        return ResponseEntity.ok(contractorService.getAllContractorDto());
-
-    }
-
 
     @GetMapping("/lite")
     @ApiOperation(value = "getAllLite", notes = "Получение лёгкого списка всех контрагентов")
@@ -171,7 +154,8 @@ public class ContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorDto> update(@ApiParam(name = "contractorDto", value = "DTO контрагента, которого необходимо обновить")
+    public ResponseEntity<ContractorDto> update(@ApiParam(name = "contractorDto",
+            value = "DTO контрагента, которого необходимо обновить")
                                                 @RequestBody ContractorDto contractorDto) {
         contractorService.update(contractorDto);
         log.info("Обновлен экземпляр ContractorDto с id= {}", contractorDto.getId());

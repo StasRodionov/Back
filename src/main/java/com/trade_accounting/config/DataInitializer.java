@@ -148,7 +148,7 @@ public class DataInitializer {
         this.commentService = commentService;
     }
 
-   // @PostConstruct
+   @PostConstruct
     public void init() {
         initTypeOfPrices();
         initContractorGroups();
@@ -640,6 +640,7 @@ public class DataInitializer {
                             "2"))));
         }
     }
+
     private void initEmployees() {
         employeeService.create(new EmployeeDto(null,
                 "Vasiliev",
