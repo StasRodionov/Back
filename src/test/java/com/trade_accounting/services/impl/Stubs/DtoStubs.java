@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -67,5 +68,9 @@ public class DtoStubs {
 
     public static InvoiceProductDto getInvoiceProductDto(Long id) {
         return dtoMapper.invoiceProductToInvoiceProductDto(ModelStubs.getInvoiceProduct(id));
+    }
+
+    public static LegalDetailDto getLegalDetailDto(Long id) {
+        return dtoMapper.legalDetailToLegalDetailDto(ModelStubs.getLegalDetail(1L));
     }
 }

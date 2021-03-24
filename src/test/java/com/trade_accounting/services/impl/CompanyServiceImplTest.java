@@ -161,7 +161,7 @@ class CompanyServiceImplTest {
     }
 
     @Test
-    void update_shouldPassInstructionsSuccessfulCreate() {
+    void update_shouldPassInstructionsSuccessfulUpdate() {
         companyService.update(
                 DtoStubs.getCompanyDto(1L)
         );
