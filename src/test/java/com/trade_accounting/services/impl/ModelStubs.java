@@ -10,9 +10,11 @@ import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
+import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
+import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.Role;
@@ -174,6 +176,16 @@ public class ModelStubs {
                 getContractor(id),
                 new Warehouse(),
                 Boolean.TRUE
+        );
+    }
+
+    public static InvoiceProduct getInvoiceProduct(Long id) {
+        return new InvoiceProduct(
+                id,
+                getInvoice(id),
+                new Product(),
+                BigDecimal.valueOf(id),
+                BigDecimal.valueOf(id)
         );
     }
 }

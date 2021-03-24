@@ -36,7 +36,7 @@ class InvoiceServiceImplTest {
     private InvoiceServiceImpl invoiceService;
 
     @Test
-    void getAll_shouldReturnListFilledAttributeOfCalculationObjectDto() {
+    void getAll_shouldReturnListFilledInvoiceDto() {
         when(invoiceRepository.findAll())
                 .thenReturn(
                         Stream.of(
@@ -77,7 +77,7 @@ class InvoiceServiceImplTest {
     }
 
     @Test
-    void getById_shouldReturnFilledAttributeOfInvoiceDto() {
+    void getById_shouldReturnFilledInvoiceDto() {
         Optional<Invoice> invoiceDtoFromRepo =
                 Optional.of(
                         ModelStubs.getInvoice(1L)
