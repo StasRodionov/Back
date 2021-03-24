@@ -5,10 +5,12 @@ import com.trade_accounting.models.Position;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.services.interfaces.PositionService;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -17,46 +19,45 @@ public class PositionServiceImpl implements PositionService {
 
     private final PositionRepository positionRepository;
 
-    public PositionServiceImpl(PositionRepository positionRepository) {
+    private final DtoMapper dtoMapper;
+
+    public PositionServiceImpl(PositionRepository positionRepository, DtoMapper dtoMapper) {
         this.positionRepository = positionRepository;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override
     public List<PositionDto> getAll() {
-        return positionRepository.getAll();
+        return positionRepository.findAll().stream()
+                .map(dtoMapper::positionToPositionDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public PositionDto getById(Long id) {
-        return positionRepository.getById(id);
+        return dtoMapper.positionToPositionDto(
+                positionRepository.findById(id).orElse(new Position())
+        );
     }
 
     @Override
     public PositionDto getByName(String name) {
-        return positionRepository.getByName(name);
-    }
-
-    @Override
-    public void create(PositionDto positionDto) {
-        positionRepository.save(
-                new Position(
-                        positionDto.getName(),
-                        positionDto.getSortNumber()
-                )
+        return dtoMapper.positionToPositionDto(
+                positionRepository.findByName(name).orElse(new Position())
         );
     }
 
     @Override
-    public void update(PositionDto positionDto) {
-        positionRepository.save(
-                new Position(
-                        positionDto.getId(),
-                        positionDto.getName(),
-                        positionDto.getSortNumber()
-                )
-
+    public PositionDto create(PositionDto positionDto) {
+        Position position = dtoMapper.positionDtoToPosition(positionDto);
+        return dtoMapper.positionToPositionDto(
+                positionRepository.save(position)
         );
+    }
 
+    @Override
+    public PositionDto update(PositionDto positionDto) {
+        return create(positionDto);
     }
 
     @Override

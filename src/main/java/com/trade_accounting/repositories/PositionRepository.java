@@ -8,10 +8,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface PositionRepository extends JpaRepository<Position, Long> {
+
+    Optional<Position> findByName(String name);
+
     @Query("SELECT new com.trade_accounting.models.dto.PositionDto(" +
             "p.id, " +
             "p.name, " +
