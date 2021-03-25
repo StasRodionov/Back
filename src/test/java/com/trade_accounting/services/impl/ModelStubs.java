@@ -12,6 +12,7 @@ import com.trade_accounting.models.Project;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.TypeOfPrice;
+import com.trade_accounting.models.dto.ContractorDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
