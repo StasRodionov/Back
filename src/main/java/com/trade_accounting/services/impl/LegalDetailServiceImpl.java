@@ -49,11 +49,10 @@ public class LegalDetailServiceImpl implements LegalDetailService {
         LegalDetail legalDetail = dtoMapper.legalDetailDtoToLegalDetail(legalDetailDto);
 
         legalDetail.setTypeOfContractor(
-                typeOfContractorRepository.save(
-                        dtoMapper.typeOfContractorDtoToTypeOfContractor(
-                                legalDetailDto.getTypeOfContractorDto()
-                        )
-                ));
+                typeOfContractorRepository.findById(
+                        legalDetailDto.getTypeOfContractorDto().getId()
+                ).orElse(null)
+        );
 
         return dtoMapper.legalDetailToLegalDetailDto(
                 legalDetailRepository.save(legalDetail)

@@ -98,7 +98,7 @@ class LegalDetailServiceImplTest {
         );
 
         verify(legalDetailRepository).save(any(LegalDetail.class));
-        verify(typeOfContractorRepository).save(any(TypeOfContractor.class));
+        verify(typeOfContractorRepository).findById(anyLong());
     }
 
     @Test
