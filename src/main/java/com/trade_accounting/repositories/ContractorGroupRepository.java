@@ -1,16 +1,22 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.support.JpaEntityInformation;
+import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ContractorGroupRepository extends JpaRepository<ContractorGroup, Long> {
+
+    Optional<ContractorGroup> findByName(String name);
 
     @Query("select new com.trade_accounting.models.dto.ContractorGroupDto(" +
             "cg.id, " +
@@ -37,4 +43,11 @@ public interface ContractorGroupRepository extends JpaRepository<ContractorGroup
             "from Contractor cg " +
             "where cg.id = :id")
     ContractorGroupDto getContractorGroupByContractorId(@Param("id") Long id);
+
+
+//    default Optional<ContractorGroup> getEntityName(String name) {
+//        return null;
+//    }
+
+    //JpaEntityInformation<ContractorGroup, Long>,
 }

@@ -137,36 +137,36 @@ public class ContractorServiceImpl implements ContractorService {
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
 
         contractor.setContractorGroup(
-                contractorGroupRepository.findById(
-                        contractorDto.getContractorGroupDto().getId()
+                contractorGroupRepository.findByName(
+                        contractorDto.getContractorGroupName()
                 ).orElse(null)
         );
 
         contractor.setTypeOfContractor(
-                typeOfContractorRepository.findById(
-                       contractorDto.getTypeOfContractorDto().getId()
+                typeOfContractorRepository.findByName(
+                       contractorDto.getTypeOfContractorName()
                 ).orElse(null)
         );
 
         contractor.setTypeOfPrice(
-                typeOfPriceRepository.findById(
-                       contractorDto.getTypeOfPriceDto().getId()
+                typeOfPriceRepository.findByName(
+                       contractorDto.getTypeOfPriceName()
                 ).orElse(null)
         );
 
-        contractor.setBankAccounts(
-                contractorDto.getBankAccountDto().stream()
-                        .map(
-                                bankAccount -> bankAccountRepository
-                                        .findById(bankAccount.getId())
-                                        .orElse(null)
-                        )
-                        .collect(Collectors.toList())
-        );
+//        contractor.setBankAccounts(
+//                contractorDto.getBankAccountDto().stream()
+//                        .map(
+//                                bankAccount -> bankAccountRepository
+//                                        .findById(bankAccount.getId())
+//                                        .orElse(null)
+//                        )
+//                        .collect(Collectors.toList())
+//        );
 
         contractor.setLegalDetail(
-                legalDetailRepository.findById(
-                        contractorDto.getLegalDetailDto().getId()
+                legalDetailRepository.findByInn(
+                        contractorDto.getLegalDetailInn()
                 ).orElse(null)
         );
         contractorRepository.save(contractor);

@@ -147,8 +147,6 @@ public abstract class DtoMapper {
             @Mapping(source = "legalDetailInn", target = "legalDetail.inn"),
             @Mapping(source = "bankAccountDto", target = "bankAccounts")
 
-
-
     })
     public abstract Contractor contractorDtoToContractor(ContractorDto contractorDto);
 
