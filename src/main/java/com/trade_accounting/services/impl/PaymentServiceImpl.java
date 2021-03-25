@@ -9,11 +9,13 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.services.interfaces.PaymentService;
+import com.trade_accounting.utils.DtoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -26,73 +28,71 @@ public class PaymentServiceImpl implements PaymentService {
     private final ContractRepository contractRepository;
     private final ProjectRepository projectRepository;
 
+    private final DtoMapper dtoMapper;
+
     public PaymentServiceImpl(PaymentRepository paymentRepository,
                               CompanyRepository companyRepository,
                               ContractorRepository contractorRepository,
                               ContractRepository contractRepository,
-                              ProjectRepository projectRepository) {
+                              ProjectRepository projectRepository, DtoMapper dtoMapper) {
         this.paymentRepository = paymentRepository;
         this.companyRepository = companyRepository;
         this.contractorRepository = contractorRepository;
         this.contractRepository = contractRepository;
         this.projectRepository = projectRepository;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override
     public List<PaymentDto> getAll() {
-        List<PaymentDto> paymentDtoList = paymentRepository.getAll();
-        for (PaymentDto paymentDto: paymentDtoList){
-            paymentDto.setCompanyDto(companyRepository.getById(paymentDto.getCompanyDto().getId()));
-            paymentDto.setContractorDto(contractorRepository.getContractorById(paymentDto.getContractorDto().getId()));
-            paymentDto.setContractDto(contractRepository.getById(paymentDto.getContractDto().getId()));
-            paymentDto.setProjectDto(projectRepository.getById(paymentDto.getProjectDto().getId()));
-        }
-        return paymentDtoList;
+        return paymentRepository.findAll().stream()
+                .map(dtoMapper::paymentToPaymentDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public PaymentDto getById(Long id) {
-        PaymentDto paymentDto = paymentRepository.getById(id);
-        paymentDto.setCompanyDto(companyRepository.getById(paymentDto.getCompanyDto().getId()));
-        paymentDto.setContractorDto(contractorRepository.getContractorById(paymentDto.getContractorDto().getId()));
-        paymentDto.setContractDto(contractRepository.getById(paymentDto.getContractDto().getId()));
-        paymentDto.setProjectDto(projectRepository.getById(paymentDto.getProjectDto().getId()));
+        return dtoMapper.paymentToPaymentDto(
+                paymentRepository.findById(id).orElse(new Payment())
+        );
+    }
+
+    @Override
+    public PaymentDto create(PaymentDto paymentDto) {
+        Payment payment = dtoMapper.paymentDtoToPayment(paymentDto);
+
+        payment.setCompany(
+                companyRepository.findById(
+                        paymentDto.getCompanyDto().getId()
+                ).orElse(null)
+        );
+
+        payment.setContractor(
+                contractorRepository.findById(
+                        paymentDto.getContractorDto().getId()
+                ).orElse(null)
+        );
+
+        payment.setContract(
+                contractRepository.findById(
+                        paymentDto.getContractDto().getId()
+                ).orElse(null)
+        );
+
+        payment.setProject(
+                projectRepository.findById(
+                        paymentDto.getProjectDto().getId()
+                ).orElse(null)
+        );
+
+        paymentRepository.save(payment);
 
         return paymentDto;
     }
 
     @Override
-    public void create(PaymentDto paymentDto) {
-        paymentRepository.save(
-                new Payment(
-                        null,
-                        TypeOfPayment.valueOf(paymentDto.getTypeOfPayment()),
-                        paymentDto.getNumber(),
-                        paymentDto.getTime(),
-                        companyRepository.getOne(paymentDto.getCompanyDto().getId()),
-                        contractorRepository.getOne(paymentDto.getContractorDto().getId()),
-                        contractRepository.getOne(paymentDto.getContractDto().getId()),
-                        projectRepository.getOne(paymentDto.getContractDto().getId()),
-                        paymentDto.getSum()
-                )
-        );
-    }
-
-    @Override
-    public void update(PaymentDto paymentDto) {
-        paymentRepository.save(
-                new Payment(
-                        paymentDto.getId(),
-                        TypeOfPayment.valueOf(paymentDto.getTypeOfPayment()),
-                        paymentDto.getNumber(),
-                        paymentDto.getTime(),
-                        companyRepository.getOne(paymentDto.getCompanyDto().getId()),
-                        contractorRepository.getOne(paymentDto.getContractorDto().getId()),
-                        contractRepository.getOne(paymentDto.getContractDto().getId()),
-                        projectRepository.getOne(paymentDto.getContractDto().getId()),
-                        paymentDto.getSum()
-                )
-        );
+    public PaymentDto update(PaymentDto paymentDto) {
+        return create(paymentDto);
     }
 
     @Override

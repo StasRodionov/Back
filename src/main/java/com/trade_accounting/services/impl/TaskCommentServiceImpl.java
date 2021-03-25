@@ -1,7 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.TaskComment;
-import com.trade_accounting.models.dto.TaskCommentDTO;
+import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
@@ -27,7 +27,7 @@ public class TaskCommentServiceImpl implements TaskCommentService {
     private final CheckEntityServiceImpl checkEntityService;
 
     @Override
-    public List<TaskCommentDTO> search(Specification<TaskComment> specification) {
+    public List<TaskCommentDto> search(Specification<TaskComment> specification) {
         return commentRepository.findAll(specification)
                 .stream()
                 .map(ModelDtoConverter::toTaskCommentDTO)
@@ -35,7 +35,7 @@ public class TaskCommentServiceImpl implements TaskCommentService {
     }
 
     @Override
-    public List<TaskCommentDTO> getAll() {
+    public List<TaskCommentDto> getAll() {
         return commentRepository.findAll()
                 .stream()
                 .map(ModelDtoConverter::toTaskCommentDTO)
@@ -43,13 +43,13 @@ public class TaskCommentServiceImpl implements TaskCommentService {
     }
 
     @Override
-    public Optional<TaskCommentDTO> getById(Long id) {
+    public Optional<TaskCommentDto> getById(Long id) {
         return commentRepository.findById(id)
                 .map(ModelDtoConverter::toTaskCommentDTO);
     }
 
     @Override
-    public TaskCommentDTO create(TaskCommentDTO dto) {
+    public TaskCommentDto create(TaskCommentDto dto) {
         checkEntityService.checkExistsTaskById(dto.getTaskId());
         var task = taskRepository.findById(dto.getTaskId()).get();
 
@@ -64,7 +64,7 @@ public class TaskCommentServiceImpl implements TaskCommentService {
         return ModelDtoConverter.toTaskCommentDTO(saved);
     }
 
-    public void createAll(List<TaskCommentDTO> dtos) {
+    public void createAll(List<TaskCommentDto> dtos) {
         dtos.forEach(dto -> {
             var entity = ModelDtoConverter.toTaskCommentEntity(dto);
             entity.setTask(taskRepository.getOne(dto.getTaskId()));
@@ -81,7 +81,7 @@ public class TaskCommentServiceImpl implements TaskCommentService {
     }
 
     @Override
-    public TaskCommentDTO update(TaskCommentDTO dto) {
+    public TaskCommentDto update(TaskCommentDto dto) {
         return this.create(dto);
     }
 

@@ -8,6 +8,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +32,7 @@ public class Payment {
     private Long id;
 
     @Column(name = "type_of_payment")
+    @Enumerated(EnumType.STRING)
     private TypeOfPayment typeOfPayment;
 
     @Column(name = "number")

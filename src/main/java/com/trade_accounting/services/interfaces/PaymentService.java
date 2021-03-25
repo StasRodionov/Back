@@ -9,9 +9,9 @@ public interface PaymentService {
 
     PaymentDto getById(Long id);
 
-    void create(PaymentDto paymentDto);
+    PaymentDto create(PaymentDto paymentDto);
 
-    void update(PaymentDto paymentDto);
+    PaymentDto update(PaymentDto paymentDto);
 
     void deleteById(Long id);
 }

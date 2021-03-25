@@ -1,7 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Task;
-import com.trade_accounting.models.dto.TaskDTO;
+import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.services.interfaces.TaskService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -47,7 +46,7 @@ public class TaskRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> getAll() {
+    public ResponseEntity<List<TaskDto>> getAll() {
         return ResponseEntity.ok(taskService.getAll());
     }
 
@@ -59,7 +58,7 @@ public class TaskRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @GetMapping(value = "search")
-    public ResponseEntity<List<TaskDTO>> search(@And({
+    public ResponseEntity<List<TaskDto>> search(@And({
             @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
             @Spec(path = "taskEmployee.id", params = "employeeId", spec = Equal.class),
             @Spec(path = "taskAuthor.id", params = "taskAuthorId", spec = Equal.class),
@@ -77,7 +76,7 @@ public class TaskRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @GetMapping("/{id}")
-    public ResponseEntity<TaskDTO> getById(@PathVariable("id") long id) {
+    public ResponseEntity<TaskDto> getById(@PathVariable("id") long id) {
         return taskService.getById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(ResponseEntity.notFound()::build);
@@ -91,7 +90,7 @@ public class TaskRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @PostMapping(consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<Void> create(@RequestBody TaskDTO dto) {
+    public ResponseEntity<Void> create(@RequestBody TaskDto dto) {
         var created = taskService.create(dto);
 
         URI taskURI = ServletUriComponentsBuilder
@@ -112,7 +111,7 @@ public class TaskRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody TaskDTO dto) {
+    public ResponseEntity<Void> update(@RequestBody TaskDto dto) {
         taskService.update(dto);
         return ResponseEntity.ok().build();
     }
