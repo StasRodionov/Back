@@ -1,26 +1,25 @@
 package com.trade_accounting.services.interfaces;
 
 import com.trade_accounting.models.Task;
-import com.trade_accounting.models.dto.TaskDTO;
+import com.trade_accounting.models.dto.TaskDto;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 public interface TaskService {
 
-    void createAll(List<TaskDTO> dtos);
+    void createAll(List<TaskDto> dtos);
 
-    List<TaskDTO> search(Specification<Task> specification);
+    List<TaskDto> search(Specification<Task> specification);
 
-    List<TaskDTO> getAll();
+    List<TaskDto> getAll();
 
-    Optional<TaskDTO> getById(Long id);
+    Optional<TaskDto> getById(Long id);
 
-    TaskDTO create(TaskDTO taskDTO);
+    TaskDto create(TaskDto taskDTO);
 
-    TaskDTO update(TaskDTO taskDTO);
+    TaskDto update(TaskDto taskDTO);
 
     void deleteById(Long id);
 }

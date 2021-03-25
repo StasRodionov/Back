@@ -21,8 +21,8 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.TaskCommentDTO;
-import com.trade_accounting.models.dto.TaskDTO;
+import com.trade_accounting.models.dto.TaskCommentDto;
+import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
@@ -955,10 +955,10 @@ public class DataInitializer {
         var employeeIds = employeeService.getAll().stream().mapToLong(EmployeeDto::getId).toArray();
         var idCount = employeeIds.length;
 
-        var tasks = new ArrayList<TaskDTO>();
-        TaskDTO dto;
+        var tasks = new ArrayList<TaskDto>();
+        TaskDto dto;
         for (int i = 0; i < 20; i++) {
-            dto = new TaskDTO();
+            dto = new TaskDto();
 
             dto.setDescription(String.format(descriptionFormat, i));
             dto.setEmployeeId(employeeIds[rnd.nextInt(idCount)]);
@@ -987,12 +987,12 @@ public class DataInitializer {
                 .mapToLong(EmployeeDto::getId)
                 .toArray();
 
-        var commentDTOs = new ArrayList<TaskCommentDTO>();
+        var commentDTOs = new ArrayList<TaskCommentDto>();
 
-        for (TaskDTO dto : tasks) {
+        for (TaskDto dto : tasks) {
             var commentCount = rnd.nextInt(5);
             for (int i = 0; i < commentCount; i++) {
-                var commentDTO = new TaskCommentDTO();
+                var commentDTO = new TaskCommentDto();
                 commentDTO.setCommentContent(String.format(commentFormat, dto.getId(), i));
                 commentDTO.setPublisherId(employeeIds[rnd.nextInt(employeeIds.length)]);
                 commentDTO.setPublishedDateTime(dto.getCreationDateTime().plusHours(rnd.nextInt(25)));

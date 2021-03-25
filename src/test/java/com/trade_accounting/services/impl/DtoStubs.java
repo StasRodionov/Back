@@ -1,6 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.dto.TypeOfPriceDto;
+import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -8,6 +9,8 @@ import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
+import com.trade_accounting.models.dto.InvoiceDto;
+import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.utils.DtoMapper;
 import org.mapstruct.factory.Mappers;
 
@@ -33,6 +36,12 @@ public class DtoStubs {
     public static AttributeOfCalculationObjectDto getAttributeOfCalculationObjectDto(Long id) {
         return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
                 ModelStubs.getAttributeOfCalculationObject(id)
+        );
+    }
+
+    public static EmployeeDto getEmployeeDto(Long id) {
+        return dtoMapper.employeeToEmployeeDto(
+                ModelStubs.getEmployee(id)
         );
     }
 
