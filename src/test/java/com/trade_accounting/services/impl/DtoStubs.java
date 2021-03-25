@@ -1,9 +1,17 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.dto.PaymentDto;
+import com.trade_accounting.models.dto.TypeOfPriceDto;
+import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.models.dto.TaxSystemDto;
+import com.trade_accounting.models.dto.InvoiceDto;
+import com.trade_accounting.models.dto.InvoiceProductDto;
+import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
+import com.trade_accounting.models.dto.InvoiceDto;
+import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.utils.DtoMapper;
 import org.mapstruct.factory.Mappers;
 
@@ -12,6 +20,10 @@ public class DtoStubs {
 
     public static PaymentDto getPaymentDto(Long id) {
         return dtoMapper.paymentToPaymentDto(ModelStubs.getPayment(id));
+    }
+
+    public static TypeOfPriceDto getTypeOfPriceDto(Long id) {
+        return dtoMapper.typeOfPriceToTypeOfPriceDto(ModelStubs.getTypeOfPrice(id));
     }
 
     public static CompanyDto getCompanyDto(Long id) {
@@ -30,5 +42,31 @@ public class DtoStubs {
         return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
                 ModelStubs.getAttributeOfCalculationObject(id)
         );
+    }
+
+    public static EmployeeDto getEmployeeDto(Long id) {
+        return dtoMapper.employeeToEmployeeDto(
+                ModelStubs.getEmployee(id)
+        );
+    }
+
+    public static ContractDto getContractDto(Long id){
+        return dtoMapper.contractToContractDto(ModelStubs.getContract(id));
+    }
+
+    public static TaxSystemDto getTaxSystemDto(Long id){
+        return dtoMapper.taxSystemToTaxSystemDto(
+                ModelStubs.getTaxSystem(id)
+        );
+    }
+
+    public static InvoiceDto getInvoiceDto(Long id) {
+        return dtoMapper.invoiceToInvoiceDto(
+                ModelStubs.getInvoice(id)
+        );
+    }
+
+    public static InvoiceProductDto getInvoiceProductDto(Long id) {
+        return dtoMapper.invoiceProductToInvoiceProductDto(ModelStubs.getInvoiceProduct(id));
     }
 }

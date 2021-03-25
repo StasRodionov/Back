@@ -1,7 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Task;
-import com.trade_accounting.models.dto.TaskDTO;
+import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
@@ -30,7 +30,7 @@ public class TaskServiceImpl implements TaskService {
     private final CheckEntityService checkEntityService;
 
     @Override
-    public List<TaskDTO> search(Specification<Task> specification) {
+    public List<TaskDto> search(Specification<Task> specification) {
         return taskRepository.findAll(specification).stream()
                 .map(ModelDtoConverter::toTaskDTO)
                 .peek(dto -> dto.setCommentCount(commentRepository.countTaskCommentByTaskId(dto.getId())))
@@ -38,7 +38,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDTO> getAll() {
+    public List<TaskDto> getAll() {
         return taskRepository.findAll()
                 .stream()
                 .map(ModelDtoConverter::toTaskDTO)
@@ -47,7 +47,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Optional<TaskDTO> getById(Long id) {
+    public Optional<TaskDto> getById(Long id) {
         var taskEntity = taskRepository.findById(id);
 
         return taskEntity
@@ -59,7 +59,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDTO create(TaskDTO dto) {
+    public TaskDto create(TaskDto dto) {
         var taskEntity = ModelDtoConverter.toTaskEntity(dto);
 
         checkEntityService.checkExistsEmployeeById(dto.getEmployeeId());
@@ -74,7 +74,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void createAll(List<TaskDTO> tasks) {
+    public void createAll(List<TaskDto> tasks) {
         var entities = tasks
                 .stream()
                 .map(dto -> {
@@ -92,7 +92,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDTO update(TaskDTO dto) {
+    public TaskDto update(TaskDto dto) {
         return this.create(dto);
     }
 

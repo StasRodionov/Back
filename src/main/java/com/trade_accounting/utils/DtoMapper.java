@@ -20,6 +20,8 @@ import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.Task;
+import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPrice;
@@ -45,6 +47,8 @@ import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.TaskCommentDto;
+import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
@@ -119,6 +123,8 @@ public abstract class DtoMapper {
             @Mapping(source = "legalDetailDto", target = "legalDetail")
     })
     public abstract Contract contractDtoToContract(ContractDto contractDto);
+
+    public abstract List<ContractDto> toContractDtoList (List<Contract> contracts);
 
     //Contractor
     @Mappings({
@@ -349,6 +355,16 @@ public abstract class DtoMapper {
 
     public abstract Role roleDtoToRole(RoleDto role);
 
+    //Task
+    public abstract TaskDto taskToTaskDto(Task task);
+
+    public abstract Task taskDtoToTask(TaskDto taskDto);
+
+    //TaskComment
+    public abstract TaskCommentDto taskCommentToTaskCommentDto(TaskComment taskComment);
+
+    public abstract TaskComment taskCommentDtoToTaskComment(TaskCommentDto taskCommentDto);
+
     //TaxSystem
     public abstract TaxSystemDto taxSystemToTaxSystemDto(TaxSystem taxSystem);
 
@@ -367,7 +383,7 @@ public abstract class DtoMapper {
     //Unit
     public abstract UnitDto unitToUnitDto(Unit unit);
 
-    public abstract Unit unitDtoToUnit(Unit unit);
+    public abstract Unit unitDtoToUnit(UnitDto unitDto);
 
     //Warehouse
     public abstract WarehouseDto warehouseToWarehouseDto(Warehouse warehouse);

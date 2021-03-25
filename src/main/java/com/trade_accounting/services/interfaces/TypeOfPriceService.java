@@ -10,9 +10,9 @@ public interface TypeOfPriceService {
 
     TypeOfPriceDto getById(Long id);
 
-    void create(TypeOfPriceDto typeOfPriceDto);
+    TypeOfPriceDto create(TypeOfPriceDto typeOfPriceDto);
 
-    void update(TypeOfPriceDto typeOfPriceDto);
+    TypeOfPriceDto update(TypeOfPriceDto typeOfPriceDto);
 
     void deleteById(Long id);
 }
