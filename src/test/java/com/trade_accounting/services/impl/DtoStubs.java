@@ -1,17 +1,16 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.dto.PaymentDto;
-import com.trade_accounting.models.dto.TypeOfPriceDto;
-import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
+import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
-import com.trade_accounting.models.dto.TaxSystemDto;
+import com.trade_accounting.models.dto.ContractDto;
+import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
-import com.trade_accounting.models.dto.ContractDto;
+import com.trade_accounting.models.dto.PaymentDto;
+import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
-import com.trade_accounting.models.dto.InvoiceDto;
-import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.utils.DtoMapper;
 import org.mapstruct.factory.Mappers;
 
@@ -24,6 +23,12 @@ public class DtoStubs {
 
     public static TypeOfPriceDto getTypeOfPriceDto(Long id) {
         return dtoMapper.typeOfPriceToTypeOfPriceDto(ModelStubs.getTypeOfPrice(id));
+    }
+
+    public static BankAccountDto getBankAccountDto(Long id) {
+        return dtoMapper.bankAccountToBankAccountDto(
+                ModelStubs.getBankAccount(id)
+        );
     }
 
     public static CompanyDto getCompanyDto(Long id) {
