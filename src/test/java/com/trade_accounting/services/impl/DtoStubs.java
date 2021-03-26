@@ -9,6 +9,7 @@ import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
+import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.utils.DtoMapper;
@@ -34,6 +35,12 @@ public class DtoStubs {
     public static CompanyDto getCompanyDto(Long id) {
         return dtoMapper.companyToCompanyDto(
                 ModelStubs.getCompany(id)
+        );
+    }
+
+    public static ProjectDto getProjectDto(Long id) {
+        return dtoMapper.projectToProjectDto(
+                ModelStubs.getProject(id)
         );
     }
 

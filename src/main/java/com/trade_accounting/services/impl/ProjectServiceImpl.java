@@ -4,10 +4,12 @@ import com.trade_accounting.models.Project;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.services.interfaces.ProjectService;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -15,37 +17,39 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    private final DtoMapper dtoMapper;
+
+    public ProjectServiceImpl(ProjectRepository projectRepository, DtoMapper dtoMapper) {
         this.projectRepository = projectRepository;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override
     public List<ProjectDto> getAll() {
-        return projectRepository.getAll();
+        return projectRepository.findAll().stream()
+                .map(dtoMapper::projectToProjectDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public ProjectDto getById(Long id) {
-        return projectRepository.getById(id);
+        return dtoMapper.projectToProjectDto(
+                projectRepository.findById(id).orElse(new Project())
+        );
     }
 
     @Override
-    public void create(ProjectDto projectDto) {
-        projectRepository.save(new Project(
-                projectDto.getName(),
-                projectDto.getCode(),
-                projectDto.getDescription()
-        ));
+    public ProjectDto create(ProjectDto projectDto) {
+        Project project = projectRepository.save(
+                dtoMapper.projectDtoToProject(projectDto)
+        );
+
+        return dtoMapper.projectToProjectDto(project);
     }
 
     @Override
-    public void update(ProjectDto projectDto) {
-        projectRepository.save(new Project(
-                projectDto.getId(),
-                projectDto.getName(),
-                projectDto.getCode(),
-                projectDto.getDescription()
-        ));
+    public ProjectDto update(ProjectDto projectDto) {
+        return create(projectDto);
     }
 
     @Override
