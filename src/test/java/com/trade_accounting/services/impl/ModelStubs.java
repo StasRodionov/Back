@@ -15,6 +15,7 @@ import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.TaxSystem;
@@ -22,6 +23,7 @@ import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.TypeOfPrice;
+import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.Warehouse;
 
 import java.math.BigDecimal;
@@ -188,4 +190,12 @@ public class ModelStubs {
                 BigDecimal.valueOf(id)
         );
     }
-}
+    public static Product getProduct(Long id) {
+        return new Product(id,"name", BigDecimal.ONE,"description", BigDecimal.TEN, BigDecimal.ZERO, false,
+                new Unit(id.toString(), id.toString(),id.toString()),new ProductGroup("name",
+                "sort"), new TaxSystem("name", "sort"),
+                getContractor(id), getAttributeOfCalculationObject(id), null,
+                null);
+   }
+
+    }
