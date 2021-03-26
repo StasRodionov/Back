@@ -1,7 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.TaskComment;
-import com.trade_accounting.models.dto.TaskCommentDTO;
+import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.services.interfaces.TaskCommentService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -46,7 +46,7 @@ public class TaskCommentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @GetMapping
-    public ResponseEntity<List<TaskCommentDTO>> getAll() {
+    public ResponseEntity<List<TaskCommentDto>> getAll() {
         return ResponseEntity.ok(commentService.getAll());
     }
 
@@ -58,7 +58,7 @@ public class TaskCommentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @GetMapping(value = "search")
-    public ResponseEntity<List<TaskCommentDTO>> search(
+    public ResponseEntity<List<TaskCommentDto>> search(
             @And({
                     @Spec(path = "id", params = "comment_id", spec = Equal.class),
                     @Spec(path = "commentContent", params = "comment", spec = LikeIgnoreCase.class),
@@ -77,7 +77,7 @@ public class TaskCommentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @GetMapping("/{id}")
-    public ResponseEntity<TaskCommentDTO> getById(@PathVariable("id") long id) {
+    public ResponseEntity<TaskCommentDto> getById(@PathVariable("id") long id) {
         return commentService.getById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(ResponseEntity.notFound()::build);
@@ -91,7 +91,7 @@ public class TaskCommentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @PostMapping(consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<Void> create(@RequestBody TaskCommentDTO dto) {
+    public ResponseEntity<Void> create(@RequestBody TaskCommentDto dto) {
         var created = commentService.create(dto);
 
         URI commentURI = ServletUriComponentsBuilder
@@ -112,7 +112,7 @@ public class TaskCommentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody TaskCommentDTO dto) {
+    public ResponseEntity<Void> update(@RequestBody TaskCommentDto dto) {
         commentService.update(dto);
         return ResponseEntity.ok().build();
     }

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskCommentDTO {
+public class TaskCommentDto {
 
     private Long id;
 
