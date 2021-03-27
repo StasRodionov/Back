@@ -11,6 +11,7 @@ import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.InvoiceDto;
+import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.utils.DtoMapper;
 import org.mapstruct.factory.Mappers;
 import com.trade_accounting.models.dto.LegalDetailDto;
