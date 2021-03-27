@@ -2,13 +2,14 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
-import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.dto.CompanyDto;
-import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -160,7 +161,7 @@ class CompanyServiceImplTest {
     }
 
     @Test
-    void update_shouldPassInstructionsSuccessfulCreate() {
+    void update_shouldPassInstructionsSuccessfulUpdate() {
         companyService.update(
                 DtoStubs.getCompanyDto(1L)
         );

@@ -11,9 +11,9 @@ public interface LegalDetailService {
 
     LegalDetailDto getById(Long id);
 
-    void create(LegalDetailDto legalDetailDto);
+    LegalDetailDto create(LegalDetailDto legalDetailDto);
 
-    void update(LegalDetailDto legalDetailDto);
+    LegalDetailDto update(LegalDetailDto legalDetailDto);
 
     void deleteById(Long id);
 

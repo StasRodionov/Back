@@ -1,4 +1,4 @@
-package com.trade_accounting.services.impl;
+package com.trade_accounting.services.impl.Stubs;
 
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
@@ -23,6 +23,7 @@ import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.Department;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -46,6 +47,8 @@ public class ModelStubs {
                 BigDecimal.ONE
         );
     }
+
+    public static Position getPosition(Long id){ return new Position(id,"name","00001");}
 
     public static Company getCompany(Long id) {
         return new Company(
@@ -111,6 +114,8 @@ public class ModelStubs {
     public static ContractorGroup getContractorGroup(Long id) {
         return new ContractorGroup(id, "name", "00001");
     }
+
+    public static Department getDepartment(Long id){ return new Department(id, "name", "00001");}
 
     public static TaxSystem getTaxSystem(Long id) {
         return new TaxSystem(id, "name", "00001");
