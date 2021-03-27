@@ -121,14 +121,6 @@ public class ModelStubs {
         return new TaxSystem(id, "name", "00001");
     }
 
-    public static Department getDepartment(Long id) {
-        return new Department(id, "name", "00001");
-    }
-
-    public static Position getPosition(Long id) {
-        return new Position(id, "name", "00001");
-    }
-
     public static Employee getEmployee(Long id) {
         return new Employee(
                 id, "lastName", "firstName",
