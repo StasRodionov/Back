@@ -5,7 +5,6 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EmployeeService {
 
@@ -15,9 +14,7 @@ public interface EmployeeService {
 
     EmployeeDto getById(Long id);
 
-    void create(EmployeeDto employeeDto);
-
-    void update(EmployeeDto employeeDto);
+    void save(EmployeeDto employeeDto);
 
     void deleteById(Long id);
 

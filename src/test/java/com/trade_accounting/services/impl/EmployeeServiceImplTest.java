@@ -138,7 +138,7 @@ class EmployeeServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        employeeService.create(
+        employeeService.save(
             DtoStubs.getEmployeeDto(1L)
         );
 
@@ -151,7 +151,7 @@ class EmployeeServiceImplTest {
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        employeeService.update(
+        employeeService.save(
             DtoStubs.getEmployeeDto(1L)
         );
 

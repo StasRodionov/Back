@@ -173,7 +173,7 @@ public abstract class DtoMapper {
             @Mapping(source = "departmentDto", target = "department"),
             @Mapping(source = "positionDto", target = "position"),
             @Mapping(source = "roleDto", target = "roles"),
-            @Mapping(source = "imageDto", target = "image"),
+//            @Mapping(source = "imageDto", target = "image"),
             @Mapping(target = "authorities", ignore = true)
     })
     public abstract Employee employeeDtoToEmployee(EmployeeDto emp);

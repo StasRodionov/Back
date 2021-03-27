@@ -12,7 +12,6 @@ import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
@@ -163,7 +162,6 @@ public class DataInitializer {
         initTaxSystems();
         initProductGroups();
         initCurrency();
-        initImage();
 
         initLegalDetails();
         initCompanies();
@@ -441,14 +439,6 @@ public class DataInitializer {
         currencyService.create(new CurrencyDto(null, "eng dollar", "USA Dollars ", "25", "dol", "3"));
     }
 
-    private void initImage() {
-        imageService.create(new ImageDto(null,  null, "1"), "employees");
-        imageService.create(new ImageDto(null,  null, "2"), "employees");
-        imageService.create(new ImageDto(null,  null, "3"), "employees");
-        imageService.create(new ImageDto(null,  null, "4"), "employees");
-        imageService.create(new ImageDto(null,  null, "5"), "employees");
-    }
-
     private void initLegalDetails() {
         legalDetailService.create(new LegalDetailDto(
                 null,
@@ -641,7 +631,7 @@ public class DataInitializer {
         }
     }
     private void initEmployees() {
-        employeeService.create(new EmployeeDto(null,
+        employeeService.save(new EmployeeDto(null,
                 "Vasiliev",
                 "Vasya",
                 "Vasilievich",
@@ -655,7 +645,7 @@ public class DataInitializer {
                 positionService.getByName("Генеральный директор"),
                 Collections.singleton(roleService.getByName("admin")),
                 null));
-        employeeService.create(new EmployeeDto(null,
+        employeeService.save(new EmployeeDto(null,
                 "Simonova",
                 "Sima",
                 "Semenovna",
@@ -669,7 +659,7 @@ public class DataInitializer {
                 positionService.getByName("Коммерческий директор"),
                 Collections.singleton(roleService.getByName("user")),
                 null));
-        employeeService.create(new EmployeeDto(null,
+        employeeService.save(new EmployeeDto(null,
                 "Belive",
                 "Vera",
                 "Henrichovna",
@@ -683,7 +673,7 @@ public class DataInitializer {
                 positionService.getByName("Технический директор"),
                 Collections.singleton(roleService.getByName("user")),
                 null));
-        employeeService.create(new EmployeeDto(null,
+        employeeService.save(new EmployeeDto(null,
                 "Islentiev",
                 "Karim",
                 "Dmitrievich",
@@ -697,7 +687,7 @@ public class DataInitializer {
                 positionService.getByName("Директор по продажам"),
                 Collections.singleton(roleService.getByName("admin")),
                 null));
-        employeeService.create(new EmployeeDto(null,
+        employeeService.save(new EmployeeDto(null,
                 "Petko",
                 "Sasha",
                 "",
