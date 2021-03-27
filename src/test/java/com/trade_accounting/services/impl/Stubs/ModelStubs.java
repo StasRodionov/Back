@@ -6,7 +6,6 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
-import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
@@ -20,6 +19,7 @@ import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.Department;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
