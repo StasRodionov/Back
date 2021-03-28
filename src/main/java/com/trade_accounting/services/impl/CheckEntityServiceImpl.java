@@ -12,6 +12,8 @@ import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
+import com.trade_accounting.repositories.TaskCommentRepository;
+import com.trade_accounting.repositories.TaskRepository;
 import com.trade_accounting.repositories.UnitRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
@@ -30,12 +32,17 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final ImageRepository imageRepository;
     private final RoleRepository roleRepository;
     private final WarehouseRepository warehouseRepository;
+    private final TaskRepository taskRepository;
+    private final TaskCommentRepository commentRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository, DepartmentRepository departmentRepository,
                                   PositionRepository positionRepository,
                                   ImageRepository imageRepository,
-                                  RoleRepository roleRepository, WarehouseRepository warehouseRepository) {
+                                  RoleRepository roleRepository,
+                                  WarehouseRepository warehouseRepository,
+                                  TaskRepository taskRepository,
+                                  TaskCommentRepository commentRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -43,6 +50,8 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.imageRepository = imageRepository;
         this.roleRepository = roleRepository;
         this.warehouseRepository = warehouseRepository;
+        this.taskRepository = taskRepository;
+        this.commentRepository = commentRepository;
     }
 
 
@@ -107,6 +116,20 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                     );
                 }
             }
+        }
+    }
+
+    @Override
+    public void checkExistsTaskById(Long taskId) {
+        if(!taskRepository.existsById(taskId)) {
+            throw new NotFoundEntityException("Задача с id=" + taskId + ", не найдена");
+        }
+    }
+
+    @Override
+    public void checkExistsTaskCommentById(Long taskCommentId) {
+        if(!commentRepository.existsById(taskCommentId)) {
+            throw new NotFoundEntityException("Комментарий с id=" + taskCommentId + ", не найдена");
         }
     }
 }

@@ -1,6 +1,7 @@
-package com.trade_accounting.services.impl;
+package com.trade_accounting.services.impl.Stubs;
 
 import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Employee;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -17,4 +18,9 @@ public class SpecificationStubs {
     public static Specification<Company> getCompanySpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
+
+    public static Specification<Contract> getContractSpecificationStub() {
+        return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+
 }

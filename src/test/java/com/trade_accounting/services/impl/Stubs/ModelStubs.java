@@ -1,17 +1,29 @@
-package com.trade_accounting.services.impl;
+package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.Department;
+import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Image;
+import com.trade_accounting.models.Department;
+import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
+import com.trade_accounting.models.Position;
+import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TypeOfContractor;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.TypeOfPrice;
+import com.trade_accounting.models.Warehouse;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,6 +33,10 @@ import java.util.stream.Stream;
 
 public class ModelStubs {
     //TODO Вынести заглушки моделей из классов сервисов сюда
+
+    public static AttributeOfCalculationObject getAttributeOfCalculationObject(Long id) {
+        return new AttributeOfCalculationObject(id, "name", "00001", true);
+    }
 
     public static Payment getPayment(Long id) {
         return new Payment(
@@ -97,6 +113,40 @@ public class ModelStubs {
         return new ContractorGroup(id, "name", "00001");
     }
 
+    public static Department getDepartment(Long id){ return new Department(id, "name", "00001");}
+
+    public static TaxSystem getTaxSystem(Long id) {
+        return new TaxSystem(id, "name", "00001");
+    }
+
+    public static Position getPosition(Long id) {
+        return new Position(id, "name", "00001");
+    }
+
+    public static Employee getEmployee(Long id) {
+        return new Employee(
+                id, "lastName", "firstName",
+                "middleName", "00001", "89030450020",
+                "123456789012", "descript",
+                "email.email@email.com", "pass",
+                getDepartment(id), getPosition(id),
+                Stream.of(
+                        getRole(id),
+                        getRole(id + 1),
+                        getRole(id + 2)
+                ).collect(Collectors.toSet()),
+                getImage(id)
+        );
+    }
+
+    public static Image getImage(Long id) {
+        return new Image(id, "url", "00001");
+    }
+
+    public static Role getRole(Long id) {
+        return new Role(id, "name", "00001");
+    }
+
     public static TypeOfContractor getTypeOfContractor(Long id) {
         return new TypeOfContractor(id, "name", "00001");
     }
@@ -118,5 +168,27 @@ public class ModelStubs {
 
     public static Role getRole(Long id) {
         return new Role(id, "name", "00001");
+    }
+
+    public static Invoice getInvoice(Long id) {
+        return new Invoice(
+                id,
+                LocalDateTime.now(),
+                TypeOfInvoice.RECEIPT,
+                getCompany(id),
+                getContractor(id),
+                new Warehouse(),
+                Boolean.TRUE
+        );
+    }
+
+    public static InvoiceProduct getInvoiceProduct(Long id) {
+        return new InvoiceProduct(
+                id,
+                getInvoice(id),
+                new Product(),
+                BigDecimal.valueOf(id),
+                BigDecimal.valueOf(id)
+        );
     }
 }

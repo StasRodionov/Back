@@ -12,9 +12,9 @@ public interface PositionService {
 
     PositionDto getByName(String name);
 
-    void create(PositionDto positionDto);
+    PositionDto create(PositionDto positionDto);
 
-    void update(PositionDto positionDto);
+    PositionDto update(PositionDto positionDto);
 
     void deleteById(Long id);
 }

@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,7 +22,7 @@ public class PaymentDto {
 
     private Long id;
 
-    private String typeOfPayment;
+    private TypeOfPayment typeOfPayment;
 
     @NotNull
     private String number;
@@ -49,7 +51,7 @@ public class PaymentDto {
                       Long projectId,
                       BigDecimal sum) {
         this.id = id;
-        this.typeOfPayment = typeOfPayment.toString();
+        this.typeOfPayment = typeOfPayment;
         this.number = number;
         this.time = time;
         this.companyDto = new CompanyDto();

@@ -4,9 +4,11 @@ import com.trade_accounting.models.Department;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.services.interfaces.DepartmentService;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -15,45 +17,46 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository departmentRepository;
 
-    public DepartmentServiceImpl(DepartmentRepository departmentRepository) {
+    private final DtoMapper dtoMapper;
+
+    public DepartmentServiceImpl(DepartmentRepository departmentRepository, DtoMapper dtoMapper) {
         this.departmentRepository = departmentRepository;
+        this.dtoMapper = dtoMapper;
     }
 
 
     @Override
     public List<DepartmentDto> getAll() {
-        return departmentRepository.getAll();
+        return departmentRepository.findAll().stream()
+                .map(dtoMapper::departmentToDepartmentDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public DepartmentDto getById(Long id) {
-        return departmentRepository.getById(id);
+        return dtoMapper.departmentToDepartmentDto(
+                departmentRepository.findById(id).orElse(new Department())
+        );
     }
 
     @Override
     public DepartmentDto getByName(String name) {
-        return departmentRepository.getByName(name);
-    }
-
-    @Override
-    public void create(DepartmentDto departmentDto) {
-        departmentRepository.save(
-                new Department(
-                    departmentDto.getName(),
-                    departmentDto.getSortNumber()
-                )
+        return dtoMapper.departmentToDepartmentDto(
+                departmentRepository.findByName(name).orElse(new Department())
         );
     }
 
     @Override
-    public void update(DepartmentDto departmentDto) {
-        departmentRepository.save(
-                new Department(
-                    departmentDto.getId(),
-                    departmentDto.getName(),
-                    departmentDto.getSortNumber()
-                )
+    public DepartmentDto create(DepartmentDto departmentDto) {
+        Department department = dtoMapper.departmentDtoToDepartment(departmentDto);
+        return dtoMapper.departmentToDepartmentDto(
+                departmentRepository.save(department)
         );
+    }
+
+    @Override
+    public DepartmentDto update(DepartmentDto departmentDto) {
+        return create(departmentDto);
     }
 
     @Override

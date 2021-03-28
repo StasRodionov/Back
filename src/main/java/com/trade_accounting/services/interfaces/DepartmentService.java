@@ -11,9 +11,9 @@ public interface DepartmentService {
 
     DepartmentDto getByName(String name);
 
-    void create(DepartmentDto departmentDto);
+    DepartmentDto create(DepartmentDto departmentDto);
 
-    void update(DepartmentDto departmentDto);
+    DepartmentDto update(DepartmentDto departmentDto);
 
     void deleteById(Long id);
 }

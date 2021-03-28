@@ -1,5 +1,6 @@
 package com.trade_accounting.services.interfaces;
 
+import com.trade_accounting.models.Image;
 import com.trade_accounting.models.dto.ImageDto;
 
 import java.util.List;
@@ -10,9 +11,7 @@ public interface ImageService {
 
     ImageDto getById(Long id);
 
-    void create(ImageDto imageDto);
-
-    void update(ImageDto imageDto);
+    Image create(ImageDto imageDto, String imageDir);
 
     void deleteById(Long id);
 }
