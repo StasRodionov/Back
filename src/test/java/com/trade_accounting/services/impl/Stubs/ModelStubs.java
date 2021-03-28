@@ -48,8 +48,6 @@ public class ModelStubs {
         );
     }
 
-    public static Position getPosition(Long id){ return new Position(id,"name","00001");}
-
     public static Company getCompany(Long id) {
         return new Company(
                 id, "name",
@@ -119,10 +117,6 @@ public class ModelStubs {
 
     public static TaxSystem getTaxSystem(Long id) {
         return new TaxSystem(id, "name", "00001");
-    }
-
-    public static Department getDepartment(Long id) {
-        return new Department(id, "name", "00001");
     }
 
     public static Position getPosition(Long id) {
