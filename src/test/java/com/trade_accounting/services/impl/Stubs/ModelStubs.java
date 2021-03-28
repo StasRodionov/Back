@@ -143,10 +143,6 @@ public class ModelStubs {
         return new Image(id, "url", "00001");
     }
 
-    public static Role getRole(Long id) {
-        return new Role(id, "name", "00001");
-    }
-
     public static TypeOfContractor getTypeOfContractor(Long id) {
         return new TypeOfContractor(id, "name", "00001");
     }

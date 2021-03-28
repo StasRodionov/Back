@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
@@ -96,5 +97,11 @@ public class DtoStubs {
 
     public static InvoiceProductDto getInvoiceProductDto(Long id) {
         return dtoMapper.invoiceProductToInvoiceProductDto(ModelStubs.getInvoiceProduct(id));
+    }
+
+    public static RoleDto getRoleDto(Long id) {
+        return dtoMapper.roleToRoleDto(
+                ModelStubs.getRole(id)
+        );
     }
 }
