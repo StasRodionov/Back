@@ -1,26 +1,25 @@
 package com.trade_accounting.services.interfaces;
 
 import com.trade_accounting.models.TaskComment;
-import com.trade_accounting.models.dto.TaskCommentDTO;
+import com.trade_accounting.models.dto.TaskCommentDto;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 public interface TaskCommentService {
 
-    void createAll(List<TaskCommentDTO> dtos);
+    void createAll(List<TaskCommentDto> dtos);
 
-    List<TaskCommentDTO> search(Specification<TaskComment> specification);
+    List<TaskCommentDto> search(Specification<TaskComment> specification);
 
-    List<TaskCommentDTO> getAll();
+    List<TaskCommentDto> getAll();
 
-    Optional<TaskCommentDTO> getById(Long id);
+    Optional<TaskCommentDto> getById(Long id);
 
-    TaskCommentDTO create(TaskCommentDTO taskDTO);
+    TaskCommentDto create(TaskCommentDto taskDTO);
 
-    TaskCommentDTO update(TaskCommentDTO taskDTO);
+    TaskCommentDto update(TaskCommentDto taskDTO);
 
     void deleteById(Long id);
 }

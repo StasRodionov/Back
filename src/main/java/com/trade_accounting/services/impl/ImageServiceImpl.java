@@ -5,10 +5,14 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.services.interfaces.ImageService;
 import com.trade_accounting.utils.DtoMapper;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -39,9 +43,14 @@ public class ImageServiceImpl implements ImageService {
     }
 
 
+    @SneakyThrows
     @Override
     public void deleteById(Long id) {
-        imageRepository.deleteById(id);
+        Optional<Image> optional = imageRepository.findById(id);
+        if (optional.isPresent()) {
+            Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
+            imageRepository.deleteById(id);
+        }
     }
 
 }

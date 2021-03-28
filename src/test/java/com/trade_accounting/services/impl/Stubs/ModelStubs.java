@@ -7,6 +7,9 @@ import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Department;
+import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Image;
+import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
@@ -14,6 +17,7 @@ import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Project;
+import com.trade_accounting.models.Role;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
@@ -115,6 +119,38 @@ public class ModelStubs {
 
     public static TaxSystem getTaxSystem(Long id) {
         return new TaxSystem(id, "name", "00001");
+    }
+
+    public static Department getDepartment(Long id) {
+        return new Department(id, "name", "00001");
+    }
+
+    public static Position getPosition(Long id) {
+        return new Position(id, "name", "00001");
+    }
+
+    public static Employee getEmployee(Long id) {
+        return new Employee(
+                id, "lastName", "firstName",
+                "middleName", "00001", "89030450020",
+                "123456789012", "descript",
+                "email.email@email.com", "pass",
+                getDepartment(id), getPosition(id),
+                Stream.of(
+                        getRole(id),
+                        getRole(id + 1),
+                        getRole(id + 2)
+                ).collect(Collectors.toSet()),
+                getImage(id)
+        );
+    }
+
+    public static Image getImage(Long id) {
+        return new Image(id, "url", "00001");
+    }
+
+    public static Role getRole(Long id) {
+        return new Role(id, "name", "00001");
     }
 
     public static TypeOfContractor getTypeOfContractor(Long id) {
