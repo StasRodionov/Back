@@ -2,7 +2,6 @@ package com.trade_accounting.services.impl.Stubs;
 
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
-
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -13,17 +12,13 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
-import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.DepartmentDto;
-import com.trade_accounting.models.dto.InvoiceDto;
-import com.trade_accounting.models.dto.TypeOfPriceDto;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.utils.DtoMapper;
 import org.mapstruct.factory.Mappers;
 import com.trade_accounting.models.dto.LegalDetailDto;
-import com.trade_accounting.models.dto.DepartmentDto;
+
 
 public class DtoStubs {
     public static DtoMapper dtoMapper = Mappers.getMapper(DtoMapper.class);
