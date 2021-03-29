@@ -9,6 +9,7 @@ import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
+import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
@@ -47,8 +48,6 @@ public class ModelStubs {
                 BigDecimal.ONE
         );
     }
-
-    public static Position getPosition(Long id){ return new Position(id,"name","00001");}
 
     public static Company getCompany(Long id) {
         return new Company(
@@ -121,6 +120,10 @@ public class ModelStubs {
         return new TaxSystem(id, "name", "00001");
     }
 
+    public static Position getPosition(Long id) {
+        return new Position(id, "name", "00001");
+    }
+
     public static Employee getEmployee(Long id) {
         return new Employee(
                 id, "lastName", "firstName",
@@ -141,10 +144,6 @@ public class ModelStubs {
         return new Image(id, "url", "00001");
     }
 
-    public static Role getRole(Long id) {
-        return new Role(id, "name", "00001");
-    }
-
     public static TypeOfContractor getTypeOfContractor(Long id) {
         return new TypeOfContractor(id, "name", "00001");
     }
@@ -162,6 +161,10 @@ public class ModelStubs {
                 "numberOfCertifacate", LocalDate.now(),
                 getTypeOfContractor(id)
         );
+    }
+
+    public static Role getRole(Long id) {
+        return new Role(id, "name", "00001");
     }
 
     public static Invoice getInvoice(Long id) {
