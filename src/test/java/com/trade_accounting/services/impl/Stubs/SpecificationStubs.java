@@ -1,4 +1,4 @@
-package com.trade_accounting.services.impl;
+package com.trade_accounting.services.impl.Stubs;
 
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
