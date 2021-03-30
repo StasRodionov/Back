@@ -1,6 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
@@ -70,34 +71,48 @@ public class EmployeeServiceImpl implements EmployeeService {
         return dtoMapper.employeeToEmployeeDto(emp.orElse(new Employee()));
     }
 
+    @SneakyThrows
     @Override
-    public void create(EmployeeDto employeeDto) {
+    public void save(EmployeeDto employeeDto) {
         Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
+
+        ImageDto imageDto = employeeDto.getImageDto();
+        //create image or update if present
+        if (imageDto != null && imageDto.getContent() != null) {
+            Image image = dtoMapper.imageDtoToImage(imageDto, "employees");
+            employee.setImage(image);
+        }
+
+        //Deleting previous image table and image file
+        if (employee.getId() != null) {
+            Optional<Employee> optional = employeeRepository.findById(employee.getId());
+
+            if (optional.isPresent() && optional.get().getImage() != null) {
+                Long previousImageId = optional.get().getImage().getId();
+                String previousImageUrl = optional.get().getImage().getImageUrl();
+
+                imageRepository.deleteById(previousImageId);
+                Files.deleteIfExists(Paths.get(previousImageUrl));
+            }
+        }
 
         DepartmentDto department = employeeDto.getDepartmentDto();
         PositionDto position = employeeDto.getPositionDto();
-        ImageDto imageDto = employeeDto.getImageDto();
         Set<RoleDto> setOfRoleDto = employeeDto.getRoleDto();
 
-        if(department != null) {
+        if (department != null) {
             employee.setDepartment(
                     departmentRepository.findById(department.getId()).orElse(null)
             );
         }
 
-        if(position != null) {
+        if (position != null) {
             employee.setPosition(
                     positionRepository.findById(position.getId()).orElse(null)
             );
         }
 
-        if(imageDto != null) {
-            employee.setImage(
-                    imageRepository.getOne(imageDto.getId())
-            );
-        }
-
-        if(setOfRoleDto != null) {
+        if (setOfRoleDto != null) {
             Set<Role> roles = setOfRoleDto.stream()
                     .map(role ->
                             role != null
@@ -112,18 +127,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.save(employee);
     }
 
-    @Override
-    public void update(EmployeeDto employeeDto) {
-        create(employeeDto);
-    }
-
     @SneakyThrows
     @Override
     public void deleteById(Long id) {
-        Optional<ImageDto> optional = Optional.ofNullable(imageRepository.getImageByEmployeeId(id));
-        if (optional.isPresent()) {
-            //Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
-            imageRepository.deleteById(optional.get().getId());
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (employee.isPresent() && employee.get().getImage() != null) {
+            Files.deleteIfExists(Paths.get(employee.get().getImage().getImageUrl()));
         }
         employeeRepository.deleteById(id);
     }
@@ -132,7 +141,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getByEmail(String email) {
         Optional<Employee> employee = employeeRepository.findByEmail(email);
 
-        if(employee.isEmpty()) {
+        if (employee.isEmpty()) {
             return new EmployeeDto();
         }
 

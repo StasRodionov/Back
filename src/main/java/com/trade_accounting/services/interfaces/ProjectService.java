@@ -10,9 +10,9 @@ public interface ProjectService {
 
     ProjectDto getById(Long id);
 
-    void create(ProjectDto projectDto);
+    ProjectDto create(ProjectDto projectDto);
 
-    void update(ProjectDto projectDto);
+    ProjectDto update(ProjectDto projectDto);
 
     void deleteById(Long id);
 }

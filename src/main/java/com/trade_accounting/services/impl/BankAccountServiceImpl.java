@@ -3,14 +3,13 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.repositories.BankAccountRepository;
-import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.services.interfaces.BankAccountService;
-import org.springframework.data.domain.Example;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.PropertyEditor;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -18,50 +17,40 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     private final BankAccountRepository bankAccountRepository;
 
-    public BankAccountServiceImpl(BankAccountRepository bankAccountRepository) {
+    private final DtoMapper dtoMapper;
+
+    public BankAccountServiceImpl(BankAccountRepository bankAccountRepository, DtoMapper dtoMapper) {
         this.bankAccountRepository = bankAccountRepository;
+        this.dtoMapper = dtoMapper;
     }
 
 
     @Override
     public List<BankAccountDto> getAll() {
-        return bankAccountRepository.getAll();
+        return bankAccountRepository.findAll().stream()
+                .map(dtoMapper::bankAccountToBankAccountDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public BankAccountDto getById(Long id) {
-        return bankAccountRepository.getById(id);
-    }
-
-    @Override
-    public void create(BankAccountDto dto) {
-        BankAccount bankAccount = new BankAccount(
-                null,
-                dto.getRcbic(),
-                dto.getBank(),
-                dto.getAddress(),
-                dto.getCorrespondentAccount(),
-                dto.getAccount(),
-                dto.getMainAccount(),
-                dto.getSortNumber()
-                );
-        bankAccountRepository.save(bankAccount);
-    }
-
-    @Override
-    public void update(BankAccountDto dto) {
-
-        BankAccount bankAccount = new BankAccount(
-                dto.getId(),
-                dto.getRcbic(),
-                dto.getBank(),
-                dto.getAddress(),
-                dto.getCorrespondentAccount(),
-                dto.getAccount(),
-                dto.getMainAccount(),
-                dto.getSortNumber()
+        return dtoMapper.bankAccountToBankAccountDto(
+                bankAccountRepository.findById(id).orElse(new BankAccount())
         );
-        bankAccountRepository.save(bankAccount);
+    }
+
+    @Override
+    public BankAccountDto create(BankAccountDto dto) {
+        BankAccount bankAccount = bankAccountRepository.save(
+                dtoMapper.bankAccountDtoToBankAccount(dto)
+        );
+
+        return dtoMapper.bankAccountToBankAccountDto(bankAccount);
+    }
+
+    @Override
+    public BankAccountDto update(BankAccountDto dto) {
+        return create(dto);
     }
 
     @Override

@@ -26,8 +26,8 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.TaskCommentDTO;
-import com.trade_accounting.models.dto.TaskDTO;
+import com.trade_accounting.models.dto.TaskCommentDto;
+import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
@@ -281,8 +281,8 @@ public class ModelDtoConverter {
         return bankAccountList;
     }
 
-    public static TaskDTO toTaskDTO(Task entity) {
-        return new TaskDTO(
+    public static TaskDto toTaskDTO(Task entity) {
+        return new TaskDto(
                 entity.getId(),
                 entity.getDescription(),
                 entity.getTaskEmployee().getId(),
@@ -294,7 +294,7 @@ public class ModelDtoConverter {
         );
     }
 
-    public static Task toTaskEntity(TaskDTO dto) {
+    public static Task toTaskEntity(TaskDto dto) {
         var entity = new Task();
 
         entity.setId(dto.getId());
@@ -306,8 +306,8 @@ public class ModelDtoConverter {
         return entity;
     }
 
-    public static TaskCommentDTO toTaskCommentDTO(TaskComment entity) {
-        var dto = new TaskCommentDTO();
+    public static TaskCommentDto toTaskCommentDTO(TaskComment entity) {
+        var dto = new TaskCommentDto();
 
         dto.setId(entity.getId());
         dto.setCommentContent(entity.getCommentContent());
@@ -318,7 +318,7 @@ public class ModelDtoConverter {
         return dto;
     }
 
-    public static TaskComment toTaskCommentEntity(TaskCommentDTO dto) {
+    public static TaskComment toTaskCommentEntity(TaskCommentDto dto) {
         var entity = new TaskComment();
 
         entity.setId(dto.getId());

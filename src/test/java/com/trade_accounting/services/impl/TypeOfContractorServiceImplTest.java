@@ -1,11 +1,10 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.TypeOfContractor;
-import com.trade_accounting.models.Warehouse;
-import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
