@@ -12,8 +12,6 @@ public interface ContractorService {
 
     List<ContractorDto> getAll(String searchTerm);
 
-    List<ContractorDto> getAllLite();
-
     List<ContractorDto> getAll();
 
     ContractorDto getById(Long id);

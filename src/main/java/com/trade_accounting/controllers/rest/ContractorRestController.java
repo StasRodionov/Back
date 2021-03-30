@@ -68,7 +68,7 @@ public class ContractorRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<List<ContractorDto>> getAllLite() {
-        List<ContractorDto> contractorDtoList = contractorService.getAllLite();
+        List<ContractorDto> contractorDtoList = contractorService.getAll();
         log.info("Запрошен список ContractorDto (Лёгкое ДТО)");
         return ResponseEntity.ok(contractorDtoList);
     }
@@ -138,7 +138,8 @@ public class ContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorDto> create(@ApiParam(name = "contractorDto", value = "DTO контрагента, которого необходимо создать")
+    public ResponseEntity<ContractorDto> create(@ApiParam(name = "contractorDto",
+            value = "DTO контрагента, которого необходимо создать")
                                                 @RequestBody ContractorDto contractorDto) {
         contractorService.create(contractorDto);
         log.info("Записан новый экземпляр {}", contractorDto.toString());

@@ -39,18 +39,23 @@ public class ContractorDto {
 
     private ContractorGroupDto contractorGroupDto;
     private String contractorGroupName;
+    private long contractorGroupId;
 
     private TypeOfContractorDto typeOfContractorDto;
     private String typeOfContractorName;
+    private long typeOfContractorId;
 
     private TypeOfPriceDto typeOfPriceDto;
     private String typeOfPriceName;
+    private long typeOfPriceId;
 
     private List<BankAccountDto> bankAccountDto;
     private Integer bankAccountSize;
+    private long bankAccountId;
 
     private LegalDetailDto legalDetailDto;
     private String legalDetailInn;
+    private long legalDetailId;
 
     public ContractorDto(Long id, String name,
                          @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$") String inn,
@@ -179,5 +184,47 @@ public class ContractorDto {
 ////        this.legalDetailDto = legalDetailDto;
 ////        this.legalDetailInn = legalDetailInn;
 //    }
+
+
+    public ContractorDto(Long id, String name,
+                         @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$") String inn,
+                         String sortNumber, String phone, String fax, String email,
+                         String address, String commentToAddress, String comment,
+                         String contractorGroupName,
+                         String typeOfContractorName,
+                         String typeOfPriceName,
+                         Integer bankAccountSize,
+                         String legalDetailInn,
+                         long contractorGroupId,
+                         long typeOfContractorId,
+                         long typeOfPriceId,
+                         long legalDetailId
+    ) {
+        this.id = id;
+        this.name = name;
+        this.inn = inn;
+        this.sortNumber = sortNumber;
+        this.phone = phone;
+        this.fax = fax;
+        this.email = email;
+        this.address = address;
+        this.commentToAddress = commentToAddress;
+        this.comment = comment;
+        this.contractorGroupDto = contractorGroupDto;
+        this.contractorGroupName = contractorGroupName;
+        this.contractorGroupId = contractorGroupId;
+        this.typeOfContractorDto = typeOfContractorDto;
+        this.typeOfContractorName = typeOfContractorName;
+        this.typeOfContractorId = typeOfContractorId;
+        this.typeOfPriceDto = typeOfPriceDto;
+        this.typeOfPriceName = typeOfPriceName;
+        this.typeOfPriceId = typeOfPriceId;
+        this.bankAccountDto = bankAccountDto;
+        this.bankAccountSize = bankAccountSize;
+        this.bankAccountId = bankAccountId;
+        this.legalDetailDto = legalDetailDto;
+        this.legalDetailInn = legalDetailInn;
+        this.legalDetailId = legalDetailId;
+    }
 
 }

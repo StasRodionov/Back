@@ -2,7 +2,6 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
-import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
@@ -28,7 +27,6 @@ public class ContractorServiceImpl implements ContractorService {
     private final ContractorGroupRepository contractorGroupRepository;
     private final TypeOfContractorRepository typeOfContractorRepository;
     private final TypeOfPriceRepository typeOfPriceRepository;
-    private final BankAccountRepository bankAccountRepository;
     private final LegalDetailRepository legalDetailRepository;
     private final DtoMapper dtoMapper;
 
@@ -36,13 +34,11 @@ public class ContractorServiceImpl implements ContractorService {
                                  ContractorGroupRepository contractorGroupRepository,
                                  TypeOfContractorRepository typeOfContractorRepository,
                                  TypeOfPriceRepository typeOfPriceRepository,
-                                 BankAccountRepository bankAccountRepository,
                                  LegalDetailRepository legalDetailRepository, DtoMapper dtoMapper) {
         this.contractorRepository = contractorRepository;
         this.contractorGroupRepository = contractorGroupRepository;
         this.typeOfContractorRepository = typeOfContractorRepository;
         this.typeOfPriceRepository = typeOfPriceRepository;
-        this.bankAccountRepository = bankAccountRepository;
         this.legalDetailRepository = legalDetailRepository;
         this.dtoMapper = dtoMapper;
     }
@@ -56,14 +52,6 @@ public class ContractorServiceImpl implements ContractorService {
     @Override
     public List<ContractorDto> getAll() {
         log.info("запрошен список getAll ");
-        return contractorRepository.findAll().stream()
-                .map(dtoMapper :: contractorToContractorDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ContractorDto> getAllLite() {
-        log.info("запрошен список Query getAll через getAllLit ");
         return contractorRepository.getAll();
     }
 
@@ -79,7 +67,6 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public ContractorDto getById(Long id) {
-
         return dtoMapper.contractorToContractorDto(
                 contractorRepository.findById(id).orElse(new Contractor())
         );
@@ -135,24 +122,38 @@ public class ContractorServiceImpl implements ContractorService {
     public ContractorDto update(ContractorDto contractorDto) {
 
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
+        //TODO временно (typeOfContractorId,typeOfPriceId,legalDetailId) пока нет реализации на front com.trade_accounting.components.contractors.ContractorModalWindow
+        long typeOfContractorId = contractorDto.getTypeOfContractorId();
+        long typeOfPriceId = contractorDto.getTypeOfPriceId();
+        long legalDetailId = contractorDto.getLegalDetailId();
 
         contractor.setContractorGroup(
-                contractorGroupRepository.findByName(
-                        contractorDto.getContractorGroupName()
+                contractorGroupRepository.findById(
+                        contractorDto.getContractorGroupId()
                 ).orElse(null)
         );
 
-        contractor.setTypeOfContractor(
-                typeOfContractorRepository.findByName(
-                       contractorDto.getTypeOfContractorName()
-                ).orElse(null)
-        );
+        if (typeOfContractorId != 0) {
+            contractor.setTypeOfContractor(
+                typeOfContractorRepository.findById(contractorDto.getTypeOfContractorId()
+                ).orElse(null));
+        //TODO временно пока нет реализации на front com.trade_accounting.components.contractors.ContractorModalWindow
+        }else {
+            contractor.setTypeOfContractor(
+                typeOfContractorRepository.findByName(contractorDto.getTypeOfContractorName()
+                ).orElse(null));
+        }
 
+        if (typeOfPriceId != 0) {
         contractor.setTypeOfPrice(
-                typeOfPriceRepository.findByName(
-                       contractorDto.getTypeOfPriceName()
-                ).orElse(null)
-        );
+                typeOfPriceRepository.findById(contractorDto.getTypeOfPriceId()
+                ).orElse(null));
+            //TODO временно пока нет реализации на front com.trade_accounting.components.contractors.ContractorModalWindow
+        }else {
+            contractor.setTypeOfPrice(
+                typeOfPriceRepository.findByName(contractorDto.getTypeOfPriceName()
+                ).orElse(null));
+        }
 
 //        contractor.setBankAccounts(
 //                contractorDto.getBankAccountDto().stream()
@@ -164,11 +165,17 @@ public class ContractorServiceImpl implements ContractorService {
 //                        .collect(Collectors.toList())
 //        );
 
+        if (legalDetailId != 0) {
         contractor.setLegalDetail(
-                legalDetailRepository.findByInn(
-                        contractorDto.getLegalDetailInn()
-                ).orElse(null)
-        );
+                legalDetailRepository.findById(contractorDto.getLegalDetailId()
+                ).orElse(null));
+            //TODO временно пока нет реализации на front com.trade_accounting.components.contractors.ContractorModalWindow
+        }else {
+            contractor.setLegalDetail(
+                legalDetailRepository.findByInn(contractorDto.getLegalDetailInn()
+                ).orElse(null));
+        }
+
         contractorRepository.save(contractor);
 
         return contractorDto;

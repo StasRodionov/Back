@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface TypeOfPriceRepository extends JpaRepository<TypeOfPrice, Long> {
 
-    Optional<TypeOfPrice> findByName(String name);
+   Optional<TypeOfPrice> findByName(String name);
 
     @Query("select new com.trade_accounting.models.dto.TypeOfPriceDto(t.id, t.name, t.sortNumber) from TypeOfPrice t")
     List<TypeOfPriceDto> getAll();
@@ -36,6 +36,4 @@ public interface TypeOfPriceRepository extends JpaRepository<TypeOfPrice, Long> 
             "where t.id = :id")
     TypeOfPriceDto getTypeOfPriceByContractorId(@Param("id") Long id);
 
-//    Optional<TypeOfPrice> getEntityName(String name);
-//    JpaPersistentEntity<TypeOfPrice>,
 }

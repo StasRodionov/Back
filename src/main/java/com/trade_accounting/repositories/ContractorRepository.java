@@ -31,13 +31,14 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long>, J
             "c.bankAccounts.size,"+
             "c.legalDetail.inn"+
             ") from Contractor c LEFT OUTER JOIN ContractorGroup AS cg " +
-                    "ON c.contractorGroup.id =  cg.id " +
+                   //TODO переделать name на id
+                    "ON c.contractorGroup.name =  cg.name  " +
                     "LEFT OUTER JOIN TypeOfContractor as toc " +
-                    "ON c.typeOfContractor.id =  toc.id " +
+                    "ON c.typeOfContractor.name  =  toc.name " +
                     "LEFT OUTER JOIN TypeOfPrice as top " +
-                    "ON c.typeOfPrice.id =  top.id " +
+                    "ON c.typeOfPrice.name  =  top.name  " +
                     "LEFT OUTER JOIN LegalDetail as ld " +
-                    "ON c.legalDetail.id =  ld.id "
+                    "ON c.legalDetail.inn  =  ld.inn  "
             )
     List<ContractorDto> getAll();
 
@@ -56,7 +57,11 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long>, J
             "c.typeOfContractor.name,"+
             "c.typeOfPrice.name,"+
             "c.bankAccounts.size,"+
-            "c.legalDetail.inn"+
+            "c.legalDetail.inn,"+
+            "c.contractorGroup.id,"+
+            "c.typeOfContractor.id,"+
+            "c.typeOfPrice.id,"+
+            "c.legalDetail.id"+
             ") from Contractor c LEFT OUTER JOIN ContractorGroup AS cg " +
             "ON c.contractorGroup.name =  cg.name " +
             "LEFT OUTER JOIN TypeOfContractor as toc " +
