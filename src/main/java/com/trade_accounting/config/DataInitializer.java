@@ -18,6 +18,7 @@ import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
+import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
@@ -177,20 +178,20 @@ public class DataInitializer {
         initTaskComments();
     }
 
-    public void initProject(){
+    public void initProject() {
         projectService.create(new ProjectDto(null, "name", "0000", "description"));
     }
 
-    public void initPayment(){
+    public void initPayment() {
         LocalDateTime localDateTime = LocalDateTime.now();
         List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ProjectDto> projectDtos = projectService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ContractDto> contractDtos = contractService.getAll().stream().limit(3).collect(Collectors.toList());
         int count = 1;
-        for (CompanyDto companyDto: companyDtos) {
-            for (ContractorDto contractorDto: contractorDtos) {
-                for (ContractDto contractDto: contractDtos) {
+        for (CompanyDto companyDto : companyDtos) {
+            for (ContractorDto contractorDto : contractorDtos) {
+                for (ContractDto contractDto : contractDtos) {
                     for (ProjectDto projectDto : projectDtos) {
                         paymentService.create(new PaymentDto(
                                 null,
@@ -202,15 +203,15 @@ public class DataInitializer {
                                 contractDto.getId(),
                                 projectDto.getId(),
                                 new BigDecimal("100.00")
-                                ));
-                        count ++;
+                        ));
+                        count++;
                     }
                 }
             }
         }
     }
 
-    public void initInvoices(){
+    public void initInvoices() {
         List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
         List<WarehouseDto> warehouseDtos = warehouseService.getAll().stream().limit(3).collect(Collectors.toList());
@@ -489,8 +490,8 @@ public class DataInitializer {
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №1\"",
-                    "7712345" + String.format("%03d" , i),
-                    String.format("%05d" , 1 + 3 * i),
+                    "7712345" + String.format("%03d", i),
+                    String.format("%05d", 1 + 3 * i),
                     "749512345678",
                     "810-41-1234567890",
                     "organization1@mail.com",
@@ -510,7 +511,7 @@ public class DataInitializer {
                             "Сергеевич",
                             "г. Воронеж,ул Карла Маркса,46",
                             "comment to address",
-                            "3664069" + String.format("%03d" , i),
+                            "3664069" + String.format("%03d", i),
                             "79271669",
                             "1053600591197",
                             "236467",
@@ -537,8 +538,8 @@ public class DataInitializer {
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №2\"",
-                    "9543564" + String.format("%03d" , i),
-                    String.format("%05d" , 2 + 3 * i),
+                    "9543564" + String.format("%03d", i),
+                    String.format("%05d", 2 + 3 * i),
                     "733126789654",
                     "920-12-2365723233",
                     "organization2@mail.com",
@@ -558,7 +559,7 @@ public class DataInitializer {
                             "Анатольевич",
                             "г. Москва, ул. Революции, д. 66",
                             "comment to address",
-                            "3664068" + String.format("%03d" , i),
+                            "3664068" + String.format("%03d", i),
                             "79271647",
                             "1053600591285",
                             "432145",
@@ -585,8 +586,8 @@ public class DataInitializer {
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №3\"",
-                    "3453123" + String.format("%03d" , i),
-                    String.format("%05d" , 3 + 3 * i),
+                    "3453123" + String.format("%03d", i),
+                    String.format("%05d", 3 + 3 * i),
                     "799123786542",
                     "543-23-1234543221",
                     "organization3@mail.com",
@@ -606,7 +607,7 @@ public class DataInitializer {
                             "Дмитриевна",
                             "г. Краснодар, ул. 40 Лет Октября, д. 16",
                             "comment to address",
-                            "3664055" + String.format("%03d" , i),
+                            "3664055" + String.format("%03d", i),
                             "70713032",
                             "1033600141277",
                             "342145",
@@ -630,6 +631,7 @@ public class DataInitializer {
                             "2"))));
         }
     }
+
     private void initEmployees() {
         employeeService.save(new EmployeeDto(null,
                 "Vasiliev",
@@ -871,6 +873,8 @@ public class DataInitializer {
 
         List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtoList = new ArrayList<>(attributeOfCalculationObjectService.getAll());
 
+        List<TypeOfPriceDto> typeOfPriceDtoList = new ArrayList<>(typeOfPriceService.getAll());
+
         for (int i = 0; i < 350; i++) {
 
             productService.save(new ProductDto(
@@ -883,7 +887,8 @@ public class DataInitializer {
                     unitDtoList.get(0),
                     false,
                     contractorDtoList.get(0),
-                    null,
+                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(100 * i)),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(100 * i))),
                     taxSystemDtoList.get(0),
                     null,
                     productGroupDtoList.get(0),
@@ -899,7 +904,8 @@ public class DataInitializer {
                     unitDtoList.get(1),
                     false,
                     contractorDtoList.get(1),
-                    null,
+                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(150 * i)),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(150 * i))),
                     taxSystemDtoList.get(1),
                     null,
                     productGroupDtoList.get(1),
@@ -915,7 +921,9 @@ public class DataInitializer {
                     unitDtoList.get(2),
                     false,
                     contractorDtoList.get(1),
-                    null,
+                    List.of(
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(125 * i)),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(125 * i))),
                     taxSystemDtoList.get(2),
                     null,
                     productGroupDtoList.get(2),
