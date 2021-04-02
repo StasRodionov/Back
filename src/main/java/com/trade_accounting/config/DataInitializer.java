@@ -13,6 +13,7 @@ import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.InvoiceDto;
+import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
@@ -40,6 +41,7 @@ import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.services.interfaces.ImageService;
+import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.PaymentService;
@@ -89,6 +91,7 @@ public class DataInitializer {
     private final ProductService productService;
     private final CurrencyService currencyService;
     private final InvoiceService invoiceService;
+    private final InvoiceProductService invoiceProductService;
     private final ProjectService projectService;
     private final PaymentService paymentService;
     private final TaskServiceImpl taskService;
@@ -116,7 +119,7 @@ public class DataInitializer {
             ProductService productService,
             CurrencyService currencyService,
             InvoiceService invoiceService,
-            ProjectService projectService,
+            InvoiceProductService invoiceProductService, ProjectService projectService,
             PaymentService paymentService,
             TaskServiceImpl taskService,
             TaskCommentServiceImpl commentService
@@ -142,6 +145,7 @@ public class DataInitializer {
         this.productService = productService;
         this.currencyService = currencyService;
         this.invoiceService = invoiceService;
+        this.invoiceProductService = invoiceProductService;
         this.projectService = projectService;
         this.paymentService = paymentService;
         this.taskService = taskService;
@@ -171,6 +175,7 @@ public class DataInitializer {
         initProducts();
         initContracts();
         initInvoices();
+        initInvoiceProducts();
         initProject();
         initPayment();
 
@@ -215,6 +220,7 @@ public class DataInitializer {
         List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
         List<WarehouseDto> warehouseDtos = warehouseService.getAll().stream().limit(3).collect(Collectors.toList());
+        List<String> typeOfInvoices = List.of(TypeOfInvoice.EXPENSE.name(), TypeOfInvoice.RECEIPT.name());
 
         for (CompanyDto companyDto : companyDtos) {
             for (ContractorDto contractorDto : contractorDtos) {
@@ -222,7 +228,7 @@ public class DataInitializer {
                     invoiceService.create(new InvoiceDto(
                             null,
                             LocalDateTime.now().toString(),
-                            TypeOfInvoice.EXPENSE.name(),
+                            typeOfInvoices.get(randomInt(0, 1)),
                             companyDto,
                             contractorDto,
                             warehouseDto,
@@ -230,6 +236,24 @@ public class DataInitializer {
                 }
             }
         }
+    }
+
+    private void initInvoiceProducts() {
+        List<InvoiceDto> invoices = invoiceService.getAll();
+
+        for (InvoiceDto invoice : invoices){
+            invoiceProductService.create(new InvoiceProductDto(
+                    null,
+                    invoice.getId(),
+                    Long.valueOf(randomInt(1,1000)),
+                    BigDecimal.valueOf(randomInt(20,100)),
+                    BigDecimal.valueOf(randomInt(30,150))
+            ));
+        }
+    }
+
+    public int randomInt(int min, int max) {
+        return (int) (Math.random() * ((max - min) + 1)) + min;
     }
 
     private void initTypeOfPrices() {
@@ -733,7 +757,7 @@ public class DataInitializer {
                 "",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
@@ -764,7 +788,7 @@ public class DataInitializer {
                 "",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
@@ -795,7 +819,7 @@ public class DataInitializer {
                 "",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
@@ -825,7 +849,7 @@ public class DataInitializer {
                 "",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
@@ -856,7 +880,7 @@ public class DataInitializer {
                 "",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
     }
@@ -887,8 +911,8 @@ public class DataInitializer {
                     unitDtoList.get(0),
                     false,
                     contractorDtoList.get(0),
-                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(100 * i)),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(100 * i))),
+                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(50,70))),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(71,100)))),
                     taxSystemDtoList.get(0),
                     null,
                     productGroupDtoList.get(0),
@@ -904,8 +928,8 @@ public class DataInitializer {
                     unitDtoList.get(1),
                     false,
                     contractorDtoList.get(1),
-                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(150 * i)),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(150 * i))),
+                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(70,90))),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(91,115)))),
                     taxSystemDtoList.get(1),
                     null,
                     productGroupDtoList.get(1),
@@ -922,8 +946,8 @@ public class DataInitializer {
                     false,
                     contractorDtoList.get(1),
                     List.of(
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(125 * i)),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(125 * i))),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(80,100))),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(101,121)))),
                     taxSystemDtoList.get(2),
                     null,
                     productGroupDtoList.get(2),
