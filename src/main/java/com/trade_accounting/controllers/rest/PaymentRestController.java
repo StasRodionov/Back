@@ -1,7 +1,5 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.Payment;
-import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.services.interfaces.PaymentService;
 import io.swagger.annotations.Api;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -47,6 +46,19 @@ public class PaymentRestController {
         List<PaymentDto> paymentDtoList = paymentService.getAll();
         log.info("Запрошен список платежей");
         return ResponseEntity.ok(paymentDtoList);
+    }
+
+    @ApiOperation(value = "search", notes = "Получение списка товаров по заданным параметрам")
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка платежей"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<PaymentDto>> getAll(@RequestParam("query") String value) {
+        log.info("Запрошен поиск платежей");
+        return ResponseEntity.ok(paymentService.search(value));
     }
 
     @GetMapping("/{id}")

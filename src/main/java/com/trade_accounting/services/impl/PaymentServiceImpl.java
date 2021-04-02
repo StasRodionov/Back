@@ -1,7 +1,6 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Payment;
-import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
@@ -11,6 +10,7 @@ import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.services.interfaces.PaymentService;
 import com.trade_accounting.utils.DtoMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final DtoMapper dtoMapper;
 
+    @Autowired
     public PaymentServiceImpl(PaymentRepository paymentRepository,
                               CompanyRepository companyRepository,
                               ContractorRepository contractorRepository,
@@ -98,5 +99,14 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public void deleteById(Long id) {
         paymentRepository.deleteById(id);
+    }
+
+    @Override
+    public List<PaymentDto> search(String value) {
+        List<PaymentDto> paymentList = paymentRepository.search(value);
+        return paymentRepository.search(value).stream()
+                .map(dtoMapper::paymentToPaymentDto)
+                .collect(Collectors.toList());
+//        return paymentList;
     }
 }

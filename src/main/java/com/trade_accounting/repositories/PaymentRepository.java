@@ -39,4 +39,17 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     PaymentDto getById(@Param("id") Long id);
 
     void deleteAllByContractId(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.PaymentDto(" +
+            "e.id, " +
+            "e.typeOfPayment, " +
+            "e.number, " +
+            "e.time, " +
+            "e.company.id, " +
+            "e.contractor.id, " +
+            "e.contract.id, " +
+            "e.project.id, " +
+            "e.sum) " +
+            "from Payment e where concat(e.company.name, ' ', e.contractor.id, ' ', e.number) like concat('%', :query, '%')")
+    List<PaymentDto> search(@Param("query") String query);
 }
