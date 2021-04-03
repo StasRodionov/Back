@@ -1,6 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
@@ -55,6 +56,13 @@ public class InvoiceServiceImpl implements InvoiceService {
     public InvoiceDto getById(Long id) {
         Optional<Invoice> invoice = invoiceRepository.findById(id);
         return dtoMapper.invoiceToInvoiceDto(invoice.orElse(new Invoice()));
+    }
+
+    @Override
+    public List<InvoiceDto> getByTypeOfInvoice(String typeOfInvoice) {
+        return invoiceRepository.findByTypeOfInvoice(TypeOfInvoice.valueOf(typeOfInvoice)).stream()
+                .map(dtoMapper::invoiceToInvoiceDto)
+                .collect(Collectors.toList());
     }
 
     @Override

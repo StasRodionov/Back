@@ -175,6 +175,11 @@ public class DataInitializer {
 
         initTasks();
         initTaskComments();
+
+        List<InvoiceDto> invoices = invoiceService.getByTypeOfInvoice("EXPENSE");
+        for (InvoiceDto invoiceDto : invoices){
+            System.out.println(invoiceDto.getTypeOfInvoice());
+        }
     }
 
     public void initProject(){
