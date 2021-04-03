@@ -14,6 +14,7 @@ import java.util.Optional;
 @Repository
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
 
+
     @Query("select new com.trade_accounting.models.dto.BankAccountDto(" +
             "ba.id, " +
             "ba.rcbic, " +

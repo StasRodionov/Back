@@ -30,15 +30,24 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long>, J
             "c.typeOfPrice.name,"+
             "c.bankAccounts.size,"+
             "c.legalDetail.inn"+
-            ") from Contractor c LEFT OUTER JOIN ContractorGroup AS cg " +
-                   //TODO переделать name на id
-                    "ON c.contractorGroup.name =  cg.name  " +
+            ") from Contractor c " +
+                    "LEFT OUTER JOIN ContractorGroup AS cg " +
+                    "ON c.contractorGroup.id =  cg.id  " +
                     "LEFT OUTER JOIN TypeOfContractor as toc " +
-                    "ON c.typeOfContractor.name  =  toc.name " +
+                    "ON c.typeOfContractor.id  =  toc.id " +
                     "LEFT OUTER JOIN TypeOfPrice as top " +
-                    "ON c.typeOfPrice.name  =  top.name  " +
+                    "ON c.typeOfPrice.id  =  top.id  " +
                     "LEFT OUTER JOIN LegalDetail as ld " +
-                    "ON c.legalDetail.inn  =  ld.inn  "
+                    "ON c.legalDetail.id  =  ld.id  "
+//                    "LEFT OUTER JOIN ContractorGroup AS cg " +
+//                    "ON c.contractorGroup.name =  cg.name " +
+//                    "LEFT OUTER JOIN TypeOfContractor as toc " +
+//                    "ON c.typeOfContractor.name  =  toc.name " +
+//                    "LEFT OUTER JOIN TypeOfPrice as top " +
+//                    "ON c.typeOfPrice.name  =  top.name  " +
+//                    "LEFT OUTER JOIN LegalDetail as ld " +
+//                    "ON c.legalDetail.inn  =  ld.inn  "
+
             )
     List<ContractorDto> getAll();
 
@@ -63,15 +72,15 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long>, J
             "c.typeOfPrice.id,"+
             "c.legalDetail.id"+
             ") from Contractor c LEFT OUTER JOIN ContractorGroup AS cg " +
-            "ON c.contractorGroup.name =  cg.name " +
+            "ON c.contractorGroup.id =  cg.id " +
             "LEFT OUTER JOIN TypeOfContractor as toc " +
-            "ON c.typeOfContractor.name =  toc.name " +
+            "ON c.typeOfContractor.id =  toc.id " +
             "LEFT OUTER JOIN TypeOfPrice as top " +
-            "ON c.typeOfPrice.name =  top.name " +
+            "ON c.typeOfPrice.id =  top.id " +
 //            "LEFT OUTER JOIN BankAccount as ba " +
 //            "ON c.bankAccounts.size =  0 " +
             "LEFT OUTER JOIN LegalDetail as ld " +
-            "ON c.legalDetail.inn =  ld.inn " +
+            "ON c.legalDetail.id =  ld.id " +
             " where lower(c.name) like lower(concat('%', :searchTerm, '%')) " +
             "      or c.inn like concat('%', :searchTerm, '%')" +
             "      or c.phone like concat('%',  :searchTerm, '%')" +
@@ -79,34 +88,34 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long>, J
     )
     List<ContractorDto> search(@Param("searchTerm") String searchTerm);
 
-    @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
-            "e.id," +
-            "e.name," +
-            "e.inn," +
-            "e.sortNumber," +
-            "e.phone," +
-            "e.fax," +
-            "e.email," +
-            "e.address," +
-            "e.commentToAddress," +
-            "e.comment," +
-            "e.contractorGroup.name,"+
-            "e.typeOfContractor.name,"+
-            "e.typeOfPrice.name,"+
-            "e.bankAccounts.size,"+
-            "e.legalDetail.inn"+
-            ") from Contractor e LEFT OUTER JOIN ContractorGroup AS cg " +
-            "ON e.contractorGroup.name =  cg.name " +
-            "LEFT OUTER JOIN TypeOfContractor as toc " +
-            "ON e.typeOfContractor.name =  toc.name " +
-            "LEFT OUTER JOIN TypeOfPrice as top " +
-            "ON e.typeOfPrice.name =  top.name " +
-//            "LEFT OUTER JOIN BankAccount as ba " +
-//            "ON e.bankAccounts.size =  0 " +
-            "LEFT OUTER JOIN LegalDetail as ld " +
-            "ON e.legalDetail.inn =  ld.inn " +
-            " where e.id = :id")
-    ContractorDto getById(@Param("id") Long id);
+//    @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
+//            "e.id," +
+//            "e.name," +
+//            "e.inn," +
+//            "e.sortNumber," +
+//            "e.phone," +
+//            "e.fax," +
+//            "e.email," +
+//            "e.address," +
+//            "e.commentToAddress," +
+//            "e.comment," +
+//            "e.contractorGroup.name,"+
+//            "e.typeOfContractor.name,"+
+//            "e.typeOfPrice.name,"+
+//            "e.bankAccounts.size,"+
+//            "e.legalDetail.inn"+
+//            ") from Contractor e LEFT OUTER JOIN ContractorGroup AS cg " +
+//            "ON e.contractorGroup.id =  cg.id " +
+//            "LEFT OUTER JOIN TypeOfContractor as toc " +
+//            "ON e.typeOfContractor.id =  toc.id " +
+//            "LEFT OUTER JOIN TypeOfPrice as top " +
+//            "ON e.typeOfPrice.id =  top.id " +
+////            "LEFT OUTER JOIN BankAccount as ba " +
+////            "ON e.bankAccounts.size =  0 " +
+//            "LEFT OUTER JOIN LegalDetail as ld " +
+//            "ON e.legalDetail.id =  ld.id " +
+//            " where e.id = :id")
+//    ContractorDto getById(@Param("id") Long id);
 
     @Query("select new com.trade_accounting.models.dto.ContractorDto(" +
             "p.contractor.id," +

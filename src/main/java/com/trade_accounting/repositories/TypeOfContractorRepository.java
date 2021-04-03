@@ -1,10 +1,7 @@
 package com.trade_accounting.repositories;
 
-import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.TypeOfContractor;
-import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
-import org.springframework.data.jpa.mapping.JpaPersistentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +14,7 @@ import java.util.Optional;
 public interface TypeOfContractorRepository extends JpaRepository<TypeOfContractor, Long> {
 
     Optional<TypeOfContractor> findByName(String name);
+
 
     @Query("select new com.trade_accounting.models.dto.TypeOfContractorDto(" +
             "t.id, " +
@@ -52,5 +50,8 @@ public interface TypeOfContractorRepository extends JpaRepository<TypeOfContract
             "from TypeOfContractor t " +
             "where t.name=:name")
     TypeOfContractorDto getByName(String name);
+
+
+
 
 }

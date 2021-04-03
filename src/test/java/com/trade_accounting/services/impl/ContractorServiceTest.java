@@ -7,6 +7,9 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
+
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,32 +49,35 @@ public class ContractorServiceTest {
 
     @Test
     void getAll_shouldReturnListFilledContractorDto() {
-        when(contractorRepository.findAll())
-                .thenReturn(Stream.of(
-                        ModelStubs.getContractor(1L),
-                        ModelStubs.getContractor(2L),
-                        ModelStubs.getContractor(3L)
-                ).collect(Collectors.toList()));
+        when(contractorRepository.getAll())
+                .thenReturn(
+                        Stream.of(
+                                DtoStubs.getContractorDto(1L),
+                                DtoStubs.getContractorDto(2L),
+                                DtoStubs.getContractorDto(3L)
+                        )
+                                .collect(Collectors.toList())
+                );
 
         List<ContractorDto> contractorDtoList = contractorService.getAll();
 
-        assertNotNull(contractorDtoList, "failure - expected that a list of warehouseDto not null");
-        assertTrue(contractorDtoList.size() > 0, "failure - expected that a list of warehouseDto grater than 0");
+        assertNotNull(contractorDtoList, "failure - expected that a list of contractorDto not null");
+        assertTrue(contractorDtoList.size() > 0, "failure - expected that a list of contractorDto grater than 0");
 
         for(ContractorDto contractorDto : contractorDtoList) {
-            contractorDtoIsCorrectlyInvitedDto(contractorDto);
+            contractorDtoIsCorrectlyInvitedDtoId(contractorDto);
         }
     }
 
     @Test
     void getAll_shouldReturnEmptyListContractorDto() {
-        when(contractorRepository.findAll())
+        when(contractorRepository.getAll())
                 .thenReturn(new ArrayList<>());
 
         List<ContractorDto> contractorDtoList = contractorService.getAll();
 
-        assertNotNull(contractorDtoList, "failure - expected that a list of warehouseDto not null");
-        assertEquals(0, contractorDtoList.size(), "failure - expected that size of list of warehouseDto equals 0");
+        assertNotNull(contractorDtoList, "failure - expected that a list of contractorDto not null");
+        assertEquals(0, contractorDtoList.size(), "failure - expected that size of list of contractorDto equals 0");
     }
 
     @Test
@@ -83,9 +89,9 @@ public class ContractorServiceTest {
 
         ContractorDto contractorDto = contractorService.getById(1L);
 
-        assertNotNull(contractorDto, "failure - expected that warehouse not null");
+        assertNotNull(contractorDto, "failure - expected that contractor not null");
 
-        contractorDtoIsCorrectlyInvitedDto(contractorDto);
+        contractorDtoIsCorrectlyInvitedDtoId(contractorDto);
     }
 
     @Test
@@ -111,7 +117,7 @@ public class ContractorServiceTest {
         verify(contractorRepository).deleteById(1L);
     }
 
-    void contractorDtoIsCorrectlyInvitedDto(ContractorDto contractorDto) {
+    void contractorDtoIsCorrectlyInvitedDtoId(ContractorDto contractorDto) {
         assertNotNull(contractorDto, "Fail in passed contractorDto");
         assertNotNull(contractorDto.getId(), "Fail in field 'id' of contractorDto");
         assertNotNull(contractorDto.getName(), "Fail in field 'name' of contractorDto");
@@ -123,12 +129,13 @@ public class ContractorServiceTest {
         assertNotNull(contractorDto.getAddress(), "Fail in field 'address' of contractorDto");
         assertNotNull(contractorDto.getCommentToAddress(), "Fail in field 'comment to address' of contractorDto");
         assertNotNull(contractorDto.getComment(), "Fail in field 'name' of contractorDto");
-        assertNotNull(contractorDto.getContractorGroupName(), "Fail in field 'ContractorGroupName' of contractorDto");
-        assertNotNull(contractorDto.getTypeOfContractorName(), "Fail in field 'TypeOfContractorName' of contractorDto");
-        assertNotNull(contractorDto.getTypeOfPriceName(), "Fail in field 'TypeOfPriceName' of contractorDto");
-        assertNotNull(contractorDto.getLegalDetailInn(), "Fail in field 'LegalDetailInn' of contractorDto");
+        assertNotNull(contractorDto.getContractorGroupDto(), "Fail in field 'ContractorGroupDto' of contractorDto");
+        assertNotNull(contractorDto.getTypeOfContractorDto(), "Fail in field 'TypeOfContractorDto' of contractorDto");
+        assertNotNull(contractorDto.getTypeOfPriceDto(), "Fail in field 'TypeOfPriceDto' of contractorDto");
+        assertNotNull(contractorDto.getLegalDetailDto(), "Fail in field 'LegalDetailDto' of contractorDto");
 
     }
+
 
 }
 

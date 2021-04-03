@@ -91,7 +91,7 @@ public class ContractorRestController {
 
     @GetMapping("/searchContractor")
     @ApiOperation(value = "searchContractor", notes = "Получение списка контрактов по заданным параметрам")
-    public ResponseEntity<List<ContractorDto>> getAll(
+    public ResponseEntity<List<ContractorDto>> getAllFilter(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),

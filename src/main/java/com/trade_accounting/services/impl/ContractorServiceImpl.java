@@ -41,6 +41,7 @@ public class ContractorServiceImpl implements ContractorService {
         this.typeOfPriceRepository = typeOfPriceRepository;
         this.legalDetailRepository = legalDetailRepository;
         this.dtoMapper = dtoMapper;
+
     }
 
     @Override
@@ -53,6 +54,7 @@ public class ContractorServiceImpl implements ContractorService {
     public List<ContractorDto> getAll() {
         log.info("запрошен список getAll ");
         return contractorRepository.getAll();
+
     }
 
     @Override
@@ -74,21 +76,18 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public ContractorDto create(ContractorDto contractorDto) {
-
+        log.info("добавление нового контрагента ");
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
-
         contractor.setContractorGroup(
                 dtoMapper.contractorGroupDtoToContractorGroup(
                         contractorDto.getContractorGroupDto()
                 )
-
         );
 
         contractor.setTypeOfContractor(
                 dtoMapper.typeOfContractorDtoToTypeOfContractor(
                         contractorDto.getTypeOfContractorDto()
                 )
-
         );
 
         contractor.setTypeOfPrice(
@@ -120,40 +119,20 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public ContractorDto update(ContractorDto contractorDto) {
-
+        log.info("обновление контрагента ");
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
-        //TODO временно (typeOfContractorId,typeOfPriceId,legalDetailId) пока нет реализации на front com.trade_accounting.components.contractors.ContractorModalWindow
-        long typeOfContractorId = contractorDto.getTypeOfContractorId();
-        long typeOfPriceId = contractorDto.getTypeOfPriceId();
-        long legalDetailId = contractorDto.getLegalDetailId();
 
         contractor.setContractorGroup(
-                contractorGroupRepository.findById(
-                        contractorDto.getContractorGroupId()
-                ).orElse(null)
-        );
+            contractorGroupRepository.findById(contractorDto.getContractorGroupId()
+        ).orElse(null));
 
-        if (typeOfContractorId != 0) {
-            contractor.setTypeOfContractor(
-                typeOfContractorRepository.findById(contractorDto.getTypeOfContractorId()
-                ).orElse(null));
-        //TODO временно пока нет реализации на front com.trade_accounting.components.contractors.ContractorModalWindow
-        }else {
-            contractor.setTypeOfContractor(
-                typeOfContractorRepository.findByName(contractorDto.getTypeOfContractorName()
-                ).orElse(null));
-        }
+        contractor.setTypeOfContractor(
+            typeOfContractorRepository.findById(contractorDto.getTypeOfContractorId()
+        ).orElse(null));
 
-        if (typeOfPriceId != 0) {
         contractor.setTypeOfPrice(
-                typeOfPriceRepository.findById(contractorDto.getTypeOfPriceId()
-                ).orElse(null));
-            //TODO временно пока нет реализации на front com.trade_accounting.components.contractors.ContractorModalWindow
-        }else {
-            contractor.setTypeOfPrice(
-                typeOfPriceRepository.findByName(contractorDto.getTypeOfPriceName()
-                ).orElse(null));
-        }
+            typeOfPriceRepository.findById(contractorDto.getTypeOfPriceId()
+        ).orElse(null));
 
 //        contractor.setBankAccounts(
 //                contractorDto.getBankAccountDto().stream()
@@ -165,16 +144,9 @@ public class ContractorServiceImpl implements ContractorService {
 //                        .collect(Collectors.toList())
 //        );
 
-        if (legalDetailId != 0) {
         contractor.setLegalDetail(
-                legalDetailRepository.findById(contractorDto.getLegalDetailId()
-                ).orElse(null));
-            //TODO временно пока нет реализации на front com.trade_accounting.components.contractors.ContractorModalWindow
-        }else {
-            contractor.setLegalDetail(
-                legalDetailRepository.findByInn(contractorDto.getLegalDetailInn()
-                ).orElse(null));
-        }
+            legalDetailRepository.findById(contractorDto.getLegalDetailId()
+        ).orElse(null));
 
         contractorRepository.save(contractor);
 
@@ -183,7 +155,6 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public void deleteById(Long id) {
-        contractorRepository.deleteById(id);
-
-    }
+        log.info("удаление контрагента ");
+        contractorRepository.deleteById(id); }
 }
