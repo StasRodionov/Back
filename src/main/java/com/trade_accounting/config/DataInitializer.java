@@ -242,13 +242,15 @@ public class DataInitializer {
         List<InvoiceDto> invoices = invoiceService.getAll();
 
         for (InvoiceDto invoice : invoices){
-            invoiceProductService.create(new InvoiceProductDto(
-                    null,
-                    invoice.getId(),
-                    Long.valueOf(randomInt(1,1000)),
-                    BigDecimal.valueOf(randomInt(20,100)),
-                    BigDecimal.valueOf(randomInt(30,150))
-            ));
+            for (int i = 0; i < randomInt(1,10); i++) {
+                invoiceProductService.create(new InvoiceProductDto(
+                        null,
+                        invoice.getId(),
+                        Long.valueOf(randomInt(1, 1000)),
+                        BigDecimal.valueOf(randomInt(20, 100)),
+                        BigDecimal.valueOf(randomInt(30, 150))
+                ));
+            }
         }
     }
 
