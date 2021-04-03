@@ -49,9 +49,16 @@ public class InvoiceRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<InvoiceDto>> getAll() {
-        List<InvoiceDto> invoiceDtoList = invoiceService.getAll();
-        log.info("Запрошен список накладных");
+    public ResponseEntity<List<InvoiceDto>> getAll(@RequestParam(required = false) String typeOfInvoice) {
+        List<InvoiceDto> invoiceDtoList;
+        if (typeOfInvoice != null){
+            invoiceDtoList = invoiceService.getAll(typeOfInvoice);
+            log.info("Запрошен список накладных с typeOfInvoice = {}", typeOfInvoice);
+        }
+        else {
+            invoiceDtoList = invoiceService.getAll();
+            log.info("Запрошен список всех накладных");
+        }
         return ResponseEntity.ok(invoiceDtoList);
     }
 
@@ -85,22 +92,6 @@ public class InvoiceRestController {
         InvoiceDto invoiceDto = invoiceService.getById(id);
         log.info("Запрошен экземпляр накладной с id = {}", id);
         return ResponseEntity.ok(invoiceDto);
-    }
-
-    @GetMapping
-    @ApiOperation(value = "getByTypeOfInvoice", notes = "Получение накладных по их typeOfInvoice")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка накладных"),
-            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
-            @ApiResponse(code = 403, message = "Операция запрещена"),
-            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
-    )
-    public ResponseEntity<List<InvoiceDto>> getByTypeOfInvoice(@ApiParam(name = "typeOfInvoice", type = "String",
-            value = "Переданный в URL typeOfInvoice, по которому необходимо найти накладную")
-                                              @RequestParam String typeOfInvoice) {
-        List<InvoiceDto> invoiceDtoList = invoiceService.getByTypeOfInvoice(typeOfInvoice);
-        log.info("Запрошен список накладных с typeOfInvoice = {}", typeOfInvoice);
-        return ResponseEntity.ok(invoiceDtoList);
     }
 
     @PostMapping
