@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
@@ -33,7 +34,7 @@ public class InvoiceDto {
                       Long companyId,
                       Long contractorId,
                       Long warehouseId,
-                      boolean isSpend) {
+                     boolean isSpend) {
         this.id = id;
         this.date = date.toString();
         this.typeOfInvoice = typeOfInvoice.toString();
@@ -44,5 +45,6 @@ public class InvoiceDto {
         this.warehouseDto = new WarehouseDto();
         this.warehouseDto.setId(warehouseId);
         this.isSpend = isSpend;
+
     }
 }

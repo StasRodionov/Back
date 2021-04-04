@@ -64,6 +64,7 @@ public class ContractorGroupRestController {
                                                       @PathVariable(name = "id") Long id) {
         ContractorGroupDto contractorGroupDto = contractorGroupService.getById(id);
         log.info("Запрошен экземпляр ContractorGroupDto с id= {}", id);
+        log.info("dto = {}", contractorGroupDto);
         return ResponseEntity.ok(contractorGroupDto);
     }
 
