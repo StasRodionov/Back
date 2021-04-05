@@ -193,7 +193,9 @@ public abstract class DtoMapper {
     public Image imageDtoToImage(ImageDto imageDto, String imageDir) {
         Image image = new Image();
         if (imageDto.getId() == null) {
-            String url = uploadImage(imageDto.getContent(), imageDir, String.valueOf(new Date().getTime()));
+            String url = uploadImage(imageDto.getContent(),
+                    imageDir,
+                    new Date().getTime() + imageDto.getFileExtension());
             image.setImageUrl(url);
             image = imageRepository.saveAndFlush(image);
         } else {
