@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -53,6 +54,19 @@ public class ProductRestController {
         List<ProductDto> productGroups = productService.getAll();
         log.info("Запрошен список ProductDto");
         return ResponseEntity.ok(productGroups);
+    }
+
+    @ApiOperation(value = "search", notes = "Получение списка товаров по заданным параметрам")
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка всех товаров (лёгкое дто)"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<ProductDto>> getAll(@RequestParam("query") String value) {
+        log.info("Запрошен поиск товаров");
+        return ResponseEntity.ok(productService.search(value));
     }
 
     @ApiOperation(value = "getById", notes = "Возвращает определенный товар по Id")
