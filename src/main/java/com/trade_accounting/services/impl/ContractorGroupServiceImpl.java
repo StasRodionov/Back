@@ -1,6 +1,5 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
@@ -12,15 +11,11 @@ import java.util.List;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ContractorGroupServiceImpl implements ContractorGroupService {
 
     private final ContractorGroupRepository contractorGroupRepository;
     private final DtoMapper dtoMapper;
-
-    public ContractorGroupServiceImpl(ContractorGroupRepository contractorGroupRepository, DtoMapper dtoMapper) {
-        this.contractorGroupRepository = contractorGroupRepository;
-        this.dtoMapper = dtoMapper;
-    }
 
     @Override
     public List<ContractorGroupDto> getAll() {
