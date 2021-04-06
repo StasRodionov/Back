@@ -43,8 +43,7 @@ public class ModelDtoConverter {
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    private ModelDtoConverter() {
-    }
+    private ModelDtoConverter() { }
 
     public static ProductPriceDto convertToProductPriceDto(ProductPrice productPrice) {
         return modelMapper.map(productPrice, ProductPriceDto.class);
@@ -201,7 +200,8 @@ public class ModelDtoConverter {
 
     public static Contractor convertToContractor(ContractorDto dto, ContractorGroup contractorGroup,
                                                  TypeOfContractor typeOfContractor, TypeOfPrice typeOfPrice,
-                                                 List<BankAccount> bankAccount, LegalDetail legalDetail) {
+                                                 List<BankAccount> bankAccount,
+                                                 LegalDetail legalDetail) {
         return new Contractor(
                 dto.getId(),
                 dto.getName(),
@@ -249,7 +249,6 @@ public class ModelDtoConverter {
                 dto.getSortNumber()
         );
     }
-
 
     public static BankAccountDto convertToBankAccountDto(BankAccount bankAccount){
         return new BankAccountDto(

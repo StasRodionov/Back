@@ -96,15 +96,6 @@ public class ContractorServiceImpl implements ContractorService {
                 )
         );
 
-//        contractor.setBankAccounts(
-//                contractorDto.getBankAccountDto().stream()
-//                        .map(
-//                                bankAccount -> bankAccountRepository
-//                                .save(dtoMapper.bankAccountDtoToBankAccount(bankAccount))
-//                        )
-//                        .collect(Collectors.toList())
-//        );
-
         contractor.setLegalDetail(
                 legalDetailRepository.save(
                         dtoMapper.legalDetailDtoToLegalDetail(
@@ -133,16 +124,6 @@ public class ContractorServiceImpl implements ContractorService {
         contractor.setTypeOfPrice(
             typeOfPriceRepository.findById(contractorDto.getTypeOfPriceId()
         ).orElse(null));
-
-//        contractor.setBankAccounts(
-//                contractorDto.getBankAccountDto().stream()
-//                        .map(
-//                                bankAccount -> bankAccountRepository
-//                                        .findById(bankAccount.getId())
-//                                        .orElse(null)
-//                        )
-//                        .collect(Collectors.toList())
-//        );
 
         contractor.setLegalDetail(
             legalDetailRepository.findById(contractorDto.getLegalDetailId()
