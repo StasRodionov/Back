@@ -138,7 +138,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     @Override
     public void checkExistsContractorGroupById(Long contractorGroupId) {
         if(!contractorGroupRepository.existsById(contractorGroupId)) {
-            throw new NotFoundEntityException("Тип контрагента с id=" + contractorGroupId + ", не найден");
+            throw new NotFoundEntityException("Группа контрагентов с id=" + contractorGroupId + ", не найдена");
         }
     }
 }
