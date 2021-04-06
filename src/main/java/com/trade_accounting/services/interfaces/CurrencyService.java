@@ -14,9 +14,9 @@ public interface CurrencyService {
 
     CurrencyDto getById(Long id);
 
-    void create(CurrencyDto currencyDto);
+    CurrencyDto create(CurrencyDto currencyDto);
 
-    void update(CurrencyDto currencyDto);
+    CurrencyDto update(CurrencyDto currencyDto);
 
     void deleteById(Long id);
 }
