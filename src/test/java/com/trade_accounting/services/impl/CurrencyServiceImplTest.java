@@ -45,11 +45,11 @@ class CurrencyServiceImplTest {
     void getAll_shouldReturnListFilledCurrencyDto() {
         when(currencyRepository.findAll())
                 .thenReturn(
-                        Stream.of(
+                        List.of(
                                 ModelStubs.getCurrency(1L),
                                 ModelStubs.getCurrency(2L),
                                 ModelStubs.getCurrency(3L)
-                        ).collect(Collectors.toList())
+                        )
                 );
         List<CurrencyDto> currencyDtoList = currencyService.getAll();
         assertNotNull(
@@ -80,11 +80,11 @@ class CurrencyServiceImplTest {
     void search_shouldReturnListFilledCurrencyDto() {
         when(currencyRepository.findAll(Mockito.<Specification<Currency>>any()))
                 .thenReturn(
-                        Stream.of(
+                        List.of(
                                 ModelStubs.getCurrency(1L),
                                 ModelStubs.getCurrency(2L),
                                 ModelStubs.getCurrency(3L)
-                        ).collect(Collectors.toList())
+                        )
                 );
 
         List<CurrencyDto> currencys = currencyService
@@ -93,7 +93,7 @@ class CurrencyServiceImplTest {
         assertNotNull(currencys, "failure - expected that a list of currencyDto not null");
         assertTrue(currencys.size() > 0, "failure - expected that a list of currencyDto greater than 0");
 
-        for(CurrencyDto currency : currencys) {
+        for (CurrencyDto currency : currencys) {
             currencyDtoIsCorrectlyInited(currency);
         }
     }

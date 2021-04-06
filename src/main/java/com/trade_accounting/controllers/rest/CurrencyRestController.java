@@ -3,6 +3,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.dto.CurrencyDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,9 +38,11 @@ import java.util.List;
 public class CurrencyRestController {
 
     private final CurrencyService currencyService;
+    private final CheckEntityService checkEntityService;
 
-    CurrencyRestController(CurrencyService currencyService) {
+    CurrencyRestController(CurrencyService currencyService, CheckEntityService checkEntityService) {
         this.currencyService = currencyService;
+        this.checkEntityService = checkEntityService;
     }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех валют")
@@ -69,6 +72,7 @@ public class CurrencyRestController {
             value = "ID переданный в URL по которому необходимо найти валюту",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsCurrencyById(id);
         CurrencyDto currency = currencyService.getById(id);
         log.info("Запрошен экземпляр CurrencyDto с id= {}", id);
         return ResponseEntity.ok(currency);
@@ -83,7 +87,7 @@ public class CurrencyRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> create(@ApiParam(name = "currencyDto",
+    public ResponseEntity<CurrencyDto> create(@ApiParam(name = "currencyDto",
             value = "DTO валюты, которую необходимо создать") @RequestBody CurrencyDto currencyDto){
         currencyService.create(currencyDto);
         log.info("Записан новый экземпляр Currency с id= {}", currencyDto.getId());
@@ -99,8 +103,9 @@ public class CurrencyRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> update(@ApiParam(name = "currencyDto",
+    public ResponseEntity<CurrencyDto> update(@ApiParam(name = "currencyDto",
             value = "DTO валюты, которую необходимо обновить") @RequestBody CurrencyDto currencyDto) {
+        checkEntityService.checkExistsCurrencyById(currencyDto.getId());
         currencyService.update(currencyDto);
         log.info("Обновлен экземпляр с id = {}", currencyDto.getId());
         return ResponseEntity.ok().build();
@@ -115,12 +120,13 @@ public class CurrencyRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> deleteById(@ApiParam(
+    public ResponseEntity<Long> deleteById(@ApiParam(
             name = "id",
             type = "Long",
             value = "ID переданный в URL по которому необходимо удалить валюту",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsCurrencyById(id);
         currencyService.deleteById(id);
         log.info("Удален экземпляр с id = {}", id);
         return ResponseEntity.ok().build();
