@@ -126,7 +126,6 @@ public class CurrencyRestController {
             value = "ID переданный в URL по которому необходимо удалить валюту",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsCurrencyById(id);
         currencyService.deleteById(id);
         log.info("Удален экземпляр с id = {}", id);
         return ResponseEntity.ok().build();
