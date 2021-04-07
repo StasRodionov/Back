@@ -42,7 +42,7 @@ public class LoggingPointcuts {
         }
 
         @Before(value = "inServiceLayer() && createExecution() && args(dto)")
-        public void createMethod(JoinPoint joinPoint, Object dto) {
+        public void logCreate(JoinPoint joinPoint, Object dto) {
                 log.info("Создан экземпляр {}: {}", getDtoName(joinPoint), dto);
         }
 
