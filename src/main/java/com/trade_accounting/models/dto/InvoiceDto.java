@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class InvoiceDto {
 
     private Long id;
+    private String comment;
     @NotNull
     private String date;
     @NotNull
@@ -33,7 +34,8 @@ public class InvoiceDto {
                       Long companyId,
                       Long contractorId,
                       Long warehouseId,
-                      boolean isSpend) {
+                      boolean isSpend,
+                      String comment) {
         this.id = id;
         this.date = date.toString();
         this.typeOfInvoice = typeOfInvoice.toString();
@@ -44,5 +46,6 @@ public class InvoiceDto {
         this.warehouseDto = new WarehouseDto();
         this.warehouseDto.setId(warehouseId);
         this.isSpend = isSpend;
+        this.comment = comment;
     }
 }

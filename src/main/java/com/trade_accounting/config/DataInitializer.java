@@ -215,11 +215,13 @@ public class DataInitializer {
         List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
         List<WarehouseDto> warehouseDtos = warehouseService.getAll().stream().limit(3).collect(Collectors.toList());
 
+        int i = 0;
         for (CompanyDto companyDto : companyDtos) {
             for (ContractorDto contractorDto : contractorDtos) {
                 for (WarehouseDto warehouseDto : warehouseDtos) {
                     invoiceService.create(new InvoiceDto(
                             null,
+                            "Комментарий " + i++,
                             LocalDateTime.now().toString(),
                             TypeOfInvoice.EXPENSE.name(),
                             companyDto,

@@ -180,7 +180,8 @@ public class ModelDtoConverter {
                 company,
                 contractor,
                 warehouse,
-                dto.isSpend()
+                dto.isSpend(),
+                dto.getComment()
         );
     }
 
