@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
@@ -79,6 +80,12 @@ public class DtoStubs {
 
     public static ContractDto getContractDto(Long id){
         return dtoMapper.contractToContractDto(ModelStubs.getContract(id));
+    }
+
+    public static ContractorGroupDto getContractorGroupDto(Long id) {
+        return dtoMapper.contractorGroupToContractorGroupDto(
+                ModelStubs.getContractorGroup(id)
+        );
     }
 
     public static TaxSystemDto getTaxSystemDto(Long id){
