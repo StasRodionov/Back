@@ -33,7 +33,7 @@ public class LoggingPointcuts {
         public void deleteExecution() {}
 
         @After("inServiceLayer() && getAllExecution()")
-        public void getAllMethod(JoinPoint joinPoint) {
+        public void logGetAll(JoinPoint joinPoint) {
                 log.info("Запрошен список {}", getDtoName(joinPoint));
         }
 
