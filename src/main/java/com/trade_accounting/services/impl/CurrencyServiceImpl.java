@@ -26,15 +26,15 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public List<CurrencyDto> getAll() {
-        return currencyRepository.findAll()
-                .stream()
-                .map(dtoMapper::currencyToCurrencyDto)
-                .collect(Collectors.toList());
+        return currencyRepository.getAll();
     }
 
     @Override
     public List<CurrencyDto> search(Specification<Currency> spec) {
-        return currencyRepository.getAll();
+        return currencyRepository.findAll(spec)
+                .stream()
+                .map(dtoMapper::currencyToCurrencyDto)
+                .collect(Collectors.toList());
     }
 
     @Override

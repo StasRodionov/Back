@@ -2,7 +2,6 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.dto.CurrencyDto;
-import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.repositories.CurrencyRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
@@ -19,9 +18,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -43,12 +39,12 @@ class CurrencyServiceImplTest {
 
     @Test
     void getAll_shouldReturnListFilledCurrencyDto() {
-        when(currencyRepository.findAll())
+        when(currencyRepository.getAll())
                 .thenReturn(
                         List.of(
-                                ModelStubs.getCurrency(1L),
-                                ModelStubs.getCurrency(2L),
-                                ModelStubs.getCurrency(3L)
+                                DtoStubs.getCurrencyDto(1L),
+                                DtoStubs.getCurrencyDto(2L),
+                                DtoStubs.getCurrencyDto(3L)
                         )
                 );
         List<CurrencyDto> currencyDtoList = currencyService.getAll();
@@ -67,7 +63,7 @@ class CurrencyServiceImplTest {
 
     @Test
     void getAll_shouldReturnEmptyListCurrencyDto() {
-        when(currencyRepository.findAll())
+        when(currencyRepository.getAll())
                 .thenReturn(new ArrayList<>());
 
         List<CurrencyDto> currencys = currencyService.getAll();
@@ -118,10 +114,10 @@ class CurrencyServiceImplTest {
 
     @Test
     void getById_shouldReturnFilledCurrencyDto() {
-        Optional<Currency> currencyFromRepo =
-                Optional.of(ModelStubs.getCurrency(1L));
+        CurrencyDto currencyFromRepo =
+                DtoStubs.getCurrencyDto(1L);
 
-        when(currencyRepository.findById(anyLong()))
+        when(currencyRepository.getById(anyLong()))
                 .thenReturn(currencyFromRepo);
 
         CurrencyDto currencyDto = currencyService.getById(1L);
