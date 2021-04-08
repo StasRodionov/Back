@@ -3,6 +3,7 @@ package com.trade_accounting.aspects;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -31,27 +32,27 @@ public class LoggingPointcuts {
         @Pointcut("execution(* deleteById(..))")
         public void deleteExecution() {}
 
-        @Before("inServiceLayer() && getAllExecution()")
+        @After("inServiceLayer() && getAllExecution()")
         public void getAllMethod(JoinPoint joinPoint) {
                 log.info("Запрошен список {}", getDtoName(joinPoint));
         }
 
-        @Before(value = "inServiceLayer() && getByIdExecution() && args(id)")
+        @After(value = "inServiceLayer() && getByIdExecution() && args(id)")
         public void logGetById(JoinPoint joinPoint, Long id) {
                 log.info("Запрошен экземпляр {} с id={}", getDtoName(joinPoint), id);
         }
 
-        @Before(value = "inServiceLayer() && createExecution() && args(dto)")
+        @After(value = "inServiceLayer() && createExecution() && args(dto)")
         public void logCreate(JoinPoint joinPoint, Object dto) {
-                log.info("Создан экземпляр {}: {}", getDtoName(joinPoint), dto);
+                log.info("Создан экземпляр {}: {}", dto.getClass().getSimpleName(), dto);
         }
 
-        @Before(value = "inServiceLayer() && updateExecution() && args(dto)")
+        @After(value = "inServiceLayer() && updateExecution() && args(dto)")
         public void logUpdate(JoinPoint joinPoint, Object dto) {
-                log.info("Обновлен экземпляр {} с id={}", getDtoName(joinPoint), getId(dto));
+                log.info("Обновлен экземпляр {} с id={}", dto.getClass().getSimpleName(), getId(dto));
         }
 
-        @Before(value = "inServiceLayer() && deleteExecution() && args(id)")
+        @After(value = "inServiceLayer() && deleteExecution() && args(id)")
         public void logDelete(JoinPoint joinPoint, Long id) {
                 log.info("Удален экземпляр {} с id={}", getDtoName(joinPoint), id);
         }
