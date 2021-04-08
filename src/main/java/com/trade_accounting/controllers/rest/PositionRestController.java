@@ -65,6 +65,22 @@ public class PositionRestController {
         return ResponseEntity.ok(positions);
     }
 
+    @GetMapping("/name/{name}")
+    @ApiOperation(value = "getByName", notes = "Получение должности по ее названию")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Должность найдена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<PositionDto> getByName(@ApiParam(name = "name", type = "String",
+            value = "Переданный в URL name по которому необходимо найти должность")
+                                               @PathVariable(name = "name") String name) {
+        PositionDto position = positionService.getByName(name);
+        log.info("Запрошен экземпляр PositionDto с name= {}", name);
+        return ResponseEntity.ok(position);
+    }
+
     @PostMapping
     @ApiOperation(value = "create", notes = "Внесение новой должности")
     @ApiResponses(value = {

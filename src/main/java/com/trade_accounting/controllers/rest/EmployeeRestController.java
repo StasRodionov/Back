@@ -142,4 +142,18 @@ public class EmployeeRestController {
         log.info("Удален экземпляр EmployeeDto с id = {}", id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/profile")
+    @ApiOperation(value = "getPrincipal", notes = "Получение информации о работнике")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение информации о работнике"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<EmployeeDto> getUserDetails(){
+        EmployeeDto employeeDto = employeeService.getPrincipal();
+        log.info("Запрошен список EmployeeDto");
+        return ResponseEntity.ok(employeeDto);
+    }
 }
