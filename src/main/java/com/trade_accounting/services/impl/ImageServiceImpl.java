@@ -50,8 +50,10 @@ public class ImageServiceImpl implements ImageService {
         if (optional.isPresent()) {
             try {
                 imageRepository.deleteById(id);
-                Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
-            } catch (RuntimeException ignored) {
+                if(!imageRepository.existsById(id)) {
+                    Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
+                }
+            } catch (Exception ignored) {
 
             }
         }
