@@ -48,8 +48,12 @@ public class ImageServiceImpl implements ImageService {
     public void deleteById(Long id) {
         Optional<Image> optional = imageRepository.findById(id);
         if (optional.isPresent()) {
-            Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
-            imageRepository.deleteById(id);
+            try {
+                imageRepository.deleteById(id);
+                Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
+            } catch (RuntimeException ignored) {
+
+            }
         }
     }
 
