@@ -13,11 +13,13 @@ import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.InvoiceDto;
+import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
+import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
@@ -39,6 +41,7 @@ import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.services.interfaces.ImageService;
+import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.PaymentService;
@@ -88,6 +91,7 @@ public class DataInitializer {
     private final ProductService productService;
     private final CurrencyService currencyService;
     private final InvoiceService invoiceService;
+    private final InvoiceProductService invoiceProductService;
     private final ProjectService projectService;
     private final PaymentService paymentService;
     private final TaskServiceImpl taskService;
@@ -115,7 +119,7 @@ public class DataInitializer {
             ProductService productService,
             CurrencyService currencyService,
             InvoiceService invoiceService,
-            ProjectService projectService,
+            InvoiceProductService invoiceProductService, ProjectService projectService,
             PaymentService paymentService,
             TaskServiceImpl taskService,
             TaskCommentServiceImpl commentService
@@ -141,6 +145,7 @@ public class DataInitializer {
         this.productService = productService;
         this.currencyService = currencyService;
         this.invoiceService = invoiceService;
+        this.invoiceProductService = invoiceProductService;
         this.projectService = projectService;
         this.paymentService = paymentService;
         this.taskService = taskService;
@@ -170,6 +175,7 @@ public class DataInitializer {
         initProducts();
         initContracts();
         initInvoices();
+        initInvoiceProducts();
         initProject();
         initPayment();
 
@@ -177,20 +183,20 @@ public class DataInitializer {
         initTaskComments();
     }
 
-    public void initProject(){
+    public void initProject() {
         projectService.create(new ProjectDto(null, "name", "0000", "description"));
     }
 
-    public void initPayment(){
+    public void initPayment() {
         LocalDateTime localDateTime = LocalDateTime.now();
         List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ProjectDto> projectDtos = projectService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ContractDto> contractDtos = contractService.getAll().stream().limit(3).collect(Collectors.toList());
         int count = 1;
-        for (CompanyDto companyDto: companyDtos) {
-            for (ContractorDto contractorDto: contractorDtos) {
-                for (ContractDto contractDto: contractDtos) {
+        for (CompanyDto companyDto : companyDtos) {
+            for (ContractorDto contractorDto : contractorDtos) {
+                for (ContractDto contractDto : contractDtos) {
                     for (ProjectDto projectDto : projectDtos) {
                         paymentService.create(new PaymentDto(
                                 null,
@@ -202,18 +208,19 @@ public class DataInitializer {
                                 contractDto.getId(),
                                 projectDto.getId(),
                                 new BigDecimal("100.00")
-                                ));
-                        count ++;
+                        ));
+                        count++;
                     }
                 }
             }
         }
     }
 
-    public void initInvoices(){
+    public void initInvoices() {
         List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
         List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
         List<WarehouseDto> warehouseDtos = warehouseService.getAll().stream().limit(3).collect(Collectors.toList());
+        List<String> typeOfInvoices = List.of(TypeOfInvoice.EXPENSE.name(), TypeOfInvoice.RECEIPT.name());
 
         for (CompanyDto companyDto : companyDtos) {
             for (ContractorDto contractorDto : contractorDtos) {
@@ -221,7 +228,7 @@ public class DataInitializer {
                     invoiceService.create(new InvoiceDto(
                             null,
                             LocalDateTime.now().toString(),
-                            TypeOfInvoice.EXPENSE.name(),
+                            typeOfInvoices.get(randomInt(0, 1)),
                             companyDto,
                             contractorDto,
                             warehouseDto,
@@ -229,6 +236,26 @@ public class DataInitializer {
                 }
             }
         }
+    }
+
+    private void initInvoiceProducts() {
+        List<InvoiceDto> invoices = invoiceService.getAll();
+
+        for (InvoiceDto invoice : invoices){
+            for (int i = 0; i < randomInt(1,10); i++) {
+                invoiceProductService.create(new InvoiceProductDto(
+                        null,
+                        invoice.getId(),
+                        Long.valueOf(randomInt(1, 1000)),
+                        BigDecimal.valueOf(randomInt(20, 100)),
+                        BigDecimal.valueOf(randomInt(30, 150))
+                ));
+            }
+        }
+    }
+
+    public int randomInt(int min, int max) {
+        return (int) (Math.random() * ((max - min) + 1)) + min;
     }
 
     private void initTypeOfPrices() {
@@ -489,8 +516,8 @@ public class DataInitializer {
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №1\"",
-                    "7712345" + String.format("%03d" , i),
-                    String.format("%05d" , 1 + 3 * i),
+                    "7712345" + String.format("%03d", i),
+                    String.format("%05d", 1 + 3 * i),
                     "749512345678",
                     "810-41-1234567890",
                     "organization1@mail.com",
@@ -510,7 +537,7 @@ public class DataInitializer {
                             "Сергеевич",
                             "г. Воронеж,ул Карла Маркса,46",
                             "comment to address",
-                            "3664069" + String.format("%03d" , i),
+                            "3664069" + String.format("%03d", i),
                             "79271669",
                             "1053600591197",
                             "236467",
@@ -537,8 +564,8 @@ public class DataInitializer {
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №2\"",
-                    "9543564" + String.format("%03d" , i),
-                    String.format("%05d" , 2 + 3 * i),
+                    "9543564" + String.format("%03d", i),
+                    String.format("%05d", 2 + 3 * i),
                     "733126789654",
                     "920-12-2365723233",
                     "organization2@mail.com",
@@ -558,7 +585,7 @@ public class DataInitializer {
                             "Анатольевич",
                             "г. Москва, ул. Революции, д. 66",
                             "comment to address",
-                            "3664068" + String.format("%03d" , i),
+                            "3664068" + String.format("%03d", i),
                             "79271647",
                             "1053600591285",
                             "432145",
@@ -585,8 +612,8 @@ public class DataInitializer {
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №3\"",
-                    "3453123" + String.format("%03d" , i),
-                    String.format("%05d" , 3 + 3 * i),
+                    "3453123" + String.format("%03d", i),
+                    String.format("%05d", 3 + 3 * i),
                     "799123786542",
                     "543-23-1234543221",
                     "organization3@mail.com",
@@ -606,7 +633,7 @@ public class DataInitializer {
                             "Дмитриевна",
                             "г. Краснодар, ул. 40 Лет Октября, д. 16",
                             "comment to address",
-                            "3664055" + String.format("%03d" , i),
+                            "3664055" + String.format("%03d", i),
                             "70713032",
                             "1033600141277",
                             "342145",
@@ -630,6 +657,7 @@ public class DataInitializer {
                             "2"))));
         }
     }
+
     private void initEmployees() {
         employeeService.save(new EmployeeDto(null,
                 "Vasiliev",
@@ -731,7 +759,7 @@ public class DataInitializer {
                 "",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
@@ -762,7 +790,7 @@ public class DataInitializer {
                 "",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
@@ -793,7 +821,7 @@ public class DataInitializer {
                 "",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
@@ -823,7 +851,7 @@ public class DataInitializer {
                 "",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
@@ -854,7 +882,7 @@ public class DataInitializer {
                 "",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
-                typeOfPriceService.getById(1L),
+                typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
     }
@@ -871,6 +899,8 @@ public class DataInitializer {
 
         List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtoList = new ArrayList<>(attributeOfCalculationObjectService.getAll());
 
+        List<TypeOfPriceDto> typeOfPriceDtoList = new ArrayList<>(typeOfPriceService.getAll());
+
         for (int i = 0; i < 350; i++) {
 
             productService.save(new ProductDto(
@@ -883,7 +913,8 @@ public class DataInitializer {
                     unitDtoList.get(0),
                     false,
                     contractorDtoList.get(0),
-                    null,
+                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(50,70))),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(71,100)))),
                     taxSystemDtoList.get(0),
                     null,
                     productGroupDtoList.get(0),
@@ -899,7 +930,8 @@ public class DataInitializer {
                     unitDtoList.get(1),
                     false,
                     contractorDtoList.get(1),
-                    null,
+                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(70,90))),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(91,115)))),
                     taxSystemDtoList.get(1),
                     null,
                     productGroupDtoList.get(1),
@@ -915,7 +947,9 @@ public class DataInitializer {
                     unitDtoList.get(2),
                     false,
                     contractorDtoList.get(1),
-                    null,
+                    List.of(
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(80,100))),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(101,121)))),
                     taxSystemDtoList.get(2),
                     null,
                     productGroupDtoList.get(2),

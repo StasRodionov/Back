@@ -1,6 +1,7 @@
 package com.trade_accounting.services.interfaces;
 
 import com.trade_accounting.models.dto.ProductDto;
+
 import java.util.List;
 
 public interface ProductService {
@@ -16,4 +17,6 @@ public interface ProductService {
     List<ProductDto> getAllByProductGroupId(Long id);
 
     List<ProductDto> getAllByContractorId(Long id);
+
+    List<ProductDto> search(String value);
 }
