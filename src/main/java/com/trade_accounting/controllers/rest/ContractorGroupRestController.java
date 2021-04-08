@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 
 import io.swagger.annotations.Api;
@@ -32,9 +33,11 @@ import java.util.List;
 @RequestMapping("/api/contractor/group")
 public class ContractorGroupRestController {
     private final ContractorGroupService contractorGroupService;
+    private final CheckEntityService checkEntityService;
 
-    public ContractorGroupRestController(ContractorGroupService contractorGroupService) {
+    public ContractorGroupRestController(ContractorGroupService contractorGroupService, CheckEntityService checkEntityService) {
         this.contractorGroupService = contractorGroupService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -62,9 +65,11 @@ public class ContractorGroupRestController {
     public ResponseEntity<ContractorGroupDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти группу")
                                                       @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsContractorGroupById(id);
         ContractorGroupDto contractorGroupDto = contractorGroupService.getById(id);
         log.info("Запрошен экземпляр ContractorGroupDto с id= {}", id);
-        return ResponseEntity.ok(contractorGroupDto);
+        return  ResponseEntity.ok(contractorGroupDto);
+
     }
 
     @PostMapping

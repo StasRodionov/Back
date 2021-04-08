@@ -1,6 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
@@ -20,8 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -56,6 +56,31 @@ class InvoiceServiceImplTest {
                 invoiceDtoList.size() > 0,
                 "failure - expected that a list of invoiceDto grater than 0"
         );
+        for (InvoiceDto invoiceDto : invoiceDtoList) {
+            invoiceListDtoIsCorrectlyInited(invoiceDto);
+        }
+    }
+
+    @Test
+    void getAll_shouldReturnListFilledInvoiceDtoByType() {
+        when(invoiceRepository.findByTypeOfInvoice(any(TypeOfInvoice.class)))
+                .thenReturn(
+                        Stream.of(
+                                ModelStubs.getInvoice(1L),
+                                ModelStubs.getInvoice(2L),
+                                ModelStubs.getInvoice(3L)
+                        ).collect(Collectors.toList())
+                );
+        List<InvoiceDto> invoiceDtoList = invoiceService.getAll("RECEIPT");
+        assertNotNull(
+                invoiceDtoList,
+                "failure - expected that a list of invoiceDto not null"
+        );
+        assertTrue(
+                invoiceDtoList.size() > 0,
+                "failure - expected that a list of invoiceDto grater than 0"
+        );
+        verify(invoiceRepository).findByTypeOfInvoice(any(TypeOfInvoice.class));
         for (InvoiceDto invoiceDto : invoiceDtoList) {
             invoiceListDtoIsCorrectlyInited(invoiceDto);
         }

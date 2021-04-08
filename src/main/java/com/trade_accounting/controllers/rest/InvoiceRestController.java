@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -48,9 +49,16 @@ public class InvoiceRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<InvoiceDto>> getAll() {
-        List<InvoiceDto> invoiceDtoList = invoiceService.getAll();
-        log.info("Запрошен список накладных");
+    public ResponseEntity<List<InvoiceDto>> getAll(@RequestParam(required = false) String typeOfInvoice) {
+        List<InvoiceDto> invoiceDtoList;
+        if (typeOfInvoice != null){
+            invoiceDtoList = invoiceService.getAll(typeOfInvoice);
+            log.info("Запрошен список накладных с typeOfInvoice = {}", typeOfInvoice);
+        }
+        else {
+            invoiceDtoList = invoiceService.getAll();
+            log.info("Запрошен список всех накладных");
+        }
         return ResponseEntity.ok(invoiceDtoList);
     }
 

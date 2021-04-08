@@ -66,4 +66,9 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> getAllByContractorId(Long id) {
         return productRepository.getAllByContractorId(id);
     }
+
+    @Override
+    public List<ProductDto> search(String value) {
+        return productRepository.search(value);
+    }
 }

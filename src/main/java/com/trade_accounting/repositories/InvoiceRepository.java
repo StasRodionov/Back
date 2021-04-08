@@ -1,6 +1,7 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -12,6 +13,8 @@ import java.util.List;
 
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpecificationExecutor<Invoice> {
+
+    List<Invoice> findByTypeOfInvoice(TypeOfInvoice typeOfInvoice);
 
     @Query("select new com.trade_accounting.models.dto.InvoiceDto(" +
             "e.id," +
