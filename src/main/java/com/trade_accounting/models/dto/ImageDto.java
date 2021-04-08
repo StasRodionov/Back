@@ -13,6 +13,8 @@ public class ImageDto {
 
     private byte[] content;
 
+    private String fileExtension;
+
     private String sortNumber;
 
     public ImageDto(Long id, String sortNumber) {
