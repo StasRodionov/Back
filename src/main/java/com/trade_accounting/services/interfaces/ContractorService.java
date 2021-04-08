@@ -11,15 +11,14 @@ public interface ContractorService {
     List<ContractorDto> searchContractor(Specification<Contractor> specification);
 
     List<ContractorDto> getAll(String searchTerm);
-    List<ContractorDto> getAllLite();
 
     List<ContractorDto> getAll();
 
     ContractorDto getById(Long id);
 
-    void create(ContractorDto contractorDto);
+    ContractorDto create(ContractorDto contractorDto);
 
-    void update(ContractorDto contractorDto);
+    ContractorDto update(ContractorDto contractorDto);
 
     void deleteById(Long id);
 }

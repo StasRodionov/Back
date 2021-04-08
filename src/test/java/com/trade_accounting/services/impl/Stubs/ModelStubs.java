@@ -23,6 +23,7 @@ import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.TypeOfPrice;
+import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.Department;
 

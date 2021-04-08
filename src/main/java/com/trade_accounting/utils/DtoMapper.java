@@ -131,8 +131,8 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorGroup", target = "contractorGroupDto"),
             @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
             @Mapping(source = "typeOfPrice", target = "typeOfPriceDto"),
-            @Mapping(source = "bankAccounts", target = "bankAccountDto"),
-            @Mapping(source = "legalDetail", target = "legalDetailDto")
+            @Mapping(source = "legalDetail", target = "legalDetailDto"),
+            @Mapping(source = "bankAccounts", target = "bankAccountDto")
     })
     public abstract ContractorDto contractorToContractorDto(Contractor contractor);
 
@@ -142,6 +142,7 @@ public abstract class DtoMapper {
             @Mapping(source = "typeOfPriceDto", target = "typeOfPrice"),
             @Mapping(source = "bankAccountDto", target = "bankAccounts"),
             @Mapping(source = "legalDetailDto", target = "legalDetail")
+
     })
     public abstract Contractor contractorDtoToContractor(ContractorDto contractorDto);
 

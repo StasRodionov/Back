@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
@@ -26,6 +27,12 @@ public class DtoStubs {
 
     public static PaymentDto getPaymentDto(Long id) {
         return dtoMapper.paymentToPaymentDto(ModelStubs.getPayment(id));
+    }
+
+    public static ContractorDto getContractorDto(Long id) {
+        return dtoMapper.contractorToContractorDto(
+                ModelStubs.getContractor(id)
+        );
     }
 
     public static TypeOfPriceDto getTypeOfPriceDto(Long id) {

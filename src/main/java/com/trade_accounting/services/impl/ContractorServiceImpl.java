@@ -1,25 +1,24 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.ContractorDto;
-import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
+import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.ModelDtoConverter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 public class ContractorServiceImpl implements ContractorService {
@@ -28,23 +27,23 @@ public class ContractorServiceImpl implements ContractorService {
     private final ContractorGroupRepository contractorGroupRepository;
     private final TypeOfContractorRepository typeOfContractorRepository;
     private final TypeOfPriceRepository typeOfPriceRepository;
-    private final BankAccountRepository bankAccountRepository;
     private final LegalDetailRepository legalDetailRepository;
+    private final DtoMapper dtoMapper;
 
     public ContractorServiceImpl(ContractorRepository contractorRepository,
                                  ContractorGroupRepository contractorGroupRepository,
                                  TypeOfContractorRepository typeOfContractorRepository,
                                  TypeOfPriceRepository typeOfPriceRepository,
-                                 BankAccountRepository bankAccountRepository,
-                                 LegalDetailRepository legalDetailRepository) {
+                                 LegalDetailRepository legalDetailRepository, DtoMapper dtoMapper) {
         this.contractorRepository = contractorRepository;
         this.contractorGroupRepository = contractorGroupRepository;
         this.typeOfContractorRepository = typeOfContractorRepository;
         this.typeOfPriceRepository = typeOfPriceRepository;
-        this.bankAccountRepository = bankAccountRepository;
         this.legalDetailRepository = legalDetailRepository;
+        this.dtoMapper = dtoMapper;
+
     }
-//добавил
+
     @Override
     public List<ContractorDto> searchContractor(Specification<Contractor> specification) {
         return contractorRepository.findAll(specification).stream()
@@ -53,139 +52,90 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<ContractorDto> getAll() {
-        List<ContractorDto> contractorDtos = contractorRepository.getAll();
-        for (ContractorDto contractorDto : contractorDtos) {
+        log.info("запрошен список getAll ");
+        return contractorRepository.getAll();
 
-            contractorDto.setContractorGroupDto(contractorGroupRepository.getContractorGroupByContractorId(contractorDto.getId()));
-            contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getTypeOfContractorByContractorId(contractorDto.getId()));
-            contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getTypeOfPriceByContractorId(contractorDto.getId()));
-            contractorDto.setLegalDetailDto(legalDetailRepository.getLegalDetailByContractorId(contractorDto.getId()));
-
-            List<BankAccount> bankAccountList = bankAccountRepository.getBankAccountByContractorId(contractorDto.getId());
-            contractorDto.setBankAccountDto(bankAccountList.stream().map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
-        }
-
-        return contractorDtos;
     }
 
     @Override
-    public List<ContractorDto> getAllLite() {
-        return contractorRepository.getAll();
-    }
-
-    public List<ContractorDto> getAll(String stringFilter) {
-        if (stringFilter == null || stringFilter.isEmpty()) {
+    public List<ContractorDto> getAll(String searchTerm) {
+        if (searchTerm.equals("null") || searchTerm.isEmpty()) {
+            log.info("запрошен список Query getAll через getAll(String searchTerm) ");
             return contractorRepository.getAll();
         } else {
-            return contractorRepository.search(stringFilter);
+            return contractorRepository.search(searchTerm);
         }
     }
 
     @Override
     public ContractorDto getById(Long id) {
+        return dtoMapper.contractorToContractorDto(
+                contractorRepository.findById(id).orElse(new Contractor())
+        );
+    }
 
-        ContractorDto contractorDto = contractorRepository.getById(id);
+    @Override
+    public ContractorDto create(ContractorDto contractorDto) {
+        log.info("добавление нового контрагента ");
+        Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
+        contractor.setContractorGroup(
+                dtoMapper.contractorGroupDtoToContractorGroup(
+                        contractorDto.getContractorGroupDto()
+                )
+        );
 
-        contractorDto.setContractorGroupDto(contractorGroupRepository.getContractorGroupByContractorId(id));
-        contractorDto.setTypeOfContractorDto(typeOfContractorRepository.getTypeOfContractorByContractorId(id));
-        contractorDto.setTypeOfPriceDto(typeOfPriceRepository.getTypeOfPriceByContractorId(id));
-        contractorDto.setLegalDetailDto(legalDetailRepository.getLegalDetailByContractorId(id));
+        contractor.setTypeOfContractor(
+                dtoMapper.typeOfContractorDtoToTypeOfContractor(
+                        contractorDto.getTypeOfContractorDto()
+                )
+        );
 
-        List<BankAccount> bankAccountList = bankAccountRepository.getBankAccountByContractorId(id);
-        contractorDto.setBankAccountDto(bankAccountList.stream().map(bankAccount -> bankAccountRepository.getById(bankAccount.getId())).collect(Collectors.toList()));
+        contractor.setTypeOfPrice(
+                dtoMapper.typeOfPriceDtoToTypeOfPrice(
+                        contractorDto.getTypeOfPriceDto()
+                )
+        );
+
+        contractor.setLegalDetail(
+                legalDetailRepository.save(
+                        dtoMapper.legalDetailDtoToLegalDetail(
+                                contractorDto.getLegalDetailDto()
+                        )
+                )
+        );
+        contractorRepository.save(contractor);
 
         return contractorDto;
     }
 
     @Override
-    public void create(ContractorDto contractorDto) {
+    public ContractorDto update(ContractorDto contractorDto) {
+        log.info("обновление контрагента ");
+        Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
 
-        List<BankAccount> bankAccounts = new ArrayList<>();
-        if (contractorDto.getBankAccountDto() != null) {
-            for (BankAccountDto bankAccountDto : contractorDto.getBankAccountDto()) {
-                bankAccounts.add(bankAccountRepository.getOne(bankAccountDto.getId()));
-            }
-        }
+        contractor.setContractorGroup(
+            contractorGroupRepository.findById(contractorDto.getContractorGroupId()
+        ).orElse(null));
 
-        contractorRepository.save(new Contractor(
-                contractorDto.getName(),
-                contractorDto.getInn(),
-                contractorDto.getSortNumber(),
-                contractorDto.getPhone(),
-                contractorDto.getFax(),
-                contractorDto.getEmail(),
-                contractorDto.getAddress(),
-                contractorDto.getCommentToAddress(),
-                contractorDto.getComment(),
+        contractor.setTypeOfContractor(
+            typeOfContractorRepository.findById(contractorDto.getTypeOfContractorId()
+        ).orElse(null));
 
-                contractorDto.getContractorGroupDto() != null
-                        ? contractorGroupRepository.getOne(contractorDto.getContractorGroupDto().getId())
-                        : null,
-                contractorDto.getTypeOfContractorDto() != null
-                        ? typeOfContractorRepository.getOne(contractorDto.getTypeOfContractorDto().getId())
-                        : null,
-                contractorDto.getTypeOfPriceDto() != null
-                        ? typeOfPriceRepository.getOne(contractorDto.getTypeOfPriceDto().getId())
-                        : null,
-                bankAccounts,
-                contractorDto.getLegalDetailDto() != null
-                        ? legalDetailRepository.getOne(contractorDto.getLegalDetailDto().getId())
-                        : null
+        contractor.setTypeOfPrice(
+            typeOfPriceRepository.findById(contractorDto.getTypeOfPriceId()
+        ).orElse(null));
 
-        ));
-    }
+        contractor.setLegalDetail(
+            legalDetailRepository.findById(contractorDto.getLegalDetailId()
+        ).orElse(null));
 
-    @Override
-    public void update(ContractorDto contractorDto) {
-        List<BankAccount> bankAccounts = new ArrayList<>();
-        if (contractorDto.getBankAccountDto() != null) {
-            for (BankAccountDto bankAccountDto : contractorDto.getBankAccountDto()) {
-                bankAccounts.add(bankAccountRepository.getOne(bankAccountDto.getId()));
-            }
-        }
+        contractorRepository.save(contractor);
 
-        contractorRepository.save(new Contractor(
-                contractorDto.getId(),
-                contractorDto.getName(),
-                contractorDto.getInn(),
-                contractorDto.getSortNumber(),
-                contractorDto.getPhone(),
-                contractorDto.getFax(),
-                contractorDto.getEmail(),
-                contractorDto.getAddress(),
-                contractorDto.getCommentToAddress(),
-                contractorDto.getComment(),
-
-                contractorDto.getContractorGroupDto() != null
-                        ? contractorGroupRepository.getOne(contractorDto.getContractorGroupDto().getId())
-                        : null,
-                contractorDto.getTypeOfContractorDto() != null
-                        ? typeOfContractorRepository.getOne(contractorDto.getTypeOfContractorDto().getId())
-                        : null,
-                contractorDto.getTypeOfPriceDto() != null
-                        ? typeOfPriceRepository.getOne(contractorDto.getTypeOfPriceDto().getId())
-                        : null,
-                bankAccounts,
-                contractorDto.getLegalDetailDto() != null
-                        ? legalDetailRepository.getOne(contractorDto.getLegalDetailDto().getId())
-                        : null
-
-        ));
+        return contractorDto;
     }
 
     @Override
     public void deleteById(Long id) {
-        contractorRepository.deleteById(id);
-
-    }
-
-//    @PostConstruct
-//    public void test() {
-//        create(new ContractorDto(null, "Name", "1234567891", "11111", "10-11-12", "156161235", "165651651625@list.ru", "Street", "sdfsfd", "hi"));
-//        List<ContractorDto> contractorDtos = getAll();
-//        getById(1L);
-//        System.out.println(contractorDtos.toString());
-//        deleteById(1L);
-//    }
-
+        log.info("удаление контрагента ");
+        contractorRepository.deleteById(id); }
 }
