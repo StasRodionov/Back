@@ -7,6 +7,7 @@ import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.utils.DtoMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +33,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> getAll() {
         return productRepository.findAll().stream().map(dtoMapper::productToProductDto).collect(Collectors.toList());
-//        return productRepository.getAll();
     }
 
     @Override
@@ -72,5 +72,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> search(String value) {
         return productRepository.search(value);
+    }
+
+    @Override
+    public List<ProductDto> searchByFilter(Specification<Product> spec) {
+        return productRepository.findAll(spec)
+                .stream()
+                .map(dtoMapper::productToProductDto)
+                .collect(Collectors.toList());
     }
 }
