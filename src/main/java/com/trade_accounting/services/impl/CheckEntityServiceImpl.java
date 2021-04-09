@@ -7,6 +7,7 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.CurrencyRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
@@ -35,6 +36,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final WarehouseRepository warehouseRepository;
     private final TaskRepository taskRepository;
     private final TaskCommentRepository commentRepository;
+    private final ContractorGroupRepository contractorGroupRepository;
     private final CurrencyRepository currencyRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
@@ -44,7 +46,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   RoleRepository roleRepository,
                                   WarehouseRepository warehouseRepository,
                                   TaskRepository taskRepository,
-                                  TaskCommentRepository commentRepository, CurrencyRepository currencyRepository) {
+                                  TaskCommentRepository commentRepository, ContractorGroupRepository contractorGroupRepository, CurrencyRepository currencyRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -54,6 +56,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.warehouseRepository = warehouseRepository;
         this.taskRepository = taskRepository;
         this.commentRepository = commentRepository;
+        this.contractorGroupRepository = contractorGroupRepository;
         this.currencyRepository = currencyRepository;
     }
 
@@ -132,7 +135,14 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     @Override
     public void checkExistsTaskCommentById(Long taskCommentId) {
         if(!commentRepository.existsById(taskCommentId)) {
-            throw new NotFoundEntityException("Комментарий с id=" + taskCommentId + ", не найдена");
+            throw new NotFoundEntityException("Комментарий с id=" + taskCommentId + ", не найден");
+        }
+    }
+
+    @Override
+    public void checkExistsContractorGroupById(Long contractorGroupId) {
+        if(!contractorGroupRepository.existsById(contractorGroupId)) {
+            throw new NotFoundEntityException("Группа контрагентов с id=" + contractorGroupId + " не найдена");
         }
     }
 

@@ -9,5 +9,7 @@ public interface CheckEntityService {
     void checkForBadEmployee(EmployeeDto employee);
     void checkExistsTaskById(Long taskId);
     void checkExistsTaskCommentById(Long taskCommentId);
+    void checkExistsContractorGroupById(Long contractorGroupId);
     void checkExistsCurrencyById(Long currencyId);
 }
+
