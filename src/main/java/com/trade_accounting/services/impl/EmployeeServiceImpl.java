@@ -148,16 +148,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         return dtoMapper.employeeToEmployeeDto(employee.get());
     }
 
-    @Override
-    public EmployeeDto getPrincipal() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email;
-        if (principal instanceof UserDetails) {
-            email = ((UserDetails)principal).getUsername();
-        } else {
-            email = principal.toString();
-        }
-        Optional<Employee> employee = employeeRepository.findByEmail(email);
-        return dtoMapper.employeeToEmployeeDto(employee.get());
-    }
 }

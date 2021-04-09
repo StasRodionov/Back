@@ -4,6 +4,8 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.EmployeeService;
+import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.DtoMapperImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -16,6 +18,7 @@ import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -151,9 +155,9 @@ public class EmployeeRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<EmployeeDto> getUserDetails(){
-        EmployeeDto employeeDto = employeeService.getPrincipal();
-        log.info("Запрошен список EmployeeDto");
+    public ResponseEntity<EmployeeDto> getUserDetails(@AuthenticationPrincipal String email){
+        EmployeeDto employeeDto = employeeService.getByEmail(email);
+        log.info("Запрошены данные авторизованного сотрудника");
         return ResponseEntity.ok(employeeDto);
     }
 }

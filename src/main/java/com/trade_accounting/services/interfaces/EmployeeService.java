@@ -20,5 +20,4 @@ public interface EmployeeService {
 
     EmployeeDto getByEmail(String email);
 
-    EmployeeDto getPrincipal();
 }
