@@ -151,7 +151,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto getPrincipal() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = new String();
+        String email;
         if (principal instanceof UserDetails) {
             email = ((UserDetails)principal).getUsername();
         } else {
