@@ -52,4 +52,7 @@ public class Invoice {
     @Column(name = "is_Spend")
     @ColumnDefault("false")
     private boolean isSpend;
+
+    @Column(name = "comment")
+    private String comment;
 }

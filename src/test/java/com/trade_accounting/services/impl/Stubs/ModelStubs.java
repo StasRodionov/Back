@@ -176,7 +176,8 @@ public class ModelStubs {
                 getCompany(id),
                 getContractor(id),
                 new Warehouse(),
-                Boolean.TRUE
+                Boolean.TRUE,
+                "Комментарий"
         );
     }
 
