@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -29,7 +30,10 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List<ImageDto> getAll() {
-        return imageRepository.getAll();
+       return imageRepository.getAll()
+               .stream()
+               .map(dtoMapper::imageToImageDto)
+               .collect(Collectors.toList());
     }
 
     @Override
@@ -39,9 +43,9 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image create(ImageDto imageDto, String imageDir) {
-        return imageRepository.saveAndFlush(dtoMapper.imageDtoToImage(imageDto, imageDir));
+        Image image = dtoMapper.imageDtoToImage(imageDto, imageDir);
+        return imageRepository.save(image);
     }
-
 
     @SneakyThrows
     @Override
@@ -52,5 +56,4 @@ public class ImageServiceImpl implements ImageService {
             imageRepository.deleteById(id);
         }
     }
-
 }

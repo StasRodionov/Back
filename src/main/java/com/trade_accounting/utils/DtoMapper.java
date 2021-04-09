@@ -54,12 +54,10 @@ import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
-import com.trade_accounting.repositories.ImageRepository;
 import lombok.SneakyThrows;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -74,9 +72,6 @@ import java.util.List;
 public abstract class DtoMapper {
 
     private static final String UPLOAD_DIR = "images";
-
-    @Autowired
-    private ImageRepository imageRepository;
 
     //AttributeOfCalculationObjectDto
     public abstract AttributeOfCalculationObjectDto
@@ -184,33 +179,27 @@ public abstract class DtoMapper {
         if (image == null){
             return null;
         }
-        ImageDto imageDto = new ImageDto();
-        imageDto.setContent(downloadImage(image.getImageUrl()));
-        imageDto.setId(image.getId());
-        imageDto.setSortNumber(image.getSortNumber());
-        return imageDto;
+        return ImageDto.builder()
+                .id(image.getId())
+                .content(downloadImage(image.getImageUrl()))
+                .sortNumber(image.getSortNumber())
+                .build();
     }
 
     public Image imageDtoToImage(ImageDto imageDto, String imageDir) {
-        Image image = new Image();
-        if (imageDto.getId() == null) {
-            String url = uploadImage(imageDto.getContent(),
-                    imageDir,
+        String url = uploadImage(imageDto.getContent(), imageDir,
                     new Date().getTime() + imageDto.getFileExtension());
-            image.setImageUrl(url);
-            image = imageRepository.saveAndFlush(image);
-        } else {
-            image = imageRepository.getOne(imageDto.getId());
-        }
-        return image;
+        return Image.builder()
+                .imageUrl(url)
+                .build();
     }
 
     public List<Image> toImage(Collection<ImageDto> imageDtos, String imageDir) {
         if ( imageDtos == null ) {
-            return null;
+            return new ArrayList<>();
         }
         List<Image> list = new ArrayList<>(imageDtos.size());
-        for ( ImageDto imageDto : imageDtos ) {
+        for (ImageDto imageDto : imageDtos) {
             list.add(imageDtoToImage(imageDto, imageDir));
         }
         return list;
@@ -237,7 +226,7 @@ public abstract class DtoMapper {
         if (Files.exists(path)){
             return Files.readAllBytes(path);
         } else {
-            return null;
+            return new byte[0];
         }
     }
 
