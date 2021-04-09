@@ -1,6 +1,7 @@
 package com.trade_accounting.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,6 +31,11 @@ public class Image {
 
     public Image(String imageUrl, String sortNumber) {
         this.imageUrl = imageUrl;
+        this.sortNumber = sortNumber;
+    }
+
+    public Image(Long id, String sortNumber) {
+        this.id = id;
         this.sortNumber = sortNumber;
     }
 }
