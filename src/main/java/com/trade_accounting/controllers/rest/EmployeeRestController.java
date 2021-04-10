@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -50,11 +51,28 @@ public class EmployeeRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<EmployeeDto>> getAll(){
+    public ResponseEntity<List<EmployeeDto>> getAll() {
         List<EmployeeDto> employeeDtos = employeeService.getAll();
         log.info("Запрошен список EmployeeDto");
         return ResponseEntity.ok(employeeDtos);
     }
+
+    @GetMapping("/pages")
+    @ApiOperation(value = "getAllByPages", notes = "Получение списка всех работников постранично")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение страницы работников"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<EmployeeDto>> getAllByPage(@RequestParam("pageNumber") Integer pageNumber,
+                                                          @RequestParam("rowsLimit") Integer rowsLimit) {
+        List<EmployeeDto> employeeDtoList = employeeService.getPageFromAll(pageNumber, rowsLimit);
+        log.info("Запрошена страница работников");
+        return ResponseEntity.ok(employeeDtoList);
+    }
+
+
 
     @GetMapping("/search")
     @ApiOperation(value = "search", notes = "Получение списка работников по заданным параметрам")

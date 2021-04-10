@@ -16,6 +16,9 @@ import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.utils.DtoMapper;
 import lombok.SneakyThrows;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +60,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findAll().stream()
                 .map(dtoMapper::employeeToEmployeeDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EmployeeDto> getPageFromAll(Integer pageNumber, Integer rowsLimit) {
+        Page<Employee> page = employeeRepository.findAll(PageRequest.of(pageNumber, rowsLimit, Sort.by(Sort.Direction.ASC, "id")));
+        return page.map(dtoMapper::employeeToEmployeeDto).stream().collect(Collectors.toList());
     }
 
     @Override

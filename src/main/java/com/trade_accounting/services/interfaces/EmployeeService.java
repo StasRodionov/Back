@@ -10,6 +10,8 @@ public interface EmployeeService {
 
     List<EmployeeDto> getAll();
 
+    List<EmployeeDto> getPageFromAll(Integer pageNumber, Integer rowsLimit);
+
     List<EmployeeDto> search(Specification<Employee> specification);
 
     EmployeeDto getById(Long id);
