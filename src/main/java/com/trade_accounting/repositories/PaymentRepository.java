@@ -39,4 +39,9 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     PaymentDto getById(@Param("id") Long id);
 
     void deleteAllByContractId(@Param("id") Long id);
+
+    @Query("from Payment e" +
+            " where concat(e.company.name, ' ', e.contractor.name, ' ', e.number)" +
+            " like concat('%', :req, '%')")
+    List<Payment> search(@Param("req") String request);
 }
