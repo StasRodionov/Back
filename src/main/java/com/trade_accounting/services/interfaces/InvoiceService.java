@@ -22,4 +22,6 @@ public interface InvoiceService {
     InvoiceDto update(InvoiceDto invoiceDto);
 
     void deleteById(Long id);
+
+    List<InvoiceDto> searchByString(String query, TypeOfInvoice typeOfInvoice);
 }
