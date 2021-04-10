@@ -156,4 +156,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return dtoMapper.employeeToEmployeeDto(employee.get());
     }
+
+    @Override
+    public long getRowCount() {
+        return employeeRepository.count();
+    }
 }

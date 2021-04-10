@@ -72,7 +72,17 @@ public class EmployeeRestController {
         return ResponseEntity.ok(employeeDtoList);
     }
 
-
+    @GetMapping("/count")
+    @ApiOperation(value = "getRowCount", notes = "Получение количества работников")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение количества работников"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<Long> getRowCount() {
+        return ResponseEntity.ok(employeeService.getRowCount());
+    }
 
     @GetMapping("/search")
     @ApiOperation(value = "search", notes = "Получение списка работников по заданным параметрам")
