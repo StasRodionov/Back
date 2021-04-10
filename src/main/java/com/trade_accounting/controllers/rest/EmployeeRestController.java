@@ -58,7 +58,7 @@ public class EmployeeRestController {
     }
 
     @GetMapping("/pages")
-    @ApiOperation(value = "getAllByPages", notes = "Получение списка всех работников постранично")
+    @ApiOperation(value = "getAllByPage", notes = "Получение списка всех работников постранично")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Успешное получение страницы работников"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),
@@ -67,7 +67,7 @@ public class EmployeeRestController {
     )
     public ResponseEntity<List<EmployeeDto>> getAllByPage(@RequestParam("pageNumber") Integer pageNumber,
                                                           @RequestParam("rowsLimit") Integer rowsLimit) {
-        List<EmployeeDto> employeeDtoList = employeeService.getPageFromAll(pageNumber, rowsLimit);
+        List<EmployeeDto> employeeDtoList = employeeService.getAllByPage(pageNumber, rowsLimit);
         log.info("Запрошена страница работников");
         return ResponseEntity.ok(employeeDtoList);
     }

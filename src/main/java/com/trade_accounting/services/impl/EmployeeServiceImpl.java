@@ -63,7 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDto> getPageFromAll(Integer pageNumber, Integer rowsLimit) {
+    public List<EmployeeDto> getAllByPage(Integer pageNumber, Integer rowsLimit) {
         Page<Employee> page = employeeRepository.findAll(PageRequest.of(pageNumber, rowsLimit, Sort.by(Sort.Direction.ASC, "id")));
         return page.map(dtoMapper::employeeToEmployeeDto).stream().collect(Collectors.toList());
     }
