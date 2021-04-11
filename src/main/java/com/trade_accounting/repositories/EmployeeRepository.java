@@ -42,7 +42,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
             "where em.id = :id")
     EmployeeDto getById(@Param("id") Long id);
 
-
     @Query("select new com.trade_accounting.models.dto.EmployeeDto(" +
             "em.id, " +
             "em.lastName, " +
@@ -58,4 +57,20 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
     EmployeeDto getByEmail(@Param("email") String email);
 
     Optional<Employee> findByEmail(String email);
+
+    @Query("SELECT new com.trade_accounting.models.dto.EmployeeDto(" +
+            "e.id, " +
+            "e.lastName, " +
+            "e.firstName, " +
+            "e.middleName, " +
+            "e.sortNumber, " +
+            "e.phone, " +
+            "e.inn, " +
+            "e.description, " +
+            "e.email," +
+            "e.password) from Employee e " +
+            "where concat(e.firstName, ' ', e.middleName, ' ', e.lastName , ' ', e.email, ' ', e.phone) " +
+            "like concat('%', :symbols, '%')")
+    List<EmployeeDto> getBySymbols(@Param("symbols") String symbols);
+
 }
