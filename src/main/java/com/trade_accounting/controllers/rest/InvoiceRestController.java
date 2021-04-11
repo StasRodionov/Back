@@ -79,6 +79,19 @@ public class InvoiceRestController {
         return ResponseEntity.ok(invoiceService.search(spec));
     }
 
+    @GetMapping("/searchByString")
+    @ApiOperation(value = "searchByString", notes = "Search of invoices")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка накладных"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<InvoiceDto>> searchByString(@RequestParam("query") String query) {
+        log.info("Запрошен поиск счетов invoice");
+        return ResponseEntity.ok(invoiceService.searchByString(query));
+    }
+
     @GetMapping("/{id}")
     @ApiOperation(value = "getById", notes = "Получение накладной по ее id")
     @ApiResponses(value = {
