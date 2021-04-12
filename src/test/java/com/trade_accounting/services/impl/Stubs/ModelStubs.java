@@ -6,6 +6,7 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
@@ -189,5 +190,10 @@ public class ModelStubs {
                 BigDecimal.valueOf(id),
                 BigDecimal.valueOf(id)
         );
+    }
+
+
+    public static Currency getCurrency(Long id){
+        return new Currency(id, "rubles", "Russian Rubles", "25", "rub","1");
     }
 }
