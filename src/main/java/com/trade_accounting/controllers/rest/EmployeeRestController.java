@@ -100,6 +100,21 @@ public class EmployeeRestController {
         return ResponseEntity.ok(employeeService.search(spec));
     }
 
+//    @GetMapping("/pages/search")
+//    @ApiOperation(value = "searchWithPage", notes = "Получение списка работников по заданным параметрам постранично")
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "Успешное получение страницы работников"),
+//            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+//            @ApiResponse(code = 403, message = "Операция запрещена"),
+//            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+//    )
+//    public ResponseEntity<List<EmployeeDto>> searchWithPage(
+//            @And({
+//
+//    }) Specification<Employee> parameters) {
+//
+//    }
+
     @GetMapping("/{id}")
     @ApiOperation(value = "getById", notes = "Получение работника по его id")
     @ApiResponses(value = {
