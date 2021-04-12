@@ -113,7 +113,7 @@ public class PaymentRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/search/{request}")
+    @GetMapping("/search/{search}")
     @ApiOperation(value = "search", notes = "Поиск по платежам")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Успешный поиск по платежам"),
@@ -121,10 +121,10 @@ public class PaymentRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<PaymentDto>> search(@ApiParam(name = "request", type = "String",
+    public ResponseEntity<List<PaymentDto>> search(@ApiParam(name = "search", type = "String",
             value = "Переданная строка, по которой необходимо найти платежи")
-                                                   @PathVariable(name = "request") String request){
-        List<PaymentDto> paymentDtoList = paymentService.search(request);
+                                                   @PathVariable(name = "search") String search){
+        List<PaymentDto> paymentDtoList = paymentService.search(search);
         log.info("Запрошен список платежей");
         return ResponseEntity.ok(paymentDtoList);
     }

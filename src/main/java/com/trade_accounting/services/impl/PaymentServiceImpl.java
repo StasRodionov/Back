@@ -101,8 +101,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<PaymentDto> search(String request) {
-        return paymentRepository.search(request).stream()
+    public List<PaymentDto> search(String search) {
+        return paymentRepository.search(search).stream()
                 .map(dtoMapper::paymentToPaymentDto)
                 .collect(Collectors.toList());
     }
