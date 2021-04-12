@@ -46,8 +46,14 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<InvoiceDto> searchByString(String query) {
-        List<InvoiceDto> invoiceDtoList = invoiceRepository.searchByString(query);
+    public List<InvoiceDto> searchByStringAndTypeOfInvoice(String query, String typeOfInvoice) {
+        TypeOfInvoice type = null;
+        for (TypeOfInvoice t: TypeOfInvoice.values()) {
+            if (t == TypeOfInvoice.valueOf(typeOfInvoice)) {
+                type = t;
+            }
+        }
+        List<InvoiceDto> invoiceDtoList = invoiceRepository.searchByStringAndTypeOfInvoice(query, type);
         for (InvoiceDto invoice: invoiceDtoList) {
             invoice.setCompanyDto(companyRepository.getById(invoice.getCompanyDto().getId()));
             invoice.setContractorDto(dtoMapper.contractorToContractorDto(

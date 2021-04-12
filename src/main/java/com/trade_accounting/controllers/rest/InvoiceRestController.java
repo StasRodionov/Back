@@ -87,9 +87,10 @@ public class InvoiceRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<InvoiceDto>> searchByString(@RequestParam("query") String query) {
+    public ResponseEntity<List<InvoiceDto>> searchByString(@RequestParam("query") String query,
+                                                           @RequestParam("typeOfInvoice") String typeOfInvoice) {
         log.info("Запрошен поиск счетов invoice");
-        return ResponseEntity.ok(invoiceService.searchByString(query));
+        return ResponseEntity.ok(invoiceService.searchByStringAndTypeOfInvoice(query, typeOfInvoice));
     }
 
     @GetMapping("/{id}")
