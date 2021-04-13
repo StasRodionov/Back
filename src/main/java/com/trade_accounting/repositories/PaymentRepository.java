@@ -41,7 +41,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     void deleteAllByContractId(@Param("id") Long id);
 
     @Query("from Payment e" +
-            " where concat(lower(e.company.name), ' ', lower(e.contractor.name), ' ', lower(e.number))" +
-            " like concat('%', lower(:req), '%')")
+            " where lower(concat(e.company.name, ' ', e.contractor.name, ' ', e.number))" +
+            " like lower(concat('%', :req, '%'))")
     List<Payment> search(@Param("req") String request);
 }
