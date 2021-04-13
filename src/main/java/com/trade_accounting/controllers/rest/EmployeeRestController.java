@@ -100,20 +100,30 @@ public class EmployeeRestController {
         return ResponseEntity.ok(employeeService.search(spec));
     }
 
-//    @GetMapping("/pages/search")
-//    @ApiOperation(value = "searchWithPage", notes = "Получение списка работников по заданным параметрам постранично")
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Успешное получение страницы работников"),
-//            @ApiResponse(code = 404, message = "Данный контролер не найден"),
-//            @ApiResponse(code = 403, message = "Операция запрещена"),
-//            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
-//    )
-//    public ResponseEntity<List<EmployeeDto>> searchWithPage(
-//            @And({
-//
-//    }) Specification<Employee> parameters) {
-//
-//    }
+    @GetMapping("/pages/search")
+    @ApiOperation(value = "searchWithPage", notes = "Получение списка работников по заданным параметрам постранично")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение страницы работников"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<EmployeeDto>> searchWithPage(
+            @And({
+                    @Spec(path = "lastName", params = "lastName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "firstName", params = "firstName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "middleName", params = "middleName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
+                    @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
+                    @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
+                    @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
+    }) Specification<Employee> specification,
+            @RequestParam("pageNumber") Integer pageNumber,
+            @RequestParam("rowsLimit") Integer rowsLimit) {
+        log.info("Запрошена страница пользователей по фильтру");
+        return ResponseEntity.ok(employeeService.searchWithPage(specification, pageNumber, rowsLimit));
+    }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "getById", notes = "Получение работника по его id")

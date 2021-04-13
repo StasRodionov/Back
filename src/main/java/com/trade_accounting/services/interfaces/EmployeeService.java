@@ -14,6 +14,8 @@ public interface EmployeeService {
 
     List<EmployeeDto> search(Specification<Employee> specification);
 
+    List<EmployeeDto> searchWithPage(Specification<Employee> specification, Integer pageNumber, Integer rowsLimit);
+
     EmployeeDto getById(Long id);
 
     void save(EmployeeDto employeeDto);
