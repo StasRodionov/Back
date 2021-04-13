@@ -17,6 +17,8 @@ import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.utils.DtoMapper;
 import lombok.SneakyThrows;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -140,11 +142,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto getByEmail(String email) {
         Optional<Employee> employee = employeeRepository.findByEmail(email);
-
         if (employee.isEmpty()) {
             return new EmployeeDto();
         }
-
         return dtoMapper.employeeToEmployeeDto(employee.get());
     }
+
 }
