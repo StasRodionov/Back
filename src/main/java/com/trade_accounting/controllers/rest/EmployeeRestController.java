@@ -86,7 +86,6 @@ public class EmployeeRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<Long> getRowCount(
-            @Nullable
             @And({
             @Spec(path = "lastName", params = "lastName", spec = LikeIgnoreCase.class),
             @Spec(path = "firstName", params = "firstName", spec = LikeIgnoreCase.class),
