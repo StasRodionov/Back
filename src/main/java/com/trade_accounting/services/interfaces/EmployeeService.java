@@ -3,6 +3,7 @@ package com.trade_accounting.services.interfaces;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.dto.EmployeeDto;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.lang.Nullable;
 
 import java.util.List;
 
@@ -24,5 +25,5 @@ public interface EmployeeService {
 
     EmployeeDto getByEmail(String email);
 
-    long getRowCount();
+    long getRowCount(@Nullable Specification<Employee> filterParameters);
 }

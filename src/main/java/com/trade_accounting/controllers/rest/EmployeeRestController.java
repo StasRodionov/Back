@@ -18,6 +18,7 @@ import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -84,8 +85,19 @@ public class EmployeeRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<Long> getRowCount() {
-        return ResponseEntity.ok(employeeService.getRowCount());
+    public ResponseEntity<Long> getRowCount(
+            @Nullable
+            @And({
+            @Spec(path = "lastName", params = "lastName", spec = LikeIgnoreCase.class),
+            @Spec(path = "firstName", params = "firstName", spec = LikeIgnoreCase.class),
+            @Spec(path = "middleName", params = "middleName", spec = LikeIgnoreCase.class),
+            @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
+            @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
+            @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
+            @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class),
+            @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
+    }) Specification<Employee> filterParameters) {
+        return ResponseEntity.ok(employeeService.getRowCount(filterParameters));
     }
 
     @GetMapping("/search")

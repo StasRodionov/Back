@@ -20,8 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -166,7 +165,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public long getRowCount() {
-        return employeeRepository.count();
+    public long getRowCount(@Nullable Specification<Employee> filterParameters) {
+        return employeeRepository.count(filterParameters);
     }
 }
