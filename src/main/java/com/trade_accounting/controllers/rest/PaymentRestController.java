@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Payment;
-import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.services.interfaces.PaymentService;
 import io.swagger.annotations.Api;
@@ -11,6 +10,12 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -106,10 +111,27 @@ public class PaymentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> deleteById(@ApiParam(name = "id", type = "Long",
-            value = "Переданный в URL id по которому необходимо удалить палтеж")
+            value = "Переданный в URL id по которому необходимо удалить платеж")
                                         @PathVariable(name = "id") Long id) {
         paymentService.deleteById(id);
         log.info("Удален экземпляр платежа с id = {}", id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/search")
+    @ApiOperation(value = "search", notes = "Получение списка платежей по заданным параметрам")
+    public ResponseEntity<List<PaymentDto>> getAll(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "time", params = "time", spec = Equal.class),
+                    @Spec(path = "typeOfPayment", params = "typeOfPayment", spec = Equal.class),
+                    @Spec(path = "company.name", params = "companyDto", spec = Like.class),
+                    @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "contract.name", params = "contractDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "project.name", params = "projectDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "sum", params = "sum", spec = Equal.class),
+            }) Specification<Payment> spec) {
+        log.info("Запрошен поиск платежей payments");
+        return ResponseEntity.ok(paymentService.search(spec));
     }
 }
