@@ -17,5 +17,5 @@ public interface PaymentService {
 
     void deleteById(Long id);
 
-    List<PaymentDto> search(Specification<Payment> specification);
+    List<PaymentDto> filter(Specification<Payment> specification);
 }

@@ -118,9 +118,9 @@ public class PaymentRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/search")
-    @ApiOperation(value = "search", notes = "Получение списка платежей по заданным параметрам")
-    public ResponseEntity<List<PaymentDto>> getAll(
+    @GetMapping("/filter")
+    @ApiOperation(value = "filter", notes = "Получение списка платежей по заданным параметрам")
+    public ResponseEntity<List<PaymentDto>> filterAll(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "time", params = "time", spec = Equal.class),
@@ -132,6 +132,6 @@ public class PaymentRestController {
                     @Spec(path = "sum", params = "sum", spec = Equal.class),
             }) Specification<Payment> spec) {
         log.info("Запрошен поиск платежей payments");
-        return ResponseEntity.ok(paymentService.search(spec));
+        return ResponseEntity.ok(paymentService.filter(spec));
     }
 }
