@@ -21,4 +21,5 @@ public interface EmployeeService {
     EmployeeDto getByEmail(String email);
 
     List<EmployeeDto> searchBySymbols(String symbols);
+
 }
