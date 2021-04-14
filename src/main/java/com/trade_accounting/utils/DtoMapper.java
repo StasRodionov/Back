@@ -190,6 +190,7 @@ public abstract class DtoMapper {
         String url = uploadImage(imageDto.getContent(), imageDir,
                     new Date().getTime() + imageDto.getFileExtension());
         return Image.builder()
+                .id(imageDto.getId())
                 .imageUrl(url)
                 .build();
     }
