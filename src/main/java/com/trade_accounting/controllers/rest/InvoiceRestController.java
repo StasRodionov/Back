@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import io.swagger.annotations.Api;
@@ -88,9 +89,9 @@ public class InvoiceRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<List<InvoiceDto>> searchByString(@RequestParam("query") String query,
-                                                           @RequestParam("typeOfInvoice") String typeOfInvoice) {
+                                                           @RequestParam("typeOfInvoice") TypeOfInvoice typeOfInvoice) {
         log.info("Запрошен поиск счетов invoice");
-        return ResponseEntity.ok(invoiceService.searchByStringAndTypeOfInvoice(query, typeOfInvoice));
+        return ResponseEntity.ok(invoiceService.findByStringAndTypeOfInvoice(query, typeOfInvoice));
     }
 
     @GetMapping("/{id}")

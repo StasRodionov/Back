@@ -35,9 +35,9 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.contractor.id," +
             "e.warehouse.id," +
             "e.isSpend," +
-            "e.comment) from Invoice e where concat(e.id, e.comment) " +
+            "e.comment) from Invoice e where lower(concat(e.id, e.comment)) " +
             "like concat('%', :query, '%') and e.typeOfInvoice = :typeOfInvoice")
-    List<InvoiceDto> searchByStringAndTypeOfInvoice(@Param("query") String query,
+    List<InvoiceDto> findByStringAndTypeOfInvoice(@Param("query") String query,
                                                     @Param("typeOfInvoice") TypeOfInvoice typeOfInvoice);
 
     @Query("select new com.trade_accounting.models.dto.InvoiceDto(" +
