@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface ImageRepository extends JpaRepository<Image, Long> {
     @Query("select new com.trade_accounting.models.Image(" +
             "i.id, " +
+            "i.imageUrl, " +
             "i.sortNumber) from Image as i")
     List<Image> getAll();
 
@@ -27,6 +28,10 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Query("select p.images from Product p where p.id = :id")
     List<Image> getAllByProductId(@Param("id") Long id);
+
+    @Query(value = "SELECT count(*) FROM products_images u WHERE u.images_id = :id",
+            nativeQuery = true)
+    int countProductImage(@Param("id") Long id);
 
     Optional<Image> findByImageUrl(String imageUrl);
 }

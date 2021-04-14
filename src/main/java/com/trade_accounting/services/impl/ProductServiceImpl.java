@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto getById(Long id) {
         Product product = productRepository.getOne(id);
 
-        ProductDto productDto = dtoMapper.productToProductDto(productRepository.getOne(id));
+        ProductDto productDto = dtoMapper.productToProductDto(product);
         productDto.setImageDtos(dtoMapper.toImageDto(product.getImages()));
 
         return productDto;
@@ -47,7 +47,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getAllByProductGroupId(Long id) {
-        return productRepository.getAllByProductGroupId(id);
+        List<Product> allByProductGroupId = productRepository.getAllByProductGroupId(id);
+        return dtoMapper.toProductDto(allByProductGroupId);
     }
 
     @Override
@@ -66,19 +67,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getAllByContractorId(Long id) {
-        return productRepository.getAllByContractorId(id);
+        List<Product> allByContractorId = productRepository.getAllByContractorId(id);
+        return dtoMapper.toProductDto(allByContractorId);
     }
 
     @Override
     public List<ProductDto> search(String value) {
-        return productRepository.search(value);
+        List<Product> productList = productRepository.search(value);
+        return dtoMapper.toProductDto(productList);
     }
 
     @Override
     public List<ProductDto> searchByFilter(Specification<Product> spec) {
-        return productRepository.findAll(spec)
-                .stream()
-                .map(dtoMapper::productToProductDto)
-                .collect(Collectors.toList());
+        List<Product> productList = productRepository.findAll(spec);
+        return dtoMapper.toProductDto(productList);
     }
 }

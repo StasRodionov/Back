@@ -51,9 +51,9 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void deleteById(Long id) {
         Optional<Image> optional = imageRepository.findById(id);
-        if (optional.isPresent()) {
-            Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
+        if (optional.isPresent() && imageRepository.countProductImage(id) == 0) {
             imageRepository.deleteById(id);
+            Files.deleteIfExists(Paths.get(optional.get().getImageUrl()));
         }
     }
 }
