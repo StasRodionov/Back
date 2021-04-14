@@ -4,12 +4,8 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Product;
 import org.springframework.data.jpa.domain.Specification;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 public class SpecificationStubs {
     public static Specification<Employee> getEmployeeSpecificationStub() {
@@ -25,6 +21,9 @@ public class SpecificationStubs {
     }
 
     public static Specification<Currency> getCurrencySpecificationStub() {
+        return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+    public static Specification<Product> getProductSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
 }
