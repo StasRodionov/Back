@@ -61,7 +61,7 @@ public class EmployeeRestController {
         log.info("Запрошен список EmployeeDto");
         return ResponseEntity.ok(employeeDtos);
     }
-
+    //FIXME избавиться от "дублирующих" методов
     @GetMapping("/pages")
     @ApiOperation(value = "getAllByPage", notes = "Получение списка всех работников постранично")
     @ApiResponses(value = {

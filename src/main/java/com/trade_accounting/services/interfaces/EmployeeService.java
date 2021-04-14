@@ -10,7 +10,7 @@ import java.util.List;
 public interface EmployeeService {
 
     List<EmployeeDto> getAll();
-
+    //FIXME слить getAllByPage и searchWithPage в один метод с Nullable фильтром
     List<EmployeeDto> getAllByPage(Integer pageNumber, Integer rowsLimit);
 
     List<EmployeeDto> search(Specification<Employee> specification);
