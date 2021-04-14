@@ -146,7 +146,6 @@ class EmployeeServiceImplTest {
         verify(employeeRepository).save(any(Employee.class));
         verify(departmentRepository).findById(anyLong());
         verify(positionRepository).findById(anyLong());
-        verify(imageRepository).getOne(anyLong());
     }
 
     @Test
@@ -159,7 +158,6 @@ class EmployeeServiceImplTest {
         verify(employeeRepository).save(any(Employee.class));
         verify(departmentRepository).findById(anyLong());
         verify(positionRepository).findById(anyLong());
-        verify(imageRepository).getOne(anyLong());
     }
 
     @Test
