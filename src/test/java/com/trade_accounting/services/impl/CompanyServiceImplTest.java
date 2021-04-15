@@ -138,8 +138,7 @@ class CompanyServiceImplTest {
 
     @Test
     void getByEmail_shouldReturnFilledCompanyDto() {
-        Optional<Company> companyFromRepo =
-                Optional.of(ModelStubs.getCompany(1L));
+        CompanyDto companyFromRepo = DtoStubs.getCompanyDto(1L);
 
         when(companyRepository.findByEmail(anyString()))
                 .thenReturn(companyFromRepo);

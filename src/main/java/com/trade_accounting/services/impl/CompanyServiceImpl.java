@@ -36,9 +36,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyDto> getAll() {
-        return companyRepository.findAll().stream()
-                .map(dtoMapper::companyToCompanyDto)
-                .collect(Collectors.toList());
+        return companyRepository.getAll();
     }
 
     @Override
@@ -50,16 +48,12 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyDto getById(Long id) {
-        return dtoMapper.companyToCompanyDto(
-                companyRepository.findById(id).orElse(new Company())
-        );
+        return companyRepository.getById(id);
     }
 
     @Override
     public CompanyDto getByEmail(String email) {
-        return dtoMapper.companyToCompanyDto(
-                companyRepository.findByEmail(email).orElse(new Company())
-        );
+        return companyRepository.findByEmail(email);
     }
 
     @Override
