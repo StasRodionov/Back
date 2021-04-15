@@ -1,5 +1,6 @@
 package com.trade_accounting.utils;
 
+import com.trade_accounting.models.Address;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contractor;
@@ -14,6 +15,7 @@ import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContractorDto;
@@ -47,6 +49,14 @@ public class ModelDtoConverter {
 
     public static ProductPriceDto convertToProductPriceDto(ProductPrice productPrice) {
         return modelMapper.map(productPrice, ProductPriceDto.class);
+    }
+
+    public static AddressDto convertToAddressDto(Address address) {
+        return modelMapper.map(address, AddressDto.class);
+    }
+
+    public static Address convertToAddress(AddressDto addressDto) {
+        return modelMapper.map(addressDto, Address.class);
     }
 
     public static ProductPrice convertToProductPrice(ProductPriceDto productPriceDto){
@@ -211,7 +221,7 @@ public class ModelDtoConverter {
                 dto.getPhone(),
                 dto.getFax(),
                 dto.getEmail(),
-                dto.getAddress(),
+                convertToAddress(dto.getAddressDto()),
                 dto.getCommentToAddress(),
                 dto.getComment(),
                 contractorGroup,
