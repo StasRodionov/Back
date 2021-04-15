@@ -3,6 +3,7 @@ package com.trade_accounting.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,8 +47,8 @@ public class Contractor {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "address")
-    private String address;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Address address;
 
     @Column(name = "comment_to_address")
     private String commentToAddress;
@@ -70,33 +71,5 @@ public class Contractor {
     @OneToOne(fetch = FetchType.LAZY)
     private LegalDetail legalDetail;
 
-    public Contractor(String name,
-                      @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$") String inn,
-                      String sortNumber,
-                      String phone,
-                      String fax,
-                      String email,
-                      String address,
-                      String commentToAddress,
-                      String comment,
-                      ContractorGroup contractorGroup,
-                      TypeOfContractor typeOfContractor,
-                      TypeOfPrice typeOfPrice,
-                      List<BankAccount> bankAccounts,
-                      LegalDetail legalDetail) {
-        this.name = name;
-        this.inn = inn;
-        this.sortNumber = sortNumber;
-        this.phone = phone;
-        this.fax = fax;
-        this.email = email;
-        this.address = address;
-        this.commentToAddress = commentToAddress;
-        this.comment = comment;
-        this.contractorGroup = contractorGroup;
-        this.typeOfContractor = typeOfContractor;
-        this.typeOfPrice = typeOfPrice;
-        this.bankAccounts = bankAccounts;
-        this.legalDetail = legalDetail;
-    }
+
 }

@@ -3,6 +3,7 @@ package com.trade_accounting.config;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
+import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -29,6 +30,7 @@ import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.services.impl.AddressServiceImpl;
 import com.trade_accounting.services.impl.TaskCommentServiceImpl;
 import com.trade_accounting.services.impl.TaskServiceImpl;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
@@ -96,6 +98,7 @@ public class DataInitializer {
     private final PaymentService paymentService;
     private final TaskServiceImpl taskService;
     private final TaskCommentServiceImpl commentService;
+    private final AddressServiceImpl addressService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -122,8 +125,8 @@ public class DataInitializer {
             InvoiceProductService invoiceProductService, ProjectService projectService,
             PaymentService paymentService,
             TaskServiceImpl taskService,
-            TaskCommentServiceImpl commentService
-    ) {
+            TaskCommentServiceImpl commentService,
+            AddressServiceImpl addressService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -150,10 +153,12 @@ public class DataInitializer {
         this.paymentService = paymentService;
         this.taskService = taskService;
         this.commentService = commentService;
+        this.addressService = addressService;
     }
 
     @PostConstruct
     public void init() {
+        initAddresses();
         initTypeOfPrices();
         initContractorGroups();
         initTypeOfContractors();
@@ -181,6 +186,7 @@ public class DataInitializer {
 
         initTasks();
         initTaskComments();
+
     }
 
     public void initProject() {
@@ -222,11 +228,13 @@ public class DataInitializer {
         List<WarehouseDto> warehouseDtos = warehouseService.getAll().stream().limit(3).collect(Collectors.toList());
         List<String> typeOfInvoices = List.of(TypeOfInvoice.EXPENSE.name(), TypeOfInvoice.RECEIPT.name());
 
+        int i = 0;
         for (CompanyDto companyDto : companyDtos) {
             for (ContractorDto contractorDto : contractorDtos) {
                 for (WarehouseDto warehouseDto : warehouseDtos) {
                     invoiceService.create(new InvoiceDto(
                             null,
+                            "Комментарий " + i++,
                             LocalDateTime.now().toString(),
                             typeOfInvoices.get(randomInt(0, 1)),
                             companyDto,
@@ -241,8 +249,8 @@ public class DataInitializer {
     private void initInvoiceProducts() {
         List<InvoiceDto> invoices = invoiceService.getAll();
 
-        for (InvoiceDto invoice : invoices){
-            for (int i = 0; i < randomInt(1,10); i++) {
+        for (InvoiceDto invoice : invoices) {
+            for (int i = 0; i < randomInt(1, 10); i++) {
                 invoiceProductService.create(new InvoiceProductDto(
                         null,
                         invoice.getId(),
@@ -731,6 +739,42 @@ public class DataInitializer {
                 null));
     }
 
+    private void initAddresses() {
+        addressService.create(
+                AddressDto.builder()
+                        .index("123456")
+                        .country("Россия")
+                        .region("Московская")
+                        .city("Москва")
+                        .street("ул. Ленина")
+                        .house("11")
+                        .apartment("15")
+                        .build()
+        );
+        addressService.create(
+                AddressDto.builder()
+                        .index("188678")
+                        .country("USA")
+                        .region("Колумбия")
+                        .city("Вашингтон")
+                        .street("ул. 5я Авеню")
+                        .house("6")
+                        .apartment("22")
+                        .build()
+        );
+        addressService.create(
+                AddressDto.builder()
+                        .index("123456")
+                        .country("Panama")
+                        .region("Область")
+                        .city("Столица Панамы")
+                        .street("ул. Индейцев")
+                        .house("2")
+                        .apartment("1")
+                        .build()
+        );
+    }
+
     private void initContractors() {
         contractorService.create(new ContractorDto(
                 null,
@@ -739,8 +783,8 @@ public class DataInitializer {
                 "8 (495) 232-59-24",
                 "8 (495) 232-59-24",
                 "alena.pechnikova@x5.ru",
-                "109029, г. Москва, ул. Средняя Калитниковская, д. 28, стр. 4",
-                "comment ot address",
+                addressService.getById(1L),
+                "1 comment to address",
                 "comment",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
@@ -754,9 +798,9 @@ public class DataInitializer {
                 "8 (800) 555-55-05",
                 "8 (800) 555-55-05",
                 "inbox@5ka.ru",
-                "127549, г. Москва, Алтуфьевское ш., д. 60",
-                "",
-                "",
+                addressService.getById(2L),
+                "2comment to address",
+                "2comment",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
@@ -770,9 +814,9 @@ public class DataInitializer {
                 "8 (495) 981-13-45",
                 "8 (495) 981-13-45",
                 "info@izbenka.msk.ru",
-                "123592, г. Москва, ул. Кулакова, д. 20, к. 1, пом. V, ком. 1, эт. 10",
-                "",
-                "",
+                addressService.getById(3L),
+                "3comment to address",
+                "3comment",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
@@ -785,9 +829,9 @@ public class DataInitializer {
                 "8 (495) 981-31-85",
                 "8 (495) 981-31-85",
                 "zholudeva.ksyusha@mail.ru",
-                "125475, г. Москва, ул. Клинская, д. 12, ПОМЕЩЕНИЕ II (КОМНАТЫ 9-13)",
-                "",
-                "",
+                addressService.getById(1L),
+                "4comment to address",
+                "4comment",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
@@ -800,9 +844,9 @@ public class DataInitializer {
                 "8 (495) 326-30-00",
                 "8 (495) 326-30-00",
                 "nina.chehovich@msk.nfretail.ru",
-                "115372, г. Москва, ул. Бирюлёвская, д. 38",
-                "",
-                "",
+                addressService.getById(2L),
+                "5comment to address",
+                "5comment",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
@@ -816,9 +860,9 @@ public class DataInitializer {
                 "8 (495) 651-92-52",
                 "8 (495) 651-92-52",
                 "d.gorobtsova@etpgpb.ru",
-                "115516, г. Москва, Кавказский б-р, д. 57",
-                "",
-                "",
+                addressService.getById(3L),
+                "6comment to address",
+                "6comment",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
@@ -831,9 +875,9 @@ public class DataInitializer {
                 "8 (495) 741-45-56",
                 "8 (495) 741-45-56",
                 "tatiana.onishchenko@selgros.ru",
-                "117546, г. Москва, ул. Подольских Курсантов, 26, 1",
-                "",
-                "",
+                addressService.getById(1L),
+                "7comment to address",
+                "7comment",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
@@ -846,9 +890,9 @@ public class DataInitializer {
                 "8 (495) 155-51-56",
                 "8 (495) 155-51-56",
                 "info@krasnoeibeloe.ru",
-                "117042, г. Москва, ул. Южнобутовская, д. 69",
-                "",
-                "",
+                addressService.getById(2L),
+                "8comment to address",
+                "8comment",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
@@ -861,9 +905,9 @@ public class DataInitializer {
                 "8 (495) 755-11-16",
                 "8 (495) 755-11-16",
                 "harlanov.aleksandr@escort-servis.ru",
-                "115404, г. Москва, ул. Бирюлёвская, д. 1, к. 3",
-                "",
-                "",
+                addressService.getById(3L),
+                "9comment to address",
+                "9comment",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
@@ -877,9 +921,9 @@ public class DataInitializer {
                 "8 (495) 777-51-95",
                 "8 (495) 777-51-95",
                 "sales11_am@aroma.ru",
-                "121087, г. Москва, Береговой пр-д, д. 5, к. 1",
-                "",
-                "",
+                addressService.getById(1L),
+                "10comment to address",
+                "10comment",
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
@@ -913,8 +957,8 @@ public class DataInitializer {
                     unitDtoList.get(0),
                     false,
                     contractorDtoList.get(0),
-                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(50,70))),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(71,100)))),
+                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(50, 70))),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(71, 100)))),
                     taxSystemDtoList.get(0),
                     null,
                     productGroupDtoList.get(0),
@@ -930,8 +974,8 @@ public class DataInitializer {
                     unitDtoList.get(1),
                     false,
                     contractorDtoList.get(1),
-                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(70,90))),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(91,115)))),
+                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(70, 90))),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(91, 115)))),
                     taxSystemDtoList.get(1),
                     null,
                     productGroupDtoList.get(1),
@@ -948,8 +992,8 @@ public class DataInitializer {
                     false,
                     contractorDtoList.get(1),
                     List.of(
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(80,100))),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(101,121)))),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(80, 100))),
+                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(101, 121)))),
                     taxSystemDtoList.get(2),
                     null,
                     productGroupDtoList.get(2),

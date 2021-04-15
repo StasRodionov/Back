@@ -73,6 +73,7 @@ public class InvoiceRestController {
                     @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "warehouse.name", params = "warehouseDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "isSpend", params = "spend", spec = Equal.class),
+                    @Spec(path = "comment", params = "comment", spec = Equal.class),
             }) Specification<Invoice> spec) {
         log.info("Запрошен поиск счетов invoice");
         return ResponseEntity.ok(invoiceService.search(spec));

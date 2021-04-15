@@ -14,4 +14,6 @@ public interface PaymentService {
     PaymentDto update(PaymentDto paymentDto);
 
     void deleteById(Long id);
+
+    List<PaymentDto> search(String search);
 }

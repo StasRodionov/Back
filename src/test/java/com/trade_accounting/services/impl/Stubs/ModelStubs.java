@@ -1,15 +1,16 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
-import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
@@ -24,7 +25,8 @@ import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Warehouse;
-import com.trade_accounting.models.Department;
+import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.models.dto.ProductDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -72,7 +74,7 @@ public class ModelStubs {
                 id, "name",
                 "123456789012", "sortNumber",
                 "12345678901", "324234234",
-                "email", "address",
+                "email", getAddress(1L),
                 "commentToAddress", "comment",
                 getContractorGroup(id), getTypeOfContractor(id),
                 getTypeOfPrice(id),
@@ -114,6 +116,13 @@ public class ModelStubs {
         return new ContractorGroup(id, "name", "00001");
     }
 
+    public static Address getAddress(Long id) {
+        return Address.builder()
+                .id(id)
+
+                .build();
+    }
+
     public static Department getDepartment(Long id){ return new Department(id, "name", "00001");}
 
     public static TaxSystem getTaxSystem(Long id) {
@@ -141,7 +150,19 @@ public class ModelStubs {
     }
 
     public static Image getImage(Long id) {
-        return new Image(id, "url", "00001");
+        return Image.builder()
+                .id(id)
+                .imageUrl("url")
+                .sortNumber("000" + id)
+                .build();
+    }
+    public static ImageDto getImageDto(Long id) {
+        return ImageDto.builder()
+                .id(id)
+                .content("content".getBytes())
+                .fileExtension(".png")
+                .sortNumber("000" + id)
+                .build();
     }
 
     public static TypeOfContractor getTypeOfContractor(Long id) {
@@ -175,7 +196,8 @@ public class ModelStubs {
                 getCompany(id),
                 getContractor(id),
                 new Warehouse(),
-                Boolean.TRUE
+                Boolean.TRUE,
+                "Комментарий"
         );
     }
 
@@ -187,5 +209,32 @@ public class ModelStubs {
                 BigDecimal.valueOf(id),
                 BigDecimal.valueOf(id)
         );
+    }
+
+    public static Currency getCurrency(Long id){
+        return new Currency(id, "rubles", "Russian Rubles", "25", "rub","1");
+    }
+
+    public static Product getProduct(Long id) {
+        return Product.builder()
+                .id(id)
+                .name("Яблоко")
+                .weight(BigDecimal.TEN)
+                .volume(BigDecimal.TEN)
+                .purchasePrice(BigDecimal.ONE)
+                .description("Description")
+                .archive(false)
+                .build();
+    }
+    public static ProductDto getProductDto(Long id) {
+        return ProductDto.builder()
+                .id(id)
+                .name("Яблоко")
+                .weight(BigDecimal.TEN)
+                .volume(BigDecimal.TEN)
+                .purchasePrice(BigDecimal.ONE)
+                .description("Description")
+                .archive(false)
+                .build();
     }
 }

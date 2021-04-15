@@ -55,7 +55,7 @@ public class ContractorRestController {
     )
     public ResponseEntity<List<ContractorDto>> getAll() {
         List<ContractorDto> contractorDtoList = contractorService.getAll();
-        log.info("Запрошен список ContractorDto");
+        log.info("Запрошен список ContractorDto через getAll");
         return ResponseEntity.ok(contractorDtoList);
     }
 
@@ -68,13 +68,13 @@ public class ContractorRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<List<ContractorDto>> getAllLite() {
-        List<ContractorDto> contractorDtoList = contractorService.getAllLite();
+        List<ContractorDto> contractorDtoList = contractorService.getAll();
         log.info("Запрошен список ContractorDto (Лёгкое ДТО)");
         return ResponseEntity.ok(contractorDtoList);
     }
 
     @GetMapping("/search/{searchTerm}")
-    @ApiOperation(value = "getFiltered", notes = "Получение списка некоторых контрагентов")
+    @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых контрагентов")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Успешное получение отф. списка контрагентов"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
@@ -85,13 +85,13 @@ public class ContractorRestController {
             value = "Переданный в URL searchTerm, по которому необходимо найти контрагента")
                                                           @PathVariable(name = "searchTerm") String searchTerm) {
         List<ContractorDto> contractorDtoList = contractorService.getAll(searchTerm);
-        log.info("Запрошен список ContractorDto");
+        log.info("Запрошен список ContractorDto searchTerm");
         return ResponseEntity.ok(contractorDtoList);
     }
-//create
+
     @GetMapping("/searchContractor")
     @ApiOperation(value = "searchContractor", notes = "Получение списка контрактов по заданным параметрам")
-    public ResponseEntity<List<ContractorDto>> getAll(
+    public ResponseEntity<List<ContractorDto>> getAllFilter(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
@@ -109,7 +109,7 @@ public class ContractorRestController {
 //                    @Spec(path = "contractor.bankAccounts", params = "bankAccountsDto", spec = LikeIgnoreCase.class),
 //                    @Spec(path = "contractor.legalDetail", params = "legalDetail", spec = Equal.class),
             }) Specification<Contractor> spec) {
-        log.info("Запрошен поиск контрактов contractor");
+        log.info("Запрошен фильтр по поиску контрактов contractor");
         return ResponseEntity.ok(contractorService.searchContractor(spec));
     }
 
@@ -138,7 +138,8 @@ public class ContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorDto> create(@ApiParam(name = "contractorDto", value = "DTO контрагента, которого необходимо создать")
+    public ResponseEntity<ContractorDto> create(@ApiParam(name = "contractorDto",
+            value = "DTO контрагента, которого необходимо создать")
                                                 @RequestBody ContractorDto contractorDto) {
         contractorService.create(contractorDto);
         log.info("Записан новый экземпляр {}", contractorDto.toString());
@@ -154,7 +155,8 @@ public class ContractorRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<ContractorDto> update(@ApiParam(name = "contractorDto", value = "DTO контрагента, которого необходимо обновить")
+    public ResponseEntity<ContractorDto> update(@ApiParam(name = "contractorDto",
+            value = "DTO контрагента, которого необходимо обновить")
                                                 @RequestBody ContractorDto contractorDto) {
         contractorService.update(contractorDto);
         log.info("Обновлен экземпляр ContractorDto с id= {}", contractorDto.getId());

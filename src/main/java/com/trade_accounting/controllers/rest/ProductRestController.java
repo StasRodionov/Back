@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.services.interfaces.ProductService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,6 +73,21 @@ public class ProductRestController {
     public ResponseEntity<List<ProductDto>> getAll(@RequestParam("query") String value) {
         log.info("Запрошен поиск товаров");
         return ResponseEntity.ok(productService.search(value));
+    }
+
+    @GetMapping("/searchByFilter")
+    @ApiOperation(value = "search", notes = "Получение списка товаров по фильтру")
+    public ResponseEntity<List<ProductDto>> getAllByFilter(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+                    @Spec(path = "weight", params = "weight", spec = Equal.class),
+                    @Spec(path = "volume", params = "volume", spec = Equal.class),
+                    @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
+                    @Spec(path = "purchasePrice", params = "purchasePrice", spec = Equal.class),
+            }) Specification<Product> spec) {
+        log.info("Запрошен поиск товаров");
+        return ResponseEntity.ok(productService.searchByFilter(spec));
     }
 
     @ApiOperation(value = "getById", notes = "Возвращает определенный товар по Id")

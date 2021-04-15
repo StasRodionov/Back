@@ -14,6 +14,8 @@ import java.util.Optional;
 public interface TypeOfContractorRepository extends JpaRepository<TypeOfContractor, Long> {
 
     Optional<TypeOfContractor> findByName(String name);
+
+
     @Query("select new com.trade_accounting.models.dto.TypeOfContractorDto(" +
             "t.id, " +
             "t.name, " +
@@ -48,4 +50,8 @@ public interface TypeOfContractorRepository extends JpaRepository<TypeOfContract
             "from TypeOfContractor t " +
             "where t.name=:name")
     TypeOfContractorDto getByName(String name);
+
+
+
+
 }

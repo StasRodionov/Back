@@ -141,25 +141,20 @@ class EmployeeServiceImplTest {
         employeeService.save(
             DtoStubs.getEmployeeDto(1L)
         );
-
         verify(roleRepository, times(3)).findById(anyLong());
         verify(employeeRepository).save(any(Employee.class));
         verify(departmentRepository).findById(anyLong());
         verify(positionRepository).findById(anyLong());
-        verify(imageRepository).getOne(anyLong());
     }
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        employeeService.save(
-            DtoStubs.getEmployeeDto(1L)
-        );
+        employeeService.save(DtoStubs.getEmployeeDto(1L));
 
         verify(roleRepository, times(3)).findById(anyLong());
         verify(employeeRepository).save(any(Employee.class));
         verify(departmentRepository).findById(anyLong());
         verify(positionRepository).findById(anyLong());
-        verify(imageRepository).getOne(anyLong());
     }
 
     @Test

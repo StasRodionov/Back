@@ -1,5 +1,6 @@
 package com.trade_accounting.utils;
 
+import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
@@ -27,6 +28,7 @@ import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -54,12 +56,10 @@ import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
-import com.trade_accounting.repositories.ImageRepository;
 import lombok.SneakyThrows;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -75,9 +75,6 @@ public abstract class DtoMapper {
 
     private static final String UPLOAD_DIR = "images";
 
-    @Autowired
-    private ImageRepository imageRepository;
-
     //AttributeOfCalculationObjectDto
     public abstract AttributeOfCalculationObjectDto
     attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
@@ -88,6 +85,11 @@ public abstract class DtoMapper {
     attributeOfCalculationObjectDtoToAttributeOfCalculationObject(
             AttributeOfCalculationObjectDto attributeOfCalculationObjectDto
     );
+
+    // Address
+    public abstract AddressDto addressToAddressDto(Address address);
+
+    public abstract Address addressDtoToAddress(AddressDto address);
 
     //BankAccount
     public abstract BankAccountDto bankAccountToBankAccountDto(BankAccount bankAccount);
@@ -131,8 +133,9 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorGroup", target = "contractorGroupDto"),
             @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
             @Mapping(source = "typeOfPrice", target = "typeOfPriceDto"),
+            @Mapping(source = "legalDetail", target = "legalDetailDto"),
             @Mapping(source = "bankAccounts", target = "bankAccountDto"),
-            @Mapping(source = "legalDetail", target = "legalDetailDto")
+            @Mapping(source = "address", target = "addressDto")
     })
     public abstract ContractorDto contractorToContractorDto(Contractor contractor);
 
@@ -141,7 +144,9 @@ public abstract class DtoMapper {
             @Mapping(source = "typeOfContractorDto", target = "typeOfContractor"),
             @Mapping(source = "typeOfPriceDto", target = "typeOfPrice"),
             @Mapping(source = "bankAccountDto", target = "bankAccounts"),
-            @Mapping(source = "legalDetailDto", target = "legalDetail")
+            @Mapping(source = "legalDetailDto", target = "legalDetail"),
+            @Mapping(source = "addressDto", target = "address")
+
     })
     public abstract Contractor contractorDtoToContractor(ContractorDto contractorDto);
 
@@ -183,33 +188,28 @@ public abstract class DtoMapper {
         if (image == null){
             return null;
         }
-        ImageDto imageDto = new ImageDto();
-        imageDto.setContent(downloadImage(image.getImageUrl()));
-        imageDto.setId(image.getId());
-        imageDto.setSortNumber(image.getSortNumber());
-        return imageDto;
+        return ImageDto.builder()
+                .id(image.getId())
+                .content(downloadImage(image.getImageUrl()))
+                .sortNumber(image.getSortNumber())
+                .build();
     }
 
     public Image imageDtoToImage(ImageDto imageDto, String imageDir) {
-        Image image = new Image();
-        if (imageDto.getId() == null) {
-            String url = uploadImage(imageDto.getContent(),
-                    imageDir,
+        String url = uploadImage(imageDto.getContent(), imageDir,
                     new Date().getTime() + imageDto.getFileExtension());
-            image.setImageUrl(url);
-            image = imageRepository.saveAndFlush(image);
-        } else {
-            image = imageRepository.getOne(imageDto.getId());
-        }
-        return image;
+        return Image.builder()
+                .id(imageDto.getId())
+                .imageUrl(url)
+                .build();
     }
 
     public List<Image> toImage(Collection<ImageDto> imageDtos, String imageDir) {
         if ( imageDtos == null ) {
-            return null;
+            return new ArrayList<>();
         }
         List<Image> list = new ArrayList<>(imageDtos.size());
-        for ( ImageDto imageDto : imageDtos ) {
+        for (ImageDto imageDto : imageDtos) {
             list.add(imageDtoToImage(imageDto, imageDir));
         }
         return list;
@@ -236,7 +236,7 @@ public abstract class DtoMapper {
         if (Files.exists(path)){
             return Files.readAllBytes(path);
         } else {
-            return null;
+            return new byte[0];
         }
     }
 
