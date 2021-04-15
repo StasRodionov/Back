@@ -54,7 +54,7 @@ Configutation:
         - level: debug
           ref: rolling_file_appender
       level: debug
-      name: com.trade_accounting.aspects
+      name: com.trade_accounting
 
     Root:
       appenderRef:

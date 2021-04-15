@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -42,9 +43,14 @@ public class LoggingPointcuts {
                 log.info("Запрошен экземпляр {} с id={}", getDtoName(joinPoint), id);
         }
 
-        @After(value = "inServiceLayer() && createExecution() && args(dto)")
+        @AfterReturning(value = "inServiceLayer() && createExecution()",  returning = "dto")
         public void logCreate(JoinPoint joinPoint, Object dto) {
-                log.info("Создан экземпляр {}: {}", dto.getClass().getSimpleName(), dto);
+                if(dto == null) {
+                        log.info("Создан экземпляр {}", getDtoName(joinPoint));
+                } else {
+                        log.info("Создан экземпляр {}: {}", dto.getClass().getSimpleName(), dto);
+                }
+
         }
 
         @After(value = "inServiceLayer() && updateExecution() && args(dto)")
