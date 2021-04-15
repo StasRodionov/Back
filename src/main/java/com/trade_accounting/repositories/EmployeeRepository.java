@@ -59,9 +59,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
     Optional<Employee> findByEmail(String email);
 
     @Query("from Employee e " +
-            "where concat(lower(e.firstName), ' ', lower(e.middleName), ' ', lower(e.lastName), ' ', lower(e.email)" +
-            ", ' ',e.phone) " +
-            "like concat('%', :symbols, '%')")
+            "where lower ( concat(e.firstName, ' ', e.middleName, ' ', e.lastName, ' ', e.email, ' ',e.phone)) " +
+            "like lower(concat('%', :symbols, '%'))")
     List<Employee> getBySymbols(@Param("symbols") String symbols);
 
 }
