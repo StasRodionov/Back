@@ -125,7 +125,7 @@ public class PaymentRestController {
                     @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "time", params = "time", spec = Equal.class),
                     @Spec(path = "typeOfPayment", params = "typeOfPayment", spec = Equal.class),
-                    @Spec(path = "company.name", params = "companyDto", spec = Like.class),
+                    @Spec(path = "company.name", params = "companyDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "contract.name", params = "contractDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "project.name", params = "projectDto", spec = LikeIgnoreCase.class),
