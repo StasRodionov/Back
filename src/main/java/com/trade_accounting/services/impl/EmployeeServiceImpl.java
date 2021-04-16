@@ -19,7 +19,6 @@ import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.jaxb.SortAdapter;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -65,24 +64,23 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDto> getAllByPage(String sortColumn, String sortDirection, Integer pageNumber, Integer rowsLimit) {
-        Page<Employee> page = employeeRepository.findAll(
-                PageRequest.of(pageNumber - 1, rowsLimit, Sort.by(sortDirection.equals("ASCENDING") ?
-                        Sort.Direction.ASC : Sort.Direction.DESC, sortColumn)));
-        return page.map(dtoMapper::employeeToEmployeeDto).stream().collect(Collectors.toList());
-    }
-
-    @Override
     public List<EmployeeDto> search(Specification<Employee> specification) {
         return employeeRepository.findAll(specification).stream()
                 .map(dtoMapper::employeeToEmployeeDto).collect(Collectors.toList());
     }
 
+
     @Override
-    public List<EmployeeDto> searchWithPage(String sortColumn, String sortDirection, Specification<Employee> specification, Integer pageNumber, Integer rowsLimit) {
+    public List<EmployeeDto> searchWithPage(String sortColumn, String sortDirection,
+                                            Specification<Employee> specification,
+                                            Integer pageNumber,
+                                            Integer rowsLimit) {
         Page<Employee> page = employeeRepository.findAll(specification,
-                PageRequest.of(pageNumber - 1, rowsLimit, Sort.by(sortDirection.equals("ASCENDING") ?
-                        Sort.Direction.ASC : Sort.Direction.DESC, sortColumn)));
+                PageRequest.of(pageNumber - 1, rowsLimit,
+    //TODO написать отдельный метод для "парсинга" Sort (если будет в каждом сервисе использоваться)
+                        Sort.by(sortDirection.equals("ASCENDING") ?
+                                        Sort.Direction.ASC : Sort.Direction.DESC,
+                                        sortColumn)));
         return page.map(dtoMapper::employeeToEmployeeDto).stream().collect(Collectors.toList());
     }
 

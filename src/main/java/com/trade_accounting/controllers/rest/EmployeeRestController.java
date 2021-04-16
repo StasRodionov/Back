@@ -4,8 +4,6 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.EmployeeService;
-import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.DtoMapperImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -16,10 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +28,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -48,37 +42,6 @@ public class EmployeeRestController {
     public EmployeeRestController(EmployeeService employeeService, CheckEntityService checkEntityService) {
         this.employeeService = employeeService;
         this.checkEntityService = checkEntityService;
-    }
-
-    @GetMapping
-    @ApiOperation(value = "getAll", notes = "Получение списка всех работников")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка работников"),
-            @ApiResponse(code = 404, message = "Данный контролер не найден"),
-            @ApiResponse(code = 403, message = "Операция запрещена"),
-            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
-    )
-    public ResponseEntity<List<EmployeeDto>> getAll() {
-        List<EmployeeDto> employeeDtos = employeeService.getAll();
-        log.info("Запрошен список EmployeeDto");
-        return ResponseEntity.ok(employeeDtos);
-    }
-    //FIXME избавиться от "дублирующих" методов
-    @GetMapping("/pages")
-    @ApiOperation(value = "getAllByPage", notes = "Получение списка всех работников постранично")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение страницы работников"),
-            @ApiResponse(code = 404, message = "Данный контролер не найден"),
-            @ApiResponse(code = 403, message = "Операция запрещена"),
-            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
-    )
-    public ResponseEntity<List<EmployeeDto>> getAllByPage(@RequestParam("column") String sortColumn,
-                                                          @RequestParam("direction") String sortDirection,
-                                                          @RequestParam("pageNumber") Integer pageNumber,
-                                                          @RequestParam("rowsLimit") Integer rowsLimit) {
-        List<EmployeeDto> employeeDtoList = employeeService.getAllByPage(sortColumn, sortDirection, pageNumber, rowsLimit);
-        log.info("Запрошена страница работников");
-        return ResponseEntity.ok(employeeDtoList);
     }
 
     @GetMapping("/count")
@@ -103,23 +66,7 @@ public class EmployeeRestController {
         return ResponseEntity.ok(employeeService.getRowCount(filterParameters));
     }
 
-    @GetMapping("/search")
-    @ApiOperation(value = "search", notes = "Получение списка работников по заданным параметрам")
-    public ResponseEntity<List<EmployeeDto>> getAll(
-            @And({
-                    @Spec(path = "lastName", params = "lastName", spec = LikeIgnoreCase.class),
-                    @Spec(path = "firstName", params = "firstName", spec = LikeIgnoreCase.class),
-                    @Spec(path = "middleName", params = "middleName", spec = LikeIgnoreCase.class),
-                    @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
-                    @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
-                    @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
-                    @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class)
-            }) Specification<Employee> spec) {
-        log.info("Запрошен поиск работника");
-        return ResponseEntity.ok(employeeService.search(spec));
-    }
-
-    @GetMapping("/pages/search")
+    @GetMapping("/pages")
     @ApiOperation(value = "searchWithPage", notes = "Получение списка работников по заданным параметрам постранично")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Успешное получение страницы работников"),
