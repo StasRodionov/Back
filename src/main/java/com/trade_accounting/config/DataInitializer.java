@@ -1012,7 +1012,7 @@ public class DataInitializer {
                 BigDecimal.valueOf(200),
                 false,
                 "no comments",
-                4L));
+                1L));
     }
 
     private void initTasks() {

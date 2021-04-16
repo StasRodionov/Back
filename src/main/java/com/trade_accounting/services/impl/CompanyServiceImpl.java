@@ -67,11 +67,14 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = dtoMapper.companyDtoToCompany(companyDto);
 
         company.setLegalDetail(
-                legalDetailRepository.save(
-                    dtoMapper.legalDetailDtoToLegalDetail(
-                            companyDto.getLegalDetailDto()
-                    )
-                )
+//                legalDetailRepository.save(
+//                    dtoMapper.legalDetailDtoToLegalDetail(
+//                            companyDto.getLegalDetailDto()
+//                    )
+//                )
+                dtoMapper.legalDetailDtoToLegalDetail(legalDetailRepository.getById(
+                        companyDto.getLegalDetailDto().getId()))
+
         );
 
         company.setBankAccounts(

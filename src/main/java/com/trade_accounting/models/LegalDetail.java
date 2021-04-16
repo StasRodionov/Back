@@ -47,7 +47,7 @@ public class LegalDetail {
     @Column(name = "inn", unique = true)
     private String inn;
 
-    @Column(name = "kkp")
+    @Column(name = "kpp")
     private String kpp;
 
     @Column(name = "okpo")

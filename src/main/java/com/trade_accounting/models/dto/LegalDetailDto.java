@@ -37,10 +37,6 @@ public class LegalDetailDto {
 
     private TypeOfContractorDto typeOfContractorDto;
 
-    //   private List<BankAccountDto> bankAccountsDto;
-
-    //    public LegalDetailDto() {};
-
     public LegalDetailDto(Long id,
                           String lastName,
                           String firstName,
@@ -48,6 +44,7 @@ public class LegalDetailDto {
                           String address,
                           String commentToAddress,
                           String inn,
+                          String kpp,
                           String okpo,
                           String ogrn,
                           String numberOfTheCertificate,
@@ -60,6 +57,7 @@ public class LegalDetailDto {
         this.address = address;
         this.commentToAddress = commentToAddress;
         this.inn = inn;
+        this.kpp = kpp;
         this.okpo = okpo;
         this.ogrn = ogrn;
         this.numberOfTheCertificate = numberOfTheCertificate;
