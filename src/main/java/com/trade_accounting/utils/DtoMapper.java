@@ -1,5 +1,6 @@
 package com.trade_accounting.utils;
 
+import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
@@ -27,6 +28,7 @@ import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -84,6 +86,11 @@ public abstract class DtoMapper {
             AttributeOfCalculationObjectDto attributeOfCalculationObjectDto
     );
 
+    // Address
+    public abstract AddressDto addressToAddressDto(Address address);
+
+    public abstract Address addressDtoToAddress(AddressDto address);
+
     //BankAccount
     public abstract BankAccountDto bankAccountToBankAccountDto(BankAccount bankAccount);
 
@@ -127,7 +134,8 @@ public abstract class DtoMapper {
             @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
             @Mapping(source = "typeOfPrice", target = "typeOfPriceDto"),
             @Mapping(source = "legalDetail", target = "legalDetailDto"),
-            @Mapping(source = "bankAccounts", target = "bankAccountDto")
+            @Mapping(source = "bankAccounts", target = "bankAccountDto"),
+            @Mapping(source = "address", target = "addressDto")
     })
     public abstract ContractorDto contractorToContractorDto(Contractor contractor);
 
@@ -136,7 +144,8 @@ public abstract class DtoMapper {
             @Mapping(source = "typeOfContractorDto", target = "typeOfContractor"),
             @Mapping(source = "typeOfPriceDto", target = "typeOfPrice"),
             @Mapping(source = "bankAccountDto", target = "bankAccounts"),
-            @Mapping(source = "legalDetailDto", target = "legalDetail")
+            @Mapping(source = "legalDetailDto", target = "legalDetail"),
+            @Mapping(source = "addressDto", target = "address")
 
     })
     public abstract Contractor contractorDtoToContractor(ContractorDto contractorDto);
