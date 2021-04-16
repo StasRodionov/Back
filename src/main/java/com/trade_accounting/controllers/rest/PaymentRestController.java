@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Payment;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.services.interfaces.PaymentService;
 import io.swagger.annotations.Api;
@@ -133,5 +134,21 @@ public class PaymentRestController {
             }) Specification<Payment> spec) {
         log.info("Запрошен поиск платежей payments");
         return ResponseEntity.ok(paymentService.filter(spec));
+    }
+
+    @GetMapping("/search/{search}")
+    @ApiOperation(value = "search", notes = "Поиск по платежам")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешный поиск по платежам"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<PaymentDto>> search(@ApiParam(name = "search", type = "String",
+            value = "Переданная строка, по которой необходимо найти платежи")
+                                                   @PathVariable(name = "search") String search){
+        List<PaymentDto> paymentDtoList = paymentService.search(search);
+        log.info("Запрошен список платежей");
+        return ResponseEntity.ok(paymentDtoList);
     }
 }

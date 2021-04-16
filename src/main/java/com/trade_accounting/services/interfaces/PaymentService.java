@@ -18,4 +18,6 @@ public interface PaymentService {
     void deleteById(Long id);
 
     List<PaymentDto> filter(Specification<Payment> specification);
+
+    List<PaymentDto> search(String search);
 }

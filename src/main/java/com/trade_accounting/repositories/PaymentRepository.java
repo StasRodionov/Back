@@ -40,4 +40,9 @@ public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpec
     PaymentDto getById(@Param("id") Long id);
 
     void deleteAllByContractId(@Param("id") Long id);
+
+    @Query("from Payment e" +
+            " where lower(concat(e.company.name, ' ', e.contractor.name, ' ', e.number))" +
+            " like lower(concat('%', :req, '%'))")
+    List<Payment> search(@Param("req") String request);
 }

@@ -2,6 +2,7 @@ package com.trade_accounting.models;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 @Entity
 @Table(name = "products")
 public class Product {
@@ -95,5 +97,15 @@ public class Product {
         this.attributeOfCalculationObject = attributeOfCalculationObject;
         this.images = images;
         this.productPrices = productPrices;
+    }
+
+    public Product(Long id, String name, BigDecimal weight, BigDecimal volume, BigDecimal purchasePrice, String description, Boolean archive) {
+        this.id = id;
+        this.name = name;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.archive = archive;
     }
 }
