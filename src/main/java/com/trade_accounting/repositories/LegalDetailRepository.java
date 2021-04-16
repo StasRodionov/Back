@@ -23,8 +23,9 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.address, " +
             "e.commentToAddress, " +
             "e.inn, " +
+            "e.kpp, " +
             "e.okpo, " +
-            "e.ogrnip, " +
+            "e.ogrn, " +
             "e.numberOfTheCertificate, " +
             "e.dateOfTheCertificate, " +
             "e.typeOfContractor.id) from LegalDetail e")
@@ -37,9 +38,9 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.middleName, " +
             "e.address, " +
             "e.commentToAddress, " +
-            "e.inn, " +
+            "e.inn, e.kpp, " +
             "e.okpo, " +
-            "e.ogrnip, " +
+            "e.ogrn, " +
             "e.numberOfTheCertificate, " +
             "e.dateOfTheCertificate, " +
             "e.typeOfContractor.id) from LegalDetail e where e.id = :id")
@@ -53,8 +54,9 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.legalDetail.address, " +
             "e.legalDetail.commentToAddress, " +
             "e.legalDetail.inn, " +
+            "e.legalDetail.kpp, " +
             "e.legalDetail.okpo, " +
-            "e.legalDetail.ogrnip, " +
+            "e.legalDetail.ogrn, " +
             "e.legalDetail.numberOfTheCertificate, " +
             "e.legalDetail.dateOfTheCertificate, " +
             "e.legalDetail.typeOfContractor.id) from Contractor e where e.id = :id")

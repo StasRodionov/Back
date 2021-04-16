@@ -31,9 +31,9 @@ public class Contractor {
     @Column(name = "name")
     private String name;
 
-    @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$")
-    @Column(name = "inn", unique = true)
-    private String inn;
+//    @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$")
+//    @Column(name = "inn", unique = true)
+//    private String inn;
 
     @Column(name = "sort_number")
     private String sortNumber;
@@ -59,8 +59,8 @@ public class Contractor {
     @ManyToOne(fetch = FetchType.LAZY)
     private ContractorGroup contractorGroup;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private TypeOfContractor typeOfContractor;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private TypeOfContractor typeOfContractor;
 
     @OneToOne(fetch = FetchType.LAZY)
     private TypeOfPrice typeOfPrice;

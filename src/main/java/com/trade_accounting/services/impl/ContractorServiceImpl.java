@@ -26,7 +26,7 @@ public class ContractorServiceImpl implements ContractorService {
 
     private final ContractorRepository contractorRepository;
     private final ContractorGroupRepository contractorGroupRepository;
-    private final TypeOfContractorRepository typeOfContractorRepository;
+    // private final TypeOfContractorRepository typeOfContractorRepository;
     private final TypeOfPriceRepository typeOfPriceRepository;
     private final LegalDetailRepository legalDetailRepository;
     private final AddressRepository addressRepository;
@@ -34,12 +34,12 @@ public class ContractorServiceImpl implements ContractorService {
 
     public ContractorServiceImpl(ContractorRepository contractorRepository,
                                  ContractorGroupRepository contractorGroupRepository,
-                                 TypeOfContractorRepository typeOfContractorRepository,
+                                 //TypeOfContractorRepository typeOfContractorRepository,
                                  TypeOfPriceRepository typeOfPriceRepository,
                                  LegalDetailRepository legalDetailRepository, AddressRepository addressRepository, DtoMapper dtoMapper) {
         this.contractorRepository = contractorRepository;
         this.contractorGroupRepository = contractorGroupRepository;
-        this.typeOfContractorRepository = typeOfContractorRepository;
+        // this.typeOfContractorRepository = typeOfContractorRepository;
         this.typeOfPriceRepository = typeOfPriceRepository;
         this.legalDetailRepository = legalDetailRepository;
         this.addressRepository = addressRepository;
@@ -92,11 +92,11 @@ public class ContractorServiceImpl implements ContractorService {
                 )
         );
 
-        contractor.setTypeOfContractor(
-                dtoMapper.typeOfContractorDtoToTypeOfContractor(
-                        contractorDto.getTypeOfContractorDto()
-                )
-        );
+//        contractor.setTypeOfContractor(
+//                dtoMapper.typeOfContractorDtoToTypeOfContractor(
+//                        contractorDto.getTypeOfContractorDto()
+//                )
+//        );
 
         contractor.setTypeOfPrice(
                 dtoMapper.typeOfPriceDtoToTypeOfPrice(
@@ -123,8 +123,8 @@ public class ContractorServiceImpl implements ContractorService {
         contractor.setContractorGroup(
                 contractorGroupRepository.findById(contractorDto.getContractorGroupDto().getId()).orElse(null));
 
-        contractor.setTypeOfContractor(
-                typeOfContractorRepository.findById(contractorDto.getTypeOfContractorDto().getId()).orElse(null));
+//        contractor.setTypeOfContractor(
+//                typeOfContractorRepository.findById(contractorDto.getTypeOfContractorDto().getId()).orElse(null));
 
         contractor.setTypeOfPrice(
                 typeOfPriceRepository.findById(contractorDto.getTypeOfPriceDto().getId()).orElse(null));

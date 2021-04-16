@@ -25,15 +25,21 @@ public class LegalDetailDto {
 
     private String inn;
 
+    private String kpp;
+
     private String okpo;
 
-    private String ogrnip;
+    private String ogrn;
 
     private String numberOfTheCertificate;
 
     private String dateOfTheCertificate;
 
     private TypeOfContractorDto typeOfContractorDto;
+
+    //   private List<BankAccountDto> bankAccountsDto;
+
+    //    public LegalDetailDto() {};
 
     public LegalDetailDto(Long id,
                           String lastName,
@@ -43,7 +49,7 @@ public class LegalDetailDto {
                           String commentToAddress,
                           String inn,
                           String okpo,
-                          String ogrnip,
+                          String ogrn,
                           String numberOfTheCertificate,
                           LocalDate dateOfTheCertificate,
                           Long typeOfContractorId) {
@@ -55,10 +61,78 @@ public class LegalDetailDto {
         this.commentToAddress = commentToAddress;
         this.inn = inn;
         this.okpo = okpo;
-        this.ogrnip = ogrnip;
+        this.ogrn = ogrn;
         this.numberOfTheCertificate = numberOfTheCertificate;
         this.dateOfTheCertificate = dateOfTheCertificate.toString();
         this.typeOfContractorDto = new TypeOfContractorDto();
         this.typeOfContractorDto.setId(typeOfContractorId);
     }
+//
+//    // Для физического лица
+//    public LegalDetailDto(Long id,
+//                          String lastName,
+//                          String firstName,
+//                          String middleName,
+//                          String address,
+//                          String commentToAddress,
+//                          Long typeOfContractorId) {
+//        this.id = id;
+//        this.lastName = lastName;
+//        this.firstName = firstName;
+//        this.middleName = middleName;
+//        this.address = address;
+//        this.commentToAddress = commentToAddress;
+//        this.typeOfContractorDto = new TypeOfContractorDto();
+//        this.typeOfContractorDto.setId(typeOfContractorId);
+//    }
+//
+//    // Для юридического лица
+//    public LegalDetailDto(Long id,
+//                          String fullName,
+//                          String address,
+//                          String commentToAddress,
+//                          String inn,
+//                          String kkp,
+//                          String okpo,
+//                          String ogrn,
+//                          Long typeOfContractorId) {
+//        this.id = id;
+//        this.firstName = fullName;
+//        this.address = address;
+//        this.commentToAddress = commentToAddress;
+//        this.inn = inn;
+//        this.kpp = kpp;
+//        this.okpo = okpo;
+//        this.ogrn = ogrn;
+//        this.typeOfContractorDto = new TypeOfContractorDto();
+//        this.typeOfContractorDto.setId(typeOfContractorId);
+//    }
+//
+//    // Для индивидуального предпринимателя
+//    public LegalDetailDto(Long id,
+//                          String lastName,
+//                          String firstName,
+//                          String middleName,
+//                          String address,
+//                          String commentToAddress,
+//                          String inn,
+//                          String okpo,
+//                          String ogrnip,
+//                          String numberOfTheCertificate,
+//                          LocalDate dateOfTheCertificate,
+//                          Long typeOfContractorId) {
+//        this.id = id;
+//        this.lastName = lastName;
+//        this.firstName = firstName;
+//        this.middleName = middleName;
+//        this.address = address;
+//        this.commentToAddress = commentToAddress;
+//        this.inn = inn;
+//        this.okpo = okpo;
+//        this.ogrn = ogrnip;
+//        this.numberOfTheCertificate = numberOfTheCertificate;
+//        this.dateOfTheCertificate = dateOfTheCertificate.toString();
+//        this.typeOfContractorDto = new TypeOfContractorDto();
+//        this.typeOfContractorDto.setId(typeOfContractorId);
+//    }
 }

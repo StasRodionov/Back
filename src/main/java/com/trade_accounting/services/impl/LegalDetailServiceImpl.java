@@ -54,6 +54,17 @@ public class LegalDetailServiceImpl implements LegalDetailService {
                 ).orElse(null)
         );
 
+//        List<BankAccountDto> bankAccountDtos = legalDetailDto.getBankAccountsDto();
+//        if (bankAccountDtos != null) {
+//            List<BankAccount> bankAccounts = new ArrayList<>();
+//            bankAccountDtos.stream().forEach(b ->
+//            {bankAccounts.add(dtoMapper.bankAccountDtoToBankAccount(b));
+//            });
+//            legalDetail.setBankAccounts(bankAccounts);
+//        } else {
+//            legalDetail.setBankAccounts(null);
+//        }
+
         return dtoMapper.legalDetailToLegalDetailDto(
                 legalDetailRepository.save(legalDetail)
         );

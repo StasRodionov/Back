@@ -140,9 +140,9 @@ public class ModelDtoConverter {
         if (contractor.getContractorGroup() != null) {
             contractorDto.setContractorGroupDto(modelMapper.map(contractor.getContractorGroup(), ContractorGroupDto.class));
         }
-        if (contractor.getTypeOfContractor() != null) {
-            contractorDto.setTypeOfContractorDto((modelMapper.map(contractor.getTypeOfContractor(), TypeOfContractorDto.class)));
-        }
+//        if (contractor.getTypeOfContractor() != null) {
+//            contractorDto.setTypeOfContractorDto((modelMapper.map(contractor.getTypeOfContractor(), TypeOfContractorDto.class)));
+//        }
 
         if (contractor.getTypeOfPrice() != null) {
             contractorDto.setTypeOfPriceDto(modelMapper.map(contractor.getTypeOfPrice(), TypeOfPriceDto.class));
@@ -166,8 +166,9 @@ public class ModelDtoConverter {
                 dto.getAddress(),
                 dto.getCommentToAddress(),
                 dto.getInn(),
+                dto.getKpp(),
                 dto.getOkpo(),
-                dto.getOgrnip(),
+                dto.getOgrn(),
                 dto.getNumberOfTheCertificate(),
                 LocalDate.parse(dto.getDateOfTheCertificate()),
                 typeOfContractor);
@@ -210,13 +211,14 @@ public class ModelDtoConverter {
     }
 
     public static Contractor convertToContractor(ContractorDto dto, ContractorGroup contractorGroup,
-                                                 TypeOfContractor typeOfContractor, TypeOfPrice typeOfPrice,
+                                                 // TypeOfContractor typeOfContractor,
+                                                 TypeOfPrice typeOfPrice,
                                                  List<BankAccount> bankAccount,
                                                  LegalDetail legalDetail) {
         return new Contractor(
                 dto.getId(),
                 dto.getName(),
-                dto.getInn(),
+                // dto.getInn(),
                 dto.getSortNumber(),
                 dto.getPhone(),
                 dto.getFax(),
@@ -225,7 +227,7 @@ public class ModelDtoConverter {
                 dto.getCommentToAddress(),
                 dto.getComment(),
                 contractorGroup,
-                typeOfContractor,
+                // typeOfContractor,
                 typeOfPrice,
                 bankAccount,
                 legalDetail
