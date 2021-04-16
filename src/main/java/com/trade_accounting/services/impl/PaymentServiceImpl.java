@@ -86,9 +86,8 @@ public class PaymentServiceImpl implements PaymentService {
                 ).orElse(null)
         );
 
-        paymentRepository.save(payment);
 
-        return paymentDto;
+        return dtoMapper.paymentToPaymentDto(paymentRepository.save(payment));
     }
 
     @Override
