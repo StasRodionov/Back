@@ -61,7 +61,7 @@ public class EmployeeRestController {
         return ResponseEntity.ok(employeeDtos);
     }
 
-    @GetMapping("/symbols")
+    @GetMapping("/findBySearch")
     @ApiOperation(value = "searchBySymbols", notes = "Получение списка работников по параметрам")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Успешное получение списка сотрудников"),
@@ -69,9 +69,9 @@ public class EmployeeRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<List<EmployeeDto>> searchBySymbols(@RequestParam("symbols") String symbols) {
+    public ResponseEntity<List<EmployeeDto>> findBySearch(@RequestParam("search") String search) {
         log.info("Запрошен поиск работника");
-        return ResponseEntity.ok(employeeService.searchBySymbols(symbols));
+        return ResponseEntity.ok(employeeService.findBySearch(search));
     }
 
 

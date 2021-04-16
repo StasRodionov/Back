@@ -56,8 +56,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDto> searchBySymbols(String symbols) {
-        return employeeRepository.getBySymbols(symbols).stream()
+    public List<EmployeeDto> findBySearch(String search) {
+        return employeeRepository.getBySearch(search).stream()
                 .map(dtoMapper::employeeToEmployeeDto)
                 .collect(Collectors.toList());
     }

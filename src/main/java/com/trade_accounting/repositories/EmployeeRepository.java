@@ -61,6 +61,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
     @Query("from Employee e " +
             "where lower ( concat(e.firstName, ' ', e.middleName, ' ', e.lastName, ' ', e.email, ' ',e.phone)) " +
             "like lower(concat('%', :symbols, '%'))")
-    List<Employee> getBySymbols(@Param("symbols") String symbols);
+    List<Employee> getBySearch(@Param("symbols") String search);
 
 }
