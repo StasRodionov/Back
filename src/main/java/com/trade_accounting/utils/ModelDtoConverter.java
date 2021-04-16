@@ -238,7 +238,6 @@ public class ModelDtoConverter {
 
     public static Contractor convertToContractor(ContractorDto dto, ContractorGroup contractorGroup,
                                                  TypeOfContractor typeOfContractor, TypeOfPrice typeOfPrice,
-                                                 List<Contact> contact,
                                                  List<BankAccount> bankAccount,
                                                  LegalDetail legalDetail) {
         return new Contractor(
@@ -252,7 +251,7 @@ public class ModelDtoConverter {
                 convertToAddress(dto.getAddressDto()),
                 dto.getCommentToAddress(),
                 dto.getComment(),
-                contact,
+                convertToListOfContact(dto.getContactDto()),
                 contractorGroup,
                 typeOfContractor,
                 typeOfPrice,

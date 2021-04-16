@@ -7,6 +7,7 @@ import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
@@ -36,6 +37,7 @@ import com.trade_accounting.services.impl.TaskServiceImpl;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.BankAccountService;
 import com.trade_accounting.services.interfaces.CompanyService;
+import com.trade_accounting.services.interfaces.ContactService;
 import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.ContractorService;
@@ -85,6 +87,7 @@ public class DataInitializer {
     private final ProductGroupService productGroupService;
     private final CompanyService companyService;
     private final LegalDetailService legalDetailService;
+    private final ContactService contactService;
     private final ContractService contractService;
     private final ContractorService contractorService;
     private final BankAccountService bankAccountService;
@@ -114,6 +117,7 @@ public class DataInitializer {
             TypeOfContractorService typeOfContractorService,
             CompanyService companyService,
             LegalDetailService legalDetailService,
+            ContactService contactService,
             ContractService contractService,
             ContractorService contractorService,
             BankAccountService bankAccountService,
@@ -140,6 +144,7 @@ public class DataInitializer {
         this.productGroupService = productGroupService;
         this.companyService = companyService;
         this.legalDetailService = legalDetailService;
+        this.contactService = contactService;
         this.contractService = contractService;
         this.contractorService = contractorService;
         this.bankAccountService = bankAccountService;
@@ -175,6 +180,7 @@ public class DataInitializer {
 
         initLegalDetails();
         initCompanies();
+        initContacts();
         initEmployees();
         initContractors();
         initProducts();
@@ -786,6 +792,7 @@ public class DataInitializer {
                 addressService.getById(1L),
                 "1 comment to address",
                 "comment",
+                contactService.getAll().subList(1,3),
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
@@ -801,6 +808,7 @@ public class DataInitializer {
                 addressService.getById(2L),
                 "2comment to address",
                 "2comment",
+                contactService.getAll().subList(0,1),
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
@@ -817,6 +825,7 @@ public class DataInitializer {
                 addressService.getById(3L),
                 "3comment to address",
                 "3comment",
+                null,
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
@@ -832,6 +841,7 @@ public class DataInitializer {
                 addressService.getById(1L),
                 "4comment to address",
                 "4comment",
+                null,
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
@@ -847,6 +857,7 @@ public class DataInitializer {
                 addressService.getById(2L),
                 "5comment to address",
                 "5comment",
+                null,
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
@@ -863,6 +874,7 @@ public class DataInitializer {
                 addressService.getById(3L),
                 "6comment to address",
                 "6comment",
+                null,
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
@@ -878,6 +890,7 @@ public class DataInitializer {
                 addressService.getById(1L),
                 "7comment to address",
                 "7comment",
+                null,
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
@@ -893,6 +906,7 @@ public class DataInitializer {
                 addressService.getById(2L),
                 "8comment to address",
                 "8comment",
+                null,
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
@@ -908,6 +922,7 @@ public class DataInitializer {
                 addressService.getById(3L),
                 "9comment to address",
                 "9comment",
+                null,
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
@@ -924,6 +939,7 @@ public class DataInitializer {
                 addressService.getById(1L),
                 "10comment to address",
                 "10comment",
+                null,
                 contractorGroupService.getById(1L),
                 typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
@@ -1000,6 +1016,36 @@ public class DataInitializer {
                     attributeOfCalculationObjectDtoList.get(2)
             ));
         }
+    }
+
+    private void initContacts() {
+        contactService.create(
+                ContactDto.builder()
+                        .fullName("Иванов Иван Иванович")
+                        .position("Контактное лицо 1")
+                        .phone("+777-777-77-77")
+                        .email("email1@mail.ru")
+                        .comment("Коментарий 1")
+                        .build()
+        );
+        contactService.create(
+                ContactDto.builder()
+                        .fullName("Алексеев Алексей Алексеевич")
+                        .position("Контактное лицо 2")
+                        .phone("+888-888-88-88")
+                        .email("email2@mail.ru")
+                        .comment("Коментарий 2")
+                        .build()
+        );
+        contactService.create(
+                ContactDto.builder()
+                        .fullName("Гэри Стивен Возняк")
+                        .position("Контактное лицо 3")
+                        .phone("+999-999-99-99")
+                        .email("email3@mail.ru")
+                        .comment("Коментарий 3")
+                        .build()
+        );
     }
 
     private void initContracts() {

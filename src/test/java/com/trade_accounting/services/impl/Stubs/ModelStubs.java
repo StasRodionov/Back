@@ -4,6 +4,7 @@ import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
@@ -76,6 +77,11 @@ public class ModelStubs {
                 "12345678901", "324234234",
                 "email", getAddress(1L),
                 "commentToAddress", "comment",
+                Stream.of(
+                        getContact(1L),
+                        getContact(2L),
+                        getContact(3L)
+                ).collect(Collectors.toList()),
                 getContractorGroup(id), getTypeOfContractor(id),
                 getTypeOfPrice(id),
                 Stream.of(
@@ -85,6 +91,10 @@ public class ModelStubs {
                 ).collect(Collectors.toList()),
                 getLegalDetail(id)
         );
+    }
+
+    public static Contact getContact(Long id) {
+        return Contact.builder().id(id).build();
     }
 
     public static Contract getContract(Long id) {
