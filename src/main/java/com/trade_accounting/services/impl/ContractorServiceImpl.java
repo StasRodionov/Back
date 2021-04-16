@@ -55,7 +55,7 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<ContractorDto> getAll() {
-        log.info("запрошен список getAll ");
+     log.info("запрошен список getAll ");
         List<Contractor> list = contractorRepository.findAll();
         return list.stream()
                 .map(dtoMapper::contractorToContractorDto)
@@ -111,8 +111,8 @@ public class ContractorServiceImpl implements ContractorService {
                         )
                 )
         );
-        contractorRepository.save(contractor);
-        return contractorDto;
+
+        return dtoMapper.contractorToContractorDto(contractorRepository.save(contractor));
     }
 
     @Override
