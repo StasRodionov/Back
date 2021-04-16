@@ -3,6 +3,7 @@ package com.trade_accounting.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,8 +47,8 @@ public class Contractor {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "address")
-    private String address;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Address address;
 
     @Column(name = "comment_to_address")
     private String commentToAddress;
@@ -69,7 +70,6 @@ public class Contractor {
 
     @OneToOne(fetch = FetchType.LAZY)
     private LegalDetail legalDetail;
-
 
 
 }

@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
@@ -73,7 +74,7 @@ public class ModelStubs {
                 id, "name",
                 "123456789012", "sortNumber",
                 "12345678901", "324234234",
-                "email", "address",
+                "email", getAddress(1L),
                 "commentToAddress", "comment",
                 getContractorGroup(id), getTypeOfContractor(id),
                 getTypeOfPrice(id),
@@ -113,6 +114,13 @@ public class ModelStubs {
 
     public static ContractorGroup getContractorGroup(Long id) {
         return new ContractorGroup(id, "name", "00001");
+    }
+
+    public static Address getAddress(Long id) {
+        return Address.builder()
+                .id(id)
+
+                .build();
     }
 
     public static Department getDepartment(Long id){ return new Department(id, "name", "00001");}

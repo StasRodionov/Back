@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface ImageRepository extends JpaRepository<Image, Long> {
     @Query("select new com.trade_accounting.models.Image(" +
             "i.id, " +
+            "i.imageUrl, " +
             "i.sortNumber) from Image as i")
     List<Image> getAll();
 
