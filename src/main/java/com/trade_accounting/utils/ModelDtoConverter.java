@@ -36,6 +36,7 @@ import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -173,6 +174,10 @@ public class ModelDtoConverter {
 
         if (contractor.getTypeOfPrice() != null) {
             contractorDto.setTypeOfPriceDto(modelMapper.map(contractor.getTypeOfPrice(), TypeOfPriceDto.class));
+        }
+
+        if (contractor.getContact() != null) {
+            contractorDto.setContactDto(modelMapper.map(contractor.getContact(), new TypeToken<List<Contact>>(){}.getType()));
         }
 //        if (contractor.getBankAccounts() != null) {
 //            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(),  null));
