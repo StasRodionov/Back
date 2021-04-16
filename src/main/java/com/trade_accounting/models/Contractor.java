@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Data
@@ -30,10 +29,6 @@ public class Contractor {
 
     @Column(name = "name")
     private String name;
-
-//    @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$")
-//    @Column(name = "inn", unique = true)
-//    private String inn;
 
     @Column(name = "sort_number")
     private String sortNumber;
@@ -59,9 +54,6 @@ public class Contractor {
     @ManyToOne(fetch = FetchType.LAZY)
     private ContractorGroup contractorGroup;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private TypeOfContractor typeOfContractor;
-
     @OneToOne(fetch = FetchType.LAZY)
     private TypeOfPrice typeOfPrice;
 
@@ -70,6 +62,5 @@ public class Contractor {
 
     @OneToOne(fetch = FetchType.LAZY)
     private LegalDetail legalDetail;
-
 
 }

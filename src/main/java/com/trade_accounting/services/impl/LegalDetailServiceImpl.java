@@ -5,7 +5,6 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.LegalDetailService;
-import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +22,6 @@ public class LegalDetailServiceImpl implements LegalDetailService {
     private final DtoMapper dtoMapper;
 
     public LegalDetailServiceImpl(LegalDetailRepository legalDetailRepository,
-                                  TypeOfContractorService typeOfContractorService,
                                   TypeOfContractorRepository typeOfContractorRepository, DtoMapper dtoMapper) {
         this.legalDetailRepository = legalDetailRepository;
         this.typeOfContractorRepository = typeOfContractorRepository;
@@ -53,17 +51,6 @@ public class LegalDetailServiceImpl implements LegalDetailService {
                         legalDetailDto.getTypeOfContractorDto().getId()
                 ).orElse(null)
         );
-
-//        List<BankAccountDto> bankAccountDtos = legalDetailDto.getBankAccountsDto();
-//        if (bankAccountDtos != null) {
-//            List<BankAccount> bankAccounts = new ArrayList<>();
-//            bankAccountDtos.stream().forEach(b ->
-//            {bankAccounts.add(dtoMapper.bankAccountDtoToBankAccount(b));
-//            });
-//            legalDetail.setBankAccounts(bankAccounts);
-//        } else {
-//            legalDetail.setBankAccounts(null);
-//        }
 
         return dtoMapper.legalDetailToLegalDetailDto(
                 legalDetailRepository.save(legalDetail)

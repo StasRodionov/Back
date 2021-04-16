@@ -776,7 +776,7 @@ public class DataInitializer {
     private void initContractors() {
         contractorService.create(new ContractorDto(
                 null,
-                "Торговый Дом \"Перекресток\", ЗАО", // "7728029110",
+                "Торговый Дом \"Перекресток\", ЗАО",
                 "1",
                 "8 (495) 232-59-24",
                 "8 (495) 232-59-24",
@@ -785,14 +785,12 @@ public class DataInitializer {
                 "1 comment to address",
                 "comment",
                 contractorGroupService.getById(1L),
-                //typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Агроаспект, ООО",
-                //"7715277300",
                 "2",
                 "8 (800) 555-55-05",
                 "8 (800) 555-55-05",
@@ -801,14 +799,12 @@ public class DataInitializer {
                 "2comment to address",
                 "2comment",
                 contractorGroupService.getById(1L),
-                //typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Вкусвилл, ООО",
-                //"7734675810",
                 "3",
                 "8 (495) 981-13-45",
                 "8 (495) 981-13-45",
@@ -817,13 +813,12 @@ public class DataInitializer {
                 "3comment to address",
                 "3comment",
                 contractorGroupService.getById(1L),
-                //typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Альфа-М, ООО", //"7743931676",
+                "Альфа-М, ООО",
                 "4",
                 "8 (495) 981-31-85",
                 "8 (495) 981-31-85",
@@ -832,13 +827,12 @@ public class DataInitializer {
                 "4comment to address",
                 "4comment",
                 contractorGroupService.getById(1L),
-                //typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Отдохни - 77, ООО", //"7737531091",
+                "Отдохни - 77, ООО",
                 "5",
                 "8 (495) 326-30-00",
                 "8 (495) 326-30-00",
@@ -847,14 +841,12 @@ public class DataInitializer {
                 "5comment to address",
                 "5comment",
                 contractorGroupService.getById(1L),
-                //typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Продмир, ООО",
-                //"5009074197",
                 "6",
                 "8 (495) 651-92-52",
                 "8 (495) 651-92-52",
@@ -863,13 +855,12 @@ public class DataInitializer {
                 "6comment to address",
                 "6comment",
                 contractorGroupService.getById(1L),
-                //typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Зельгрос, ООО",// "5050058510",
+                "Зельгрос, ООО",
                 "7",
                 "8 (495) 741-45-56",
                 "8 (495) 741-45-56",
@@ -878,13 +869,12 @@ public class DataInitializer {
                 "7comment to address",
                 "7comment",
                 contractorGroupService.getById(1L),
-                //typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Лабиринт-М, ООО", //"7727777402",
+                "Лабиринт-М, ООО",
                 "8",
                 "8 (495) 155-51-56",
                 "8 (495) 155-51-56",
@@ -893,13 +883,12 @@ public class DataInitializer {
                 "8comment to address",
                 "8comment",
                 contractorGroupService.getById(1L),
-                //typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Эскорт Сервис, ООО", //"7705603716",
+                "Эскорт Сервис, ООО",
                 "9",
                 "8 (495) 755-11-16",
                 "8 (495) 755-11-16",
@@ -908,14 +897,12 @@ public class DataInitializer {
                 "9comment to address",
                 "9comment",
                 contractorGroupService.getById(1L),
-                //typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Арома Маркет, ООО",
-               // "7710161911",
                 "10",
                 "8 (495) 777-51-95",
                 "8 (495) 777-51-95",
@@ -924,7 +911,6 @@ public class DataInitializer {
                 "10comment to address",
                 "10comment",
                 contractorGroupService.getById(1L),
-               // typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
