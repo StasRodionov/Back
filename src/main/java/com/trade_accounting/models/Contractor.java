@@ -56,6 +56,9 @@ public class Contractor {
     @Column(name = "comment")
     private String comment;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Contact> contact;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private ContractorGroup contractorGroup;
 

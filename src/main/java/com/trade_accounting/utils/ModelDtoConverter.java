@@ -3,6 +3,7 @@ package com.trade_accounting.utils;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Employee;
@@ -18,6 +19,7 @@ import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
@@ -97,6 +99,31 @@ public class ModelDtoConverter {
                 dto.getStamp(),
                 legalDetail, bankAccounts);
     }
+
+    public static ContactDto convertToContactDto(Contact contact) {
+        return modelMapper.map(contact, ContactDto.class);
+    }
+
+    public static Contact convertToContact(ContactDto contactDto) {
+        return modelMapper.map(contactDto, Contact.class);
+    }
+
+    public static List<Contact> convertToListOfContact(List<ContactDto> list) {
+        List<Contact> contactList = new ArrayList<>();
+        for (ContactDto contactDto : list) {
+            contactList.add(new Contact(
+                    contactDto.getId(),
+                    contactDto.getFullName(),
+                    contactDto.getPosition(),
+                    contactDto.getPhone(),
+                    contactDto.getEmail(),
+                    contactDto.getComment()
+            ));
+        }
+        return contactList;
+    }
+
+
 
     public static EmployeeDto convertToEmployeeDto(Employee employee) {
         EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
@@ -211,6 +238,7 @@ public class ModelDtoConverter {
 
     public static Contractor convertToContractor(ContractorDto dto, ContractorGroup contractorGroup,
                                                  TypeOfContractor typeOfContractor, TypeOfPrice typeOfPrice,
+                                                 List<Contact> contact,
                                                  List<BankAccount> bankAccount,
                                                  LegalDetail legalDetail) {
         return new Contractor(
@@ -224,6 +252,7 @@ public class ModelDtoConverter {
                 convertToAddress(dto.getAddressDto()),
                 dto.getCommentToAddress(),
                 dto.getComment(),
+                contact,
                 contractorGroup,
                 typeOfContractor,
                 typeOfPrice,
