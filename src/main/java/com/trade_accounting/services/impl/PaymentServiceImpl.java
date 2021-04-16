@@ -10,6 +10,7 @@ import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.services.interfaces.PaymentService;
 import com.trade_accounting.utils.DtoMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,5 +105,11 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentRepository.search(search).stream()
                 .map(dtoMapper::paymentToPaymentDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PaymentDto> filter(Specification<Payment> specification) {
+        return paymentRepository.findAll(specification).stream().
+                map(dtoMapper::paymentToPaymentDto).collect(Collectors.toList());
     }
 }
