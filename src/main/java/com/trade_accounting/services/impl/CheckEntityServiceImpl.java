@@ -181,7 +181,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         List<BankAccountDto> bankAccounts = company.getBankAccountDto();
 
         boolean isLegalDetailFilled = legalDetail != null && legalDetail.getId() != null;
-        boolean bankAccountFilled = bankAccounts != null && bankAccounts.isEmpty();
+        boolean bankAccountListFilled = bankAccounts != null && !bankAccounts.isEmpty();
 
         if(isLegalDetailFilled && !legalDetailRepository.existsById(legalDetail.getId())) {
             throw new BadRequestException(
@@ -189,7 +189,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
             );
         }
 
-        if(bankAccountFilled) {
+        if(bankAccountListFilled) {
             for (BankAccountDto bankAccount : bankAccounts) {
                 boolean isBankAccountFilled = bankAccount != null && bankAccount.getId() != null;
 

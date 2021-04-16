@@ -22,15 +22,12 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.times;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyServiceImplTest {
@@ -53,12 +50,12 @@ class CompanyServiceImplTest {
 
     @Test
     void getAll_shouldReturnListFilledCompanyDto() {
-        when(companyRepository.findAll())
+        when(companyService.getAll())
                 .thenReturn(
                         Stream.of(
-                                ModelStubs.getCompany(1L),
-                                ModelStubs.getCompany(2L),
-                                ModelStubs.getCompany(3L)
+                                DtoStubs.getCompanyDto(1L),
+                                DtoStubs.getCompanyDto(2L),
+                                DtoStubs.getCompanyDto(3L)
                         )
                         .collect(Collectors.toList())
                 );
@@ -75,7 +72,7 @@ class CompanyServiceImplTest {
 
     @Test
     void getAll_shouldReturnEmptyListCompanyDto() {
-        when(companyRepository.findAll())
+        when(companyService.getAll())
                 .thenReturn(
                     new ArrayList<>()
                 );
@@ -125,11 +122,8 @@ class CompanyServiceImplTest {
 
     @Test
     void getById_shouldReturnFilledCompanyDto() {
-        Optional<Company> companyFromRepo =
-                Optional.of(ModelStubs.getCompany(1L));
-
-        when(companyRepository.findById(anyLong()))
-                .thenReturn(companyFromRepo);
+        when(companyService.getById(1L))
+                .thenReturn(DtoStubs.getCompanyDto(anyLong()));
 
         CompanyDto companyDto = companyService.getById(1L);
 
