@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -70,9 +72,11 @@ public class EmployeeRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<EmployeeDto>> getAllByPage(@RequestParam("pageNumber") Integer pageNumber,
+    public ResponseEntity<List<EmployeeDto>> getAllByPage(@RequestParam("column") String sortColumn,
+                                                          @RequestParam("direction") String sortDirection,
+                                                          @RequestParam("pageNumber") Integer pageNumber,
                                                           @RequestParam("rowsLimit") Integer rowsLimit) {
-        List<EmployeeDto> employeeDtoList = employeeService.getAllByPage(pageNumber, rowsLimit);
+        List<EmployeeDto> employeeDtoList = employeeService.getAllByPage(sortColumn, sortDirection, pageNumber, rowsLimit);
         log.info("Запрошена страница работников");
         return ResponseEntity.ok(employeeDtoList);
     }
@@ -134,10 +138,12 @@ public class EmployeeRestController {
                     @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
     }) Specification<Employee> specification,
+            @RequestParam("column") String sortColumn,
+            @RequestParam("direction") String sortDirection,
             @RequestParam("pageNumber") Integer pageNumber,
             @RequestParam("rowsLimit") Integer rowsLimit) {
         log.info("Запрошена страница пользователей по фильтру");
-        return ResponseEntity.ok(employeeService.searchWithPage(specification, pageNumber, rowsLimit));
+        return ResponseEntity.ok(employeeService.searchWithPage(sortColumn, sortDirection, specification, pageNumber, rowsLimit));
     }
 
     @GetMapping("/{id}")
