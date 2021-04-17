@@ -34,6 +34,9 @@ public class LoggingPointcuts {
         @Pointcut("execution(* deleteById(..))")
         public void deleteExecution() {}
 
+        @Pointcut("execution(* search(..))")
+        public void searchExecution() {}
+
         @After("inServiceLayer() && getAllExecution()")
         public void logGetAll(JoinPoint joinPoint) {
                 log.info("Запрошен список {}", getDtoName(joinPoint));
@@ -58,12 +61,19 @@ public class LoggingPointcuts {
         public void logUpdate(JoinPoint joinPoint, Object dto) {
                 log.info("Обновлен экземпляр {} с id={}", dto.getClass().getSimpleName(), getId(dto));
         }
-
         @After(value = "inServiceLayer() && deleteExecution() && args(id)")
         public void logDelete(JoinPoint joinPoint, Long id) {
                 log.info("Удален экземпляр {} с id={}", getDtoName(joinPoint), id);
         }
+        @AfterReturning(value = "inServiceLayer() && searchExecution()",  returning = "result")
+        public void logSearch(JoinPoint joinPoint, Object result) {
+                if(result == null) {
+                        // search method id void
+                } else {
+                        log.info("Найдены экземпляры {}: {}", getDtoName(joinPoint), result);
+                }
 
+        }
         private String getDtoName(JoinPoint joinPoint) {
                 var serviceName = joinPoint.getTarget().getClass().getSimpleName();
                 return serviceName.replaceFirst("ServiceImpl", "Dto") ;
