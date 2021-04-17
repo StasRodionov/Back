@@ -6,9 +6,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Marker;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -58,7 +56,7 @@ public class LoggingPointcuts {
         }
 
         @After(value = "inServiceLayer() && updateExecution() && args(dto)")
-        public void logUpdate(JoinPoint joinPoint, Object dto) {
+        public void logUpdate(Object dto) {
                 log.info("Обновлен экземпляр {} с id={}", dto.getClass().getSimpleName(), getId(dto));
         }
         @After(value = "inServiceLayer() && deleteExecution() && args(id)")
@@ -81,7 +79,6 @@ public class LoggingPointcuts {
 
         @SneakyThrows
         private Long getId(Object dto) {
-                return (Long) dto.getClass().getMethod("getId", new Class<?>[]{})
-                                .invoke(dto, new Object[]{});
+                return (Long) dto.getClass().getMethod("getId").invoke(dto, new Object[]{});
         }
 }
