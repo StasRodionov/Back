@@ -44,6 +44,19 @@ public class EmployeeRestController {
         this.checkEntityService = checkEntityService;
     }
 
+    @GetMapping
+    @ApiOperation(value = "getAll", notes = "Получение списка всех работников")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка работников"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<EmployeeDto>> getAll() {
+        List<EmployeeDto> employeeDtos = employeeService.getAll();
+        return ResponseEntity.ok(employeeDtos);
+    }
+
     @GetMapping("/count")
     @ApiOperation(value = "getRowCount", notes = "Получение количества работников")
     @ApiResponses(value = {
