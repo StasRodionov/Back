@@ -14,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -80,14 +83,14 @@ public class EmployeeRestController {
     }
 
     @GetMapping("/pages")
-    @ApiOperation(value = "searchWithPage", notes = "Получение списка работников по заданным параметрам постранично")
+    @ApiOperation(value = "searchWithPages", notes = "Получение списка работников по заданным параметрам постранично")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Успешное получение страницы работников"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<EmployeeDto>> searchWithPage(
+    public ResponseEntity<List<EmployeeDto>> searchWithPages(
             @And({
                     @Spec(path = "lastName", params = "lastName", spec = LikeIgnoreCase.class),
                     @Spec(path = "firstName", params = "firstName", spec = LikeIgnoreCase.class),
@@ -103,7 +106,11 @@ public class EmployeeRestController {
             @RequestParam("pageNumber") Integer pageNumber,
             @RequestParam("rowsLimit") Integer rowsLimit) {
         log.info("Запрошена страница пользователей по фильтру");
-        return ResponseEntity.ok(employeeService.searchWithPage(sortColumn, sortDirection, specification, pageNumber, rowsLimit));
+        Pageable pageParams = PageRequest.of(pageNumber - 1, rowsLimit,
+                Sort.by(sortDirection.equals("ASCENDING") ?
+                                Sort.Direction.ASC : Sort.Direction.DESC,
+                                sortColumn));
+        return ResponseEntity.ok(employeeService.search(specification, pageParams));
     }
 
     @GetMapping("/{id}")

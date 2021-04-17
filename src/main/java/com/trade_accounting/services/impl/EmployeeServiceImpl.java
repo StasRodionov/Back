@@ -18,6 +18,7 @@ import com.trade_accounting.utils.DtoMapper;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
@@ -69,18 +70,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .map(dtoMapper::employeeToEmployeeDto).collect(Collectors.toList());
     }
 
-
     @Override
-    public List<EmployeeDto> searchWithPage(String sortColumn, String sortDirection,
-                                            Specification<Employee> specification,
-                                            Integer pageNumber,
-                                            Integer rowsLimit) {
-        Page<Employee> page = employeeRepository.findAll(specification,
-                PageRequest.of(pageNumber - 1, rowsLimit,
-    //TODO написать отдельный метод для "парсинга" Sort (если будет в каждом сервисе использоваться)
-                        Sort.by(sortDirection.equals("ASCENDING") ?
-                                        Sort.Direction.ASC : Sort.Direction.DESC,
-                                        sortColumn)));
+    public List<EmployeeDto> search(Specification<Employee> specification, Pageable pageParams) {
+        Page<Employee> page = employeeRepository.findAll(specification, pageParams);
         return page.map(dtoMapper::employeeToEmployeeDto).stream().collect(Collectors.toList());
     }
 
