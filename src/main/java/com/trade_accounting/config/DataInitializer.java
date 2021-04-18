@@ -483,7 +483,8 @@ public class DataInitializer {
                 "3664069397",
                 "79271669",
                 "1053600591197",
-                "236467", null, null,
+                "236467", "432145",
+                LocalDate.of(2020, 10, 10).toString(),
                 typeOfContractorService.getByName("Юридическое лицо")
         ));
         legalDetailService.create(new LegalDetailDto(
@@ -493,7 +494,7 @@ public class DataInitializer {
                 "Анатольевич",
                 "г. Москва, ул. Революции, д. 66",
                 "comment to address",
-                "3664069439", null,
+                "3664069439", "34271669",
                 "79271647",
                 "1053600591285",
                 "432145",
@@ -508,7 +509,7 @@ public class DataInitializer {
                 "г. Краснодар, ул. 40 Лет Октября, д. 16",
                 "comment to address",
                 "3664055588",
-                null,
+                "35259831",
                 "70713032",
                 "1033600141277",
                 "342145",
