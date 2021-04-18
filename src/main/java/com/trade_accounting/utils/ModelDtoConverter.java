@@ -140,16 +140,13 @@ public class ModelDtoConverter {
         if (contractor.getContractorGroup() != null) {
             contractorDto.setContractorGroupDto(modelMapper.map(contractor.getContractorGroup(), ContractorGroupDto.class));
         }
-//        if (contractor.getTypeOfContractor() != null) {
-//            contractorDto.setTypeOfContractorDto((modelMapper.map(contractor.getTypeOfContractor(), TypeOfContractorDto.class)));
-//        }
 
         if (contractor.getTypeOfPrice() != null) {
             contractorDto.setTypeOfPriceDto(modelMapper.map(contractor.getTypeOfPrice(), TypeOfPriceDto.class));
         }
-//        if (contractor.getBankAccounts() != null) {
-//            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(),  null));
-//        }
+        if (contractor.getBankAccounts() != null) {
+            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(),  null));
+        }
         if (contractor.getLegalDetail() != null) {
             contractorDto.setLegalDetailDto(modelMapper.map(contractor.getLegalDetail(), LegalDetailDto.class));
         }
@@ -211,14 +208,12 @@ public class ModelDtoConverter {
     }
 
     public static Contractor convertToContractor(ContractorDto dto, ContractorGroup contractorGroup,
-                                                 // TypeOfContractor typeOfContractor,
                                                  TypeOfPrice typeOfPrice,
                                                  List<BankAccount> bankAccount,
                                                  LegalDetail legalDetail) {
         return new Contractor(
                 dto.getId(),
                 dto.getName(),
-                // dto.getInn(),
                 dto.getSortNumber(),
                 dto.getPhone(),
                 dto.getFax(),
@@ -227,7 +222,6 @@ public class ModelDtoConverter {
                 dto.getCommentToAddress(),
                 dto.getComment(),
                 contractorGroup,
-                // typeOfContractor,
                 typeOfPrice,
                 bankAccount,
                 legalDetail

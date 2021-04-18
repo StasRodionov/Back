@@ -95,7 +95,6 @@ public class ContractorRestController {
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
-                    // @Spec(path = "inn", params = "inn", spec = LikeIgnoreCase.class),
                     @Spec(path = "sortNumber", params = "sortNumber", spec = LikeIgnoreCase.class),
                     @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
                     @Spec(path = "fax", params = "fax", spec = LikeIgnoreCase.class),
