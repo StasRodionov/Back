@@ -145,7 +145,7 @@ public class ModelDtoConverter {
             contractorDto.setTypeOfPriceDto(modelMapper.map(contractor.getTypeOfPrice(), TypeOfPriceDto.class));
         }
         if (contractor.getBankAccounts() != null) {
-            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(),  null));
+            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(), List.class));
         }
         if (contractor.getLegalDetail() != null) {
             contractorDto.setLegalDetailDto(modelMapper.map(contractor.getLegalDetail(), LegalDetailDto.class));
