@@ -10,6 +10,7 @@ import java.util.List;
 public interface InvoiceService {
 
     List<InvoiceDto> search(Specification<Invoice> specification);
+    List<InvoiceDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice);
 
     List<InvoiceDto> getAll();
 

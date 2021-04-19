@@ -27,6 +27,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +53,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.roleRepository = roleRepository;
         this.imageRepository = imageRepository;
         this.dtoMapper = dtoMapper;
+    }
+
+    @Override
+    public List<EmployeeDto> findBySearch(String search) {
+        return employeeRepository.getBySearch(search).stream()
+                .map(dtoMapper::employeeToEmployeeDto)
+                .collect(Collectors.toList());
     }
 
     @Override

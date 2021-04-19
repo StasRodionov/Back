@@ -46,13 +46,15 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<InvoiceDto> searchByString(String searchString, TypeOfInvoice typeOfInvoice) {
-        return invoiceRepository.search(searchString, typeOfInvoice).stream().map(invoiceDto -> {
-            invoiceDto.setCompanyDto(companyRepository.getById(invoiceDto.getCompanyDto().getId()));
-            invoiceDto.setContractorDto(dtoMapper.contractorToContractorDto(contractorRepository.getOne(invoiceDto.getContractorDto().getId())));
-            invoiceDto.setWarehouseDto(warehouseRepository.getById(invoiceDto.getWarehouseDto().getId()));
-            return invoiceDto;
-        }).collect(Collectors.toList());
+    public List<InvoiceDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice) {
+        List<InvoiceDto> invoiceDtoList = invoiceRepository.findBySearchAndTypeOfInvoice(search, typeOfInvoice);
+        for (InvoiceDto invoice: invoiceDtoList) {
+            invoice.setCompanyDto(companyRepository.getById(invoice.getCompanyDto().getId()));
+            invoice.setContractorDto(dtoMapper.contractorToContractorDto(
+                    contractorRepository.getOne(invoice.getContractorDto().getId())));
+            invoice.setWarehouseDto(warehouseRepository.getById(invoice.getWarehouseDto().getId()));
+        }
+        return invoiceDtoList;
     }
 
     @Override
