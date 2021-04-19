@@ -20,6 +20,7 @@ import com.trade_accounting.models.Product;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Project;
+import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
@@ -48,6 +49,7 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
+import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
@@ -391,4 +393,9 @@ public abstract class DtoMapper {
     public abstract WarehouseDto warehouseToWarehouseDto(Warehouse warehouse);
 
     public abstract Warehouse warehouseDtoToWarehouse(WarehouseDto warehouseDto);
+
+    //RetailStore
+    public abstract RetailStoreDto retailStoreToRetailStoreDto(RetailStore retailStore);
+
+    public abstract RetailStore retailStoreDtoToRetailStore(RetailStoreDto retailStoreDto);
 }

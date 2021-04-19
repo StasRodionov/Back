@@ -11,4 +11,5 @@ public interface CheckEntityService {
     void checkExistsTaskCommentById(Long taskCommentId);
     void checkExistsContractorGroupById(Long contractorGroupId);
     void checkExistsCurrencyById(Long currencyId);
+    void checkExistsRetailStoreById(Long retailStoreId);
 }
