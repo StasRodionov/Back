@@ -74,7 +74,12 @@ public class LoggingPointcuts {
 
         @AfterReturning(value = "inServiceLayer() && searchExecution()",  returning = "result")
         public void logSearch(JoinPoint joinPoint, Object result) {
-                log.info("Найдены экземпляры {}: {}", getDtoName(joinPoint), result);
+                if(result == null) {
+                        log.info("Не найдено экземпляров {}", getDtoName(joinPoint));
+                } else {
+                        log.info("Найдены экземпляры {}: {}", getDtoName(joinPoint), result);
+                }
+
         }
 
         private String getDtoName(JoinPoint joinPoint) {
