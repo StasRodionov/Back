@@ -10,6 +10,7 @@ import java.util.List;
 public interface InvoiceService {
 
     List<InvoiceDto> search(Specification<Invoice> specification);
+
     List<InvoiceDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice);
 
     List<InvoiceDto> getAll();
@@ -23,6 +24,4 @@ public interface InvoiceService {
     InvoiceDto update(InvoiceDto invoiceDto);
 
     void deleteById(Long id);
-
-    List<InvoiceDto> searchByString(String query, TypeOfInvoice typeOfInvoice);
 }
