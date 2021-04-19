@@ -177,7 +177,7 @@ public class ModelDtoConverter {
         }
 
         if (contractor.getContact() != null) {
-            contractorDto.setContactDto(modelMapper.map(contractor.getContact(), new TypeToken<List<Contact>>(){}.getType()));
+            contractorDto.setContactDto(modelMapper.map(contractor.getContact(), new TypeToken<List<ContactDto>>(){}.getType()));
         }
 //        if (contractor.getBankAccounts() != null) {
 //            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(),  null));
