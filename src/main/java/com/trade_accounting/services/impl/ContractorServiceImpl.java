@@ -19,7 +19,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,10 +92,13 @@ public class ContractorServiceImpl implements ContractorService {
         log.info("добавление нового контрагента ");
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
 
-
         Address address = dtoMapper.addressDtoToAddress(contractorDto.getAddressDto());
         addressRepository.save(address);
         contractor.setAddress(address);
+
+        List<Contact> contactList = dtoMapper.contactDtoListToContactList(contractorDto.getContactDto());
+        contactList.forEach(contactRepository::save);
+        contractor.setContact(contactList);
 
 
         contractor.setContractorGroup(
@@ -132,16 +134,13 @@ public class ContractorServiceImpl implements ContractorService {
     public ContractorDto update(ContractorDto contractorDto) {
         log.info("обновление контрагента ");
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
+
         Address address = dtoMapper.addressDtoToAddress(contractorDto.getAddressDto());
         addressRepository.save(address);
         contractor.setAddress(address);
 
-        List<Contact> contactList = new ArrayList<>();
-        contractorDto.getContactDto().forEach(contactDto -> {
-            Contact contact = dtoMapper.contactDtoToContact(contactDto);
-            contactRepository.save(contact);
-            contactList.add(contact);
-        });
+        List<Contact> contactList = dtoMapper.contactDtoListToContactList(contractorDto.getContactDto());
+        contactList.forEach(contactRepository::save);
         contractor.setContact(contactList);
 
         contractor.setContractorGroup(

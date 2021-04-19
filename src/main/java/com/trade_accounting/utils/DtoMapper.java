@@ -116,6 +116,10 @@ public abstract class DtoMapper {
 
     public abstract Contact contactDtoToContact(ContactDto contactDto);
 
+    public abstract List<Contact> contactDtoListToContactList(List<ContactDto> contactDtoList);
+
+    public abstract List<ContactDto> contactListToContactDtoList(List<Contact> contactList);
+
     //Contract
     @Mappings({
             @Mapping(source = "company", target = "companyDto"),
