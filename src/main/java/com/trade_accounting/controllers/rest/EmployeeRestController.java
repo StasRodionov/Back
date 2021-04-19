@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -59,6 +60,20 @@ public class EmployeeRestController {
         log.info("Запрошен список EmployeeDto");
         return ResponseEntity.ok(employeeDtos);
     }
+
+    @GetMapping("/findBySearch")
+    @ApiOperation(value = "searchBySymbols", notes = "Получение списка работников по параметрам")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка сотрудников"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<EmployeeDto>> findBySearch(@RequestParam("search") String search) {
+        log.info("Запрошен поиск работника");
+        return ResponseEntity.ok(employeeService.findBySearch(search));
+    }
+
 
     @GetMapping("/search")
     @ApiOperation(value = "search", notes = "Получение списка работников по заданным параметрам")
