@@ -26,6 +26,9 @@ public class LoggingPointcuts {
         @Pointcut("execution(* create(..))")
         public void createExecution() {}
 
+        @Pointcut("execution(void create(..))")
+        public void voidCreateExecution() {}
+
         @Pointcut("execution(* update(..))")
         public void updateExecution() {}
 
@@ -46,27 +49,34 @@ public class LoggingPointcuts {
         }
 
         @AfterReturning(value = "inServiceLayer() && createExecution()",  returning = "dto")
-        public void logCreate(JoinPoint joinPoint, Object dto) {
+        public void logCreate(Object dto) {
                 if(dto == null) {
-                        log.info("Создан экземпляр {}", getDtoName(joinPoint));
+
                 } else {
                         log.info("Создан экземпляр {}: {}", dto.getClass().getSimpleName(), dto);
                 }
 
         }
 
+        @After(value = "inServiceLayer() && voidCreateExecution() && args(dto)")
+        public void logVoidCreate(Object dto) {
+                log.info("Создан экземпляр {}", dto.getClass().getSimpleName());
+        }
+
         @After(value = "inServiceLayer() && updateExecution() && args(dto)")
         public void logUpdate(Object dto) {
                 log.info("Обновлен экземпляр {} с id={}", dto.getClass().getSimpleName(), getId(dto));
         }
+
         @After(value = "inServiceLayer() && deleteExecution() && args(id)")
         public void logDelete(JoinPoint joinPoint, Long id) {
                 log.info("Удален экземпляр {} с id={}", getDtoName(joinPoint), id);
         }
+
         @AfterReturning(value = "inServiceLayer() && searchExecution()",  returning = "result")
         public void logSearch(JoinPoint joinPoint, Object result) {
                 if(result == null) {
-                        // search method id void
+                        // search method is void
                 } else {
                         log.info("Найдены экземпляры {}: {}", getDtoName(joinPoint), result);
                 }
