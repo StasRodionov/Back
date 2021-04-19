@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import io.swagger.annotations.Api;
@@ -77,6 +78,20 @@ public class InvoiceRestController {
             }) Specification<Invoice> spec) {
         log.info("Запрошен поиск счетов invoice");
         return ResponseEntity.ok(invoiceService.search(spec));
+    }
+
+    @GetMapping("/searchByString")
+    @ApiOperation(value = "searchByString", notes = "Search of invoices")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка накладных"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<InvoiceDto>> search(@RequestParam("search") String search,
+                                                           @RequestParam("typeOfInvoice") TypeOfInvoice typeOfInvoice) {
+        log.info("Запрошен поиск счетов invoice");
+        return ResponseEntity.ok(invoiceService.findBySearchAndTypeOfInvoice(search, typeOfInvoice));
     }
 
     @GetMapping("/{id}")

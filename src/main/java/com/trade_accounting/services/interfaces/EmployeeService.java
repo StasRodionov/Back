@@ -20,4 +20,6 @@ public interface EmployeeService {
 
     EmployeeDto getByEmail(String email);
 
+    List<EmployeeDto> findBySearch(String search);
+
 }

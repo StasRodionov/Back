@@ -116,7 +116,9 @@ public class ContractorServiceImpl implements ContractorService {
         );
 
         contractor.setTypeOfPrice(
-                typeOfPriceRepository.save(dtoMapper.typeOfPriceDtoToTypeOfPrice(contractorDto.getTypeOfPriceDto()))
+                typeOfPriceRepository.save(dtoMapper.typeOfPriceDtoToTypeOfPrice(
+                        contractorDto.getTypeOfPriceDto())
+                )
         );
 
         contractor.setLegalDetail(
@@ -126,7 +128,6 @@ public class ContractorServiceImpl implements ContractorService {
                         )
                 )
         );
-
         return dtoMapper.contractorToContractorDto(contractorRepository.saveAndFlush(contractor));
     }
 
