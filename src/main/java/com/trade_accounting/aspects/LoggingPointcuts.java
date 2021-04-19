@@ -3,7 +3,6 @@ package com.trade_accounting.aspects;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -26,8 +25,6 @@ public class LoggingPointcuts {
         @Pointcut("execution(* create(..))")
         public void createExecution() {}
 
-        @Pointcut("execution(void create(..))")
-        public void voidCreateExecution() {}
 
         @Pointcut("execution(* update(..))")
         public void updateExecution() {}
@@ -48,18 +45,13 @@ public class LoggingPointcuts {
                 log.info("Запрошен экземпляр {} с id={}", getDtoName(joinPoint), id);
         }
 
-        @AfterReturning(value = "inServiceLayer() && createExecution()",  returning = "dto")
-        public void logCreate(Object dto) {
-                if(dto == null) {
-
+        @AfterReturning(value = "inServiceLayer() && createExecution() && args(dto)",  returning = "saved")
+        public void logCreate(Object dto, Object saved) {
+                if(saved == null) {
+                        log.info("Создан экземпляр {}", dto.getClass().getSimpleName());
                 } else {
                         log.info("Создан экземпляр {}: {}", dto.getClass().getSimpleName(), dto);
                 }
-        }
-
-        @AfterReturning(value = "inServiceLayer() && voidCreateExecution() && args(dto)")
-        public void logVoidCreate(Object dto) {
-                log.info("Создан экземпляр {}", dto.getClass().getSimpleName());
         }
 
         @AfterReturning(value = "inServiceLayer() && updateExecution() && args(dto)")
