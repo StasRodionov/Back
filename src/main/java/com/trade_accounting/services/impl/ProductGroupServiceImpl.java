@@ -37,17 +37,16 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     }
 
     @Override
-    public void create(ProductGroup productGroup) {
-        productGroupRepository.save(productGroup);
-    }
-
-    @Override
     public ProductGroupDto create(ProductGroupDto dto) {
         ProductGroup productGroup = dtoMapper.productGroupDtoToProductGroup(dto);
 
-        productGroup.setProductGroup(
-                productGroupRepository.findById(dto.getParentId()).orElse(null)
-        );
+        if(dto.getId() != null) {
+            productGroup.setProductGroup(
+                    productGroupRepository.findById(dto.getParentId()).orElse(null)
+            );
+        } else {
+            productGroup.setProductGroup(null);
+        }
 
         productGroupRepository.save(productGroup);
 

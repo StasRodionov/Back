@@ -1,6 +1,5 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.AddressDto;
@@ -431,11 +430,11 @@ public class DataInitializer {
 
     private void initProductGroups() {
 
-        ProductGroup productGroup1 = new ProductGroup("Товарная группа №1", "1");
-        ProductGroup productGroup2 = new ProductGroup("Товарная группа №2", "2");
-        ProductGroup productGroup3 = new ProductGroup("Товарная группа №3", "3");
-        ProductGroup productGroup4 = new ProductGroup("Товарная группа №4", "4");
-        ProductGroup productGroup5 = new ProductGroup("Товарная группа №5", "5");
+        ProductGroupDto productGroup1 = new ProductGroupDto("Товарная группа №1", "1");
+        ProductGroupDto productGroup2 = new ProductGroupDto("Товарная группа №2", "2");
+        ProductGroupDto productGroup3 = new ProductGroupDto("Товарная группа №3", "3");
+        ProductGroupDto productGroup4 = new ProductGroupDto("Товарная группа №4", "4");
+        ProductGroupDto productGroup5 = new ProductGroupDto("Товарная группа №5", "5");
 
         productGroupService.create(productGroup1);
         productGroupService.create(productGroup2);
@@ -443,22 +442,23 @@ public class DataInitializer {
         productGroupService.create(productGroup4);
         productGroupService.create(productGroup5);
 
-        ProductGroup productGroup6 = new ProductGroup("Товарная группа №6", "6", productGroup1);
+        ProductGroupDto productGroup6 = new ProductGroupDto("Товарная группа №6", "6", productGroup1.getId());
+        ProductGroupDto productGroup7 = new ProductGroupDto("Товарная группа №7", "7", productGroup6.getId());
+        ProductGroupDto productGroup8 = new ProductGroupDto("Товарная группа №8", "8", productGroup2.getId());
+        ProductGroupDto productGroup9 = new ProductGroupDto("Товарная группа №9", "9", productGroup7.getId());
+        ProductGroupDto productGroup10 = new ProductGroupDto("Товарная группа №10", "10", productGroup3.getId());
+
         productGroupService.create(productGroup6);
-        ProductGroup productGroup7 = new ProductGroup("Товарная группа №7", "7", productGroup6);
         productGroupService.create(productGroup7);
-        ProductGroup productGroup8 = new ProductGroup("Товарная группа №8", "8", productGroup2);
         productGroupService.create(productGroup8);
-        ProductGroup productGroup9 = new ProductGroup("Товарная группа №9", "9", productGroup7);
         productGroupService.create(productGroup9);
-        ProductGroup productGroup10 = new ProductGroup("Товарная группа №10", "10", productGroup3);
         productGroupService.create(productGroup10);
 
-        ProductGroup productGroup11 = new ProductGroup("Товарная группа №11", "11", productGroup8);
-        ProductGroup productGroup12 = new ProductGroup("Товарная группа №12", "12", productGroup4);
-        ProductGroup productGroup13 = new ProductGroup("Товарная группа №13", "13", productGroup9);
-        ProductGroup productGroup14 = new ProductGroup("Товарная группа №14", "14", productGroup5);
-        ProductGroup productGroup15 = new ProductGroup("Товарная группа №15", "15", productGroup10);
+        ProductGroupDto productGroup11 = new ProductGroupDto("Товарная группа №11", "11", productGroup8.getId());
+        ProductGroupDto productGroup12 = new ProductGroupDto("Товарная группа №12", "12", productGroup4.getId());
+        ProductGroupDto productGroup13 = new ProductGroupDto("Товарная группа №13", "13", productGroup9.getId());
+        ProductGroupDto productGroup14 = new ProductGroupDto("Товарная группа №14", "14", productGroup5.getId());
+        ProductGroupDto productGroup15 = new ProductGroupDto("Товарная группа №15", "15", productGroup10.getId());
 
         productGroupService.create(productGroup11);
         productGroupService.create(productGroup12);
@@ -947,7 +947,7 @@ public class DataInitializer {
 
         for (int i = 0; i < 350; i++) {
 
-            productService.save(new ProductDto(
+            productService.create(new ProductDto(
                     null,
                     "Яблоки" + i,
                     new BigDecimal("1.0"),
@@ -964,7 +964,7 @@ public class DataInitializer {
                     productGroupDtoList.get(0),
                     attributeOfCalculationObjectDtoList.get(0)
             ));
-            productService.save(new ProductDto(
+            productService.create(new ProductDto(
                     null,
                     "Бананы" + i,
                     new BigDecimal("1.0"),
@@ -981,7 +981,7 @@ public class DataInitializer {
                     productGroupDtoList.get(1),
                     attributeOfCalculationObjectDtoList.get(1)
             ));
-            productService.save(new ProductDto(
+            productService.create(new ProductDto(
                     null,
                     "Мандарины" + i,
                     new BigDecimal("1.0"),
@@ -1003,7 +1003,7 @@ public class DataInitializer {
     }
 
     private void initContracts() {
-        contractService.save(new ContractDto(
+        contractService.create(new ContractDto(
                 null,
                 "1",
                 LocalDate.now(),

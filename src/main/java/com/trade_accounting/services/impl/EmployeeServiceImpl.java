@@ -17,8 +17,6 @@ import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.utils.DtoMapper;
 import lombok.SneakyThrows;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,6 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return dtoMapper.employeeToEmployeeDto(emp.orElse(new Employee()));
     }
 
+    //TODO рефакторинг метода save и разделение его на update и create
     @SneakyThrows
     @Override
     public void save(EmployeeDto employeeDto) {
@@ -127,6 +126,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
         employeeRepository.save(employee);
+    }
+
+    @Override
+    public EmployeeDto create(EmployeeDto dto) {
+        return null;
+    }
+
+    @Override
+    public EmployeeDto update(EmployeeDto dto) {
+        return null;
     }
 
     @SneakyThrows

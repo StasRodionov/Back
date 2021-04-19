@@ -7,6 +7,7 @@ import com.trade_accounting.utils.DtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -28,14 +29,16 @@ public class ContractorGroupServiceImpl implements ContractorGroupService {
     }
 
     @Override
-    public void create(ContractorGroupDto dto) {
+    public ContractorGroupDto create(ContractorGroupDto dto) {
         contractorGroupRepository
                 .save(dtoMapper.contractorGroupDtoToContractorGroup(dto));
+        return dto;
     }
 
     @Override
-    public void update(ContractorGroupDto dto) {
+    public ContractorGroupDto update(ContractorGroupDto dto) {
         create(dto);
+        return dto;
     }
 
     @Override

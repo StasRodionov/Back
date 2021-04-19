@@ -6,13 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface ProductService {
-
-    List<ProductDto> getAll();
-
-    ProductDto getById(Long id);
-
-    void save(ProductDto productDto);
+public interface ProductService extends AbstractService<ProductDto> {
 
     void deleteById(Long id);
 

@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Conjunction;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Or;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -112,7 +111,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> create(@ApiParam(name = "contractDto",
             value = "DTO договора, который необходимо создать")
                                                   @RequestBody ContractDto contractDto) {
-        contractService.save(contractDto);
+        contractService.create(contractDto);
         log.info("Записан новый экземпляр - {}", contractDto.toString());
         return ResponseEntity.ok().build();
     }
@@ -129,7 +128,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> update(@ApiParam(name = "contractDto",
             value = "DTO договора, который необходимо обновить")
                                                   @RequestBody ContractDto contractDto) {
-        contractService.save(contractDto);
+        contractService.update(contractDto);
         log.info("Обновлен экземпляр ContractDto с id= {}", contractDto.getId());
         return ResponseEntity.ok().build();
     }

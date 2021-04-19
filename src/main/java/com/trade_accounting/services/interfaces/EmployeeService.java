@@ -6,18 +6,12 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface EmployeeService {
-
-    List<EmployeeDto> getAll();
+public interface EmployeeService extends AbstractService<EmployeeDto> {
 
     List<EmployeeDto> search(Specification<Employee> specification);
 
-    EmployeeDto getById(Long id);
+    EmployeeDto getByEmail(String email);
 
     void save(EmployeeDto employeeDto);
-
-    void deleteById(Long id);
-
-    EmployeeDto getByEmail(String email);
 
 }
