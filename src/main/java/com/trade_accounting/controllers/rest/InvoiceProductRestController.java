@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Invoice Product Rest Controller", description = "CRUD операции с товарами в накладной")
 @Api(tags = "Invoice Product Rest Controller")
@@ -44,7 +42,6 @@ public class InvoiceProductRestController {
     )
     public ResponseEntity<List<InvoiceProductDto>> getAll() {
         List<InvoiceProductDto> invoiceProductDtos = invoiceProductService.getAll();
-        log.info("Запрошен список InvoiceProduct");
         return ResponseEntity.ok(invoiceProductDtos);
     }
 
@@ -63,7 +60,6 @@ public class InvoiceProductRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         InvoiceProductDto invoiceProductDto = invoiceProductService.getById(id);
-        log.info("Запрошен экземпляр InvoiceProduct с id= {}", id);
         return ResponseEntity.ok(invoiceProductDto);
     }
     @ApiOperation(value = "getByInvoiceId", notes = "Возвращает список товаров в накладной по Invoice.id")
@@ -81,7 +77,6 @@ public class InvoiceProductRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         List<InvoiceProductDto> invoiceProductDtoList = invoiceProductService.getByInvoiceId(id);
-        log.info("Запрошен список InvoiceProduct с Invoice.id= {}", id);
         return ResponseEntity.ok(invoiceProductDtoList);
     }
 
@@ -97,7 +92,6 @@ public class InvoiceProductRestController {
     public ResponseEntity<?> create(@ApiParam(name = "invoiceProductDto",
             value = "DTO товара в накладной, который необходимо создать") @RequestBody InvoiceProductDto invoiceProductDto) {
         invoiceProductService.create(invoiceProductDto);
-        log.info("Записан новый экземпляр InvoiceProduct c id= {}", invoiceProductDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -113,7 +107,6 @@ public class InvoiceProductRestController {
     public ResponseEntity<?> update(@ApiParam(name = "invoiceProductDto",
             value = "DTO InvoiceProduct, который необходимо обновить") @RequestBody InvoiceProductDto invoiceProductDto) {
         invoiceProductService.update(invoiceProductDto);
-        log.info("Обновлен экземпляр InvoiceProduct с id= {}", invoiceProductDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -133,7 +126,6 @@ public class InvoiceProductRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         invoiceProductService.deleteById(id);
-        log.info("Удален экземпляр InvoiceProduct с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }
