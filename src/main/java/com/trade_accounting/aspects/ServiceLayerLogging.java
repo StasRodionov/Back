@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Slf4j
 @Component
-public class LoggingPointcuts {
+public class ServiceLayerLogging {
 
         @Pointcut("within(com.trade_accounting.services..*)")
         public void inServiceLayer() {}
@@ -32,7 +32,7 @@ public class LoggingPointcuts {
         @Pointcut("execution(* deleteById(..))")
         public void deleteExecution() {}
 
-        @Pointcut("execution(* search(..))")
+        @Pointcut("execution(* search*(..))")
         public void searchExecution() {}
 
         @AfterReturning("inServiceLayer() && getAllExecution()")
@@ -42,11 +42,11 @@ public class LoggingPointcuts {
 
         @AfterReturning(value = "inServiceLayer() && getByIdExecution() && args(id)")
         public void logGetById(JoinPoint joinPoint, Long id) {
-                log.info("Запрошен экземпляр {} с id={}", getDtoName(joinPoint), id);
+                log.info("Найден экземпляр {} с id={}", getDtoName(joinPoint), id);
         }
 
         @AfterReturning(value = "inServiceLayer() && createExecution() && args(dto)",  returning = "saved")
-        public void logCreate(Object dto, Object saved) {
+        public void logCreate(JoinPoint joinPoint, Object dto, Object saved) {
                 if(saved == null) {
                         log.info("Создан экземпляр {}", dto.getClass().getSimpleName());
                 } else {
