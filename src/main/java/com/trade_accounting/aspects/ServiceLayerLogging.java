@@ -13,14 +13,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServiceLayerLogging {
 
+        /**
+         * Pointcuts
+         */
+
         @Pointcut("within(com.trade_accounting.services..*)")
         public void inServiceLayer() {}
 
-        @Pointcut("execution(* getAll())")
+        @Pointcut("execution(* getAll*(..))")
         public void getAllExecution() {}
 
-        @Pointcut("execution(* getById(..))")
-        public void getByIdExecution() {}
+        @Pointcut("execution(* getBy*(..))")
+        public void getByExecution() {}
+
 
         @Pointcut("execution(* create(..))")
         public void createExecution() {}
@@ -35,18 +40,29 @@ public class ServiceLayerLogging {
         @Pointcut("execution(* search*(..))")
         public void searchExecution() {}
 
+        /**
+         * Advices
+         */
+
         @AfterReturning("inServiceLayer() && getAllExecution()")
         public void logGetAll(JoinPoint joinPoint) {
-                log.info("Запрошен список {}", getDtoName(joinPoint));
+                log.info("Получен список {}", getDtoName(joinPoint));
         }
 
-        @AfterReturning(value = "inServiceLayer() && getByIdExecution() && args(id)")
-        public void logGetById(JoinPoint joinPoint, Long id) {
-                log.info("Найден экземпляр {} с id={}", getDtoName(joinPoint), id);
+        @AfterReturning(value = "inServiceLayer() && getByExecution() && args(prop)", returning = "result")
+        public void logGetBy(JoinPoint joinPoint, Object prop, Object result) {
+                if (result == null)  {
+
+                } else {
+                        log.info("Найден экземпляр {} с {}={}",
+                                result.getClass().getSimpleName(), getPropertyName(joinPoint), prop);
+                }
         }
+
+
 
         @AfterReturning(value = "inServiceLayer() && createExecution() && args(dto)",  returning = "saved")
-        public void logCreate(JoinPoint joinPoint, Object dto, Object saved) {
+        public void logCreate(Object dto, Object saved) {
                 if(saved == null) {
                         log.info("Создан экземпляр {}", dto.getClass().getSimpleName());
                 } else {
@@ -82,5 +98,9 @@ public class ServiceLayerLogging {
         @SneakyThrows
         private Long getId(Object dto) {
                 return (Long) dto.getClass().getMethod("getId").invoke(dto, new Object[]{});
+        }
+
+        private String getPropertyName(JoinPoint joinPoint) {
+                return joinPoint.getSignature().getName().substring(5);
         }
 }
