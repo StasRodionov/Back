@@ -1,8 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProjectDto;
-import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,7 +8,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Project Rest Controller", description = "CRUD операции с проектами")
 @Api(tags = "Project Rest Controller")
@@ -46,7 +42,6 @@ public class ProjectRestController {
     })
     public ResponseEntity<List<ProjectDto>> getAll() {
         List<ProjectDto> projectDtoList = projectService.getAll();
-        log.info("Запрошен список ProjectDto");
         return ResponseEntity.ok(projectDtoList);
     }
 
@@ -61,7 +56,6 @@ public class ProjectRestController {
     public ResponseEntity<ProjectDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти проект") @PathVariable(name = "id") Long id) {
         ProjectDto projectDto = projectService.getById(id);
-        log.info("Запрошен экземпляр ProjectDto с id= {}", id);
         return ResponseEntity.ok(projectDto);
     }
 
@@ -77,7 +71,6 @@ public class ProjectRestController {
     public ResponseEntity<ProjectDto> create(@ApiParam(name = "projectDto", value = "DTO проекта, который необходимо создать")
                                              @RequestBody ProjectDto projectDto) {
         projectService.create(projectDto);
-        log.info("Записан новый экземпляр ProjectDto с id= {}, name= {}", projectDto.getId(), projectDto.getName());
         return ResponseEntity.ok().build();
     }
 
@@ -94,7 +87,6 @@ public class ProjectRestController {
             value = "DTO проекта, c обновленными данными")
                                              @RequestBody ProjectDto projectDto) {
         projectService.update(projectDto);
-        log.info("Обновлен экземпляр ProjectDto с id= {}, name= {}", projectDto.getId(), projectDto.getName());
         return ResponseEntity.ok().build();
     }
 
@@ -111,7 +103,6 @@ public class ProjectRestController {
             value = "ID проекта, который необходимо удалить")
                                                  @PathVariable(name = "id") Long id) {
         projectService.deleteById(id);
-        log.info("Удален экземпляр ProjectDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }
