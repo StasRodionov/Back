@@ -2,16 +2,22 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.exceptions.BadRequestException;
 import com.trade_accounting.exceptions.NotFoundEntityException;
+import com.trade_accounting.models.dto.BankAccountDto;
+import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.repositories.BankAccountRepository;
+import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.CurrencyRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
+import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.repositories.RoleRepository;
@@ -23,6 +29,7 @@ import com.trade_accounting.services.interfaces.CheckEntityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -39,6 +46,9 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final TaskCommentRepository commentRepository;
     private final ContractorGroupRepository contractorGroupRepository;
     private final CurrencyRepository currencyRepository;
+    private final CompanyRepository companyRepository;
+    private final LegalDetailRepository legalDetailRepository;
+    private final BankAccountRepository bankAccountRepository;
     private final RetailStoreRepository retailStoreRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
@@ -48,8 +58,10 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   RoleRepository roleRepository,
                                   WarehouseRepository warehouseRepository,
                                   TaskRepository taskRepository,
-                                  TaskCommentRepository commentRepository, ContractorGroupRepository contractorGroupRepository, CurrencyRepository currencyRepository,
-                                  RetailStoreRepository retailStoreRepository) {
+                                  RetailStoreRepository retailStoreRepository,
+                                  TaskCommentRepository commentRepository, ContractorGroupRepository contractorGroupRepository,
+                                  CurrencyRepository currencyRepository, CompanyRepository companyRepository,
+                                  LegalDetailRepository legalDetailRepository, BankAccountRepository bankAccountRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -62,6 +74,9 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.contractorGroupRepository = contractorGroupRepository;
         this.currencyRepository = currencyRepository;
         this.retailStoreRepository = retailStoreRepository;
+        this.companyRepository = companyRepository;
+        this.legalDetailRepository = legalDetailRepository;
+        this.bankAccountRepository = bankAccountRepository;
     }
 
 
@@ -154,6 +169,40 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsCurrencyById(Long currencyId) {
         if(!currencyRepository.existsById(currencyId)) {
             throw new NotFoundEntityException("Валюта с id=" + currencyId + ", не найдена");
+        }
+    }
+
+    @Override
+    public void checkExistCompanyById(Long companyId) {
+        if (!companyRepository.existsById(companyId)) {
+            throw new NotFoundEntityException("Компания с id=" + companyId + " не найдена");
+        }
+    }
+
+    @Override
+    public void checkForBadCompany(CompanyDto company) {
+        LegalDetailDto legalDetail = company.getLegalDetailDto();
+        List<BankAccountDto> bankAccounts = company.getBankAccountDto();
+
+        boolean isLegalDetailFilled = legalDetail != null && legalDetail.getId() != null;
+        boolean bankAccountListFilled = bankAccounts != null && !bankAccounts.isEmpty();
+
+        if(isLegalDetailFilled && !legalDetailRepository.existsById(legalDetail.getId())) {
+            throw new BadRequestException(
+                    String.format("Юридических деталей с id %d не существует", legalDetail.getId())
+            );
+        }
+
+        if(bankAccountListFilled) {
+            for (BankAccountDto bankAccount : bankAccounts) {
+                boolean isBankAccountFilled = bankAccount != null && bankAccount.getId() != null;
+
+                if (isBankAccountFilled && !bankAccountRepository.existsById(bankAccount.getId())) {
+                    throw new BadRequestException(
+                            String.format("Банковского счёта с id %d не существует.", bankAccount.getId())
+                    );
+                }
+            }
         }
     }
 

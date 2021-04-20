@@ -1,5 +1,6 @@
 package com.trade_accounting.services.interfaces;
 
+import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 
 public interface CheckEntityService {
@@ -11,5 +12,7 @@ public interface CheckEntityService {
     void checkExistsTaskCommentById(Long taskCommentId);
     void checkExistsContractorGroupById(Long contractorGroupId);
     void checkExistsCurrencyById(Long currencyId);
-    void checkExistsRetailStoreById(Long retailStoreId);
+    void checkExistCompanyById(Long companyId);
+    void checkForBadCompany(CompanyDto company);
+    void checkExistsRetailStoreById(Long RetailStoreId);
 }

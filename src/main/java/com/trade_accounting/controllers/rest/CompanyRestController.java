@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.CompanyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,9 +37,12 @@ import java.util.List;
 public class CompanyRestController {
 
     private final CompanyService companyService;
+    private final CheckEntityService checkEntityService;
 
-    public CompanyRestController(CompanyService companyService) {
+    public CompanyRestController(CompanyService companyService,
+                                 CheckEntityService checkEntityService) {
         this.companyService = companyService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -91,6 +95,7 @@ public class CompanyRestController {
     public ResponseEntity<CompanyDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти компанию")
                                                   @PathVariable(name = "id") Long id){
+        checkEntityService.checkExistCompanyById(id);
         CompanyDto companyDto = companyService.getById(id);
         log.info("Запрошен экземпляр компании с id = {}", id);
         return ResponseEntity.ok(companyDto);
@@ -123,6 +128,7 @@ public class CompanyRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "companyDto", value = "DTO компании, которую необходимо создать")
                                         @RequestBody CompanyDto companyDto){
+        checkEntityService.checkForBadCompany(companyDto);
         companyService.create(companyDto);
         log.info("Записан новый экземпляр компании - {}", companyDto);
         return ResponseEntity.ok().build();
@@ -139,6 +145,8 @@ public class CompanyRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "companyDto", value = "DTO компании, которую необходимо обновить")
                                         @RequestBody CompanyDto companyDto) {
+        checkEntityService.checkExistCompanyById(companyDto.getId());
+        checkEntityService.checkForBadCompany(companyDto);
         companyService.update(companyDto);
         log.info("Обновлен экземпляр компании с id = {}", companyDto.getId());
         return ResponseEntity.ok().build();
