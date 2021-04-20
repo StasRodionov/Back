@@ -46,7 +46,7 @@ public class ServiceLayerLogging {
 
         @AfterReturning("inServiceLayer() && getAllExecution()")
         public void logGetAll(JoinPoint joinPoint) {
-                log.info("Получен список {}", getDtoName(joinPoint));
+                log.info("Запрошен список {}", getDtoName(joinPoint));
         }
 
         @AfterReturning(value = "inServiceLayer() && getByExecution() && args(prop)", returning = "result")
@@ -59,8 +59,6 @@ public class ServiceLayerLogging {
                 }
         }
 
-
-
         @AfterReturning(value = "inServiceLayer() && createExecution() && args(dto)",  returning = "saved")
         public void logCreate(Object dto, Object saved) {
                 if(saved == null) {
@@ -70,8 +68,8 @@ public class ServiceLayerLogging {
                 }
         }
 
-        @AfterReturning(value = "inServiceLayer() && updateExecution() && args(dto)")
-        public void logUpdate(Object dto) {
+        @AfterReturning(value = "inServiceLayer() && updateExecution() && args(dto)", returning = "updated")
+        public void logUpdate(Object dto, Object updated) {
                 log.info("Обновлен экземпляр {} с id={}", dto.getClass().getSimpleName(), getId(dto));
         }
 
@@ -83,7 +81,7 @@ public class ServiceLayerLogging {
         @AfterReturning(value = "inServiceLayer() && searchExecution()",  returning = "result")
         public void logSearch(JoinPoint joinPoint, Object result) {
                 if(result == null) {
-                        log.info("Не найдено экземпляров {}", getDtoName(joinPoint));
+
                 } else {
                         log.info("Найдены экземпляры {}: {}", getDtoName(joinPoint), result);
                 }
