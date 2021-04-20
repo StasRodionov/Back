@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Invoice Rest Controller", description = "CRUD  операции с накладными")
 @Api(tags = "Invoice Rest Controller")
@@ -54,11 +53,9 @@ public class InvoiceRestController {
         List<InvoiceDto> invoiceDtoList;
         if (typeOfInvoice != null){
             invoiceDtoList = invoiceService.getAll(typeOfInvoice);
-            log.info("Запрошен список накладных с typeOfInvoice = {}", typeOfInvoice);
         }
         else {
             invoiceDtoList = invoiceService.getAll();
-            log.info("Запрошен список всех накладных");
         }
         return ResponseEntity.ok(invoiceDtoList);
     }
@@ -76,7 +73,6 @@ public class InvoiceRestController {
                     @Spec(path = "isSpend", params = "spend", spec = Equal.class),
                     @Spec(path = "comment", params = "comment", spec = Equal.class),
             }) Specification<Invoice> spec) {
-        log.info("Запрошен поиск счетов invoice");
         return ResponseEntity.ok(invoiceService.search(spec));
     }
 
@@ -90,7 +86,6 @@ public class InvoiceRestController {
     )
     public ResponseEntity<List<InvoiceDto>> search(@RequestParam("search") String search,
                                                            @RequestParam("typeOfInvoice") TypeOfInvoice typeOfInvoice) {
-        log.info("Запрошен поиск счетов invoice");
         return ResponseEntity.ok(invoiceService.findBySearchAndTypeOfInvoice(search, typeOfInvoice));
     }
 
@@ -106,7 +101,6 @@ public class InvoiceRestController {
             value = "Переданный в URL id, по которому необходимо найти накладную")
                                               @PathVariable(name = "id") Long id) {
         InvoiceDto invoiceDto = invoiceService.getById(id);
-        log.info("Запрошен экземпляр накладной с id = {}", id);
         return ResponseEntity.ok(invoiceDto);
     }
 
@@ -122,7 +116,6 @@ public class InvoiceRestController {
     public ResponseEntity<InvoiceDto> create(@ApiParam(name = "invoiceDto", value = "DTO накладной, которую необходимо создать")
                                     @RequestBody InvoiceDto invoiceDto) {
         InvoiceDto invoiceDto1 = invoiceService.create(invoiceDto);
-        log.info("Записан новый экземпляр накладной - {}", invoiceDto);
         return ResponseEntity.ok().body(invoiceDto1);
     }
 
@@ -138,7 +131,6 @@ public class InvoiceRestController {
     public ResponseEntity<?> update(@ApiParam(name = "invoiceDto", value = "DTO накладной, которую необходимо обновить")
                                     @RequestBody InvoiceDto invoiceDto) {
         invoiceService.update(invoiceDto);
-        log.info("Обновлен экземпляр накладной с id = {}", invoiceDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -155,7 +147,6 @@ public class InvoiceRestController {
             value = "Переданный в URL id по которому необходимо удалить накладную")
                                         @PathVariable(name = "id") Long id) {
         invoiceService.deleteById(id);
-        log.info("Удален экземпляр накладной с id = {}", id);
         return ResponseEntity.ok().build();
     }
 }
