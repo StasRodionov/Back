@@ -9,11 +9,9 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Conjunction;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Or;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -30,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Contract Rest Controller", description = "CRUD  операции с договорами")
 @Api(tags = "Contract Rest Controller")
@@ -53,7 +50,6 @@ public class ContractRestController {
     )
     public ResponseEntity<List<ContractDto>> getAll() {
         List<ContractDto> contracts = contractService.getAll();
-        log.info("Запрошен список ContractDto");
         return ResponseEntity.ok(contracts);
     }
 
@@ -80,7 +76,6 @@ public class ContractRestController {
                             @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
             }) Specification<Contract> specification
     ) {
-        log.info("Запрошен список контрактов по параметрам");
         return ResponseEntity.ok(contractService.search(specification));
     }
 
@@ -96,7 +91,6 @@ public class ContractRestController {
             value = "Переданный в URL id по которому необходимо найти договор")
                                                    @PathVariable(name = "id") Long id) {
         ContractDto contractDto = contractService.getById(id);
-        log.info("Запрошен ContractDto с id= {}", id);
         return ResponseEntity.ok(contractDto);
     }
 
@@ -113,7 +107,6 @@ public class ContractRestController {
             value = "DTO договора, который необходимо создать")
                                                   @RequestBody ContractDto contractDto) {
         contractService.save(contractDto);
-        log.info("Записан новый экземпляр - {}", contractDto.toString());
         return ResponseEntity.ok().build();
     }
 
@@ -130,7 +123,6 @@ public class ContractRestController {
             value = "DTO договора, который необходимо обновить")
                                                   @RequestBody ContractDto contractDto) {
         contractService.save(contractDto);
-        log.info("Обновлен экземпляр ContractDto с id= {}", contractDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -147,7 +139,6 @@ public class ContractRestController {
             value = "Переданный в URL id по которому необходимо удалить договор")
                                                       @PathVariable(name = "id") Long id) {
         contractService.deleteById(id);
-        log.info("Удален экземпляр ContractDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }

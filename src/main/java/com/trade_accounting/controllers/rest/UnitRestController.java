@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Unit Rest Controller", description = "CRUD операции с единицами измерения")
 @Api(tags = "Unit Rest Controller")
@@ -47,7 +45,6 @@ public class UnitRestController {
     @GetMapping
     public ResponseEntity<List<UnitDto>> getAll() {
         List<UnitDto> units = unitService.getAll();
-        log.info("Запрошен список UnitDto");
         return ResponseEntity.ok(units);
     }
 
@@ -65,7 +62,6 @@ public class UnitRestController {
             value = "ID переданный в URL по которому необходимо найти единицу измерения") @PathVariable Long id) {
         checkEntityService.checkExistsUnitById(id);
         UnitDto unit = unitService.getById(id);
-        log.info("Запрошен экземпляр UnitDto с id= {}", id);
         return ResponseEntity.ok(unit);
     }
 
@@ -82,7 +78,6 @@ public class UnitRestController {
             name = "unitDto",
             value = "DTO единицы измерения, которую необходимо создать") @RequestBody UnitDto unitDto) {
         unitService.create(unitDto);
-        log.info("Записан новый экземпляр {}", unitDto.toString());
         return ResponseEntity.ok().build();
     }
 
@@ -100,7 +95,6 @@ public class UnitRestController {
             value = "DTO единицы измерения, которую необходимо обновить") @RequestBody UnitDto unitDto) {
         checkEntityService.checkExistsUnitById(unitDto.getId());
         unitService.update(unitDto);
-        log.info("Обновлен экземпляр UnitDto с id= {}", unitDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -118,7 +112,6 @@ public class UnitRestController {
             type = "Long",
             value = "ID переданный в URL по которому необходимо удалить единицу измерения") @PathVariable Long id) {
         unitService.deleteById(id);
-        log.info("Удален экземпляр UnitDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 
