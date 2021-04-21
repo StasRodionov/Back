@@ -8,20 +8,15 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Image Rest Controller", description = "CRUD операции с фото")
 @Api(tags = "Image Rest Controller")
@@ -44,7 +39,6 @@ public class ImageRestController {
     )
     public ResponseEntity<List<ImageDto>> getAll() {
         List<ImageDto> images = imageService.getAll();
-        log.info("Запрошен список Image");
         return ResponseEntity.ok(images);
     }
 
@@ -66,7 +60,6 @@ public class ImageRestController {
 
         ImageDto imageDto = imageService.getById(id);
 
-        log.info("Запрошен экземпляр Image с id= {}", id);
         return ResponseEntity.ok(imageDto);
     }
 
@@ -88,7 +81,6 @@ public class ImageRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         imageService.deleteById(id);
-        log.info("Удален экземпляр Image с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }

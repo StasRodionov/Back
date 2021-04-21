@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Tax System Rest Controller", description = "CRUD операции с налоговыми системами")
 @Api(tags = "Tax System Rest Controller")
@@ -44,7 +42,6 @@ public class TaxSystemRestController {
     @GetMapping
     public ResponseEntity<List<TaxSystemDto>> getAll() {
         List<TaxSystemDto> taxSystems = taxSystemService.getAll();
-        log.info("Запрошен список TaxSystem");
         return ResponseEntity.ok(taxSystems);
     }
 
@@ -60,7 +57,6 @@ public class TaxSystemRestController {
             value = "ID переданный в URL по которому необходимо найти налоговую систему")
                                                     @PathVariable(name = "id") Long id) {
         TaxSystemDto taxSystem = taxSystemService.getById(id);
-        log.info("Запрошен экземпляр TaxSystem с id= {}", id);
         return ResponseEntity.ok(taxSystem);
     }
 
@@ -77,7 +73,6 @@ public class TaxSystemRestController {
             value = "DTO налоговой системы, которую необходимо создать")
                                         @RequestBody TaxSystemDto taxSystemDto) {
         taxSystemService.create(taxSystemDto);
-        log.info("Записан новый экземпляр TaxSystem c id= {}", taxSystemDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -94,7 +89,6 @@ public class TaxSystemRestController {
             value = "DTO налоговой системы, которую необходимо обновить")
                                         @RequestBody TaxSystemDto taxSystemDto) {
         taxSystemService.update(taxSystemDto);
-        log.info("Обновлен экземпляр TaxSystem c id= {}", taxSystemDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -111,7 +105,6 @@ public class TaxSystemRestController {
             value = "ID налоговой системы, которую необходимо удалить")
                                             @PathVariable(name = "id") Long id) {
         taxSystemService.deleteById(id);
-        log.info("Удален экземпляр TaxSystem с id= {}", id);
         return ResponseEntity.ok().build();
     }
 

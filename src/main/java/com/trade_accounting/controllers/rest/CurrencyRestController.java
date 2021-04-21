@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
@@ -30,7 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Currency Rest Controller", description = "CRUD операции с валютами")
 @Api(tags = "Currency Rest Controller")
@@ -54,7 +52,6 @@ public class CurrencyRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<List<CurrencyDto>> getAll() {
-        log.info("Запрошен список CurrencyDto");
         return ResponseEntity.ok(currencyService.getAll());
     }
 
@@ -74,7 +71,6 @@ public class CurrencyRestController {
             required = true) @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsCurrencyById(id);
         CurrencyDto currency = currencyService.getById(id);
-        log.info("Запрошен экземпляр CurrencyDto с id= {}", id);
         return ResponseEntity.ok(currency);
     }
 
@@ -90,7 +86,6 @@ public class CurrencyRestController {
     public ResponseEntity<CurrencyDto> create(@ApiParam(name = "currencyDto",
             value = "DTO валюты, которую необходимо создать") @RequestBody CurrencyDto currencyDto){
         currencyService.create(currencyDto);
-        log.info("Записан новый экземпляр Currency с id= {}", currencyDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -107,7 +102,6 @@ public class CurrencyRestController {
             value = "DTO валюты, которую необходимо обновить") @RequestBody CurrencyDto currencyDto) {
         checkEntityService.checkExistsCurrencyById(currencyDto.getId());
         currencyService.update(currencyDto);
-        log.info("Обновлен экземпляр с id = {}", currencyDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -127,7 +121,6 @@ public class CurrencyRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         currencyService.deleteById(id);
-        log.info("Удален экземпляр с id = {}", id);
         return ResponseEntity.ok().build();
     }
 
@@ -143,7 +136,6 @@ public class CurrencyRestController {
                     @Spec(path = "letterCode", params = "letterCode", spec = LikeIgnoreCase.class),
                     @Spec(path = "sortNumber", params = "sortNumber", spec = Like.class),
             }) Specification<Currency> spec) {
-        log.info("Запрошен поиск валют");
         return ResponseEntity.ok(currencyService.search(spec));
     }
 }

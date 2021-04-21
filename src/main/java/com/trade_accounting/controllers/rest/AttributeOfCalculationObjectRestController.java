@@ -5,12 +5,11 @@ import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectServ
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
-@Slf4j
+
 @RestController
 @Tag(name = "Attribute Of Calculation Object Rest Controller", description = "CRUD операции с объектами")
 @Api(tags = "Attribute Of Calculation Object Rest Controller")
@@ -47,7 +46,6 @@ public class AttributeOfCalculationObjectRestController {
     )
     public ResponseEntity<List<AttributeOfCalculationObjectDto>> getAll(){
         List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtos = attributeOfCalculationObjectService.getAll();
-        log.info("Запрошен список AttributeOfCalculationObjectDto");
         return ResponseEntity.ok(attributeOfCalculationObjectDtos);
     }
 
@@ -61,7 +59,6 @@ public class AttributeOfCalculationObjectRestController {
     )
     public ResponseEntity<AttributeOfCalculationObjectDto> getById(@PathVariable("id") Long id) {
         AttributeOfCalculationObjectDto attributeOfCalculationObjectDto = attributeOfCalculationObjectService.getById(id);
-        log.info("Запрошен экземпляр AttributeOfCalculationObjectDto с id = {}", id);
         return ResponseEntity.ok(attributeOfCalculationObjectDto);
     }
 
@@ -76,7 +73,6 @@ public class AttributeOfCalculationObjectRestController {
     )
     public ResponseEntity<?> create(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto){
         attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto);
-        log.info("Записан новый экземпляр AttributeOfCalculationObjectDto");
         return ResponseEntity.ok().build();
     }
 
@@ -91,7 +87,6 @@ public class AttributeOfCalculationObjectRestController {
     )
     public ResponseEntity<?> update(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto){
         attributeOfCalculationObjectService.update(attributeOfCalculationObjectDto);
-        log.info("Обновлен экземплярAttributeOfCalculationObjectDto");
         return ResponseEntity.ok().build();
     }
 
@@ -106,7 +101,6 @@ public class AttributeOfCalculationObjectRestController {
     )
     public ResponseEntity<?> deleteById(@PathVariable("id") Long id){
         attributeOfCalculationObjectService.deleteById(id);
-        log.info("Удален экземпляр с id = {}", id);
         return ResponseEntity.ok().build();
     }
 
