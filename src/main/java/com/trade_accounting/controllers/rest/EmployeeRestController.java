@@ -15,6 +15,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Conjunction;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Disjunction;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Or;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -134,7 +137,16 @@ public class EmployeeRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<List<EmployeeDto>> searchWithPages(
-            @And({
+            @Conjunction(value = {
+                    @Or({
+                            @Spec(path = "lastName", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "firstName", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "middleName", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "email", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "phone", params = "search", spec = LikeIgnoreCase.class)
+
+                    })
+            }, and = {
                     @Spec(path = "lastName", params = "lastName", spec = LikeIgnoreCase.class),
                     @Spec(path = "firstName", params = "firstName", spec = LikeIgnoreCase.class),
                     @Spec(path = "middleName", params = "middleName", spec = LikeIgnoreCase.class),
