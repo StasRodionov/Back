@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.lang.annotation.Native;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
             "em.password) from Employee em " +
             "where em.id = :id")
     EmployeeDto getById(@Param("id") Long id);
-
 
     @Query("select new com.trade_accounting.models.dto.EmployeeDto(" +
             "em.id, " +

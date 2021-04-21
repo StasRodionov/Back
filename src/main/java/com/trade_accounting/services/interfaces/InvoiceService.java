@@ -10,5 +10,7 @@ public interface InvoiceService extends AbstractService<InvoiceDto> {
 
     List<InvoiceDto> search(Specification<Invoice> specification);
 
+    List<InvoiceDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice);
+
     List<InvoiceDto> getAll(String typeOfInvoice);
 }

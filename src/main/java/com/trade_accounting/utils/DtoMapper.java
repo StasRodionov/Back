@@ -4,6 +4,7 @@ import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
@@ -32,6 +33,7 @@ import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
@@ -109,6 +111,15 @@ public abstract class DtoMapper {
     })
     public abstract Company companyDtoToCompany(CompanyDto companyDto);
 
+    //Contact
+    public abstract ContactDto contactToContactDto(Contact contact);
+
+    public abstract Contact contactDtoToContact(ContactDto contactDto);
+
+    public abstract List<Contact> contactDtoListToContactList(List<ContactDto> contactDtoList);
+
+    public abstract List<ContactDto> contactListToContactDtoList(List<Contact> contactList);
+
     //Contract
     @Mappings({
             @Mapping(source = "company", target = "companyDto"),
@@ -135,7 +146,8 @@ public abstract class DtoMapper {
             @Mapping(source = "typeOfPrice", target = "typeOfPriceDto"),
             @Mapping(source = "legalDetail", target = "legalDetailDto"),
             @Mapping(source = "bankAccounts", target = "bankAccountDto"),
-            @Mapping(source = "address", target = "addressDto")
+            @Mapping(source = "address", target = "addressDto"),
+            @Mapping(source = "contact", target = "contactDto")
     })
     public abstract ContractorDto contractorToContractorDto(Contractor contractor);
 
@@ -145,7 +157,8 @@ public abstract class DtoMapper {
             @Mapping(source = "typeOfPriceDto", target = "typeOfPrice"),
             @Mapping(source = "bankAccountDto", target = "bankAccounts"),
             @Mapping(source = "legalDetailDto", target = "legalDetail"),
-            @Mapping(source = "addressDto", target = "address")
+            @Mapping(source = "addressDto", target = "address"),
+            @Mapping(source = "contactDto", target = "contact"),
 
     })
     public abstract Contractor contractorDtoToContractor(ContractorDto contractorDto);
