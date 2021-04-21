@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.lang.annotation.Native;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +43,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
             "where em.id = :id")
     EmployeeDto getById(@Param("id") Long id);
 
-
     @Query("select new com.trade_accounting.models.dto.EmployeeDto(" +
             "em.id, " +
             "em.lastName, " +
@@ -58,4 +58,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
     EmployeeDto getByEmail(@Param("email") String email);
 
     Optional<Employee> findByEmail(String email);
+
+    @Query("from Employee e " +
+            "where lower ( concat(e.firstName, ' ', e.middleName, ' ', e.lastName, ' ', e.email, ' ',e.phone)) " +
+            "like lower(concat('%', :symbols, '%'))")
+    List<Employee> getBySearch(@Param("symbols") String search);
+
 }

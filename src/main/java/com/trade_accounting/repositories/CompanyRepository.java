@@ -14,7 +14,6 @@ import java.util.Optional;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpecificationExecutor<Company> {
 
-    Optional<Company> findByEmail(String email);
 
     @Query("select new com.trade_accounting.models.dto.CompanyDto(" +
             "e.id, " +
@@ -55,4 +54,25 @@ public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpec
             "e.stamp, " +
             "e.legalDetail.id) from Company e where e.id = :id")
     CompanyDto getById(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.CompanyDto(" +
+            "e.id, " +
+            "e.name, " +
+            "e.inn, " +
+            "e.sortNumber, " +
+            "e.phone, " +
+            "e.fax, " +
+            "e.email, " +
+            "e.payerVat, " +
+            "e.address, " +
+            "e.commentToAddress, " +
+            "e.leader, " +
+            "e.leaderManagerPosition, " +
+            "e.leaderSignature, " +
+            "e.chiefAccountant, " +
+            "e.chiefAccountantSignature, " +
+            "e.stamp, " +
+            "e.legalDetail.id) from Company e where e.email = :email")
+    CompanyDto findByEmail(@Param("email") String email);
+
 }
