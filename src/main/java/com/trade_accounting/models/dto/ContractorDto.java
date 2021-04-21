@@ -23,6 +23,7 @@ public class ContractorDto {
     private String commentToAddress;
     private String comment;
 
+    private List<ContactDto> contactDto;
     private ContractorGroupDto contractorGroupDto;
     private TypeOfContractorDto typeOfContractorDto;
     private TypeOfPriceDto typeOfPriceDto;
