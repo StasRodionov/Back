@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Conjunction;
@@ -35,7 +34,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/employee")
 @Tag(name = "Employee Rest Controller", description = "CRUD операции с работниками")
@@ -60,7 +58,6 @@ public class EmployeeRestController {
     )
     public ResponseEntity<List<EmployeeDto>> getAll() {
         List<EmployeeDto> employeeDtos = employeeService.getAll();
-        log.info("Запрошен список EmployeeDto");
         return ResponseEntity.ok(employeeDtos);
     }
 
@@ -77,7 +74,7 @@ public class EmployeeRestController {
                     @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
     }) Specification<Employee> specification) {
-        log.info("Запрошена страница пользователей по фильтру");
+
         return ResponseEntity.ok(employeeService.search(specification));
     }
 
@@ -113,7 +110,6 @@ public class EmployeeRestController {
             @RequestParam("direction") String sortDirection,
             @RequestParam("pageNumber") Integer pageNumber,
             @RequestParam("rowsLimit") Integer rowsLimit) {
-        log.info("Запрошена страница пользователей по фильтру");
         Pageable pageParams = PageRequest.of(pageNumber - 1, rowsLimit,
                 Sort.by(sortDirection.equals("ASCENDING") ?
                                 Sort.Direction.ASC : Sort.Direction.DESC,
@@ -134,7 +130,6 @@ public class EmployeeRestController {
                                                    @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsEmployeeById(id);
         EmployeeDto employeeDto = employeeService.getById(id);
-        log.info("Запрошен экземпляр EmployeeDto с id = {}", id);
         return ResponseEntity.ok(employeeDto);
     }
 
@@ -152,7 +147,6 @@ public class EmployeeRestController {
                                         @RequestBody EmployeeDto employeeDto){
         checkEntityService.checkForBadEmployee(employeeDto);
         employeeService.save(employeeDto);
-        log.info("Записан новый экземпляр EmployeeDto");
         return ResponseEntity.ok().build();
     }
 
@@ -171,7 +165,6 @@ public class EmployeeRestController {
         checkEntityService.checkExistsEmployeeById(employeeDto.getId());
         checkEntityService.checkForBadEmployee(employeeDto);
         employeeService.save(employeeDto);
-        log.info("Обновлен экземпляр EmployeeDto с id = {}", employeeDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -188,7 +181,6 @@ public class EmployeeRestController {
             value = "ID работника, которого необходимо удалить")
                                             @PathVariable(name = "id") Long id) {
         employeeService.deleteById(id);
-        log.info("Удален экземпляр EmployeeDto с id = {}", id);
         return ResponseEntity.ok().build();
     }
 
@@ -202,7 +194,6 @@ public class EmployeeRestController {
     )
     public ResponseEntity<EmployeeDto> getUserDetails(@AuthenticationPrincipal String email){
         EmployeeDto employeeDto = employeeService.getByEmail(email);
-        log.info("Запрошены данные авторизованного сотрудника");
         return ResponseEntity.ok(employeeDto);
     }
 }

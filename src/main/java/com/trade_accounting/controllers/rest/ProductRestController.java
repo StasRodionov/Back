@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -34,7 +33,6 @@ import java.util.List;
  * @author Sanych
  * @see ProductService
  */
-@Slf4j
 @RestController
 @Tag(name = "Product Rest Controller", description = "CRUD операции с товаром")
 @Api(tags = "Product Rest Controller")
@@ -58,7 +56,6 @@ public class ProductRestController {
     })
     public ResponseEntity<List<ProductDto>> getAll() {
         List<ProductDto> productGroups = productService.getAll();
-        log.info("Запрошен список ProductDto");
         return ResponseEntity.ok(productGroups);
     }
 
@@ -71,7 +68,6 @@ public class ProductRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<List<ProductDto>> getAll(@RequestParam("query") String value) {
-        log.info("Запрошен поиск товаров");
         return ResponseEntity.ok(productService.search(value));
     }
 
@@ -86,7 +82,6 @@ public class ProductRestController {
                     @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
                     @Spec(path = "purchasePrice", params = "purchasePrice", spec = Equal.class),
             }) Specification<Product> spec) {
-        log.info("Запрошен поиск товаров");
         return ResponseEntity.ok(productService.searchByFilter(spec));
     }
 
@@ -101,7 +96,6 @@ public class ProductRestController {
     public ResponseEntity<ProductDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
         ProductDto productGroup = productService.getById(id);
-        log.info("Запрошен экземпляр ProductDto с id= {}", id);
         return ResponseEntity.ok(productGroup);
     }
 
@@ -116,7 +110,6 @@ public class ProductRestController {
     public ResponseEntity<List<ProductDto>> getByProductGroupId(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
             List<ProductDto> productGroups = productService.getAllByProductGroupId(id);
-            log.info("Запрошен список ProductDto");
             return ResponseEntity.ok(productGroups);
     }
 
@@ -131,7 +124,6 @@ public class ProductRestController {
     public ResponseEntity<List<ProductDto>> getAllByContractorId(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
             List<ProductDto> productGroups = productService.getAllByContractorId(id);
-            log.info("Запрошен список ProductDto");
             return ResponseEntity.ok(productGroups);
     }
 
@@ -147,7 +139,6 @@ public class ProductRestController {
             @ApiParam(name = "id", value = "ID группы товаров, переданный в URL, по которому необходимо найти товары")
             @PathVariable(name = "id") Long id) {
         List<ProductDto> productGroups = productService.getAllByProductGroupId(id);
-        log.info("Запрошен список ProductDto (Легкое Дто) принадлежащих гуруппе с id = {}", id);
         return ResponseEntity.ok(productGroups);
     }
 
@@ -163,7 +154,6 @@ public class ProductRestController {
     public ResponseEntity<ProductDto> create(@ApiParam(name = "productDto", value = "DTO товара, который необходимо создать")
                                     @RequestBody ProductDto productDto) {
         productService.save(productDto);
-        log.info("Записан новый экземпляр ProductDto с id= {}, name= {}", productDto.getId(), productDto.getName());
         return ResponseEntity.ok().build();
     }
 
@@ -180,7 +170,6 @@ public class ProductRestController {
             value = "DTO товара, c обновленными данными")
                                     @RequestBody ProductDto productDto) {
         productService.save(productDto);
-        log.info("Обновлен экземпляр ProductDto с id= {}, name= {}", productDto.getId(), productDto.getName());
         return ResponseEntity.ok().build();
     }
 
@@ -197,7 +186,6 @@ public class ProductRestController {
             value = "ID товара, который необходимо удалить")
                                         @PathVariable(name = "id") Long id) {
         productService.deleteById(id);
-        log.info("Удален экземпляр ProductDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }
