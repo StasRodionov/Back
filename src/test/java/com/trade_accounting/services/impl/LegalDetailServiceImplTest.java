@@ -1,8 +1,8 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.LegalDetail;
-import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
@@ -32,6 +32,9 @@ class LegalDetailServiceImplTest {
 
     @Mock
     private LegalDetailRepository legalDetailRepository;
+
+    @Mock
+    private AddressRepository addressRepository;
 
     @Mock
     private TypeOfContractorRepository typeOfContractorRepository;
