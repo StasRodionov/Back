@@ -76,11 +76,7 @@ public class EmployeeRestController {
                     @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
                     @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
-    }) Specification<Employee> specification,
-            @RequestParam("column") String sortColumn,
-            @RequestParam("direction") String sortDirection,
-            @RequestParam("pageNumber") Integer pageNumber,
-            @RequestParam("rowsLimit") Integer rowsLimit) {
+    }) Specification<Employee> specification) {
         log.info("Запрошена страница пользователей по фильтру");
         return ResponseEntity.ok(employeeService.search(specification));
     }
