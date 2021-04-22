@@ -486,7 +486,7 @@ public class DataInitializer {
                 "Иванов",
                 "Михаил",
                 "Сергеевич",
-                "г. Воронеж,ул Карла Маркса,46",
+                addressService.getById(3L),
                 "comment to address",
                 "3664069397",
                 "79271669",
@@ -500,7 +500,7 @@ public class DataInitializer {
                 "Гордон",
                 "Андрей",
                 "Анатольевич",
-                "г. Москва, ул. Революции, д. 66",
+                addressService.getById(2L),
                 "comment to address",
                 "3664069439",
                 "79271647",
@@ -514,7 +514,7 @@ public class DataInitializer {
                 "Сергеева",
                 "Мария",
                 "Дмитриевна",
-                "г. Краснодар, ул. 40 Лет Октября, д. 16",
+                addressService.getById(4L),
                 "comment to address",
                 "3664055588",
                 "70713032",
@@ -549,7 +549,7 @@ public class DataInitializer {
                             "Иванов",
                             "Михаил",
                             "Сергеевич",
-                            "г. Воронеж,ул Карла Маркса,46",
+                            addressService.getById(3L),
                             "comment to address",
                             "3664069" + String.format("%03d", i),
                             "79271669",
@@ -597,7 +597,7 @@ public class DataInitializer {
                             "Гордон",
                             "Андрей",
                             "Анатольевич",
-                            "г. Москва, ул. Революции, д. 66",
+                            addressService.getById(2L),
                             "comment to address",
                             "3664068" + String.format("%03d", i),
                             "79271647",
@@ -645,7 +645,7 @@ public class DataInitializer {
                             "Сергеева",
                             "Мария",
                             "Дмитриевна",
-                            "г. Краснодар, ул. 40 Лет Октября, д. 16",
+                            addressService.getById(1L),
                             "comment to address",
                             "3664055" + String.format("%03d", i),
                             "70713032",
@@ -775,6 +775,17 @@ public class DataInitializer {
                         .region("Область")
                         .city("Столица Панамы")
                         .street("ул. Индейцев")
+                        .house("2")
+                        .apartment("1")
+                        .build()
+        );
+        addressService.create(
+                AddressDto.builder()
+                        .index("123456")
+                        .country("Россия")
+                        .region("Краснодарский край")
+                        .city("Краснодар")
+                        .street("ул. 40 Лет Октября")
                         .house("2")
                         .apartment("1")
                         .build()

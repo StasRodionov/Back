@@ -195,7 +195,7 @@ public class ModelDtoConverter {
                 dto.getLastName(),
                 dto.getFirstName(),
                 dto.getMiddleName(),
-                dto.getAddress(),
+                convertToAddress(dto.getAddressDto()),
                 dto.getCommentToAddress(),
                 dto.getInn(),
                 dto.getOkpo(),

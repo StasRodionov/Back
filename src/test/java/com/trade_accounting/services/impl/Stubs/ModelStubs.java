@@ -187,7 +187,7 @@ public class ModelStubs {
         return new LegalDetail(
                 id, "lastName",
                 "firstNAme", "middleName",
-                "address", "commentToAddress",
+                getAddress(1L), "commentToAddress",
                 "32432423", "okpo", "ogrnip",
                 "numberOfCertifacate", LocalDate.now(),
                 getTypeOfContractor(id)
