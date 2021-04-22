@@ -6,6 +6,7 @@ import com.trade_accounting.models.Role;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.DepartmentRepository;
@@ -17,11 +18,8 @@ import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.utils.DtoMapper;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +28,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,13 +56,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDto> findBySearch(String search) {
-        return employeeRepository.getBySearch(search).stream()
-                .map(dtoMapper::employeeToEmployeeDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<EmployeeDto> getAll() {
         return employeeRepository.findAll().stream()
                 .map(dtoMapper::employeeToEmployeeDto)
@@ -79,9 +69,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDto> search(Specification<Employee> specification, Pageable pageParams) {
+    public PageDto<EmployeeDto> search(Specification<Employee> specification, Pageable pageParams) {
         Page<Employee> page = employeeRepository.findAll(specification, pageParams);
-        return page.map(dtoMapper::employeeToEmployeeDto).stream().collect(Collectors.toList());
+        return new PageDto<>(
+                page.getContent().stream().map(dtoMapper::employeeToEmployeeDto).collect(Collectors.toList()),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.getNumberOfElements()
+                );
     }
 
     @Override
@@ -163,10 +158,5 @@ public class EmployeeServiceImpl implements EmployeeService {
             return new EmployeeDto();
         }
         return dtoMapper.employeeToEmployeeDto(employee.get());
-    }
-
-    @Override
-    public long getRowCount(@Nullable Specification<Employee> filterParameters) {
-        return employeeRepository.count(filterParameters);
     }
 }
