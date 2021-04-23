@@ -7,21 +7,11 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface InvoiceService {
+public interface InvoiceService extends AbstractService<InvoiceDto> {
 
     List<InvoiceDto> search(Specification<Invoice> specification);
 
     List<InvoiceDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice);
 
-    List<InvoiceDto> getAll();
-
-    InvoiceDto getById(Long id);
-
     List<InvoiceDto> getAll(String typeOfInvoice);
-
-    InvoiceDto create(InvoiceDto invoiceDto);
-
-    InvoiceDto update(InvoiceDto invoiceDto);
-
-    void deleteById(Long id);
 }

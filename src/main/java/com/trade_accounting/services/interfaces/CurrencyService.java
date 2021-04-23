@@ -6,17 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface CurrencyService {
-
-    List<CurrencyDto> getAll();
+public interface CurrencyService extends AbstractService<CurrencyDto> {
 
     List<CurrencyDto> search(Specification<Currency> specification);
-
-    CurrencyDto getById(Long id);
-
-    CurrencyDto create(CurrencyDto currencyDto);
-
-    CurrencyDto update(CurrencyDto currencyDto);
-
-    void deleteById(Long id);
 }

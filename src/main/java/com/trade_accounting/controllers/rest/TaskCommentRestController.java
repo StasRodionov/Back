@@ -76,9 +76,8 @@ public class TaskCommentRestController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<TaskCommentDto> getById(@PathVariable("id") long id) {
-        return commentService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(ResponseEntity.notFound()::build);
+        TaskCommentDto taskCommentDto = commentService.getById(id);
+        return ResponseEntity.ok(taskCommentDto);
     }
 
     @ApiOperation(value = "create", notes = "Создание нового комментария")

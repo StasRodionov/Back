@@ -153,7 +153,7 @@ public class ProductRestController {
     })
     public ResponseEntity<ProductDto> create(@ApiParam(name = "productDto", value = "DTO товара, который необходимо создать")
                                     @RequestBody ProductDto productDto) {
-        productService.save(productDto);
+        productService.create(productDto);
         return ResponseEntity.ok().build();
     }
 
@@ -169,7 +169,7 @@ public class ProductRestController {
     public ResponseEntity<ProductDto> update(@ApiParam(name = "productDto",
             value = "DTO товара, c обновленными данными")
                                     @RequestBody ProductDto productDto) {
-        productService.save(productDto);
+        productService.update(productDto);
         return ResponseEntity.ok().build();
     }
 

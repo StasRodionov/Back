@@ -74,7 +74,7 @@ class ImageServiceImplTest {
                 .fileExtension(".jpg")
                 .sortNumber("0001")
                 .build();
-        imageService.create(imageDto, "picture");
+        imageService.create(imageDto);
         verify(imageRepository).save(any(Image.class));
     }
 }
