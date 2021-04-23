@@ -44,8 +44,15 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public void save(ContractDto contractDto) {
+    public ContractDto create(ContractDto contractDto) {
         contractRepository.save(dtoMapper.contractDtoToContract(contractDto));
+        return contractDto;
+    }
+
+    @Override
+    public ContractDto update(ContractDto contractDto) {
+        contractRepository.save(dtoMapper.contractDtoToContract(contractDto));
+        return contractDto;
     }
 
     @Override

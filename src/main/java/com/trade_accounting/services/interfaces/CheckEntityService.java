@@ -14,4 +14,5 @@ public interface CheckEntityService {
     void checkExistsCurrencyById(Long currencyId);
     void checkExistCompanyById(Long companyId);
     void checkForBadCompany(CompanyDto company);
+    void checkExistsRetailStoreById(Long RetailStoreId);
 }

@@ -42,9 +42,17 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image create(ImageDto imageDto, String imageDir) {
-        Image image = dtoMapper.imageDtoToImage(imageDto, imageDir);
-        return imageRepository.save(image);
+    public ImageDto create(ImageDto dto) {
+        Image image = dtoMapper.imageDtoToImage(dto, "picture");
+        imageRepository.save(image);
+        return dto;
+    }
+
+    @Override
+    public ImageDto update(ImageDto dto) {
+        Image image = dtoMapper.imageDtoToImage(dto, "picture");
+        imageRepository.save(image);
+        return dto;
     }
 
     @SneakyThrows

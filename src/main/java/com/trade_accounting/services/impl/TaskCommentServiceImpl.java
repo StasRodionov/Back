@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,9 +42,9 @@ public class TaskCommentServiceImpl implements TaskCommentService {
     }
 
     @Override
-    public Optional<TaskCommentDto> getById(Long id) {
+    public TaskCommentDto getById(Long id) {
         return commentRepository.findById(id)
-                .map(ModelDtoConverter::toTaskCommentDTO);
+                .map(ModelDtoConverter::toTaskCommentDTO).orElse(new TaskCommentDto());
     }
 
     @Override

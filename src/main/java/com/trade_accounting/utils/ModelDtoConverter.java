@@ -10,6 +10,7 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.ProductPrice;
+import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TypeOfContractor;
@@ -29,6 +30,7 @@ import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
+import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
@@ -195,7 +197,7 @@ public class ModelDtoConverter {
                 dto.getLastName(),
                 dto.getFirstName(),
                 dto.getMiddleName(),
-                dto.getAddress(),
+                convertToAddress(dto.getAddressDto()),
                 dto.getCommentToAddress(),
                 dto.getInn(),
                 dto.getOkpo(),
@@ -369,5 +371,15 @@ public class ModelDtoConverter {
         entity.setPublishedDateTime(dto.getPublishedDateTime());
 
         return entity;
+    }
+
+    public static RetailStore convertToRetailStore(RetailStoreDto dto) {
+        return new RetailStore(
+                dto.getId(),
+                dto.getName(),
+                dto.isActive(),
+                dto.getActivityStatus(),
+                dto.getRevenue()
+        );
     }
 }

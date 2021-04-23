@@ -1,7 +1,9 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Address;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.LegalDetailService;
@@ -19,14 +21,15 @@ public class LegalDetailServiceImpl implements LegalDetailService {
 
     private final LegalDetailRepository legalDetailRepository;
     private final TypeOfContractorRepository typeOfContractorRepository;
-
+    private final AddressRepository addressRepository;
     private final DtoMapper dtoMapper;
 
     public LegalDetailServiceImpl(LegalDetailRepository legalDetailRepository,
                                   TypeOfContractorService typeOfContractorService,
-                                  TypeOfContractorRepository typeOfContractorRepository, DtoMapper dtoMapper) {
+                                  TypeOfContractorRepository typeOfContractorRepository, AddressRepository addressRepository, DtoMapper dtoMapper) {
         this.legalDetailRepository = legalDetailRepository;
         this.typeOfContractorRepository = typeOfContractorRepository;
+        this.addressRepository = addressRepository;
         this.dtoMapper = dtoMapper;
     }
 
@@ -48,6 +51,10 @@ public class LegalDetailServiceImpl implements LegalDetailService {
     public LegalDetailDto create(LegalDetailDto legalDetailDto) {
         LegalDetail legalDetail = dtoMapper.legalDetailDtoToLegalDetail(legalDetailDto);
 
+        Address address = dtoMapper.addressDtoToAddress(legalDetailDto.getAddressDto());
+        addressRepository.save(address);
+        legalDetail.setAddress(address);
+
         legalDetail.setTypeOfContractor(
                 typeOfContractorRepository.findById(
                         legalDetailDto.getTypeOfContractorDto().getId()
@@ -62,6 +69,10 @@ public class LegalDetailServiceImpl implements LegalDetailService {
     @Override
     public LegalDetailDto update(LegalDetailDto legalDetailDto) {
         LegalDetail legalDetail = dtoMapper.legalDetailDtoToLegalDetail(legalDetailDto);
+
+        Address address = dtoMapper.addressDtoToAddress(legalDetailDto.getAddressDto());
+        addressRepository.save(address);
+        legalDetail.setAddress(address);
 
         legalDetail.setTypeOfContractor(
                 typeOfContractorRepository.findById(
@@ -79,8 +90,4 @@ public class LegalDetailServiceImpl implements LegalDetailService {
         legalDetailRepository.deleteById(id);
     }
 
-    @Override
-    public void create(LegalDetail legalDetail) {
-        legalDetailRepository.save(legalDetail);
-    }
 }

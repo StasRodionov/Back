@@ -19,7 +19,7 @@ public class LegalDetailDto {
 
     private String middleName;
 
-    private String address;
+    private AddressDto addressDto;
 
     private String commentToAddress;
 
@@ -39,7 +39,7 @@ public class LegalDetailDto {
                           String lastName,
                           String firstName,
                           String middleName,
-                          String address,
+                          AddressDto addressDto,
                           String commentToAddress,
                           String inn,
                           String okpo,
@@ -51,7 +51,7 @@ public class LegalDetailDto {
         this.lastName = lastName;
         this.firstName = firstName;
         this.middleName = middleName;
-        this.address = address;
+        this.addressDto = addressDto;
         this.commentToAddress = commentToAddress;
         this.inn = inn;
         this.okpo = okpo;

@@ -52,12 +52,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void save(ProductDto productDto) {
-        List<Image> preparedImages = dtoMapper.toImage(productDto.getImageDtos(), "product");
+    public ProductDto create(ProductDto dto) {
+        List<Image> preparedImages = dtoMapper.toImage(dto.getImageDtos(), "product");
         List<Image> savedImages = imageRepository.saveAll(preparedImages);
-        Product product = dtoMapper.productDtoToProduct(productDto);
+        Product product = dtoMapper.productDtoToProduct(dto);
         product.setImages(savedImages);
         productRepository.saveAndFlush(product);
+        return dto;
+    }
+
+    @Override
+    public ProductDto update(ProductDto dto) {
+        List<Image> preparedImages = dtoMapper.toImage(dto.getImageDtos(), "product");
+        List<Image> savedImages = imageRepository.saveAll(preparedImages);
+        Product product = dtoMapper.productDtoToProduct(dto);
+        product.setImages(savedImages);
+        productRepository.saveAndFlush(product);
+        return dto;
     }
 
     @Override
