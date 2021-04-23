@@ -60,6 +60,14 @@ import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.models.dto.fias.CityDto;
+import com.trade_accounting.models.dto.fias.DistrictDto;
+import com.trade_accounting.models.dto.fias.RegionDto;
+import com.trade_accounting.models.dto.fias.StreetDto;
+import com.trade_accounting.models.fias.City;
+import com.trade_accounting.models.fias.District;
+import com.trade_accounting.models.fias.Region;
+import com.trade_accounting.models.fias.Street;
 import lombok.SneakyThrows;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -413,4 +421,14 @@ public abstract class DtoMapper {
     public abstract RetailStoreDto retailStoreToRetailStoreDto(RetailStore retailStore);
 
     public abstract RetailStore retailStoreDtoToRetailStore(RetailStoreDto retailStoreDto);
+
+    public abstract Region toRegion(RegionDto regionDto);
+    public abstract RegionDto toRegionDto(Region region);
+    public abstract District toDistrict(DistrictDto districtDto);
+    public abstract DistrictDto toDistrictDto(District district);
+    public abstract City toCity(CityDto cityDto);
+    public abstract CityDto toCityDto(City city);
+    public abstract Street toStreet(StreetDto streetDto);
+    public abstract StreetDto toStreetDto(Street street);
+
 }

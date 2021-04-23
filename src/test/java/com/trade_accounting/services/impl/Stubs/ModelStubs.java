@@ -82,7 +82,8 @@ public class ModelStubs {
                         getContact(2L),
                         getContact(3L)
                 ).collect(Collectors.toList()),
-                getContractorGroup(id), getTypeOfContractor(id),
+                getContractorGroup(id),
+                getTypeOfContractor(id),
                 getTypeOfPrice(id),
                 Stream.of(
                         getBankAccount(1L),
@@ -129,7 +130,13 @@ public class ModelStubs {
     public static Address getAddress(Long id) {
         return Address.builder()
                 .id(id)
-
+                .index("123456")
+                .country("Россия")
+                .region("region")
+                .city("city")
+                .house("1")
+                .apartment("1")
+                .another("")
                 .build();
     }
 

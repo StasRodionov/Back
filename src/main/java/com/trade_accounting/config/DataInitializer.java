@@ -22,7 +22,6 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
-import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
@@ -32,9 +31,6 @@ import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.services.impl.AddressServiceImpl;
-import com.trade_accounting.services.impl.RetailStoreServiceImpl;
-import com.trade_accounting.services.impl.TaskCommentServiceImpl;
-import com.trade_accounting.services.impl.TaskServiceImpl;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.BankAccountService;
 import com.trade_accounting.services.interfaces.CompanyService;
@@ -54,12 +50,17 @@ import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
+import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.services.interfaces.RoleService;
+import com.trade_accounting.services.interfaces.TaskCommentService;
+import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.services.interfaces.WarehouseService;
+import com.trade_accounting.services.interfaces.fias.FiasDbService;
+import com.trade_accounting.utils.fias.ExcelParser;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -100,10 +101,12 @@ public class DataInitializer {
     private final InvoiceProductService invoiceProductService;
     private final ProjectService projectService;
     private final PaymentService paymentService;
-    private final TaskServiceImpl taskService;
-    private final TaskCommentServiceImpl commentService;
+    private final TaskService taskService;
+    private final TaskCommentService commentService;
     private final AddressServiceImpl addressService;
-    private final RetailStoreServiceImpl retailStoreService;
+    private final FiasDbService fiasDbService;
+    private final RetailStoreService retailStoreService;
+
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -130,10 +133,11 @@ public class DataInitializer {
             InvoiceService invoiceService,
             InvoiceProductService invoiceProductService, ProjectService projectService,
             PaymentService paymentService,
-            TaskServiceImpl taskService,
-            TaskCommentServiceImpl commentService,
+            TaskService taskService,
+            TaskCommentService commentService,
+            RetailStoreService retailStoreService,
             AddressServiceImpl addressService,
-            RetailStoreServiceImpl retailStoreService) {
+            FiasDbService fiasDbService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -162,11 +166,13 @@ public class DataInitializer {
         this.taskService = taskService;
         this.commentService = commentService;
         this.addressService = addressService;
+        this.fiasDbService = fiasDbService;
         this.retailStoreService = retailStoreService;
     }
 
     @PostConstruct
     public void init() {
+        fiasDbService.createAll(ExcelParser.getModelsForDb());
         initAddresses();
         initTypeOfPrices();
         initContractorGroups();
@@ -196,13 +202,7 @@ public class DataInitializer {
 
         initTasks();
         initTaskComments();
-        initRetailStores();
-    }
 
-    public void initRetailStores() {
-        retailStoreService.create(new RetailStoreDto("Магазин 1", true, "Онлайн", new BigDecimal(10_000)));
-        retailStoreService.create(new RetailStoreDto("Магазин 2", true, "Был в сети вчера", new BigDecimal(20_000)));
-        retailStoreService.create(new RetailStoreDto("Магазин 3", true, "Был в сети 2 часа назад", new BigDecimal(15_700)));
     }
 
     public void initProject() {
@@ -525,7 +525,7 @@ public class DataInitializer {
                 "Сергеева",
                 "Мария",
                 "Дмитриевна",
-                addressService.getById(4L),
+                addressService.getById(3L),
                 "comment to address",
                 "3664055588",
                 "70713032",
@@ -786,17 +786,6 @@ public class DataInitializer {
                         .region("Область")
                         .city("Столица Панамы")
                         .street("ул. Индейцев")
-                        .house("2")
-                        .apartment("1")
-                        .build()
-        );
-        addressService.create(
-                AddressDto.builder()
-                        .index("123456")
-                        .country("Россия")
-                        .region("Краснодарский край")
-                        .city("Краснодар")
-                        .street("ул. 40 Лет Октября")
                         .house("2")
                         .apartment("1")
                         .build()
