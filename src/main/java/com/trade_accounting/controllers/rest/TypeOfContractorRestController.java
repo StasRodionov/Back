@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Type Of Contractor Rest Controller", description = "CRUD операции со типами контрагентов")
 @Api(tags = "Type Of Contractor Rest Controller")
@@ -44,7 +42,6 @@ public class TypeOfContractorRestController {
     })
     public ResponseEntity<List<TypeOfContractorDto>> getAll() {
         List<TypeOfContractorDto> typeOfContractorDtos = typeOfContractorService.getAll();
-        log.info("Запрошен список TypeOfContractorDto");
         return ResponseEntity.ok(typeOfContractorDtos);
     }
 
@@ -63,7 +60,6 @@ public class TypeOfContractorRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         TypeOfContractorDto typeOfContractorDto = typeOfContractorService.getById(id);
-        log.info("Запрошен экземпляр TypeOfContractorDto с id= {}", id);
         return ResponseEntity.ok(typeOfContractorDto);
     }
 
@@ -80,7 +76,6 @@ public class TypeOfContractorRestController {
             value = "DTO типа контрагента, который необходимо создать")
                                     @RequestBody TypeOfContractorDto typeOfContractorDto) {
         typeOfContractorService.create(typeOfContractorDto);
-        log.info("Записан новый экземпляр TypeOfContractorDto");
         return ResponseEntity.ok().build();
     }
 
@@ -97,7 +92,6 @@ public class TypeOfContractorRestController {
             value = "DTO типа контрагента, который необходимо обновить")
                                     @RequestBody TypeOfContractorDto typeOfContractorDto) {
         typeOfContractorService.update(typeOfContractorDto);
-        log.info("Обновлен экземпляр TypeOfContractorDto");
         return ResponseEntity.ok().build();
     }
 
@@ -117,7 +111,6 @@ public class TypeOfContractorRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         typeOfContractorService.deleteById(id);
-        log.info("Удален экземпляр TypeOfContractorDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }

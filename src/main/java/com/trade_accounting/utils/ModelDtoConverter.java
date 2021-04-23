@@ -3,12 +3,14 @@ package com.trade_accounting.utils;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.ProductPrice;
+import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TypeOfContractor;
@@ -18,6 +20,7 @@ import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
@@ -27,6 +30,7 @@ import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
+import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
@@ -34,6 +38,7 @@ import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -98,6 +103,31 @@ public class ModelDtoConverter {
                 legalDetail, bankAccounts);
     }
 
+    public static ContactDto convertToContactDto(Contact contact) {
+        return modelMapper.map(contact, ContactDto.class);
+    }
+
+    public static Contact convertToContact(ContactDto contactDto) {
+        return modelMapper.map(contactDto, Contact.class);
+    }
+
+    public static List<Contact> convertToListOfContact(List<ContactDto> list) {
+        List<Contact> contactList = new ArrayList<>();
+        for (ContactDto contactDto : list) {
+            contactList.add(new Contact(
+                    contactDto.getId(),
+                    contactDto.getFullName(),
+                    contactDto.getPosition(),
+                    contactDto.getPhone(),
+                    contactDto.getEmail(),
+                    contactDto.getComment()
+            ));
+        }
+        return contactList;
+    }
+
+
+
     public static EmployeeDto convertToEmployeeDto(Employee employee) {
         EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
         if (employee.getDepartment() != null) {
@@ -144,9 +174,13 @@ public class ModelDtoConverter {
         if (contractor.getTypeOfPrice() != null) {
             contractorDto.setTypeOfPriceDto(modelMapper.map(contractor.getTypeOfPrice(), TypeOfPriceDto.class));
         }
-        if (contractor.getBankAccounts() != null) {
-            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(), List.class));
+
+        if (contractor.getContact() != null) {
+            contractorDto.setContactDto(modelMapper.map(contractor.getContact(), new TypeToken<List<ContactDto>>(){}.getType()));
         }
+//        if (contractor.getBankAccounts() != null) {
+//            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(),  null));
+//        }
         if (contractor.getLegalDetail() != null) {
             contractorDto.setLegalDetailDto(modelMapper.map(contractor.getLegalDetail(), LegalDetailDto.class));
         }
@@ -160,7 +194,7 @@ public class ModelDtoConverter {
                 dto.getLastName(),
                 dto.getFirstName(),
                 dto.getMiddleName(),
-                dto.getAddress(),
+                convertToAddress(dto.getAddressDto()),
                 dto.getCommentToAddress(),
                 dto.getInn(),
                 dto.getKpp(),
@@ -221,6 +255,7 @@ public class ModelDtoConverter {
                 convertToAddress(dto.getAddressDto()),
                 dto.getCommentToAddress(),
                 dto.getComment(),
+                convertToListOfContact(dto.getContactDto()),
                 contractorGroup,
                 typeOfPrice,
                 bankAccount,
@@ -332,5 +367,15 @@ public class ModelDtoConverter {
         entity.setPublishedDateTime(dto.getPublishedDateTime());
 
         return entity;
+    }
+
+    public static RetailStore convertToRetailStore(RetailStoreDto dto) {
+        return new RetailStore(
+                dto.getId(),
+                dto.getName(),
+                dto.isActive(),
+                dto.getActivityStatus(),
+                dto.getRevenue()
+        );
     }
 }

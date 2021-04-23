@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Warehouse Rest Controller", description = "CRUD операции со складами")
 @Api(tags = "Warehouse Account Rest Controller")
@@ -46,7 +44,6 @@ public class WarehouseRestController {
     })
     public ResponseEntity<List<WarehouseDto>> getAll() {
         List<WarehouseDto> warehouseDtos = warehouseService.getAll();
-        log.info("Запрошен список WarehouseDto");
         return ResponseEntity.ok(warehouseDtos);
     }
 
@@ -61,7 +58,6 @@ public class WarehouseRestController {
     public ResponseEntity<WarehouseDto> getById(@PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsWarehouseById(id);
         WarehouseDto warehouseDto = warehouseService.getById(id);
-        log.info("Запрошен экземпляр WarehouseDto с id = {}", id);
         return ResponseEntity.ok(warehouseDto);
     }
 
@@ -76,7 +72,6 @@ public class WarehouseRestController {
     })
     public ResponseEntity<?> create(@RequestBody WarehouseDto warehouseDto) {
         warehouseService.create(warehouseDto);
-        log.info("Записан новый экземпляр WarehouseDto - {}", warehouseDto);
         return ResponseEntity.ok().build();
     }
 
@@ -92,7 +87,6 @@ public class WarehouseRestController {
     public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto) {
         checkEntityService.checkExistsWarehouseById(warehouseDto.getId());
         warehouseService.update(warehouseDto);
-        log.info("Обновлен экземпляр WarehouseDto с id = {}", warehouseDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -107,7 +101,6 @@ public class WarehouseRestController {
     })
     public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
         warehouseService.deleteById(id);
-        log.info("Удален экземпляр WarehouseDto с id = {}", id);
         return ResponseEntity.ok().build();
     }
 }

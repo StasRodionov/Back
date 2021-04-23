@@ -7,10 +7,12 @@ import org.springframework.data.jpa.mapping.JpaPersistentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> {
 
     Optional<LegalDetail> findByInn(String name);
@@ -20,7 +22,7 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.lastName, " +
             "e.firstName, " +
             "e.middleName, " +
-            "e.address, " +
+            "e.address.id, " +
             "e.commentToAddress, " +
             "e.inn, " +
             "e.kpp, " +
@@ -36,7 +38,7 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.lastName, " +
             "e.firstName, " +
             "e.middleName, " +
-            "e.address, " +
+            "e.address.id, " +
             "e.commentToAddress, " +
             "e.inn, e.kpp, " +
             "e.okpo, " +
@@ -51,7 +53,7 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.legalDetail.lastName, " +
             "e.legalDetail.firstName, " +
             "e.legalDetail.middleName, " +
-            "e.legalDetail.address, " +
+            "e.legalDetail.address.id, " +
             "e.legalDetail.commentToAddress, " +
             "e.legalDetail.inn, " +
             "e.legalDetail.kpp, " +
@@ -61,6 +63,7 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.legalDetail.dateOfTheCertificate, " +
             "e.legalDetail.typeOfContractor.id) from Contractor e where e.id = :id")
     LegalDetailDto getLegalDetailByContractorId(@Param("id") Long id);
+
 
 //    Optional<LegalDetail> getEntityName(String name);
 //    JpaPersistentEntity<LegalDetail>,

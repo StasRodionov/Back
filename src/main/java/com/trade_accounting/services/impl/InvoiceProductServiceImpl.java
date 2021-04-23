@@ -48,13 +48,15 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     }
 
     @Override
-    public void create(@NotNull InvoiceProductDto invoiceProductDto) {
+    public InvoiceProductDto create(@NotNull InvoiceProductDto invoiceProductDto) {
         invoiceProductRepository.save(dtoMapper.invoiceProductDtoToInvoiceProduct(invoiceProductDto));
+        return invoiceProductDto;
     }
 
     @Override
-    public void update(@NotNull InvoiceProductDto invoiceProductDto) {
+    public InvoiceProductDto update(@NotNull InvoiceProductDto invoiceProductDto) {
         invoiceProductRepository.save(dtoMapper.invoiceProductDtoToInvoiceProduct(invoiceProductDto));
+        return invoiceProductDto;
     }
 
     @Override

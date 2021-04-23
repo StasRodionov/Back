@@ -6,16 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface PaymentService {
-    List<PaymentDto> getAll();
-
-    PaymentDto getById(Long id);
-
-    PaymentDto create(PaymentDto paymentDto);
-
-    PaymentDto update(PaymentDto paymentDto);
-
-    void deleteById(Long id);
+public interface PaymentService extends AbstractService<PaymentDto> {
 
     List<PaymentDto> filter(Specification<Payment> specification);
 

@@ -109,8 +109,4 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.deleteById(id);
     }
 
-    @Override
-    public void create(Company company) {
-        companyRepository.save(company);
-    }
 }

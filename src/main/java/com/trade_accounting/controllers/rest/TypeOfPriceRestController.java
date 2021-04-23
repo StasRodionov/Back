@@ -16,11 +16,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Type of price Controller", description = "CRUD операции с видами цен")
 @Api(tags = "Type of price Rest Controller")
@@ -42,7 +40,6 @@ public class TypeOfPriceRestController {
     })
     public ResponseEntity<List<TypeOfPriceDto>> getAll() {
         List<TypeOfPriceDto> types = typeOfPriceService.getAll();
-        log.info("Запрошен список видов цен");
         return ResponseEntity.ok(types);
     }
 
@@ -56,7 +53,6 @@ public class TypeOfPriceRestController {
     })
     public ResponseEntity<TypeOfPriceDto> getById(@PathVariable(name = "id") Long id) {
         TypeOfPriceDto type = typeOfPriceService.getById(id);
-        log.info("Запрошен экземпляр вида цен с id= {}", id);
         return ResponseEntity.ok(type);
     }
 
@@ -71,7 +67,6 @@ public class TypeOfPriceRestController {
     })
     public ResponseEntity<TypeOfPriceDto> create(@RequestBody TypeOfPriceDto typeOfPriceDto) {
         typeOfPriceService.create(typeOfPriceDto);
-        log.info("Записан новый экземпляр вида цен");
         return ResponseEntity.ok().build();
     }
 
@@ -86,7 +81,6 @@ public class TypeOfPriceRestController {
     })
     public ResponseEntity<TypeOfPriceDto> update(@RequestBody TypeOfPriceDto typeOfPriceDto) {
         typeOfPriceService.update(typeOfPriceDto);
-        log.info("Обновлен экземпляр вида цен");
         return ResponseEntity.ok().build();
     }
 
@@ -101,7 +95,6 @@ public class TypeOfPriceRestController {
     })
     public ResponseEntity<TypeOfPriceDto> deleteById(@PathVariable(name = "id") Long id) {
         typeOfPriceService.deleteById(id);
-        log.info("Удален экземпляр Вида цен с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }

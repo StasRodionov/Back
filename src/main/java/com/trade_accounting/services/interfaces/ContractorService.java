@@ -6,19 +6,9 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface ContractorService {
+public interface ContractorService extends AbstractService<ContractorDto> {
 
     List<ContractorDto> searchContractor(Specification<Contractor> specification);
 
     List<ContractorDto> getAll(String searchTerm);
-
-    List<ContractorDto> getAll();
-
-    ContractorDto getById(Long id);
-
-    ContractorDto create(ContractorDto contractorDto);
-
-    ContractorDto update(ContractorDto contractorDto);
-
-    void deleteById(Long id);
 }
