@@ -129,7 +129,13 @@ public class ModelStubs {
     public static Address getAddress(Long id) {
         return Address.builder()
                 .id(id)
-
+                .index("123456")
+                .country("Россия")
+                .region("region")
+                .city("city")
+                .house("1")
+                .apartment("1")
+                .another("")
                 .build();
     }
 

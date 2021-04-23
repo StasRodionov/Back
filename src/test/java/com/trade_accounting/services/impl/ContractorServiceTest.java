@@ -2,6 +2,8 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
+import com.trade_accounting.repositories.AddressRepository;
+import com.trade_accounting.repositories.ContactRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
@@ -42,7 +44,11 @@ public class ContractorServiceTest {
     @Mock
     private LegalDetailRepository legalDetailRepository;
     @Spy
+    private AddressRepository addressRepository;
+    @Spy
     private DtoMapperImpl dtoMapper;
+    @Spy
+    private ContactRepository contactRepository;
     @InjectMocks
     private ContractorServiceImpl contractorService;
 
@@ -96,6 +102,7 @@ public class ContractorServiceTest {
     @Test
     void create_shouldPassInstructionsSuccessfulContractorCreate() {
         contractorService.create(DtoStubs.getContractorDto(1L));
+
         verify(contractorRepository).save(any(Contractor.class));
     }
 

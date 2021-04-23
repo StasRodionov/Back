@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import io.swagger.annotations.Api;
@@ -12,7 +13,12 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Conjunction;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Or;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -50,23 +56,10 @@ public class EmployeeRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<EmployeeDto>> getAll(){
+    public ResponseEntity<List<EmployeeDto>> getAll() {
         List<EmployeeDto> employeeDtos = employeeService.getAll();
         return ResponseEntity.ok(employeeDtos);
     }
-
-    @GetMapping("/findBySearch")
-    @ApiOperation(value = "searchBySymbols", notes = "Получение списка работников по параметрам")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка сотрудников"),
-            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
-            @ApiResponse(code = 403, message = "Операция запрещена"),
-            @ApiResponse(code = 404, message = "Данный контроллер не найден")
-    })
-    public ResponseEntity<List<EmployeeDto>> findBySearch(@RequestParam("search") String search) {
-        return ResponseEntity.ok(employeeService.findBySearch(search));
-    }
-
 
     @GetMapping("/search")
     @ApiOperation(value = "search", notes = "Получение списка работников по заданным параметрам")
@@ -78,9 +71,50 @@ public class EmployeeRestController {
                     @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
                     @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
                     @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
-                    @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class)
-            }) Specification<Employee> spec) {
-        return ResponseEntity.ok(employeeService.search(spec));
+                    @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
+    }) Specification<Employee> specification) {
+
+        return ResponseEntity.ok(employeeService.search(specification));
+    }
+
+    @GetMapping("/pages")
+    @ApiOperation(value = "searchWithPages", notes = "Получение списка работников по заданным параметрам постранично")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение страницы работников"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<PageDto<EmployeeDto>> searchWithPages(
+            @Conjunction(value = {
+                    @Or({
+                            @Spec(path = "lastName", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "firstName", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "middleName", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "email", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "phone", params = "search", spec = LikeIgnoreCase.class)
+
+                    })
+            }, and = {
+                    @Spec(path = "lastName", params = "lastName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "firstName", params = "firstName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "middleName", params = "middleName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
+                    @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
+                    @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
+                    @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
+            }) Specification<Employee> specification,
+            @RequestParam("column") String sortColumn,
+            @RequestParam("direction") String sortDirection,
+            @RequestParam("pageNumber") Integer pageNumber,
+            @RequestParam("rowsLimit") Integer rowsLimit) {
+        Pageable pageParams = PageRequest.of(pageNumber - 1, rowsLimit,
+                Sort.by(sortDirection.equals("ASCENDING") ?
+                                Sort.Direction.ASC : Sort.Direction.DESC,
+                        sortColumn));
+        return ResponseEntity.ok(employeeService.search(specification, pageParams));
     }
 
     @GetMapping("/{id}")

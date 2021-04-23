@@ -2,7 +2,9 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
+import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
 import com.trade_accounting.services.interfaces.ContractorService;
+import com.trade_accounting.services.interfaces.fias.FiasDbService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -33,9 +35,11 @@ import java.util.List;
 public class ContractorRestController {
 
     private final ContractorService contractorService;
+    private final FiasDbService fiasDbService;
 
-    public ContractorRestController(ContractorService contractorService) {
+    public ContractorRestController(ContractorService contractorService, FiasDbService fiasDbService) {
         this.contractorService = contractorService;
+        this.fiasDbService = fiasDbService;
     }
 
     @GetMapping
@@ -49,6 +53,34 @@ public class ContractorRestController {
     public ResponseEntity<List<ContractorDto>> getAll() {
         List<ContractorDto> contractorDtoList = contractorService.getAll();
         return ResponseEntity.ok(contractorDtoList);
+    }
+
+    @GetMapping("/searchAddressByLevel/{level}")
+    @ApiOperation(value = "level", notes = "Получение списка из БД Адресов по уровню")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка адресов"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<FiasAddressModelDto>> searchAddressByLevel(@ApiParam(name = "level",
+            value = "Переданный в URL aolevel по которому необходимо получить список") @PathVariable(name = "level") Byte level) {
+        List<FiasAddressModelDto> addressList = fiasDbService.findAllByLevel(String.valueOf(level));
+        return ResponseEntity.ok(addressList);
+    }
+
+    @GetMapping("/searchAddressByAoguid/{aoguid}")
+    @ApiOperation(value = "aoguid", notes = "Получение списка из БД Адресов по уровню")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка адресов"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<FiasAddressModelDto>> searchAddressByAoguid(@ApiParam(name = "aoguid",
+            value = "Переданный в URL aolevel по которому необходимо получить список") @PathVariable(name = "aoguid") String level) {
+        List<FiasAddressModelDto> addressList = fiasDbService.findAllByAoguid(level);
+        return ResponseEntity.ok(addressList);
     }
 
     @GetMapping("/lite")
@@ -74,7 +106,7 @@ public class ContractorRestController {
     )
     public ResponseEntity<List<ContractorDto>> getAll(@ApiParam(name = "searchTerm",
             value = "Переданный в URL searchTerm, по которому необходимо найти контрагента")
-                                                          @PathVariable(name = "searchTerm") String searchTerm) {
+                                                      @PathVariable(name = "searchTerm") String searchTerm) {
         List<ContractorDto> contractorDtoList = contractorService.getAll(searchTerm);
         return ResponseEntity.ok(contractorDtoList);
     }

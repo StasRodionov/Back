@@ -37,6 +37,16 @@ import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.models.dto.fias.CityDto;
+import com.trade_accounting.models.dto.fias.DistrictDto;
+import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
+import com.trade_accounting.models.dto.fias.RegionDto;
+import com.trade_accounting.models.dto.fias.StreetDto;
+import com.trade_accounting.models.fias.City;
+import com.trade_accounting.models.fias.District;
+import com.trade_accounting.models.fias.FiasAddressModel;
+import com.trade_accounting.models.fias.Region;
+import com.trade_accounting.models.fias.Street;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
@@ -377,5 +387,45 @@ public class ModelDtoConverter {
                 dto.getActivityStatus(),
                 dto.getRevenue()
         );
+    }
+
+    public static Region toRegion(RegionDto regionDto) {
+        return modelMapper.map(regionDto, Region.class);
+    }
+
+    public static RegionDto toRegionDto(Region region) {
+        return modelMapper.map(region, RegionDto.class);
+    }
+
+    public static District toDistrict(DistrictDto districtDto) {
+        return modelMapper.map(districtDto, District.class);
+    }
+
+    public static DistrictDto toDistrictDto(District district) {
+        return modelMapper.map(district, DistrictDto.class);
+    }
+
+    public static City toCity(CityDto cytyDto) {
+        return modelMapper.map(cytyDto, City.class);
+    }
+
+    public static CityDto toCityDto(City city) {
+        return modelMapper.map(city, CityDto.class);
+    }
+
+    public static Street toStreet(StreetDto streetDto) {
+        return modelMapper.map(streetDto, Street.class);
+    }
+
+    public static StreetDto toStreetDto(Street street) {
+        return modelMapper.map(street, StreetDto.class);
+    }
+
+    public static FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model) {
+        return modelMapper.map(model, FiasAddressModelDto.class);
+    }
+
+    public static FiasAddressModel toFiasAddressModel(FiasAddressModelDto modelDto) {
+        return modelMapper.map(modelDto, FiasAddressModel.class);
     }
 }
