@@ -15,6 +15,7 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
 
     Optional<LegalDetail> findByInn(String name);
 
+/*
     @Query("select new com.trade_accounting.models.dto.LegalDetailDto(" +
             "e.id, " +
             "e.lastName, " +
@@ -59,6 +60,7 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.legalDetail.dateOfTheCertificate, " +
             "e.legalDetail.typeOfContractor.id) from Contractor e where e.id = :id")
     LegalDetailDto getLegalDetailByContractorId(@Param("id") Long id);
+*/
 
 //    Optional<LegalDetail> getEntityName(String name);
 //    JpaPersistentEntity<LegalDetail>,

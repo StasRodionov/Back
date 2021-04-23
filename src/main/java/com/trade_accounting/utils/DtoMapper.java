@@ -285,12 +285,14 @@ public abstract class DtoMapper {
 
     //LegalDetail
     @Mappings({
-            @Mapping(source = "typeOfContractor", target = "typeOfContractorDto")
+            @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
+            @Mapping(source = "address", target = "addressDto")
     })
     public abstract LegalDetailDto legalDetailToLegalDetailDto(LegalDetail legalDetail);
 
     @Mappings({
-            @Mapping(source = "typeOfContractorDto", target = "typeOfContractor")
+            @Mapping(source = "typeOfContractorDto", target = "typeOfContractor"),
+            @Mapping(source = "addressDto", target = "address")
     })
     public abstract LegalDetail legalDetailDtoToLegalDetail(LegalDetailDto legalDetailDto);
 
