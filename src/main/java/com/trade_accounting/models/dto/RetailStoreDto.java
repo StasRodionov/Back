@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,12 +21,24 @@ public class RetailStoreDto {
     private boolean isActive;
     private String activityStatus;
     private BigDecimal revenue;
+    private CompanyDto organizationDto;
+    private String salesInvoicePrefix;
+    private String defaultTaxationSystem;
+    private String orderTaxationSystem;
+    private List<EmployeeDto> cashiersDto;
 
-    public RetailStoreDto(String name, boolean isActive, String activityStatus, BigDecimal revenue) {
+    public RetailStoreDto(String name, boolean isActive, String activityStatus, BigDecimal revenue,
+                          CompanyDto organization, String salesInvoicePrefix, String defaultTaxationSystem,
+                          String orderTaxationSystem, List<EmployeeDto> cashiers) {
         this.name = name;
         this.isActive = isActive;
         this.activityStatus = activityStatus;
         this.revenue = revenue;
+        this.organizationDto = organization;
+        this.salesInvoicePrefix = salesInvoicePrefix;
+        this.defaultTaxationSystem = defaultTaxationSystem;
+        this.orderTaxationSystem = orderTaxationSystem;
+        this.cashiersDto = cashiers;
     }
 
 }

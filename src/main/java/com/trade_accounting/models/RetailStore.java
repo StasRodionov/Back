@@ -7,12 +7,16 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -39,11 +43,42 @@ public class RetailStore {
     @Column(name = "revenue")
     private BigDecimal revenue;
 
+    @Column(name = "organization")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Company organization;
+
+    @Column(name = "sales_invoice_prefix")
+    private String salesInvoicePrefix;
+
+    @Column(name = "default_taxation_system")
+    private String defaultTaxationSystem;
+
+    @Column(name = "order_taxation_system")
+    private String orderTaxationSystem;
+
+    @Column(name = "cashiers")
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Employee> cashiers;
+
     public RetailStore(String name, boolean isActive, String activityStatus, BigDecimal revenue) {
         this.name = name;
         this.isActive = isActive;
         this.activityStatus = activityStatus;
         this.revenue = revenue;
+    }
+
+    public RetailStore(String name, boolean isActive, String activityStatus, BigDecimal revenue,
+                       Company organization, String salesInvoicePrefix, String defaultTaxationSystem,
+                       String orderTaxationSystem, List<Employee> cashiers) {
+        this.name = name;
+        this.isActive = isActive;
+        this.activityStatus = activityStatus;
+        this.revenue = revenue;
+        this.organization = organization;
+        this.salesInvoicePrefix = salesInvoicePrefix;
+        this.defaultTaxationSystem = defaultTaxationSystem;
+        this.orderTaxationSystem = orderTaxationSystem;
+        this.cashiers = cashiers;
     }
 
 }

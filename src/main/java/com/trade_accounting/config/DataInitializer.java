@@ -195,9 +195,9 @@ public class DataInitializer {
     }
 
     public void initRetailStores() {
-        retailStoreService.create(new RetailStoreDto("Магазин 1", true, "Онлайн", new BigDecimal(10_000)));
-        retailStoreService.create(new RetailStoreDto("Магазин 2", true, "Был в сети вчера", new BigDecimal(20_000)));
-        retailStoreService.create(new RetailStoreDto("Магазин 3", true, "Был в сети 2 часа назад", new BigDecimal(15_700)));
+        retailStoreService.create(new RetailStoreDto("Магазин 1", true, "Онлайн", new BigDecimal(10_000), companyService.getById(1L), "SI", "ОСН", "ОСН", employeeService.getById(1L)));
+        retailStoreService.create(new RetailStoreDto("Магазин 2", true, "Был в сети вчера", new BigDecimal(20_000), companyService.getById(1L), "SI", "ОСН", "УСН. Доход", employeeService.getById(1L)));
+        retailStoreService.create(new RetailStoreDto("Магазин 3", true, "Был в сети 2 часа назад", new BigDecimal(15_700), companyService.getById(1L), "SI", "ОСН", "ЕСХН", employeeService.getById(1L)));
     }
 
     public void initProject() {
