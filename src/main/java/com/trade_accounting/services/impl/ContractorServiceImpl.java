@@ -40,7 +40,9 @@ public class ContractorServiceImpl implements ContractorService {
                                  ContractorGroupRepository contractorGroupRepository,
                                  TypeOfContractorRepository typeOfContractorRepository,
                                  TypeOfPriceRepository typeOfPriceRepository,
-                                 LegalDetailRepository legalDetailRepository, AddressRepository addressRepository, ContactRepository contactRepository, DtoMapper dtoMapper) {
+                                 LegalDetailRepository legalDetailRepository,
+                                 AddressRepository addressRepository,
+                                 ContactRepository contactRepository, DtoMapper dtoMapper) {
         this.contractorRepository = contractorRepository;
         this.contractorGroupRepository = contractorGroupRepository;
         this.typeOfContractorRepository = typeOfContractorRepository;
@@ -93,13 +95,10 @@ public class ContractorServiceImpl implements ContractorService {
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
 
         Address address = dtoMapper.addressDtoToAddress(contractorDto.getAddressDto());
-        addressRepository.save(address);
-        contractor.setAddress(address);
+        contractor.setAddress(addressRepository.save(address));
 
         List<Contact> contactList = dtoMapper.contactDtoListToContactList(contractorDto.getContactDto());
-        contactList.forEach(contactRepository::save);
-        contractor.setContact(contactList);
-
+        contractor.setContact(contactRepository.saveAll(contactList));
 
         contractor.setContractorGroup(
                 contractorGroupRepository
@@ -128,7 +127,7 @@ public class ContractorServiceImpl implements ContractorService {
                         )
                 )
         );
-        return dtoMapper.contractorToContractorDto(contractorRepository.saveAndFlush(contractor));
+        return dtoMapper.contractorToContractorDto(contractorRepository.save(contractor));
     }
 
     @Override
