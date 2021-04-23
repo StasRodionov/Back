@@ -19,6 +19,7 @@ import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PositionRepository;
+import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
@@ -48,6 +49,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final CompanyRepository companyRepository;
     private final LegalDetailRepository legalDetailRepository;
     private final BankAccountRepository bankAccountRepository;
+    private final RetailStoreRepository retailStoreRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository, DepartmentRepository departmentRepository,
@@ -56,6 +58,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   RoleRepository roleRepository,
                                   WarehouseRepository warehouseRepository,
                                   TaskRepository taskRepository,
+                                  RetailStoreRepository retailStoreRepository,
                                   TaskCommentRepository commentRepository, ContractorGroupRepository contractorGroupRepository,
                                   CurrencyRepository currencyRepository, CompanyRepository companyRepository,
                                   LegalDetailRepository legalDetailRepository, BankAccountRepository bankAccountRepository) {
@@ -70,6 +73,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.commentRepository = commentRepository;
         this.contractorGroupRepository = contractorGroupRepository;
         this.currencyRepository = currencyRepository;
+        this.retailStoreRepository = retailStoreRepository;
         this.companyRepository = companyRepository;
         this.legalDetailRepository = legalDetailRepository;
         this.bankAccountRepository = bankAccountRepository;
@@ -199,6 +203,13 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                     );
                 }
             }
+        }
+    }
+
+    @Override
+    public void checkExistsRetailStoreById(Long retailStoreId) {
+        if(!retailStoreRepository.existsById(retailStoreId)) {
+            throw new NotFoundEntityException("Точка продаж с id=" + retailStoreId + ", не найдена");
         }
     }
 }

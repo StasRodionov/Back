@@ -23,6 +23,7 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
+import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
@@ -32,6 +33,7 @@ import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.services.impl.AddressServiceImpl;
+import com.trade_accounting.services.impl.RetailStoreServiceImpl;
 import com.trade_accounting.services.impl.TaskCommentServiceImpl;
 import com.trade_accounting.services.impl.TaskServiceImpl;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
@@ -102,6 +104,7 @@ public class DataInitializer {
     private final TaskServiceImpl taskService;
     private final TaskCommentServiceImpl commentService;
     private final AddressServiceImpl addressService;
+    private final RetailStoreServiceImpl retailStoreService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -130,7 +133,8 @@ public class DataInitializer {
             PaymentService paymentService,
             TaskServiceImpl taskService,
             TaskCommentServiceImpl commentService,
-            AddressServiceImpl addressService) {
+            AddressServiceImpl addressService,
+            RetailStoreServiceImpl retailStoreService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -159,6 +163,7 @@ public class DataInitializer {
         this.taskService = taskService;
         this.commentService = commentService;
         this.addressService = addressService;
+        this.retailStoreService = retailStoreService;
     }
 
     @PostConstruct
@@ -192,7 +197,13 @@ public class DataInitializer {
 
         initTasks();
         initTaskComments();
+        initRetailStores();
+    }
 
+    public void initRetailStores() {
+        retailStoreService.create(new RetailStoreDto("Магазин 1", true, "Онлайн", new BigDecimal(10_000)));
+        retailStoreService.create(new RetailStoreDto("Магазин 2", true, "Был в сети вчера", new BigDecimal(20_000)));
+        retailStoreService.create(new RetailStoreDto("Магазин 3", true, "Был в сети 2 часа назад", new BigDecimal(15_700)));
     }
 
     public void initProject() {
