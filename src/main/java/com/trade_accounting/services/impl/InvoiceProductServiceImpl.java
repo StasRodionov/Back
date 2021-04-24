@@ -34,7 +34,7 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     }
 
     @Override
-    public List<InvoiceProductDto> getByInvoiceId(Long id) {
+    public List<InvoiceProductDto> searchByInvoiceId(Long id) {
         List<InvoiceProduct> invoiceProductList = invoiceProductRepository.getByInvoiceId(id);
         return invoiceProductList.stream()
                 .map(dtoMapper::invoiceProductToInvoiceProductDto)

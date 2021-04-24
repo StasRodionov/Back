@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface InvoiceProductService extends AbstractService<InvoiceProductDto> {
 
-    List<InvoiceProductDto> getByInvoiceId(Long id);
+    List<InvoiceProductDto> searchByInvoiceId(Long id);
 }

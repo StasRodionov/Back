@@ -108,7 +108,7 @@ class InvoiceProductServiceImplTest {
                                 ModelStubs.getInvoiceProduct(3L)
                         ).collect(Collectors.toList())
                 );
-        List<InvoiceProductDto> invoiceProductDtoList = invoiceProductService.getByInvoiceId(1L);
+        List<InvoiceProductDto> invoiceProductDtoList = invoiceProductService.searchByInvoiceId(1L);
         assertNotNull(
                 invoiceProductDtoList,
                 "failure - expected that a list of invoiceProductDto not null"

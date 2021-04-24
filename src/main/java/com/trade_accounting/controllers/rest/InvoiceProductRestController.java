@@ -76,7 +76,7 @@ public class InvoiceProductRestController {
             value = "Переданный ID  в URL по которому необходимо список товаров в накладной",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        List<InvoiceProductDto> invoiceProductDtoList = invoiceProductService.getByInvoiceId(id);
+        List<InvoiceProductDto> invoiceProductDtoList = invoiceProductService.searchByInvoiceId(id);
         return ResponseEntity.ok(invoiceProductDtoList);
     }
 
