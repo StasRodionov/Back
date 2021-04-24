@@ -98,7 +98,7 @@ class InvoiceProductServiceImplTest {
         invoiceProductListDtoIsCorrectlyInited(invoiceProductDto);
     }
 
-    @Test
+   /* @Test
     void getByInvoiceId_shouldReturnListOfInvoiceProduct() {
         when(invoiceProductRepository.getByInvoiceId(anyLong()))
                 .thenReturn(
@@ -122,7 +122,7 @@ class InvoiceProductServiceImplTest {
         }
 
     }
-
+*/
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         invoiceProductService.create(
