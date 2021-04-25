@@ -35,7 +35,7 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     }
     @Override
     public List<InvoiceProductDto> search(Specification<InvoiceProduct> spec) {
-        return search(invoiceProductRepository, dtoMapper::invoiceProductToInvoiceProductDto, spec);
+        return executeSearch(invoiceProductRepository, dtoMapper::invoiceProductToInvoiceProductDto, spec);
     }
     @Override
     public InvoiceProductDto getById(Long id) {

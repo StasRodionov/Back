@@ -12,7 +12,6 @@ public interface InvoiceProductService extends AbstractService<InvoiceProductDto
 
     @Transactional
     default List<InvoiceProductDto> searchByInvoiceId(Long id) {
-        return search((root, query, builder) ->
-                builder.equal(root.get("invoice").get("id"), id));
+        return search((root, query, builder) -> builder.equal(root.get("invoice").get("id"), id));
     }
 }
