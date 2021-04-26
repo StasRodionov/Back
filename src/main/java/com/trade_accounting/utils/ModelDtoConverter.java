@@ -211,7 +211,7 @@ public class ModelDtoConverter {
                 dto.getOkpo(),
                 dto.getOgrn(),
                 dto.getNumberOfTheCertificate(),
-                LocalDate.parse(dto.getDateOfTheCertificate()),
+                dto.getDateOfTheCertificate(),
                 typeOfContractor);
     }
 

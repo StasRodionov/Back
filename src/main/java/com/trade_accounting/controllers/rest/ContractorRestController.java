@@ -160,8 +160,9 @@ public class ContractorRestController {
     public ResponseEntity<ContractorDto> create(@ApiParam(name = "contractorDto",
             value = "DTO контрагента, которого необходимо создать")
                                                 @RequestBody ContractorDto contractorDto) {
-        contractorService.create(contractorDto);
-        return ResponseEntity.ok().build();
+        var contractorDtoSaved = contractorService.create(contractorDto);
+
+        return ResponseEntity.ok(contractorDtoSaved);
     }
 
     @PutMapping
