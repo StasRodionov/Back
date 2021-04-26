@@ -340,46 +340,21 @@ public class ModelDtoConverter {
         return entity;
     }
 
-    public static List<Employee> toEmployeeList (List<EmployeeDto> list) {
-        List<Employee> employeesList = new ArrayList<>();
-        for (EmployeeDto employeeDto : list) {
-//            employeesList.add(new Employee(
-//                    employeeDto.getId(),
-//                    employeeDto.getLastName(),
-//                    employeeDto.getFirstName(),
-//                    employeeDto.getMiddleName(),
-//                    employeeDto.getSortNumber(),
-//                    employeeDto.getPhone(),
-//                    employeeDto.getInn(),
-//                    employeeDto.getDescription(),
-//                    employeeDto.getEmail(),
-//                    employeeDto.getPassword(),
-//                    employeeDto.getDepartmentDto(),
-
-                    employeesList.add(modelMapper.map(employeeDto, Employee.class));
-        }
-        return employeesList;
-    }
-
     public static RetailStore convertToRetailStore(RetailStoreDto dto) {
 
         RetailStore retailStore = modelMapper.map(dto, RetailStore.class);
 
         if (dto.getOrganizationDto() != null) {
-            retailStore.setOrganization(modelMapper.map());
+            retailStore.setOrganization(modelMapper.map(dto.getOrganizationDto(), Company.class));
         }
 
-//        return new RetailStore(
-//                dto.getId(),
-//                dto.getName(),
-//                dto.isActive(),
-//                dto.getActivityStatus(),
-//                dto.getRevenue(),
-//                dto.getOrganization(),
-//                dto.getSalesInvoicePrefix(),
-//                dto.getDefaultTaxationSystem(),
-//                dto.getOrderTaxationSystem(),
-//                toEmployeeList(dto.getCashiers())
-//        );
+        if (dto.getCashiersDto() != null) {
+            List<Employee> cashiers = dto.getCashiersDto().stream()
+                    .map(e -> modelMapper.map(e, Employee.class))
+                    .collect(Collectors.toList());
+            retailStore.setCashiers(cashiers);
+        }
+
+        return retailStore;
     }
 }

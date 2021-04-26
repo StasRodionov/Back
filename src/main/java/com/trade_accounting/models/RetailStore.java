@@ -11,7 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -43,7 +43,6 @@ public class RetailStore {
     @Column(name = "revenue")
     private BigDecimal revenue;
 
-    @Column(name = "organization")
     @OneToOne(fetch = FetchType.LAZY)
     private Company organization;
 
@@ -56,16 +55,8 @@ public class RetailStore {
     @Column(name = "order_taxation_system")
     private String orderTaxationSystem;
 
-    @Column(name = "cashiers")
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Employee> cashiers;
-
-    public RetailStore(String name, boolean isActive, String activityStatus, BigDecimal revenue) {
-        this.name = name;
-        this.isActive = isActive;
-        this.activityStatus = activityStatus;
-        this.revenue = revenue;
-    }
 
     public RetailStore(String name, boolean isActive, String activityStatus, BigDecimal revenue,
                        Company organization, String salesInvoicePrefix, String defaultTaxationSystem,
