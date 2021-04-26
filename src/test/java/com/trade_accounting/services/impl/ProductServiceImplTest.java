@@ -97,7 +97,7 @@ class ProductServiceImplTest {
         ).collect(Collectors.toList());
         ProductDto productDto = ModelStubs.getProductDto(1L);
         productDto.setImageDtos(imageDtoList);
-        productService.save(productDto);
+        productService.create(productDto);
         verify(dtoMapper).toImage(any(List.class), anyString());
         verify(imageRepository).saveAll(any(List.class));
         verify(dtoMapper).productDtoToProduct(productDto);

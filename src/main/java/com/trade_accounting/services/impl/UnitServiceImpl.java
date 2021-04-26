@@ -40,7 +40,7 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
-    public void create(UnitDto unitDto) {
+    public UnitDto create(UnitDto unitDto) {
         Unit unit = dtoMapper.unitDtoToUnit(unitDto);
 
         unit.setSortNumber(
@@ -48,11 +48,13 @@ public class UnitServiceImpl implements UnitService {
         );
 
         unitRepository.save(unit);
+        return unitDto;
     }
 
     @Override
-    public void update(UnitDto unitDto) {
+    public UnitDto update(UnitDto unitDto) {
         create(unitDto);
+        return unitDto;
     }
 
     @Override

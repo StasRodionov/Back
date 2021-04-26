@@ -2,6 +2,8 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
+import com.trade_accounting.repositories.AddressRepository;
+import com.trade_accounting.repositories.ContactRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
@@ -42,7 +44,11 @@ public class ContractorServiceTest {
     @Mock
     private LegalDetailRepository legalDetailRepository;
     @Spy
+    private AddressRepository addressRepository;
+    @Spy
     private DtoMapperImpl dtoMapper;
+    @Spy
+    private ContactRepository contactRepository;
     @InjectMocks
     private ContractorServiceImpl contractorService;
 
@@ -96,6 +102,7 @@ public class ContractorServiceTest {
     @Test
     void create_shouldPassInstructionsSuccessfulContractorCreate() {
         contractorService.create(DtoStubs.getContractorDto(1L));
+
         verify(contractorRepository).save(any(Contractor.class));
     }
 
@@ -118,7 +125,6 @@ public class ContractorServiceTest {
         assertNotNull(contractorDto, "Fail in passed contractorDto");
         assertNotNull(contractorDto.getId(), "Fail in field 'id' of contractorDto");
         assertNotNull(contractorDto.getName(), "Fail in field 'name' of contractorDto");
-        assertNotNull(contractorDto.getInn(), "Fail in field 'inn' of contractorDto");
         assertNotNull(contractorDto.getSortNumber(), "Fail in field 'sortNumber' of contractorDto");
         assertNotNull(contractorDto.getPhone(), "Fail in field 'phone' of contractorDto");
         assertNotNull(contractorDto.getFax(), "Fail in field 'fax' of contractorDto");
@@ -127,7 +133,7 @@ public class ContractorServiceTest {
         assertNotNull(contractorDto.getCommentToAddress(), "Fail in field 'comment to address' of contractorDto");
         assertNotNull(contractorDto.getComment(), "Fail in field 'name' of contractorDto");
         assertNotNull(contractorDto.getContractorGroupDto(), "Fail in field 'ContractorGroupDto' of contractorDto");
-        assertNotNull(contractorDto.getTypeOfContractorDto(), "Fail in field 'TypeOfContractorDto' of contractorDto");
+        assertNotNull(contractorDto.getContactDto(), "Fail in field 'ContactDto' of contractorDto");
         assertNotNull(contractorDto.getTypeOfPriceDto(), "Fail in field 'TypeOfPriceDto' of contractorDto");
         assertNotNull(contractorDto.getLegalDetailDto(), "Fail in field 'LegalDetailDto' of contractorDto");
 

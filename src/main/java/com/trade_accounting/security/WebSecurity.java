@@ -21,6 +21,20 @@ import static com.trade_accounting.config.SecurityConstants.SIGN_UP_URL;
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
+    private static final String[] AUTH_WHITELIST = {
+            // -- Swagger UI v2
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
+
     private final EmployeeDetailsServiceImpl userDetailsService;
     // private BCryptPasswordEncoder bCryptPasswordEncoder; // #bookmark #encrypt.password
 
@@ -47,6 +61,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                     .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 .and()
                     .authorizeRequests()
+                    .antMatchers(AUTH_WHITELIST).permitAll()
                     .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                     .anyRequest().authenticated()
                 .and()

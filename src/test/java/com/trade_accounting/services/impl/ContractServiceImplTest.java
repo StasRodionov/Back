@@ -98,7 +98,7 @@ public class ContractServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        contractService.save(
+        contractService.update(
                 DtoStubs.getContractDto(1L)
         );
 
@@ -107,7 +107,7 @@ public class ContractServiceImplTest {
 
     @Test
     void update_shouldPassInstructionsSuccessfulCreate() {
-        contractService.save(
+        contractService.update(
                 DtoStubs.getContractDto(1L)
         );
 

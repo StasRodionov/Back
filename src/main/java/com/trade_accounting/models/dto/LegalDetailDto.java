@@ -19,15 +19,17 @@ public class LegalDetailDto {
 
     private String middleName;
 
-    private String address;
+    private AddressDto addressDto;
 
     private String commentToAddress;
 
     private String inn;
 
+    private String kpp;
+
     private String okpo;
 
-    private String ogrnip;
+    private String ogrn;
 
     private String numberOfTheCertificate;
 
@@ -39,11 +41,12 @@ public class LegalDetailDto {
                           String lastName,
                           String firstName,
                           String middleName,
-                          String address,
+                          Long addressDtoId,
                           String commentToAddress,
                           String inn,
+                          String kpp,
                           String okpo,
-                          String ogrnip,
+                          String ogrn,
                           String numberOfTheCertificate,
                           LocalDate dateOfTheCertificate,
                           Long typeOfContractorId) {
@@ -51,11 +54,13 @@ public class LegalDetailDto {
         this.lastName = lastName;
         this.firstName = firstName;
         this.middleName = middleName;
-        this.address = address;
+        this.addressDto = new AddressDto();
+        this.addressDto.setId(addressDtoId);
         this.commentToAddress = commentToAddress;
         this.inn = inn;
+        this.kpp = kpp;
         this.okpo = okpo;
-        this.ogrnip = ogrnip;
+        this.ogrn = ogrn;
         this.numberOfTheCertificate = numberOfTheCertificate;
         this.dateOfTheCertificate = dateOfTheCertificate.toString();
         this.typeOfContractorDto = new TypeOfContractorDto();

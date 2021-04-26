@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Between;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
@@ -30,7 +29,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@Slf4j
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/task_comments")
@@ -78,9 +76,8 @@ public class TaskCommentRestController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<TaskCommentDto> getById(@PathVariable("id") long id) {
-        return commentService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(ResponseEntity.notFound()::build);
+        TaskCommentDto taskCommentDto = commentService.getById(id);
+        return ResponseEntity.ok(taskCommentDto);
     }
 
     @ApiOperation(value = "create", notes = "Создание нового комментария")

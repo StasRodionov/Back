@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/department")
 @Tag(name = "Department Rest Controller", description = "Контроллер с CRUD операциями для работы с подразделениями")
@@ -43,7 +41,6 @@ public class DepartmentRestController {
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
     public ResponseEntity<List<DepartmentDto>> getAll() {
         List<DepartmentDto> departmentDtos = departmentService.getAll();
-        log.info("Запрошен список DepartmentDto");
         return ResponseEntity.ok(departmentDtos);
     }
 
@@ -61,7 +58,6 @@ public class DepartmentRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         DepartmentDto departmentDto = departmentService.getById(id);
-        log.info("Запрошен экземпляр DepartmentDto с id = {}", id);
         return ResponseEntity.ok(departmentDto);
     }
 
@@ -75,7 +71,6 @@ public class DepartmentRestController {
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
     public ResponseEntity<?> create(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо создать") @RequestBody DepartmentDto departmentDto) {
         departmentService.create(departmentDto);
-        log.info("Записан новый экземпляр DepartmentDto");
         return ResponseEntity.ok().build();
     }
 
@@ -89,7 +84,6 @@ public class DepartmentRestController {
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
     public ResponseEntity<?> update(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо обновить") @RequestBody DepartmentDto departmentDto) {
         departmentService.update(departmentDto);
-        log.info("Обновлен экземпляр DepartmentDto");
         return ResponseEntity.ok().build();
     }
 
@@ -108,7 +102,6 @@ public class DepartmentRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         departmentService.deleteById(id);
-        log.info("Удален экземпляр DepartmentDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }

@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Between;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
@@ -30,7 +29,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@Slf4j
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/tasks")
@@ -77,9 +75,8 @@ public class TaskRestController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<TaskDto> getById(@PathVariable("id") long id) {
-        return taskService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(ResponseEntity.notFound()::build);
+        TaskDto taskDto = taskService.getById(id);
+        return ResponseEntity.ok(taskDto);
     }
 
     @ApiOperation(value = "create", notes = "Создание новой задачи")

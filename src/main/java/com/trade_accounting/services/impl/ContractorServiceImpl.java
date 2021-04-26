@@ -1,13 +1,14 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Address;
+import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.repositories.AddressRepository;
+import com.trade_accounting.repositories.ContactRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
-import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.DtoMapper;
@@ -27,23 +28,24 @@ public class ContractorServiceImpl implements ContractorService {
 
     private final ContractorRepository contractorRepository;
     private final ContractorGroupRepository contractorGroupRepository;
-    private final TypeOfContractorRepository typeOfContractorRepository;
     private final TypeOfPriceRepository typeOfPriceRepository;
     private final LegalDetailRepository legalDetailRepository;
     private final AddressRepository addressRepository;
+    private final ContactRepository contactRepository;
     private final DtoMapper dtoMapper;
 
     public ContractorServiceImpl(ContractorRepository contractorRepository,
                                  ContractorGroupRepository contractorGroupRepository,
-                                 TypeOfContractorRepository typeOfContractorRepository,
                                  TypeOfPriceRepository typeOfPriceRepository,
-                                 LegalDetailRepository legalDetailRepository, AddressRepository addressRepository, DtoMapper dtoMapper) {
+                                 LegalDetailRepository legalDetailRepository,
+                                 AddressRepository addressRepository,
+                                 ContactRepository contactRepository, DtoMapper dtoMapper) {
         this.contractorRepository = contractorRepository;
         this.contractorGroupRepository = contractorGroupRepository;
-        this.typeOfContractorRepository = typeOfContractorRepository;
         this.typeOfPriceRepository = typeOfPriceRepository;
         this.legalDetailRepository = legalDetailRepository;
         this.addressRepository = addressRepository;
+        this.contactRepository = contactRepository;
         this.dtoMapper = dtoMapper;
 
     }
@@ -89,20 +91,15 @@ public class ContractorServiceImpl implements ContractorService {
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
 
         Address address = dtoMapper.addressDtoToAddress(contractorDto.getAddressDto());
-        addressRepository.save(address);
-        contractor.setAddress(address);
+        contractor.setAddress(addressRepository.save(address));
+
+        List<Contact> contactList = dtoMapper.contactDtoListToContactList(contractorDto.getContactDto());
+        contractor.setContact(contactRepository.saveAll(contactList));
 
         contractor.setContractorGroup(
                 contractorGroupRepository
                         .save(dtoMapper.contractorGroupDtoToContractorGroup(
                                 contractorDto.getContractorGroupDto()
-                        ))
-        );
-
-        contractor.setTypeOfContractor(
-                typeOfContractorRepository
-                        .save(dtoMapper.typeOfContractorDtoToTypeOfContractor(
-                                contractorDto.getTypeOfContractorDto()
                         ))
         );
 
@@ -119,22 +116,24 @@ public class ContractorServiceImpl implements ContractorService {
                         )
                 )
         );
-        return dtoMapper.contractorToContractorDto(contractorRepository.saveAndFlush(contractor));
+        return dtoMapper.contractorToContractorDto(contractorRepository.save(contractor));
     }
 
     @Override
     public ContractorDto update(ContractorDto contractorDto) {
         log.info("обновление контрагента ");
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
+
         Address address = dtoMapper.addressDtoToAddress(contractorDto.getAddressDto());
         addressRepository.save(address);
         contractor.setAddress(address);
 
+        List<Contact> contactList = dtoMapper.contactDtoListToContactList(contractorDto.getContactDto());
+        contactList.forEach(contactRepository::save);
+        contractor.setContact(contactList);
+
         contractor.setContractorGroup(
                 contractorGroupRepository.findById(contractorDto.getContractorGroupDto().getId()).orElse(null));
-
-        contractor.setTypeOfContractor(
-                typeOfContractorRepository.findById(contractorDto.getTypeOfContractorDto().getId()).orElse(null));
 
         contractor.setTypeOfPrice(
                 typeOfPriceRepository.findById(contractorDto.getTypeOfPriceDto().getId()).orElse(null));
@@ -143,6 +142,7 @@ public class ContractorServiceImpl implements ContractorService {
                 legalDetailRepository.findById(contractorDto.getLegalDetailDto().getId()).orElse(null));
 
         contractorRepository.save(contractor);
+
         return contractorDto;
     }
 

@@ -10,9 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
-import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -29,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Company Rest Controller", description = "CRUD  операции с компаниями")
 @Api(tags = "Company Rest Controller")
@@ -55,7 +52,6 @@ public class CompanyRestController {
     )
     public ResponseEntity<List<CompanyDto>> getAll(){
         List<CompanyDto> companyDtos = companyService.getAll();
-        log.info("Запрошен список компаний");
         return ResponseEntity.ok(companyDtos);
     }
 
@@ -80,7 +76,6 @@ public class CompanyRestController {
                     @Spec(path = "chiefAccountantSignature", params = "chiefAccountantSignature", spec = LikeIgnoreCase.class),
                     @Spec(path = "stamp", params = "stamp", spec = LikeIgnoreCase.class)
             }) Specification<Company> spec) {
-        log.info("Запрошен поиск компаний");
         return ResponseEntity.ok(companyService.search(spec));
     }
 
@@ -97,7 +92,6 @@ public class CompanyRestController {
                                                   @PathVariable(name = "id") Long id){
         checkEntityService.checkExistCompanyById(id);
         CompanyDto companyDto = companyService.getById(id);
-        log.info("Запрошен экземпляр компании с id = {}", id);
         return ResponseEntity.ok(companyDto);
     }
 
@@ -113,7 +107,6 @@ public class CompanyRestController {
             value = "Переданный в URL email по которому необходимо найти компанию", required = true)
                                                      @PathVariable(name = "email") String email){
         CompanyDto companyDto = companyService.getByEmail(email);
-        log.info("Запрошен экземпляр с email = {}", email);
         return ResponseEntity.ok(companyDto);
     }
 
@@ -130,7 +123,6 @@ public class CompanyRestController {
                                         @RequestBody CompanyDto companyDto){
         checkEntityService.checkForBadCompany(companyDto);
         companyService.create(companyDto);
-        log.info("Записан новый экземпляр компании - {}", companyDto);
         return ResponseEntity.ok().build();
     }
 
@@ -148,7 +140,6 @@ public class CompanyRestController {
         checkEntityService.checkExistCompanyById(companyDto.getId());
         checkEntityService.checkForBadCompany(companyDto);
         companyService.update(companyDto);
-        log.info("Обновлен экземпляр компании с id = {}", companyDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -165,7 +156,6 @@ public class CompanyRestController {
             value = "Переданный в URL id по которому необходимо удалить компанию")
                                             @PathVariable(name = "id") Long id) {
         companyService.deleteById(id);
-        log.info("Удален экземпляр компании с id = {}", id);
         return ResponseEntity.ok().build();
     }
 }

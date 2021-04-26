@@ -1,6 +1,5 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.services.interfaces.BankAccountService;
 import io.swagger.annotations.Api;
@@ -9,7 +8,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
+
 @RestController
 @Tag(name = "Bank Account Rest Controller", description = "CRUD операции с банковскими аккаунтами")
 @Api(tags = "Bank Account Rest Controller")
@@ -45,7 +43,6 @@ public class BankAccountRestController {
     )
     public ResponseEntity<List<BankAccountDto>> getAll() {
         List<BankAccountDto> accounts = bankAccountService.getAll();
-        log.info("Запрошен список BankAccountDto");
         return ResponseEntity.ok(accounts);
     }
 
@@ -60,7 +57,6 @@ public class BankAccountRestController {
     public ResponseEntity<BankAccountDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти банковский аккаунт")
                                                   @PathVariable(name = "id") Long id) {
         BankAccountDto bankAccount = bankAccountService.getById(id);
-        log.info("Запрошен экземпляр BankAccountDto с id= {}", id);
         return ResponseEntity.ok(bankAccount);
     }
 
@@ -75,7 +71,6 @@ public class BankAccountRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "bankAccountDto", value = "DTO банковского аккаунта, который необходимо создать") @RequestBody BankAccountDto bankAccountDto) {
         bankAccountService.create(bankAccountDto);
-        log.info("Записан новый экземпляр BankAccountDto");
         return ResponseEntity.ok().build();
     }
 
@@ -90,7 +85,6 @@ public class BankAccountRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "bankAccountDto", value = "DTO банковского аккаунта, c обновленными данными") @RequestBody BankAccountDto bankAccountDto) {
         bankAccountService.update(bankAccountDto);
-        log.info("Обновлен экземпляр BankAccountDto");
         return ResponseEntity.ok().build();
     }
     @ApiOperation(value = "deleteById", notes = "Удаляет банковский аккаунт на основе переданного ID")
@@ -104,7 +98,6 @@ public class BankAccountRestController {
     )
     public ResponseEntity<?> deleteById(@ApiParam(name = "id", value = "ID банковского аккаунта, который необходимо удалить") @PathVariable(name = "id") Long id) {
         bankAccountService.deleteById(id);
-        log.info("Удален экземпляр BankAccountDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 

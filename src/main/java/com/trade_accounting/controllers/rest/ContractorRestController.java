@@ -1,26 +1,22 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.dto.ContractorDto;
-import com.trade_accounting.models.dto.InvoiceDto;
+import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
 import com.trade_accounting.services.interfaces.ContractorService;
-import lombok.extern.slf4j.Slf4j;
-import net.kaczmarzyk.spring.data.jpa.domain.Equal;
-import net.kaczmarzyk.spring.data.jpa.domain.Like;
-import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
-
+import com.trade_accounting.services.interfaces.fias.FiasDbService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Contractor Rest Controller", description = "CRUD  операции с контрагентами")
 @Api(tags = "Contractor Rest Controller")
@@ -40,9 +35,11 @@ import java.util.List;
 public class ContractorRestController {
 
     private final ContractorService contractorService;
+    private final FiasDbService fiasDbService;
 
-    public ContractorRestController(ContractorService contractorService) {
+    public ContractorRestController(ContractorService contractorService, FiasDbService fiasDbService) {
         this.contractorService = contractorService;
+        this.fiasDbService = fiasDbService;
     }
 
     @GetMapping
@@ -55,8 +52,35 @@ public class ContractorRestController {
     )
     public ResponseEntity<List<ContractorDto>> getAll() {
         List<ContractorDto> contractorDtoList = contractorService.getAll();
-        log.info("Запрошен список ContractorDto через getAll");
         return ResponseEntity.ok(contractorDtoList);
+    }
+
+    @GetMapping("/searchAddressByLevel/{level}")
+    @ApiOperation(value = "level", notes = "Получение списка из БД Адресов по уровню")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка адресов"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<FiasAddressModelDto>> searchAddressByLevel(@ApiParam(name = "level",
+            value = "Переданный в URL aolevel по которому необходимо получить список") @PathVariable(name = "level") Byte level) {
+        List<FiasAddressModelDto> addressList = fiasDbService.findAllByLevel(String.valueOf(level));
+        return ResponseEntity.ok(addressList);
+    }
+
+    @GetMapping("/searchAddressByAoguid/{aoguid}")
+    @ApiOperation(value = "aoguid", notes = "Получение списка из БД Адресов по уровню")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка адресов"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<FiasAddressModelDto>> searchAddressByAoguid(@ApiParam(name = "aoguid",
+            value = "Переданный в URL aolevel по которому необходимо получить список") @PathVariable(name = "aoguid") String level) {
+        List<FiasAddressModelDto> addressList = fiasDbService.findAllByAoguid(level);
+        return ResponseEntity.ok(addressList);
     }
 
     @GetMapping("/lite")
@@ -69,7 +93,6 @@ public class ContractorRestController {
     )
     public ResponseEntity<List<ContractorDto>> getAllLite() {
         List<ContractorDto> contractorDtoList = contractorService.getAll();
-        log.info("Запрошен список ContractorDto (Лёгкое ДТО)");
         return ResponseEntity.ok(contractorDtoList);
     }
 
@@ -83,9 +106,8 @@ public class ContractorRestController {
     )
     public ResponseEntity<List<ContractorDto>> getAll(@ApiParam(name = "searchTerm",
             value = "Переданный в URL searchTerm, по которому необходимо найти контрагента")
-                                                          @PathVariable(name = "searchTerm") String searchTerm) {
+                                                      @PathVariable(name = "searchTerm") String searchTerm) {
         List<ContractorDto> contractorDtoList = contractorService.getAll(searchTerm);
-        log.info("Запрошен список ContractorDto searchTerm");
         return ResponseEntity.ok(contractorDtoList);
     }
 
@@ -95,7 +117,6 @@ public class ContractorRestController {
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
-                    @Spec(path = "inn", params = "inn", spec = LikeIgnoreCase.class),
                     @Spec(path = "sortNumber", params = "sortNumber", spec = LikeIgnoreCase.class),
                     @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
                     @Spec(path = "fax", params = "fax", spec = LikeIgnoreCase.class),
@@ -109,7 +130,6 @@ public class ContractorRestController {
 //                    @Spec(path = "contractor.bankAccounts", params = "bankAccountsDto", spec = LikeIgnoreCase.class),
 //                    @Spec(path = "contractor.legalDetail", params = "legalDetail", spec = Equal.class),
             }) Specification<Contractor> spec) {
-        log.info("Запрошен фильтр по поиску контрактов contractor");
         return ResponseEntity.ok(contractorService.searchContractor(spec));
     }
 
@@ -125,7 +145,6 @@ public class ContractorRestController {
             value = "Переданный в URL id по которому необходимо найти контрагента")
                                                  @PathVariable(name = "id") Long id) {
         ContractorDto contractorDto = contractorService.getById(id);
-        log.info("Запрошен экземпляр ContractorDto с id= {}", id);
         return ResponseEntity.ok(contractorDto);
     }
 
@@ -142,7 +161,6 @@ public class ContractorRestController {
             value = "DTO контрагента, которого необходимо создать")
                                                 @RequestBody ContractorDto contractorDto) {
         contractorService.create(contractorDto);
-        log.info("Записан новый экземпляр {}", contractorDto.toString());
         return ResponseEntity.ok().build();
     }
 
@@ -159,7 +177,6 @@ public class ContractorRestController {
             value = "DTO контрагента, которого необходимо обновить")
                                                 @RequestBody ContractorDto contractorDto) {
         contractorService.update(contractorDto);
-        log.info("Обновлен экземпляр ContractorDto с id= {}", contractorDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -176,7 +193,6 @@ public class ContractorRestController {
             value = "Переданный в URL id по которому необходимо удалить контрагента")
                                                     @PathVariable("id") Long id) {
         contractorService.deleteById(id);
-        log.info("Удален экземпляр ContractorDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }

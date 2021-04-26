@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Role Rest Controller", description = "CRUD операции с ролями")
 @Api(tags = "Role Rest Controller")
@@ -44,7 +42,6 @@ public class RoleRestController {
     )
     public ResponseEntity<List<RoleDto>> getAll() {
         List<RoleDto> roleDtos = roleService.getAll();
-        log.info("Запрошен список RoleDto");
         return ResponseEntity.ok(roleDtos);
     }
 
@@ -63,7 +60,6 @@ public class RoleRestController {
             example = "1",
             required = true) @PathVariable("id") Long id) {
         RoleDto roleDto = roleService.getById(id);
-        log.info("Запрошен экземпляр RoleDto с id = {}", id);
         return ResponseEntity.ok(roleDto);
     }
 
@@ -79,7 +75,6 @@ public class RoleRestController {
     public ResponseEntity<?> create(@ApiParam(name = "roleDto",
             value = "DTO роли, которую необходимо создать") @RequestBody RoleDto roleDto) {
         roleService.create(roleDto);
-        log.info("Записан новый экземпляр - {}", roleDto);
         return ResponseEntity.ok().build();
     }
 
@@ -96,7 +91,6 @@ public class RoleRestController {
             value = "DTO роли, которую необходимо обновить")
                                     @RequestBody RoleDto roleDto) {
         roleService.update(roleDto);
-        log.info("Обновлен экземпляр RoleDto с id = {}", roleDto.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -116,7 +110,6 @@ public class RoleRestController {
             example = "1",
             required = true) @PathVariable("id") Long id) {
         roleService.deleteById(id);
-        log.info("Удален экземпляр RoleDto с id = {}", id);
         return ResponseEntity.ok().build();
     }
 }

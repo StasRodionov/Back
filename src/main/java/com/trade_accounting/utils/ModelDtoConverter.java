@@ -3,6 +3,7 @@ package com.trade_accounting.utils;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Employee;
@@ -19,6 +20,7 @@ import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
@@ -35,7 +37,18 @@ import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.models.dto.fias.CityDto;
+import com.trade_accounting.models.dto.fias.DistrictDto;
+import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
+import com.trade_accounting.models.dto.fias.RegionDto;
+import com.trade_accounting.models.dto.fias.StreetDto;
+import com.trade_accounting.models.fias.City;
+import com.trade_accounting.models.fias.District;
+import com.trade_accounting.models.fias.FiasAddressModel;
+import com.trade_accounting.models.fias.Region;
+import com.trade_accounting.models.fias.Street;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -100,6 +113,31 @@ public class ModelDtoConverter {
                 legalDetail, bankAccounts);
     }
 
+    public static ContactDto convertToContactDto(Contact contact) {
+        return modelMapper.map(contact, ContactDto.class);
+    }
+
+    public static Contact convertToContact(ContactDto contactDto) {
+        return modelMapper.map(contactDto, Contact.class);
+    }
+
+    public static List<Contact> convertToListOfContact(List<ContactDto> list) {
+        List<Contact> contactList = new ArrayList<>();
+        for (ContactDto contactDto : list) {
+            contactList.add(new Contact(
+                    contactDto.getId(),
+                    contactDto.getFullName(),
+                    contactDto.getPosition(),
+                    contactDto.getPhone(),
+                    contactDto.getEmail(),
+                    contactDto.getComment()
+            ));
+        }
+        return contactList;
+    }
+
+
+
     public static EmployeeDto convertToEmployeeDto(Employee employee) {
         EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
         if (employee.getDepartment() != null) {
@@ -142,12 +180,13 @@ public class ModelDtoConverter {
         if (contractor.getContractorGroup() != null) {
             contractorDto.setContractorGroupDto(modelMapper.map(contractor.getContractorGroup(), ContractorGroupDto.class));
         }
-        if (contractor.getTypeOfContractor() != null) {
-            contractorDto.setTypeOfContractorDto((modelMapper.map(contractor.getTypeOfContractor(), TypeOfContractorDto.class)));
-        }
 
         if (contractor.getTypeOfPrice() != null) {
             contractorDto.setTypeOfPriceDto(modelMapper.map(contractor.getTypeOfPrice(), TypeOfPriceDto.class));
+        }
+
+        if (contractor.getContact() != null) {
+            contractorDto.setContactDto(modelMapper.map(contractor.getContact(), new TypeToken<List<ContactDto>>(){}.getType()));
         }
 //        if (contractor.getBankAccounts() != null) {
 //            contractorDto.setBankAccountDto(modelMapper.map(contractor.getBankAccounts(),  null));
@@ -165,11 +204,12 @@ public class ModelDtoConverter {
                 dto.getLastName(),
                 dto.getFirstName(),
                 dto.getMiddleName(),
-                dto.getAddress(),
+                convertToAddress(dto.getAddressDto()),
                 dto.getCommentToAddress(),
                 dto.getInn(),
+                dto.getKpp(),
                 dto.getOkpo(),
-                dto.getOgrnip(),
+                dto.getOgrn(),
                 dto.getNumberOfTheCertificate(),
                 LocalDate.parse(dto.getDateOfTheCertificate()),
                 typeOfContractor);
@@ -212,13 +252,12 @@ public class ModelDtoConverter {
     }
 
     public static Contractor convertToContractor(ContractorDto dto, ContractorGroup contractorGroup,
-                                                 TypeOfContractor typeOfContractor, TypeOfPrice typeOfPrice,
+                                                 TypeOfPrice typeOfPrice,
                                                  List<BankAccount> bankAccount,
                                                  LegalDetail legalDetail) {
         return new Contractor(
                 dto.getId(),
                 dto.getName(),
-                dto.getInn(),
                 dto.getSortNumber(),
                 dto.getPhone(),
                 dto.getFax(),
@@ -226,8 +265,8 @@ public class ModelDtoConverter {
                 convertToAddress(dto.getAddressDto()),
                 dto.getCommentToAddress(),
                 dto.getComment(),
+                convertToListOfContact(dto.getContactDto()),
                 contractorGroup,
-                typeOfContractor,
                 typeOfPrice,
                 bankAccount,
                 legalDetail
@@ -356,5 +395,45 @@ public class ModelDtoConverter {
         }
 
         return retailStore;
+    }
+
+    public static Region toRegion(RegionDto regionDto) {
+        return modelMapper.map(regionDto, Region.class);
+    }
+
+    public static RegionDto toRegionDto(Region region) {
+        return modelMapper.map(region, RegionDto.class);
+    }
+
+    public static District toDistrict(DistrictDto districtDto) {
+        return modelMapper.map(districtDto, District.class);
+    }
+
+    public static DistrictDto toDistrictDto(District district) {
+        return modelMapper.map(district, DistrictDto.class);
+    }
+
+    public static City toCity(CityDto cytyDto) {
+        return modelMapper.map(cytyDto, City.class);
+    }
+
+    public static CityDto toCityDto(City city) {
+        return modelMapper.map(city, CityDto.class);
+    }
+
+    public static Street toStreet(StreetDto streetDto) {
+        return modelMapper.map(streetDto, Street.class);
+    }
+
+    public static StreetDto toStreetDto(Street street) {
+        return modelMapper.map(street, StreetDto.class);
+    }
+
+    public static FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model) {
+        return modelMapper.map(model, FiasAddressModelDto.class);
+    }
+
+    public static FiasAddressModel toFiasAddressModel(FiasAddressModelDto modelDto) {
+        return modelMapper.map(modelDto, FiasAddressModel.class);
     }
 }

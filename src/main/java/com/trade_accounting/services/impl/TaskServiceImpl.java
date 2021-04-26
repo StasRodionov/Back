@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -47,7 +46,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Optional<TaskDto> getById(Long id) {
+    public TaskDto getById(Long id) {
         var taskEntity = taskRepository.findById(id);
 
         return taskEntity
@@ -55,7 +54,7 @@ public class TaskServiceImpl implements TaskService {
                     var dto = ModelDtoConverter.toTaskDTO(entity);
                     dto.setCommentCount(commentRepository.countTaskCommentByTaskId(id));
                     return dto;
-                });
+                }).orElse(new TaskDto());
     }
 
     @Override

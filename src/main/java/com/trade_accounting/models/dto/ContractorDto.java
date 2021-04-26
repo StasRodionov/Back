@@ -13,8 +13,6 @@ import java.util.List;
 public class ContractorDto {
     private Long id;
     private String name;
-    @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$")
-    private String inn;
     private String sortNumber;
     private String phone;
     private String fax;
@@ -23,8 +21,8 @@ public class ContractorDto {
     private String commentToAddress;
     private String comment;
 
+    private List<ContactDto> contactDto;
     private ContractorGroupDto contractorGroupDto;
-    private TypeOfContractorDto typeOfContractorDto;
     private TypeOfPriceDto typeOfPriceDto;
     private List<BankAccountDto> bankAccountDto;
     private LegalDetailDto legalDetailDto;

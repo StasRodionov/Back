@@ -6,15 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface ContractService {
-
-    List<ContractDto> getAll();
+public interface ContractService extends AbstractService<ContractDto> {
 
     List<ContractDto> search(Specification<Contract> specification);
-
-    ContractDto getById(Long id);
-
-    void save(ContractDto contractDto);
-
-    void deleteById(Long id);
 }

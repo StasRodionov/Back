@@ -4,15 +4,12 @@ package com.trade_accounting.controllers.rest;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Contractor Group Rest Controller", description = "CRUD  операции с группой контрагентов")
 @Api(tags = "Contractor Group Rest Controller")
@@ -50,7 +45,6 @@ public class ContractorGroupRestController {
     )
     public ResponseEntity<List<ContractorGroupDto>> getAll() {
         List<ContractorGroupDto> contractorGroupDtos = contractorGroupService.getAll();
-        log.info("Запрошен список ContractorGroupDto");
         return ResponseEntity.ok(contractorGroupDtos);
     }
 
@@ -67,7 +61,6 @@ public class ContractorGroupRestController {
                                                       @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsContractorGroupById(id);
         ContractorGroupDto contractorGroupDto = contractorGroupService.getById(id);
-        log.info("Запрошен экземпляр ContractorGroupDto с id= {}", id);
         return  ResponseEntity.ok(contractorGroupDto);
 
     }
@@ -84,7 +77,6 @@ public class ContractorGroupRestController {
     public ResponseEntity<?> create(@ApiParam(name = "ContractorGroupDto", value = "DTO группы, которую необходимо создать")
                                     @RequestBody ContractorGroupDto contractorGroupDto) {
         contractorGroupService.create(contractorGroupDto);
-        log.info("Записан новый экземпляр ContractorGroupDto");
         return ResponseEntity.ok().build();
     }
 
@@ -100,7 +92,6 @@ public class ContractorGroupRestController {
     public ResponseEntity<?> update(@ApiParam(name = "ContractorGroupDto", value = "DTO группы, которую необходимо обновить")
                                     @RequestBody ContractorGroupDto contractorGroupDto) {
         contractorGroupService.update(contractorGroupDto);
-        log.info("Обновлен экземпляр ContractorGroupDto");
         return ResponseEntity.ok().build();
     }
 
@@ -117,7 +108,6 @@ public class ContractorGroupRestController {
             value = "Переданный в URL id по которому необходимо удалить групу")
                                         @PathVariable(name = "id") Long id) {
         contractorGroupService.deleteById(id);
-        log.info("Удален экземпляр ContractorGroupDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }

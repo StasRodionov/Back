@@ -44,17 +44,19 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
-    public void create(WarehouseDto warehouseDto) {
+    public WarehouseDto create(WarehouseDto warehouseDto) {
         Warehouse warehouse = dtoMapper.warehouseDtoToWarehouse(warehouseDto);
         warehouse.setSortNumber(
                 SortNumberConverter.convert(warehouseDto.getSortNumber())
         );
         warehouseRepository.save(warehouse);
+        return warehouseDto;
     }
 
     @Override
-    public void update(WarehouseDto warehouseDto) {
+    public WarehouseDto update(WarehouseDto warehouseDto) {
         create(warehouseDto);
+        return warehouseDto;
     }
 
     @Override
