@@ -46,6 +46,19 @@ public class BankAccountRestController {
         return ResponseEntity.ok(accounts);
     }
 
+    @ApiOperation(value = "getListBankUniqueBic", notes = "Возвращает лист всех банковских аккаунтов")
+    @GetMapping("/bic")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение листа банковских аккаунтов"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<String>> getListBankUniqueBic() {
+        List<String> accounts = bankAccountService.getBankUniqueBic();
+        return ResponseEntity.ok(accounts);
+    }
+
     @ApiOperation(value = "getById", notes = "Возвращает определенный по айди банковский аккаунт")
     @GetMapping("/{id}")
     @ApiResponses(value = {

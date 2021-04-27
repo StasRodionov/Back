@@ -44,4 +44,19 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
     @Query("select comp.bankAccounts from Company comp where comp.id = :id")
     List<BankAccount> getBankAccountByCompanyId(@Param("id") Long id);
 
+    @Query("select distinct rcbic from BankAccount")
+    List<String> getListBankUniqueBic();
+
+    @Query("select new com.trade_accounting.models.dto.BankAccountDto(" +
+            "ba.id, " +
+            "ba.rcbic, " +
+            "ba.bank, " +
+            "ba.address, " +
+            "ba.correspondentAccount, " +
+            "ba.account, " +
+            "ba.mainAccount, " +
+            "ba.sortNumber) from BankAccount ba " +
+            "where ba.rcbic = :rcbic")
+    BankAccountDto getBank(@Param("rcbic") String rcbic);
+
 }

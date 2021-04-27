@@ -24,6 +24,10 @@ public class BankAccountServiceImpl implements BankAccountService {
         this.dtoMapper = dtoMapper;
     }
 
+    @Override
+    public List<String> getBankUniqueBic() {
+        return bankAccountRepository.getListBankUniqueBic();
+    }
 
     @Override
     public List<BankAccountDto> getAll() {
