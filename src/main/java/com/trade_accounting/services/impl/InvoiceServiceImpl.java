@@ -41,8 +41,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<InvoiceDto> search(Specification<Invoice> specification) {
-        return invoiceRepository.findAll(specification).stream()
-                .map(dtoMapper::invoiceToInvoiceDto).collect(Collectors.toList());
+        return executeSearch(invoiceRepository, dtoMapper::invoiceToInvoiceDto, specification);
     }
 
     @Override
@@ -64,12 +63,12 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .collect(Collectors.toList());
     }
 
-    @Override
+  /*  @Override
     public List<InvoiceDto> getAll(String typeOfInvoice) {
         return invoiceRepository.findByTypeOfInvoice(TypeOfInvoice.valueOf(typeOfInvoice)).stream()
                 .map(dtoMapper::invoiceToInvoiceDto)
                 .collect(Collectors.toList());
-    }
+    }*/
 
     @Override
     public InvoiceDto getById(Long id) {
