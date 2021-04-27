@@ -27,10 +27,7 @@ public class TaskCommentServiceImpl implements TaskCommentService {
 
     @Override
     public List<TaskCommentDto> search(Specification<TaskComment> specification) {
-        return commentRepository.findAll(specification)
-                .stream()
-                .map(ModelDtoConverter::toTaskCommentDTO)
-                .collect(Collectors.toList());
+        return executeSearch(commentRepository, ModelDtoConverter::toTaskCommentDTO, specification);
     }
 
     @Override
