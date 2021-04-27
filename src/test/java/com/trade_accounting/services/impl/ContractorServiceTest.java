@@ -125,7 +125,6 @@ public class ContractorServiceTest {
         assertNotNull(contractorDto, "Fail in passed contractorDto");
         assertNotNull(contractorDto.getId(), "Fail in field 'id' of contractorDto");
         assertNotNull(contractorDto.getName(), "Fail in field 'name' of contractorDto");
-        assertNotNull(contractorDto.getInn(), "Fail in field 'inn' of contractorDto");
         assertNotNull(contractorDto.getSortNumber(), "Fail in field 'sortNumber' of contractorDto");
         assertNotNull(contractorDto.getPhone(), "Fail in field 'phone' of contractorDto");
         assertNotNull(contractorDto.getFax(), "Fail in field 'fax' of contractorDto");
@@ -134,7 +133,6 @@ public class ContractorServiceTest {
         assertNotNull(contractorDto.getCommentToAddress(), "Fail in field 'comment to address' of contractorDto");
         assertNotNull(contractorDto.getComment(), "Fail in field 'name' of contractorDto");
         assertNotNull(contractorDto.getContractorGroupDto(), "Fail in field 'ContractorGroupDto' of contractorDto");
-        assertNotNull(contractorDto.getTypeOfContractorDto(), "Fail in field 'TypeOfContractorDto' of contractorDto");
         assertNotNull(contractorDto.getContactDto(), "Fail in field 'ContactDto' of contractorDto");
         assertNotNull(contractorDto.getTypeOfPriceDto(), "Fail in field 'TypeOfPriceDto' of contractorDto");
         assertNotNull(contractorDto.getLegalDetailDto(), "Fail in field 'LegalDetailDto' of contractorDto");
