@@ -25,6 +25,11 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
+    public BankAccountDto getBankByBic(String bic) {
+        return bankAccountRepository.getBankByBic(bic);
+    }
+
+    @Override
     public List<String> getBankUniqueBic() {
         return bankAccountRepository.getListBankUniqueBic();
     }

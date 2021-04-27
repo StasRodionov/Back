@@ -57,6 +57,6 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
             "ba.mainAccount, " +
             "ba.sortNumber) from BankAccount ba " +
             "where ba.rcbic = :rcbic")
-    BankAccountDto getBank(@Param("rcbic") String rcbic);
+    BankAccountDto getBankByBic(@Param("rcbic") String rcbic);
 
 }

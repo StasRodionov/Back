@@ -33,6 +33,20 @@ public class BankAccountRestController {
         this.bankAccountService = bankAccountService;
     }
 
+    @ApiOperation(value = "getById", notes = "Возвращает определенный по айди банковский аккаунт")
+    @GetMapping("/bic/{uniqBic}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Банковский аккаунт найден"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<BankAccountDto> getBankByBic(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти банковский аккаунт")
+                                                  @PathVariable(name = "id") Long id) {
+        BankAccountDto bankAccount = bankAccountService.getById(id);
+        return ResponseEntity.ok(bankAccount);
+    }
+
     @ApiOperation(value = "getAll", notes = "Возвращает лист всех банковских аккаунтов")
     @GetMapping
     @ApiResponses(value = {

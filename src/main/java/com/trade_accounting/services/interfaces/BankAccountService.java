@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface BankAccountService extends AbstractService<BankAccountDto>   {
     List<String> getBankUniqueBic();
+    BankAccountDto getBankByBic(String bic);
 }
 
