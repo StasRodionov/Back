@@ -63,13 +63,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .collect(Collectors.toList());
     }
 
-  /*  @Override
-    public List<InvoiceDto> getAll(String typeOfInvoice) {
-        return invoiceRepository.findByTypeOfInvoice(TypeOfInvoice.valueOf(typeOfInvoice)).stream()
-                .map(dtoMapper::invoiceToInvoiceDto)
-                .collect(Collectors.toList());
-    }*/
-
     @Override
     public InvoiceDto getById(Long id) {
         Optional<Invoice> invoice = invoiceRepository.findById(id);
