@@ -3,6 +3,8 @@ package com.trade_accounting.controllers.rest;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
+import com.trade_accounting.repositories.AddressRepository;
+import com.trade_accounting.services.interfaces.AddressService;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.services.interfaces.fias.FiasDbService;
 import io.swagger.annotations.Api;
@@ -36,11 +38,13 @@ public class ContractorRestController {
 
     private final ContractorService contractorService;
     private final FiasDbService fiasDbService;
+    private final AddressService addressService;
 
-    public ContractorRestController(ContractorService contractorService, FiasDbService fiasDbService) {
-        this.contractorService = contractorService;
-        this.fiasDbService = fiasDbService;
-    }
+    public ContractorRestController(ContractorService contractorService, FiasDbService fiasDbService, AddressService addressService) {
+            this.contractorService = contractorService;
+            this.fiasDbService = fiasDbService;
+            this.addressService = addressService;
+        }
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех контрагентов")
@@ -160,9 +164,9 @@ public class ContractorRestController {
     public ResponseEntity<ContractorDto> create(@ApiParam(name = "contractorDto",
             value = "DTO контрагента, которого необходимо создать")
                                                 @RequestBody ContractorDto contractorDto) {
-        var contractorDtoSaved = contractorService.create(contractorDto);
-
-        return ResponseEntity.ok(contractorDtoSaved);
+        addressService.create(contractorDto.getLegalDetailDto().getAddressDto());
+        ContractorDto contractorDtoCreate = contractorService.create(contractorDto);
+        return ResponseEntity.ok(contractorDtoCreate);
     }
 
     @PutMapping
