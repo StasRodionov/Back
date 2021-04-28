@@ -98,31 +98,6 @@ class InvoiceProductServiceImplTest {
         invoiceProductListDtoIsCorrectlyInited(invoiceProductDto);
     }
 
-   /* @Test
-    void getByInvoiceId_shouldReturnListOfInvoiceProduct() {
-        when(invoiceProductRepository.getByInvoiceId(anyLong()))
-                .thenReturn(
-                        Stream.of(
-                                ModelStubs.getInvoiceProduct(1L),
-                                ModelStubs.getInvoiceProduct(2L),
-                                ModelStubs.getInvoiceProduct(3L)
-                        ).collect(Collectors.toList())
-                );
-        List<InvoiceProductDto> invoiceProductDtoList = invoiceProductService.searchByInvoiceId(1L);
-        assertNotNull(
-                invoiceProductDtoList,
-                "failure - expected that a list of invoiceProductDto not null"
-        );
-        assertTrue(
-                invoiceProductDtoList.size() > 0,
-                "failure - expected that a list of invoiceProductDto grater than 0"
-        );
-        for (InvoiceProductDto invoiceProductDto : invoiceProductDtoList) {
-            invoiceProductListDtoIsCorrectlyInited(invoiceProductDto);
-        }
-
-    }
-*/
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         invoiceProductService.create(
