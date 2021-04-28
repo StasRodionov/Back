@@ -22,6 +22,7 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
+import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
@@ -202,7 +203,13 @@ public class DataInitializer {
 
         initTasks();
         initTaskComments();
+        initRetailStores();
+    }
 
+    public void initRetailStores() {
+        retailStoreService.create(new RetailStoreDto("Магазин 1", true, "Онлайн", new BigDecimal(10_000), companyService.getById(1L), "SI", "ОСН", "ОСН", null));
+        retailStoreService.create(new RetailStoreDto("Магазин 2", true, "Был в сети вчера", new BigDecimal(20_000), companyService.getById(1L), "SI", "ОСН", "УСН. Доход", null));
+        retailStoreService.create(new RetailStoreDto("Магазин 3", true, "Был в сети 2 часа назад", new BigDecimal(15_700), companyService.getById(1L), "SI", "ОСН", "ЕСХН", null));
     }
 
     public void initProject() {
@@ -753,8 +760,8 @@ public class DataInitializer {
                 "Some special text about Sasha",
                 "sashaogon@mail.ru",
                 "asdfg",
-                departmentService.getByName("Складской комплекс"),
-                positionService.getByName("Технический директор"),
+                departmentService.getByName("Отдел продаж"),
+                positionService.getByName("Кассир"),
                 Collections.singleton(roleService.getByName("user")),
                 null));
     }

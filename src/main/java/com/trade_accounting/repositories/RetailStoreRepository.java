@@ -13,12 +13,14 @@ import java.util.List;
 public interface RetailStoreRepository extends JpaRepository<RetailStore, Long> {
 
     @Query("select new com.trade_accounting.models.dto.RetailStoreDto(" +
-            "e.id, e.name, e.isActive, e.activityStatus, e.revenue) " +
+            "e.id, e.name, e.isActive, e.activityStatus, e.revenue," +
+            "e.organization.id, e.salesInvoicePrefix, e.defaultTaxationSystem, e.orderTaxationSystem) " +
             "from RetailStore e")
     List<RetailStoreDto> getAll();
 
     @Query("select new com.trade_accounting.models.dto.RetailStoreDto(" +
-            "e.id, e.name, e.isActive, e.activityStatus, e.revenue) " +
+            "e.id, e.name, e.isActive, e.activityStatus, e.revenue," +
+            "e.organization.id, e.salesInvoicePrefix, e.defaultTaxationSystem, e.orderTaxationSystem) " +
             "from RetailStore e where e.id = :id")
     RetailStoreDto getById(@Param("id") Long id);
 

@@ -380,13 +380,21 @@ public class ModelDtoConverter {
     }
 
     public static RetailStore convertToRetailStore(RetailStoreDto dto) {
-        return new RetailStore(
-                dto.getId(),
-                dto.getName(),
-                dto.isActive(),
-                dto.getActivityStatus(),
-                dto.getRevenue()
-        );
+
+        RetailStore retailStore = modelMapper.map(dto, RetailStore.class);
+
+        if (dto.getOrganizationDto() != null) {
+            retailStore.setOrganization(modelMapper.map(dto.getOrganizationDto(), Company.class));
+        }
+
+        if (dto.getCashiersDto() != null) {
+            List<Employee> cashiers = dto.getCashiersDto().stream()
+                    .map(e -> modelMapper.map(e, Employee.class))
+                    .collect(Collectors.toList());
+            retailStore.setCashiers(cashiers);
+        }
+
+        return retailStore;
     }
 
     public static Region toRegion(RegionDto regionDto) {
