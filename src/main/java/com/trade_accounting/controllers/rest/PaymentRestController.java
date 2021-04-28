@@ -131,6 +131,7 @@ public class PaymentRestController {
                     @Spec(path = "contract.name", params = "contractDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "project.name", params = "projectDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "sum", params = "sum", spec = Equal.class),
+                    @Spec(path = "number", params = "number", spec = Like.class)
             }) Specification<Payment> spec) {
         log.info("Запрошен поиск платежей payments");
         return ResponseEntity.ok(paymentService.filter(spec));
