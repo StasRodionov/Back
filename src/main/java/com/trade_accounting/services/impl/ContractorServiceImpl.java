@@ -49,9 +49,8 @@ public class ContractorServiceImpl implements ContractorService {
     }
 
     @Override
-    public List<ContractorDto> searchContractor(Specification<Contractor> specification) {
-        return contractorRepository.findAll(specification).stream()
-                .map(ModelDtoConverter::convertToContractorDto).collect(Collectors.toList());
+    public List<ContractorDto> search(Specification<Contractor> specification) {
+        return executeSearch(contractorRepository, ModelDtoConverter::convertToContractorDto, specification);
     }
 
     @Override
