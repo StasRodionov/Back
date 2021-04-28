@@ -134,7 +134,7 @@ public class ContractorRestController {
 //                    @Spec(path = "contractor.bankAccounts", params = "bankAccountsDto", spec = LikeIgnoreCase.class),
 //                    @Spec(path = "contractor.legalDetail", params = "legalDetail", spec = Equal.class),
             }) Specification<Contractor> spec) {
-        return ResponseEntity.ok(contractorService.searchContractor(spec));
+        return ResponseEntity.ok(contractorService.search(spec));
     }
 
     @GetMapping("/{id}")

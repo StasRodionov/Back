@@ -41,9 +41,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyDto> search(Specification<Company> spec) {
-        return companyRepository.findAll(spec).stream()
-                .map(dtoMapper::companyToCompanyDto)
-                .collect(Collectors.toList());
+        return executeSearch(companyRepository, dtoMapper::companyToCompanyDto, spec);
     }
 
     @Override

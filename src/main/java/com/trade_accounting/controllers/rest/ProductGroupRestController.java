@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Product Group Rest Controller", description = "CRUD операции с товарными группами")
 @Api(tags = "Product Group Rest Controller")
@@ -45,7 +44,6 @@ public class ProductGroupRestController {
     })
     public ResponseEntity<List<ProductGroupDto>> getAll() {
         List<ProductGroupDto> productGroups = productGroupService.getAll();
-        log.info("Запрошен список ProductGroupDto");
         return ResponseEntity.ok(productGroups);
     }
 
@@ -61,7 +59,6 @@ public class ProductGroupRestController {
             value = "Переданный в URL id по которому необходимо найти товарную группу")
             @PathVariable(name = "id") Long id) {
         ProductGroupDto productGroup = productGroupService.getById(id);
-        log.info("Запрошен экземпляр ProductGroupDto с id= {}", id);
         return ResponseEntity.ok(productGroup);
     }
 
@@ -78,8 +75,6 @@ public class ProductGroupRestController {
             value = "DTO товарной группы, которую необходимо создать")
                                         @RequestBody ProductGroupDto productGroupDto){
         productGroupService.create(productGroupDto);
-        log.info("Записан новый экземпляр ProductGroup с id= {}, name= {}", productGroupDto.getId(),
-                productGroupDto.getName());
         return ResponseEntity.ok().build();
     }
 
@@ -95,7 +90,6 @@ public class ProductGroupRestController {
     public ResponseEntity<?> update(@ApiParam(name = "ProductGroupDto", value = "DTO товарной группы, которую необходимо обновить")
             @RequestBody ProductGroupDto productGroupDto) {
         productGroupService.update(productGroupDto);
-        log.info("Обновлен экземпляр ProductGroup с id= {}, name= {}", productGroupDto.getId(), productGroupDto.getName());
         return ResponseEntity.ok().build();
     }
 
@@ -112,7 +106,6 @@ public class ProductGroupRestController {
             value = "Переданный в URL id по которому необходимо удалить товарную группу")
             @PathVariable(name = "id") Long id) {
         productGroupService.deleteById(id);
-        log.info("Удален экземпляр ProductGroup с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }

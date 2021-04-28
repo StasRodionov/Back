@@ -33,10 +33,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public List<CurrencyDto> search(Specification<Currency> spec) {
-        return currencyRepository.findAll(spec)
-                .stream()
-                .map(dtoMapper::currencyToCurrencyDto)
-                .collect(Collectors.toList());
+        return executeSearch(currencyRepository, dtoMapper::currencyToCurrencyDto, spec);
     }
 
     @Override
