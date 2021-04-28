@@ -33,7 +33,7 @@ public class LegalDetailDto {
 
     private String numberOfTheCertificate;
 
-    private String dateOfTheCertificate;
+    private LocalDate dateOfTheCertificate;
 
     private TypeOfContractorDto typeOfContractorDto;
 
@@ -62,7 +62,7 @@ public class LegalDetailDto {
         this.okpo = okpo;
         this.ogrn = ogrn;
         this.numberOfTheCertificate = numberOfTheCertificate;
-        this.dateOfTheCertificate = dateOfTheCertificate.toString();
+        this.dateOfTheCertificate = dateOfTheCertificate;
         this.typeOfContractorDto = new TypeOfContractorDto();
         this.typeOfContractorDto.setId(typeOfContractorId);
     }

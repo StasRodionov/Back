@@ -503,7 +503,7 @@ public class DataInitializer {
                 "79271669",
                 "1053600591197",
                 "236467", "432145",
-                LocalDate.of(2020, 10, 10).toString(),
+                LocalDate.of(2020, 10, 10),
                 typeOfContractorService.getByName("Юридическое лицо")
         ));
         legalDetailService.create(new LegalDetailDto(
@@ -517,7 +517,7 @@ public class DataInitializer {
                 "79271647",
                 "1053600591285",
                 "432145",
-                LocalDate.of(2018, 2, 23).toString(),
+                LocalDate.of(2018, 2, 23),
                 typeOfContractorService.getByName("Индивидуальный предприниматель")
         ));
         legalDetailService.create(new LegalDetailDto(
@@ -532,7 +532,7 @@ public class DataInitializer {
                 "70713032",
                 "1033600141277",
                 "342145",
-                LocalDate.of(2022, 4, 5).toString(),
+                LocalDate.of(2022, 4, 5),
                 typeOfContractorService.getByName("Физическое лицо")
         ));
     }
@@ -615,7 +615,7 @@ public class DataInitializer {
                             "79271647",
                             "1053600591285",
                             "432145",
-                            LocalDate.of(2018, 2, 23).toString(),
+                            LocalDate.of(2018, 2, 23),
                             typeOfContractorService.getByName("Индивидуальный предприниматель")),
 
                     List.of(new BankAccountDto(
@@ -665,7 +665,7 @@ public class DataInitializer {
                             "70713032",
                             "1033600141277",
                             "342145",
-                            LocalDate.of(2022, 4, 5).toString(),
+                            LocalDate.of(2022, 4, 5),
                             typeOfContractorService.getByName("Физическое лицо")),
                     List.of(new BankAccountDto(
                             null,
