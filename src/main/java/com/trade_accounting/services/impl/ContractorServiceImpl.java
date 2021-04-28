@@ -9,7 +9,6 @@ import com.trade_accounting.repositories.ContactRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
-import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.DtoMapper;
@@ -29,7 +28,6 @@ public class ContractorServiceImpl implements ContractorService {
 
     private final ContractorRepository contractorRepository;
     private final ContractorGroupRepository contractorGroupRepository;
-    private final TypeOfContractorRepository typeOfContractorRepository;
     private final TypeOfPriceRepository typeOfPriceRepository;
     private final LegalDetailRepository legalDetailRepository;
     private final AddressRepository addressRepository;
@@ -38,14 +36,12 @@ public class ContractorServiceImpl implements ContractorService {
 
     public ContractorServiceImpl(ContractorRepository contractorRepository,
                                  ContractorGroupRepository contractorGroupRepository,
-                                 TypeOfContractorRepository typeOfContractorRepository,
                                  TypeOfPriceRepository typeOfPriceRepository,
                                  LegalDetailRepository legalDetailRepository,
                                  AddressRepository addressRepository,
                                  ContactRepository contactRepository, DtoMapper dtoMapper) {
         this.contractorRepository = contractorRepository;
         this.contractorGroupRepository = contractorGroupRepository;
-        this.typeOfContractorRepository = typeOfContractorRepository;
         this.typeOfPriceRepository = typeOfPriceRepository;
         this.legalDetailRepository = legalDetailRepository;
         this.addressRepository = addressRepository;
@@ -107,13 +103,6 @@ public class ContractorServiceImpl implements ContractorService {
                         ))
         );
 
-        contractor.setTypeOfContractor(
-                typeOfContractorRepository
-                        .save(dtoMapper.typeOfContractorDtoToTypeOfContractor(
-                                contractorDto.getTypeOfContractorDto()
-                        ))
-        );
-
         contractor.setTypeOfPrice(
                 typeOfPriceRepository.save(dtoMapper.typeOfPriceDtoToTypeOfPrice(
                         contractorDto.getTypeOfPriceDto())
@@ -145,9 +134,6 @@ public class ContractorServiceImpl implements ContractorService {
 
         contractor.setContractorGroup(
                 contractorGroupRepository.findById(contractorDto.getContractorGroupDto().getId()).orElse(null));
-
-        contractor.setTypeOfContractor(
-                typeOfContractorRepository.findById(contractorDto.getTypeOfContractorDto().getId()).orElse(null));
 
         contractor.setTypeOfPrice(
                 typeOfPriceRepository.findById(contractorDto.getTypeOfPriceDto().getId()).orElse(null));

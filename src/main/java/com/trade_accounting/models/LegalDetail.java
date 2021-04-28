@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 @Data
@@ -41,14 +42,18 @@ public class LegalDetail {
     @Column(name = "comment_to_address")
     private String commentToAddress;
 
+    @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$")
     @Column(name = "inn", unique = true)
     private String inn;
+
+    @Column(name = "kpp")
+    private String kpp;
 
     @Column(name = "okpo")
     private String okpo;
 
-    @Column(name = "ogrnip")
-    private String ogrnip;
+    @Column(name = "ogrn")
+    private String ogrn;
 
     @Column(name = "number_of_the_certificate")
     private String numberOfTheCertificate;

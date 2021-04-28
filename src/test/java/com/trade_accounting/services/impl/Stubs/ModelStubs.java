@@ -73,7 +73,7 @@ public class ModelStubs {
     public static Contractor getContractor(Long id) {
         return new Contractor(
                 id, "name",
-                "123456789012", "sortNumber",
+                "sortNumber",
                 "12345678901", "324234234",
                 "email", getAddress(1L),
                 "commentToAddress", "comment",
@@ -82,8 +82,7 @@ public class ModelStubs {
                         getContact(2L),
                         getContact(3L)
                 ).collect(Collectors.toList()),
-                getContractorGroup(id),
-                getTypeOfContractor(id),
+                getContractorGroup(id), // getTypeOfContractor(id),
                 getTypeOfPrice(id),
                 Stream.of(
                         getBankAccount(1L),
@@ -195,7 +194,7 @@ public class ModelStubs {
                 id, "lastName",
                 "firstNAme", "middleName",
                 getAddress(1L), "commentToAddress",
-                "32432423", "okpo", "ogrnip",
+                "32432423", "kpp", "okpo", "ogrn",
                 "numberOfCertifacate", LocalDate.now(),
                 getTypeOfContractor(id)
         );

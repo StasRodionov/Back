@@ -7,7 +7,6 @@ import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.LegalDetailService;
-import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +24,6 @@ public class LegalDetailServiceImpl implements LegalDetailService {
     private final DtoMapper dtoMapper;
 
     public LegalDetailServiceImpl(LegalDetailRepository legalDetailRepository,
-                                  TypeOfContractorService typeOfContractorService,
                                   TypeOfContractorRepository typeOfContractorRepository, AddressRepository addressRepository, DtoMapper dtoMapper) {
         this.legalDetailRepository = legalDetailRepository;
         this.typeOfContractorRepository = typeOfContractorRepository;

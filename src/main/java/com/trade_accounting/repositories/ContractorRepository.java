@@ -15,8 +15,6 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long>, J
     @Query(
             "from Contractor c LEFT OUTER JOIN ContractorGroup AS cg " +
             "ON c.contractorGroup.id =  cg.id " +
-            "LEFT OUTER JOIN TypeOfContractor as toc " +
-            "ON c.typeOfContractor.id =  toc.id " +
             "LEFT OUTER JOIN TypeOfPrice as top " +
             "ON c.typeOfPrice.id =  top.id " +
             "LEFT OUTER JOIN Address as address " +
@@ -24,7 +22,6 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long>, J
             "LEFT OUTER JOIN LegalDetail as ld " +
             "ON c.legalDetail.id =  ld.id " +
             " where lower(c.name) like lower(concat('%', :searchTerm, '%')) " +
-            "      or c.inn like concat('%', :searchTerm, '%')" +
             "      or c.phone like concat('%',  :searchTerm, '%')" +
             "      or c.comment like concat('%', :searchTerm, '%')"
     )
