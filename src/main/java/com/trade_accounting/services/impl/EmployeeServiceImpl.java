@@ -64,8 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeDto> search(Specification<Employee> specification) {
-        return employeeRepository.findAll(specification).stream()
-                .map(dtoMapper::employeeToEmployeeDto).collect(Collectors.toList());
+        return executeSearch(employeeRepository, dtoMapper::employeeToEmployeeDto, specification);
     }
 
     @Override

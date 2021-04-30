@@ -46,12 +46,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAllByProductGroupId(Long id) {
-        List<Product> allByProductGroupId = productRepository.getAllByProductGroupId(id);
-        return dtoMapper.toProductDto(allByProductGroupId);
-    }
-
-    @Override
     public ProductDto create(ProductDto dto) {
         List<Image> preparedImages = dtoMapper.toImage(dto.getImageDtos(), "product");
         List<Image> savedImages = imageRepository.saveAll(preparedImages);
@@ -77,19 +71,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAllByContractorId(Long id) {
-        List<Product> allByContractorId = productRepository.getAllByContractorId(id);
-        return dtoMapper.toProductDto(allByContractorId);
-    }
-
-    @Override
     public List<ProductDto> search(String value) {
         List<Product> productList = productRepository.search(value);
         return dtoMapper.toProductDto(productList);
     }
 
     @Override
-    public List<ProductDto> searchByFilter(Specification<Product> spec) {
+    public List<ProductDto> search(Specification<Product> spec) {
         List<Product> productList = productRepository.findAll(spec);
         return dtoMapper.toProductDto(productList);
     }

@@ -152,7 +152,6 @@ public abstract class DtoMapper {
     //Contractor
     @Mappings({
             @Mapping(source = "contractorGroup", target = "contractorGroupDto"),
-            @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
             @Mapping(source = "typeOfPrice", target = "typeOfPriceDto"),
             @Mapping(source = "legalDetail", target = "legalDetailDto"),
             @Mapping(source = "bankAccounts", target = "bankAccountDto"),
@@ -163,7 +162,6 @@ public abstract class DtoMapper {
 
     @Mappings({
             @Mapping(source = "contractorGroupDto", target = "contractorGroup"),
-            @Mapping(source = "typeOfContractorDto", target = "typeOfContractor"),
             @Mapping(source = "typeOfPriceDto", target = "typeOfPrice"),
             @Mapping(source = "bankAccountDto", target = "bankAccounts"),
             @Mapping(source = "legalDetailDto", target = "legalDetail"),
@@ -418,8 +416,16 @@ public abstract class DtoMapper {
     public abstract Warehouse warehouseDtoToWarehouse(WarehouseDto warehouseDto);
 
     //RetailStore
+    @Mappings({
+            @Mapping(source = "organization", target = "organizationDto"),
+            @Mapping(source = "cashiers", target = "cashiersDto"),
+    })
     public abstract RetailStoreDto retailStoreToRetailStoreDto(RetailStore retailStore);
 
+    @Mappings({
+            @Mapping(source = "organizationDto", target = "organization"),
+            @Mapping(source = "cashiersDto", target = "cashiers"),
+    })
     public abstract RetailStore retailStoreDtoToRetailStore(RetailStoreDto retailStoreDto);
 
     public abstract Region toRegion(RegionDto regionDto);

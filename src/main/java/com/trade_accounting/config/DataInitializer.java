@@ -22,6 +22,7 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
+import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
@@ -202,7 +203,13 @@ public class DataInitializer {
 
         initTasks();
         initTaskComments();
+        initRetailStores();
+    }
 
+    public void initRetailStores() {
+        retailStoreService.create(new RetailStoreDto("Магазин 1", true, "Онлайн", new BigDecimal(10_000), companyService.getById(1L), "SI", "ОСН", "ОСН", null));
+        retailStoreService.create(new RetailStoreDto("Магазин 2", true, "Был в сети вчера", new BigDecimal(20_000), companyService.getById(1L), "SI", "ОСН", "УСН. Доход", null));
+        retailStoreService.create(new RetailStoreDto("Магазин 3", true, "Был в сети 2 часа назад", new BigDecimal(15_700), companyService.getById(1L), "SI", "ОСН", "ЕСХН", null));
     }
 
     public void initProject() {
@@ -502,8 +509,8 @@ public class DataInitializer {
                 "3664069397",
                 "79271669",
                 "1053600591197",
-                "236467",
-                LocalDate.of(2020, 6, 12).toString(),
+                "236467", "432145",
+                LocalDate.of(2020, 10, 10),
                 typeOfContractorService.getByName("Юридическое лицо")
         ));
         legalDetailService.create(new LegalDetailDto(
@@ -513,11 +520,11 @@ public class DataInitializer {
                 "Анатольевич",
                 addressService.getById(2L),
                 "comment to address",
-                "3664069439",
+                "3664069439", "34271669",
                 "79271647",
                 "1053600591285",
                 "432145",
-                LocalDate.of(2018, 2, 23).toString(),
+                LocalDate.of(2018, 2, 23),
                 typeOfContractorService.getByName("Индивидуальный предприниматель")
         ));
         legalDetailService.create(new LegalDetailDto(
@@ -528,10 +535,11 @@ public class DataInitializer {
                 addressService.getById(3L),
                 "comment to address",
                 "3664055588",
+                "35259831",
                 "70713032",
                 "1033600141277",
                 "342145",
-                LocalDate.of(2022, 4, 5).toString(),
+                LocalDate.of(2022, 4, 5),
                 typeOfContractorService.getByName("Физическое лицо")
         ));
     }
@@ -562,12 +570,12 @@ public class DataInitializer {
                             "Сергеевич",
                             addressService.getById(3L),
                             "comment to address",
-                            "3664069" + String.format("%03d", i),
+                            "3664069397",
                             "79271669",
                             "1053600591197",
-                            "236467",
-                            LocalDate.of(2020, 6, 12).toString(),
+                            "236467", null, null,
                             typeOfContractorService.getByName("Юридическое лицо")),
+
                     List.of(new BankAccountDto(
                             null,
                             "14593",
@@ -610,12 +618,13 @@ public class DataInitializer {
                             "Анатольевич",
                             addressService.getById(2L),
                             "comment to address",
-                            "3664068" + String.format("%03d", i),
+                            "3664069439", null,
                             "79271647",
                             "1053600591285",
                             "432145",
-                            LocalDate.of(2018, 2, 23).toString(),
+                            LocalDate.of(2018, 2, 23),
                             typeOfContractorService.getByName("Индивидуальный предприниматель")),
+
                     List.of(new BankAccountDto(
                             null,
                             "14593",
@@ -658,11 +667,12 @@ public class DataInitializer {
                             "Дмитриевна",
                             addressService.getById(1L),
                             "comment to address",
-                            "3664055" + String.format("%03d", i),
+                            "3664055588",
+                            null,
                             "70713032",
                             "1033600141277",
                             "342145",
-                            LocalDate.of(2022, 4, 5).toString(),
+                            LocalDate.of(2022, 4, 5),
                             typeOfContractorService.getByName("Физическое лицо")),
                     List.of(new BankAccountDto(
                             null,
@@ -750,8 +760,8 @@ public class DataInitializer {
                 "Some special text about Sasha",
                 "sashaogon@mail.ru",
                 "asdfg",
-                departmentService.getByName("Складской комплекс"),
-                positionService.getByName("Технический директор"),
+                departmentService.getByName("Отдел продаж"),
+                positionService.getByName("Кассир"),
                 Collections.singleton(roleService.getByName("user")),
                 null));
     }
@@ -795,7 +805,7 @@ public class DataInitializer {
     private void initContractors() {
         contractorService.create(new ContractorDto(
                 null,
-                "Торговый Дом \"Перекресток\", ЗАО", "7728029110",
+                "Торговый Дом \"Перекресток\", ЗАО",
                 "1",
                 "8 (495) 232-59-24",
                 "8 (495) 232-59-24",
@@ -805,14 +815,13 @@ public class DataInitializer {
                 "comment",
                 contactService.getAll().subList(1,3),
                 contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Агроаспект, ООО",
-                "7715277300", "2",
+                "2",
                 "8 (800) 555-55-05",
                 "8 (800) 555-55-05",
                 "inbox@5ka.ru",
@@ -821,14 +830,12 @@ public class DataInitializer {
                 "2comment",
                 contactService.getAll().subList(0,1),
                 contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Вкусвилл, ООО",
-                "7734675810",
                 "3",
                 "8 (495) 981-13-45",
                 "8 (495) 981-13-45",
@@ -838,13 +845,12 @@ public class DataInitializer {
                 "3comment",
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Альфа-М, ООО", "7743931676",
+                "Альфа-М, ООО",
                 "4",
                 "8 (495) 981-31-85",
                 "8 (495) 981-31-85",
@@ -854,13 +860,12 @@ public class DataInitializer {
                 "4comment",
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Отдохни - 77, ООО", "7737531091",
+                "Отдохни - 77, ООО",
                 "5",
                 "8 (495) 326-30-00",
                 "8 (495) 326-30-00",
@@ -870,14 +875,12 @@ public class DataInitializer {
                 "5comment",
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Продмир, ООО",
-                "5009074197",
                 "6",
                 "8 (495) 651-92-52",
                 "8 (495) 651-92-52",
@@ -887,13 +890,12 @@ public class DataInitializer {
                 "6comment",
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Зельгрос, ООО", "5050058510",
+                "Зельгрос, ООО",
                 "7",
                 "8 (495) 741-45-56",
                 "8 (495) 741-45-56",
@@ -903,13 +905,12 @@ public class DataInitializer {
                 "7comment",
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Лабиринт-М, ООО", "7727777402",
+                "Лабиринт-М, ООО",
                 "8",
                 "8 (495) 155-51-56",
                 "8 (495) 155-51-56",
@@ -919,13 +920,12 @@ public class DataInitializer {
                 "8comment",
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
-                "Эскорт Сервис, ООО", "7705603716",
+                "Эскорт Сервис, ООО",
                 "9",
                 "8 (495) 755-11-16",
                 "8 (495) 755-11-16",
@@ -935,14 +935,12 @@ public class DataInitializer {
                 "9comment",
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
                 legalDetailService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Арома Маркет, ООО",
-                "7710161911",
                 "10",
                 "8 (495) 777-51-95",
                 "8 (495) 777-51-95",
@@ -952,7 +950,6 @@ public class DataInitializer {
                 "10comment",
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
-                typeOfContractorService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
                 legalDetailService.getById(1L)));
@@ -1070,7 +1067,7 @@ public class DataInitializer {
                 BigDecimal.valueOf(200),
                 false,
                 "no comments",
-                4L));
+                1L));
     }
 
     private void initTasks() {

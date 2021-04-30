@@ -8,11 +8,9 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface EmployeeService {
+public interface EmployeeService extends SearchableService<Employee, EmployeeDto> {
 
     List<EmployeeDto> getAll();
-
-    List<EmployeeDto> search(Specification<Employee> specification);
 
     PageDto<EmployeeDto> search(Specification<Employee> specification, Pageable page);
 

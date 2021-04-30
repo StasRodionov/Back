@@ -9,12 +9,10 @@ import com.trade_accounting.repositories.ContactRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
-import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.ModelDtoConverter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,14 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @Transactional
 public class ContractorServiceImpl implements ContractorService {
 
     private final ContractorRepository contractorRepository;
     private final ContractorGroupRepository contractorGroupRepository;
-    private final TypeOfContractorRepository typeOfContractorRepository;
     private final TypeOfPriceRepository typeOfPriceRepository;
     private final LegalDetailRepository legalDetailRepository;
     private final AddressRepository addressRepository;
@@ -38,14 +34,12 @@ public class ContractorServiceImpl implements ContractorService {
 
     public ContractorServiceImpl(ContractorRepository contractorRepository,
                                  ContractorGroupRepository contractorGroupRepository,
-                                 TypeOfContractorRepository typeOfContractorRepository,
                                  TypeOfPriceRepository typeOfPriceRepository,
                                  LegalDetailRepository legalDetailRepository,
                                  AddressRepository addressRepository,
                                  ContactRepository contactRepository, DtoMapper dtoMapper) {
         this.contractorRepository = contractorRepository;
         this.contractorGroupRepository = contractorGroupRepository;
-        this.typeOfContractorRepository = typeOfContractorRepository;
         this.typeOfPriceRepository = typeOfPriceRepository;
         this.legalDetailRepository = legalDetailRepository;
         this.addressRepository = addressRepository;
@@ -55,14 +49,12 @@ public class ContractorServiceImpl implements ContractorService {
     }
 
     @Override
-    public List<ContractorDto> searchContractor(Specification<Contractor> specification) {
-        return contractorRepository.findAll(specification).stream()
-                .map(ModelDtoConverter::convertToContractorDto).collect(Collectors.toList());
+    public List<ContractorDto> search(Specification<Contractor> specification) {
+        return executeSearch(contractorRepository, ModelDtoConverter::convertToContractorDto, specification);
     }
 
     @Override
     public List<ContractorDto> getAll() {
-        log.info("запрошен список getAll ");
         List<Contractor> list = contractorRepository.findAll();
         return list.stream()
                 .map(dtoMapper::contractorToContractorDto)
@@ -73,7 +65,6 @@ public class ContractorServiceImpl implements ContractorService {
     @Override
     public List<ContractorDto> getAll(String searchTerm) {
         if (searchTerm.equals("null") || searchTerm.isEmpty()) {
-            log.info("запрошен список Query getAll через getAll(String searchTerm) ");
             List<Contractor> all = contractorRepository.findAll();
             return all.stream().map(dtoMapper::contractorToContractorDto).collect(Collectors.toList());
         } else {
@@ -91,7 +82,6 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public ContractorDto create(ContractorDto contractorDto) {
-        log.info("добавление нового контрагента ");
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
 
         Address address = dtoMapper.addressDtoToAddress(contractorDto.getAddressDto());
@@ -104,13 +94,6 @@ public class ContractorServiceImpl implements ContractorService {
                 contractorGroupRepository
                         .save(dtoMapper.contractorGroupDtoToContractorGroup(
                                 contractorDto.getContractorGroupDto()
-                        ))
-        );
-
-        contractor.setTypeOfContractor(
-                typeOfContractorRepository
-                        .save(dtoMapper.typeOfContractorDtoToTypeOfContractor(
-                                contractorDto.getTypeOfContractorDto()
                         ))
         );
 
@@ -132,7 +115,6 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public ContractorDto update(ContractorDto contractorDto) {
-        log.info("обновление контрагента ");
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
 
         Address address = dtoMapper.addressDtoToAddress(contractorDto.getAddressDto());
@@ -145,9 +127,6 @@ public class ContractorServiceImpl implements ContractorService {
 
         contractor.setContractorGroup(
                 contractorGroupRepository.findById(contractorDto.getContractorGroupDto().getId()).orElse(null));
-
-        contractor.setTypeOfContractor(
-                typeOfContractorRepository.findById(contractorDto.getTypeOfContractorDto().getId()).orElse(null));
 
         contractor.setTypeOfPrice(
                 typeOfPriceRepository.findById(contractorDto.getTypeOfPriceDto().getId()).orElse(null));
@@ -162,7 +141,6 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public void deleteById(Long id) {
-        log.info("удаление контрагента ");
         contractorRepository.deleteById(id);
     }
 }

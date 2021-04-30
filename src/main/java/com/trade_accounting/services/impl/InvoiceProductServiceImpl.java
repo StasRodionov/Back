@@ -5,6 +5,7 @@ import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.repositories.InvoiceProductRepository;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.utils.DtoMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,15 +33,10 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
         return listInvoiceProductDto.stream().map(dtoMapper::invoiceProductToInvoiceProductDto)
                 .collect(Collectors.toList());
     }
-
     @Override
-    public List<InvoiceProductDto> getByInvoiceId(Long id) {
-        List<InvoiceProduct> invoiceProductList = invoiceProductRepository.getByInvoiceId(id);
-        return invoiceProductList.stream()
-                .map(dtoMapper::invoiceProductToInvoiceProductDto)
-                .collect(Collectors.toList());
+    public List<InvoiceProductDto> search(Specification<InvoiceProduct> spec) {
+        return executeSearch(invoiceProductRepository, dtoMapper::invoiceProductToInvoiceProductDto, spec);
     }
-
     @Override
     public InvoiceProductDto getById(Long id) {
         Optional<InvoiceProduct> invoiceProductDto = invoiceProductRepository.findById(id);

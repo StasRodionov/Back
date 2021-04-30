@@ -82,7 +82,7 @@ public class ProductRestController {
                     @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
                     @Spec(path = "purchasePrice", params = "purchasePrice", spec = Equal.class),
             }) Specification<Product> spec) {
-        return ResponseEntity.ok(productService.searchByFilter(spec));
+        return ResponseEntity.ok(productService.search(spec));
     }
 
     @ApiOperation(value = "getById", notes = "Возвращает определенный товар по Id")

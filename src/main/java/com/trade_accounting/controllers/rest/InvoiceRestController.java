@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -50,10 +51,9 @@ public class InvoiceRestController {
     )
     public ResponseEntity<List<InvoiceDto>> getAll(@RequestParam(required = false) String typeOfInvoice) {
         List<InvoiceDto> invoiceDtoList;
-        if (typeOfInvoice != null){
+        if (typeOfInvoice != null) {
             invoiceDtoList = invoiceService.getAll(typeOfInvoice);
-        }
-        else {
+        } else {
             invoiceDtoList = invoiceService.getAll();
         }
         return ResponseEntity.ok(invoiceDtoList);
@@ -64,7 +64,7 @@ public class InvoiceRestController {
     public ResponseEntity<List<InvoiceDto>> getAll(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
-                    @Spec(path = "date", params = "date", spec = Equal.class),
+                    @Spec(path = "date", params = "date", spec = GreaterThanOrEqual.class),
                     @Spec(path = "typeOfInvoice", params = "typeOfInvoice", spec = Equal.class),
                     @Spec(path = "company.name", params = "companyDto", spec = Like.class),
                     @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
@@ -84,7 +84,7 @@ public class InvoiceRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<List<InvoiceDto>> search(@RequestParam("search") String search,
-                                                           @RequestParam("typeOfInvoice") TypeOfInvoice typeOfInvoice) {
+                                                   @RequestParam("typeOfInvoice") TypeOfInvoice typeOfInvoice) {
         return ResponseEntity.ok(invoiceService.findBySearchAndTypeOfInvoice(search, typeOfInvoice));
     }
 
@@ -113,7 +113,7 @@ public class InvoiceRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<InvoiceDto> create(@ApiParam(name = "invoiceDto", value = "DTO накладной, которую необходимо создать")
-                                    @RequestBody InvoiceDto invoiceDto) {
+                                             @RequestBody InvoiceDto invoiceDto) {
         InvoiceDto invoiceDto1 = invoiceService.create(invoiceDto);
         return ResponseEntity.ok().body(invoiceDto1);
     }

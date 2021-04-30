@@ -180,9 +180,6 @@ public class ModelDtoConverter {
         if (contractor.getContractorGroup() != null) {
             contractorDto.setContractorGroupDto(modelMapper.map(contractor.getContractorGroup(), ContractorGroupDto.class));
         }
-        if (contractor.getTypeOfContractor() != null) {
-            contractorDto.setTypeOfContractorDto((modelMapper.map(contractor.getTypeOfContractor(), TypeOfContractorDto.class)));
-        }
 
         if (contractor.getTypeOfPrice() != null) {
             contractorDto.setTypeOfPriceDto(modelMapper.map(contractor.getTypeOfPrice(), TypeOfPriceDto.class));
@@ -210,10 +207,11 @@ public class ModelDtoConverter {
                 convertToAddress(dto.getAddressDto()),
                 dto.getCommentToAddress(),
                 dto.getInn(),
+                dto.getKpp(),
                 dto.getOkpo(),
-                dto.getOgrnip(),
+                dto.getOgrn(),
                 dto.getNumberOfTheCertificate(),
-                LocalDate.parse(dto.getDateOfTheCertificate()),
+                dto.getDateOfTheCertificate(),
                 typeOfContractor);
     }
 
@@ -254,13 +252,12 @@ public class ModelDtoConverter {
     }
 
     public static Contractor convertToContractor(ContractorDto dto, ContractorGroup contractorGroup,
-                                                 TypeOfContractor typeOfContractor, TypeOfPrice typeOfPrice,
+                                                 TypeOfPrice typeOfPrice,
                                                  List<BankAccount> bankAccount,
                                                  LegalDetail legalDetail) {
         return new Contractor(
                 dto.getId(),
                 dto.getName(),
-                dto.getInn(),
                 dto.getSortNumber(),
                 dto.getPhone(),
                 dto.getFax(),
@@ -270,7 +267,6 @@ public class ModelDtoConverter {
                 dto.getComment(),
                 convertToListOfContact(dto.getContactDto()),
                 contractorGroup,
-                typeOfContractor,
                 typeOfPrice,
                 bankAccount,
                 legalDetail
@@ -384,13 +380,21 @@ public class ModelDtoConverter {
     }
 
     public static RetailStore convertToRetailStore(RetailStoreDto dto) {
-        return new RetailStore(
-                dto.getId(),
-                dto.getName(),
-                dto.isActive(),
-                dto.getActivityStatus(),
-                dto.getRevenue()
-        );
+
+        RetailStore retailStore = modelMapper.map(dto, RetailStore.class);
+
+        if (dto.getOrganizationDto() != null) {
+            retailStore.setOrganization(modelMapper.map(dto.getOrganizationDto(), Company.class));
+        }
+
+        if (dto.getCashiersDto() != null) {
+            List<Employee> cashiers = dto.getCashiersDto().stream()
+                    .map(e -> modelMapper.map(e, Employee.class))
+                    .collect(Collectors.toList());
+            retailStore.setCashiers(cashiers);
+        }
+
+        return retailStore;
     }
 
     public static Region toRegion(RegionDto regionDto) {

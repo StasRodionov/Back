@@ -4,14 +4,17 @@ import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface InvoiceService extends AbstractService<InvoiceDto> {
-
-    List<InvoiceDto> search(Specification<Invoice> specification);
+public interface InvoiceService extends AbstractService<InvoiceDto>, SearchableService<Invoice, InvoiceDto> {
 
     List<InvoiceDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice);
 
-    List<InvoiceDto> getAll(String typeOfInvoice);
+    @Transactional
+    default  List<InvoiceDto> getAll(String typeOfInvoice) {
+        return search((root, query, builder)
+                -> builder.equal(root.get("typeOfInvoice"), TypeOfInvoice.valueOf(typeOfInvoice)));
+    }
 }

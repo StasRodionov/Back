@@ -147,7 +147,7 @@ class ProductServiceImplTest {
                 );
 
         List<ProductDto> actualProductDtos = productService
-                .searchByFilter(SpecificationStubs.getProductSpecificationStub());
+                .search(SpecificationStubs.getProductSpecificationStub());
 
         assertNotNull(actualProductDtos, "failure - expected that a list of employeeDto not null");
         assertEquals(3, actualProductDtos.size(), "failure - expected that a list of employeeDto equals 3");

@@ -6,9 +6,9 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface TaskCommentService extends AbstractService<TaskCommentDto>{
+public interface TaskCommentService extends AbstractService<TaskCommentDto>,
+        SearchableService<TaskComment, TaskCommentDto>{
 
     void createAll(List<TaskCommentDto> dtos);
 
-    List<TaskCommentDto> search(Specification<TaskComment> specification);
 }

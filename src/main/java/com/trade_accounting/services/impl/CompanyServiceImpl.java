@@ -41,9 +41,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyDto> search(Specification<Company> spec) {
-        return companyRepository.findAll(spec).stream()
-                .map(dtoMapper::companyToCompanyDto)
-                .collect(Collectors.toList());
+        return executeSearch(companyRepository, dtoMapper::companyToCompanyDto, spec);
     }
 
     @Override
@@ -61,11 +59,8 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = dtoMapper.companyDtoToCompany(companyDto);
 
         company.setLegalDetail(
-                legalDetailRepository.save(
-                    dtoMapper.legalDetailDtoToLegalDetail(
-                            companyDto.getLegalDetailDto()
-                    )
-                )
+                dtoMapper.legalDetailDtoToLegalDetail(legalDetailRepository.getById(
+                        companyDto.getLegalDetailDto().getId()))
         );
 
         company.setBankAccounts(

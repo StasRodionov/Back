@@ -7,25 +7,27 @@ import org.springframework.data.jpa.mapping.JpaPersistentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> {
 
     Optional<LegalDetail> findByInn(String name);
 
-/*
     @Query("select new com.trade_accounting.models.dto.LegalDetailDto(" +
             "e.id, " +
             "e.lastName, " +
             "e.firstName, " +
             "e.middleName, " +
-            "e.address, " +
+            "e.address.id, " +
             "e.commentToAddress, " +
             "e.inn, " +
+            "e.kpp, " +
             "e.okpo, " +
-            "e.ogrnip, " +
+            "e.ogrn, " +
             "e.numberOfTheCertificate, " +
             "e.dateOfTheCertificate, " +
             "e.typeOfContractor.id) from LegalDetail e")
@@ -36,11 +38,11 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.lastName, " +
             "e.firstName, " +
             "e.middleName, " +
-            "e.address, " +
+            "e.address.id, " +
             "e.commentToAddress, " +
-            "e.inn, " +
+            "e.inn, e.kpp, " +
             "e.okpo, " +
-            "e.ogrnip, " +
+            "e.ogrn, " +
             "e.numberOfTheCertificate, " +
             "e.dateOfTheCertificate, " +
             "e.typeOfContractor.id) from LegalDetail e where e.id = :id")
@@ -51,16 +53,17 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
             "e.legalDetail.lastName, " +
             "e.legalDetail.firstName, " +
             "e.legalDetail.middleName, " +
-            "e.legalDetail.address, " +
+            "e.legalDetail.address.id, " +
             "e.legalDetail.commentToAddress, " +
             "e.legalDetail.inn, " +
+            "e.legalDetail.kpp, " +
             "e.legalDetail.okpo, " +
-            "e.legalDetail.ogrnip, " +
+            "e.legalDetail.ogrn, " +
             "e.legalDetail.numberOfTheCertificate, " +
             "e.legalDetail.dateOfTheCertificate, " +
             "e.legalDetail.typeOfContractor.id) from Contractor e where e.id = :id")
     LegalDetailDto getLegalDetailByContractorId(@Param("id") Long id);
-*/
+
 
 //    Optional<LegalDetail> getEntityName(String name);
 //    JpaPersistentEntity<LegalDetail>,
