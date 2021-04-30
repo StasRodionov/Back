@@ -26,7 +26,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     public BankAccountDto getBankByBic(String bic) {
-        return bankAccountRepository.getBankByBic(bic);
+        return bankAccountRepository.getBankByBic(bic).get(0);
     }
 
     @Override
