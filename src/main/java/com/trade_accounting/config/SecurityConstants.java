@@ -9,4 +9,5 @@ public class SecurityConstants {
     public static final String HEADER_STRING = "Authorization";
     public static final String AUTHENTICATION_URL = "/login";
     public static final String SIGN_UP_URL = "/";
+    public static final String TOKEN_GENERATOR_URL = "/api/token";
 }
