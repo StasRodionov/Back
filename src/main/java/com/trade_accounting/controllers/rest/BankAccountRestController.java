@@ -33,6 +33,20 @@ public class BankAccountRestController {
         this.bankAccountService = bankAccountService;
     }
 
+    @ApiOperation(value = "getBankByBic", notes = "Возвращает определенный банк по bic")
+    @GetMapping("/bic/{uniqBic}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Банковский аккаунт найден"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<BankAccountDto> getBankByBic(@ApiParam(name = "uniqBic", value = "uniqBic переданный в URL по которому необходимо найти банковский аккаунт")
+                                                  @PathVariable(name = "uniqBic") String uniqBic) {
+        BankAccountDto bankAccount = bankAccountService.getBankByBic(uniqBic);
+        return ResponseEntity.ok(bankAccount);
+    }
+
     @ApiOperation(value = "getAll", notes = "Возвращает лист всех банковских аккаунтов")
     @GetMapping
     @ApiResponses(value = {
@@ -43,6 +57,19 @@ public class BankAccountRestController {
     )
     public ResponseEntity<List<BankAccountDto>> getAll() {
         List<BankAccountDto> accounts = bankAccountService.getAll();
+        return ResponseEntity.ok(accounts);
+    }
+
+    @ApiOperation(value = "getListBankUniqueBic", notes = "Возвращает лист всех банковских аккаунтов")
+    @GetMapping("/bic")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение листа банковских аккаунтов"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<String>> getListBankUniqueBic() {
+        List<String> accounts = bankAccountService.getBankUniqueBic();
         return ResponseEntity.ok(accounts);
     }
 
