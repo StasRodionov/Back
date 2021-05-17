@@ -8,15 +8,13 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface EmployeeService extends SearchableService<Employee, EmployeeDto> {
+public interface EmployeeService extends SearchableService<Employee, EmployeeDto>, AbstractService<EmployeeDto> {
 
     List<EmployeeDto> getAll();
 
     PageDto<EmployeeDto> search(Specification<Employee> specification, Pageable page);
 
     EmployeeDto getById(Long id);
-
-    void save(EmployeeDto employeeDto);
 
     void deleteById(Long id);
 
