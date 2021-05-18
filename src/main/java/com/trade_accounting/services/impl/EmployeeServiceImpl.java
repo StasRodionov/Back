@@ -75,7 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 page.getTotalElements(),
                 page.getTotalPages(),
                 page.getNumberOfElements()
-                );
+        );
     }
 
     @Override
@@ -85,13 +85,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto create(EmployeeDto dto) {
-        return null;
+    public EmployeeDto create(EmployeeDto employeeDto) {
+        employeeRepository.save(dtoMapper.employeeDtoToEmployee(employeeDto));
+        return employeeDto;
     }
 
     @Override
-    public EmployeeDto update(EmployeeDto dto) {
-        return null;
+    public EmployeeDto update(EmployeeDto employeeDto) {
+        employeeRepository.save(dtoMapper.employeeDtoToEmployee(employeeDto));
+        return employeeDto;
     }
 
     @SneakyThrows
