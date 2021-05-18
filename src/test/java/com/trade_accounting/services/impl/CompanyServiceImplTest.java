@@ -142,7 +142,7 @@ class CompanyServiceImplTest {
         companyDtoIsCorrectlyInited(companyDto);
     }
 
-    @Test
+    @Test //этот тест не проходит
     void create_shouldPassInstructionsSuccessfulCreate() {
         companyService.create(
                 DtoStubs.getCompanyDto(1L)

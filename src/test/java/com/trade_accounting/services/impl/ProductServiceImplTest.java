@@ -111,7 +111,7 @@ class ProductServiceImplTest {
     }
 
     @Test
-    void getAllByContractorId() {
+    void getAllByContractorId() { //этот тест не проходит
         List<Product> productList = Stream.of(ModelStubs.getProduct(1L)).collect(Collectors.toList());
         when(repository.getAllByContractorId(1L)).thenReturn(productList);
 
