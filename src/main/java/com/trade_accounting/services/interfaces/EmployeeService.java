@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface EmployeeService extends SearchableService<Employee, EmployeeDto> {
+public interface EmployeeService extends SearchableService<Employee, EmployeeDto>, AbstractService<EmployeeDto>{
 
     List<EmployeeDto> getAll();
 

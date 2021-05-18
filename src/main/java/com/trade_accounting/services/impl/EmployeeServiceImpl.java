@@ -84,6 +84,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         return dtoMapper.employeeToEmployeeDto(emp.orElse(new Employee()));
     }
 
+    @Override
+    public EmployeeDto create(EmployeeDto dto) {
+        return null;
+    }
+
+    @Override
+    public EmployeeDto update(EmployeeDto dto) {
+        return null;
+    }
+
     @SneakyThrows
     @Override
     public void save(EmployeeDto employeeDto) {
