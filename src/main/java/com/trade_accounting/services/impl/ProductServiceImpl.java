@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto create(ProductDto dto) {
+    public ProductDto create(@NotNull ProductDto dto) {
         List<Image> preparedImages = dtoMapper.toImage(dto.getImageDtos(), "product");
         List<Image> savedImages = imageRepository.saveAll(preparedImages);
         Product product = dtoMapper.productDtoToProduct(dto);
