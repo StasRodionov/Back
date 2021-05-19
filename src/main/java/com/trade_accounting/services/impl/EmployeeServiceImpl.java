@@ -98,7 +98,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @SneakyThrows
     @Override
-    public void save(EmployeeDto employeeDto) {
+    public void save(EmployeeDto employeeDto) { //удалить этот метод и переписать на save/update
         Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
 
         ImageDto imageDto = employeeDto.getImageDto();

@@ -16,7 +16,11 @@ public interface EmployeeService extends SearchableService<Employee, EmployeeDto
 
     EmployeeDto getById(Long id);
 
-    void save(EmployeeDto employeeDto);
+   // void save(EmployeeDto employeeDto);
+
+    EmployeeDto create(EmployeeDto employeeDto);
+
+    EmployeeDto update(EmployeeDto employeeDto);
 
     void deleteById(Long id);
 
