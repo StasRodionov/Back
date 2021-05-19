@@ -2,14 +2,11 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 
@@ -44,7 +42,7 @@ public class AttributeOfCalculationObjectRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<AttributeOfCalculationObjectDto>> getAll(){
+    public ResponseEntity<List<AttributeOfCalculationObjectDto>> getAll() {
         List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtos = attributeOfCalculationObjectService.getAll();
         return ResponseEntity.ok(attributeOfCalculationObjectDtos);
     }
@@ -71,10 +69,9 @@ public class AttributeOfCalculationObjectRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> create(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto){
-    AttributeOfCalculationObjectDto attributeOfCalculationObjectDtoCreate = attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto);
-          return ResponseEntity.ok().body(attributeOfCalculationObjectDtoCreate);
-       // return ResponseEntity.ok().build();
+    public ResponseEntity<?> create(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto) {
+        AttributeOfCalculationObjectDto attributeOfCalculationObjectDtoCreate = attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto);
+        return ResponseEntity.ok().body(attributeOfCalculationObjectDtoCreate);
     }
 
     @PutMapping
@@ -86,10 +83,9 @@ public class AttributeOfCalculationObjectRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> update(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto){
-    AttributeOfCalculationObjectDto attributeOfCalculationObjectDtoUpdated = attributeOfCalculationObjectService.update(attributeOfCalculationObjectDto);
-          return ResponseEntity.ok().body(attributeOfCalculationObjectDtoUpdated);
-       // return ResponseEntity.ok().build();
+    public ResponseEntity<?> update(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto) {
+        AttributeOfCalculationObjectDto attributeOfCalculationObjectDtoUpdated = attributeOfCalculationObjectService.update(attributeOfCalculationObjectDto);
+        return ResponseEntity.ok().body(attributeOfCalculationObjectDtoUpdated);
     }
 
     @DeleteMapping("/{id}")
@@ -101,7 +97,7 @@ public class AttributeOfCalculationObjectRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> deleteById(@PathVariable("id") Long id){
+    public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
         attributeOfCalculationObjectService.deleteById(id);
         return ResponseEntity.ok().build();
     }

@@ -61,7 +61,7 @@ public class ContractorGroupRestController {
                                                       @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsContractorGroupById(id);
         ContractorGroupDto contractorGroupDto = contractorGroupService.getById(id);
-        return  ResponseEntity.ok(contractorGroupDto);
+        return ResponseEntity.ok(contractorGroupDto);
 
     }
 
@@ -76,8 +76,7 @@ public class ContractorGroupRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "ContractorGroupDto", value = "DTO группы, которую необходимо создать")
                                     @RequestBody ContractorGroupDto contractorGroupDto) {
-       ContractorGroupDto contractorGroupDtoCreate =  contractorGroupService.create(contractorGroupDto);
-       // return ResponseEntity.ok().build();
+        ContractorGroupDto contractorGroupDtoCreate = contractorGroupService.create(contractorGroupDto);
         return ResponseEntity.ok().body(contractorGroupDtoCreate);
     }
 
@@ -92,8 +91,8 @@ public class ContractorGroupRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "ContractorGroupDto", value = "DTO группы, которую необходимо обновить")
                                     @RequestBody ContractorGroupDto contractorGroupDto) {
-       ContractorGroupDto contractorGroupDtoUpdate = contractorGroupService.update(contractorGroupDto);
-      //  return ResponseEntity.ok().build();
+        ContractorGroupDto contractorGroupDtoUpdate = contractorGroupService.update(contractorGroupDto);
+        //  return ResponseEntity.ok().build();
         return ResponseEntity.ok().body(contractorGroupDtoUpdate);
     }
 

@@ -30,6 +30,7 @@ public class TypeOfPriceRestController {
     public TypeOfPriceRestController(TypeOfPriceService typeOfPriceService) {
         this.typeOfPriceService = typeOfPriceService;
     }
+
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Возвращает список всех видов цен")
     @ApiResponses(value = {
@@ -66,9 +67,8 @@ public class TypeOfPriceRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<TypeOfPriceDto> create(@RequestBody TypeOfPriceDto typeOfPriceDto) {
-      TypeOfPriceDto typeOfPriceDtoUpdate =  typeOfPriceService.create(typeOfPriceDto);
-          return ResponseEntity.ok().body(typeOfPriceDtoUpdate);
-        //return ResponseEntity.ok().build();
+        TypeOfPriceDto typeOfPriceDtoUpdate = typeOfPriceService.create(typeOfPriceDto);
+        return ResponseEntity.ok().body(typeOfPriceDtoUpdate);
     }
 
     @PutMapping
@@ -81,9 +81,8 @@ public class TypeOfPriceRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<TypeOfPriceDto> update(@RequestBody TypeOfPriceDto typeOfPriceDto) {
-      TypeOfPriceDto typeOfPriceDtoUpdated = typeOfPriceService.update(typeOfPriceDto);
-          return ResponseEntity.ok().body(typeOfPriceDtoUpdated);
-        //return ResponseEntity.ok().build();
+        TypeOfPriceDto typeOfPriceDtoUpdated = typeOfPriceService.update(typeOfPriceDto);
+        return ResponseEntity.ok().body(typeOfPriceDtoUpdated);
     }
 
     @DeleteMapping("/{id}")

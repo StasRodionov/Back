@@ -42,7 +42,7 @@ public class BankAccountRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<BankAccountDto> getBankByBic(@ApiParam(name = "uniqBic", value = "uniqBic переданный в URL по которому необходимо найти банковский аккаунт")
-                                                  @PathVariable(name = "uniqBic") String uniqBic) {
+                                                       @PathVariable(name = "uniqBic") String uniqBic) {
         BankAccountDto bankAccount = bankAccountService.getBankByBic(uniqBic);
         return ResponseEntity.ok(bankAccount);
     }
@@ -97,8 +97,7 @@ public class BankAccountRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> create(@ApiParam(name = "bankAccountDto", value = "DTO банковского аккаунта, который необходимо создать") @RequestBody BankAccountDto bankAccountDto) {
-       BankAccountDto bankAccountDtoCreate = bankAccountService.create(bankAccountDto);
-       // return ResponseEntity.ok().build();
+        BankAccountDto bankAccountDtoCreate = bankAccountService.create(bankAccountDto);
         return ResponseEntity.ok().body(bankAccountDtoCreate);
     }
 
@@ -112,10 +111,10 @@ public class BankAccountRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> update(@ApiParam(name = "bankAccountDto", value = "DTO банковского аккаунта, c обновленными данными") @RequestBody BankAccountDto bankAccountDto) {
-       BankAccountDto bankAccountDtoUpdate = bankAccountService.update(bankAccountDto);
-       // return ResponseEntity.ok().build();
+        BankAccountDto bankAccountDtoUpdate = bankAccountService.update(bankAccountDto);
         return ResponseEntity.ok().body(bankAccountDtoUpdate);
     }
+
     @ApiOperation(value = "deleteById", notes = "Удаляет банковский аккаунт на основе переданного ID")
     @DeleteMapping("/{id}")
     @ApiResponses(value = {

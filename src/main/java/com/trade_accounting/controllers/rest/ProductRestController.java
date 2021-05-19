@@ -109,8 +109,8 @@ public class ProductRestController {
     })
     public ResponseEntity<List<ProductDto>> getByProductGroupId(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
-            List<ProductDto> productGroups = productService.getAllByProductGroupId(id);
-            return ResponseEntity.ok(productGroups);
+        List<ProductDto> productGroups = productService.getAllByProductGroupId(id);
+        return ResponseEntity.ok(productGroups);
     }
 
     @ApiOperation(value = "getByContractorId", notes = "Возвращает товары из определенной группы")
@@ -123,8 +123,8 @@ public class ProductRestController {
     })
     public ResponseEntity<List<ProductDto>> getAllByContractorId(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
-            List<ProductDto> productGroups = productService.getAllByContractorId(id);
-            return ResponseEntity.ok(productGroups);
+        List<ProductDto> productGroups = productService.getAllByContractorId(id);
+        return ResponseEntity.ok(productGroups);
     }
 
     @ApiOperation(value = "getLiteByProductGroupId", notes = "Возвращает товары из определенной группы (лёгкое дто)")
@@ -152,10 +152,9 @@ public class ProductRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<ProductDto> create(@ApiParam(name = "productDto", value = "DTO товара, который необходимо создать")
-                                    @RequestBody ProductDto productDto) {
-      ProductDto productDtoCreate = productService.create(productDto);
-          return ResponseEntity.ok().body(productDtoCreate);
-        //return ResponseEntity.ok().build();
+                                             @RequestBody ProductDto productDto) {
+        ProductDto productDtoCreate = productService.create(productDto);
+        return ResponseEntity.ok().body(productDtoCreate);
     }
 
     @ApiOperation(value = "update", notes = "Обновляет товар на основе переданных данных")
@@ -169,10 +168,9 @@ public class ProductRestController {
     })
     public ResponseEntity<ProductDto> update(@ApiParam(name = "productDto",
             value = "DTO товара, c обновленными данными")
-                                    @RequestBody ProductDto productDto) {
-      ProductDto productDtoUpdated = productService.update(productDto);
-          return ResponseEntity.ok().body(productDtoUpdated);
-        //return ResponseEntity.ok().build();
+                                             @RequestBody ProductDto productDto) {
+        ProductDto productDtoUpdated = productService.update(productDto);
+        return ResponseEntity.ok().body(productDtoUpdated);
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет товар на основе переданного ID")
@@ -186,7 +184,7 @@ public class ProductRestController {
     })
     public ResponseEntity<ProductDto> deleteById(@ApiParam(name = "id",
             value = "ID товара, который необходимо удалить")
-                                        @PathVariable(name = "id") Long id) {
+                                                 @PathVariable(name = "id") Long id) {
         productService.deleteById(id);
         return ResponseEntity.ok().build();
     }

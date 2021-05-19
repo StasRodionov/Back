@@ -73,8 +73,7 @@ public class TaxSystemRestController {
             value = "DTO налоговой системы, которую необходимо создать")
                                     @RequestBody TaxSystemDto taxSystemDto) {
         TaxSystemDto taxSystemDtoCreate = taxSystemService.create(taxSystemDto);
-            return ResponseEntity.ok().body(taxSystemDtoCreate);
-        // return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(taxSystemDtoCreate);
     }
 
     @ApiOperation(value = "update", notes = "Обновление информации о налоговой системе")
@@ -89,9 +88,8 @@ public class TaxSystemRestController {
     public ResponseEntity<?> update(@ApiParam(name = "taxSystemDto",
             value = "DTO налоговой системы, которую необходимо обновить")
                                     @RequestBody TaxSystemDto taxSystemDto) {
-       TaxSystemDto taxSystemDtoUpdated = taxSystemService.update(taxSystemDto);
-           return  ResponseEntity.ok().body(taxSystemDtoUpdated);
-        //return ResponseEntity.ok().build();
+        TaxSystemDto taxSystemDtoUpdated = taxSystemService.update(taxSystemDto);
+        return ResponseEntity.ok().body(taxSystemDtoUpdated);
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаление налоговой системы по её id")

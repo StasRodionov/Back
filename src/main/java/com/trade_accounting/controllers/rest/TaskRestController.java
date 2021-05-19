@@ -96,8 +96,7 @@ public class TaskRestController {
                 .buildAndExpand(created.getId())
                 .normalize()
                 .toUri();
-          return ResponseEntity.created(taskURI).body(created);
-       // return ResponseEntity.created(taskURI).build();
+        return ResponseEntity.created(taskURI).body(created);
     }
 
     @ApiOperation(value = "update", notes = "Обновление задачи")
@@ -109,9 +108,8 @@ public class TaskRestController {
     )
     @PutMapping
     public ResponseEntity<TaskDto> update(@RequestBody TaskDto dto) {
-      var updated =  taskService.update(dto);
-          return ResponseEntity.ok().body(updated);
-       // return ResponseEntity.ok().build();
+        var updated = taskService.update(dto);
+        return ResponseEntity.ok().body(updated);
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаление задачи по её id")

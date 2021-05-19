@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Payment;
-import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.services.interfaces.PaymentService;
 import io.swagger.annotations.Api;
@@ -41,6 +40,7 @@ public class PaymentRestController {
     public PaymentRestController(PaymentService paymentService) {
         this.paymentService = paymentService;
     }
+
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех платежей")
     @ApiResponses(value = {
@@ -49,7 +49,7 @@ public class PaymentRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<PaymentDto>> getAll(){
+    public ResponseEntity<List<PaymentDto>> getAll() {
         List<PaymentDto> paymentDtoList = paymentService.getAll();
         log.info("Запрошен список платежей");
         return ResponseEntity.ok(paymentDtoList);
@@ -65,7 +65,7 @@ public class PaymentRestController {
     )
     public ResponseEntity<PaymentDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти платеж")
-                                              @PathVariable(name = "id") Long id){
+                                              @PathVariable(name = "id") Long id) {
         PaymentDto paymentDto = paymentService.getById(id);
         log.info("Запрошен экземпляр платежа с id = {}", id);
         return ResponseEntity.ok(paymentDto);
@@ -81,11 +81,10 @@ public class PaymentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> create(@ApiParam(name = "paymentDto", value = "DTO платежа, который необходимо создать")
-                                    @RequestBody PaymentDto paymentDto){
+                                    @RequestBody PaymentDto paymentDto) {
         PaymentDto paymentDtoCreated = paymentService.create(paymentDto);
         log.info("Записан новый экземпляр платежа - {}", paymentDto);
         return ResponseEntity.ok().body(paymentDtoCreated);
-       // return ResponseEntity.ok().build();
     }
 
     @PutMapping
@@ -99,11 +98,11 @@ public class PaymentRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "paymentDto", value = "DTO платежа, который необходимо обновить")
                                     @RequestBody PaymentDto paymentDto) {
-      PaymentDto paymentDtoUpdated = paymentService.update(paymentDto);
+        PaymentDto paymentDtoUpdated = paymentService.update(paymentDto);
         log.info("Обновлен экземпляр платежа с id = {}", paymentDto.getId());
         return ResponseEntity.ok().body(paymentDtoUpdated);
-       // return ResponseEntity.ok().build();
     }
+
     @DeleteMapping("/{id}")
     @ApiOperation(value = "deleteById", notes = "Удаление платежа по его id")
     @ApiResponses(value = {
@@ -149,7 +148,7 @@ public class PaymentRestController {
     )
     public ResponseEntity<List<PaymentDto>> search(@ApiParam(name = "search", type = "String",
             value = "Переданная строка, по которой необходимо найти платежи")
-                                                   @PathVariable(name = "search") String search){
+                                                   @PathVariable(name = "search") String search) {
         List<PaymentDto> paymentDtoList = paymentService.search(search);
         log.info("Запрошен список платежей");
         return ResponseEntity.ok(paymentDtoList);

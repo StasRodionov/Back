@@ -74,7 +74,6 @@ public class ProductGroupRestController {
                                     @RequestBody ProductGroupDto productGroupDto) {
         ProductGroupDto productGroupDtoCreate = productGroupService.create(productGroupDto);
         return ResponseEntity.ok().body(productGroupDtoCreate);
-        //return ResponseEntity.ok().build();
     }
 
     @PutMapping
@@ -90,7 +89,6 @@ public class ProductGroupRestController {
                                     @RequestBody ProductGroupDto productGroupDto) {
         ProductGroupDto productGroupDtoUpdated = productGroupService.update(productGroupDto);
         return ResponseEntity.ok().body(productGroupDtoUpdated);
-        // return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

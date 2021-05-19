@@ -94,8 +94,6 @@ public class InvoiceProductRestController {
             value = "DTO товара в накладной, который необходимо создать") @RequestBody InvoiceProductDto invoiceProductDto) {
         InvoiceProductDto invoiceProductDtoCreate = invoiceProductService.create(invoiceProductDto);
         return ResponseEntity.ok().body(invoiceProductDtoCreate);
-
-        //return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "update", notes = "Обновляет товар в накладной на основе переданных данных")
@@ -111,7 +109,6 @@ public class InvoiceProductRestController {
             value = "DTO InvoiceProduct, который необходимо обновить") @RequestBody InvoiceProductDto invoiceProductDto) {
         InvoiceProductDto invoiceProductDtoUpdated = invoiceProductService.update(invoiceProductDto);
         return ResponseEntity.ok().body(invoiceProductDtoUpdated);
-        //return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет товар в накладной на основе переданного ID")

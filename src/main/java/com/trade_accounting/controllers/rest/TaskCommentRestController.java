@@ -98,8 +98,7 @@ public class TaskCommentRestController {
                 .normalize()
                 .toUri();
 
-          return ResponseEntity.created(commentURI).body(created);
-        //return ResponseEntity.created(commentURI).build();
+        return ResponseEntity.created(commentURI).body(created);
     }
 
     @ApiOperation(value = "update", notes = "Обновление комментария")
@@ -111,9 +110,8 @@ public class TaskCommentRestController {
     )
     @PutMapping
     public ResponseEntity<TaskCommentDto> update(@RequestBody TaskCommentDto dto) {
-       var updated = commentService.update(dto);
-          return ResponseEntity.ok().body(updated);
-        //return ResponseEntity.ok().build();
+        var updated = commentService.update(dto);
+        return ResponseEntity.ok().body(updated);
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаление комментария по его id")

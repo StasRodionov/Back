@@ -70,9 +70,8 @@ public class ProjectRestController {
     })
     public ResponseEntity<ProjectDto> create(@ApiParam(name = "projectDto", value = "DTO проекта, который необходимо создать")
                                              @RequestBody ProjectDto projectDto) {
-      ProjectDto projectDtoCreate = projectService.create(projectDto);
-          return ResponseEntity.ok().body(projectDtoCreate);
-        //return ResponseEntity.ok().build();
+        ProjectDto projectDtoCreate = projectService.create(projectDto);
+        return ResponseEntity.ok().body(projectDtoCreate);
     }
 
     @ApiOperation(value = "update", notes = "Обновляет проект на основе переданных данных")
@@ -87,9 +86,8 @@ public class ProjectRestController {
     public ResponseEntity<ProjectDto> update(@ApiParam(name = "projectDto",
             value = "DTO проекта, c обновленными данными")
                                              @RequestBody ProjectDto projectDto) {
-    ProjectDto projectDtoUpdated = projectService.update(projectDto);
-          return ResponseEntity.ok().body(projectDtoUpdated);
-        //return ResponseEntity.ok().build();
+        ProjectDto projectDtoUpdated = projectService.update(projectDto);
+        return ResponseEntity.ok().body(projectDtoUpdated);
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет проект на основе переданного ID")
