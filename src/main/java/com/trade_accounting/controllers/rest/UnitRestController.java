@@ -94,8 +94,8 @@ public class UnitRestController {
             name = "unitDto",
             value = "DTO единицы измерения, которую необходимо обновить") @RequestBody UnitDto unitDto) {
         checkEntityService.checkExistsUnitById(unitDto.getId());
-        unitService.update(unitDto);
-        return ResponseEntity.ok().build();
+        UnitDto unitDtoUpdated = unitService.update(unitDto);
+        return ResponseEntity.ok().body(unitDtoUpdated);
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаление единицы измерения по ее id")
