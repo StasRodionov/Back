@@ -124,7 +124,7 @@ public class CompanyRestController {
         checkEntityService.checkForBadCompany(companyDto);
        CompanyDto companyDtoCreate = companyService.create(companyDto);
        // return ResponseEntity.ok().build();
-        return ResponseEntity.ok(companyDtoCreate);
+        return ResponseEntity.ok().body(companyDtoCreate);
     }
 
     @PutMapping
@@ -142,7 +142,7 @@ public class CompanyRestController {
         checkEntityService.checkForBadCompany(companyDto);
        CompanyDto companyDtoUpdate = companyService.update(companyDto);
        // return ResponseEntity.ok().build();
-        return ResponseEntity.ok(companyDtoUpdate);
+        return ResponseEntity.ok().body(companyDtoUpdate);
     }
 
     @DeleteMapping("/{id}")

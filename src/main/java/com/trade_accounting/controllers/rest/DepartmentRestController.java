@@ -72,7 +72,7 @@ public class DepartmentRestController {
     public ResponseEntity<?> create(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо создать") @RequestBody DepartmentDto departmentDto) {
         DepartmentDto departmentDtoCreate = departmentService.create(departmentDto);
         //return ResponseEntity.ok().build();
-        return ResponseEntity.ok(departmentDtoCreate);
+        return ResponseEntity.ok().body(departmentDtoCreate);
     }
 
     @PutMapping
@@ -86,7 +86,7 @@ public class DepartmentRestController {
     public ResponseEntity<?> update(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо обновить") @RequestBody DepartmentDto departmentDto) {
       DepartmentDto departmentDtoUpdated = departmentService.update(departmentDto);
         //return ResponseEntity.ok().build();
-        return ResponseEntity.ok(departmentDtoUpdated);
+        return ResponseEntity.ok().body(departmentDtoUpdated);
     }
 
     @DeleteMapping("/{id}")

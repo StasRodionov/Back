@@ -93,7 +93,8 @@ public class InvoiceProductRestController {
     public ResponseEntity<?> create(@ApiParam(name = "invoiceProductDto",
             value = "DTO товара в накладной, который необходимо создать") @RequestBody InvoiceProductDto invoiceProductDto) {
         InvoiceProductDto invoiceProductDtoCreate = invoiceProductService.create(invoiceProductDto);
-        return ResponseEntity.ok(invoiceProductDtoCreate);
+        return ResponseEntity.ok().body(invoiceProductDtoCreate);
+
         //return ResponseEntity.ok().build();
     }
 
@@ -109,7 +110,7 @@ public class InvoiceProductRestController {
     public ResponseEntity<?> update(@ApiParam(name = "invoiceProductDto",
             value = "DTO InvoiceProduct, который необходимо обновить") @RequestBody InvoiceProductDto invoiceProductDto) {
         InvoiceProductDto invoiceProductDtoUpdated = invoiceProductService.update(invoiceProductDto);
-        return ResponseEntity.ok(invoiceProductDtoUpdated);
+        return ResponseEntity.ok().body(invoiceProductDtoUpdated);
         //return ResponseEntity.ok().build();
     }
 

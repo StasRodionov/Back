@@ -166,7 +166,7 @@ public class ContractorRestController {
                                                 @RequestBody ContractorDto contractorDto) {
         addressService.create(contractorDto.getLegalDetailDto().getAddressDto());
         ContractorDto contractorDtoCreate = contractorService.create(contractorDto);
-        return ResponseEntity.ok(contractorDtoCreate);
+        return ResponseEntity.ok().body(contractorDtoCreate);
     }
 
     @PutMapping
@@ -183,7 +183,7 @@ public class ContractorRestController {
                                                 @RequestBody ContractorDto contractorDto) {
        ContractorDto contractorDtoUpdated = contractorService.update(contractorDto);
       //  return ResponseEntity.ok().build();
-        return ResponseEntity.ok(contractorDtoUpdated);
+        return ResponseEntity.ok().body(contractorDtoUpdated);
     }
 
     @DeleteMapping("/{id}")

@@ -108,7 +108,7 @@ public class ContractRestController {
                                                   @RequestBody ContractDto contractDto) {
        ContractDto contractDtoCreate = contractService.create(contractDto);
         //return ResponseEntity.ok().build();
-        return ResponseEntity.ok(contractDtoCreate);
+        return ResponseEntity.ok().body(contractDtoCreate);
     }
 
     @PutMapping
@@ -125,7 +125,7 @@ public class ContractRestController {
                                                   @RequestBody ContractDto contractDto) {
        ContractDto contractDtoUpdated =contractService.update(contractDto);
         //return ResponseEntity.ok().build();
-        return ResponseEntity.ok(contractDtoUpdated);
+        return ResponseEntity.ok().body(contractDtoUpdated);
     }
 
     @DeleteMapping("/{id}")

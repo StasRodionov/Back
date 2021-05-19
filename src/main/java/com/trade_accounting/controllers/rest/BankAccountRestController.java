@@ -99,7 +99,7 @@ public class BankAccountRestController {
     public ResponseEntity<?> create(@ApiParam(name = "bankAccountDto", value = "DTO банковского аккаунта, который необходимо создать") @RequestBody BankAccountDto bankAccountDto) {
        BankAccountDto bankAccountDtoCreate = bankAccountService.create(bankAccountDto);
        // return ResponseEntity.ok().build();
-        return ResponseEntity.ok(bankAccountDtoCreate);
+        return ResponseEntity.ok().body(bankAccountDtoCreate);
     }
 
     @ApiOperation(value = "update", notes = "Обновляет банковский аккаунт на основе переданных данных")
@@ -114,7 +114,7 @@ public class BankAccountRestController {
     public ResponseEntity<?> update(@ApiParam(name = "bankAccountDto", value = "DTO банковского аккаунта, c обновленными данными") @RequestBody BankAccountDto bankAccountDto) {
        BankAccountDto bankAccountDtoUpdate = bankAccountService.update(bankAccountDto);
        // return ResponseEntity.ok().build();
-        return ResponseEntity.ok(bankAccountDtoUpdate);
+        return ResponseEntity.ok().body(bankAccountDtoUpdate);
     }
     @ApiOperation(value = "deleteById", notes = "Удаляет банковский аккаунт на основе переданного ID")
     @DeleteMapping("/{id}")

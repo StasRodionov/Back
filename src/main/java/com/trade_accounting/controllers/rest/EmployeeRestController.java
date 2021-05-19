@@ -148,7 +148,7 @@ public class EmployeeRestController {
         checkEntityService.checkForBadEmployee(employeeDto);
        EmployeeDto employeeDtoCreate = employeeService.create(employeeDto);
         //return ResponseEntity.ok().build();
-        return ResponseEntity.ok(employeeDtoCreate);
+        return ResponseEntity.ok().body(employeeDtoCreate);
 
     }
 
@@ -167,7 +167,7 @@ public class EmployeeRestController {
         checkEntityService.checkExistsEmployeeById(employeeDto.getId());
         checkEntityService.checkForBadEmployee(employeeDto);
         EmployeeDto employeeDtoUpdated = employeeService.update(employeeDto);
-        return ResponseEntity.ok(employeeDtoUpdated);
+        return ResponseEntity.ok().body(employeeDtoUpdated);
        // return ResponseEntity.ok().build();
     }
 

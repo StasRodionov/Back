@@ -78,7 +78,7 @@ public class ContractorGroupRestController {
                                     @RequestBody ContractorGroupDto contractorGroupDto) {
        ContractorGroupDto contractorGroupDtoCreate =  contractorGroupService.create(contractorGroupDto);
        // return ResponseEntity.ok().build();
-        return ResponseEntity.ok(contractorGroupDtoCreate);
+        return ResponseEntity.ok().body(contractorGroupDtoCreate);
     }
 
     @PutMapping
@@ -94,7 +94,7 @@ public class ContractorGroupRestController {
                                     @RequestBody ContractorGroupDto contractorGroupDto) {
        ContractorGroupDto contractorGroupDtoUpdate = contractorGroupService.update(contractorGroupDto);
       //  return ResponseEntity.ok().build();
-        return ResponseEntity.ok(contractorGroupDtoUpdate);
+        return ResponseEntity.ok().body(contractorGroupDtoUpdate);
     }
 
     @DeleteMapping("/{id}")
