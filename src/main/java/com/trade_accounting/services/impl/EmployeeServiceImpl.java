@@ -86,19 +86,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {
-        employeeRepository.save(dtoMapper.employeeDtoToEmployee(employeeDto));
+        Employee employee =dtoMapper.employeeDtoToEmployee(employeeDto);
+        Employee employeeSaved = employeeRepository.save(employee);
+        employeeDto.setId(employeeSaved.getId());
         return employeeDto;
     }
 
     @Override
     public EmployeeDto update(EmployeeDto employeeDto) {
-        employeeRepository.save(dtoMapper.employeeDtoToEmployee(employeeDto));
+        Employee employee =dtoMapper.employeeDtoToEmployee(employeeDto);
+        Employee employeeSaved = employeeRepository.save(employee);
+        employeeDto.setId(employeeSaved.getId());
         return employeeDto;
     }
 
+    /*
     @SneakyThrows
     @Override
-    public void save(EmployeeDto employeeDto) { //удалить этот метод и переписать на save/update
+    public void save(EmployeeDto employeeDto) { //удалить этот метод и переписать на create/update
         Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
 
         ImageDto imageDto = employeeDto.getImageDto();
@@ -152,6 +157,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.save(employee);
     }
 
+     */
     @SneakyThrows
     @Override
     public void deleteById(Long id) {
