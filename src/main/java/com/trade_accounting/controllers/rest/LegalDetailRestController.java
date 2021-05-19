@@ -90,12 +90,12 @@ public class LegalDetailRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<LegalDetailService> update(@ApiParam(name = "legalDetailDto", value = "DTO юридические реквизиты с обновленными данными")
+    public ResponseEntity<LegalDetailDto> update(@ApiParam(name = "legalDetailDto", value = "DTO юридические реквизиты с обновленными данными")
                                                      @RequestBody LegalDetailDto legalDetailDto) {
      LegalDetailDto legalDetailDtoUpdated = legalDetailService.update(legalDetailDto);
         log.info("Обновлен экземпляр LegalDetailDto - {}", legalDetailDto);
-     //   return ResponseEntity.ok(legalDetailDtoUpdated);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(legalDetailDtoUpdated);
+       // return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
