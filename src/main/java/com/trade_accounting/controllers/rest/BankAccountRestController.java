@@ -97,8 +97,9 @@ public class BankAccountRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> create(@ApiParam(name = "bankAccountDto", value = "DTO банковского аккаунта, который необходимо создать") @RequestBody BankAccountDto bankAccountDto) {
-        bankAccountService.create(bankAccountDto);
-        return ResponseEntity.ok().build();
+       BankAccountDto bankAccountDtoCreate = bankAccountService.create(bankAccountDto);
+       // return ResponseEntity.ok().build();
+        return ResponseEntity.ok(bankAccountDtoCreate);
     }
 
     @ApiOperation(value = "update", notes = "Обновляет банковский аккаунт на основе переданных данных")
@@ -111,8 +112,9 @@ public class BankAccountRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> update(@ApiParam(name = "bankAccountDto", value = "DTO банковского аккаунта, c обновленными данными") @RequestBody BankAccountDto bankAccountDto) {
-        bankAccountService.update(bankAccountDto);
-        return ResponseEntity.ok().build();
+       BankAccountDto bankAccountDtoUpdate = bankAccountService.update(bankAccountDto);
+       // return ResponseEntity.ok().build();
+        return ResponseEntity.ok(bankAccountDtoUpdate);
     }
     @ApiOperation(value = "deleteById", notes = "Удаляет банковский аккаунт на основе переданного ID")
     @DeleteMapping("/{id}")

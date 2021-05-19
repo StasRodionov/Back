@@ -181,8 +181,9 @@ public class ContractorRestController {
     public ResponseEntity<ContractorDto> update(@ApiParam(name = "contractorDto",
             value = "DTO контрагента, которого необходимо обновить")
                                                 @RequestBody ContractorDto contractorDto) {
-        contractorService.update(contractorDto);
-        return ResponseEntity.ok().build();
+       ContractorDto contractorDtoUpdated = contractorService.update(contractorDto);
+      //  return ResponseEntity.ok().build();
+        return ResponseEntity.ok(contractorDtoUpdated);
     }
 
     @DeleteMapping("/{id}")
