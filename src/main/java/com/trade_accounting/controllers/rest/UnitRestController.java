@@ -77,8 +77,9 @@ public class UnitRestController {
     public ResponseEntity<?> create(@ApiParam(
             name = "unitDto",
             value = "DTO единицы измерения, которую необходимо создать") @RequestBody UnitDto unitDto) {
-        unitService.create(unitDto);
-        return ResponseEntity.ok().build();
+    UnitDto unitDtoCreate = unitService.create(unitDto);
+        //return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(unitDtoCreate);
     }
 
     @ApiOperation(value = "update", notes = "Обновление информации о единицы измерения")

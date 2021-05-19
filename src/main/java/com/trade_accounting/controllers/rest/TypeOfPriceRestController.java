@@ -66,8 +66,9 @@ public class TypeOfPriceRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<TypeOfPriceDto> create(@RequestBody TypeOfPriceDto typeOfPriceDto) {
-        typeOfPriceService.create(typeOfPriceDto);
-        return ResponseEntity.ok().build();
+      TypeOfPriceDto typeOfPriceDtoUpdate =  typeOfPriceService.create(typeOfPriceDto);
+          return ResponseEntity.ok().body(typeOfPriceDtoUpdate);
+        //return ResponseEntity.ok().build();
     }
 
     @PutMapping
@@ -80,8 +81,9 @@ public class TypeOfPriceRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<TypeOfPriceDto> update(@RequestBody TypeOfPriceDto typeOfPriceDto) {
-        typeOfPriceService.update(typeOfPriceDto);
-        return ResponseEntity.ok().build();
+      TypeOfPriceDto typeOfPriceDtoUpdated = typeOfPriceService.update(typeOfPriceDto);
+          return ResponseEntity.ok().body(typeOfPriceDtoUpdated);
+        //return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

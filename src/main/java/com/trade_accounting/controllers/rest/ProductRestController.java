@@ -153,8 +153,9 @@ public class ProductRestController {
     })
     public ResponseEntity<ProductDto> create(@ApiParam(name = "productDto", value = "DTO товара, который необходимо создать")
                                     @RequestBody ProductDto productDto) {
-        productService.create(productDto);
-        return ResponseEntity.ok().build();
+      ProductDto productDtoCreate = productService.create(productDto);
+          return ResponseEntity.ok().body(productDtoCreate);
+        //return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "update", notes = "Обновляет товар на основе переданных данных")
@@ -169,8 +170,9 @@ public class ProductRestController {
     public ResponseEntity<ProductDto> update(@ApiParam(name = "productDto",
             value = "DTO товара, c обновленными данными")
                                     @RequestBody ProductDto productDto) {
-        productService.update(productDto);
-        return ResponseEntity.ok().build();
+      ProductDto productDtoUpdated = productService.update(productDto);
+          return ResponseEntity.ok().body(productDtoUpdated);
+        //return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет товар на основе переданного ID")

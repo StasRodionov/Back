@@ -62,6 +62,7 @@ public class InvoiceProductRestController {
         InvoiceProductDto invoiceProductDto = invoiceProductService.getById(id);
         return ResponseEntity.ok(invoiceProductDto);
     }
+
     @ApiOperation(value = "getByInvoiceId", notes = "Возвращает список товаров в накладной по Invoice.id")
     @GetMapping("/invoice_product/{id}")
     @ApiResponses(value = {
@@ -91,8 +92,9 @@ public class InvoiceProductRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "invoiceProductDto",
             value = "DTO товара в накладной, который необходимо создать") @RequestBody InvoiceProductDto invoiceProductDto) {
-        invoiceProductService.create(invoiceProductDto);
-        return ResponseEntity.ok().build();
+        InvoiceProductDto invoiceProductDtoCreate = invoiceProductService.create(invoiceProductDto);
+        return ResponseEntity.ok(invoiceProductDtoCreate);
+        //return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "update", notes = "Обновляет товар в накладной на основе переданных данных")
@@ -106,8 +108,9 @@ public class InvoiceProductRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "invoiceProductDto",
             value = "DTO InvoiceProduct, который необходимо обновить") @RequestBody InvoiceProductDto invoiceProductDto) {
-        invoiceProductService.update(invoiceProductDto);
-        return ResponseEntity.ok().build();
+        InvoiceProductDto invoiceProductDtoUpdated = invoiceProductService.update(invoiceProductDto);
+        return ResponseEntity.ok(invoiceProductDtoUpdated);
+        //return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет товар в накладной на основе переданного ID")

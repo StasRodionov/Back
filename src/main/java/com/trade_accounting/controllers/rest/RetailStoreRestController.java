@@ -75,9 +75,10 @@ public class RetailStoreRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<RetailStoreDto> create(@RequestBody RetailStoreDto retailStoreDto) {
-        retailStoreService.create(retailStoreDto);
+       RetailStoreDto retailStoreDtoCreate = retailStoreService.create(retailStoreDto);
         log.info("Записан новый экземпляр RetailStoreDto - {}", retailStoreDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(retailStoreDtoCreate);
+        //return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "update", notes = "Обновляет точку продаж на основе переданных данных")
@@ -91,9 +92,10 @@ public class RetailStoreRestController {
     })
     public ResponseEntity<RetailStoreDto> update(@RequestBody RetailStoreDto retailStoreDto) {
         checkEntityService.checkExistsRetailStoreById(retailStoreDto.getId());
-        retailStoreService.update(retailStoreDto);
+       RetailStoreDto retailStoreDtoUpdate = retailStoreService.update(retailStoreDto);
         log.info("Обновлен экземпляр RetailStoreDto с id = {}", retailStoreDto.getId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(retailStoreDtoUpdate);
+        //return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет точку продаж на основе переданного ID")

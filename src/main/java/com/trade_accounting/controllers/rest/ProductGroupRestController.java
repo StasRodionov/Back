@@ -1,6 +1,5 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import io.swagger.annotations.Api;
@@ -9,7 +8,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,7 +55,7 @@ public class ProductGroupRestController {
     })
     public ResponseEntity<ProductGroupDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти товарную группу")
-            @PathVariable(name = "id") Long id) {
+                                                   @PathVariable(name = "id") Long id) {
         ProductGroupDto productGroup = productGroupService.getById(id);
         return ResponseEntity.ok(productGroup);
     }
@@ -73,9 +71,10 @@ public class ProductGroupRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "productGroupDto",
             value = "DTO товарной группы, которую необходимо создать")
-                                        @RequestBody ProductGroupDto productGroupDto){
-        productGroupService.create(productGroupDto);
-        return ResponseEntity.ok().build();
+                                    @RequestBody ProductGroupDto productGroupDto) {
+        ProductGroupDto productGroupDtoCreate = productGroupService.create(productGroupDto);
+        return ResponseEntity.ok().body(productGroupDtoCreate);
+        //return ResponseEntity.ok().build();
     }
 
     @PutMapping
@@ -88,9 +87,10 @@ public class ProductGroupRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> update(@ApiParam(name = "ProductGroupDto", value = "DTO товарной группы, которую необходимо обновить")
-            @RequestBody ProductGroupDto productGroupDto) {
-        productGroupService.update(productGroupDto);
-        return ResponseEntity.ok().build();
+                                    @RequestBody ProductGroupDto productGroupDto) {
+        ProductGroupDto productGroupDtoUpdated = productGroupService.update(productGroupDto);
+        return ResponseEntity.ok().body(productGroupDtoUpdated);
+        // return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
@@ -104,7 +104,7 @@ public class ProductGroupRestController {
     )
     public ResponseEntity<?> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо удалить товарную группу")
-            @PathVariable(name = "id") Long id) {
+                                        @PathVariable(name = "id") Long id) {
         productGroupService.deleteById(id);
         return ResponseEntity.ok().build();
     }

@@ -71,8 +71,9 @@ public class WarehouseRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<?> create(@RequestBody WarehouseDto warehouseDto) {
-        warehouseService.create(warehouseDto);
-        return ResponseEntity.ok().build();
+        WarehouseDto warehouseDtoCreate = warehouseService.create(warehouseDto);
+        return ResponseEntity.ok().body(warehouseDtoCreate);
+        //return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "update", notes = "Обновляет склад на основе переданных данных")
@@ -86,8 +87,9 @@ public class WarehouseRestController {
     })
     public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto) {
         checkEntityService.checkExistsWarehouseById(warehouseDto.getId());
-        warehouseService.update(warehouseDto);
-        return ResponseEntity.ok().build();
+     WarehouseDto warehouseDtoUpdated = warehouseService.update(warehouseDto);
+        //return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(warehouseDtoUpdated);
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет склад на основе переданного ID")

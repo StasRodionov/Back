@@ -82,9 +82,10 @@ public class PaymentRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "paymentDto", value = "DTO платежа, который необходимо создать")
                                     @RequestBody PaymentDto paymentDto){
-        paymentService.create(paymentDto);
+        PaymentDto paymentDtoCreated = paymentService.create(paymentDto);
         log.info("Записан новый экземпляр платежа - {}", paymentDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(paymentDtoCreated);
+       // return ResponseEntity.ok().build();
     }
 
     @PutMapping
@@ -98,9 +99,10 @@ public class PaymentRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "paymentDto", value = "DTO платежа, который необходимо обновить")
                                     @RequestBody PaymentDto paymentDto) {
-        paymentService.update(paymentDto);
+      PaymentDto paymentDtoUpdated = paymentService.update(paymentDto);
         log.info("Обновлен экземпляр платежа с id = {}", paymentDto.getId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(paymentDtoUpdated);
+       // return ResponseEntity.ok().build();
     }
     @DeleteMapping("/{id}")
     @ApiOperation(value = "deleteById", notes = "Удаление платежа по его id")
