@@ -76,9 +76,9 @@ public class ContractorGroupRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "ContractorGroupDto", value = "DTO группы, которую необходимо создать")
                                     @RequestBody ContractorGroupDto contractorGroupDto) {
-        contractorGroupService.create(contractorGroupDto);
+       ContractorGroupDto contractorGroupDtoCreate =  contractorGroupService.create(contractorGroupDto);
        // return ResponseEntity.ok().build();
-        return ResponseEntity.ok(contractorGroupDto);
+        return ResponseEntity.ok(contractorGroupDtoCreate);
     }
 
     @PutMapping
@@ -92,9 +92,9 @@ public class ContractorGroupRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "ContractorGroupDto", value = "DTO группы, которую необходимо обновить")
                                     @RequestBody ContractorGroupDto contractorGroupDto) {
-        contractorGroupService.update(contractorGroupDto);
+       ContractorGroupDto contractorGroupDtoUpdate = contractorGroupService.update(contractorGroupDto);
       //  return ResponseEntity.ok().build();
-        return ResponseEntity.ok(contractorGroupDto);
+        return ResponseEntity.ok(contractorGroupDtoUpdate);
     }
 
     @DeleteMapping("/{id}")

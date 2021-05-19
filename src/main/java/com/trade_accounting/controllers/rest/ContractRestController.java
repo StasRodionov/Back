@@ -123,8 +123,9 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> update(@ApiParam(name = "contractDto",
             value = "DTO договора, который необходимо обновить")
                                                   @RequestBody ContractDto contractDto) {
-        contractService.update(contractDto);
-        return ResponseEntity.ok().build();
+       ContractDto contractDtoUpdated =contractService.update(contractDto);
+        //return ResponseEntity.ok().build();
+        return ResponseEntity.ok(contractDtoUpdated);
     }
 
     @DeleteMapping("/{id}")
