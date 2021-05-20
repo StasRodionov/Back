@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
+import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.repositories.ProjectRepository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,9 +36,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDto getById(Long id) {
-        return dtoMapper.projectToProjectDto(
-                projectRepository.findById(id).orElse(new Project())
-        );
+        Optional<Project> project = projectRepository.findById(id);
+        if(project.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.projectToProjectDto(project.get());
+
     }
 
     @Override

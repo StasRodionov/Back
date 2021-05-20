@@ -1,6 +1,8 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.BankAccount;
+import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.services.interfaces.BankAccountService;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,9 +46,12 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     public BankAccountDto getById(Long id) {
-        return dtoMapper.bankAccountToBankAccountDto(
-                bankAccountRepository.findById(id).orElse(new BankAccount())
-        );
+
+        Optional<BankAccount> bankAccount = bankAccountRepository.findById(id);
+        if(bankAccount.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.bankAccountToBankAccountDto(bankAccount.get());
     }
 
     @Override

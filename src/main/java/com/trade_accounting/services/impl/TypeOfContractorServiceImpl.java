@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
@@ -34,7 +35,10 @@ public class TypeOfContractorServiceImpl implements TypeOfContractorService {
     @Override
     public TypeOfContractorDto getById(Long id) {
         Optional<TypeOfContractor> typeOfContractor = typeOfContractorRepository.findById(id);
-        return dtoMapper.typeOfContractorToTypeOfContractorDto(typeOfContractor.orElse(new TypeOfContractor()));
+        if(typeOfContractor.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.typeOfContractorToTypeOfContractorDto(typeOfContractor.get());
     }
 
     @Override

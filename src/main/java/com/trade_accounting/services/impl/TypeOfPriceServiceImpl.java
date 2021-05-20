@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
+import com.trade_accounting.models.Position;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,9 +36,12 @@ public class TypeOfPriceServiceImpl implements TypeOfPriceService {
 
     @Override
     public TypeOfPriceDto getById(Long id) {
-        return dtoMapper.typeOfPriceToTypeOfPriceDto(
-                typeOfPriceRepository.findById(id).orElse(new TypeOfPrice())
-        );
+        Optional<TypeOfPrice> typeOfPrice = typeOfPriceRepository.findById(id);
+        if(typeOfPrice.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.typeOfPriceToTypeOfPriceDto(typeOfPrice.get());
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.repositories.AddressRepository;

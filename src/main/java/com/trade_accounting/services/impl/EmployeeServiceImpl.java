@@ -1,7 +1,9 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
+import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
@@ -81,7 +83,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto getById(Long id) {
         Optional<Employee> emp = employeeRepository.findById(id);
-        return dtoMapper.employeeToEmployeeDto(emp.orElse(new Employee()));
+        if(emp.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.employeeToEmployeeDto(emp.get());
     }
 
     @SneakyThrows

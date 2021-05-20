@@ -1,6 +1,8 @@
 package com.trade_accounting.services.impl;
 
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
+import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.repositories.PositionRepository;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -35,9 +38,11 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     public PositionDto getById(Long id) {
-        return dtoMapper.positionToPositionDto(
-                positionRepository.findById(id).orElse(new Position())
-        );
+        Optional<Position> position = positionRepository.findById(id);
+        if(position.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.positionToPositionDto(position.get());
     }
 
     @Override

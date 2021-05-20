@@ -1,8 +1,10 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.ContactRepository;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,9 +78,12 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public ContractorDto getById(Long id) {
-        return dtoMapper.contractorToContractorDto(
-                contractorRepository.findById(id).orElse(new Contractor())
-        );
+
+        Optional<Contractor> contractor = contractorRepository.findById(id);
+        if(contractor.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.contractorToContractorDto(contractor.get());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.repositories.RetailStoreRepository;
@@ -35,8 +36,10 @@ public class RetailStoreServiceImpl implements RetailStoreService {
     @Override
     public RetailStoreDto getById(Long id) {
         Optional<RetailStore> retailStore = retailStoreRepository.findById(id);
-        return dtoMapper.retailStoreToRetailStoreDto(
-                retailStore.orElse(new RetailStore()));
+        if(retailStore.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.retailStoreToRetailStoreDto(retailStore.get());
     }
 
     @Override

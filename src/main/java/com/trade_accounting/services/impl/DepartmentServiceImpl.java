@@ -1,6 +1,8 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.Department;
+import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.services.interfaces.DepartmentService;
@@ -8,6 +10,7 @@ import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -34,9 +37,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDto getById(Long id) {
-        return dtoMapper.departmentToDepartmentDto(
-                departmentRepository.findById(id).orElse(new Department())
-        );
+        Optional<Department> department = departmentRepository.findById(id);
+        if(department.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.departmentToDepartmentDto(department.get());
     }
 
     @Override

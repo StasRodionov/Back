@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
+import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.RoleRepository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,9 +36,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto getById(Long id) {
-        return dtoMapper.roleToRoleDto(
-                roleRepository.findById(id).orElse(new Role())
-        );
+        Optional<Role> role = roleRepository.findById(id);
+        if(role.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.roleToRoleDto(role.get());
+
     }
 
     @Override

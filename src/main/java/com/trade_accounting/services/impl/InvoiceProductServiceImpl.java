@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.repositories.InvoiceProductRepository;
@@ -40,7 +41,10 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     @Override
     public InvoiceProductDto getById(Long id) {
         Optional<InvoiceProduct> invoiceProductDto = invoiceProductRepository.findById(id);
-        return dtoMapper.invoiceProductToInvoiceProductDto(invoiceProductDto.orElse(new InvoiceProduct()));
+        if(invoiceProductDto.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.invoiceProductToInvoiceProductDto(invoiceProductDto.get());
     }
 
     @Override

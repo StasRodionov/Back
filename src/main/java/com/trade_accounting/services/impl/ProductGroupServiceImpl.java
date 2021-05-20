@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
+import com.trade_accounting.models.Position;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.repositories.ProductGroupRepository;
@@ -8,6 +10,7 @@ import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,9 +34,11 @@ public class ProductGroupServiceImpl implements ProductGroupService {
 
     @Override
     public ProductGroupDto getById(Long id) {
-        return dtoMapper.productGroupToProductGroupDto(
-                productGroupRepository.findById(id).orElse(new ProductGroup())
-        );
+        Optional<ProductGroup> productGroup = productGroupRepository.findById(id);
+        if(productGroup.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.productGroupToProductGroupDto(productGroup.get());
     }
 
     @Override

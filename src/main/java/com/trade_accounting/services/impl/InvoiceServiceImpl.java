@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
@@ -66,7 +67,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public InvoiceDto getById(Long id) {
         Optional<Invoice> invoice = invoiceRepository.findById(id);
-        return dtoMapper.invoiceToInvoiceDto(invoice.orElse(new Invoice()));
+        if(invoice.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.invoiceToInvoiceDto(invoice.get());
     }
 
     @Override

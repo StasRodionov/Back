@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
+import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.repositories.UnitRepository;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,9 +37,11 @@ public class UnitServiceImpl implements UnitService {
 
     @Override
     public UnitDto getById(Long id) {
-        return dtoMapper.unitToUnitDto(
-                unitRepository.findById(id).orElse(new Unit())
-        );
+        Optional<Unit> unit = unitRepository.findById(id);
+        if(unit.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.unitToUnitDto(unit.get());
     }
 
     @Override

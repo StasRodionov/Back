@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.repositories.WarehouseRepository;
@@ -36,10 +37,10 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Override
     public WarehouseDto getById(Long id) {
         Optional<Warehouse> warehouse = warehouseRepository.findById(id);
-        return dtoMapper.warehouseToWarehouseDto(
-                warehouse.orElse(
-                        new Warehouse()
-                )
+        if(warehouse.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.warehouseToWarehouseDto(warehouse.get()
         );
     }
 

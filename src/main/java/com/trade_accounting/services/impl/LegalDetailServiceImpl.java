@@ -1,6 +1,8 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.Address;
+import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.repositories.AddressRepository;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,9 +43,11 @@ public class LegalDetailServiceImpl implements LegalDetailService {
 
     @Override
     public LegalDetailDto getById(Long id) {
-        return dtoMapper.legalDetailToLegalDetailDto(
-                legalDetailRepository.findById(id).orElse(new LegalDetail())
-        );
+        Optional<LegalDetail> legalDetail = legalDetailRepository.findById(id);
+        if(legalDetail.isEmpty()) {
+            throw new NotFoundEntityException("No invoice ");
+        }
+            return dtoMapper.legalDetailToLegalDetailDto( legalDetail.get());
     }
 
     @Override

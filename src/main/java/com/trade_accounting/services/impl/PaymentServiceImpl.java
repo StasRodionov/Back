@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
+import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.repositories.CompanyRepository;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -53,9 +56,12 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentDto getById(Long id) {
-        return dtoMapper.paymentToPaymentDto(
-                paymentRepository.findById(id).orElse(new Payment())
-        );
+        Optional<Payment> payment = paymentRepository.findById(id);
+        if(payment.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.paymentToPaymentDto(payment.get());
+
     }
 
     @Override

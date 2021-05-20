@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
+import com.trade_accounting.models.Position;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.repositories.TaxSystemRepository;
@@ -8,6 +10,7 @@ import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -32,8 +35,12 @@ public class TaxSystemServiceImpl implements TaxSystemService {
 
     @Override
     public TaxSystemDto getById(Long id) {
-        return dtoMapper.taxSystemToTaxSystemDto(
-                taxSystemRepository.findById(id).orElse(new TaxSystem()));
+        Optional<TaxSystem> taxSystem = taxSystemRepository.findById(id);
+        if(taxSystem.isEmpty()){
+            throw new NotFoundEntityException("No invoice ");
+        }
+        return dtoMapper.taxSystemToTaxSystemDto(taxSystem.get());
+
     }
 
     @Override
