@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl.fias;
 
+import com.trade_accounting.models.dto.fias.StreetDto;
+import com.trade_accounting.models.fias.Street;
 import com.trade_accounting.repositories.fias.StreetRepository;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.Test;
@@ -8,8 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import static org.mockito.Mockito.verify;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 public class StreetService {
@@ -44,6 +47,8 @@ public class StreetService {
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
+       // streetService.update(DtoStubs.getStreetDto(1));
+        verify(streetRepository).save(any(Street.class));
 
     }
 

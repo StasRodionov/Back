@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.verify;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 
 @ExtendWith(MockitoExtension.class)
 public class FiasService {
