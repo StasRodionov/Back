@@ -28,6 +28,14 @@ import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.ProductDto;
+import com.trade_accounting.models.dto.fias.CityDto;
+import com.trade_accounting.models.dto.fias.DistrictDto;
+import com.trade_accounting.models.dto.fias.RegionDto;
+import com.trade_accounting.models.dto.fias.StreetDto;
+import com.trade_accounting.models.fias.City;
+import com.trade_accounting.models.fias.District;
+import com.trade_accounting.models.fias.Region;
+import com.trade_accounting.models.fias.Street;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -253,11 +261,40 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
+
+    public static City getCity(Long id){
+
+    }
+
+    public static CityDto getCityDto(Long id){
+
+    }
+
+    public static District getDistrict(Long id){
+
+    }
+
+    public static DistrictDto getDistrictDto(Long id){
+
+    }
+
+    public static Region getRegion(Long id){
+
+    }
+
+    public static RegionDto getRegionDto(Long id){
+
+    }
+
+    public static Street getStreet(Long id){
+
+    }
+
+    public static StreetDto getStreetDro(Long id){
+
+    }
+
     /*
-     -getCity
-     -getDistrict
      -getFias
-     -getRegion
-     -getStreet
      */
 }

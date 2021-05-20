@@ -138,12 +138,13 @@ public class DtoStubs {
     }
 
     public static DistrictDto getDistrictDto(Long id){
-        return dtoMapper.toCityDto(ModelStubs.getDistrict(id));
+        return dtoMapper.toDistrictDto(ModelStubs.getDistrict(id));
     }
-
+/*
     public static FiasDto getFiasDto(Long id){
         return dtoMapper.toFiasDto(ModelStubs.getFias(id));
     }
+ */
 
     public static RegionDto getRegionDto(Long id){
         return dtoMapper.toRegionDto(ModelStubs.getRegion(id));
