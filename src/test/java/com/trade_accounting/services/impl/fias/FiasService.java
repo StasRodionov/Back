@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class FiasService {
@@ -47,7 +48,8 @@ public class FiasService {
 
     @Test
     void deleteById(){
-
+        fiasService.deleteById();
+        verify(addressDbRepository).deleteById(1);
     }
 
 }

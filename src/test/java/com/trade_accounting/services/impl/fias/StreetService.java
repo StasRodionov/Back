@@ -9,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.Mockito.verify;
+
 @ExtendWith(MockitoExtension.class)
 public class StreetService {
     @Mock
@@ -21,33 +23,34 @@ public class StreetService {
     private StreetServiceImpl streetService;
 
     @Test
-    void getAll_shouldReturnListFilledStreetDto(){
+    void getAll_shouldReturnListFilledStreetDto() {
 
     }
 
     @Test
-    void getAll_shouldReturnEmptyListStreetDto(){
+    void getAll_shouldReturnEmptyListStreetDto() {
 
     }
 
     @Test
-    void getById_shouldReturnFilledStreetDto(){
+    void getById_shouldReturnFilledStreetDto() {
 
     }
 
     @Test
-    void create_shouldPassInstructionsSuccessfulCreate(){
+    void create_shouldPassInstructionsSuccessfulCreate() {
 
     }
 
     @Test
-    void update_shouldPassInstructionsSuccessfulUpdate(){
+    void update_shouldPassInstructionsSuccessfulUpdate() {
 
     }
 
     @Test
-    void deleteById(){
-
+    void deleteById() {
+        streetService.deleteById(1);
+        verify(streetRepository).deleteById(1);
     }
 
 }

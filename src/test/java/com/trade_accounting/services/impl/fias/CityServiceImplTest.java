@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class CityServiceImplTest {
@@ -32,7 +33,7 @@ public class CityServiceImplTest {
 
     @Test
     void getById_shouldReturnFilledCityDto(){
-        
+
     }
 
     @Test
@@ -47,6 +48,8 @@ public class CityServiceImplTest {
 
     @Test
     void deleteById(){
+        cityService.deleteById(1);
+        verify(cityRepository).deleteById(1);
 
     }
 

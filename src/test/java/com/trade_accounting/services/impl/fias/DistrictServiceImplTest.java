@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class DistrictServiceImplTest {
@@ -47,7 +48,8 @@ public class DistrictServiceImplTest {
 
     @Test
     void deleteById(){
-
+        districtService.deleteById(1);
+        verify(districtRepository).deleteById(1);
     }
 
 }
