@@ -2,6 +2,7 @@ package com.trade_accounting.services.impl.fias;
 
 import com.trade_accounting.repositories.fias.CityRepository;
 import com.trade_accounting.utils.DtoMapperImpl;
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,4 +20,19 @@ public class CityServiceImplTest {
     @InjectMocks
     private CityServiceImpl cityService;
 
+    @Test
+    void create_shouldPassInstructionsSuccessfulCreate(){
+
+    }
+
+    @Test
+    void update_shouldPassInstructionsSuccessfulUpdate(){
+
+    }
+
+    @Test
+    void deleteById(){
+
+    }
+    
 }
