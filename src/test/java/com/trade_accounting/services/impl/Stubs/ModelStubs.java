@@ -261,7 +261,7 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
-
+ /*
     public static City getCity(Long id){
 
     }
@@ -293,6 +293,8 @@ public class ModelStubs {
     public static StreetDto getStreetDro(Long id){
 
     }
+
+  */
 
     /*
      -getFias

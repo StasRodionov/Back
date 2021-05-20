@@ -21,7 +21,7 @@ public class DistrictServiceImplTest {
 
     @InjectMocks
     private DistrictServiceImpl districtService;
-
+/*
     @Test
     void getAll_shouldReturnListFilledDistrictDto(){
 
@@ -47,8 +47,9 @@ public class DistrictServiceImplTest {
 
     }
 
+ */
     @Test
-    void deleteById(){
+    public void deleteById(){
         districtService.deleteById(1);
         verify(districtRepository).deleteById(1);
     }

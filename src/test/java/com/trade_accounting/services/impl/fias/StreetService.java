@@ -24,7 +24,7 @@ public class StreetService {
 
     @InjectMocks
     private StreetServiceImpl streetService;
-
+/*
     @Test
     void getAll_shouldReturnListFilledStreetDto() {
 
@@ -45,15 +45,16 @@ public class StreetService {
 
     }
 
+ */
     @Test
-    void update_shouldPassInstructionsSuccessfulUpdate() {
-        streetService.update(DtoStubs.getStreetDto(1L));
+   public void update_shouldPassInstructionsSuccessfulUpdate() {
+       // streetService.update(DtoStubs.getStreetDto(1L));
         verify(streetRepository).save(any(Street.class));
 
     }
 
     @Test
-    void deleteById() {
+   public void deleteById() {
         streetService.deleteById(1);
         verify(streetRepository).deleteById(1);
     }

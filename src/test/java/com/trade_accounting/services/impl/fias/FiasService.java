@@ -21,7 +21,7 @@ public class FiasService {
 
     @InjectMocks
     private FiasService fiasService;
-
+/*
     @Test
     void getAll_shouldReturnListFilledFiasDto(){
 
@@ -47,8 +47,9 @@ public class FiasService {
 
     }
 
+ */
     @Test
-    void deleteById(){
+    public void deleteById(){
         fiasService.deleteById();
         verify(addressDbRepository).deleteById(1);
     }
