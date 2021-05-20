@@ -37,19 +37,20 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public ContactDto create(ContactDto ContactDto) {
-        Contact contact = dtoMapper.contactDtoToContact(ContactDto);
+    public ContactDto create(ContactDto contactDto) {
+        Contact contact = dtoMapper.contactDtoToContact(contactDto);
         Contact contactSaved = contactRepository.save(contact);
-        ContactDto.setId(contactSaved.getId());
-        return ContactDto;
+        contactDto.setId(contactSaved.getId());
+        return contactDto;
     }
 
     @Override
-    public ContactDto update(ContactDto ContactDto) {
-        Contact contact = dtoMapper.contactDtoToContact(ContactDto);
+    public ContactDto update(ContactDto contactDto) {
+        Contact contact = dtoMapper.contactDtoToContact(contactDto);
         Contact save = contactRepository.save(contact);
         return dtoMapper.contactToContactDto(save);
     }
+
 
     @Override
     public void deleteById(Long id) {
