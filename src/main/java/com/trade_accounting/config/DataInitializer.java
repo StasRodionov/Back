@@ -556,7 +556,8 @@ public class DataInitializer {
                     "810-41-1234567890",
                     "organization" + 1*(i + 1) + "@mail.com",
                     true,
-                    new AddressDto("123456, г. Москва, ул. Подвойского, д. 14, стр. 7"),
+                   new AddressDto("123456","г.Москва","ул. Подвойского","д.14, стр.7");
+                   // new AddressDto("123456, г. Москва, ул. Подвойского, д. 14, стр. 7"),
                     "something comment",
                     "Петров Сергей Петрович",
                     "Manager",
