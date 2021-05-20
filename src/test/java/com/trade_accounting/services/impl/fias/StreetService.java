@@ -47,7 +47,7 @@ public class StreetService {
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-       // streetService.update(DtoStubs.getStreetDto(1));
+        streetService.update(DtoStubs.getStreetDto(1));
         verify(streetRepository).save(any(Street.class));
 
     }

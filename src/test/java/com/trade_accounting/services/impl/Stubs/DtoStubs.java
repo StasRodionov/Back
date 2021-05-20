@@ -132,27 +132,27 @@ public class DtoStubs {
         );
     }
 
-    /*
+
     public static CityDto getCityDto(Long id){
-        return dtoMapper.cityToCityDto(ModelStubs.getCity(id));
+        return dtoMapper.toCityDto(ModelStubs.getCity(id));
     }
 
     public static DistrictDto getDistrictDto(Long id){
-        return dtoMapper.districtToCityDto(ModelStubs.getDistrict(id));
+        return dtoMapper.toCityDto(ModelStubs.getDistrict(id));
     }
 
     public static FiasDto getFiasDto(Long id){
-        return dtoMapper.fiasToFiasDto(ModelStubs.getFias(id));
+        return dtoMapper.toFiasDto(ModelStubs.getFias(id));
     }
 
     public static RegionDto getRegionDto(Long id){
-        return dtoMapper.regionToRegionDto(ModelStubs.getRegion(id));
+        return dtoMapper.toRegionDto(ModelStubs.getRegion(id));
     }
 
     public static StreetDto getStreetDto(Long id){
-        return dtoMapper.streetToStreetDto(ModelStubs.getStreet(id));
+        return dtoMapper.toStreetDto(ModelStubs.getStreet(id));
     }
 
-     */
+
 
 }

@@ -253,4 +253,11 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
+    /*
+     -getCity
+     -getDistrict
+     -getFias
+     -getRegion
+     -getStreet
+     */
 }
