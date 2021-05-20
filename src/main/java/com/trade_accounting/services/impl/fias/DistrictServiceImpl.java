@@ -30,7 +30,7 @@ public class DistrictServiceImpl implements DistrictService {
     }
 
     @Override
-    public DistrictDto getById(Integer id) {
+    public DistrictDto getById(Long id) {
         District district = repository.findById(id).orElse(new District());
         return dtoMapper.toDistrictDto(district);
     }
@@ -49,7 +49,7 @@ public class DistrictServiceImpl implements DistrictService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         repository.deleteById(id);
     }
 }

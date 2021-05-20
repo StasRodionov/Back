@@ -7,11 +7,11 @@ import java.util.List;
 public interface StreetService {
     List<StreetDto> getAll();
 
-    StreetDto getById(Integer id);
+    StreetDto getById(Long id);
 
     StreetDto create(StreetDto streetDto);
 
     StreetDto update(StreetDto streetDto);
 
-    void deleteById(Integer id);
+    void deleteById(Long id);
 }

@@ -26,10 +26,8 @@ public class ServiceLayerLogging {
         @Pointcut("execution(* getBy*(..))")
         public void getByExecution() {}
 
-
         @Pointcut("execution(* create(..))")
         public void createExecution() {}
-
 
         @Pointcut("execution(* update(..))")
         public void updateExecution() {}
@@ -51,25 +49,18 @@ public class ServiceLayerLogging {
 
         @AfterReturning(value = "inServiceLayer() && getByExecution() && args(prop)", returning = "result")
         public void logGetBy(JoinPoint joinPoint, Object prop, Object result) {
-                if (result == null)  {
-
-                } else {
                         log.info("Найден экземпляр {} с {}={}",
                                 result.getClass().getSimpleName(), getPropertyName(joinPoint), prop);
-                }
         }
 
-        @AfterReturning(value = "inServiceLayer() && createExecution() && args(dto)",  returning = "saved")
-        public void logCreate(Object dto, Object saved) {
-                if(saved == null) {
-                        log.info("Создан экземпляр {}", dto.getClass().getSimpleName());
-                } else {
+        @AfterReturning(value = "inServiceLayer() && createExecution() && args(dto)")
+        public void logCreate(Object dto) {
                         log.info("Создан экземпляр {}: {}", dto.getClass().getSimpleName(), dto);
-                }
+
         }
 
-        @AfterReturning(value = "inServiceLayer() && updateExecution() && args(dto)", returning = "updated")
-        public void logUpdate(Object dto, Object updated) {
+        @AfterReturning(value = "inServiceLayer() && updateExecution() && args(dto)")
+        public void logUpdate(Object dto) {
                 log.info("Обновлен экземпляр {} с id={}", dto.getClass().getSimpleName(), getId(dto));
         }
 
@@ -80,12 +71,7 @@ public class ServiceLayerLogging {
 
         @AfterReturning(value = "inServiceLayer() && searchExecution()",  returning = "result")
         public void logSearch(JoinPoint joinPoint, Object result) {
-                if(result == null) {
-
-                } else {
                         log.info("Найдены экземпляры {}: {}", getDtoName(joinPoint), result);
-                }
-
         }
 
         private String getDtoName(JoinPoint joinPoint) {
