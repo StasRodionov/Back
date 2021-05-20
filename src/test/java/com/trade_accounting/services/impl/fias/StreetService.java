@@ -21,6 +21,21 @@ public class StreetService {
     private StreetServiceImpl streetService;
 
     @Test
+    void getAll_shouldReturnListFilledStreetDto(){
+
+    }
+
+    @Test
+    void getAll_shouldReturnEmptyListStreetDto(){
+
+    }
+
+    @Test
+    void getById_shouldReturnFilledStreetDto(){
+
+    }
+
+    @Test
     void create_shouldPassInstructionsSuccessfulCreate(){
 
     }

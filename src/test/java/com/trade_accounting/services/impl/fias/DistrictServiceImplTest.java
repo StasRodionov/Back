@@ -21,6 +21,21 @@ public class DistrictServiceImplTest {
     private DistrictServiceImpl districtService;
 
     @Test
+    void getAll_shouldReturnListFilledDistrictDto(){
+
+    }
+
+    @Test
+    void getAll_shouldReturnEmptyListDistrictDto(){
+
+    }
+
+    @Test
+    void getById_shouldReturnFilledDistrictDto(){
+
+    }
+
+    @Test
     void create_shouldPassInstructionsSuccessfulCreate(){
 
     }

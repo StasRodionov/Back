@@ -21,6 +21,21 @@ public class FiasService {
     private FiasService fiasService;
 
     @Test
+    void getAll_shouldReturnListFilledFiasDto(){
+
+    }
+
+    @Test
+    void getAll_shouldReturnEmptyListFiasDto(){
+
+    }
+
+    @Test
+    void getById_shouldReturnFilledFiasDto(){
+
+    }
+
+    @Test
     void create_shouldPassInstructionsSuccessfulCreate(){
 
     }

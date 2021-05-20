@@ -21,6 +21,21 @@ public class CityServiceImplTest {
     private CityServiceImpl cityService;
 
     @Test
+    void getAll_shouldReturnListFilledCityDto(){
+
+    }
+
+    @Test
+    void getAll_shouldReturnEmptyListCityDto(){
+
+    }
+
+    @Test
+    void getById_shouldReturnFilledCityDto(){
+        
+    }
+
+    @Test
     void create_shouldPassInstructionsSuccessfulCreate(){
 
     }
@@ -34,5 +49,5 @@ public class CityServiceImplTest {
     void deleteById(){
 
     }
-    
+
 }
