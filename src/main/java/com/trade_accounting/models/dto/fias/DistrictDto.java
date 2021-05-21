@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DistrictDto {
-    private Integer id;
+    private Long id;
     private String name;
     RegionDto regionDto;
     List<CityDto> citiesDto;
