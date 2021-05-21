@@ -58,7 +58,7 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentDto getById(Long id) {
         Optional<Payment> payment = paymentRepository.findById(id);
         if(payment.isEmpty()){
-            throw new NotFoundEntityException("There is not payment with “id”");
+            throw new NotFoundEntityException("There is not payment with id " + id);
         }
         return dtoMapper.paymentToPaymentDto(payment.get());
 

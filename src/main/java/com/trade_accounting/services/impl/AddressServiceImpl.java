@@ -37,7 +37,7 @@ public class AddressServiceImpl implements AddressService {
     public AddressDto getById(Long id) {
         Optional<Address> address = addressRepository.findById(id);
         if(address.isEmpty()){
-            throw new NotFoundEntityException("There is not address with “id”");
+            throw new NotFoundEntityException("There is not address with id " + id);
         }
         return dtoMapper.addressToAddressDto(address.get());
 

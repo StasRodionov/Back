@@ -40,6 +40,7 @@ public class TaskCommentServiceImpl implements TaskCommentService {
 
     @Override
     public TaskCommentDto getById(Long id) {
+
         return commentRepository.findById(id)
                 .map(ModelDtoConverter::toTaskCommentDTO).orElse(new TaskCommentDto());
     }

@@ -35,9 +35,10 @@ public class RetailStoreServiceImpl implements RetailStoreService {
 
     @Override
     public RetailStoreDto getById(Long id) {
+
         Optional<RetailStore> retailStore = retailStoreRepository.findById(id);
         if(retailStore.isEmpty()){
-            throw new NotFoundEntityException("There is not retailStore with “id”");
+            throw new NotFoundEntityException("There is not retailStore with id " + id);
         }
         return dtoMapper.retailStoreToRetailStoreDto(retailStore.get());
     }

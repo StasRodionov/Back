@@ -49,7 +49,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 
         Optional<BankAccount> bankAccount = bankAccountRepository.findById(id);
         if(bankAccount.isEmpty()){
-            throw new NotFoundEntityException("There is not bankAccount with “id”");
+            throw new NotFoundEntityException("There is not bankAccount with id " + id);
         }
         return dtoMapper.bankAccountToBankAccountDto(bankAccount.get());
     }

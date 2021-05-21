@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.exceptions.NotFoundEntityException;
+import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,9 +36,12 @@ public class AttributeOfCalculationObjectServiceImpl implements AttributeOfCalcu
 
     @Override
     public AttributeOfCalculationObjectDto getById(Long id) {
-        return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
-                attributeOfCalculationObjectRepository.findById(id).orElse(new AttributeOfCalculationObject())
-        );
+        Optional<AttributeOfCalculationObject> attributeOfCalculationObject = attributeOfCalculationObjectRepository.findById(id);
+        if(attributeOfCalculationObject.isEmpty()){
+            throw new NotFoundEntityException("There is not attributeOfCalculationObject with id " + id);
+        }
+        return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(attributeOfCalculationObject.get());
+
     }
 
     @Override
