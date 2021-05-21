@@ -58,7 +58,7 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentDto getById(Long id) {
         Optional<Payment> payment = paymentRepository.findById(id);
         if(payment.isEmpty()){
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("No payment ");
         }
         return dtoMapper.paymentToPaymentDto(payment.get());
 

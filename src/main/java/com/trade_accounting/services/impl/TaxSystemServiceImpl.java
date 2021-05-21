@@ -37,7 +37,7 @@ public class TaxSystemServiceImpl implements TaxSystemService {
     public TaxSystemDto getById(Long id) {
         Optional<TaxSystem> taxSystem = taxSystemRepository.findById(id);
         if(taxSystem.isEmpty()){
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("No taxSystem ");
         }
         return dtoMapper.taxSystemToTaxSystemDto(taxSystem.get());
 

@@ -38,7 +38,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     public WarehouseDto getById(Long id) {
         Optional<Warehouse> warehouse = warehouseRepository.findById(id);
         if(warehouse.isEmpty()){
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("No warehouse ");
         }
         return dtoMapper.warehouseToWarehouseDto(warehouse.get()
         );

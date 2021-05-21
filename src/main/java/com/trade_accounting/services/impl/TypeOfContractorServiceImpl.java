@@ -36,7 +36,7 @@ public class TypeOfContractorServiceImpl implements TypeOfContractorService {
     public TypeOfContractorDto getById(Long id) {
         Optional<TypeOfContractor> typeOfContractor = typeOfContractorRepository.findById(id);
         if(typeOfContractor.isEmpty()){
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("No typeOfContractor  ");
         }
         return dtoMapper.typeOfContractorToTypeOfContractorDto(typeOfContractor.get());
     }

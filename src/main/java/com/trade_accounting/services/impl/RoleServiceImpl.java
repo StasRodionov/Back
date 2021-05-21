@@ -38,7 +38,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleDto getById(Long id) {
         Optional<Role> role = roleRepository.findById(id);
         if(role.isEmpty()){
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("No role ");
         }
         return dtoMapper.roleToRoleDto(role.get());
 

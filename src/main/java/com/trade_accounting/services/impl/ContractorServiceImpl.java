@@ -81,7 +81,7 @@ public class ContractorServiceImpl implements ContractorService {
 
         Optional<Contractor> contractor = contractorRepository.findById(id);
         if(contractor.isEmpty()){
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("No contractor ");
         }
         return dtoMapper.contractorToContractorDto(contractor.get());
     }

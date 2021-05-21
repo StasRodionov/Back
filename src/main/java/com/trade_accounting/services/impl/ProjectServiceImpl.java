@@ -38,7 +38,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectDto getById(Long id) {
         Optional<Project> project = projectRepository.findById(id);
         if(project.isEmpty()){
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("No project ");
         }
         return dtoMapper.projectToProjectDto(project.get());
 

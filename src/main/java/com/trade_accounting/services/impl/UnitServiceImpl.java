@@ -39,7 +39,7 @@ public class UnitServiceImpl implements UnitService {
     public UnitDto getById(Long id) {
         Optional<Unit> unit = unitRepository.findById(id);
         if(unit.isEmpty()){
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("No unit");
         }
         return dtoMapper.unitToUnitDto(unit.get());
     }

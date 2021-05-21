@@ -84,7 +84,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getById(Long id) {
         Optional<Employee> emp = employeeRepository.findById(id);
         if(emp.isEmpty()){
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("No emp ");
         }
         return dtoMapper.employeeToEmployeeDto(emp.get());
     }

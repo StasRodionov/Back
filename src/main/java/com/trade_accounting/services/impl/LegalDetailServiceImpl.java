@@ -45,7 +45,7 @@ public class LegalDetailServiceImpl implements LegalDetailService {
     public LegalDetailDto getById(Long id) {
         Optional<LegalDetail> legalDetail = legalDetailRepository.findById(id);
         if(legalDetail.isEmpty()) {
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("No legalDetail ");
         }
             return dtoMapper.legalDetailToLegalDetailDto( legalDetail.get());
     }

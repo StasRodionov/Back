@@ -40,7 +40,7 @@ public class PositionServiceImpl implements PositionService {
     public PositionDto getById(Long id) {
         Optional<Position> position = positionRepository.findById(id);
         if(position.isEmpty()){
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("No position ");
         }
         return dtoMapper.positionToPositionDto(position.get());
     }
