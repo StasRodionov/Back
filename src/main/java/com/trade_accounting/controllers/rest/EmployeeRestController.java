@@ -146,7 +146,7 @@ public class EmployeeRestController {
     public ResponseEntity<?> create(@ApiParam(name = "employeeDto", value = "DTO работника, который необходимо создать")
                                         @RequestBody EmployeeDto employeeDto){
         checkEntityService.checkForBadEmployee(employeeDto);
-        employeeService.save(employeeDto);
+        employeeService.create(employeeDto);
         return ResponseEntity.ok().build();
     }
 
@@ -164,7 +164,7 @@ public class EmployeeRestController {
                                         @RequestBody EmployeeDto employeeDto) {
         checkEntityService.checkExistsEmployeeById(employeeDto.getId());
         checkEntityService.checkForBadEmployee(employeeDto);
-        employeeService.save(employeeDto);
+        employeeService.update(employeeDto);
         return ResponseEntity.ok().build();
     }
 

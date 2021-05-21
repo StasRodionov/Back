@@ -694,7 +694,7 @@ public class DataInitializer {
     }
 
     private void initEmployees() {
-        employeeService.save(new EmployeeDto(null,
+        employeeService.create(new EmployeeDto(null,
                 "Vasiliev",
                 "Vasya",
                 "Vasilievich",
@@ -708,7 +708,7 @@ public class DataInitializer {
                 positionService.getByName("Генеральный директор"),
                 Collections.singleton(roleService.getByName("admin")),
                 null));
-        employeeService.save(new EmployeeDto(null,
+        employeeService.create(new EmployeeDto(null,
                 "Simonova",
                 "Sima",
                 "Semenovna",
@@ -722,7 +722,7 @@ public class DataInitializer {
                 positionService.getByName("Коммерческий директор"),
                 Collections.singleton(roleService.getByName("user")),
                 null));
-        employeeService.save(new EmployeeDto(null,
+        employeeService.create(new EmployeeDto(null,
                 "Belive",
                 "Vera",
                 "Henrichovna",
@@ -736,7 +736,7 @@ public class DataInitializer {
                 positionService.getByName("Технический директор"),
                 Collections.singleton(roleService.getByName("user")),
                 null));
-        employeeService.save(new EmployeeDto(null,
+        employeeService.create(new EmployeeDto(null,
                 "Islentiev",
                 "Karim",
                 "Dmitrievich",
@@ -750,7 +750,7 @@ public class DataInitializer {
                 positionService.getByName("Директор по продажам"),
                 Collections.singleton(roleService.getByName("admin")),
                 null));
-        employeeService.save(new EmployeeDto(null,
+        employeeService.create(new EmployeeDto(null,
                 "Petko",
                 "Sasha",
                 "",
