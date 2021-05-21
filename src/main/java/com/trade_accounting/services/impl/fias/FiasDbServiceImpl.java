@@ -25,7 +25,7 @@ public class FiasDbServiceImpl implements FiasDbService {
     }
 
     @Override
-    public FiasAddressModelDto getById(Integer id) {
+    public FiasAddressModelDto getById(Long id) {
         FiasAddressModel model = repository.findById(id).orElse(null);
         return ModelDtoConverter.toFiasAddressModelDto(model);
     }
@@ -49,7 +49,7 @@ public class FiasDbServiceImpl implements FiasDbService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         repository.deleteById(id);
     }
 
