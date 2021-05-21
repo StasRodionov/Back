@@ -21,7 +21,7 @@ public class CityServiceImplTest {
 
     @InjectMocks
     private CityServiceImpl cityService;
-
+/*
     @Test
     void getAll_shouldReturnListFilledCityDto(){
 
@@ -44,9 +44,10 @@ public class CityServiceImplTest {
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate(){
-       // cityService.update(DtoStubs.getCityDto(1L));
+        //cityService.update(dtoMapper.toCityDto());
 
     }
+ */
 
     @Test
     void deleteById(){

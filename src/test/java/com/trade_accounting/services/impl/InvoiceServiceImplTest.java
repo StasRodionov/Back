@@ -76,14 +76,19 @@ class InvoiceServiceImplTest {
                 invoiceDtoList,
                 "failure - expected that a list of invoiceDto not null"
         );
+
+
         assertTrue(
                 invoiceDtoList.size() > 0,
                 "failure - expected that a list of invoiceDto grater than 0"
         );
+
+
         verify(invoiceRepository).findByTypeOfInvoice(any(TypeOfInvoice.class));
         for (InvoiceDto invoiceDto : invoiceDtoList) {
             invoiceListDtoIsCorrectlyInited(invoiceDto);
         }
+
     }
 
     @Test

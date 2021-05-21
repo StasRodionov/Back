@@ -21,7 +21,7 @@ public class RegionService {
 
     @InjectMocks
     private RegionServiceImpl regionService;
-
+  /*
     @Test
     void getAll_shouldReturnListFilledRegionDto(){
 
@@ -47,6 +47,8 @@ public class RegionService {
        // regionService.update(DtoStubs.)
 
     }
+
+   */
 
     @Test
     void deleteById(){
