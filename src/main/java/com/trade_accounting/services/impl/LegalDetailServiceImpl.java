@@ -45,7 +45,7 @@ public class LegalDetailServiceImpl implements LegalDetailService {
     public LegalDetailDto getById(Long id) {
         Optional<LegalDetail> legalDetail = legalDetailRepository.findById(id);
         if(legalDetail.isEmpty()) {
-            throw new NotFoundEntityException("No legalDetail ");
+            throw new NotFoundEntityException("There is not legalDetail with “id”");
         }
             return dtoMapper.legalDetailToLegalDetailDto( legalDetail.get());
     }

@@ -2,6 +2,7 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.exceptions.NotFoundEntityException;
 import com.trade_accounting.models.Address;
+import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.services.interfaces.AddressService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -33,8 +35,12 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressDto getById(Long id) {
-        Address address = addressRepository.getOne(id);
-        return dtoMapper.addressToAddressDto(address);
+        Optional<Address> address = addressRepository.findById(id);
+        if(address.isEmpty()){
+            throw new NotFoundEntityException("There is not address with “id”");
+        }
+        return dtoMapper.addressToAddressDto(address.get());
+
     }
 
     @Override

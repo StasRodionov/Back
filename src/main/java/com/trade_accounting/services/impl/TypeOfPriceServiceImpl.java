@@ -38,7 +38,7 @@ public class TypeOfPriceServiceImpl implements TypeOfPriceService {
     public TypeOfPriceDto getById(Long id) {
         Optional<TypeOfPrice> typeOfPrice = typeOfPriceRepository.findById(id);
         if(typeOfPrice.isEmpty()){
-            throw new NotFoundEntityException("No typeOfPrice ");
+            throw new NotFoundEntityException("There is not typeOfPrice with “id”");
         }
         return dtoMapper.typeOfPriceToTypeOfPriceDto(typeOfPrice.get());
 

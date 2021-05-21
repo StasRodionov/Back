@@ -39,7 +39,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentDto getById(Long id) {
         Optional<Department> department = departmentRepository.findById(id);
         if(department.isEmpty()){
-            throw new NotFoundEntityException("No department ");
+            throw new NotFoundEntityException("There is not department with “id”");
         }
         return dtoMapper.departmentToDepartmentDto(department.get());
     }

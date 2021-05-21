@@ -68,7 +68,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public InvoiceDto getById(Long id) {
         Optional<Invoice> invoice = invoiceRepository.findById(id);
         if(invoice.isEmpty()){
-            throw new NotFoundEntityException("No invoice ");
+            throw new NotFoundEntityException("There is not invoice with “id”");
         }
         return dtoMapper.invoiceToInvoiceDto(invoice.get());
     }

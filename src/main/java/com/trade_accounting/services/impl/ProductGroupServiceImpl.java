@@ -36,7 +36,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     public ProductGroupDto getById(Long id) {
         Optional<ProductGroup> productGroup = productGroupRepository.findById(id);
         if(productGroup.isEmpty()){
-            throw new NotFoundEntityException("No productGroup ");
+            throw new NotFoundEntityException("There is not productGroup with “id”");
         }
         return dtoMapper.productGroupToProductGroupDto(productGroup.get());
     }

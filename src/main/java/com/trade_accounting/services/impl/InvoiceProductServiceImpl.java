@@ -42,7 +42,7 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
     public InvoiceProductDto getById(Long id) {
         Optional<InvoiceProduct> invoiceProductDto = invoiceProductRepository.findById(id);
         if(invoiceProductDto.isEmpty()){
-            throw new NotFoundEntityException("No invoiceProductDto ");
+            throw new NotFoundEntityException("There is not invoiceProductDto with “id”");
         }
         return dtoMapper.invoiceProductToInvoiceProductDto(invoiceProductDto.get());
     }

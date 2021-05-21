@@ -38,7 +38,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleDto getById(Long id) {
         Optional<Role> role = roleRepository.findById(id);
         if(role.isEmpty()){
-            throw new NotFoundEntityException("No role ");
+            throw new NotFoundEntityException("There is not role with “id”");
         }
         return dtoMapper.roleToRoleDto(role.get());
 
