@@ -2,11 +2,14 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.utils.DtoMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,15 +73,26 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(id);
     }
 
-    @Override
-    public List<ProductDto> search(String value) {
-        List<Product> productList = productRepository.search(value);
-        return dtoMapper.toProductDto(productList);
-    }
 
     @Override
     public List<ProductDto> search(Specification<Product> spec) {
         List<Product> productList = productRepository.findAll(spec);
         return dtoMapper.toProductDto(productList);
+    }
+
+    @Override
+    public PageDto<ProductDto> search(Specification<Product> specification, Pageable pageParam) {
+        Page<Product> page = productRepository.findAll(specification, pageParam);
+        return new PageDto<>(
+                page.getContent().stream().map(dtoMapper::productToProductDto).collect(Collectors.toList()),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.getNumberOfElements()
+        );
+    }
+
+    @Override
+    public List<ProductDto> search(String value) {
+        return dtoMapper.toProductDto(productRepository.search(value));
     }
 }
