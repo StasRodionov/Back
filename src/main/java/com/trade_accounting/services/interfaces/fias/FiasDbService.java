@@ -9,7 +9,7 @@ import java.util.List;
 public interface FiasDbService {
     List<FiasAddressModelDto> getAll();
 
-    FiasAddressModelDto getById(Integer id);
+    FiasAddressModelDto getById(Long id);
 
     FiasAddressModelDto create(FiasAddressModelDto dto);
 
@@ -17,7 +17,7 @@ public interface FiasDbService {
 
     FiasAddressModelDto update(FiasAddressModelDto dto);
 
-    void deleteById(Integer id);
+    void deleteById(Long id);
 
     List<FiasAddressModelDto> findAllByLevel(String level);
 

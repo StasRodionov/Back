@@ -149,7 +149,11 @@ class EmployeeServiceImplTest {
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
+
         employeeService.create(DtoStubs.getEmployeeDto(1L));
+
+        employeeService.update(DtoStubs.getEmployeeDto(1L));
+
 
         verify(roleRepository, times(3)).findById(anyLong());
         verify(employeeRepository).save(any(Employee.class));
