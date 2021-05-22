@@ -261,42 +261,5 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
- /*
-    public static City getCity(Long id){
 
-    }
-
-    public static CityDto getCityDto(Long id){
-
-    }
-
-    public static District getDistrict(Long id){
-
-    }
-
-    public static DistrictDto getDistrictDto(Long id){
-
-    }
-
-    public static Region getRegion(Long id){
-
-    }
-
-    public static RegionDto getRegionDto(Long id){
-
-    }
-
-    public static Street getStreet(Long id){
-
-    }
-
-    public static StreetDto getStreetDro(Long id){
-
-    }
-
-  */
-
-    /*
-     -getFias
-     */
 }

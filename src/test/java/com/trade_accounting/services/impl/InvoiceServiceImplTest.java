@@ -62,7 +62,7 @@ class InvoiceServiceImplTest {
     }
 
     @Test
-    void getAll_shouldReturnListFilledInvoiceDtoByType() {
+    void getAll_shouldReturnListFilledInvoiceDtoByType() { //этот тест не проходит вообще
         when(invoiceRepository.findByTypeOfInvoice(any(TypeOfInvoice.class)))
                 .thenReturn(
                         Stream.of(
@@ -84,10 +84,13 @@ class InvoiceServiceImplTest {
         );
 
 
+
+
         verify(invoiceRepository).findByTypeOfInvoice(any(TypeOfInvoice.class));
         for (InvoiceDto invoiceDto : invoiceDtoList) {
             invoiceListDtoIsCorrectlyInited(invoiceDto);
         }
+
 
     }
 

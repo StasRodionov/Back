@@ -149,7 +149,7 @@ class CompanyServiceImplTest {
         );
 
         verify(companyRepository).save(any(Company.class));
-   //     verify(legalDetailRepository).save(any(LegalDetail.class)); - этот тест валится здесь
+        verify(legalDetailRepository).save(any(LegalDetail.class)); //- этот тест валится здесь
         verify(bankAccountRepository, times(3)).save(any(BankAccount.class));
     }
 
