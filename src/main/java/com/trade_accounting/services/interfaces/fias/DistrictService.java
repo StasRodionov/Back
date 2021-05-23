@@ -7,11 +7,11 @@ import java.util.List;
 public interface DistrictService {
     List<DistrictDto> getAll();
 
-    DistrictDto getById(Integer id);
+    DistrictDto getById(Long id);
 
     DistrictDto create(DistrictDto districtDto);
 
     DistrictDto update(DistrictDto districtDto);
 
-    void deleteById(Integer id);
+    void deleteById(Long id);
 }

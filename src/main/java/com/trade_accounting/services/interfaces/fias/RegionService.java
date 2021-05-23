@@ -8,11 +8,11 @@ public interface RegionService {
 
     List<RegionDto> getAll();
 
-    RegionDto getById(Integer id);
+    RegionDto getById(Long id);
 
     RegionDto create(RegionDto regionDto);
 
     RegionDto update(RegionDto regionDto);
 
-    void deleteById(Integer id);
+    void deleteById(Long id);
 }
