@@ -131,5 +131,5 @@ public class DtoStubs {
                 ModelStubs.getCurrency(id)
         );
     }
-    
+
 }

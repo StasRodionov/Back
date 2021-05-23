@@ -557,7 +557,7 @@ public class DataInitializer {
                     "organization" + 1*(i + 1) + "@mail.com",
                     true,
                  //  new AddressDto("123456","г.Москва","ул. Подвойского","д.14, стр.7"),
-                    "123456, г. Москва, ул. Подвойского, д. 14, стр. 7",
+                    "123456, г. Москва, ул. Подвойского, д. 14, стр. 7",//решить проблемы с адресом в 3 местах в этом файле
                     "something comment",
                     "Петров Сергей Петрович",
                     "Manager",
@@ -605,7 +605,7 @@ public class DataInitializer {
                     "920-12-2365723233",
                     "organization" + 2*(i + 1) + "@mail.com",
                     true,
-                    "123498, г. Москва, ул. Тверская, д. 20",
+                    "123498, г. Москва, ул. Тверская, д. 20",//
                     "something comment",
                     "Иванова Мария Сергеевна",
                     "Executive director",
@@ -654,7 +654,7 @@ public class DataInitializer {
                     "543-23-1234543221",
                     "organization" + 3*(i + 1) + "@mail.com",
                     true,
-                    "432156, г. Самара, ул. Гагарина, д. 18",
+                    "432156, г. Самара, ул. Гагарина, д. 18",//
                     "something comment",
                     "Сергеева Ксения Андреевна",
                     "Project manager",
