@@ -23,6 +23,7 @@ import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.Status;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TaxSystem;
@@ -53,6 +54,7 @@ import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.StatusDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -379,6 +381,11 @@ public abstract class DtoMapper {
     public abstract RoleDto roleToRoleDto(Role role);
 
     public abstract Role roleDtoToRole(RoleDto role);
+
+    //Status
+    public abstract StatusDto statusToStatusDto(Status status);
+
+    public abstract Status statusDtoToStatus(StatusDto status);
 
     //Task
     public abstract TaskDto taskToTaskDto(Task task);

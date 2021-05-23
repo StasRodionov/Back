@@ -6,11 +6,16 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.Position;
 import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.RetailStore;
+import com.trade_accounting.models.Role;
+import com.trade_accounting.models.Status;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TypeOfContractor;
@@ -32,6 +37,7 @@ import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.StatusDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
@@ -50,7 +56,6 @@ import com.trade_accounting.models.fias.Street;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -154,6 +159,24 @@ public class ModelDtoConverter {
             employeeDto.setImageDto(modelMapper.map(employee.getImage(), ImageDto.class));
         }
         return employeeDto;
+    }
+
+    public static Employee convertToEmployeeEntity(EmployeeDto employeedto) {
+        Employee employee = modelMapper.map(employeedto, Employee.class);
+        if (employeedto.getDepartmentDto() != null) {
+            employee.setDepartment(modelMapper.map(employeedto.getDepartmentDto(), Department.class));
+        }
+        if (employeedto.getPositionDto() != null) {
+            employee.setPosition((modelMapper.map(employeedto.getPositionDto(), Position.class)));
+        }
+        if (employeedto.getRoleDto() != null) {
+            employee.setRoles(employeedto.getRoleDto().stream()
+                    .map(role -> modelMapper.map(role, Role.class)).collect(Collectors.toSet()));
+        }
+        if (employeedto.getImageDto() != null) {
+            employee.setImage(modelMapper.map(employeedto.getImageDto(), Image.class));
+        }
+        return employee;
     }
 
     public static InvoiceDto convertToInvoiceDto(Invoice invoice) {
@@ -265,11 +288,16 @@ public class ModelDtoConverter {
                 convertToAddress(dto.getAddressDto()),
                 dto.getCommentToAddress(),
                 dto.getComment(),
+                dto.getDiscountCardNumber(),
+                dto.getGeneralAccess(),
                 convertToListOfContact(dto.getContactDto()),
                 contractorGroup,
                 typeOfPrice,
                 bankAccount,
-                legalDetail
+                legalDetail,
+                toStatusEntity(dto.getStatusDto()),
+                convertToEmployeeEntity(dto.getEmployeeDto()),
+                toDepartmentEntity(dto.getDepartmentDto())
         );
     }
 
@@ -330,6 +358,31 @@ public class ModelDtoConverter {
             ));
         }
         return bankAccountList;
+    }
+
+    public static Department toDepartmentEntity(DepartmentDto dto) {
+        var entity = new Department();
+
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        entity.setSortNumber(dto.getSortNumber());
+        return entity;
+    }
+
+    public static StatusDto toStatusDTO(Status entity) {
+        return new StatusDto(
+                entity.getId(),
+                entity.getTypeOfStatus()
+        );
+    }
+
+    public static Status toStatusEntity(StatusDto dto) {
+        var entity = new Status();
+
+        entity.setId(dto.getId());
+        entity.setTypeOfStatus(dto.getTypeOfStatus());
+
+        return entity;
     }
 
     public static TaskDto toTaskDTO(Task entity) {

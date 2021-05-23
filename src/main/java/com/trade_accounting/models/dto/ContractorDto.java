@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Data
@@ -20,10 +19,16 @@ public class ContractorDto {
     private AddressDto addressDto;
     private String commentToAddress;
     private String comment;
+    private String discountCardNumber;
+    private Boolean generalAccess;
 
     private List<ContactDto> contactDto;
     private ContractorGroupDto contractorGroupDto;
     private TypeOfPriceDto typeOfPriceDto;
     private List<BankAccountDto> bankAccountDto;
     private LegalDetailDto legalDetailDto;
+    private StatusDto statusDto;
+    private EmployeeDto employeeDto;
+    private DepartmentDto departmentDto;
+
 }

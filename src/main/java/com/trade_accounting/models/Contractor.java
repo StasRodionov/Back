@@ -51,6 +51,12 @@ public class Contractor {
     @Column(name = "comment")
     private String comment;
 
+    @Column(name = "dicsount_card_number")
+    private String discountCardNumber;
+
+    @Column(name = "general_access")
+    private Boolean generalAccess;
+
     @OneToMany(fetch = FetchType.LAZY)
     private List<Contact> contact;
 
@@ -66,4 +72,12 @@ public class Contractor {
     @OneToOne(fetch = FetchType.LAZY)
     private LegalDetail legalDetail;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Status status;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Employee employee;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Department department;
 }
