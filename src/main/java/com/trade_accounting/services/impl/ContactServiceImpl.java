@@ -42,7 +42,7 @@ public class ContactServiceImpl implements ContactService {
         Contact contact = dtoMapper.contactDtoToContact(ContactDto);
         Contact contactSaved = contactRepository.save(contact);
         ContactDto.setId(contactSaved.getId());
-       // contactRepository.save(dtoMapper.contactDtoToContact(ContactDto));
+  //>>>
         return ContactDto;
     }
 
