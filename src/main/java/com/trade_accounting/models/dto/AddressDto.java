@@ -20,11 +20,5 @@ public class AddressDto {
     private String apartment;
     private String another;
 
-    public AddressDto(String index,  String city, String street, String house){
-        this.index = index;
-        this.city = city;
-        this.street = street;
-        this.house = house;
-    }
 
 }
