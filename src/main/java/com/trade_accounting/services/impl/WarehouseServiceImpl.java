@@ -54,6 +54,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         return warehouseDto;
     }
 
+
     @Override
     public WarehouseDto update(WarehouseDto warehouseDto) {
         create(warehouseDto);

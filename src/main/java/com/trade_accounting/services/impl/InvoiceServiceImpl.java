@@ -71,9 +71,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public InvoiceDto create(InvoiceDto invoiceDto) {
-       // addressDto.setId(addressSaved.getId());
+        Invoice invoiceSaved = invoiceRepository.save(dtoMapper.invoiceDtoToInvoice(invoiceDto));
+        invoiceDto.setId(invoiceSaved.getId());
         return update(invoiceDto);
     }
+
 
     @Override
     public InvoiceDto update(InvoiceDto invoiceDto) {

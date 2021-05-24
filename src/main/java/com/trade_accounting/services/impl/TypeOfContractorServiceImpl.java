@@ -44,6 +44,7 @@ public class TypeOfContractorServiceImpl implements TypeOfContractorService {
                 typeOfContractorRepository.save(typeOfContractor));
     }
 
+
     @Override
     public TypeOfContractorDto update(TypeOfContractorDto typeOfContractorDto) {
         return create(typeOfContractorDto);

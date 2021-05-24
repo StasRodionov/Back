@@ -71,8 +71,8 @@ public class CompanyServiceImpl implements CompanyService {
                 )
                 .collect(Collectors.toList())
         );
-        companyRepository.save(company);
-
+       Company companySaved = companyRepository.save(company);
+        companyDto.setId(companySaved.getId());
         return companyDto;
     }
 

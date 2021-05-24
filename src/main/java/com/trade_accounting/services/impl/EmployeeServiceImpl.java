@@ -96,7 +96,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.save(dtoMapper.employeeDtoToEmployee(employeeDto));
         return employeeDto;
     }
-
+/*
     @SneakyThrows
     @Override
     public EmployeeDto update(EmployeeDto employeeDto) {
@@ -152,6 +152,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.save(employee);
         return employeeDto;
     }
+
+ */
 
     @SneakyThrows
     @Override

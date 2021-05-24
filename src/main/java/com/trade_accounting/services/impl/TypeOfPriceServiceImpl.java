@@ -47,6 +47,7 @@ public class TypeOfPriceServiceImpl implements TypeOfPriceService {
         return dtoMapper.typeOfPriceToTypeOfPriceDto(savedTypeOfPrice);
     }
 
+
     @Override
     public TypeOfPriceDto update(TypeOfPriceDto typeOfPriceDto) {
         return create(typeOfPriceDto);
