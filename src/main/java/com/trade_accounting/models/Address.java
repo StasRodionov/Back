@@ -40,6 +40,13 @@ public class Address {
     @Transient
     private String another = toString();
 
+    public Address(String index,  String city, String street, String house){
+        this.index = index;
+        this.city = city;
+        this.street = street;
+        this.house = house;
+    }
+
     @Override
     public String toString() {
         return String.format("%s, %s, %s, %s, %s, %s", index, region, city, street, house, apartment);
