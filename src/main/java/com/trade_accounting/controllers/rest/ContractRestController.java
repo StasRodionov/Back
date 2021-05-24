@@ -53,6 +53,22 @@ public class ContractRestController {
         return ResponseEntity.ok(contracts);
     }
 
+    //добавил
+    @GetMapping("/search/{searchContr}")
+    @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых договоров")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение отф. списка договоров"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<ContractDto>> getAll(@ApiParam(name = "searchContr",
+            value = "Переданный в URL searchTerm, по которому необходимо найти договор")
+                                                      @PathVariable(name = "searchContr") String searchContr) {
+        List<ContractDto> contractDtoList = contractService.getAll(searchContr);
+        return ResponseEntity.ok(contractDtoList);
+    }
+
     @GetMapping("/search")
     @ApiOperation(value = "search", notes = "Получение списка договоров по заданным параметрам")
     public ResponseEntity<List<ContractDto>> search(
