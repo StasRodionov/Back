@@ -53,7 +53,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         BankAccount bankAccount = bankAccountRepository.save(
                 dtoMapper.bankAccountDtoToBankAccount(dto)
         );
-
+        dto.setId(bankAccount.getId());
         return dtoMapper.bankAccountToBankAccountDto(bankAccount);
     }
 
