@@ -24,6 +24,7 @@ import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.StatusDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -53,6 +54,7 @@ import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.services.interfaces.RoleService;
+import com.trade_accounting.services.interfaces.StatusService;
 import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
@@ -107,6 +109,7 @@ public class DataInitializer {
     private final AddressServiceImpl addressService;
     private final FiasDbService fiasDbService;
     private final RetailStoreService retailStoreService;
+    private final StatusService statusService;
 
 
     public DataInitializer(
@@ -138,7 +141,7 @@ public class DataInitializer {
             TaskCommentService commentService,
             RetailStoreService retailStoreService,
             AddressServiceImpl addressService,
-            FiasDbService fiasDbService) {
+            FiasDbService fiasDbService, StatusService statusService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -169,6 +172,7 @@ public class DataInitializer {
         this.addressService = addressService;
         this.fiasDbService = fiasDbService;
         this.retailStoreService = retailStoreService;
+        this.statusService = statusService;
     }
 
     @PostConstruct
@@ -193,6 +197,7 @@ public class DataInitializer {
         initCompanies();
         initContacts();
         initEmployees();
+        initStatuses();
         initContractors();
         initProducts();
         initContracts();
@@ -802,6 +807,14 @@ public class DataInitializer {
         );
     }
 
+    private void initStatuses() {
+        statusService.create(new StatusDto(1L, "Новый"));
+        statusService.create(new StatusDto(2L, "Выслано предложение"));
+        statusService.create(new StatusDto(3L, "Переговоры"));
+        statusService.create(new StatusDto(4L, "Сделка заключена"));
+        statusService.create(new StatusDto(5L, "Сделка не заключена"));
+    }
+
     private void initContractors() {
         contractorService.create(new ContractorDto(
                 null,
@@ -813,11 +826,18 @@ public class DataInitializer {
                 addressService.getById(1L),
                 "1 comment to address",
                 "comment",
+                "1234-5678-9012-3456",
+                false,
                 contactService.getAll().subList(1,3),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-                legalDetailService.getById(1L)));
+                legalDetailService.getById(1L),
+                statusService.getById(1L),
+                employeeService.getById(1L),
+                departmentService.getById(1L))
+                );
+
         contractorService.create(new ContractorDto(
                 null,
                 "Агроаспект, ООО",
@@ -828,11 +848,16 @@ public class DataInitializer {
                 addressService.getById(2L),
                 "2comment to address",
                 "2comment",
+                "7890-1234-5678-9012",
+                false,
                 contactService.getAll().subList(0,1),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
-                legalDetailService.getById(1L)));
+                legalDetailService.getById(1L),
+                statusService.getById(2L),
+                employeeService.getById(2L),
+                departmentService.getById(2L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Вкусвилл, ООО",
@@ -843,11 +868,16 @@ public class DataInitializer {
                 addressService.getById(3L),
                 "3comment to address",
                 "3comment",
+                "3456-7890-1234-5678",
+                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-                legalDetailService.getById(1L)));
+                legalDetailService.getById(1L),
+                statusService.getById(3L),
+                employeeService.getById(3L),
+                departmentService.getById(3L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Альфа-М, ООО",
@@ -858,11 +888,16 @@ public class DataInitializer {
                 addressService.getById(1L),
                 "4comment to address",
                 "4comment",
+                "9012-3456-7890-1234",
+                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
-                legalDetailService.getById(1L)));
+                legalDetailService.getById(1L),
+                statusService.getById(4L),
+                employeeService.getById(4L),
+                departmentService.getById(4L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Отдохни - 77, ООО",
@@ -873,11 +908,16 @@ public class DataInitializer {
                 addressService.getById(2L),
                 "5comment to address",
                 "5comment",
+                "5678-9012-3456-7890",
+                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-                legalDetailService.getById(1L)));
+                legalDetailService.getById(1L),
+                statusService.getById(5L),
+                employeeService.getById(5L),
+                departmentService.getById(5L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Продмир, ООО",
@@ -888,11 +928,16 @@ public class DataInitializer {
                 addressService.getById(3L),
                 "6comment to address",
                 "6comment",
+                "1234-5678-9012-3456",
+                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
-                legalDetailService.getById(1L)));
+                legalDetailService.getById(1L),
+                statusService.getById(1L),
+                employeeService.getById(1L),
+                departmentService.getById(1L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Зельгрос, ООО",
@@ -903,11 +948,16 @@ public class DataInitializer {
                 addressService.getById(1L),
                 "7comment to address",
                 "7comment",
+                "7890-1234-5678-9012",
+                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-                legalDetailService.getById(1L)));
+                legalDetailService.getById(1L),
+                statusService.getById(2L),
+                employeeService.getById(2L),
+                departmentService.getById(2L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Лабиринт-М, ООО",
@@ -918,11 +968,16 @@ public class DataInitializer {
                 addressService.getById(2L),
                 "8comment to address",
                 "8comment",
+                "3456-7890-1234-5678",
+                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
-                legalDetailService.getById(1L)));
+                legalDetailService.getById(1L),
+                statusService.getById(3L),
+                employeeService.getById(3L),
+                departmentService.getById(3L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Эскорт Сервис, ООО",
@@ -933,11 +988,16 @@ public class DataInitializer {
                 addressService.getById(3L),
                 "9comment to address",
                 "9comment",
+                "9012-3456-7890-1234",
+                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
                 null,
-                legalDetailService.getById(1L)));
+                legalDetailService.getById(1L),
+                statusService.getById(4L),
+                employeeService.getById(4L),
+                departmentService.getById(4L)));
         contractorService.create(new ContractorDto(
                 null,
                 "Арома Маркет, ООО",
@@ -948,11 +1008,16 @@ public class DataInitializer {
                 addressService.getById(1L),
                 "10comment to address",
                 "10comment",
+                "5678-9012-3456-7890",
+                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
                 null,
-                legalDetailService.getById(1L)));
+                legalDetailService.getById(1L),
+                statusService.getById(5L),
+                employeeService.getById(5L),
+                departmentService.getById(5L)));
     }
 
     private void initProducts() {
@@ -1126,4 +1191,6 @@ public class DataInitializer {
         commentService.createAll(commentDTOs);
 
     }
+
+
 }

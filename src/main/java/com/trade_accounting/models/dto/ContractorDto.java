@@ -31,4 +31,6 @@ public class ContractorDto {
     private EmployeeDto employeeDto;
     private DepartmentDto departmentDto;
 
+
+
 }

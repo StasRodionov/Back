@@ -20,6 +20,7 @@ import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.Status;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
@@ -77,6 +78,7 @@ public class ModelStubs {
                 "12345678901", "324234234",
                 "email", getAddress(1L),
                 "commentToAddress", "comment",
+                "1234", false,
                 Stream.of(
                         getContact(1L),
                         getContact(2L),
@@ -89,7 +91,10 @@ public class ModelStubs {
                         getBankAccount(2L),
                         getBankAccount(3L)
                 ).collect(Collectors.toList()),
-                getLegalDetail(id)
+                getLegalDetail(id),
+                getStatus(id),
+                getEmployee(id),
+                getDepartment(id)
         );
     }
 
@@ -251,6 +256,13 @@ public class ModelStubs {
                 .purchasePrice(BigDecimal.ONE)
                 .description("Description")
                 .archive(false)
+                .build();
+    }
+
+    public static Status getStatus(Long id) {
+        return Status.builder()
+                .id(id)
+                .typeOfStatus("Новый")
                 .build();
     }
 }
