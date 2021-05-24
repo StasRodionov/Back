@@ -31,7 +31,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public CityDto getById(Integer id) {
+    public CityDto getById(Long id) {
         City city = repository.findById(id).orElse(new City());
         return dtoMapper.toCityDto(city);
     }
@@ -51,7 +51,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         repository.deleteById(id);
     }
 }

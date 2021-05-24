@@ -16,8 +16,6 @@ public interface EmployeeService extends SearchableService<Employee, EmployeeDto
 
     EmployeeDto getById(Long id);
 
-    void save(EmployeeDto employeeDto);
-
     void deleteById(Long id);
 
     EmployeeDto getByEmail(String email);

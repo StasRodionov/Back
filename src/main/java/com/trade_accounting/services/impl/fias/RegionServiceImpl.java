@@ -27,7 +27,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public RegionDto getById(Integer id) {
+    public RegionDto getById(Long id) {
         Region region = repository.findById(id).orElse(new Region());
         return dtoMapper.toRegionDto(region);
     }
@@ -44,7 +44,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         repository.deleteById(id);
     }
 }
