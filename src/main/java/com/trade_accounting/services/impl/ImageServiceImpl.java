@@ -43,11 +43,12 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public ImageDto create(ImageDto dto) {
-      //  Image image = dtoMapper.imageDtoToImage(dto, "picture");
-       // imageRepository.save(image);
-        imageRepository.save(dtoMapper.imageDtoToImage(dto,"picture"));
+        Image image = dtoMapper.imageDtoToImage(dto, "picture");
+        dto.setId(image.getId());
+        imageRepository.save(image);
         return dto;
     }
+
 
 
     @Override

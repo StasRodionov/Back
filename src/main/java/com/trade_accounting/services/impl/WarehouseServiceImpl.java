@@ -49,7 +49,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         warehouse.setSortNumber(
                 SortNumberConverter.convert(warehouseDto.getSortNumber())
         );
-       // addressDto.setId(addressSaved.getId());
+        warehouseDto.setId(warehouse.getId());
         warehouseRepository.save(warehouse);
         return warehouseDto;
     }

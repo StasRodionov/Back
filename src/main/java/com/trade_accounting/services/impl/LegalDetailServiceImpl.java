@@ -64,6 +64,7 @@ public class LegalDetailServiceImpl implements LegalDetailService {
         );
     }
 
+
     @Override
     public LegalDetailDto update(LegalDetailDto legalDetailDto) {
         LegalDetail legalDetail = dtoMapper.legalDetailDtoToLegalDetail(legalDetailDto);
