@@ -17,16 +17,33 @@ public interface ProductGroupRepository extends JpaRepository<ProductGroup, Long
             "pg.id, " +
             "pg.name, " +
             "pg.sortNumber," +
-            "pg.productGroup.id) from ProductGroup  pg")
+            "pg.productGroup.id) from ProductGroup  pg where pg.serviceGroup = false")
     List<ProductGroupDto> getAll();
 
     @Query("select new com.trade_accounting.models.dto.ProductGroupDto(" +
             "pg.id, " +
             "pg.name, " +
             "pg.sortNumber," +
-            "pg.productGroup.id) from ProductGroup  pg where pg.id = :id")
+            "pg.productGroup.id) from ProductGroup  pg where pg.serviceGroup = true")
+    List<ProductGroupDto> getAllServices();
+
+    @Query("select new com.trade_accounting.models.dto.ProductGroupDto(" +
+            "pg.id, " +
+            "pg.name, " +
+            "pg.sortNumber," +
+            "pg.productGroup.id) from ProductGroup  pg where pg.id = :id and pg.serviceGroup = false")
     ProductGroupDto getById(@Param("id") Long id);
 
-    @Query("select new com.trade_accounting.models.dto.ProductGroupDto(p.productGroup.id,  p.productGroup.name, p.productGroup.sortNumber, p.productGroup.productGroup.id) from Product p where p.id = :id")
+    @Query("select new com.trade_accounting.models.dto.ProductGroupDto(" +
+            "pg.id, " +
+            "pg.name, " +
+            "pg.sortNumber," +
+            "pg.productGroup.id) from ProductGroup  pg where pg.id = :id and pg.serviceGroup = true")
+    ProductGroupDto getServicesById(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.ProductGroupDto(p.productGroup.id,  p.productGroup.name, p.productGroup.sortNumber, p.productGroup.productGroup.id) from Product p where p.id = :id and p.service = false")
     ProductGroupDto getProductGroupByProductId(@Param("id") Long id);
+
+    @Query("select new com.trade_accounting.models.dto.ProductGroupDto(p.productGroup.id,  p.productGroup.name, p.productGroup.sortNumber, p.productGroup.productGroup.id) from Product p where p.id = :id and p.service = true")
+    ProductGroupDto getServiceGroupByProductId(@Param("id") Long id);
 }
