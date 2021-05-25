@@ -47,7 +47,6 @@ public class ProductGroupServiceImpl implements ProductGroupService {
         } else {
             productGroup.setProductGroup(null);
         }
-
         productGroupRepository.save(productGroup);
 
         return dto;
