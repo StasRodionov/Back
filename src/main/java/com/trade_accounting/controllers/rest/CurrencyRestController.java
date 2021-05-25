@@ -100,8 +100,7 @@ public class CurrencyRestController {
     public ResponseEntity<CurrencyDto> update(@ApiParam(name = "currencyDto",
             value = "DTO валюты, которую необходимо обновить") @RequestBody CurrencyDto currencyDto) {
         checkEntityService.checkExistsCurrencyById(currencyDto.getId());
-        CurrencyDto currencyDtoUpdated = currencyService.update(currencyDto);
-        return ResponseEntity.ok().body(currencyDtoUpdated);
+        return ResponseEntity.ok().body(currencyService.update(currencyDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет валюту на основе переданного ID")

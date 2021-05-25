@@ -90,8 +90,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти договор")
                                                @PathVariable(name = "id") Long id) {
-        ContractDto contractDto = contractService.getById(id);
-        return ResponseEntity.ok(contractDto);
+        return ResponseEntity.ok(contractService.getById(id));
     }
 
     @PostMapping

@@ -59,7 +59,7 @@ public class AttributeOfCalculationObjectRestController {
         AttributeOfCalculationObjectDto attributeOfCalculationObjectDto = attributeOfCalculationObjectService.getById(id);
         return ResponseEntity.ok(attributeOfCalculationObjectDto);
     }
->>>>>>
+
     @PostMapping
     @ApiOperation(value = "create", notes = "Внесение нового Attribute Of Calculation")
     @ApiResponses(value = {

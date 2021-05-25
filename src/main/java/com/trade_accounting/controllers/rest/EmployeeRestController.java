@@ -147,7 +147,6 @@ public class EmployeeRestController {
                                     @RequestBody EmployeeDto employeeDto) {
         checkEntityService.checkForBadEmployee(employeeDto);
         return ResponseEntity.ok().body(employeeService.create(employeeDto));
-
     }
 
     @PutMapping
