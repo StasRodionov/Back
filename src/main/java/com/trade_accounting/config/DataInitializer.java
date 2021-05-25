@@ -328,6 +328,158 @@ public class DataInitializer {
                 "40702643100007654321",
                 true,
                 "2"));
+        bankAccountService.create(new BankAccountDto(
+                null, "54354",
+                "Промсвязьбанк",
+                "Москва ул. Петровка",
+                "30101643600000000456",
+                "4070264310000876543",
+                true,
+                "3"));
+        bankAccountService.create(new BankAccountDto(
+                null, "86758",
+                "ВТБ",
+                "Москва ул. Охотный ряд",
+                "30101643600000000789",
+                "40702643100008876543",
+                true,
+                "4"));
+        bankAccountService.create(new BankAccountDto(
+                null, "28394",
+                "Совкомбанк",
+                "Москва ул. Ильинка",
+                "30101643600000000012",
+                "40702643100008210987",
+                true,
+                "5"));
+        bankAccountService.create(new BankAccountDto(
+                null, "80209",
+                "Россельхозбанк",
+                "Москва ул. Маросейка",
+                "30101643600000000345",
+                "40702643100008654321",
+                true,
+                "6"));
+        bankAccountService.create(new BankAccountDto(
+                null, "90624",
+                "ВТБ",
+                "Москва ул. Воздвиженка",
+                "30101643600000000678",
+                "40702643100008098765",
+                true,
+                "7"));
+        bankAccountService.create(new BankAccountDto(
+                null, "27895",
+                "Россельхозбанк",
+                "Москва ул. Покровка",
+                "30101643600000901234",
+                "40702643100008432109",
+                true,
+                "8"));
+        bankAccountService.create(new BankAccountDto(
+                null, "80972",
+                "Газпромбанк",
+                "Москва ул. Старая Басманная",
+                "30101643600000567890",
+                "40702643100008876543",
+                true,
+                "9"));
+        bankAccountService.create(new BankAccountDto(
+                null, "897323",
+                "Сбербанк",
+                "Москва ул. Ильинка",
+                "30101643600000123456",
+                "40702643100008210987",
+                true,
+                "10"));
+        bankAccountService.create(new BankAccountDto(
+                null, "0938343",
+                "Газпромбанк",
+                "Москва ул. Воздвиженка",
+                "30101643600000789012",
+                "4070264310000654321",
+                true,
+                "11"));
+        bankAccountService.create(new BankAccountDto(
+                null, "8936234",
+                "Совкомбанк",
+                "Москва ул. Петровка",
+                "30101643600000345678",
+                "4070264310000098765",
+                true,
+                "12"));
+        bankAccountService.create(new BankAccountDto(
+                null, "90843",
+                "Альфа-Банк",
+                "Москва ул. Петровка",
+                "30101643600000901234",
+                "4070264310000432109",
+                true,
+                "13"));
+        bankAccountService.create(new BankAccountDto(
+                null, "19872",
+                "Сбербанк",
+                "Москва ул. Ильинка",
+                "30101643600000123456",
+                "40702643100008987654",
+                true,
+                "14"));
+        bankAccountService.create(new BankAccountDto(
+                null, "09836",
+                "Газпромбанк",
+                "Москва ул. Воздвиженка",
+                "30101643600000567890",
+                "4070264310000321098",
+                true,
+                "15"));
+        bankAccountService.create(new BankAccountDto(
+                null, "12098",
+                "Совкомбанк",
+                "Москва ул. Петровка",
+                "30101643600000123456",
+                "4070264310000765432",
+                true,
+                "16"));
+        bankAccountService.create(new BankAccountDto(
+                null, "09863",
+                "Альфа-Банк",
+                "Москва ул. Петровка",
+                "30101643600000789012",
+                "4070264310000109876",
+                true,
+                "17"));
+        bankAccountService.create(new BankAccountDto(
+                null, "19872",
+                "Сбербанк",
+                "Москва ул. Ильинка",
+                "30101643600000345678",
+                "40702643100008543210",
+                true,
+                "18"));
+        bankAccountService.create(new BankAccountDto(
+                null, "93094",
+                "Газпромбанк",
+                "Москва ул. Воздвиженка",
+                "30101643600000901234",
+                "4070264310000987654",
+                true,
+                "19"));
+        bankAccountService.create(new BankAccountDto(
+                null, "21039",
+                "Совкомбанк",
+                "Москва ул. Петровка",
+                "30101643600000567890",
+                "4070264310000321098",
+                true,
+                "20"));
+        bankAccountService.create(new BankAccountDto(
+                null, "89743",
+                "ВТБ",
+                "Москва ул. Петровка",
+                "3010164360000123456",
+                "4070264310000765432",
+                true,
+                "21"));
     }
 
     private void initRoles() {
@@ -558,7 +710,7 @@ public class DataInitializer {
                     String.format("%05d", 1 + 3 * i),
                     "749512345678",
                     "810-41-1234567890",
-                    "organization" + 1*(i + 1) + "@mail.com",
+                    "organization" + 1 * (i + 1) + "@mail.com",
                     true,
                     "123456, г. Москва, ул. Подвойского, д. 14, стр. 7",
                     "something comment",
@@ -606,7 +758,7 @@ public class DataInitializer {
                     String.format("%05d", 2 + 3 * i),
                     "733126789654",
                     "920-12-2365723233",
-                    "organization" + 2*(i + 1) + "@mail.com",
+                    "organization" + 2 * (i + 1) + "@mail.com",
                     true,
                     "123498, г. Москва, ул. Тверская, д. 20",
                     "something comment",
@@ -655,7 +807,7 @@ public class DataInitializer {
                     String.format("%05d", 3 + 3 * i),
                     "799123786542",
                     "543-23-1234543221",
-                    "organization" + 3*(i + 1) + "@mail.com",
+                    "organization" + 3 * (i + 1) + "@mail.com",
                     true,
                     "432156, г. Самара, ул. Гагарина, д. 18",
                     "something comment",
@@ -828,15 +980,15 @@ public class DataInitializer {
                 "comment",
                 "1234-5678-9012-3456",
                 false,
-                contactService.getAll().subList(1,3),
+                contactService.getAll().subList(1, 3),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                bankAccountService.getAll().subList(0, 2),
                 legalDetailService.getById(1L),
                 statusService.getById(1L),
                 employeeService.getById(1L),
                 departmentService.getById(1L))
-                );
+        );
 
         contractorService.create(new ContractorDto(
                 null,
@@ -850,10 +1002,10 @@ public class DataInitializer {
                 "2comment",
                 "7890-1234-5678-9012",
                 false,
-                contactService.getAll().subList(0,1),
+                new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
-                null,
+                bankAccountService.getAll().subList(2, 4),
                 legalDetailService.getById(1L),
                 statusService.getById(2L),
                 employeeService.getById(2L),
@@ -873,7 +1025,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                bankAccountService.getAll().subList(4, 6),
                 legalDetailService.getById(1L),
                 statusService.getById(3L),
                 employeeService.getById(3L),
@@ -893,7 +1045,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
-                null,
+                bankAccountService.getAll().subList(6, 8),
                 legalDetailService.getById(1L),
                 statusService.getById(4L),
                 employeeService.getById(4L),
@@ -913,7 +1065,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                bankAccountService.getAll().subList(8, 10),
                 legalDetailService.getById(1L),
                 statusService.getById(5L),
                 employeeService.getById(5L),
@@ -933,7 +1085,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
-                null,
+                bankAccountService.getAll().subList(10, 12),
                 legalDetailService.getById(1L),
                 statusService.getById(1L),
                 employeeService.getById(1L),
@@ -953,7 +1105,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                bankAccountService.getAll().subList(12, 14),
                 legalDetailService.getById(1L),
                 statusService.getById(2L),
                 employeeService.getById(2L),
@@ -973,7 +1125,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
-                null,
+                bankAccountService.getAll().subList(14, 16),
                 legalDetailService.getById(1L),
                 statusService.getById(3L),
                 employeeService.getById(3L),
@@ -993,7 +1145,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
-                null,
+                bankAccountService.getAll().subList(16, 18),
                 legalDetailService.getById(1L),
                 statusService.getById(4L),
                 employeeService.getById(4L),
@@ -1013,7 +1165,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
-                null,
+                bankAccountService.getAll().subList(18, 20),
                 legalDetailService.getById(1L),
                 statusService.getById(5L),
                 employeeService.getById(5L),
