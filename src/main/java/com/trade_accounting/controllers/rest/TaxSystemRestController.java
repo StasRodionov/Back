@@ -72,8 +72,7 @@ public class TaxSystemRestController {
     public ResponseEntity<?> create(@ApiParam(name = "taxSystemDto",
             value = "DTO налоговой системы, которую необходимо создать")
                                     @RequestBody TaxSystemDto taxSystemDto) {
-        TaxSystemDto taxSystemDtoCreate = taxSystemService.create(taxSystemDto);
-        return ResponseEntity.ok().body(taxSystemDtoCreate);
+        return ResponseEntity.ok().body(taxSystemService.create(taxSystemDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновление информации о налоговой системе")

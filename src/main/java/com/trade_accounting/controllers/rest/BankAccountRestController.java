@@ -97,8 +97,7 @@ public class BankAccountRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> create(@ApiParam(name = "bankAccountDto", value = "DTO банковского аккаунта, который необходимо создать") @RequestBody BankAccountDto bankAccountDto) {
-        BankAccountDto bankAccountDtoCreate = bankAccountService.create(bankAccountDto);
-        return ResponseEntity.ok().body(bankAccountDtoCreate);
+        return ResponseEntity.ok().body(bankAccountService.create(bankAccountDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновляет банковский аккаунт на основе переданных данных")

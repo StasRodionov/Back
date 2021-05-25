@@ -70,8 +70,7 @@ public class DepartmentRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
     public ResponseEntity<?> create(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо создать") @RequestBody DepartmentDto departmentDto) {
-        DepartmentDto departmentDtoCreate = departmentService.create(departmentDto);
-        return ResponseEntity.ok().body(departmentDtoCreate);
+        return ResponseEntity.ok().body(departmentService.create(departmentDto));
     }
 
     @PutMapping

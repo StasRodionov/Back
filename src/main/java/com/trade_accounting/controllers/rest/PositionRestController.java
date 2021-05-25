@@ -75,9 +75,8 @@ public class PositionRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "PositionDto", value = "DTO должности, которую необходимо создать")
                                     @RequestBody PositionDto positionDto) {
-        PositionDto positionDtoCreate = positionService.create(positionDto);
         log.info("Записан новый экземпляр PositionDto");
-        return ResponseEntity.ok().body(positionDtoCreate);
+        return ResponseEntity.ok().body(positionService.create(positionDto));
     }
 
     @PutMapping

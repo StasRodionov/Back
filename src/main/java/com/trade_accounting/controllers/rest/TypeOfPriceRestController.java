@@ -67,8 +67,7 @@ public class TypeOfPriceRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<TypeOfPriceDto> create(@RequestBody TypeOfPriceDto typeOfPriceDto) {
-        TypeOfPriceDto typeOfPriceDtoUpdate = typeOfPriceService.create(typeOfPriceDto);
-        return ResponseEntity.ok().body(typeOfPriceDtoUpdate);
+        return ResponseEntity.ok().body(typeOfPriceService.create(typeOfPriceDto));
     }
 
     @PutMapping

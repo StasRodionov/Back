@@ -70,8 +70,7 @@ public class AttributeOfCalculationObjectRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> create(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto) {
-        AttributeOfCalculationObjectDto attributeOfCalculationObjectDtoCreate = attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto);
-        return ResponseEntity.ok().body(attributeOfCalculationObjectDtoCreate);
+        return ResponseEntity.ok().body(attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto)); //избавиться от лишних переменных и передавать их содержимое сразу в теле запроса
     }
 
     @PutMapping

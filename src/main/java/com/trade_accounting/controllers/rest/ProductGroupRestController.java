@@ -72,8 +72,7 @@ public class ProductGroupRestController {
     public ResponseEntity<?> create(@ApiParam(name = "productGroupDto",
             value = "DTO товарной группы, которую необходимо создать")
                                     @RequestBody ProductGroupDto productGroupDto) {
-        ProductGroupDto productGroupDtoCreate = productGroupService.create(productGroupDto);
-        return ResponseEntity.ok().body(productGroupDtoCreate);
+        return ResponseEntity.ok().body(productGroupService.create(productGroupDto));
     }
 
     @PutMapping

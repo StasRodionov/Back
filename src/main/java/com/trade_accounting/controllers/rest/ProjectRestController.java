@@ -70,8 +70,7 @@ public class ProjectRestController {
     })
     public ResponseEntity<ProjectDto> create(@ApiParam(name = "projectDto", value = "DTO проекта, который необходимо создать")
                                              @RequestBody ProjectDto projectDto) {
-        ProjectDto projectDtoCreate = projectService.create(projectDto);
-        return ResponseEntity.ok().body(projectDtoCreate);
+        return ResponseEntity.ok().body(projectService.create(projectDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновляет проект на основе переданных данных")

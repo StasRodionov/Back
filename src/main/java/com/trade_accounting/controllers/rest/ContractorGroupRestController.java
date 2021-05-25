@@ -76,8 +76,7 @@ public class ContractorGroupRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "ContractorGroupDto", value = "DTO группы, которую необходимо создать")
                                     @RequestBody ContractorGroupDto contractorGroupDto) {
-        ContractorGroupDto contractorGroupDtoCreate = contractorGroupService.create(contractorGroupDto);
-        return ResponseEntity.ok().body(contractorGroupDtoCreate);
+        return ResponseEntity.ok().body(contractorGroupService.create(contractorGroupDto));
     }
 
     @PutMapping

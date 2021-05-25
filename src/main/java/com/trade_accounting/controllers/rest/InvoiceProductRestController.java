@@ -92,8 +92,7 @@ public class InvoiceProductRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "invoiceProductDto",
             value = "DTO товара в накладной, который необходимо создать") @RequestBody InvoiceProductDto invoiceProductDto) {
-        InvoiceProductDto invoiceProductDtoCreate = invoiceProductService.create(invoiceProductDto);
-        return ResponseEntity.ok().body(invoiceProductDtoCreate);
+        return ResponseEntity.ok().body(invoiceProductService.create(invoiceProductDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновляет товар в накладной на основе переданных данных")

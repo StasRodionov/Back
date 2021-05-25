@@ -75,9 +75,8 @@ public class RetailStoreRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<RetailStoreDto> create(@RequestBody RetailStoreDto retailStoreDto) {
-        RetailStoreDto retailStoreDtoCreate = retailStoreService.create(retailStoreDto);
         log.info("Записан новый экземпляр RetailStoreDto - {}", retailStoreDto);
-        return ResponseEntity.ok().body(retailStoreDtoCreate);
+        return ResponseEntity.ok().body(retailStoreService.create(retailStoreDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновляет точку продаж на основе переданных данных")

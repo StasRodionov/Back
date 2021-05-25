@@ -82,9 +82,8 @@ public class PaymentRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "paymentDto", value = "DTO платежа, который необходимо создать")
                                     @RequestBody PaymentDto paymentDto) {
-        PaymentDto paymentDtoCreated = paymentService.create(paymentDto);
         log.info("Записан новый экземпляр платежа - {}", paymentDto);
-        return ResponseEntity.ok().body(paymentDtoCreated);
+        return ResponseEntity.ok().body(paymentService.create(paymentDto));
     }
 
     @PutMapping

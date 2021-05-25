@@ -75,8 +75,7 @@ public class TypeOfContractorRestController {
     public ResponseEntity<?> create(@ApiParam(name = "typeOfContractorDto",
             value = "DTO типа контрагента, который необходимо создать")
                                     @RequestBody TypeOfContractorDto typeOfContractorDto) {
-        TypeOfContractorDto typeOfContractorDtoCreate = typeOfContractorService.create(typeOfContractorDto);
-        return ResponseEntity.ok().body(typeOfContractorDtoCreate);
+        return ResponseEntity.ok().body(typeOfContractorService.create(typeOfContractorDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновляет тип контрагента на основе переданных данных")

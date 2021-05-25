@@ -114,8 +114,7 @@ public class InvoiceRestController {
     )
     public ResponseEntity<InvoiceDto> create(@ApiParam(name = "invoiceDto", value = "DTO накладной, которую необходимо создать")
                                              @RequestBody InvoiceDto invoiceDto) {
-        InvoiceDto invoiceDtoCreate = invoiceService.create(invoiceDto);
-        return ResponseEntity.ok().body(invoiceDtoCreate);
+        return ResponseEntity.ok().body(invoiceService.create(invoiceDto));
     }
 
     @PutMapping

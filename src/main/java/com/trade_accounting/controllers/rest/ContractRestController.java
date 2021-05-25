@@ -106,8 +106,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> create(@ApiParam(name = "contractDto",
             value = "DTO договора, который необходимо создать")
                                               @RequestBody ContractDto contractDto) {
-        ContractDto contractDtoCreate = contractService.create(contractDto);
-        return ResponseEntity.ok().body(contractDtoCreate);
+        return ResponseEntity.ok().body(contractService.create(contractDto));
     }
 
     @PutMapping

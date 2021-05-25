@@ -59,9 +59,8 @@ public class LegalDetailRestController {
 
     public ResponseEntity<LegalDetailDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти юридические реквизиты")
                                                   @PathVariable("id") Long id) {
-        LegalDetailDto legalDetailDto = legalDetailService.getById(id);
         log.info("Запрошен экземпляр LegalDetailDto с id= {}", id);
-        return ResponseEntity.ok(legalDetailDto);
+        return ResponseEntity.ok(legalDetailService.getById(id));
     }
 
     @PostMapping

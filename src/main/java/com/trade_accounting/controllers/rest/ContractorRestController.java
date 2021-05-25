@@ -164,8 +164,7 @@ public class ContractorRestController {
             value = "DTO контрагента, которого необходимо создать")
                                                 @RequestBody ContractorDto contractorDto) {
         addressService.create(contractorDto.getLegalDetailDto().getAddressDto());
-        ContractorDto contractorDtoCreate = contractorService.create(contractorDto);
-        return ResponseEntity.ok().body(contractorDtoCreate);
+        return ResponseEntity.ok().body(contractorService.create(contractorDto));
     }
 
     @PutMapping
