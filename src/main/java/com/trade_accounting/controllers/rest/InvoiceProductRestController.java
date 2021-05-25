@@ -106,8 +106,7 @@ public class InvoiceProductRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "invoiceProductDto",
             value = "DTO InvoiceProduct, который необходимо обновить") @RequestBody InvoiceProductDto invoiceProductDto) {
-        InvoiceProductDto invoiceProductDtoUpdated = invoiceProductService.update(invoiceProductDto);
-        return ResponseEntity.ok().body(invoiceProductDtoUpdated);
+        return ResponseEntity.ok().body(invoiceProductService.update(invoiceProductDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет товар в накладной на основе переданного ID")

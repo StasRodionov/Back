@@ -85,8 +85,7 @@ public class ProjectRestController {
     public ResponseEntity<ProjectDto> update(@ApiParam(name = "projectDto",
             value = "DTO проекта, c обновленными данными")
                                              @RequestBody ProjectDto projectDto) {
-        ProjectDto projectDtoUpdated = projectService.update(projectDto);
-        return ResponseEntity.ok().body(projectDtoUpdated);
+        return ResponseEntity.ok().body(projectService.update(projectDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет проект на основе переданного ID")

@@ -90,9 +90,7 @@ public class ContractorGroupRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "ContractorGroupDto", value = "DTO группы, которую необходимо обновить")
                                     @RequestBody ContractorGroupDto contractorGroupDto) {
-        ContractorGroupDto contractorGroupDtoUpdate = contractorGroupService.update(contractorGroupDto);
-        //  return ResponseEntity.ok().build();
-        return ResponseEntity.ok().body(contractorGroupDtoUpdate);
+        return ResponseEntity.ok().body(contractorGroupService.update(contractorGroupDto));
     }
 
     @DeleteMapping("/{id}")

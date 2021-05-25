@@ -168,8 +168,7 @@ public class ProductRestController {
     public ResponseEntity<ProductDto> update(@ApiParam(name = "productDto",
             value = "DTO товара, c обновленными данными")
                                              @RequestBody ProductDto productDto) {
-        ProductDto productDtoUpdated = productService.update(productDto);
-        return ResponseEntity.ok().body(productDtoUpdated);
+        return ResponseEntity.ok().body(productService.update(productDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет товар на основе переданного ID")

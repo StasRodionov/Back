@@ -80,8 +80,7 @@ public class TypeOfPriceRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<TypeOfPriceDto> update(@RequestBody TypeOfPriceDto typeOfPriceDto) {
-        TypeOfPriceDto typeOfPriceDtoUpdated = typeOfPriceService.update(typeOfPriceDto);
-        return ResponseEntity.ok().body(typeOfPriceDtoUpdated);
+        return ResponseEntity.ok().body(typeOfPriceService.update(typeOfPriceDto));
     }
 
     @DeleteMapping("/{id}")

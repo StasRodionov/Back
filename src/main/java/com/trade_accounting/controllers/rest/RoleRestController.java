@@ -89,8 +89,7 @@ public class RoleRestController {
     public ResponseEntity<?> update(@ApiParam(name = "roleDto",
             value = "DTO роли, которую необходимо обновить")
                                     @RequestBody RoleDto roleDto) {
-        RoleDto roleDtoUpdate = roleService.update(roleDto);
-        return ResponseEntity.ok().body(roleDtoUpdate);
+        return ResponseEntity.ok().body(roleService.update(roleDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет роль на основе переданного ID")

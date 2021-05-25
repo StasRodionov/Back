@@ -90,8 +90,7 @@ public class TypeOfContractorRestController {
     public ResponseEntity<?> update(@ApiParam(name = "typeOfContractorDto",
             value = "DTO типа контрагента, который необходимо обновить")
                                     @RequestBody TypeOfContractorDto typeOfContractorDto) {
-        TypeOfContractorDto typeOfContractorDtoUpdate = typeOfContractorService.update(typeOfContractorDto);
-        return ResponseEntity.ok().body(typeOfContractorDtoUpdate);
+        return ResponseEntity.ok().body(typeOfContractorService.update(typeOfContractorDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет тип контрагента на основе переданного ID")

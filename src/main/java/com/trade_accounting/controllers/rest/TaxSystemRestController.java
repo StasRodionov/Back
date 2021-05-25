@@ -87,8 +87,7 @@ public class TaxSystemRestController {
     public ResponseEntity<?> update(@ApiParam(name = "taxSystemDto",
             value = "DTO налоговой системы, которую необходимо обновить")
                                     @RequestBody TaxSystemDto taxSystemDto) {
-        TaxSystemDto taxSystemDtoUpdated = taxSystemService.update(taxSystemDto);
-        return ResponseEntity.ok().body(taxSystemDtoUpdated);
+        return ResponseEntity.ok().body(taxSystemService.update(taxSystemDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаление налоговой системы по её id")

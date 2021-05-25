@@ -110,8 +110,7 @@ public class TaskCommentRestController {
     )
     @PutMapping
     public ResponseEntity<TaskCommentDto> update(@RequestBody TaskCommentDto dto) {
-        var updated = commentService.update(dto);
-        return ResponseEntity.ok().body(updated);
+        return ResponseEntity.ok().body(commentService.update(dto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаление комментария по его id")

@@ -85,8 +85,7 @@ public class WarehouseRestController {
     })
     public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto) {
         checkEntityService.checkExistsWarehouseById(warehouseDto.getId());
-        WarehouseDto warehouseDtoUpdated = warehouseService.update(warehouseDto);
-        return ResponseEntity.ok().body(warehouseDtoUpdated);
+        return ResponseEntity.ok().body(warehouseService.update(warehouseDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет склад на основе переданного ID")

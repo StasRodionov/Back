@@ -138,8 +138,7 @@ public class CompanyRestController {
                                     @RequestBody CompanyDto companyDto) {
         checkEntityService.checkExistCompanyById(companyDto.getId());
         checkEntityService.checkForBadCompany(companyDto);
-        CompanyDto companyDtoUpdate = companyService.update(companyDto);
-        return ResponseEntity.ok().body(companyDtoUpdate);
+        return ResponseEntity.ok().body(companyService.update(companyDto));
     }
 
     @DeleteMapping("/{id}")

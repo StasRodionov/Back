@@ -128,8 +128,7 @@ public class InvoiceRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "invoiceDto", value = "DTO накладной, которую необходимо обновить")
                                     @RequestBody InvoiceDto invoiceDto) {
-        InvoiceDto invoiceDtoUpdated = invoiceService.update(invoiceDto);
-        return ResponseEntity.ok().body(invoiceDtoUpdated);
+        return ResponseEntity.ok().body(invoiceService.update(invoiceDto));
     }
 
     @DeleteMapping("/{id}")

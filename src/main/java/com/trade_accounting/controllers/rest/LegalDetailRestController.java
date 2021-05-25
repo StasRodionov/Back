@@ -74,9 +74,8 @@ public class LegalDetailRestController {
     )
     public ResponseEntity<LegalDetailDto> create(@ApiParam(name = "legalDetailDto", value = "DTO юридические реквизиты, которые необходимо создать")
                                                  @RequestBody LegalDetailDto legalDetailDto) {
-        LegalDetailDto legalDetailDtoCreate = legalDetailService.create(legalDetailDto);
         log.info("Записан новый экземпляр LegalDetailDto - {}", legalDetailDto);
-        return ResponseEntity.ok().body(legalDetailDtoCreate);
+        return ResponseEntity.ok().body(legalDetailService.create(legalDetailDto));
     }
 
     @PutMapping
@@ -90,9 +89,8 @@ public class LegalDetailRestController {
     )
     public ResponseEntity<LegalDetailDto> update(@ApiParam(name = "legalDetailDto", value = "DTO юридические реквизиты с обновленными данными")
                                                  @RequestBody LegalDetailDto legalDetailDto) {
-        LegalDetailDto legalDetailDtoUpdated = legalDetailService.update(legalDetailDto);
         log.info("Обновлен экземпляр LegalDetailDto - {}", legalDetailDto);
-        return ResponseEntity.ok(legalDetailDtoUpdated);
+        return ResponseEntity.ok(legalDetailService.update(legalDetailDto));
     }
 
     @DeleteMapping("/{id}")

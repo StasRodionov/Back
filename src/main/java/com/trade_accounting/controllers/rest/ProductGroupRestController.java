@@ -86,8 +86,7 @@ public class ProductGroupRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "ProductGroupDto", value = "DTO товарной группы, которую необходимо обновить")
                                     @RequestBody ProductGroupDto productGroupDto) {
-        ProductGroupDto productGroupDtoUpdated = productGroupService.update(productGroupDto);
-        return ResponseEntity.ok().body(productGroupDtoUpdated);
+        return ResponseEntity.ok().body(productGroupService.update(productGroupDto));
     }
 
     @DeleteMapping("/{id}")
