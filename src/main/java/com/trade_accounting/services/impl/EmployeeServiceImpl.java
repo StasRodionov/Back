@@ -112,7 +112,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             Image image = dtoMapper.imageDtoToImage(imageDto, "employees");
             employee.setImage(image);
         }
-
         //Deleting previous image table and image file
         if (employee.getId() != null) {
             Optional<Employee> optional = employeeRepository.findById(employee.getId());
@@ -155,6 +154,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
         employeeRepository.save(employee);
+        return employeeDto;
     }
 
      */

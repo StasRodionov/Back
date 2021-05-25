@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface AddressDbRepository extends JpaRepository<FiasAddressModel, Integer> {
+public interface AddressDbRepository extends JpaRepository<FiasAddressModel, Long> {
     @Query("from FiasAddressModel as address where address.aolevel like :level")
     List<FiasAddressModel> findAllByLevel(@Param("level") String level);
 
