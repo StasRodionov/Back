@@ -43,7 +43,7 @@ public class TypeOfPriceServiceImpl implements TypeOfPriceService {
         TypeOfPrice savedTypeOfPrice = typeOfPriceRepository.save(
             dtoMapper.typeOfPriceDtoToTypeOfPrice(typeOfPriceDto)
         );
-
+        typeOfPriceDto.setId(savedTypeOfPrice.getId());
         return dtoMapper.typeOfPriceToTypeOfPriceDto(savedTypeOfPrice);
     }
 

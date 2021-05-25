@@ -50,10 +50,12 @@ public class PositionServiceImpl implements PositionService {
     @Override
     public PositionDto create(PositionDto positionDto) {
         Position position = dtoMapper.positionDtoToPosition(positionDto);
+        positionDto.setId(position.getId());
         return dtoMapper.positionToPositionDto(
                 positionRepository.save(position)
         );
     }
+
 
     @Override
     public PositionDto update(PositionDto positionDto) {

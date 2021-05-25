@@ -68,9 +68,11 @@ public class TaskServiceImpl implements TaskService {
         taskEntity.setTaskAuthor(employeeRepository.getOne(dto.getTaskAuthorId()));
 
         var saved = taskRepository.save(taskEntity);
+        dto.setId(saved.getId());
 
         return ModelDtoConverter.toTaskDTO(saved);
     }
+
 
 
     @Override

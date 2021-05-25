@@ -55,10 +55,12 @@ public class TaskCommentServiceImpl implements TaskCommentService {
         commentEntity.setTask(taskRepository.getOne(dto.getTaskId()));
 
         var saved = commentRepository.save(commentEntity);
+        dto.setId(saved.getId());
         task.getTaskComments().add(commentEntity);
 
         return ModelDtoConverter.toTaskCommentDTO(saved);
     }
+
 
 
     public void createAll(List<TaskCommentDto> dtos) {

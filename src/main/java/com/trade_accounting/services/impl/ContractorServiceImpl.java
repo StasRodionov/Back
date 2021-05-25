@@ -110,6 +110,7 @@ public class ContractorServiceImpl implements ContractorService {
                         )
                 )
         );
+
         return dtoMapper.contractorToContractorDto(contractorRepository.save(contractor));
     }
 
