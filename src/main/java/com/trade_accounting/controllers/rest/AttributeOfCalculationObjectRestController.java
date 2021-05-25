@@ -3,6 +3,7 @@ package com.trade_accounting.controllers.rest;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -30,10 +31,13 @@ import java.util.List;
 public class AttributeOfCalculationObjectRestController {
 
     private final AttributeOfCalculationObjectService attributeOfCalculationObjectService;
+    private final CheckEntityService checkEntityService;
+
 
     @Autowired
-    public AttributeOfCalculationObjectRestController(AttributeOfCalculationObjectService attributeOfCalculationObjectService) {
+    public AttributeOfCalculationObjectRestController(AttributeOfCalculationObjectService attributeOfCalculationObjectService, CheckEntityService checkEntityService) {
         this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -58,6 +62,7 @@ public class AttributeOfCalculationObjectRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<AttributeOfCalculationObjectDto> getById(@PathVariable("id") Long id) {
+        checkEntityService.checkExistsUnitById(id);
         AttributeOfCalculationObjectDto attributeOfCalculationObjectDto = attributeOfCalculationObjectService.getById(id);
         return ResponseEntity.ok(attributeOfCalculationObjectDto);
     }

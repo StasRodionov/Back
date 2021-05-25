@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.ProductDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,9 +41,11 @@ import java.util.List;
 public class ProductRestController {
 
     private final ProductService productService;
+    private final CheckEntityService checkEntityService;
 
-    public ProductRestController(ProductService productService) {
+    public ProductRestController(ProductService productService,CheckEntityService checkEntityService) {
         this.productService = productService;
+        this.checkEntityService = checkEntityService;
     }
 
 
@@ -95,8 +98,9 @@ public class ProductRestController {
     })
     public ResponseEntity<ProductDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
-        ProductDto productGroup = productService.getById(id);
-        return ResponseEntity.ok(productGroup);
+        checkEntityService.checkExistsProductById(id);
+        ProductDto productGroupDTO = productService.getById(id);
+        return ResponseEntity.ok(productGroupDTO);
     }
 
     @ApiOperation(value = "getByProductGroupId", notes = "Возвращает товары из определенной группы")

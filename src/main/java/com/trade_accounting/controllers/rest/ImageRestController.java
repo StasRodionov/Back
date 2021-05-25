@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ImageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,9 +25,11 @@ import java.util.List;
 public class ImageRestController {
 
     private final ImageService imageService;
+    private final CheckEntityService checkEntityService;
 
-    public ImageRestController(ImageService imageService) {
+    public ImageRestController(ImageService imageService, CheckEntityService checkEntityService) {
         this.imageService = imageService;
+        this.checkEntityService = checkEntityService;
     }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех фото")
@@ -57,9 +60,8 @@ public class ImageRestController {
             value = "Переданный ID  в URL по которому необходимо найти фото",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-
+        checkEntityService.checkExistsImageById(id);
         ImageDto imageDto = imageService.getById(id);
-
         return ResponseEntity.ok(imageDto);
     }
 

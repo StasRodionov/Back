@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.InvoiceProductDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,9 +28,11 @@ import java.util.List;
 public class InvoiceProductRestController {
 
     private final InvoiceProductService invoiceProductService;
+    private final CheckEntityService checkEntityService;
 
-    public InvoiceProductRestController(InvoiceProductService invoiceProductService) {
+    public InvoiceProductRestController(InvoiceProductService invoiceProductService, CheckEntityService checkEntityService) {
         this.invoiceProductService = invoiceProductService;
+        this.checkEntityService = checkEntityService;
     }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех товаров в накладной")
@@ -59,6 +62,7 @@ public class InvoiceProductRestController {
             value = "Переданный ID  в URL по которому необходимо найти товар в накладной",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsInvoiceProductById(id);
         InvoiceProductDto invoiceProductDto = invoiceProductService.getById(id);
         return ResponseEntity.ok(invoiceProductDto);
     }

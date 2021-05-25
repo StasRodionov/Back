@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.dto.ContractDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ContractService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,9 +36,11 @@ import java.util.List;
 public class ContractRestController {
 
     private final ContractService contractService;
+    private final CheckEntityService checkEntityService;
 
-    public ContractRestController(ContractService contractService) {
+    public ContractRestController(ContractService contractService, CheckEntityService checkEntityService) {
         this.contractService = contractService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -90,6 +93,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти договор")
                                                    @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsContractById(id);
         ContractDto contractDto = contractService.getById(id);
         return ResponseEntity.ok(contractDto);
     }

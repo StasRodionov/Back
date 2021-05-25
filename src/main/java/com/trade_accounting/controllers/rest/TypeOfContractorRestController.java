@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 
 import com.trade_accounting.models.dto.TypeOfContractorDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,11 +26,13 @@ import java.util.List;
 @Tag(name = "Type Of Contractor Rest Controller", description = "CRUD операции со типами контрагентов")
 @Api(tags = "Type Of Contractor Rest Controller")
 @RequestMapping("/api/typeofcontractor")
-public class TypeOfContractorRestController {
+public class TypeOfContractorRestController<СheckEntityService> {
     private final TypeOfContractorService typeOfContractorService;
+    private final CheckEntityService checkEntityService;
 
-    public TypeOfContractorRestController(TypeOfContractorService typeOfContractorService) {
+    public TypeOfContractorRestController(TypeOfContractorService typeOfContractorService, CheckEntityService checkEntityService) {
         this.typeOfContractorService = typeOfContractorService;
+        this.checkEntityService = checkEntityService;
     }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех типов контрагентов")
@@ -59,6 +62,7 @@ public class TypeOfContractorRestController {
             value = "Переданный ID  в URL по которому необходимо найти тип контрагента",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsTypeOfContractorById(id);
         TypeOfContractorDto typeOfContractorDto = typeOfContractorService.getById(id);
         return ResponseEntity.ok(typeOfContractorDto);
     }

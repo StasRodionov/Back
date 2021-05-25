@@ -3,6 +3,7 @@ package com.trade_accounting.controllers.rest;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,9 +37,11 @@ import java.util.List;
 @RequestMapping("/api/invoice")
 public class InvoiceRestController {
     private final InvoiceService invoiceService;
+    private final CheckEntityService checkEntityService;
 
-    public InvoiceRestController(InvoiceService invoiceService) {
+    public InvoiceRestController(InvoiceService invoiceService, CheckEntityService checkEntityService) {
         this.invoiceService = invoiceService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -99,6 +102,7 @@ public class InvoiceRestController {
     public ResponseEntity<InvoiceDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти накладную")
                                               @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsInvoiceById(id);
         InvoiceDto invoiceDto = invoiceService.getById(id);
         return ResponseEntity.ok(invoiceDto);
     }

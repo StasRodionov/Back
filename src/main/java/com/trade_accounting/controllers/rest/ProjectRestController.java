@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.ProjectDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,9 +28,11 @@ import java.util.List;
 public class ProjectRestController {
 
     private final ProjectService projectService;
+    private final CheckEntityService checkEntityService;
 
-    public ProjectRestController(ProjectService projectService) {
+    public ProjectRestController(ProjectService projectService, CheckEntityService checkEntityService) {
         this.projectService = projectService;
+        this.checkEntityService = checkEntityService;
     }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех проектов")
@@ -55,6 +58,7 @@ public class ProjectRestController {
     })
     public ResponseEntity<ProjectDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти проект") @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsProjectById(id);
         ProjectDto projectDto = projectService.getById(id);
         return ResponseEntity.ok(projectDto);
     }

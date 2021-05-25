@@ -61,8 +61,8 @@ public class UnitRestController {
             type = "Long",
             value = "ID переданный в URL по которому необходимо найти единицу измерения") @PathVariable Long id) {
         checkEntityService.checkExistsUnitById(id);
-        UnitDto unit = unitService.getById(id);
-        return ResponseEntity.ok(unit);
+        UnitDto unitDto = unitService.getById(id);
+        return ResponseEntity.ok(unitDto);
     }
 
     @ApiOperation(value = "create", notes = "Регистрация новой единицы измерения")
