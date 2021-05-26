@@ -77,8 +77,7 @@ public class UnitRestController {
     public ResponseEntity<?> create(@ApiParam(
             name = "unitDto",
             value = "DTO единицы измерения, которую необходимо создать") @RequestBody UnitDto unitDto) {
-        unitService.create(unitDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(unitService.create(unitDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновление информации о единицы измерения")
@@ -94,8 +93,7 @@ public class UnitRestController {
             name = "unitDto",
             value = "DTO единицы измерения, которую необходимо обновить") @RequestBody UnitDto unitDto) {
         checkEntityService.checkExistsUnitById(unitDto.getId());
-        unitService.update(unitDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(unitService.update(unitDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаление единицы измерения по ее id")

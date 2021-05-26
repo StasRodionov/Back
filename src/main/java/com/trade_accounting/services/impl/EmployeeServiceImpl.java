@@ -75,7 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 page.getTotalElements(),
                 page.getTotalPages(),
                 page.getNumberOfElements()
-                );
+        );
     }
 
     @Override
@@ -86,63 +86,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {
-        Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
-        employeeRepository.save(employee);
+        Employee employee =dtoMapper.employeeDtoToEmployee(employeeDto);
+        Employee employeeSaved = employeeRepository.save(employee);
+        employeeDto.setId(employeeSaved.getId());
         return employeeDto;
     }
 
-    @SneakyThrows
     @Override
     public EmployeeDto update(EmployeeDto employeeDto) {
-        Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
-
-        ImageDto imageDto = employeeDto.getImageDto();
-        //create image or update if present
-        if (imageDto != null && imageDto.getContent() != null) {
-            Image image = dtoMapper.imageDtoToImage(imageDto, "employees");
-            employee.setImage(image);
-        }
-        //Deleting previous image table and image file
-        if (employee.getId() != null) {
-            Optional<Employee> optional = employeeRepository.findById(employee.getId());
-
-            if (optional.isPresent() && optional.get().getImage() != null) {
-                Long previousImageId = optional.get().getImage().getId();
-                String previousImageUrl = optional.get().getImage().getImageUrl();
-
-                imageRepository.deleteById(previousImageId);
-                Files.deleteIfExists(Paths.get(previousImageUrl));
-            }
-        }
-
-        DepartmentDto department = employeeDto.getDepartmentDto();
-        PositionDto position = employeeDto.getPositionDto();
-        Set<RoleDto> setOfRoleDto = employeeDto.getRoleDto();
-
-        if (department != null) {
-            employee.setDepartment(
-                    departmentRepository.findById(department.getId()).orElse(null)
-            );
-        }
-
-        if (position != null) {
-            employee.setPosition(
-                    positionRepository.findById(position.getId()).orElse(null)
-            );
-        }
-
-        if (setOfRoleDto != null) {
-            Set<Role> roles = setOfRoleDto.stream()
-                    .map(role ->
-                            role != null
-                                    ? roleRepository.findById(role.getId()).orElse(null)
-                                    : null)
-                    .collect(Collectors.toSet());
-
-            employee.setRoles(roles);
-        }
-
-
+        Employee employee =dtoMapper.employeeDtoToEmployee(employeeDto);
         employeeRepository.save(employee);
         return employeeDto;
     }
