@@ -1,6 +1,9 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.services.interfaces.ProductService;
 import io.swagger.annotations.Api;
@@ -12,7 +15,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Conjunction;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Or;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -186,4 +194,42 @@ public class ProductRestController {
         productService.deleteById(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/pages")
+    @ApiOperation(value = "searchWithPages", notes = "Получение списка товаров по заданным параметрам постранично")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение страницы товаров"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<PageDto<ProductDto>> searchWithPages(
+            @Conjunction(value = {
+                    @Or({
+                            @Spec(path = "weight", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "volume", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "purchase_price", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "description", params = "search", spec = LikeIgnoreCase.class),
+                            @Spec(path = "name", params = "search", spec = LikeIgnoreCase.class)
+
+                    })
+            }, and = {
+                    @Spec(path = "weight", params = "weight", spec = LikeIgnoreCase.class),
+                    @Spec(path = "volume", params = "volume", spec = LikeIgnoreCase.class),
+                    @Spec(path = "purchase_price", params = "purchase_price", spec = LikeIgnoreCase.class),
+                    @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
+                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+                    @Spec(path = "archive", params = "archive", spec = LikeIgnoreCase.class)
+            }) Specification<Product> specification,
+            @RequestParam("column") String sortColumn,
+            @RequestParam("direction") String sortDirection,
+            @RequestParam("pageNumber") Integer pageNumber,
+            @RequestParam("rowsLimit") Integer rowsLimit) {
+        Pageable pageParams = PageRequest.of(pageNumber - 1, rowsLimit,
+                Sort.by(sortDirection.equals("ASCENDING") ?
+                                Sort.Direction.ASC : Sort.Direction.DESC,
+                        sortColumn));
+        return ResponseEntity.ok(productService.search(specification, pageParams));
+    }
+
 }
