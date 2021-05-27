@@ -35,7 +35,7 @@ public class ContractServiceImpl implements ContractService {
         return dtoMapper.toContractDtoList(contractRepository.findAll());
     }
 
-    @Override  //добавил
+    @Override
     public List<ContractDto> getAll(String searchContr) {
         if(searchContr.equals("null") || searchContr.isEmpty()) {
             List<Contract> all = contractRepository.findAll();
@@ -48,7 +48,6 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<ContractDto> search(Specification<Contract> specification) {
-//        return dtoMapper.toContractDtoList(contractRepository.findAll(specification));
         return executeSearch(contractRepository, ModelDtoConverter::convertToContactDto, specification);
     }
 
