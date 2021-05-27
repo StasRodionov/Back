@@ -31,6 +31,8 @@ public class ProductDto {
 
     private Boolean archive = false;
 
+    private Boolean service = false;
+
     private ContractorDto contractorDto;
 
     private List<ProductPriceDto> productPriceDtos;
@@ -66,5 +68,39 @@ public class ProductDto {
                       Boolean archive) {
         this(name, weight, volume, purchasePrice, description, archive);
         this.id = id;
+    }
+
+    public ProductDto(String name, BigDecimal purchasePrice, String description, Boolean archive, Boolean service) {
+        this.name = name;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.archive = archive;
+        this.service = service;
+    }
+
+    public ProductDto(Long id, String name, BigDecimal purchasePrice, String description, Boolean archive, Boolean service) {
+        this.id = id;
+        this.name = name;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.archive = archive;
+        this.service = service;
+    }
+
+    public ProductDto(Long id, String name, BigDecimal weight, BigDecimal volume, BigDecimal purchasePrice, String description, UnitDto unitDto, Boolean archive, ContractorDto contractorDto, List<ProductPriceDto> productPriceDtos, TaxSystemDto taxSystemDto, List<ImageDto> imageDtos, ProductGroupDto productGroupDto, AttributeOfCalculationObjectDto attributeOfCalculationObjectDto) {
+        this.id = id;
+        this.name = name;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.unitDto = unitDto;
+        this.archive = archive;
+        this.contractorDto = contractorDto;
+        this.productPriceDtos = productPriceDtos;
+        this.taxSystemDto = taxSystemDto;
+        this.imageDtos = imageDtos;
+        this.productGroupDto = productGroupDto;
+        this.attributeOfCalculationObjectDto = attributeOfCalculationObjectDto;
     }
 }

@@ -55,7 +55,7 @@ public class TaxSystemRestController {
     @GetMapping("/{id}")
     public ResponseEntity<TaxSystemDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти налоговую систему")
-                                                    @PathVariable(name = "id") Long id) {
+                                                @PathVariable(name = "id") Long id) {
         TaxSystemDto taxSystem = taxSystemService.getById(id);
         return ResponseEntity.ok(taxSystem);
     }
@@ -71,9 +71,8 @@ public class TaxSystemRestController {
     @PostMapping
     public ResponseEntity<?> create(@ApiParam(name = "taxSystemDto",
             value = "DTO налоговой системы, которую необходимо создать")
-                                        @RequestBody TaxSystemDto taxSystemDto) {
-        taxSystemService.create(taxSystemDto);
-        return ResponseEntity.ok().build();
+                                    @RequestBody TaxSystemDto taxSystemDto) {
+        return ResponseEntity.ok().body(taxSystemService.create(taxSystemDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновление информации о налоговой системе")
@@ -87,9 +86,8 @@ public class TaxSystemRestController {
     @PutMapping
     public ResponseEntity<?> update(@ApiParam(name = "taxSystemDto",
             value = "DTO налоговой системы, которую необходимо обновить")
-                                        @RequestBody TaxSystemDto taxSystemDto) {
-        taxSystemService.update(taxSystemDto);
-        return ResponseEntity.ok().build();
+                                    @RequestBody TaxSystemDto taxSystemDto) {
+        return ResponseEntity.ok().body(taxSystemService.update(taxSystemDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаление налоговой системы по её id")
@@ -103,7 +101,7 @@ public class TaxSystemRestController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@ApiParam(name = "id",
             value = "ID налоговой системы, которую необходимо удалить")
-                                            @PathVariable(name = "id") Long id) {
+                                        @PathVariable(name = "id") Long id) {
         taxSystemService.deleteById(id);
         return ResponseEntity.ok().build();
     }
