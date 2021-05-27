@@ -28,6 +28,14 @@ import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.ProductDto;
+import com.trade_accounting.models.dto.fias.CityDto;
+import com.trade_accounting.models.dto.fias.DistrictDto;
+import com.trade_accounting.models.dto.fias.RegionDto;
+import com.trade_accounting.models.dto.fias.StreetDto;
+import com.trade_accounting.models.fias.City;
+import com.trade_accounting.models.fias.District;
+import com.trade_accounting.models.fias.Region;
+import com.trade_accounting.models.fias.Street;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -253,4 +261,5 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
+
 }

@@ -50,6 +50,8 @@ public class Company {
 
     @Column(name = "address")
     private String address;
+  //  @OneToOne(fetch = FetchType.LAZY)
+ //   private Address address;
 
     @Column(name = "comment_to_address")
     private String commentToAddress;

@@ -31,6 +31,9 @@ public class ProductGroup {
     @Column(name = "sort_number")
     private String sortNumber;
 
+    @Column(name = "service_group")
+    private Boolean serviceGroup = false;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="main_group", referencedColumnName = "id")
     private ProductGroup productGroup;
@@ -44,4 +47,24 @@ public class ProductGroup {
         this.name = name;
         this.sortNumber = sortNumber;
     }
+
+    public ProductGroup(Long id, String name, String sortNumber, ProductGroup parentGroup) {
+        this.id = id;
+        this.name = name;
+        this.sortNumber = sortNumber;
+        this.productGroup = parentGroup;
+    }
+
+    public ProductGroup(String name, String sortNumber, Boolean serviceGroup) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+        this.serviceGroup = serviceGroup;
+    }
+
+    public ProductGroup(String name, String sortNumber, Boolean serviceGroup, ProductGroup parentGroup){
+        this(name, sortNumber, serviceGroup);
+        this.productGroup = parentGroup;
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.Address;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.AddressDto;
@@ -555,6 +556,7 @@ public class DataInitializer {
                     "810-41-1234567890",
                     "organization" + 1*(i + 1) + "@mail.com",
                     true,
+                 //  new AddressDto("123456","г.Москва","ул. Подвойского","д.14, стр.7"),
                     "123456, г. Москва, ул. Подвойского, д. 14, стр. 7",
                     "something comment",
                     "Петров Сергей Петрович",
@@ -694,7 +696,7 @@ public class DataInitializer {
     }
 
     private void initEmployees() {
-        employeeService.save(new EmployeeDto(null,
+        employeeService.create(new EmployeeDto(null,
                 "Vasiliev",
                 "Vasya",
                 "Vasilievich",
@@ -708,7 +710,7 @@ public class DataInitializer {
                 positionService.getByName("Генеральный директор"),
                 Collections.singleton(roleService.getByName("admin")),
                 null));
-        employeeService.save(new EmployeeDto(null,
+        employeeService.create(new EmployeeDto(null,
                 "Simonova",
                 "Sima",
                 "Semenovna",
@@ -722,7 +724,7 @@ public class DataInitializer {
                 positionService.getByName("Коммерческий директор"),
                 Collections.singleton(roleService.getByName("user")),
                 null));
-        employeeService.save(new EmployeeDto(null,
+        employeeService.create(new EmployeeDto(null,
                 "Belive",
                 "Vera",
                 "Henrichovna",
@@ -736,7 +738,7 @@ public class DataInitializer {
                 positionService.getByName("Технический директор"),
                 Collections.singleton(roleService.getByName("user")),
                 null));
-        employeeService.save(new EmployeeDto(null,
+        employeeService.create(new EmployeeDto(null,
                 "Islentiev",
                 "Karim",
                 "Dmitrievich",
@@ -750,7 +752,7 @@ public class DataInitializer {
                 positionService.getByName("Директор по продажам"),
                 Collections.singleton(roleService.getByName("admin")),
                 null));
-        employeeService.save(new EmployeeDto(null,
+        employeeService.create(new EmployeeDto(null,
                 "Petko",
                 "Sasha",
                 "",

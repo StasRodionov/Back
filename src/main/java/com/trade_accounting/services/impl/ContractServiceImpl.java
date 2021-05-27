@@ -58,7 +58,8 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public ContractDto create(ContractDto contractDto) {
-        contractRepository.save(dtoMapper.contractDtoToContract(contractDto));
+        Contract contractSaved = contractRepository.save(dtoMapper.contractDtoToContract(contractDto));
+        contractDto.setId(contractSaved.getId());
         return contractDto;
     }
 

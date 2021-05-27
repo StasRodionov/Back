@@ -45,7 +45,8 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
 
     @Override
     public InvoiceProductDto create(@NotNull InvoiceProductDto invoiceProductDto) {
-        invoiceProductRepository.save(dtoMapper.invoiceProductDtoToInvoiceProduct(invoiceProductDto));
+    InvoiceProduct invoiceProductSaved = invoiceProductRepository.save(dtoMapper.invoiceProductDtoToInvoiceProduct(invoiceProductDto));
+        invoiceProductDto.setId(invoiceProductSaved.getId());
         return invoiceProductDto;
     }
 
