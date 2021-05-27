@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
@@ -20,7 +21,7 @@ import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Role;
-import com.trade_accounting.models.Status;
+import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
@@ -38,6 +39,10 @@ import java.util.stream.Stream;
 
 public class ModelStubs {
     //TODO Вынести заглушки моделей из классов сервисов сюда
+
+    public static AccessParameters getAccessParameters(Long id){
+        return new AccessParameters(id, false, getEmployee(id), getDepartment(id));
+    }
 
     public static AttributeOfCalculationObject getAttributeOfCalculationObject(Long id) {
         return new AttributeOfCalculationObject(id, "name", "00001", true);
@@ -78,7 +83,7 @@ public class ModelStubs {
                 "12345678901", "324234234",
                 "email", getAddress(1L),
                 "commentToAddress", "comment",
-                "1234", false,
+                "1234",
                 Stream.of(
                         getContact(1L),
                         getContact(2L),
@@ -93,8 +98,7 @@ public class ModelStubs {
                 ).collect(Collectors.toList()),
                 getLegalDetail(id),
                 getStatus(id),
-                getEmployee(id),
-                getDepartment(id)
+                getAccessParameters(id)
         );
     }
 
@@ -259,10 +263,10 @@ public class ModelStubs {
                 .build();
     }
 
-    public static Status getStatus(Long id) {
-        return Status.builder()
+    public static ContractorStatus getStatus(Long id) {
+        return ContractorStatus.builder()
                 .id(id)
-                .typeOfStatus("Новый")
+                .name("Новый")
                 .build();
     }
 }

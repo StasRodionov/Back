@@ -1,5 +1,6 @@
 package com.trade_accounting.utils;
 
+import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
@@ -23,7 +24,7 @@ import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.Role;
-import com.trade_accounting.models.Status;
+import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TaxSystem;
@@ -31,6 +32,7 @@ import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
@@ -39,6 +41,7 @@ import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
@@ -54,7 +57,6 @@ import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.StatusDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -99,6 +101,19 @@ public abstract class DtoMapper {
     attributeOfCalculationObjectDtoToAttributeOfCalculationObject(
             AttributeOfCalculationObjectDto attributeOfCalculationObjectDto
     );
+
+    //AccessParameters
+    @Mappings({
+            @Mapping(source = "employee", target = "employeeDto"),
+            @Mapping(source = "department", target = "departmentDto")
+    })
+    public abstract AccessParametersDto AccessParametersToAccessParametersDto(AccessParameters accessParameters);
+
+    @Mappings({
+            @Mapping(source = "employeeDto", target = "employee"),
+            @Mapping(source = "departmentDto", target = "department")
+    })
+    public abstract AccessParameters AccessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto);
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
@@ -159,9 +174,8 @@ public abstract class DtoMapper {
             @Mapping(source = "bankAccounts", target = "bankAccountDto"),
             @Mapping(source = "address", target = "addressDto"),
             @Mapping(source = "contact", target = "contactDto"),
-            @Mapping(source = "status", target = "statusDto"),
-            @Mapping(source = "employee", target = "employeeDto"),
-            @Mapping(source = "department", target = "departmentDto")
+            @Mapping(source = "contractorStatus", target = "contractorStatusDto"),
+            @Mapping(source = "accessParameters", target = "accessParametersDto"),
     })
     public abstract ContractorDto contractorToContractorDto(Contractor contractor);
 
@@ -172,10 +186,8 @@ public abstract class DtoMapper {
             @Mapping(source = "legalDetailDto", target = "legalDetail"),
             @Mapping(source = "addressDto", target = "address"),
             @Mapping(source = "contactDto", target = "contact"),
-            @Mapping(source = "statusDto", target = "status"),
-            @Mapping(source = "employeeDto", target = "employee"),
-            @Mapping(source = "departmentDto", target = "department")
-
+            @Mapping(source = "contractorStatusDto", target = "contractorStatus"),
+            @Mapping(source = "accessParametersDto", target = "accessParameters"),
     })
     public abstract Contractor contractorDtoToContractor(ContractorDto contractorDto);
 
@@ -388,10 +400,10 @@ public abstract class DtoMapper {
 
     public abstract Role roleDtoToRole(RoleDto role);
 
-    //Status
-    public abstract StatusDto statusToStatusDto(Status status);
+    //ContractorStatus
+    public abstract ContractorStatusDto statusToStatusDto(ContractorStatus contractorStatus);
 
-    public abstract Status statusDtoToStatus(StatusDto status);
+    public abstract ContractorStatus statusDtoToStatus(ContractorStatusDto status);
 
     //Task
     public abstract TaskDto taskToTaskDto(Task task);

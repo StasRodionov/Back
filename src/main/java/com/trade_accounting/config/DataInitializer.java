@@ -2,6 +2,7 @@ package com.trade_accounting.config;
 
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
+import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
@@ -24,7 +25,7 @@ import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.StatusDto;
+import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -33,6 +34,7 @@ import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.services.impl.AddressServiceImpl;
+import com.trade_accounting.services.interfaces.AccessParametersService;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.BankAccountService;
 import com.trade_accounting.services.interfaces.CompanyService;
@@ -54,7 +56,7 @@ import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.services.interfaces.RoleService;
-import com.trade_accounting.services.interfaces.StatusService;
+import com.trade_accounting.services.interfaces.ContractorStatusService;
 import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
@@ -109,7 +111,8 @@ public class DataInitializer {
     private final AddressServiceImpl addressService;
     private final FiasDbService fiasDbService;
     private final RetailStoreService retailStoreService;
-    private final StatusService statusService;
+    private final ContractorStatusService contractorStatusService;
+    private final AccessParametersService accessParametersService;
 
 
     public DataInitializer(
@@ -141,7 +144,8 @@ public class DataInitializer {
             TaskCommentService commentService,
             RetailStoreService retailStoreService,
             AddressServiceImpl addressService,
-            FiasDbService fiasDbService, StatusService statusService) {
+            FiasDbService fiasDbService, ContractorStatusService contractorStatusService,
+            AccessParametersService accessParametersService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -172,7 +176,8 @@ public class DataInitializer {
         this.addressService = addressService;
         this.fiasDbService = fiasDbService;
         this.retailStoreService = retailStoreService;
-        this.statusService = statusService;
+        this.contractorStatusService = contractorStatusService;
+        this.accessParametersService = accessParametersService;
     }
 
     @PostConstruct
@@ -197,7 +202,8 @@ public class DataInitializer {
         initCompanies();
         initContacts();
         initEmployees();
-        initStatuses();
+        initContractorStatuses();
+        initAccessParameters();
         initContractors();
         initProducts();
         initContracts();
@@ -209,6 +215,19 @@ public class DataInitializer {
         initTasks();
         initTaskComments();
         initRetailStores();
+    }
+
+    private void initAccessParameters() {
+        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(1L), departmentService.getById(1L)));
+        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(2L), departmentService.getById(2L)));
+        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(3L), departmentService.getById(3L)));
+        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(4L), departmentService.getById(4L)));
+        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(5L), departmentService.getById(5L)));
+        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(1L), departmentService.getById(1L)));
+        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(2L), departmentService.getById(2L)));
+        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(3L), departmentService.getById(3L)));
+        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(4L), departmentService.getById(4L)));
+        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(5L), departmentService.getById(5L)));
     }
 
     public void initRetailStores() {
@@ -959,12 +978,12 @@ public class DataInitializer {
         );
     }
 
-    private void initStatuses() {
-        statusService.create(new StatusDto(1L, "Новый"));
-        statusService.create(new StatusDto(2L, "Выслано предложение"));
-        statusService.create(new StatusDto(3L, "Переговоры"));
-        statusService.create(new StatusDto(4L, "Сделка заключена"));
-        statusService.create(new StatusDto(5L, "Сделка не заключена"));
+    private void initContractorStatuses() {
+        contractorStatusService.create(new ContractorStatusDto(1L, "Новый"));
+        contractorStatusService.create(new ContractorStatusDto(2L, "Выслано предложение"));
+        contractorStatusService.create(new ContractorStatusDto(3L, "Переговоры"));
+        contractorStatusService.create(new ContractorStatusDto(4L, "Сделка заключена"));
+        contractorStatusService.create(new ContractorStatusDto(5L, "Сделка не заключена"));
     }
 
     private void initContractors() {
@@ -979,15 +998,13 @@ public class DataInitializer {
                 "1 comment to address",
                 "comment",
                 "1234-5678-9012-3456",
-                false,
                 contactService.getAll().subList(1, 3),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
                 bankAccountService.getAll().subList(0, 2),
                 legalDetailService.getById(1L),
-                statusService.getById(1L),
-                employeeService.getById(1L),
-                departmentService.getById(1L))
+                contractorStatusService.getById(1L),
+                accessParametersService.getById(1L))
         );
 
         contractorService.create(new ContractorDto(
@@ -1001,15 +1018,14 @@ public class DataInitializer {
                 "2comment to address",
                 "2comment",
                 "7890-1234-5678-9012",
-                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
                 bankAccountService.getAll().subList(2, 4),
                 legalDetailService.getById(1L),
-                statusService.getById(2L),
-                employeeService.getById(2L),
-                departmentService.getById(2L)));
+                contractorStatusService.getById(2L),
+                accessParametersService.getById(2L))
+        );
         contractorService.create(new ContractorDto(
                 null,
                 "Вкусвилл, ООО",
@@ -1021,15 +1037,14 @@ public class DataInitializer {
                 "3comment to address",
                 "3comment",
                 "3456-7890-1234-5678",
-                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
                 bankAccountService.getAll().subList(4, 6),
                 legalDetailService.getById(1L),
-                statusService.getById(3L),
-                employeeService.getById(3L),
-                departmentService.getById(3L)));
+                contractorStatusService.getById(3L),
+                accessParametersService.getById(3L))
+        );
         contractorService.create(new ContractorDto(
                 null,
                 "Альфа-М, ООО",
@@ -1041,15 +1056,14 @@ public class DataInitializer {
                 "4comment to address",
                 "4comment",
                 "9012-3456-7890-1234",
-                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
                 bankAccountService.getAll().subList(6, 8),
                 legalDetailService.getById(1L),
-                statusService.getById(4L),
-                employeeService.getById(4L),
-                departmentService.getById(4L)));
+                contractorStatusService.getById(4L),
+                accessParametersService.getById(4L))
+        );
         contractorService.create(new ContractorDto(
                 null,
                 "Отдохни - 77, ООО",
@@ -1061,15 +1075,14 @@ public class DataInitializer {
                 "5comment to address",
                 "5comment",
                 "5678-9012-3456-7890",
-                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
                 bankAccountService.getAll().subList(8, 10),
                 legalDetailService.getById(1L),
-                statusService.getById(5L),
-                employeeService.getById(5L),
-                departmentService.getById(5L)));
+                contractorStatusService.getById(5L),
+                accessParametersService.getById(5L))
+        );
         contractorService.create(new ContractorDto(
                 null,
                 "Продмир, ООО",
@@ -1081,15 +1094,14 @@ public class DataInitializer {
                 "6comment to address",
                 "6comment",
                 "1234-5678-9012-3456",
-                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
                 bankAccountService.getAll().subList(10, 12),
                 legalDetailService.getById(1L),
-                statusService.getById(1L),
-                employeeService.getById(1L),
-                departmentService.getById(1L)));
+                contractorStatusService.getById(1L),
+                accessParametersService.getById(6L))
+        );
         contractorService.create(new ContractorDto(
                 null,
                 "Зельгрос, ООО",
@@ -1101,15 +1113,14 @@ public class DataInitializer {
                 "7comment to address",
                 "7comment",
                 "7890-1234-5678-9012",
-                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
                 bankAccountService.getAll().subList(12, 14),
                 legalDetailService.getById(1L),
-                statusService.getById(2L),
-                employeeService.getById(2L),
-                departmentService.getById(2L)));
+                contractorStatusService.getById(2L),
+                accessParametersService.getById(7L))
+        );
         contractorService.create(new ContractorDto(
                 null,
                 "Лабиринт-М, ООО",
@@ -1121,15 +1132,14 @@ public class DataInitializer {
                 "8comment to address",
                 "8comment",
                 "3456-7890-1234-5678",
-                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
                 bankAccountService.getAll().subList(14, 16),
                 legalDetailService.getById(1L),
-                statusService.getById(3L),
-                employeeService.getById(3L),
-                departmentService.getById(3L)));
+                contractorStatusService.getById(3L),
+                accessParametersService.getById(8L))
+        );
         contractorService.create(new ContractorDto(
                 null,
                 "Эскорт Сервис, ООО",
@@ -1141,15 +1151,14 @@ public class DataInitializer {
                 "9comment to address",
                 "9comment",
                 "9012-3456-7890-1234",
-                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(1L),
                 bankAccountService.getAll().subList(16, 18),
                 legalDetailService.getById(1L),
-                statusService.getById(4L),
-                employeeService.getById(4L),
-                departmentService.getById(4L)));
+                contractorStatusService.getById(4L),
+                accessParametersService.getById(9L))
+        );
         contractorService.create(new ContractorDto(
                 null,
                 "Арома Маркет, ООО",
@@ -1161,15 +1170,14 @@ public class DataInitializer {
                 "10comment to address",
                 "10comment",
                 "5678-9012-3456-7890",
-                false,
                 new ArrayList<>(),
                 contractorGroupService.getById(1L),
                 typeOfPriceService.getById(2L),
                 bankAccountService.getAll().subList(18, 20),
                 legalDetailService.getById(1L),
-                statusService.getById(5L),
-                employeeService.getById(5L),
-                departmentService.getById(5L)));
+                contractorStatusService.getById(5L),
+                accessParametersService.getById(10L))
+        );
     }
 
     private void initProducts() {
