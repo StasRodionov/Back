@@ -40,9 +40,12 @@ public class TypeOfContractorServiceImpl implements TypeOfContractorService {
     @Override
     public TypeOfContractorDto create(TypeOfContractorDto typeOfContractorDto) {
         TypeOfContractor typeOfContractor = dtoMapper.typeOfContractorDtoToTypeOfContractor(typeOfContractorDto);
+        typeOfContractorDto.setId(typeOfContractor.getId());
         return dtoMapper.typeOfContractorToTypeOfContractorDto(
                 typeOfContractorRepository.save(typeOfContractor));
     }
+
+
 
     @Override
     public TypeOfContractorDto update(TypeOfContractorDto typeOfContractorDto) {

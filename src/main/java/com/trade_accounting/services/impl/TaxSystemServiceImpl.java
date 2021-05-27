@@ -7,6 +7,7 @@ import com.trade_accounting.services.interfaces.TaxSystemService;
 import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,9 +40,11 @@ public class TaxSystemServiceImpl implements TaxSystemService {
     @Override
     public TaxSystemDto create(TaxSystemDto taxSystemDto) {
         TaxSystem taxSystem = dtoMapper.taxSystemDtoToTaxSystem(taxSystemDto);
+        taxSystemDto.setId(taxSystem.getId());
         return dtoMapper.taxSystemToTaxSystemDto(
                 taxSystemRepository.save(taxSystem));
     }
+
 
     @Override
     public TaxSystemDto update(TaxSystemDto taxSystemDto) {
