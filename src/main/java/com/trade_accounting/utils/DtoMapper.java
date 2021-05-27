@@ -62,10 +62,12 @@ import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.fias.CityDto;
 import com.trade_accounting.models.dto.fias.DistrictDto;
+import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
 import com.trade_accounting.models.dto.fias.RegionDto;
 import com.trade_accounting.models.dto.fias.StreetDto;
 import com.trade_accounting.models.fias.City;
 import com.trade_accounting.models.fias.District;
+import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
 import lombok.SneakyThrows;
@@ -487,4 +489,8 @@ public abstract class DtoMapper {
             @Mapping(source = "city", target = "cityDto")
     })
     public abstract StreetDto toStreetDto(Street street);
+
+    public abstract FiasAddressModel toFiasAddressModel(FiasAddressModelDto dto);
+
+    public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
 }
