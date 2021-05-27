@@ -146,9 +146,7 @@ public class EmployeeRestController {
     public ResponseEntity<?> create(@ApiParam(name = "employeeDto", value = "DTO работника, который необходимо создать")
                                     @RequestBody EmployeeDto employeeDto) {
         checkEntityService.checkForBadEmployee(employeeDto);
-        EmployeeDto employeeDtoCreate = employeeService.create(employeeDto);
-        return ResponseEntity.ok().body(employeeDtoCreate);
-
+        return ResponseEntity.ok().body(employeeService.create(employeeDto));
     }
 
     @PutMapping
@@ -165,8 +163,7 @@ public class EmployeeRestController {
                                     @RequestBody EmployeeDto employeeDto) {
         checkEntityService.checkExistsEmployeeById(employeeDto.getId());
         checkEntityService.checkForBadEmployee(employeeDto);
-        EmployeeDto employeeDtoUpdated = employeeService.update(employeeDto);
-        return ResponseEntity.ok().body(employeeDtoUpdated);
+        return ResponseEntity.ok().body(employeeService.update(employeeDto));
     }
 
     @DeleteMapping("/{id}")

@@ -75,9 +75,8 @@ public class PositionRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "PositionDto", value = "DTO должности, которую необходимо создать")
                                     @RequestBody PositionDto positionDto) {
-        PositionDto positionDtoCreate = positionService.create(positionDto);
         log.info("Записан новый экземпляр PositionDto");
-        return ResponseEntity.ok().body(positionDtoCreate);
+        return ResponseEntity.ok().body(positionService.create(positionDto));
     }
 
     @PutMapping
@@ -91,9 +90,8 @@ public class PositionRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "PositionDto", value = "DTO должности, которую необходимо обновить")
                                     @RequestBody PositionDto positionDto) {
-        PositionDto positionDtoUpdated = positionService.update(positionDto);
         log.info("Обновлен экземпляр PositionDto");
-        return ResponseEntity.ok().body(positionDtoUpdated);
+        return ResponseEntity.ok().body(positionService.update(positionDto));
     }
 
     @DeleteMapping("/{id}")

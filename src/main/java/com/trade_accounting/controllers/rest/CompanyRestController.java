@@ -122,9 +122,7 @@ public class CompanyRestController {
     public ResponseEntity<?> create(@ApiParam(name = "companyDto", value = "DTO компании, которую необходимо создать")
                                     @RequestBody CompanyDto companyDto) {
         checkEntityService.checkForBadCompany(companyDto);
-        CompanyDto companyDtoCreate = companyService.create(companyDto);
-        // return ResponseEntity.ok().build();
-        return ResponseEntity.ok().body(companyDtoCreate);
+        return ResponseEntity.ok().body(companyService.create(companyDto));
     }
 
     @PutMapping
@@ -140,8 +138,7 @@ public class CompanyRestController {
                                     @RequestBody CompanyDto companyDto) {
         checkEntityService.checkExistCompanyById(companyDto.getId());
         checkEntityService.checkForBadCompany(companyDto);
-        CompanyDto companyDtoUpdate = companyService.update(companyDto);
-        return ResponseEntity.ok().body(companyDtoUpdate);
+        return ResponseEntity.ok().body(companyService.update(companyDto));
     }
 
     @DeleteMapping("/{id}")

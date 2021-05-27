@@ -72,8 +72,7 @@ public class ProductGroupRestController {
     public ResponseEntity<?> create(@ApiParam(name = "productGroupDto",
             value = "DTO товарной группы, которую необходимо создать")
                                     @RequestBody ProductGroupDto productGroupDto) {
-        ProductGroupDto productGroupDtoCreate = productGroupService.create(productGroupDto);
-        return ResponseEntity.ok().body(productGroupDtoCreate);
+        return ResponseEntity.ok().body(productGroupService.create(productGroupDto));
     }
 
     @PutMapping
@@ -87,8 +86,7 @@ public class ProductGroupRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "ProductGroupDto", value = "DTO товарной группы, которую необходимо обновить")
                                     @RequestBody ProductGroupDto productGroupDto) {
-        ProductGroupDto productGroupDtoUpdated = productGroupService.update(productGroupDto);
-        return ResponseEntity.ok().body(productGroupDtoUpdated);
+        return ResponseEntity.ok().body(productGroupService.update(productGroupDto));
     }
 
     @DeleteMapping("/{id}")

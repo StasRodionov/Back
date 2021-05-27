@@ -108,9 +108,9 @@ public class TaskRestController {
     )
     @PutMapping
     public ResponseEntity<TaskDto> update(@RequestBody TaskDto dto) {
-        var updated = taskService.update(dto);
-        return ResponseEntity.ok().body(updated);
+        return ResponseEntity.ok().body(taskService.update(dto));
     }
+
 
     @ApiOperation(value = "deleteById", notes = "Удаление задачи по её id")
     @ApiResponses(value = {

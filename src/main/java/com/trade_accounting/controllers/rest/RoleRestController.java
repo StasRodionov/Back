@@ -74,8 +74,7 @@ public class RoleRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "roleDto",
             value = "DTO роли, которую необходимо создать") @RequestBody RoleDto roleDto) {
-        RoleDto roleDtoCreate = roleService.create(roleDto);
-        return ResponseEntity.ok().body(roleDtoCreate);
+        return ResponseEntity.ok().body(roleService.create(roleDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновляет роль на основе переданных данных")
@@ -90,8 +89,7 @@ public class RoleRestController {
     public ResponseEntity<?> update(@ApiParam(name = "roleDto",
             value = "DTO роли, которую необходимо обновить")
                                     @RequestBody RoleDto roleDto) {
-        RoleDto roleDtoUpdate = roleService.update(roleDto);
-        return ResponseEntity.ok().body(roleDtoUpdate);
+        return ResponseEntity.ok().body(roleService.update(roleDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет роль на основе переданного ID")

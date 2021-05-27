@@ -70,8 +70,7 @@ public class AttributeOfCalculationObjectRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> create(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto) {
-        AttributeOfCalculationObjectDto attributeOfCalculationObjectDtoCreate = attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto);
-        return ResponseEntity.ok().body(attributeOfCalculationObjectDtoCreate);
+        return ResponseEntity.ok().body(attributeOfCalculationObjectService.create(attributeOfCalculationObjectDto));
     }
 
     @PutMapping
@@ -84,8 +83,7 @@ public class AttributeOfCalculationObjectRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> update(@RequestBody AttributeOfCalculationObjectDto attributeOfCalculationObjectDto) {
-        AttributeOfCalculationObjectDto attributeOfCalculationObjectDtoUpdated = attributeOfCalculationObjectService.update(attributeOfCalculationObjectDto);
-        return ResponseEntity.ok().body(attributeOfCalculationObjectDtoUpdated);
+        return ResponseEntity.ok().body(attributeOfCalculationObjectService.update(attributeOfCalculationObjectDto));
     }
 
     @DeleteMapping("/{id}")

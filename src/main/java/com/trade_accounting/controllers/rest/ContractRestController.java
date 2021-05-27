@@ -90,8 +90,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти договор")
                                                @PathVariable(name = "id") Long id) {
-        ContractDto contractDto = contractService.getById(id);
-        return ResponseEntity.ok(contractDto);
+        return ResponseEntity.ok(contractService.getById(id));
     }
 
     @PostMapping
@@ -106,8 +105,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> create(@ApiParam(name = "contractDto",
             value = "DTO договора, который необходимо создать")
                                               @RequestBody ContractDto contractDto) {
-        ContractDto contractDtoCreate = contractService.create(contractDto);
-        return ResponseEntity.ok().body(contractDtoCreate);
+        return ResponseEntity.ok().body(contractService.create(contractDto));
     }
 
     @PutMapping
@@ -122,8 +120,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> update(@ApiParam(name = "contractDto",
             value = "DTO договора, который необходимо обновить")
                                               @RequestBody ContractDto contractDto) {
-        ContractDto contractDtoUpdated = contractService.update(contractDto);
-        return ResponseEntity.ok().body(contractDtoUpdated);
+        return ResponseEntity.ok().body(contractService.update(contractDto));
     }
 
     @DeleteMapping("/{id}")
