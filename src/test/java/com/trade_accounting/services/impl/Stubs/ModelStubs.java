@@ -30,10 +30,16 @@ import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.ProductDto;
+import com.trade_accounting.models.fias.City;
+import com.trade_accounting.models.fias.District;
+import com.trade_accounting.models.fias.FiasAddressModel;
+import com.trade_accounting.models.fias.Region;
+import com.trade_accounting.models.fias.Street;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -267,6 +273,47 @@ public class ModelStubs {
         return ContractorStatus.builder()
                 .id(id)
                 .name("Новый")
+                .build();
+    }
+
+    public static City getCity(Long id){
+        return City.builder()
+                .id(id)
+                .name("Petrpopavlovsk")
+                .district(getDistrict(id))
+                .streets(new ArrayList<>())
+                .build();
+    }
+    public static District getDistrict(Long id){
+        return District.builder()
+                .id(id)
+                .name("Vasileostrivky")
+                .region(getRegion(id))
+                .cities(new ArrayList<>())
+                .build();
+    }
+    public static Street getStreet(Long id){
+        return Street.builder()
+                .id(id)
+                .name("Volodarskogo")
+                .city(getCity(id))
+                .build();
+    }
+    public static Region getRegion(Long id){
+        return Region.builder()
+                .id(id)
+                .name("SKO")
+                .districts(new ArrayList<>())
+                .build();
+    }
+    public static FiasAddressModel getFiasAddressModel(Long id){
+        return FiasAddressModel.builder()
+                .id(id)
+                .aoguid("example")
+                .aolevel("1")
+                .formalname("formalName")
+                .parentguid("parentguid")
+                .shortname("shortname")
                 .build();
     }
 }

@@ -120,13 +120,11 @@ public abstract class DtoMapper {
     );
 
     //AccessParameters
-    public AccessParametersDto AccessParametersToAccessParametersDto(AccessParameters accessParameters){
-        if (accessParameters == null){
-            return null;
-        }
-        return AccessParametersDto.builder().id(accessParameters.getId()).generalAccess(accessParameters.getGeneralAccess())
-                .employeeId(accessParameters.getEmployee().getId()).departmentId(accessParameters.getDepartment().getId()).build();
-    }
+    @Mappings({
+            @Mapping(source = "employee.id", target = "employeeId"),
+            @Mapping(source = "department.id", target = "departmentId")
+    })
+    public abstract AccessParametersDto AccessParametersToAccessParametersDto(AccessParameters accessParameters);
 
     public AccessParameters AccessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto){
         if (accessParametersDto == null){
@@ -427,10 +425,12 @@ public abstract class DtoMapper {
 
     public abstract ContractorStatus statusDtoToStatus(ContractorStatusDto status);
 
-    //Task
+    //Task *Test
+    @Mappings({
+            @Mapping(source = "taskEmployee.id", target = "employeeId"),
+            @Mapping(source = "taskAuthor.id", target = "taskAuthorId")
+    })
     public abstract TaskDto taskToTaskDto(Task task);
-
-    public abstract Task taskDtoToTask(TaskDto taskDto);
 
     //TaskComment
     public abstract TaskCommentDto taskCommentToTaskCommentDto(TaskComment taskComment);
