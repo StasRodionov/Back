@@ -47,11 +47,11 @@ public class ProductGroupServiceImpl implements ProductGroupService {
         } else {
             productGroup.setProductGroup(null);
         }
-
         productGroupRepository.save(productGroup);
 
         return dto;
     }
+
 
     @Override
     public ProductGroupDto update(ProductGroupDto dto) {

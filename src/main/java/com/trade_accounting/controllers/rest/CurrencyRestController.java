@@ -84,9 +84,8 @@ public class CurrencyRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<CurrencyDto> create(@ApiParam(name = "currencyDto",
-            value = "DTO валюты, которую необходимо создать") @RequestBody CurrencyDto currencyDto){
-        currencyService.create(currencyDto);
-        return ResponseEntity.ok().build();
+            value = "DTO валюты, которую необходимо создать") @RequestBody CurrencyDto currencyDto) {
+        return ResponseEntity.ok().body(currencyService.create(currencyDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновляет валюту на основе передданых данных")
@@ -101,8 +100,7 @@ public class CurrencyRestController {
     public ResponseEntity<CurrencyDto> update(@ApiParam(name = "currencyDto",
             value = "DTO валюты, которую необходимо обновить") @RequestBody CurrencyDto currencyDto) {
         checkEntityService.checkExistsCurrencyById(currencyDto.getId());
-        currencyService.update(currencyDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(currencyService.update(currencyDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет валюту на основе переданного ID")

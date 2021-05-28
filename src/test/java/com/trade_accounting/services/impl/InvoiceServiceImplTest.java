@@ -62,7 +62,7 @@ class InvoiceServiceImplTest {
     }
 
     @Test
-    void getAll_shouldReturnListFilledInvoiceDtoByType() {
+    void getAll_shouldReturnListFilledInvoiceDtoByType() { //этот тест не проходит вообще
         when(invoiceRepository.findByTypeOfInvoice(any(TypeOfInvoice.class)))
                 .thenReturn(
                         Stream.of(
@@ -76,14 +76,22 @@ class InvoiceServiceImplTest {
                 invoiceDtoList,
                 "failure - expected that a list of invoiceDto not null"
         );
+
+
         assertTrue(
                 invoiceDtoList.size() > 0,
                 "failure - expected that a list of invoiceDto grater than 0"
         );
+
+
+
+
         verify(invoiceRepository).findByTypeOfInvoice(any(TypeOfInvoice.class));
         for (InvoiceDto invoiceDto : invoiceDtoList) {
             invoiceListDtoIsCorrectlyInited(invoiceDto);
         }
+
+
     }
 
     @Test

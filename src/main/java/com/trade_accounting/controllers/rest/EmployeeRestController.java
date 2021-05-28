@@ -73,7 +73,7 @@ public class EmployeeRestController {
                     @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
                     @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
-    }) Specification<Employee> specification) {
+            }) Specification<Employee> specification) {
 
         return ResponseEntity.ok(employeeService.search(specification));
     }
@@ -127,7 +127,7 @@ public class EmployeeRestController {
     )
     public ResponseEntity<EmployeeDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти работника")
-                                                   @PathVariable(name = "id") Long id) {
+                                               @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsEmployeeById(id);
         EmployeeDto employeeDto = employeeService.getById(id);
         return ResponseEntity.ok(employeeDto);
@@ -144,10 +144,9 @@ public class EmployeeRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> create(@ApiParam(name = "employeeDto", value = "DTO работника, который необходимо создать")
-                                        @RequestBody EmployeeDto employeeDto){
+                                    @RequestBody EmployeeDto employeeDto) {
         checkEntityService.checkForBadEmployee(employeeDto);
-        employeeService.create(employeeDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(employeeService.create(employeeDto));
     }
 
     @PutMapping
@@ -161,11 +160,10 @@ public class EmployeeRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "employeeDto",
             value = "DTO работника, c обновленными данными")
-                                        @RequestBody EmployeeDto employeeDto) {
+                                    @RequestBody EmployeeDto employeeDto) {
         checkEntityService.checkExistsEmployeeById(employeeDto.getId());
         checkEntityService.checkForBadEmployee(employeeDto);
-        employeeService.update(employeeDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(employeeService.update(employeeDto));
     }
 
     @DeleteMapping("/{id}")
@@ -179,7 +177,7 @@ public class EmployeeRestController {
     )
     public ResponseEntity<?> deleteById(@ApiParam(name = "id",
             value = "ID работника, которого необходимо удалить")
-                                            @PathVariable(name = "id") Long id) {
+                                        @PathVariable(name = "id") Long id) {
         employeeService.deleteById(id);
         return ResponseEntity.ok().build();
     }
@@ -192,7 +190,7 @@ public class EmployeeRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<EmployeeDto> getUserDetails(@AuthenticationPrincipal String email){
+    public ResponseEntity<EmployeeDto> getUserDetails(@AuthenticationPrincipal String email) {
         EmployeeDto employeeDto = employeeService.getByEmail(email);
         return ResponseEntity.ok(employeeDto);
     }

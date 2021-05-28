@@ -113,13 +113,13 @@ class ProductServiceImplTest {
     @Test
     void getAllByContractorId() {
         List<Product> productList = Stream.of(ModelStubs.getProduct(1L)).collect(Collectors.toList());
-        when(repository.getAllByContractorId(1L)).thenReturn(productList);
+        when(repository.getAllByContractorId(1L)).thenReturn(productList);// валится здесь
 
         List<ProductDto> allByContractorId = productService.getAllByContractorId(1L);
 
-        verify(repository).getAllByContractorId(1L);
+        verify(repository).getAllByContractorId(1L);// здесь
         verify(dtoMapper).toProductDto(any(List.class));
-        assertEquals(dtoMapper.toProductDto(productList), allByContractorId);
+        assertEquals(dtoMapper.toProductDto(productList), allByContractorId);// и здесь
     }
 
     @Test

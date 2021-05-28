@@ -86,6 +86,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {
+<<<<<<< HEAD
         Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
         employeeRepository.save(employee);
         return employeeDto;
@@ -143,6 +144,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
 
+=======
+        Employee employee =dtoMapper.employeeDtoToEmployee(employeeDto);
+        Employee employeeSaved = employeeRepository.save(employee);
+        employeeDto.setId(employeeSaved.getId());
+        return employeeDto;
+    }
+
+    @Override
+    public EmployeeDto update(EmployeeDto employeeDto) {
+        Employee employee =dtoMapper.employeeDtoToEmployee(employeeDto);
+>>>>>>> dev
         employeeRepository.save(employee);
         return employeeDto;
     }

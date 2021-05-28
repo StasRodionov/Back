@@ -50,7 +50,8 @@ public class StreetServiceImpl implements StreetService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        streetRepository.deleteById(id);
-    }
+        public void deleteById (Long id){
+            streetRepository.deleteById(id);
+        }
+
 }
