@@ -38,14 +38,13 @@ public class DistrictServiceImpl implements DistrictService {
     @Override
     public DistrictDto create(DistrictDto districtDto) {
         District district1 = dtoMapper.toDistrict(districtDto);
-        district1.setRegion(regionRepository.getOne(districtDto.getRegionDto().getId()));
         District district = repository.save(district1);
         return dtoMapper.toDistrictDto(district);
     }
 
     @Override
     public DistrictDto update(DistrictDto districtDto) {
-        return create(districtDto);
+        return dtoMapper.toDistrictDto(repository.save(dtoMapper.toDistrict(districtDto)));
     }
 
     @Override
