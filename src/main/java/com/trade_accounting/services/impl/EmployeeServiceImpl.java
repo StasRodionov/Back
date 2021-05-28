@@ -1,14 +1,8 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Employee;
-import com.trade_accounting.models.Image;
-import com.trade_accounting.models.Role;
-import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.PageDto;
-import com.trade_accounting.models.dto.PositionDto;
-import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
@@ -27,7 +21,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,78 +79,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {
-<<<<<<< HEAD
-        Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
-        employeeRepository.save(employee);
-        return employeeDto;
-    }
-
-    @SneakyThrows
-    @Override
-    public EmployeeDto update(EmployeeDto employeeDto) {
-        Employee employee = dtoMapper.employeeDtoToEmployee(employeeDto);
-
-        ImageDto imageDto = employeeDto.getImageDto();
-        //create image or update if present
-        if (imageDto != null && imageDto.getContent() != null) {
-            Image image = dtoMapper.imageDtoToImage(imageDto, "employees");
-            employee.setImage(image);
-        }
-        //Deleting previous image table and image file
-        if (employee.getId() != null) {
-            Optional<Employee> optional = employeeRepository.findById(employee.getId());
-
-            if (optional.isPresent() && optional.get().getImage() != null) {
-                Long previousImageId = optional.get().getImage().getId();
-                String previousImageUrl = optional.get().getImage().getImageUrl();
-
-                imageRepository.deleteById(previousImageId);
-                Files.deleteIfExists(Paths.get(previousImageUrl));
-            }
-        }
-
-        DepartmentDto department = employeeDto.getDepartmentDto();
-        PositionDto position = employeeDto.getPositionDto();
-        Set<RoleDto> setOfRoleDto = employeeDto.getRoleDto();
-
-        if (department != null) {
-            employee.setDepartment(
-                    departmentRepository.findById(department.getId()).orElse(null)
-            );
-        }
-
-        if (position != null) {
-            employee.setPosition(
-                    positionRepository.findById(position.getId()).orElse(null)
-            );
-        }
-
-        if (setOfRoleDto != null) {
-            Set<Role> roles = setOfRoleDto.stream()
-                    .map(role ->
-                            role != null
-                                    ? roleRepository.findById(role.getId()).orElse(null)
-                                    : null)
-                    .collect(Collectors.toSet());
-
-            employee.setRoles(roles);
-        }
-
-
-=======
-        Employee employee =dtoMapper.employeeDtoToEmployee(employeeDto);
-        Employee employeeSaved = employeeRepository.save(employee);
+        Employee employeeSaved = employeeRepository.save(dtoMapper.employeeDtoToEmployee(employeeDto));
         employeeDto.setId(employeeSaved.getId());
         return employeeDto;
     }
 
     @Override
     public EmployeeDto update(EmployeeDto employeeDto) {
-        Employee employee =dtoMapper.employeeDtoToEmployee(employeeDto);
->>>>>>> dev
-        employeeRepository.save(employee);
+        employeeRepository.save(dtoMapper.employeeDtoToEmployee(employeeDto));
         return employeeDto;
     }
+
 
     @SneakyThrows
     @Override

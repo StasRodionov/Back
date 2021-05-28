@@ -41,26 +41,17 @@ public class RetailStoreServiceImpl implements RetailStoreService {
 
     @Override
     public RetailStoreDto create(RetailStoreDto retailStoreDto) {
-<<<<<<< HEAD
-        RetailStore retailStore = dtoMapper.retailStoreDtoToRetailStore(retailStoreDto);
-        RetailStore retailStoreCreated = retailStoreRepository.save(retailStore);
-        retailStoreDto.setId(retailStoreCreated.getId());
-        return dtoMapper.retailStoreToRetailStoreDto(retailStoreCreated);
-=======
         RetailStore retailStore = ModelDtoConverter.convertToRetailStore(retailStoreDto);
         retailStoreDto.setId(retailStore.getId());
         retailStoreRepository.save(retailStore);
         return retailStoreDto;
->>>>>>> dev
     }
 
     @Override
     public RetailStoreDto update(RetailStoreDto retailStoreDto) {
-        RetailStore retailStore = dtoMapper.retailStoreDtoToRetailStore(retailStoreDto);
-        RetailStore retailStoreUpdated = retailStoreRepository.save(retailStore);
-        return dtoMapper.retailStoreToRetailStoreDto(retailStoreUpdated);
+        create(retailStoreDto);
+        return retailStoreDto;
     }
-
 
     @Override
     public void deleteById(Long id) {
