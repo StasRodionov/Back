@@ -53,7 +53,7 @@ public class ContractRestController {
         return ResponseEntity.ok(contracts);
     }
 
-    //добавил
+    
     @GetMapping("/search/{searchContr}")
     @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых договоров")
     @ApiResponses(value = {

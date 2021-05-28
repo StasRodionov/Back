@@ -62,10 +62,12 @@ import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.models.dto.fias.CityDto;
 import com.trade_accounting.models.dto.fias.DistrictDto;
+import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
 import com.trade_accounting.models.dto.fias.RegionDto;
 import com.trade_accounting.models.dto.fias.StreetDto;
 import com.trade_accounting.models.fias.City;
 import com.trade_accounting.models.fias.District;
+import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
 import lombok.SneakyThrows;
@@ -380,14 +382,30 @@ public abstract class DtoMapper {
 
     public abstract Role roleDtoToRole(RoleDto role);
 
-    //Task
+    //Task *Test
+    @Mappings({
+            @Mapping(source = "taskEmployee.id", target = "employeeId"),
+            @Mapping(source = "taskAuthor.id", target = "taskAuthorId")
+    })
     public abstract TaskDto taskToTaskDto(Task task);
 
+    @Mappings({
+            @Mapping(source = "employeeId", target = "taskEmployee.id"),
+            @Mapping(source = "taskAuthorId", target = "taskAuthor.id")
+    })
     public abstract Task taskDtoToTask(TaskDto taskDto);
 
-    //TaskComment
+    //TaskComment *Test
+    @Mappings({
+            @Mapping(source = "publisher.id", target = "publisherId"),
+            @Mapping(source = "task.id", target = "taskId"),
+    })
     public abstract TaskCommentDto taskCommentToTaskCommentDto(TaskComment taskComment);
 
+    @Mappings({
+            @Mapping(source = "publisherId", target = "publisher.id"),
+            @Mapping(source = "taskId", target = "task.id")
+    })
     public abstract TaskComment taskCommentDtoToTaskComment(TaskCommentDto taskCommentDto);
 
     //TaxSystem
@@ -428,13 +446,51 @@ public abstract class DtoMapper {
     })
     public abstract RetailStore retailStoreDtoToRetailStore(RetailStoreDto retailStoreDto);
 
+    @Mappings({
+            @Mapping(source = "districtDtos", target = "districts")
+    })
     public abstract Region toRegion(RegionDto regionDto);
+
+    @Mappings({
+            @Mapping(source = "districts", target = "districtDtos")
+    })
     public abstract RegionDto toRegionDto(Region region);
+
+    @Mappings({
+            @Mapping(source = "regionDto", target = "region"),
+            @Mapping(source = "citiesDto", target = "cities")
+    })
     public abstract District toDistrict(DistrictDto districtDto);
+
+    @Mappings({
+            @Mapping(source = "region", target = "regionDto"),
+            @Mapping(source = "cities", target = "citiesDto")
+    })
     public abstract DistrictDto toDistrictDto(District district);
+
+    @Mappings({
+            @Mapping(source = "districtDto", target = "district"),
+            @Mapping(source = "streetsDto", target = "streets")
+    })
     public abstract City toCity(CityDto cityDto);
+
+    @Mappings({
+            @Mapping(source = "district", target = "districtDto"),
+            @Mapping(source = "streets", target = "streetsDto")
+    })
     public abstract CityDto toCityDto(City city);
+
+    @Mappings({
+            @Mapping(source = "cityDto", target = "city")
+    })
     public abstract Street toStreet(StreetDto streetDto);
+
+    @Mappings({
+            @Mapping(source = "city", target = "cityDto")
+    })
     public abstract StreetDto toStreetDto(Street street);
 
+    public abstract FiasAddressModel toFiasAddressModel(FiasAddressModelDto dto);
+
+    public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
 }

@@ -38,7 +38,6 @@ public class StreetServiceImpl implements StreetService {
     @Override
     public StreetDto create(StreetDto streetDto) {
         Street street = dtoMapper.toStreet(streetDto);
-        street.setCity(cityRepository.getOne(streetDto.getCityDto().getId()));
         Street save = streetRepository.save(street);
         return dtoMapper.toStreetDto(save);
     }
@@ -50,7 +49,7 @@ public class StreetServiceImpl implements StreetService {
     }
 
     @Override
-    public void deleteById(Integer id) {  
+    public void deleteById(Long id) {
         streetRepository.deleteById(id);
     }
 }
