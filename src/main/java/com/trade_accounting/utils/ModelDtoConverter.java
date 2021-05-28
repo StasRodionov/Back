@@ -438,7 +438,7 @@ public class ModelDtoConverter {
     public static FiasAddressModel toFiasAddressModel(FiasAddressModelDto modelDto) {
         return modelMapper.map(modelDto, FiasAddressModel.class);
     }
-    // добавил
+    
     public static ContractDto convertToContactDto(Contract contract) {
         ContractDto contractDto = modelMapper.map(contract, ContractDto.class);
         return contractDto;
