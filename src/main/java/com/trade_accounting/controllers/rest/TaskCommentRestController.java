@@ -91,7 +91,7 @@ public class TaskCommentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @PostMapping(consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<Void> create(@RequestBody TaskCommentDto dto) {
+    public ResponseEntity<TaskCommentDto> create(@RequestBody TaskCommentDto dto) {
         var created = commentService.create(dto);
 
         URI commentURI = ServletUriComponentsBuilder
@@ -101,7 +101,7 @@ public class TaskCommentRestController {
                 .normalize()
                 .toUri();
 
-        return ResponseEntity.created(commentURI).build();
+        return ResponseEntity.created(commentURI).body(created);
     }
 
     @ApiOperation(value = "update", notes = "Обновление комментария")
@@ -112,9 +112,8 @@ public class TaskCommentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody TaskCommentDto dto) {
-        commentService.update(dto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<TaskCommentDto> update(@RequestBody TaskCommentDto dto) {
+        return ResponseEntity.ok().body(commentService.update(dto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаление комментария по его id")

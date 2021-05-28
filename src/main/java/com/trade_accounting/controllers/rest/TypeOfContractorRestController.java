@@ -79,8 +79,7 @@ public class TypeOfContractorRestController<СheckEntityService> {
     public ResponseEntity<?> create(@ApiParam(name = "typeOfContractorDto",
             value = "DTO типа контрагента, который необходимо создать")
                                     @RequestBody TypeOfContractorDto typeOfContractorDto) {
-        typeOfContractorService.create(typeOfContractorDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(typeOfContractorService.create(typeOfContractorDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновляет тип контрагента на основе переданных данных")
@@ -95,8 +94,7 @@ public class TypeOfContractorRestController<СheckEntityService> {
     public ResponseEntity<?> update(@ApiParam(name = "typeOfContractorDto",
             value = "DTO типа контрагента, который необходимо обновить")
                                     @RequestBody TypeOfContractorDto typeOfContractorDto) {
-        typeOfContractorService.update(typeOfContractorDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(typeOfContractorService.update(typeOfContractorDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет тип контрагента на основе переданного ID")

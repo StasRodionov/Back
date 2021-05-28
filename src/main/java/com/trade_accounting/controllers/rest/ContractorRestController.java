@@ -168,8 +168,7 @@ public class ContractorRestController {
             value = "DTO контрагента, которого необходимо создать")
                                                 @RequestBody ContractorDto contractorDto) {
         addressService.create(contractorDto.getLegalDetailDto().getAddressDto());
-        ContractorDto contractorDtoCreate = contractorService.create(contractorDto);
-        return ResponseEntity.ok(contractorDtoCreate);
+        return ResponseEntity.ok().body(contractorService.create(contractorDto));
     }
 
     @PutMapping
@@ -184,8 +183,7 @@ public class ContractorRestController {
     public ResponseEntity<ContractorDto> update(@ApiParam(name = "contractorDto",
             value = "DTO контрагента, которого необходимо обновить")
                                                 @RequestBody ContractorDto contractorDto) {
-        contractorService.update(contractorDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(contractorService.update(contractorDto));
     }
 
     @DeleteMapping("/{id}")

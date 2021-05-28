@@ -46,7 +46,7 @@ public class UnitServiceImpl implements UnitService {
         unit.setSortNumber(
                 SortNumberConverter.convert(unitDto.getSortNumber())
         );
-
+        unitDto.setId(unit.getId());
         unitRepository.save(unit);
         return unitDto;
     }

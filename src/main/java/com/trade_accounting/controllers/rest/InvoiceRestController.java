@@ -118,8 +118,7 @@ public class InvoiceRestController {
     )
     public ResponseEntity<InvoiceDto> create(@ApiParam(name = "invoiceDto", value = "DTO накладной, которую необходимо создать")
                                              @RequestBody InvoiceDto invoiceDto) {
-        InvoiceDto invoiceDto1 = invoiceService.create(invoiceDto);
-        return ResponseEntity.ok().body(invoiceDto1);
+        return ResponseEntity.ok().body(invoiceService.create(invoiceDto));
     }
 
     @PutMapping
@@ -133,8 +132,7 @@ public class InvoiceRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "invoiceDto", value = "DTO накладной, которую необходимо обновить")
                                     @RequestBody InvoiceDto invoiceDto) {
-        invoiceService.update(invoiceDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(invoiceService.update(invoiceDto));
     }
 
     @DeleteMapping("/{id}")

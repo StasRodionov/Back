@@ -75,8 +75,7 @@ public class DepartmentRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
     public ResponseEntity<?> create(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо создать") @RequestBody DepartmentDto departmentDto) {
-        departmentService.create(departmentDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(departmentService.create(departmentDto));
     }
 
     @PutMapping
@@ -88,8 +87,7 @@ public class DepartmentRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
     public ResponseEntity<?> update(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо обновить") @RequestBody DepartmentDto departmentDto) {
-        departmentService.update(departmentDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(departmentService.update(departmentDto));
     }
 
     @DeleteMapping("/{id}")

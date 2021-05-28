@@ -90,7 +90,7 @@ public class TaskRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @PostMapping(consumes = MediaType.ALL_VALUE)
-    public ResponseEntity<Void> create(@RequestBody TaskDto dto) {
+    public ResponseEntity<TaskDto> create(@RequestBody TaskDto dto) {
         var created = taskService.create(dto);
 
         URI taskURI = ServletUriComponentsBuilder
@@ -99,8 +99,7 @@ public class TaskRestController {
                 .buildAndExpand(created.getId())
                 .normalize()
                 .toUri();
-
-        return ResponseEntity.created(taskURI).build();
+        return ResponseEntity.created(taskURI).body(created);
     }
 
     @ApiOperation(value = "update", notes = "Обновление задачи")
@@ -111,10 +110,10 @@ public class TaskRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody TaskDto dto) {
-        taskService.update(dto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<TaskDto> update(@RequestBody TaskDto dto) {
+        return ResponseEntity.ok().body(taskService.update(dto));
     }
+
 
     @ApiOperation(value = "deleteById", notes = "Удаление задачи по её id")
     @ApiResponses(value = {

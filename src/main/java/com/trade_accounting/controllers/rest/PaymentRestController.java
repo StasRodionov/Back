@@ -43,6 +43,7 @@ public class PaymentRestController {
         this.paymentService = paymentService;
         this.checkEntityService = checkEntityService;
     }
+
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех платежей")
     @ApiResponses(value = {
@@ -51,7 +52,7 @@ public class PaymentRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<PaymentDto>> getAll(){
+    public ResponseEntity<List<PaymentDto>> getAll() {
         List<PaymentDto> paymentDtoList = paymentService.getAll();
         log.info("Запрошен список платежей");
         return ResponseEntity.ok(paymentDtoList);
@@ -84,10 +85,9 @@ public class PaymentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> create(@ApiParam(name = "paymentDto", value = "DTO платежа, который необходимо создать")
-                                    @RequestBody PaymentDto paymentDto){
-        paymentService.create(paymentDto);
+                                    @RequestBody PaymentDto paymentDto) {
         log.info("Записан новый экземпляр платежа - {}", paymentDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(paymentService.create(paymentDto));
     }
 
     @PutMapping
@@ -101,10 +101,10 @@ public class PaymentRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "paymentDto", value = "DTO платежа, который необходимо обновить")
                                     @RequestBody PaymentDto paymentDto) {
-        paymentService.update(paymentDto);
         log.info("Обновлен экземпляр платежа с id = {}", paymentDto.getId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(paymentService.update(paymentDto));
     }
+
     @DeleteMapping("/{id}")
     @ApiOperation(value = "deleteById", notes = "Удаление платежа по его id")
     @ApiResponses(value = {
@@ -150,7 +150,7 @@ public class PaymentRestController {
     )
     public ResponseEntity<List<PaymentDto>> search(@ApiParam(name = "search", type = "String",
             value = "Переданная строка, по которой необходимо найти платежи")
-                                                   @PathVariable(name = "search") String search){
+                                                   @PathVariable(name = "search") String search) {
         List<PaymentDto> paymentDtoList = paymentService.search(search);
         log.info("Запрошен список платежей");
         return ResponseEntity.ok(paymentDtoList);

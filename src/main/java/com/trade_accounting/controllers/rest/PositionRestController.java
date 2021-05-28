@@ -3,6 +3,11 @@ package com.trade_accounting.controllers.rest;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.PositionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +19,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 import java.util.List;
 
@@ -80,9 +79,8 @@ public class PositionRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "PositionDto", value = "DTO должности, которую необходимо создать")
                                     @RequestBody PositionDto positionDto) {
-        positionService.create(positionDto);
         log.info("Записан новый экземпляр PositionDto");
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(positionService.create(positionDto));
     }
 
     @PutMapping
@@ -96,9 +94,8 @@ public class PositionRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "PositionDto", value = "DTO должности, которую необходимо обновить")
                                     @RequestBody PositionDto positionDto) {
-        positionService.update(positionDto);
         log.info("Обновлен экземпляр PositionDto");
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(positionService.update(positionDto));
     }
 
     @DeleteMapping("/{id}")

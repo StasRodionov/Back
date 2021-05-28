@@ -1,5 +1,6 @@
 package com.trade_accounting.models.dto;
 
+import com.trade_accounting.models.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,8 @@ public class CompanyDto {
 
     private String address;
 
+  //  private Address address;
+
     private String commentToAddress;
 
     private String leader;
@@ -56,6 +59,7 @@ public class CompanyDto {
                       String email,
                       Boolean payerVat,
                       String address,
+                    //  Address address,
                       String commentToAddress,
                       String leader,
                       String leaderManagerPosition,
@@ -83,4 +87,6 @@ public class CompanyDto {
         this.legalDetailDto = new LegalDetailDto();
         this.legalDetailDto.setId(legalDetailId);
     }
+
+
 }

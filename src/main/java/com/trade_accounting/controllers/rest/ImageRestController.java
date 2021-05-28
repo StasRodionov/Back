@@ -66,7 +66,6 @@ public class ImageRestController {
     }
 
 
-
     @ApiOperation(value = "deleteById", notes = "Удаляет фото на основе переданного ID")
     @DeleteMapping("/{id}")
     @ApiResponses(value = {

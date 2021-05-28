@@ -75,9 +75,8 @@ public class ProductGroupRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "productGroupDto",
             value = "DTO товарной группы, которую необходимо создать")
-                                        @RequestBody ProductGroupDto productGroupDto){
-        productGroupService.create(productGroupDto);
-        return ResponseEntity.ok().build();
+                                    @RequestBody ProductGroupDto productGroupDto) {
+        return ResponseEntity.ok().body(productGroupService.create(productGroupDto));
     }
 
     @PutMapping
@@ -90,9 +89,8 @@ public class ProductGroupRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> update(@ApiParam(name = "ProductGroupDto", value = "DTO товарной группы, которую необходимо обновить")
-            @RequestBody ProductGroupDto productGroupDto) {
-        productGroupService.update(productGroupDto);
-        return ResponseEntity.ok().build();
+                                    @RequestBody ProductGroupDto productGroupDto) {
+        return ResponseEntity.ok().body(productGroupService.update(productGroupDto));
     }
 
     @DeleteMapping("/{id}")
@@ -106,7 +104,7 @@ public class ProductGroupRestController {
     )
     public ResponseEntity<?> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо удалить товарную группу")
-            @PathVariable(name = "id") Long id) {
+                                        @PathVariable(name = "id") Long id) {
         productGroupService.deleteById(id);
         return ResponseEntity.ok().build();
     }

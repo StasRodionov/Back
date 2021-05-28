@@ -50,7 +50,7 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<ContractorDto> search(Specification<Contractor> specification) {
-        return executeSearch(contractorRepository, ModelDtoConverter::convertToContractorDto, specification);
+        return executeSearch(contractorRepository, dtoMapper::contractorToContractorDto, specification);
     }
 
     @Override
@@ -110,8 +110,10 @@ public class ContractorServiceImpl implements ContractorService {
                         )
                 )
         );
+
         return dtoMapper.contractorToContractorDto(contractorRepository.save(contractor));
     }
+
 
     @Override
     public ContractorDto update(ContractorDto contractorDto) {

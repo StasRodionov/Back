@@ -65,7 +65,7 @@ public class LegalDetailRestController {
         checkEntityService.checkExistsLegalDetailById(id);
         LegalDetailDto legalDetailDto = legalDetailService.getById(id);
         log.info("Запрошен экземпляр LegalDetailDto с id= {}", id);
-        return ResponseEntity.ok(legalDetailDto);
+        return ResponseEntity.ok(legalDetailService.getById(id));
     }
 
     @PostMapping
@@ -79,9 +79,8 @@ public class LegalDetailRestController {
     )
     public ResponseEntity<LegalDetailDto> create(@ApiParam(name = "legalDetailDto", value = "DTO юридические реквизиты, которые необходимо создать")
                                                  @RequestBody LegalDetailDto legalDetailDto) {
-        legalDetailService.create(legalDetailDto);
         log.info("Записан новый экземпляр LegalDetailDto - {}", legalDetailDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(legalDetailService.create(legalDetailDto));
     }
 
     @PutMapping
@@ -93,11 +92,10 @@ public class LegalDetailRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<LegalDetailService> update(@ApiParam(name = "legalDetailDto", value = "DTO юридические реквизиты с обновленными данными")
-                                                     @RequestBody LegalDetailDto legalDetailDto) {
-        legalDetailService.update(legalDetailDto);
+    public ResponseEntity<LegalDetailDto> update(@ApiParam(name = "legalDetailDto", value = "DTO юридические реквизиты с обновленными данными")
+                                                 @RequestBody LegalDetailDto legalDetailDto) {
         log.info("Обновлен экземпляр LegalDetailDto - {}", legalDetailDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(legalDetailService.update(legalDetailDto));
     }
 
     @DeleteMapping("/{id}")
