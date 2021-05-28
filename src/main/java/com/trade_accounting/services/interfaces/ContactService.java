@@ -10,9 +10,9 @@ public interface ContactService extends AbstractService<ContactDto> {
 
     ContactDto getById(Long id);
 
-    ContactDto create(ContactDto contactDto);
+  //  ContactDto create(ContactDto contactDto);
 
-    ContactDto update(ContactDto contactDto);
+  //  ContactDto update(ContactDto contactDto);
 
     void deleteById(Long id);
 }

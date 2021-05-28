@@ -10,9 +10,9 @@ public interface RetailStoreService extends AbstractService<RetailStoreDto>{
 
     RetailStoreDto getById(Long id);
 
-    RetailStoreDto create(RetailStoreDto retailStoreDto);
+ //   RetailStoreDto create(RetailStoreDto retailStoreDto);
 
-    RetailStoreDto update(RetailStoreDto retailStoreDto);
+ //   RetailStoreDto update(RetailStoreDto retailStoreDto);
 
     void deleteById(Long id);
 
