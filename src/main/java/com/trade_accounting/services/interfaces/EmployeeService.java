@@ -10,19 +10,19 @@ import java.util.List;
 
 public interface EmployeeService extends SearchableService<Employee, EmployeeDto>, AbstractService<EmployeeDto>{
 
-    List<EmployeeDto> getAll();
+ //   List<EmployeeDto> getAll();
 
     PageDto<EmployeeDto> search(Specification<Employee> specification, Pageable page);
 
-    EmployeeDto getById(Long id);
+ //   EmployeeDto getById(Long id);
 
     // void save(EmployeeDto employeeDto);
 
-    EmployeeDto create(EmployeeDto employeeDto);
+   // EmployeeDto create(EmployeeDto employeeDto);
 
-    EmployeeDto update(EmployeeDto employeeDto);
+  //  EmployeeDto update(EmployeeDto employeeDto);
 
-    void deleteById(Long id);
+ //   void deleteById(Long id);
 
     EmployeeDto getByEmail(String email);
 }

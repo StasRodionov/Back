@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface RetailStoreService extends AbstractService<RetailStoreDto>{
 
-    List<RetailStoreDto> getAll();
+ //   List<RetailStoreDto> getAll();
 
-    RetailStoreDto getById(Long id);
+//    RetailStoreDto getById(Long id);
 
  //   RetailStoreDto create(RetailStoreDto retailStoreDto);
 
  //   RetailStoreDto update(RetailStoreDto retailStoreDto);
 
-    void deleteById(Long id);
+//    void deleteById(Long id);
 
 }

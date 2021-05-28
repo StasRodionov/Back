@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface ContactService extends AbstractService<ContactDto> {
 
-    List<ContactDto> getAll();
+ //   List<ContactDto> getAll();
 
-    ContactDto getById(Long id);
+//    ContactDto getById(Long id);
 
   //  ContactDto create(ContactDto contactDto);
 
   //  ContactDto update(ContactDto contactDto);
 
-    void deleteById(Long id);
+//    void deleteById(Long id);
 }
