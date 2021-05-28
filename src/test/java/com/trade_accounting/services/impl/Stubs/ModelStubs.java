@@ -286,13 +286,6 @@ public class ModelStubs {
                 .cities(new ArrayList<>())
                 .build();
     }
-    public static Street getStreet(Long id){
-        return Street.builder()
-                .id(id)
-                .name("Volodarskogo")
-                .city(getCity(id))
-                .build();
-    }
     public static Region getRegion(Long id){
         return Region.builder()
                 .id(id)
@@ -317,23 +310,6 @@ public class ModelStubs {
                 .name("Новый")
                 .build();
     }
-
-    public static City getCity(Long id){
-        return City.builder()
-                .id(id)
-                .name("Petrpopavlovsk")
-                .district(getDistrict(id))
-                .streets(new ArrayList<>())
-                .build();
-    }
-    public static District getDistrict(Long id){
-        return District.builder()
-                .id(id)
-                .name("Vasileostrivky")
-                .region(getRegion(id))
-                .cities(new ArrayList<>())
-                .build();
-    }
     public static Street getStreet(Long id){
         return Street.builder()
                 .id(id)
@@ -341,22 +317,6 @@ public class ModelStubs {
                 .city(getCity(id))
                 .build();
     }
-    public static Region getRegion(Long id){
-        return Region.builder()
-                .id(id)
-                .name("SKO")
-                .districts(new ArrayList<>())
-                .build();
-    }
-    public static FiasAddressModel getFiasAddressModel(Long id){
-        return FiasAddressModel.builder()
-                .id(id)
-                .aoguid("example")
-                .aolevel("1")
-                .formalname("formalName")
-                .parentguid("parentguid")
-                .shortname("shortname")
-                .build();
-    }
+
 }
 
