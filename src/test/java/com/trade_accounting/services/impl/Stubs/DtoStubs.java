@@ -18,6 +18,10 @@ import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.DepartmentDto;
+import com.trade_accounting.models.dto.fias.CityDto;
+import com.trade_accounting.models.dto.fias.DistrictDto;
+import com.trade_accounting.models.dto.fias.RegionDto;
+import com.trade_accounting.models.dto.fias.StreetDto;
 import com.trade_accounting.utils.DtoMapper;
 import org.mapstruct.factory.Mappers;
 import com.trade_accounting.models.dto.LegalDetailDto;
@@ -127,4 +131,5 @@ public class DtoStubs {
                 ModelStubs.getCurrency(id)
         );
     }
+    
 }
