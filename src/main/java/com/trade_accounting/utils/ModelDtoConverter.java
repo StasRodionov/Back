@@ -4,6 +4,7 @@ import com.trade_accounting.models.Address;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contact;
+import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Department;
@@ -25,6 +26,7 @@ import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContactDto;
+import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
@@ -445,5 +447,10 @@ public class ModelDtoConverter {
 
     public static FiasAddressModel toFiasAddressModel(FiasAddressModelDto modelDto) {
         return modelMapper.map(modelDto, FiasAddressModel.class);
+    }
+    
+    public static ContractDto convertToContactDto(Contract contract) {
+        ContractDto contractDto = modelMapper.map(contract, ContractDto.class);
+        return contractDto;
     }
 }

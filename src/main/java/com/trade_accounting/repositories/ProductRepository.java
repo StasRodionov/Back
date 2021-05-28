@@ -12,13 +12,21 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
-    @Query("from Product p where p.productGroup.id = :id")
+    @Query("from Product p where p.productGroup.id = :id and p.service = false")
     List<Product> getAllByProductGroupId(@Param("id") Long id);
 
-    @Query("from Product p where p.contractor.id = :id")
+    @Query("from Product p where p.productGroup.id = :id and p.service = true")
+    List<Product> getAllServicesByProductGroupId(@Param("id") Long id);
+
+    @Query("from Product p where p.contractor.id = :id and p.service = false")
     List<Product> getAllByContractorId(@Param("id") Long id);
 
-    @Query("from Product p where concat(p.id, ' ', p.name, ' ', p.description) like concat('%', :query, '%')")
+    @Query("from Product p where p.contractor.id = :id and p.service = true")
+    List<Product> getAllServicesByContractorId(@Param("id") Long id);
+
+    @Query("from Product p where concat(p.id, ' ', p.name, ' ', p.description) like concat('%', :query, '%') and p.service = false")
     List<Product> search(@Param("query") String query);
 
+    @Query("from Product p where concat(p.id, ' ', p.name, ' ', p.description) like concat('%', :query, '%') and p.service = false")
+    List<Product> searchService (@Param("query") String query);
 }

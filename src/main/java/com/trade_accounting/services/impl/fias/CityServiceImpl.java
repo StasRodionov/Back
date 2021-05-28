@@ -39,14 +39,13 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityDto create(CityDto cityDto) {
         City city1 = dtoMapper.toCity(cityDto);
-        city1.setDistrict(districtRepository.getOne(cityDto.getDistrictDto().getId()));
         City city = repository.save(city1);
         return dtoMapper.toCityDto(city);
     }
 
     @Override
     public CityDto update(CityDto cityDto) {
-        City city = repository.save(ModelDtoConverter.toCity(cityDto));
+        City city = repository.save(dtoMapper.toCity(cityDto));
         return dtoMapper.toCityDto(city);
     }
 

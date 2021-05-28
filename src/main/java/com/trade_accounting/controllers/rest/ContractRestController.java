@@ -53,20 +53,36 @@ public class ContractRestController {
         return ResponseEntity.ok(contracts);
     }
 
+    
+    @GetMapping("/search/{searchContr}")
+    @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых договоров")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение отф. списка договоров"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<ContractDto>> getAll(@ApiParam(name = "searchContr",
+            value = "Переданный в URL searchTerm, по которому необходимо найти договор")
+                                                      @PathVariable(name = "searchContr") String searchContr) {
+        List<ContractDto> contractDtoList = contractService.getAll(searchContr);
+        return ResponseEntity.ok(contractDtoList);
+    }
+
     @GetMapping("/search")
     @ApiOperation(value = "search", notes = "Получение списка договоров по заданным параметрам")
     public ResponseEntity<List<ContractDto>> search(
             @Conjunction(value = {
-                    @Or ({@Spec(path = "bankAccount.bank", params = "bankAccount",spec = LikeIgnoreCase.class),
+                    @Or({@Spec(path = "bankAccount.bank", params = "bankAccount", spec = LikeIgnoreCase.class),
                             @Spec(path = "bankAccount.account", params = "bankAccount", spec = Like.class)}),
 
                     @Or({@Spec(path = "legalDetail.firstName", params = "legalDetails", spec = LikeIgnoreCase.class),
                             @Spec(path = "legalDetail.lastName", params = "legalDetails", spec = LikeIgnoreCase.class),
                             @Spec(path = "legalDetail.middleName", params = "legalDetails", spec = LikeIgnoreCase.class)
                     }
-                            )},
+                    )},
                     and = {
-                    @Spec(path = "id", params = "id", spec = Equal.class),
+                            @Spec(path = "id", params = "id", spec = Equal.class),
                             @Spec(path = "amount", params = "amount", spec = Equal.class),
                             @Spec(path = "contractor.name", params = "contractor", spec = LikeIgnoreCase.class),
                             @Spec(path = "contractDate", params = "contractDate", spec = Equal.class),
@@ -74,7 +90,7 @@ public class ContractRestController {
                             @Spec(path = "archive", params = "archive", spec = Equal.class),
                             @Spec(path = "number", params = "number", spec = Like.class),
                             @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
-            }) Specification<Contract> specification
+                    }) Specification<Contract> specification
     ) {
         return ResponseEntity.ok(contractService.search(specification));
     }
@@ -89,9 +105,8 @@ public class ContractRestController {
     )
     public ResponseEntity<ContractDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти договор")
-                                                   @PathVariable(name = "id") Long id) {
-        ContractDto contractDto = contractService.getById(id);
-        return ResponseEntity.ok(contractDto);
+                                               @PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(contractService.getById(id));
     }
 
     @PostMapping
@@ -105,9 +120,8 @@ public class ContractRestController {
     )
     public ResponseEntity<ContractDto> create(@ApiParam(name = "contractDto",
             value = "DTO договора, который необходимо создать")
-                                                  @RequestBody ContractDto contractDto) {
-        contractService.create(contractDto);
-        return ResponseEntity.ok().build();
+                                              @RequestBody ContractDto contractDto) {
+        return ResponseEntity.ok().body(contractService.create(contractDto));
     }
 
     @PutMapping
@@ -121,9 +135,8 @@ public class ContractRestController {
     )
     public ResponseEntity<ContractDto> update(@ApiParam(name = "contractDto",
             value = "DTO договора, который необходимо обновить")
-                                                  @RequestBody ContractDto contractDto) {
-        contractService.update(contractDto);
-        return ResponseEntity.ok().build();
+                                              @RequestBody ContractDto contractDto) {
+        return ResponseEntity.ok().body(contractService.update(contractDto));
     }
 
     @DeleteMapping("/{id}")
@@ -137,7 +150,7 @@ public class ContractRestController {
     )
     public ResponseEntity<ContractDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо удалить договор")
-                                                      @PathVariable(name = "id") Long id) {
+                                                  @PathVariable(name = "id") Long id) {
         contractService.deleteById(id);
         return ResponseEntity.ok().build();
     }
