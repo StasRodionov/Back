@@ -50,7 +50,7 @@ public class RoleServiceImpl implements RoleService {
         Role role = roleRepository.save(
                 dtoMapper.roleDtoToRole(roleDto)
         );
-
+        roleDto.setId(role.getId());
         return dtoMapper.roleToRoleDto(role);
     }
 
