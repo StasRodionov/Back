@@ -3,6 +3,8 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.repositories.AccessParametersRepository;
+import com.trade_accounting.repositories.DepartmentRepository;
+import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.services.interfaces.AccessParametersService;
 import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,15 @@ import java.util.stream.Collectors;
 public class AccessParametersServiceImpl implements AccessParametersService {
 
     private final AccessParametersRepository accessParametersRepository;
+    private final EmployeeRepository employeeRepository;
+    private final DepartmentRepository departmentRepository;
 
     private final DtoMapper dtoMapper;
 
-    public AccessParametersServiceImpl(AccessParametersRepository accessParametersRepository, DtoMapper dtoMapper) {
+    public AccessParametersServiceImpl(AccessParametersRepository accessParametersRepository, EmployeeRepository employeeRepository, DepartmentRepository departmentRepository, DtoMapper dtoMapper) {
         this.accessParametersRepository = accessParametersRepository;
+        this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
         this.dtoMapper = dtoMapper;
     }
 
@@ -40,7 +46,9 @@ public class AccessParametersServiceImpl implements AccessParametersService {
     @Override
     public AccessParametersDto create(AccessParametersDto dto) {
         return dtoMapper.AccessParametersToAccessParametersDto(accessParametersRepository
-                .save(dtoMapper.AccessParametersDtoToAccessParameters(dto)));
+                .save(AccessParameters.builder().id(dto.getId()).generalAccess(dto.getGeneralAccess())
+                        .employee(dtoMapper.employeeDtoToEmployee(employeeRepository.getById(dto.getEmployeeId())))
+                        .department(dtoMapper.departmentDtoToDepartment(departmentRepository.getById(dto.getDepartmentId()))).build()));
     }
 
     @Override

@@ -72,10 +72,13 @@ import com.trade_accounting.models.fias.City;
 import com.trade_accounting.models.fias.District;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
+import com.trade_accounting.repositories.DepartmentRepository;
+import com.trade_accounting.repositories.EmployeeRepository;
 import lombok.SneakyThrows;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -91,6 +94,20 @@ public abstract class DtoMapper {
 
     private static final String UPLOAD_DIR = "images";
 
+    private EmployeeRepository employeeRepository;
+
+    private DepartmentRepository departmentRepository;
+
+    @Autowired
+    public final void setEmployeeRepository(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
+    @Autowired
+    public final void setDepartmentRepository(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
+    }
+
     //AttributeOfCalculationObjectDto
     public abstract AttributeOfCalculationObjectDto
     attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
@@ -103,17 +120,22 @@ public abstract class DtoMapper {
     );
 
     //AccessParameters
-    @Mappings({
-            @Mapping(source = "employee", target = "employeeDto"),
-            @Mapping(source = "department", target = "departmentDto")
-    })
-    public abstract AccessParametersDto AccessParametersToAccessParametersDto(AccessParameters accessParameters);
+    public AccessParametersDto AccessParametersToAccessParametersDto(AccessParameters accessParameters){
+        if (accessParameters == null){
+            return null;
+        }
+        return AccessParametersDto.builder().id(accessParameters.getId()).generalAccess(accessParameters.getGeneralAccess())
+                .employeeId(accessParameters.getEmployee().getId()).departmentId(accessParameters.getDepartment().getId()).build();
+    }
 
-    @Mappings({
-            @Mapping(source = "employeeDto", target = "employee"),
-            @Mapping(source = "departmentDto", target = "department")
-    })
-    public abstract AccessParameters AccessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto);
+    public AccessParameters AccessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto){
+        if (accessParametersDto == null){
+            return null;
+        }
+        return AccessParameters.builder().id(accessParametersDto.getId()).generalAccess(accessParametersDto.getGeneralAccess())
+                .employee(employeeDtoToEmployee(employeeRepository.getById(accessParametersDto.getEmployeeId())))
+                .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
+    }
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);

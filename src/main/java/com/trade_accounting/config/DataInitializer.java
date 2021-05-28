@@ -114,7 +114,6 @@ public class DataInitializer {
     private final ContractorStatusService contractorStatusService;
     private final AccessParametersService accessParametersService;
 
-
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
             RoleService roleService,
@@ -197,7 +196,6 @@ public class DataInitializer {
         initTaxSystems();
         initProductGroups();
         initCurrency();
-
         initLegalDetails();
         initCompanies();
         initContacts();
@@ -211,23 +209,22 @@ public class DataInitializer {
         initInvoiceProducts();
         initProject();
         initPayment();
-
         initTasks();
         initTaskComments();
         initRetailStores();
     }
 
     private void initAccessParameters() {
-        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(1L), departmentService.getById(1L)));
-        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(2L), departmentService.getById(2L)));
-        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(3L), departmentService.getById(3L)));
-        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(4L), departmentService.getById(4L)));
-        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(5L), departmentService.getById(5L)));
-        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(1L), departmentService.getById(1L)));
-        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(2L), departmentService.getById(2L)));
-        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(3L), departmentService.getById(3L)));
-        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(4L), departmentService.getById(4L)));
-        accessParametersService.create(new AccessParametersDto(null, false, employeeService.getById(5L), departmentService.getById(5L)));
+        accessParametersService.create(new AccessParametersDto(null, false, 1L, 1L));
+        accessParametersService.create(new AccessParametersDto(null, false, 2L, 2L));
+        accessParametersService.create(new AccessParametersDto(null, false, 3L, 3L));
+        accessParametersService.create(new AccessParametersDto(null, false, 4L, 4L));
+        accessParametersService.create(new AccessParametersDto(null, false, 5L, 5L));
+        accessParametersService.create(new AccessParametersDto(null, false, 1L, 1L));
+        accessParametersService.create(new AccessParametersDto(null, false, 2L, 2L));
+        accessParametersService.create(new AccessParametersDto(null, false, 3L, 3L));
+        accessParametersService.create(new AccessParametersDto(null, false, 4L, 4L));
+        accessParametersService.create(new AccessParametersDto(null, false, 5L, 5L));
     }
 
     public void initRetailStores() {

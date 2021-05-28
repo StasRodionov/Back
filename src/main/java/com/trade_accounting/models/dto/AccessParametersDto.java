@@ -1,10 +1,12 @@
 package com.trade_accounting.models.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccessParametersDto {
@@ -13,7 +15,7 @@ public class AccessParametersDto {
 
     private Boolean generalAccess;
 
-    private EmployeeDto employeeDto;
+    private Long employeeId;
 
-    private DepartmentDto departmentDto;
+    private Long departmentId;
 }
