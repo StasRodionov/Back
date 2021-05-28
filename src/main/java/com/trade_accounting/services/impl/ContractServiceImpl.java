@@ -37,7 +37,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<ContractDto> getAll(String searchContr) {
-        if(searchContr.equals("null") || searchContr.isEmpty()) {
+        if("null".equals(searchContr) || searchContr.isEmpty()) {
             List<Contract> all = contractRepository.findAll();
             return all.stream().map(dtoMapper::contractToContractDto).collect(Collectors.toList());
         } else {
