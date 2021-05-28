@@ -7,6 +7,7 @@ import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,11 +49,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDto create(DepartmentDto departmentDto) {
-        Department department = dtoMapper.departmentDtoToDepartment(departmentDto);
+        departmentDto.setId(dtoMapper.departmentDtoToDepartment(departmentDto).getId());
         return dtoMapper.departmentToDepartmentDto(
-                departmentRepository.save(department)
+                departmentRepository.save(dtoMapper.departmentDtoToDepartment(departmentDto))
         );
+
     }
+
 
     @Override
     public DepartmentDto update(DepartmentDto departmentDto) {

@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
@@ -30,8 +31,8 @@ public class ContractorGroupServiceImpl implements ContractorGroupService {
 
     @Override
     public ContractorGroupDto create(ContractorGroupDto dto) {
-        contractorGroupRepository
-                .save(dtoMapper.contractorGroupDtoToContractorGroup(dto));
+      ContractorGroup contractorGroupSaved = contractorGroupRepository.save(dtoMapper.contractorGroupDtoToContractorGroup(dto));
+        dto.setId(contractorGroupSaved.getId());
         return dto;
     }
 
