@@ -40,7 +40,7 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     public RegionDto update(RegionDto regionDto) {
-        return create(regionDto);
+        return dtoMapper.toRegionDto(repository.save(dtoMapper.toRegion(regionDto)));
     }
 
     @Override

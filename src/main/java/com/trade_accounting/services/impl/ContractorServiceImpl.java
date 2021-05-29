@@ -12,7 +12,6 @@ import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +63,7 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<ContractorDto> getAll(String searchTerm) {
-        if (searchTerm.equals("null") || searchTerm.isEmpty()) {
+        if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
             List<Contractor> all = contractorRepository.findAll();
             return all.stream().map(dtoMapper::contractorToContractorDto).collect(Collectors.toList());
         } else {
