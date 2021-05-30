@@ -50,7 +50,7 @@ public class CompanyRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<CompanyDto>> getAll(){
+    public ResponseEntity<List<CompanyDto>> getAll() {
         List<CompanyDto> companyDtos = companyService.getAll();
         return ResponseEntity.ok(companyDtos);
     }
@@ -89,7 +89,7 @@ public class CompanyRestController {
     )
     public ResponseEntity<CompanyDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти компанию")
-                                                  @PathVariable(name = "id") Long id){
+                                              @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistCompanyById(id);
         CompanyDto companyDto = companyService.getById(id);
         return ResponseEntity.ok(companyDto);
@@ -105,7 +105,7 @@ public class CompanyRestController {
     )
     public ResponseEntity<CompanyDto> getByEmail(@ApiParam(name = "email", type = "String",
             value = "Переданный в URL email по которому необходимо найти компанию", required = true)
-                                                     @PathVariable(name = "email") String email){
+                                                 @PathVariable(name = "email") String email) {
         CompanyDto companyDto = companyService.getByEmail(email);
         return ResponseEntity.ok(companyDto);
     }
@@ -120,10 +120,9 @@ public class CompanyRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> create(@ApiParam(name = "companyDto", value = "DTO компании, которую необходимо создать")
-                                        @RequestBody CompanyDto companyDto){
+                                    @RequestBody CompanyDto companyDto) {
         checkEntityService.checkForBadCompany(companyDto);
-        companyService.create(companyDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(companyService.create(companyDto));
     }
 
     @PutMapping
@@ -136,11 +135,10 @@ public class CompanyRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> update(@ApiParam(name = "companyDto", value = "DTO компании, которую необходимо обновить")
-                                        @RequestBody CompanyDto companyDto) {
+                                    @RequestBody CompanyDto companyDto) {
         checkEntityService.checkExistCompanyById(companyDto.getId());
         checkEntityService.checkForBadCompany(companyDto);
-        companyService.update(companyDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(companyService.update(companyDto));
     }
 
     @DeleteMapping("/{id}")
@@ -154,7 +152,7 @@ public class CompanyRestController {
     )
     public ResponseEntity<?> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо удалить компанию")
-                                            @PathVariable(name = "id") Long id) {
+                                        @PathVariable(name = "id") Long id) {
         companyService.deleteById(id);
         return ResponseEntity.ok().build();
     }

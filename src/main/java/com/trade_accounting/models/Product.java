@@ -53,6 +53,9 @@ public class Product {
     @Column(name = "archive")
     private Boolean archive = false;
 
+    @Column(name = "service")
+    private Boolean service = false;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
@@ -108,4 +111,29 @@ public class Product {
         this.description = description;
         this.archive = archive;
     }
+
+    public Product(String name, BigDecimal purchasePrice, String description, Unit unit, Boolean archive, Boolean service, List<ProductPrice> productPrices, TaxSystem taxSystem, List<Image> images, ProductGroup productGroup, AttributeOfCalculationObject attributeOfCalculationObject) {
+        this.name = name;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.unit = unit;
+        this.archive = archive;
+        this.service = service;
+        this.productPrices = productPrices;
+        this.taxSystem = taxSystem;
+        this.images = images;
+        this.productGroup = productGroup;
+        this.attributeOfCalculationObject = attributeOfCalculationObject;
+    }
+
+    public Product(Long id, String name, BigDecimal purchasePrice, String description, Boolean archive, Boolean service) {
+        this.id = id;
+        this.name = name;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.archive = archive;
+        this.service = service;
+    }
+
+
 }

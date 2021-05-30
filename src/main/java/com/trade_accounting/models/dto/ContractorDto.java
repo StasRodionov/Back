@@ -20,17 +20,12 @@ public class ContractorDto {
     private String commentToAddress;
     private String comment;
     private String discountCardNumber;
-    private Boolean generalAccess;
 
     private List<ContactDto> contactDto;
     private ContractorGroupDto contractorGroupDto;
     private TypeOfPriceDto typeOfPriceDto;
     private List<BankAccountDto> bankAccountDto;
     private LegalDetailDto legalDetailDto;
-    private StatusDto statusDto;
-    private EmployeeDto employeeDto;
-    private DepartmentDto departmentDto;
-
-
-
+    private ContractorStatusDto contractorStatusDto;
+    private AccessParametersDto accessParametersDto;
 }

@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
@@ -17,14 +19,19 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "statuses")
-public class Status {
+@Table(name = "access_parameters")
+public class AccessParameters {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "type_of_status")
-    private String typeOfStatus;
+    @Column(name = "general_access")
+    private Boolean generalAccess;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Employee employee;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Department department;
 }

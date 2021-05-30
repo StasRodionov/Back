@@ -46,7 +46,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         Currency currency = currencyRepository.save(
                 dtoMapper.currencyDtoToCurrency(currencyDto)
         );
-
+        currencyDto.setId(currency.getId());
         return dtoMapper.currencyToCurrencyDto(currency);
     }
 

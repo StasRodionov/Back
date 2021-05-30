@@ -5,11 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StatusDto {
+public class AccessParametersDto {
+
     private Long id;
-    private String typeOfStatus;
+
+    private Boolean generalAccess;
+
+    private Long employeeId;
+
+    private Long departmentId;
 }

@@ -23,7 +23,7 @@ import java.util.List;
 public class Region {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String name;
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "region")
     List<District> districts;

@@ -1,18 +1,21 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
+import com.trade_accounting.repositories.AccessParametersRepository;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.ContactRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
+import com.trade_accounting.repositories.DepartmentRepository;
+import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,9 @@ public class ContractorServiceImpl implements ContractorService {
     private final LegalDetailRepository legalDetailRepository;
     private final AddressRepository addressRepository;
     private final ContactRepository contactRepository;
+    private final AccessParametersRepository accessParametersRepository;
+    private final EmployeeRepository employeeRepository;
+    private final DepartmentRepository departmentRepository;
     private final DtoMapper dtoMapper;
 
     public ContractorServiceImpl(ContractorRepository contractorRepository,
@@ -37,20 +43,23 @@ public class ContractorServiceImpl implements ContractorService {
                                  TypeOfPriceRepository typeOfPriceRepository,
                                  LegalDetailRepository legalDetailRepository,
                                  AddressRepository addressRepository,
-                                 ContactRepository contactRepository, DtoMapper dtoMapper) {
+                                 ContactRepository contactRepository, AccessParametersRepository accessParametersRepository, EmployeeRepository employeeRepository, DepartmentRepository departmentRepository, DtoMapper dtoMapper) {
         this.contractorRepository = contractorRepository;
         this.contractorGroupRepository = contractorGroupRepository;
         this.typeOfPriceRepository = typeOfPriceRepository;
         this.legalDetailRepository = legalDetailRepository;
         this.addressRepository = addressRepository;
         this.contactRepository = contactRepository;
+        this.accessParametersRepository = accessParametersRepository;
+        this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
         this.dtoMapper = dtoMapper;
 
     }
 
     @Override
     public List<ContractorDto> search(Specification<Contractor> specification) {
-        return executeSearch(contractorRepository, ModelDtoConverter::convertToContractorDto, specification);
+        return executeSearch(contractorRepository, dtoMapper::contractorToContractorDto, specification);
     }
 
     @Override
@@ -64,7 +73,7 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<ContractorDto> getAll(String searchTerm) {
-        if (searchTerm.equals("null") || searchTerm.isEmpty()) {
+        if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
             List<Contractor> all = contractorRepository.findAll();
             return all.stream().map(dtoMapper::contractorToContractorDto).collect(Collectors.toList());
         } else {
@@ -97,6 +106,8 @@ public class ContractorServiceImpl implements ContractorService {
                         ))
         );
 
+        contractor.setAccessParameters(dtoMapper.AccessParametersDtoToAccessParameters(contractorDto.getAccessParametersDto()));
+
         contractor.setTypeOfPrice(
                 typeOfPriceRepository.save(dtoMapper.typeOfPriceDtoToTypeOfPrice(
                         contractorDto.getTypeOfPriceDto())
@@ -110,8 +121,10 @@ public class ContractorServiceImpl implements ContractorService {
                         )
                 )
         );
+
         return dtoMapper.contractorToContractorDto(contractorRepository.save(contractor));
     }
+
 
     @Override
     public ContractorDto update(ContractorDto contractorDto) {

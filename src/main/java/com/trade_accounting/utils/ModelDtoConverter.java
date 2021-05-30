@@ -4,6 +4,7 @@ import com.trade_accounting.models.Address;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contact;
+import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Department;
@@ -15,7 +16,6 @@ import com.trade_accounting.models.Position;
 import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.Role;
-import com.trade_accounting.models.Status;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TypeOfContractor;
@@ -26,6 +26,7 @@ import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContactDto;
+import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.DepartmentDto;
@@ -37,7 +38,6 @@ import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.StatusDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
@@ -274,32 +274,6 @@ public class ModelDtoConverter {
         );
     }
 
-    public static Contractor convertToContractor(ContractorDto dto, ContractorGroup contractorGroup,
-                                                 TypeOfPrice typeOfPrice,
-                                                 List<BankAccount> bankAccount,
-                                                 LegalDetail legalDetail) {
-        return new Contractor(
-                dto.getId(),
-                dto.getName(),
-                dto.getSortNumber(),
-                dto.getPhone(),
-                dto.getFax(),
-                dto.getEmail(),
-                convertToAddress(dto.getAddressDto()),
-                dto.getCommentToAddress(),
-                dto.getComment(),
-                dto.getDiscountCardNumber(),
-                dto.getGeneralAccess(),
-                convertToListOfContact(dto.getContactDto()),
-                contractorGroup,
-                typeOfPrice,
-                bankAccount,
-                legalDetail,
-                toStatusEntity(dto.getStatusDto()),
-                convertToEmployeeEntity(dto.getEmployeeDto()),
-                toDepartmentEntity(dto.getDepartmentDto())
-        );
-    }
 
     public static ContractorGroup convertToContractorGroup(ContractorGroupDto dto) {
         return new ContractorGroup(
@@ -369,21 +343,6 @@ public class ModelDtoConverter {
         return entity;
     }
 
-    public static StatusDto toStatusDTO(Status entity) {
-        return new StatusDto(
-                entity.getId(),
-                entity.getTypeOfStatus()
-        );
-    }
-
-    public static Status toStatusEntity(StatusDto dto) {
-        var entity = new Status();
-
-        entity.setId(dto.getId());
-        entity.setTypeOfStatus(dto.getTypeOfStatus());
-
-        return entity;
-    }
 
     public static TaskDto toTaskDTO(Task entity) {
         return new TaskDto(
@@ -488,5 +447,10 @@ public class ModelDtoConverter {
 
     public static FiasAddressModel toFiasAddressModel(FiasAddressModelDto modelDto) {
         return modelMapper.map(modelDto, FiasAddressModel.class);
+    }
+    
+    public static ContractDto convertToContactDto(Contract contract) {
+        ContractDto contractDto = modelMapper.map(contract, ContractDto.class);
+        return contractDto;
     }
 }
