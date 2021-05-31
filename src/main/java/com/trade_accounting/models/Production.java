@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -23,8 +22,13 @@ public class Production {
     private Long id;
 
 
-    @NotNull
     @Column(name = "texh_cards")
     private String tech_cards;
+
+    @Column(name = "requests_production")
+    private String requests_production;
+
+    @Column(name = "tech_operations")
+    private String tech_operations;
 
 }
