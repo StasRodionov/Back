@@ -5,7 +5,6 @@ import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.repositories.fias.AddressDbRepository;
 import com.trade_accounting.services.interfaces.fias.FiasDbService;
 import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +35,7 @@ public class FiasDbServiceImpl implements FiasDbService {
 
     @Override
     public FiasAddressModelDto create(FiasAddressModelDto dto) {
-        FiasAddressModel model = repository.save(ModelDtoConverter.toFiasAddressModel(dto));
+        FiasAddressModel model = repository.save(dtoMapper.toFiasAddressModel(dto));
         return dtoMapper.toFiasAddressModelDto(model);
     }
 
