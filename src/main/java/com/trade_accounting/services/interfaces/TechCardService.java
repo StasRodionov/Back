@@ -1,4 +1,7 @@
 package com.trade_accounting.services.interfaces;
 
-public interface TechCardService {
+import com.trade_accounting.models.dto.TechCardDto;
+
+public interface TechCardService extends AbstractService<TechCardDto>{
+    
 }
