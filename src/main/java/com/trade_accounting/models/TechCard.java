@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,5 +20,23 @@ public class TechCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "comment")
+    private String comment;
+
+    @Column(name = "production_costs")
+    private Long production_costs;
+
+    @Column(name = "group")
+    private String group;
+
+    @Column(name = "finished_products")
+    private String finished_products;
+
+    @Column(name = "materials")
+    private String materials;
 
 }
