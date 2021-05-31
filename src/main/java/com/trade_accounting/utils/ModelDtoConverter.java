@@ -7,11 +7,15 @@ import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.Position;
 import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.RetailStore;
+import com.trade_accounting.models.Role;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TypeOfContractor;
@@ -52,7 +56,6 @@ import com.trade_accounting.models.fias.Street;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -158,6 +161,24 @@ public class ModelDtoConverter {
         return employeeDto;
     }
 
+    public static Employee convertToEmployeeEntity(EmployeeDto employeedto) {
+        Employee employee = modelMapper.map(employeedto, Employee.class);
+        if (employeedto.getDepartmentDto() != null) {
+            employee.setDepartment(modelMapper.map(employeedto.getDepartmentDto(), Department.class));
+        }
+        if (employeedto.getPositionDto() != null) {
+            employee.setPosition((modelMapper.map(employeedto.getPositionDto(), Position.class)));
+        }
+        if (employeedto.getRoleDto() != null) {
+            employee.setRoles(employeedto.getRoleDto().stream()
+                    .map(role -> modelMapper.map(role, Role.class)).collect(Collectors.toSet()));
+        }
+        if (employeedto.getImageDto() != null) {
+            employee.setImage(modelMapper.map(employeedto.getImageDto(), Image.class));
+        }
+        return employee;
+    }
+
     public static InvoiceDto convertToInvoiceDto(Invoice invoice) {
 
         InvoiceDto invoiceDto = modelMapper.map(invoice, InvoiceDto.class);
@@ -253,27 +274,6 @@ public class ModelDtoConverter {
         );
     }
 
-    public static Contractor convertToContractor(ContractorDto dto, ContractorGroup contractorGroup,
-                                                 TypeOfPrice typeOfPrice,
-                                                 List<BankAccount> bankAccount,
-                                                 LegalDetail legalDetail) {
-        return new Contractor(
-                dto.getId(),
-                dto.getName(),
-                dto.getSortNumber(),
-                dto.getPhone(),
-                dto.getFax(),
-                dto.getEmail(),
-                convertToAddress(dto.getAddressDto()),
-                dto.getCommentToAddress(),
-                dto.getComment(),
-                convertToListOfContact(dto.getContactDto()),
-                contractorGroup,
-                typeOfPrice,
-                bankAccount,
-                legalDetail
-        );
-    }
 
     public static ContractorGroup convertToContractorGroup(ContractorGroupDto dto) {
         return new ContractorGroup(
@@ -333,6 +333,16 @@ public class ModelDtoConverter {
         }
         return bankAccountList;
     }
+
+    public static Department toDepartmentEntity(DepartmentDto dto) {
+        var entity = new Department();
+
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        entity.setSortNumber(dto.getSortNumber());
+        return entity;
+    }
+
 
     public static TaskDto toTaskDTO(Task entity) {
         return new TaskDto(

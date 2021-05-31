@@ -1,5 +1,6 @@
 package com.trade_accounting.utils;
 
+import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
@@ -23,6 +24,7 @@ import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TaxSystem;
@@ -30,6 +32,7 @@ import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
@@ -38,6 +41,7 @@ import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
@@ -70,10 +74,13 @@ import com.trade_accounting.models.fias.District;
 import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
+import com.trade_accounting.repositories.DepartmentRepository;
+import com.trade_accounting.repositories.EmployeeRepository;
 import lombok.SneakyThrows;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -89,6 +96,20 @@ public abstract class DtoMapper {
 
     private static final String UPLOAD_DIR = "images";
 
+    private EmployeeRepository employeeRepository;
+
+    private DepartmentRepository departmentRepository;
+
+    @Autowired
+    public final void setEmployeeRepository(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
+    @Autowired
+    public final void setDepartmentRepository(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
+    }
+
     //AttributeOfCalculationObjectDto
     public abstract AttributeOfCalculationObjectDto
     attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
@@ -99,6 +120,22 @@ public abstract class DtoMapper {
     attributeOfCalculationObjectDtoToAttributeOfCalculationObject(
             AttributeOfCalculationObjectDto attributeOfCalculationObjectDto
     );
+
+    //AccessParameters
+    @Mappings({
+            @Mapping(source = "employee.id", target = "employeeId"),
+            @Mapping(source = "department.id", target = "departmentId")
+    })
+    public abstract AccessParametersDto AccessParametersToAccessParametersDto(AccessParameters accessParameters);
+
+    public AccessParameters AccessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto){
+        if (accessParametersDto == null){
+            return null;
+        }
+        return AccessParameters.builder().id(accessParametersDto.getId()).generalAccess(accessParametersDto.getGeneralAccess())
+                .employee(employeeDtoToEmployee(employeeRepository.getById(accessParametersDto.getEmployeeId())))
+                .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
+    }
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
@@ -158,7 +195,9 @@ public abstract class DtoMapper {
             @Mapping(source = "legalDetail", target = "legalDetailDto"),
             @Mapping(source = "bankAccounts", target = "bankAccountDto"),
             @Mapping(source = "address", target = "addressDto"),
-            @Mapping(source = "contact", target = "contactDto")
+            @Mapping(source = "contact", target = "contactDto"),
+            @Mapping(source = "contractorStatus", target = "contractorStatusDto"),
+            @Mapping(source = "accessParameters", target = "accessParametersDto"),
     })
     public abstract ContractorDto contractorToContractorDto(Contractor contractor);
 
@@ -169,7 +208,8 @@ public abstract class DtoMapper {
             @Mapping(source = "legalDetailDto", target = "legalDetail"),
             @Mapping(source = "addressDto", target = "address"),
             @Mapping(source = "contactDto", target = "contact"),
-
+            @Mapping(source = "contractorStatusDto", target = "contractorStatus"),
+            @Mapping(source = "accessParametersDto", target = "accessParameters"),
     })
     public abstract Contractor contractorDtoToContractor(ContractorDto contractorDto);
 
@@ -381,6 +421,11 @@ public abstract class DtoMapper {
     public abstract RoleDto roleToRoleDto(Role role);
 
     public abstract Role roleDtoToRole(RoleDto role);
+
+    //ContractorStatus
+    public abstract ContractorStatusDto statusToStatusDto(ContractorStatus contractorStatus);
+
+    public abstract ContractorStatus statusDtoToStatus(ContractorStatusDto status);
 
     //Task *Test
     @Mappings({

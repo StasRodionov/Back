@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
@@ -17,33 +19,19 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "bank_accounts")
-public class BankAccount {
+@Table(name = "access_parameters")
+public class AccessParameters {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "rcbic")
-    private String rcbic;
+    @Column(name = "general_access")
+    private Boolean generalAccess;
 
-    @Column(name = "bank")
-    private String bank;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Employee employee;
 
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "correspondent_account")
-    private String correspondentAccount;
-
-    @Column(name = "account")
-    private String account;
-
-    @Column(name = "main_account")
-    private Boolean mainAccount;
-
-    @Column(name = "sort_number")
-    private String sortNumber;
-
+    @OneToOne(fetch = FetchType.LAZY)
+    private Department department;
 }
-
