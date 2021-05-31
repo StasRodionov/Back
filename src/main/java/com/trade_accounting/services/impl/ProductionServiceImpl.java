@@ -1,10 +1,13 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.Production;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.models.dto.ProductDto;
+import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.repositories.ProductionRepository;
 import com.trade_accounting.services.interfaces.ProductService;
+import com.trade_accounting.services.interfaces.ProductionService;
 import com.trade_accounting.utils.DtoMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,10 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ProductionServiceImpl implements ProductService {
+public class ProductionServiceImpl implements ProductionService {
 
     private final ProductionRepository productionRepository;
 
@@ -27,42 +31,41 @@ public class ProductionServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAll() {
-        return null;
+    public List<ProductionDto> getAll() {
+        return productionRepository.findAll().stream()
+                .map(dtoMapper::productionToProductionDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public ProductDto getById(Long id) {
-        return null;
+    public ProductionDto getById(Long id) {
+        /*
+                return dtoMapper.projectToProjectDto(
+                projectRepository.findById(id).orElse(new Project())
+        );
+         */
+        return dtoMapper.productionToProductionDto(productionRepository.findById(id)
+        .orElse(new Production()));
     }
 
     @Override
-    public ProductDto create(ProductDto dto) {
-        return null;
+    public ProductionDto create(ProductionDto dto) {
+
+        Production production = productionRepository.save(
+                dtoMapper.productionDtoToProduction(dto)
+        );
+        dto.setId(production.getId());
+        return dtoMapper.productionToProductionDto(production);
     }
 
     @Override
-    public ProductDto update(ProductDto dto) {
-        return null;
+    public ProductionDto update(ProductionDto dto) {
+        return create(dto);
     }
 
     @Override
     public void deleteById(Long id) {
-
+        productionRepository.deleteById(id);
     }
 
-    @Override
-    public PageDto<ProductDto> search(Specification<Product> specification, Pageable page) {
-        return null;
-    }
-
-    @Override
-    public List<ProductDto> search(String value) {
-        return null;
-    }
-
-    @Override
-    public List<ProductDto> search(Specification<Product> spec) {
-        return null;
-    }
 }
