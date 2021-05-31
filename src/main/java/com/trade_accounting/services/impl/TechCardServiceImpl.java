@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class TechCardServiceImpl implements TechCardService { //не хватает репозитория для техкарты
+public class TechCardServiceImpl implements TechCardService { 
     @Override
     public List<TechCardDto> getAll() {
         return null;
