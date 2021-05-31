@@ -6,7 +6,6 @@ import com.trade_accounting.repositories.fias.CityRepository;
 import com.trade_accounting.repositories.fias.DistrictRepository;
 import com.trade_accounting.services.interfaces.fias.CityService;
 import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

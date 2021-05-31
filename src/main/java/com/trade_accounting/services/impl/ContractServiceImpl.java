@@ -6,7 +6,6 @@ import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +47,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<ContractDto> search(Specification<Contract> specification) {
-        return executeSearch(contractRepository, ModelDtoConverter::convertToContactDto, specification);
+        return executeSearch(contractRepository, dtoMapper::contractToContractDto, specification);
     }
 
     @Override
