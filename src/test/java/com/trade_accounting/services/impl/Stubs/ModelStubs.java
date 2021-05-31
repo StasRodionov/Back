@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
@@ -20,6 +21,7 @@ import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
@@ -45,6 +47,10 @@ import java.util.stream.Stream;
 
 public class ModelStubs {
     //TODO Вынести заглушки моделей из классов сервисов сюда
+
+    public static AccessParameters getAccessParameters(Long id){
+        return new AccessParameters(id, false, getEmployee(id), getDepartment(id));
+    }
 
     public static AttributeOfCalculationObject getAttributeOfCalculationObject(Long id) {
         return new AttributeOfCalculationObject(id, "name", "00001", true);
@@ -85,6 +91,7 @@ public class ModelStubs {
                 "12345678901", "324234234",
                 "email", getAddress(1L),
                 "commentToAddress", "comment",
+                "1234",
                 Stream.of(
                         getContact(1L),
                         getContact(2L),
@@ -97,7 +104,9 @@ public class ModelStubs {
                         getBankAccount(2L),
                         getBankAccount(3L)
                 ).collect(Collectors.toList()),
-                getLegalDetail(id)
+                getLegalDetail(id),
+                getStatus(id),
+                getAccessParameters(id)
         );
     }
 
@@ -277,13 +286,6 @@ public class ModelStubs {
                 .cities(new ArrayList<>())
                 .build();
     }
-    public static Street getStreet(Long id){
-        return Street.builder()
-                .id(id)
-                .name("Volodarskogo")
-                .city(getCity(id))
-                .build();
-    }
     public static Region getRegion(Long id){
         return Region.builder()
                 .id(id)
@@ -301,5 +303,20 @@ public class ModelStubs {
                 .shortname("shortname")
                 .build();
     }
+
+    public static ContractorStatus getStatus(Long id) {
+        return ContractorStatus.builder()
+                .id(id)
+                .name("Новый")
+                .build();
+    }
+    public static Street getStreet(Long id){
+        return Street.builder()
+                .id(id)
+                .name("Volodarskogo")
+                .city(getCity(id))
+                .build();
+    }
+
 }
 

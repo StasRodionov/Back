@@ -139,7 +139,7 @@ class EmployeeServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         employeeService.create(
-            DtoStubs.getEmployeeDto(1L)
+                DtoStubs.getEmployeeDto(1L)
         );
         verify(roleRepository, times(3)).findById(anyLong());
         verify(employeeRepository).save(any(Employee.class));
@@ -202,3 +202,4 @@ class EmployeeServiceImplTest {
         assertTrue(employee.getRoleDto().size() >= 1, "Expected that size of EmployeeDto role list greater than 0");
     }
 }
+

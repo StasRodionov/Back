@@ -17,33 +17,13 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "bank_accounts")
-public class BankAccount {
+@Table(name = "contractor_statuses")
+public class ContractorStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "rcbic")
-    private String rcbic;
-
-    @Column(name = "bank")
-    private String bank;
-
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "correspondent_account")
-    private String correspondentAccount;
-
-    @Column(name = "account")
-    private String account;
-
-    @Column(name = "main_account")
-    private Boolean mainAccount;
-
-    @Column(name = "sort_number")
-    private String sortNumber;
-
+    @Column(name = "name")
+    private String name;
 }
-

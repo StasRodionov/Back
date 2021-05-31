@@ -1,13 +1,17 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
+import com.trade_accounting.repositories.AccessParametersRepository;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.ContactRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
+import com.trade_accounting.repositories.DepartmentRepository;
+import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
@@ -29,6 +33,9 @@ public class ContractorServiceImpl implements ContractorService {
     private final LegalDetailRepository legalDetailRepository;
     private final AddressRepository addressRepository;
     private final ContactRepository contactRepository;
+    private final AccessParametersRepository accessParametersRepository;
+    private final EmployeeRepository employeeRepository;
+    private final DepartmentRepository departmentRepository;
     private final DtoMapper dtoMapper;
 
     public ContractorServiceImpl(ContractorRepository contractorRepository,
@@ -36,13 +43,16 @@ public class ContractorServiceImpl implements ContractorService {
                                  TypeOfPriceRepository typeOfPriceRepository,
                                  LegalDetailRepository legalDetailRepository,
                                  AddressRepository addressRepository,
-                                 ContactRepository contactRepository, DtoMapper dtoMapper) {
+                                 ContactRepository contactRepository, AccessParametersRepository accessParametersRepository, EmployeeRepository employeeRepository, DepartmentRepository departmentRepository, DtoMapper dtoMapper) {
         this.contractorRepository = contractorRepository;
         this.contractorGroupRepository = contractorGroupRepository;
         this.typeOfPriceRepository = typeOfPriceRepository;
         this.legalDetailRepository = legalDetailRepository;
         this.addressRepository = addressRepository;
         this.contactRepository = contactRepository;
+        this.accessParametersRepository = accessParametersRepository;
+        this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
         this.dtoMapper = dtoMapper;
 
     }
@@ -95,6 +105,8 @@ public class ContractorServiceImpl implements ContractorService {
                                 contractorDto.getContractorGroupDto()
                         ))
         );
+
+        contractor.setAccessParameters(dtoMapper.AccessParametersDtoToAccessParameters(contractorDto.getAccessParametersDto()));
 
         contractor.setTypeOfPrice(
                 typeOfPriceRepository.save(dtoMapper.typeOfPriceDtoToTypeOfPrice(
