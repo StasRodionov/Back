@@ -147,6 +147,10 @@ public abstract class DtoMapper {
 
     public abstract BankAccount bankAccountDtoToBankAccount(BankAccountDto bankAccountDto);
 
+    public abstract List<BankAccount> bankAccountDtoListToBankAccountList(List<BankAccountDto> bankAccountDtoList);
+
+    public abstract List<BankAccountDto> bankAccountListToBankAccountDtoList(List<BankAccount> bankAccountList);
+
     //Company
     @Mappings({
             @Mapping(source = "bankAccounts", target = "bankAccountDto"),

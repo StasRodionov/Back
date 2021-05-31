@@ -2,11 +2,13 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
+import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.repositories.AccessParametersRepository;
 import com.trade_accounting.repositories.AddressRepository;
+import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.ContactRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
@@ -36,6 +38,7 @@ public class ContractorServiceImpl implements ContractorService {
     private final AccessParametersRepository accessParametersRepository;
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
+    private final BankAccountRepository bankAccountRepository;
     private final DtoMapper dtoMapper;
 
     public ContractorServiceImpl(ContractorRepository contractorRepository,
@@ -43,7 +46,12 @@ public class ContractorServiceImpl implements ContractorService {
                                  TypeOfPriceRepository typeOfPriceRepository,
                                  LegalDetailRepository legalDetailRepository,
                                  AddressRepository addressRepository,
-                                 ContactRepository contactRepository, AccessParametersRepository accessParametersRepository, EmployeeRepository employeeRepository, DepartmentRepository departmentRepository, DtoMapper dtoMapper) {
+                                 ContactRepository contactRepository,
+                                 AccessParametersRepository accessParametersRepository,
+                                 EmployeeRepository employeeRepository,
+                                 DepartmentRepository departmentRepository,
+                                 BankAccountRepository bankAccountRepository,
+                                 DtoMapper dtoMapper) {
         this.contractorRepository = contractorRepository;
         this.contractorGroupRepository = contractorGroupRepository;
         this.typeOfPriceRepository = typeOfPriceRepository;
@@ -53,6 +61,7 @@ public class ContractorServiceImpl implements ContractorService {
         this.accessParametersRepository = accessParametersRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
+        this.bankAccountRepository = bankAccountRepository;
         this.dtoMapper = dtoMapper;
 
     }
@@ -99,6 +108,9 @@ public class ContractorServiceImpl implements ContractorService {
         List<Contact> contactList = dtoMapper.contactDtoListToContactList(contractorDto.getContactDto());
         contractor.setContact(contactRepository.saveAll(contactList));
 
+        List<BankAccount> bankAccountList = dtoMapper.bankAccountDtoListToBankAccountList(contractorDto.getBankAccountDto());
+        contractor.setBankAccounts(bankAccountRepository.saveAll(bankAccountList));
+
         contractor.setContractorGroup(
                 contractorGroupRepository
                         .save(dtoMapper.contractorGroupDtoToContractorGroup(
@@ -106,7 +118,10 @@ public class ContractorServiceImpl implements ContractorService {
                         ))
         );
 
-        contractor.setAccessParameters(dtoMapper.AccessParametersDtoToAccessParameters(contractorDto.getAccessParametersDto()));
+        contractor.setAccessParameters(
+                accessParametersRepository.save(dtoMapper.AccessParametersDtoToAccessParameters
+                        (contractorDto.getAccessParametersDto()))
+        );
 
         contractor.setTypeOfPrice(
                 typeOfPriceRepository.save(dtoMapper.typeOfPriceDtoToTypeOfPrice(
