@@ -91,8 +91,7 @@ public class CompanyRestController {
             value = "Переданный в URL id по которому необходимо найти компанию")
                                               @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistCompanyById(id);
-        CompanyDto companyDto = companyService.getById(id);
-        return ResponseEntity.ok(companyDto);
+        return ResponseEntity.ok(companyService.getById(id));
     }
 
     @GetMapping("/{email:^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$}")

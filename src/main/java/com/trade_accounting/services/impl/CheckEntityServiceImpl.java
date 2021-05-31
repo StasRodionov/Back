@@ -10,6 +10,7 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
@@ -70,10 +71,12 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final ContractRepository contractRepository;
     private final ContractorRepository contractorRepository;
     private final PaymentRepository paymentRepository;
+    private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
 
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
-                                  EmployeeRepository employeeRepository, DepartmentRepository departmentRepository,
+                                  EmployeeRepository employeeRepository,
+                                  DepartmentRepository departmentRepository,
                                   PositionRepository positionRepository,
                                   ImageRepository imageRepository,
                                   RoleRepository roleRepository,
@@ -95,7 +98,8 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   InvoiceProductRepository invoiceProductRepository,
                                   ContractRepository contractRepository,
                                   ContractorRepository contractorRepository,
-                                  PaymentRepository paymentRepository) {
+                                  PaymentRepository paymentRepository,
+                                  AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -121,6 +125,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.contractRepository = contractRepository;
         this.contractorRepository = contractorRepository;
         this.paymentRepository = paymentRepository;
+        this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
     }
 
 
@@ -161,6 +166,12 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsWarehouseById(Long warehouseId) {
         if(!warehouseRepository.existsById(warehouseId)) {
             throw new NotFoundEntityException("Склада с id=" + warehouseId + ", не найдено");
+        }
+    }
+    @Override
+    public void checkExistsAttributeOfCalculationObjectByID(Long attributeOfCalculationObjectId) {
+        if(!attributeOfCalculationObjectRepository.existsById(attributeOfCalculationObjectId)) {
+            throw new NotFoundEntityException("Склада с id=" + attributeOfCalculationObjectId+ ", не найдено");
         }
     }
 

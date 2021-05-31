@@ -30,7 +30,8 @@ public class ProjectRestController {
     private final ProjectService projectService;
     private final CheckEntityService checkEntityService;
 
-    public ProjectRestController(ProjectService projectService, CheckEntityService checkEntityService) {
+    public ProjectRestController(ProjectService projectService,
+                                 CheckEntityService checkEntityService) {
         this.projectService = projectService;
         this.checkEntityService = checkEntityService;
     }
@@ -59,8 +60,7 @@ public class ProjectRestController {
     public ResponseEntity<ProjectDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти проект") @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsProjectById(id);
-        ProjectDto projectDto = projectService.getById(id);
-        return ResponseEntity.ok(projectDto);
+        return ResponseEntity.ok(projectService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создает проект на основе переданных данных")

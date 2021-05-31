@@ -34,7 +34,8 @@ public class AttributeOfCalculationObjectRestController {
 
 
     @Autowired
-    public AttributeOfCalculationObjectRestController(AttributeOfCalculationObjectService attributeOfCalculationObjectService, CheckEntityService checkEntityService) {
+    public AttributeOfCalculationObjectRestController(AttributeOfCalculationObjectService attributeOfCalculationObjectService,
+                                                      CheckEntityService checkEntityService) {
         this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
         this.checkEntityService = checkEntityService;
     }
@@ -61,9 +62,8 @@ public class AttributeOfCalculationObjectRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<AttributeOfCalculationObjectDto> getById(@PathVariable("id") Long id) {
-        checkEntityService.checkExistsUnitById(id);
-        AttributeOfCalculationObjectDto attributeOfCalculationObjectDto = attributeOfCalculationObjectService.getById(id);
-        return ResponseEntity.ok(attributeOfCalculationObjectDto);
+        checkEntityService.checkExistsAttributeOfCalculationObjectByID(id);
+        return ResponseEntity.ok(attributeOfCalculationObjectService.getById(id));
     }
 
     @PostMapping

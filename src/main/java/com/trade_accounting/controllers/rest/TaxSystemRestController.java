@@ -30,7 +30,8 @@ public class TaxSystemRestController {
     private final TaxSystemService taxSystemService;
     private final CheckEntityService checkEntityService;
 
-    public TaxSystemRestController(TaxSystemService taxSystemService, CheckEntityService checkEntityService) {
+    public TaxSystemRestController(TaxSystemService taxSystemService,
+                                   CheckEntityService checkEntityService) {
         this.taxSystemService = taxSystemService;
         this.checkEntityService = checkEntityService;
     }
@@ -60,8 +61,7 @@ public class TaxSystemRestController {
             value = "ID переданный в URL по которому необходимо найти налоговую систему")
                                                     @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsTaxSystemById(id);
-        TaxSystemDto taxSystemDto = taxSystemService.getById(id);
-        return ResponseEntity.ok(taxSystemDto);
+        return ResponseEntity.ok(taxSystemService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Регистрация новой налоговой системы")

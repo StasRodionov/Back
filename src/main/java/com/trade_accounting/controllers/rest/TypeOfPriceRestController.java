@@ -29,7 +29,8 @@ public class TypeOfPriceRestController {
     private final TypeOfPriceService typeOfPriceService;
     private final CheckEntityService checkEntityService;
 
-    public TypeOfPriceRestController(TypeOfPriceService typeOfPriceService, CheckEntityService checkEntityService) {
+    public TypeOfPriceRestController(TypeOfPriceService typeOfPriceService,
+                                     CheckEntityService checkEntityService) {
         this.typeOfPriceService = typeOfPriceService;
         this.checkEntityService = checkEntityService;
     }
@@ -57,8 +58,7 @@ public class TypeOfPriceRestController {
     })
     public ResponseEntity<TypeOfPriceDto> getById(@PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsUnitById(id);
-        TypeOfPriceDto typeOfPriceDto = typeOfPriceService.getById(id);
-        return ResponseEntity.ok(typeOfPriceDto);
+        return ResponseEntity.ok(typeOfPriceService.getById(id));
     }
 
     @PostMapping

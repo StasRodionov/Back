@@ -51,7 +51,8 @@ public class ProductRestController {
     private final ProductService productService;
     private final CheckEntityService checkEntityService;
 
-    public ProductRestController(ProductService productService,CheckEntityService checkEntityService) {
+    public ProductRestController(ProductService productService,
+                                 CheckEntityService checkEntityService) {
         this.productService = productService;
         this.checkEntityService = checkEntityService;
     }
@@ -107,8 +108,7 @@ public class ProductRestController {
     public ResponseEntity<ProductDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsProductById(id);
-        ProductDto productGroupDTO = productService.getById(id);
-        return ResponseEntity.ok(productGroupDTO);
+        return ResponseEntity.ok(productService.getById(id));
     }
 
     @ApiOperation(value = "getByProductGroupId", notes = "Возвращает товары из определенной группы")

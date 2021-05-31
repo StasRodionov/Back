@@ -30,7 +30,8 @@ public class ProductGroupRestController {
     private final ProductGroupService productGroupService;
     private final CheckEntityService checkEntityService;
 
-    public ProductGroupRestController(ProductGroupService productGroupService, CheckEntityService checkEntityService) {
+    public ProductGroupRestController(ProductGroupService productGroupService,
+                                      CheckEntityService checkEntityService) {
         this.productGroupService = productGroupService;
         this.checkEntityService = checkEntityService;
     }
@@ -60,8 +61,7 @@ public class ProductGroupRestController {
             value = "Переданный в URL id по которому необходимо найти товарную группу")
             @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsProductGroupById(id);
-        ProductGroupDto productGroupDTO = productGroupService.getById(id);
-        return ResponseEntity.ok(productGroupDTO);
+        return ResponseEntity.ok(productGroupService.getById(id));
     }
 
     @PostMapping

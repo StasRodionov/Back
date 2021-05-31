@@ -27,7 +27,8 @@ public class ImageRestController {
     private final ImageService imageService;
     private final CheckEntityService checkEntityService;
 
-    public ImageRestController(ImageService imageService, CheckEntityService checkEntityService) {
+    public ImageRestController(ImageService imageService,
+                               CheckEntityService checkEntityService) {
         this.imageService = imageService;
         this.checkEntityService = checkEntityService;
     }
@@ -61,8 +62,7 @@ public class ImageRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsImageById(id);
-        ImageDto imageDto = imageService.getById(id);
-        return ResponseEntity.ok(imageDto);
+        return ResponseEntity.ok(imageService.getById(id));
     }
 
 

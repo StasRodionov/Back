@@ -79,8 +79,7 @@ public class TaskCommentRestController {
     @GetMapping("/{id}")
     public ResponseEntity<TaskCommentDto> getById(@PathVariable("id") long id) {
         checkEntityService.checkExistsTaskCommentById(id);
-        TaskCommentDto taskCommentDto = commentService.getById(id);
-        return ResponseEntity.ok(taskCommentDto);
+        return ResponseEntity.ok(commentService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создание нового комментария")

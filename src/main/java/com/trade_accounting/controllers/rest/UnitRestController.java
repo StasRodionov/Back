@@ -30,7 +30,8 @@ public class UnitRestController {
     private final UnitService unitService;
     private final CheckEntityService checkEntityService;
 
-    public UnitRestController(UnitService unitService, CheckEntityService checkEntityService) {
+    public UnitRestController(UnitService unitService,
+                              CheckEntityService checkEntityService) {
         this.unitService = unitService;
         this.checkEntityService = checkEntityService;
     }
@@ -61,8 +62,7 @@ public class UnitRestController {
             type = "Long",
             value = "ID переданный в URL по которому необходимо найти единицу измерения") @PathVariable Long id) {
         checkEntityService.checkExistsUnitById(id);
-        UnitDto unitDto = unitService.getById(id);
-        return ResponseEntity.ok(unitDto);
+        return ResponseEntity.ok(unitService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Регистрация новой единицы измерения")

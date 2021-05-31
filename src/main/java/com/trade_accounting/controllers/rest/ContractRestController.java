@@ -38,7 +38,8 @@ public class ContractRestController {
     private final ContractService contractService;
     private final CheckEntityService checkEntityService;
 
-    public ContractRestController(ContractService contractService, CheckEntityService checkEntityService) {
+    public ContractRestController(ContractService contractService,
+                                  CheckEntityService checkEntityService) {
         this.contractService = contractService;
         this.checkEntityService = checkEntityService;
     }
@@ -110,8 +111,7 @@ public class ContractRestController {
             value = "Переданный в URL id по которому необходимо найти договор")
                                                    @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsContractById(id);
-        ContractDto contractDto = contractService.getById(id);
-        return ResponseEntity.ok(contractDto);
+        return ResponseEntity.ok(contractService.getById(id));
     }
 
     @PostMapping

@@ -39,7 +39,8 @@ public class InvoiceRestController {
     private final InvoiceService invoiceService;
     private final CheckEntityService checkEntityService;
 
-    public InvoiceRestController(InvoiceService invoiceService, CheckEntityService checkEntityService) {
+    public InvoiceRestController(InvoiceService invoiceService,
+                                 CheckEntityService checkEntityService) {
         this.invoiceService = invoiceService;
         this.checkEntityService = checkEntityService;
     }
@@ -103,8 +104,7 @@ public class InvoiceRestController {
             value = "Переданный в URL id, по которому необходимо найти накладную")
                                               @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsInvoiceById(id);
-        InvoiceDto invoiceDto = invoiceService.getById(id);
-        return ResponseEntity.ok(invoiceDto);
+        return ResponseEntity.ok(invoiceService.getById(id));
     }
 
     @PostMapping

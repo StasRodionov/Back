@@ -30,7 +30,8 @@ public class DepartmentRestController {
     private final DepartmentService departmentService;
     private final CheckEntityService checkEntityService;
 
-    public DepartmentRestController(DepartmentService departmentService,CheckEntityService checkEntityService) {
+    public DepartmentRestController(DepartmentService departmentService,
+                                    CheckEntityService checkEntityService) {
         this.departmentService = departmentService;
         this.checkEntityService = checkEntityService;
     }
@@ -62,8 +63,7 @@ public class DepartmentRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsDepartmentById(id);
-        DepartmentDto departmentDto = departmentService.getById(id);
-        return ResponseEntity.ok(departmentDto);
+        return ResponseEntity.ok(departmentService.getById(id));
     }
 
     @PostMapping

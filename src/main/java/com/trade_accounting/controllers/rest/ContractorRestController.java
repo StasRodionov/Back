@@ -41,7 +41,10 @@ public class ContractorRestController {
     private final AddressService addressService;
     private final CheckEntityService checkEntityService;
 
-    public ContractorRestController(ContractorService contractorService, FiasDbService fiasDbService, AddressService addressService, CheckEntityService checkEntityService) {
+    public ContractorRestController(ContractorService contractorService,
+                                    FiasDbService fiasDbService,
+                                    AddressService addressService,
+                                    CheckEntityService checkEntityService) {
             this.contractorService = contractorService;
             this.fiasDbService = fiasDbService;
             this.addressService = addressService;
@@ -151,8 +154,7 @@ public class ContractorRestController {
             value = "Переданный в URL id по которому необходимо найти контрагента")
                                                  @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsContractorById(id);
-        ContractorDto contractorDto = contractorService.getById(id);
-        return ResponseEntity.ok(contractorDto);
+        return ResponseEntity.ok(contractorService.getById(id));
     }
 
     @PostMapping

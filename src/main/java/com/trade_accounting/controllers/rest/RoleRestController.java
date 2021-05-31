@@ -30,7 +30,8 @@ public class RoleRestController {
     private final RoleService roleService;
     private final CheckEntityService checkEntityService;
 
-    public RoleRestController(RoleService roleService, CheckEntityService checkEntityService) {
+    public RoleRestController(RoleService roleService,
+                              CheckEntityService checkEntityService) {
         this.roleService = roleService;
         this.checkEntityService = checkEntityService;
     }
@@ -63,8 +64,7 @@ public class RoleRestController {
             example = "1",
             required = true) @PathVariable("id") Long id) {
         checkEntityService.checkExistsRoleById(id);
-        RoleDto roleDto = roleService.getById(id);
-        return ResponseEntity.ok(roleDto);
+        return ResponseEntity.ok(roleService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создает роль на основе переданных данных")

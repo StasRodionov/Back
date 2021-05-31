@@ -78,8 +78,7 @@ public class TaskRestController {
     @GetMapping("/{id}")
     public ResponseEntity<TaskDto> getById(@PathVariable("id") long id) {
         checkEntityService.checkExistsTaskById(id);
-        TaskDto taskDto = taskService.getById(id);
-        return ResponseEntity.ok(taskDto);
+        return ResponseEntity.ok(taskService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создание новой задачи")

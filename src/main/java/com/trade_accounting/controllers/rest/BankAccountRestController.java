@@ -31,7 +31,8 @@ public class BankAccountRestController {
     private final BankAccountService bankAccountService;
     private final CheckEntityService checkEntityService;
 
-    public BankAccountRestController(BankAccountService bankAccountService, CheckEntityService checkEntityService) {
+    public BankAccountRestController(BankAccountService bankAccountService,
+                                     CheckEntityService checkEntityService) {
         this.bankAccountService = bankAccountService;
         this.checkEntityService = checkEntityService;
     }
@@ -87,8 +88,7 @@ public class BankAccountRestController {
     public ResponseEntity<BankAccountDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти банковский аккаунт")
                                                   @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsBankAccountById(id);
-        BankAccountDto bankAccount = bankAccountService.getById(id);
-        return ResponseEntity.ok(bankAccount);
+        return ResponseEntity.ok(bankAccountService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создает банковский аккаунт на основе переданных данных")

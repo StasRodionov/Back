@@ -32,7 +32,8 @@ public class LegalDetailRestController {
     private final LegalDetailService legalDetailService;
     private final CheckEntityService checkEntityService;
 
-    public LegalDetailRestController(LegalDetailService legalDetailService, CheckEntityService checkEntityService) {
+    public LegalDetailRestController(LegalDetailService legalDetailService,
+                                     CheckEntityService checkEntityService) {
         this.legalDetailService = legalDetailService;
         this.checkEntityService = checkEntityService;
     }
@@ -63,8 +64,6 @@ public class LegalDetailRestController {
     public ResponseEntity<LegalDetailDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти юридические реквизиты")
                                                   @PathVariable("id") Long id) {
         checkEntityService.checkExistsLegalDetailById(id);
-        LegalDetailDto legalDetailDto = legalDetailService.getById(id);
-        log.info("Запрошен экземпляр LegalDetailDto с id= {}", id);
         return ResponseEntity.ok(legalDetailService.getById(id));
     }
 

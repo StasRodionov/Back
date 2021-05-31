@@ -30,7 +30,8 @@ public class TypeOfContractorRestController<СheckEntityService> {
     private final TypeOfContractorService typeOfContractorService;
     private final CheckEntityService checkEntityService;
 
-    public TypeOfContractorRestController(TypeOfContractorService typeOfContractorService, CheckEntityService checkEntityService) {
+    public TypeOfContractorRestController(TypeOfContractorService typeOfContractorService,
+                                          CheckEntityService checkEntityService) {
         this.typeOfContractorService = typeOfContractorService;
         this.checkEntityService = checkEntityService;
     }
@@ -63,8 +64,7 @@ public class TypeOfContractorRestController<СheckEntityService> {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsTypeOfContractorById(id);
-        TypeOfContractorDto typeOfContractorDto = typeOfContractorService.getById(id);
-        return ResponseEntity.ok(typeOfContractorDto);
+        return ResponseEntity.ok(typeOfContractorService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создает тип контрагента на основе переданных данных")

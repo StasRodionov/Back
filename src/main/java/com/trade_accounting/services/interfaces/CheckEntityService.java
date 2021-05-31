@@ -14,6 +14,9 @@ public interface CheckEntityService {
     void checkExistsProjectById(Long projectId);
 
     void checkExistsWarehouseById(Long warehouseId);
+
+    void checkExistsAttributeOfCalculationObjectByID(Long attributeOfCalculationObjectId);
+
     void checkForBadEmployee(EmployeeDto employee);
     void checkExistsTaskById(Long taskId);
     void checkExistsTaskCommentById(Long taskCommentId);

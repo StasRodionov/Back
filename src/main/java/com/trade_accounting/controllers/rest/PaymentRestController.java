@@ -39,7 +39,8 @@ public class PaymentRestController {
     private final PaymentService paymentService;
     private final CheckEntityService checkEntityService;
 
-    public PaymentRestController(PaymentService paymentService, CheckEntityService checkEntityService) {
+    public PaymentRestController(PaymentService paymentService,
+                                 CheckEntityService checkEntityService) {
         this.paymentService = paymentService;
         this.checkEntityService = checkEntityService;
     }
@@ -70,9 +71,7 @@ public class PaymentRestController {
             value = "Переданный в URL id, по которому необходимо найти платеж")
                                               @PathVariable(name = "id") Long id){
         checkEntityService.checkExistsPaymentById(id);
-        PaymentDto paymentDto = paymentService.getById(id);
-        log.info("Запрошен экземпляр платежа с id = {}", id);
-        return ResponseEntity.ok(paymentDto);
+        return ResponseEntity.ok(paymentService.getById(id));
     }
 
     @PostMapping

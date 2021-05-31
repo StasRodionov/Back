@@ -30,7 +30,8 @@ public class InvoiceProductRestController {
     private final InvoiceProductService invoiceProductService;
     private final CheckEntityService checkEntityService;
 
-    public InvoiceProductRestController(InvoiceProductService invoiceProductService, CheckEntityService checkEntityService) {
+    public InvoiceProductRestController(InvoiceProductService invoiceProductService,
+                                        CheckEntityService checkEntityService) {
         this.invoiceProductService = invoiceProductService;
         this.checkEntityService = checkEntityService;
     }
@@ -63,8 +64,7 @@ public class InvoiceProductRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsInvoiceProductById(id);
-        InvoiceProductDto invoiceProductDto = invoiceProductService.getById(id);
-        return ResponseEntity.ok(invoiceProductDto);
+        return ResponseEntity.ok(invoiceProductService.getById(id));
     }
 
     @ApiOperation(value = "getByInvoiceId", notes = "Возвращает список товаров в накладной по Invoice.id")

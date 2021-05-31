@@ -32,7 +32,8 @@ public class PositionRestController {
     private final PositionService positionService;
     private final CheckEntityService checkEntityService;
 
-    public PositionRestController(PositionService positionService, CheckEntityService checkEntityService) {
+    public PositionRestController(PositionService positionService,
+                                  CheckEntityService checkEntityService) {
         this.positionService = positionService;
         this.checkEntityService = checkEntityService;
     }
@@ -63,9 +64,7 @@ public class PositionRestController {
             value = "Переданный в URL id по которому необходимо найти должность")
                                                @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsPositionById(id);
-        PositionDto positions = positionService.getById(id);
-        log.info("Запрошен экземпляр PositionDto с id= {}", id);
-        return ResponseEntity.ok(positions);
+        return ResponseEntity.ok(positionService.getById(id));
     }
 
     @PostMapping
