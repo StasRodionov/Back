@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.TypeOfPriceDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,9 +27,12 @@ import java.util.List;
 public class TypeOfPriceRestController {
 
     private final TypeOfPriceService typeOfPriceService;
+    private final CheckEntityService checkEntityService;
 
-    public TypeOfPriceRestController(TypeOfPriceService typeOfPriceService) {
+    public TypeOfPriceRestController(TypeOfPriceService typeOfPriceService,
+                                     CheckEntityService checkEntityService) {
         this.typeOfPriceService = typeOfPriceService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -53,8 +57,8 @@ public class TypeOfPriceRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<TypeOfPriceDto> getById(@PathVariable(name = "id") Long id) {
-        TypeOfPriceDto type = typeOfPriceService.getById(id);
-        return ResponseEntity.ok(type);
+        checkEntityService.checkExistsUnitById(id);
+        return ResponseEntity.ok(typeOfPriceService.getById(id));
     }
 
     @PostMapping

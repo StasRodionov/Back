@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.DepartmentDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,9 +28,12 @@ import java.util.List;
 public class DepartmentRestController {
 
     private final DepartmentService departmentService;
+    private final CheckEntityService checkEntityService;
 
-    public DepartmentRestController(DepartmentService departmentService) {
+    public DepartmentRestController(DepartmentService departmentService,
+                                    CheckEntityService checkEntityService) {
         this.departmentService = departmentService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -51,14 +55,15 @@ public class DepartmentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
+
     public ResponseEntity<DepartmentDto> getById(@ApiParam(
             name = "id",
             type = "Long",
             value = "Переданный ID  в URL по которому необходимо найти подразделение",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        DepartmentDto departmentDto = departmentService.getById(id);
-        return ResponseEntity.ok(departmentDto);
+        checkEntityService.checkExistsDepartmentById(id);
+        return ResponseEntity.ok(departmentService.getById(id));
     }
 
     @PostMapping

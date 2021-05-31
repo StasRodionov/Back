@@ -45,4 +45,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpec
             " where lower(concat(e.company.name, ' ', e.contractor.name, ' ', e.number))" +
             " like lower(concat('%', :req, '%'))")
     List<Payment> search(@Param("req") String request);
+
+
 }

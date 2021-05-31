@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,9 +30,12 @@ import java.util.List;
 public class LegalDetailRestController {
 
     private final LegalDetailService legalDetailService;
+    private final CheckEntityService checkEntityService;
 
-    public LegalDetailRestController(LegalDetailService legalDetailService) {
+    public LegalDetailRestController(LegalDetailService legalDetailService,
+                                     CheckEntityService checkEntityService) {
         this.legalDetailService = legalDetailService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -59,7 +63,7 @@ public class LegalDetailRestController {
 
     public ResponseEntity<LegalDetailDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти юридические реквизиты")
                                                   @PathVariable("id") Long id) {
-        log.info("Запрошен экземпляр LegalDetailDto с id= {}", id);
+        checkEntityService.checkExistsLegalDetailById(id);
         return ResponseEntity.ok(legalDetailService.getById(id));
     }
 
