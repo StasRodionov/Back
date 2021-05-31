@@ -1,7 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.dto.StatusDto;
-import com.trade_accounting.services.interfaces.StatusService;
+import com.trade_accounting.models.dto.ContractorStatusDto;
+import com.trade_accounting.services.interfaces.ContractorStatusService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -13,17 +13,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 @RestController
 @Tag(name = "Status Rest Controller", description = "CRUD  операции со статусами")
 @Api(tags = "Status Rest Controller")
-@RequestMapping("/api/status")
-public class StatusRestController {
+@RequestMapping("/api/contractor_status")
+public class ContractorStatusRestController {
 
-    private final StatusService statusService;
+    private final ContractorStatusService statusService;
 
-    public StatusRestController(StatusService statusService) {
+    public ContractorStatusRestController(ContractorStatusService statusService) {
         this.statusService = statusService;
     }
 
@@ -35,8 +36,8 @@ public class StatusRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<StatusDto>> getAll() {
-        List<StatusDto> statusDtoList = statusService.getAll();
+    public ResponseEntity<List<ContractorStatusDto>> getAll() {
+        List<ContractorStatusDto> statusDtoList = statusService.getAll();
         return ResponseEntity.ok(statusDtoList);
     }
 
@@ -48,10 +49,10 @@ public class StatusRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<StatusDto> getById(@ApiParam(name = "id",
+    public ResponseEntity<ContractorStatusDto> getById(@ApiParam(name = "id",
             value = "Переданный в URL id по которому необходимо найти статус")
                                                  @PathVariable(name = "id") Long id) {
-        StatusDto statusDto = statusService.getById(id);
+        ContractorStatusDto statusDto = statusService.getById(id);
         return ResponseEntity.ok(statusDto);
     }
 }
