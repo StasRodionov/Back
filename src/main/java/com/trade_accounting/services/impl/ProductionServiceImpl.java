@@ -32,10 +32,16 @@ public class ProductionServiceImpl implements ProductionService {
 
     @Override
     public List<ProductionDto> getAll() {
-        return productionRepository.findAll().stream()
+        /*
+        final List<ProductionDto> collect = productionRepository.findAll().stream()
                 .map(dtoMapper::productionToProductionDto)
                 .collect(Collectors.toList());
+        return collect;
+
+         */
+        return null;
     }
+
 
     @Override
     public ProductionDto getById(Long id) {
@@ -44,18 +50,20 @@ public class ProductionServiceImpl implements ProductionService {
                 projectRepository.findById(id).orElse(new Project())
         );
          */
-        return dtoMapper.productionToProductionDto(productionRepository.findById(id)
-        .orElse(new Production()));
+       return null;
     }
 
     @Override
     public ProductionDto create(ProductionDto dto) {
+        /*
 
         Production production = productionRepository.save(
                 dtoMapper.productionDtoToProduction(dto)
         );
         dto.setId(production.getId());
         return dtoMapper.productionToProductionDto(production);
+         */
+        return null;
     }
 
     @Override
