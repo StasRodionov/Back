@@ -4,10 +4,12 @@ import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.services.interfaces.ProductionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,6 @@ public class ProductionRestController {
     public ProductionRestController(ProductionService productionService){ this.productionService = productionService; }
 
     /*
-       -getById
        -create
        -update
        -deleteById
@@ -42,6 +43,20 @@ public class ProductionRestController {
         List<ProductionDto> productionDtoList = productionService.getAll();
         return ResponseEntity.ok(productionDtoList);
     }
-    
+
+    @ApiOperation(value = "getById", notes = "Возвращает определенное производство по Id")
+    @GetMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Производство найдено"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<ProductionDto> getById(@ApiParam(name = "id",
+            value = "ID переданный в URL по которому необходимо найти производство") @PathVariable(name = "id") Long id){
+        ProductionDto productionDto = productionService.getById(id);
+        return ResponseEntity.ok(productionDto);
+    }
+
 
 }
