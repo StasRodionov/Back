@@ -48,7 +48,6 @@ public class LegalDetailRestController {
     )
     public ResponseEntity<List<LegalDetailDto>> getAll() {
         List<LegalDetailDto> legalDetailDtoList = legalDetailService.getAll();
-        log.info("Запрошен список LegalDetailDto");
         return ResponseEntity.ok(legalDetailDtoList);
     }
 
@@ -78,7 +77,6 @@ public class LegalDetailRestController {
     )
     public ResponseEntity<LegalDetailDto> create(@ApiParam(name = "legalDetailDto", value = "DTO юридические реквизиты, которые необходимо создать")
                                                  @RequestBody LegalDetailDto legalDetailDto) {
-        log.info("Записан новый экземпляр LegalDetailDto - {}", legalDetailDto);
         return ResponseEntity.ok().body(legalDetailService.create(legalDetailDto));
     }
 
@@ -93,7 +91,6 @@ public class LegalDetailRestController {
     )
     public ResponseEntity<LegalDetailDto> update(@ApiParam(name = "legalDetailDto", value = "DTO юридические реквизиты с обновленными данными")
                                                  @RequestBody LegalDetailDto legalDetailDto) {
-        log.info("Обновлен экземпляр LegalDetailDto - {}", legalDetailDto);
         return ResponseEntity.ok(legalDetailService.update(legalDetailDto));
     }
 
@@ -109,7 +106,6 @@ public class LegalDetailRestController {
     public ResponseEntity<LegalDetailDto> deleteById(@ApiParam(name = "id", value = "ID юридических реквизитов, которые необходимо удалить")
                                                      @PathVariable("id") Long id) {
         legalDetailService.deleteById(id);
-        log.info("Удален экземпляр LegalDetailDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }

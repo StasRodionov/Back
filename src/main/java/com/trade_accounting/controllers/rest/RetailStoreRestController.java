@@ -47,7 +47,6 @@ public class RetailStoreRestController {
     })
     public ResponseEntity<List<RetailStoreDto>> getAll() {
         List<RetailStoreDto> retailStoreDtos = retailStoreService.getAll();
-        log.info("Запрошен список RetailStoreDto");
         return ResponseEntity.ok(retailStoreDtos);
     }
 
@@ -74,7 +73,6 @@ public class RetailStoreRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<RetailStoreDto> create(@RequestBody RetailStoreDto retailStoreDto) {
-        log.info("Записан новый экземпляр RetailStoreDto - {}", retailStoreDto);
         return ResponseEntity.ok().body(retailStoreService.create(retailStoreDto));
     }
 
@@ -89,7 +87,6 @@ public class RetailStoreRestController {
     })
     public ResponseEntity<RetailStoreDto> update(@RequestBody RetailStoreDto retailStoreDto) {
         checkEntityService.checkExistsRetailStoreById(retailStoreDto.getId());
-        log.info("Обновлен экземпляр RetailStoreDto с id = {}", retailStoreDto.getId());
         return ResponseEntity.ok().body(retailStoreService.update(retailStoreDto));
     }
 
@@ -104,7 +101,6 @@ public class RetailStoreRestController {
     })
     public ResponseEntity<RetailStoreDto> deleteById(@PathVariable("id") Long id) {
         retailStoreService.deleteById(id);
-        log.info("Удален экземпляр RetailStoreDto с id = {}", id);
         return ResponseEntity.ok().build();
     }
 }
