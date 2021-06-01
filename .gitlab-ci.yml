@@ -1,0 +1,94 @@
+stages:
+  - build
+  - deploy
+  - dismiss
+  - cleanup
+
+Build and Publish:
+  stage: build
+  script:
+    - type multiwerf && . $(multiwerf use 1.1 stable --as-file)
+    - type werf && source $(werf ci-env gitlab --as-file)
+    - werf build
+  except: [schedules]
+  tags: [werf]
+
+.base_deploy: &base_deploy
+  stage: deploy
+  script:
+    - type multiwerf && . $(multiwerf use 1.1 stable --as-file)
+    - type werf && source $(werf ci-env gitlab --as-file)
+    - werf converge --skip-build --set "global.env_url=$(echo ${CI_ENVIRONMENT_URL} | cut -d / -f 3)"
+  dependencies:
+    - Build and Publish
+  tags: [werf]
+
+Review:
+  stage: deploy
+  script:
+    - type multiwerf && . $(multiwerf use 1.1 stable --as-file)
+    - type werf && source $(werf ci-env gitlab --as-file)
+    - >
+      # do optional deploy/dismiss
+
+      if echo $CI_MERGE_REQUEST_LABELS | tr ',' '\n' | grep -q -P '^review$'; then
+        werf converge --skip-build --set "global.env_url=$(echo ${CI_ENVIRONMENT_URL} | cut -d / -f 3)"
+      else
+        if werf helm get $(werf helm get-release) 2>/dev/null; then
+          werf dismiss --with-namespace
+        fi
+      fi
+  environment:
+    name: review-${CI_MERGE_REQUEST_ID}
+    url: http://${CI_PROJECT_NAME}-${CI_MERGE_REQUEST_ID}.kube.DOMAIN
+    on_stop: Stop Review
+    auto_stop_in: 1 day
+  artifacts:
+    paths:
+      - werf.yaml
+  dependencies:
+    - Build and Publish
+  only: [merge_requests]
+  tags: [werf]
+
+Stop Review:
+  stage: dismiss
+  script:
+    - type multiwerf && . $(multiwerf use 1.1 stable --as-file)
+    - type werf && source $(werf ci-env gitlab --as-file)
+    - werf dismiss --with-namespace
+  environment:
+    name: review-${CI_MERGE_REQUEST_ID}
+    action: stop
+  variables:
+    GIT_STRATEGY: none
+  dependencies:
+    - Review
+  only: [merge_requests]
+  when: manual
+  tags: [werf]
+
+Deploy to Staging:
+  <<: *base_deploy
+  environment:
+    name: staging
+    url: http://${CI_PROJECT_NAME}.kube.DOMAIN
+  only: [merge_requests]
+  when: manual
+
+Deploy to Production:
+  <<: *base_deploy
+  environment:
+    name: production
+    url: https://www.company.org
+  only: [master]
+
+Cleanup:
+  stage: cleanup
+  script:
+    - type multiwerf && . $(multiwerf use 1.1 stable --as-file)
+    - type werf && source $(werf ci-env gitlab --as-file)
+    - docker login -u nobody -p ${WERF_IMAGES_CLEANUP_PASSWORD} ${WERF_REPO}
+    - werf cleanup
+  only: [schedules]
+  tags: [werf]
