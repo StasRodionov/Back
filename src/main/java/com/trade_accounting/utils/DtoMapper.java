@@ -101,14 +101,16 @@ public abstract class DtoMapper {
     );
 
     //Production
-    /*
+
     @Mappings({
             @Mapping(source = "production", target = "productionDto")
     })
 
-     */
     public abstract ProductionDto productionToProductionDto(Production production);
 
+    @Mappings({
+            @Mapping(source = "productionDto", target = "production")
+    })
     public abstract Production productionDtoToProduction(ProductionDto productionDto);
 
     // Address
