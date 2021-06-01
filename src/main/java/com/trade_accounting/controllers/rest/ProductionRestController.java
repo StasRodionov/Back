@@ -8,11 +8,14 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 @RestController
@@ -23,10 +26,11 @@ public class ProductionRestController {
 
     private final ProductionService productionService;
 
-    public ProductionRestController(ProductionService productionService){ this.productionService = productionService; }
+    public ProductionRestController(ProductionService productionService) {
+        this.productionService = productionService;
+    }
 
     /*
-       -create
        -update
        -deleteById
      */
@@ -39,7 +43,7 @@ public class ProductionRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<List<ProductionDto>> getAll(){
+    public ResponseEntity<List<ProductionDto>> getAll() {
         List<ProductionDto> productionDtoList = productionService.getAll();
         return ResponseEntity.ok(productionDtoList);
     }
@@ -53,10 +57,39 @@ public class ProductionRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<ProductionDto> getById(@ApiParam(name = "id",
-            value = "ID переданный в URL по которому необходимо найти производство") @PathVariable(name = "id") Long id){
+            value = "ID переданный в URL по которому необходимо найти производство") @PathVariable(name = "id") Long id) {
         ProductionDto productionDto = productionService.getById(id);
         return ResponseEntity.ok(productionDto);
     }
 
+    @ApiOperation(value = "create", notes = "Создает производство на основе переданных данных")
+    @PostMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Производство успешно создан"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<ProductionDto> create(@ApiParam(name = "productionDto", value = "DTO производства, которое необходимо создать")
+                                                @RequestBody ProductionDto productionDto) {
+        return ResponseEntity.ok().body(productionService.create(productionDto));
+    }
+    /*
+        @ApiOperation(value = "update", notes = "Обновляет проект на основе переданных данных")
+    @PutMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Проект успешно обновлен"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные обновлены"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<ProjectDto> update(@ApiParam(name = "projectDto",
+            value = "DTO проекта, c обновленными данными")
+                                             @RequestBody ProjectDto projectDto) {
+        return ResponseEntity.ok().body(projectService.update(projectDto));
+    }
+     */
 
 }
