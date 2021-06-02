@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.PositionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,9 +30,12 @@ import java.util.List;
 public class PositionRestController {
 
     private final PositionService positionService;
+    private final CheckEntityService checkEntityService;
 
-    public PositionRestController(PositionService positionService) {
+    public PositionRestController(PositionService positionService,
+                                  CheckEntityService checkEntityService) {
         this.positionService = positionService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -59,9 +63,8 @@ public class PositionRestController {
     public ResponseEntity<PositionDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти должность")
                                                @PathVariable(name = "id") Long id) {
-        PositionDto positions = positionService.getById(id);
-        log.info("Запрошен экземпляр PositionDto с id= {}", id);
-        return ResponseEntity.ok(positions);
+        checkEntityService.checkExistsPositionById(id);
+        return ResponseEntity.ok(positionService.getById(id));
     }
 
     @PostMapping

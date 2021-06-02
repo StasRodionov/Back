@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,9 +28,12 @@ import java.util.List;
 public class RoleRestController {
 
     private final RoleService roleService;
+    private final CheckEntityService checkEntityService;
 
-    public RoleRestController(RoleService roleService) {
+    public RoleRestController(RoleService roleService,
+                              CheckEntityService checkEntityService) {
         this.roleService = roleService;
+        this.checkEntityService = checkEntityService;
     }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех ролей")
@@ -59,8 +63,8 @@ public class RoleRestController {
             value = "Переданный ID  в URL по которому необходимо найти роль",
             example = "1",
             required = true) @PathVariable("id") Long id) {
-        RoleDto roleDto = roleService.getById(id);
-        return ResponseEntity.ok(roleDto);
+        checkEntityService.checkExistsRoleById(id);
+        return ResponseEntity.ok(roleService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создает роль на основе переданных данных")

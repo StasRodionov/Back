@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.ProductGroupDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,9 +28,12 @@ import java.util.List;
 public class ProductGroupRestController {
 
     private final ProductGroupService productGroupService;
+    private final CheckEntityService checkEntityService;
 
-    public ProductGroupRestController(ProductGroupService productGroupService) {
+    public ProductGroupRestController(ProductGroupService productGroupService,
+                                      CheckEntityService checkEntityService) {
         this.productGroupService = productGroupService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -55,9 +59,9 @@ public class ProductGroupRestController {
     })
     public ResponseEntity<ProductGroupDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти товарную группу")
-                                                   @PathVariable(name = "id") Long id) {
-        ProductGroupDto productGroup = productGroupService.getById(id);
-        return ResponseEntity.ok(productGroup);
+            @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsProductGroupById(id);
+        return ResponseEntity.ok(productGroupService.getById(id));
     }
 
     @PostMapping

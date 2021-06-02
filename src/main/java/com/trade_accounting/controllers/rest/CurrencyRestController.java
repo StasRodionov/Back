@@ -38,7 +38,8 @@ public class CurrencyRestController {
     private final CurrencyService currencyService;
     private final CheckEntityService checkEntityService;
 
-    CurrencyRestController(CurrencyService currencyService, CheckEntityService checkEntityService) {
+    CurrencyRestController(CurrencyService currencyService,
+                           CheckEntityService checkEntityService) {
         this.currencyService = currencyService;
         this.checkEntityService = checkEntityService;
     }
@@ -70,8 +71,7 @@ public class CurrencyRestController {
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsCurrencyById(id);
-        CurrencyDto currency = currencyService.getById(id);
-        return ResponseEntity.ok(currency);
+        return ResponseEntity.ok(currencyService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создает валюту на основе передданых данных")

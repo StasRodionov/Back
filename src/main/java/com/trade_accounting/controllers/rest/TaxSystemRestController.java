@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.TaxSystemDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,9 +28,12 @@ import java.util.List;
 public class TaxSystemRestController {
 
     private final TaxSystemService taxSystemService;
+    private final CheckEntityService checkEntityService;
 
-    public TaxSystemRestController(TaxSystemService taxSystemService) {
+    public TaxSystemRestController(TaxSystemService taxSystemService,
+                                   CheckEntityService checkEntityService) {
         this.taxSystemService = taxSystemService;
+        this.checkEntityService = checkEntityService;
     }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех налоговых систем")
@@ -55,9 +59,9 @@ public class TaxSystemRestController {
     @GetMapping("/{id}")
     public ResponseEntity<TaxSystemDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти налоговую систему")
-                                                @PathVariable(name = "id") Long id) {
-        TaxSystemDto taxSystem = taxSystemService.getById(id);
-        return ResponseEntity.ok(taxSystem);
+                                                    @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsTaxSystemById(id);
+        return ResponseEntity.ok(taxSystemService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Регистрация новой налоговой системы")

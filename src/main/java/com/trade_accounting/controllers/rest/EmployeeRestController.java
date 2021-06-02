@@ -43,7 +43,8 @@ public class EmployeeRestController {
     private final EmployeeService employeeService;
     private final CheckEntityService checkEntityService;
 
-    public EmployeeRestController(EmployeeService employeeService, CheckEntityService checkEntityService) {
+    public EmployeeRestController(EmployeeService employeeService,
+                                  CheckEntityService checkEntityService) {
         this.employeeService = employeeService;
         this.checkEntityService = checkEntityService;
     }
@@ -129,8 +130,7 @@ public class EmployeeRestController {
             value = "ID переданный в URL по которому необходимо найти работника")
                                                @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsEmployeeById(id);
-        EmployeeDto employeeDto = employeeService.getById(id);
-        return ResponseEntity.ok(employeeDto);
+        return ResponseEntity.ok(employeeService.getById(id));
     }
 
 
