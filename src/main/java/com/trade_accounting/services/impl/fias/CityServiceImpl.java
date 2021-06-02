@@ -6,7 +6,6 @@ import com.trade_accounting.repositories.fias.CityRepository;
 import com.trade_accounting.repositories.fias.DistrictRepository;
 import com.trade_accounting.services.interfaces.fias.CityService;
 import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,14 +38,13 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityDto create(CityDto cityDto) {
         City city1 = dtoMapper.toCity(cityDto);
-        city1.setDistrict(districtRepository.getOne(cityDto.getDistrictDto().getId()));
         City city = repository.save(city1);
         return dtoMapper.toCityDto(city);
     }
 
     @Override
     public CityDto update(CityDto cityDto) {
-        City city = repository.save(ModelDtoConverter.toCity(cityDto));
+        City city = repository.save(dtoMapper.toCity(cityDto));
         return dtoMapper.toCityDto(city);
     }
 

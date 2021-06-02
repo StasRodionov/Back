@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.services.interfaces.BankAccountService;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -28,9 +29,12 @@ import java.util.List;
 public class BankAccountRestController {
 
     private final BankAccountService bankAccountService;
+    private final CheckEntityService checkEntityService;
 
-    public BankAccountRestController(BankAccountService bankAccountService) {
+    public BankAccountRestController(BankAccountService bankAccountService,
+                                     CheckEntityService checkEntityService) {
         this.bankAccountService = bankAccountService;
+        this.checkEntityService = checkEntityService;
     }
 
     @ApiOperation(value = "getBankByBic", notes = "Возвращает определенный банк по bic")
@@ -83,8 +87,8 @@ public class BankAccountRestController {
     )
     public ResponseEntity<BankAccountDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти банковский аккаунт")
                                                   @PathVariable(name = "id") Long id) {
-        BankAccountDto bankAccount = bankAccountService.getById(id);
-        return ResponseEntity.ok(bankAccount);
+        checkEntityService.checkExistsBankAccountById(id);
+        return ResponseEntity.ok(bankAccountService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создает банковский аккаунт на основе переданных данных")

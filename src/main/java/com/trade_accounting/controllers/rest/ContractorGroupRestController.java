@@ -30,7 +30,8 @@ public class ContractorGroupRestController {
     private final ContractorGroupService contractorGroupService;
     private final CheckEntityService checkEntityService;
 
-    public ContractorGroupRestController(ContractorGroupService contractorGroupService, CheckEntityService checkEntityService) {
+    public ContractorGroupRestController(ContractorGroupService contractorGroupService,
+                                         CheckEntityService checkEntityService) {
         this.contractorGroupService = contractorGroupService;
         this.checkEntityService = checkEntityService;
     }
@@ -60,8 +61,7 @@ public class ContractorGroupRestController {
             value = "Переданный в URL id по которому необходимо найти группу")
                                                       @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsContractorGroupById(id);
-        ContractorGroupDto contractorGroupDto = contractorGroupService.getById(id);
-        return ResponseEntity.ok(contractorGroupDto);
+        return ResponseEntity.ok(contractorGroupService.getById(id));
 
     }
 

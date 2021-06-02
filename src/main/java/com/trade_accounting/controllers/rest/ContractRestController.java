@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.dto.ContractDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ContractService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,9 +36,12 @@ import java.util.List;
 public class ContractRestController {
 
     private final ContractService contractService;
+    private final CheckEntityService checkEntityService;
 
-    public ContractRestController(ContractService contractService) {
+    public ContractRestController(ContractService contractService,
+                                  CheckEntityService checkEntityService) {
         this.contractService = contractService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -51,6 +55,22 @@ public class ContractRestController {
     public ResponseEntity<List<ContractDto>> getAll() {
         List<ContractDto> contracts = contractService.getAll();
         return ResponseEntity.ok(contracts);
+    }
+
+    
+    @GetMapping("/search/{searchContr}")
+    @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых договоров")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение отф. списка договоров"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<ContractDto>> getAll(@ApiParam(name = "searchContr",
+            value = "Переданный в URL searchTerm, по которому необходимо найти договор")
+                                                      @PathVariable(name = "searchContr") String searchContr) {
+        List<ContractDto> contractDtoList = contractService.getAll(searchContr);
+        return ResponseEntity.ok(contractDtoList);
     }
 
     @GetMapping("/search")
@@ -89,7 +109,8 @@ public class ContractRestController {
     )
     public ResponseEntity<ContractDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти договор")
-                                               @PathVariable(name = "id") Long id) {
+                                                   @PathVariable(name = "id") Long id) {
+        checkEntityService.checkExistsContractById(id);
         return ResponseEntity.ok(contractService.getById(id));
     }
 

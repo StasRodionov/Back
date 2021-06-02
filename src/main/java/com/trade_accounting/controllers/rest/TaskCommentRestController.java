@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.TaskCommentDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TaskCommentService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -35,6 +36,7 @@ import java.util.List;
 public class TaskCommentRestController {
 
     private final TaskCommentService commentService;
+    private final CheckEntityService checkEntityService;
 
     @ApiOperation(value = "getAll", notes = "Получение списка всех комментариев")
     @ApiResponses(value = {
@@ -76,8 +78,8 @@ public class TaskCommentRestController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<TaskCommentDto> getById(@PathVariable("id") long id) {
-        TaskCommentDto taskCommentDto = commentService.getById(id);
-        return ResponseEntity.ok(taskCommentDto);
+        checkEntityService.checkExistsTaskCommentById(id);
+        return ResponseEntity.ok(commentService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создание нового комментария")

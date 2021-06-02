@@ -24,7 +24,7 @@ import java.util.List;
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String name;
     @ManyToOne(fetch = FetchType.LAZY)
     District district;

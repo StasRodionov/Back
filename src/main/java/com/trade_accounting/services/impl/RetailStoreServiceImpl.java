@@ -5,7 +5,6 @@ import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.ModelDtoConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +40,7 @@ public class RetailStoreServiceImpl implements RetailStoreService {
 
     @Override
     public RetailStoreDto create(RetailStoreDto retailStoreDto) {
-        RetailStore retailStore = ModelDtoConverter.convertToRetailStore(retailStoreDto);
+        RetailStore retailStore = dtoMapper.retailStoreDtoToRetailStore(retailStoreDto);
         retailStoreDto.setId(retailStore.getId());
         retailStoreRepository.save(retailStore);
         return retailStoreDto;

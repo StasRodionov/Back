@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class FiasAddressModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String aolevel;
     private String formalname;
     private String shortname;

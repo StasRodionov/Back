@@ -20,8 +20,10 @@ import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.fias.CityDto;
 import com.trade_accounting.models.dto.fias.DistrictDto;
+import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
 import com.trade_accounting.models.dto.fias.RegionDto;
 import com.trade_accounting.models.dto.fias.StreetDto;
+import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.utils.DtoMapper;
 import org.mapstruct.factory.Mappers;
 import com.trade_accounting.models.dto.LegalDetailDto;
@@ -131,5 +133,24 @@ public class DtoStubs {
                 ModelStubs.getCurrency(id)
         );
     }
-    
+
+    public static CityDto getCityDto(Long id){
+        return dtoMapper.toCityDto(ModelStubs.getCity(id));
+    }
+
+    public static DistrictDto getDistrictDto(Long id){
+        return dtoMapper.toDistrictDto(ModelStubs.getDistrict(id));
+    }
+
+    public static StreetDto getStreetDto(Long id){
+        return dtoMapper.toStreetDto(ModelStubs.getStreet(id));
+    }
+
+    public static RegionDto getRegionDto(Long id){
+        return dtoMapper.toRegionDto(ModelStubs.getRegion(id));
+    }
+
+    public static FiasAddressModelDto getFiasAddressModelDto(Long id){
+        return dtoMapper.toFiasAddressModelDto(ModelStubs.getFiasAddressModel(id));
+    }
 }
