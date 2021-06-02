@@ -88,6 +88,7 @@ public class ProductionRestController {
         return ResponseEntity.ok().body(productionService.update(productionDto));
     }
 
+
     @ApiOperation(value = "deleteById", notes = "Удаляет производство на основе переданного ID")
     @DeleteMapping("/{id}")
     @ApiResponses(value = {
