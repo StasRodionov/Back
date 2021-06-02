@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Legal Detail Rest Controller", description = "CRUD  операции с юридическими реквизитами")
 @Api(tags = "Legal Detail Rest Controller")

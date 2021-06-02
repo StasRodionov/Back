@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Position Rest Controller", description = "CRUD операции с должностями")
 @Api(tags = "Position Rest Controller")

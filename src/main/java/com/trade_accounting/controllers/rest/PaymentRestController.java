@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Payment Rest Controller", description = "CRUD  операции с платежами")
 @Api(tags = "Payment Rest Controller")

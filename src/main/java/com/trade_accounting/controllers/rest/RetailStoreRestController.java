@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "RetailStore Rest Controller", description = "CRUD операции с точками продаж")
 @Api(tags = "RetailStore Rest Controller")
