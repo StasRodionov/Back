@@ -29,7 +29,8 @@ public class WarehouseRestController {
     private final WarehouseService warehouseService;
     private final CheckEntityService checkEntityService;
 
-    public WarehouseRestController(WarehouseService warehouseService, CheckEntityService checkEntityService) {
+    public WarehouseRestController(WarehouseService warehouseService,
+                                   CheckEntityService checkEntityService) {
         this.warehouseService = warehouseService;
         this.checkEntityService = checkEntityService;
     }
@@ -57,8 +58,7 @@ public class WarehouseRestController {
     })
     public ResponseEntity<WarehouseDto> getById(@PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsWarehouseById(id);
-        WarehouseDto warehouseDto = warehouseService.getById(id);
-        return ResponseEntity.ok(warehouseDto);
+        return ResponseEntity.ok(warehouseService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создает склад на основе переданных данных")

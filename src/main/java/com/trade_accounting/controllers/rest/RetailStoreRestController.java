@@ -31,7 +31,8 @@ public class RetailStoreRestController {
     private final RetailStoreService retailStoreService;
     private final CheckEntityService checkEntityService;
 
-    public RetailStoreRestController(RetailStoreService retailStoreService, CheckEntityService checkEntityService) {
+    public RetailStoreRestController(RetailStoreService retailStoreService,
+                                     CheckEntityService checkEntityService) {
         this.retailStoreService = retailStoreService;
         this.checkEntityService = checkEntityService;
     }
@@ -60,9 +61,7 @@ public class RetailStoreRestController {
     })
     public ResponseEntity<RetailStoreDto> getById(@PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsRetailStoreById(id);
-        RetailStoreDto retailStoreDto = retailStoreService.getById(id);
-        log.info("Запрошен экземпляр RetailStoreDto с id = {}", id);
-        return ResponseEntity.ok(retailStoreDto);
+        return ResponseEntity.ok(retailStoreService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Создает точку продаж на основе переданных данных")

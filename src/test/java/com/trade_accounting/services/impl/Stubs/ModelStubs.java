@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
@@ -20,6 +21,7 @@ import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
@@ -28,23 +30,27 @@ import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.ProductDto;
-import com.trade_accounting.models.dto.fias.CityDto;
-import com.trade_accounting.models.dto.fias.DistrictDto;
-import com.trade_accounting.models.dto.fias.RegionDto;
-import com.trade_accounting.models.dto.fias.StreetDto;
 import com.trade_accounting.models.fias.City;
 import com.trade_accounting.models.fias.District;
+import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ModelStubs {
     //TODO Вынести заглушки моделей из классов сервисов сюда
+
+    public static AccessParameters getAccessParameters(Long id){
+        return new AccessParameters(id, false, getEmployee(id), getDepartment(id));
+    }
 
     public static AttributeOfCalculationObject getAttributeOfCalculationObject(Long id) {
         return new AttributeOfCalculationObject(id, "name", "00001", true);
@@ -85,6 +91,7 @@ public class ModelStubs {
                 "12345678901", "324234234",
                 "email", getAddress(1L),
                 "commentToAddress", "comment",
+                "1234",
                 Stream.of(
                         getContact(1L),
                         getContact(2L),
@@ -97,7 +104,9 @@ public class ModelStubs {
                         getBankAccount(2L),
                         getBankAccount(3L)
                 ).collect(Collectors.toList()),
-                getLegalDetail(id)
+                getLegalDetail(id),
+                getStatus(id),
+                getAccessParameters(id)
         );
     }
 
@@ -261,5 +270,53 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
+    public static City getCity(Long id){
+        return City.builder()
+                .id(id)
+                .name("Petrpopavlovsk")
+                .district(getDistrict(id))
+                .streets(new ArrayList<>())
+                .build();
+    }
+    public static District getDistrict(Long id){
+        return District.builder()
+                .id(id)
+                .name("Vasileostrivky")
+                .region(getRegion(id))
+                .cities(new ArrayList<>())
+                .build();
+    }
+    public static Region getRegion(Long id){
+        return Region.builder()
+                .id(id)
+                .name("SKO")
+                .districts(new ArrayList<>())
+                .build();
+    }
+    public static FiasAddressModel getFiasAddressModel(Long id){
+        return FiasAddressModel.builder()
+                .id(id)
+                .aoguid("example")
+                .aolevel("1")
+                .formalname("formalName")
+                .parentguid("parentguid")
+                .shortname("shortname")
+                .build();
+    }
+
+    public static ContractorStatus getStatus(Long id) {
+        return ContractorStatus.builder()
+                .id(id)
+                .name("Новый")
+                .build();
+    }
+    public static Street getStreet(Long id){
+        return Street.builder()
+                .id(id)
+                .name("Volodarskogo")
+                .city(getCity(id))
+                .build();
+    }
 
 }
+

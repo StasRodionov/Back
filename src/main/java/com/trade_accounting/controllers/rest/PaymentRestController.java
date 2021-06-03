@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.dto.PaymentDto;
+import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.PaymentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,9 +37,12 @@ import java.util.List;
 public class PaymentRestController {
 
     private final PaymentService paymentService;
+    private final CheckEntityService checkEntityService;
 
-    public PaymentRestController(PaymentService paymentService) {
+    public PaymentRestController(PaymentService paymentService,
+                                 CheckEntityService checkEntityService) {
         this.paymentService = paymentService;
+        this.checkEntityService = checkEntityService;
     }
 
     @GetMapping
@@ -65,10 +69,9 @@ public class PaymentRestController {
     )
     public ResponseEntity<PaymentDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти платеж")
-                                              @PathVariable(name = "id") Long id) {
-        PaymentDto paymentDto = paymentService.getById(id);
-        log.info("Запрошен экземпляр платежа с id = {}", id);
-        return ResponseEntity.ok(paymentDto);
+                                              @PathVariable(name = "id") Long id){
+        checkEntityService.checkExistsPaymentById(id);
+        return ResponseEntity.ok(paymentService.getById(id));
     }
 
     @PostMapping
