@@ -1,22 +1,13 @@
 package com.trade_accounting.utils;
 
-import com.trade_accounting.models.AccessParameters;
-import com.trade_accounting.models.Department;
-import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
-import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
-import com.trade_accounting.repositories.UnitRepository;
-import com.trade_accounting.services.impl.UnitServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
