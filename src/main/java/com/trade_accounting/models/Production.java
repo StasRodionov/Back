@@ -6,9 +6,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Data
@@ -20,15 +22,16 @@ public class Production {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+/*
+   @ManyToOne(fetch = FetchType.LAZY)
+    private TechCards techCards;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private RequestProductions requestsProductions;
 
-    @Column(name = "texh_cards")
-    private String tech_cards;
-
-    @Column(name = "requests_production")
-    private String requests_production;
-
-    @Column(name = "tech_operations")
-    private String tech_operations;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TechOperations techOperations;
+    
+ */
 
 }
