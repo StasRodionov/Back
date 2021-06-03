@@ -14,8 +14,8 @@ public interface SearchableService<MODEL, DTO> {
 
     @Transactional
     default List<DTO> executeSearch(JpaSpecificationExecutor<MODEL> executor,
-                             Function<MODEL, DTO> mapper,
-                             Specification<MODEL> spec) {
+                                    Function<MODEL, DTO> mapper,
+                                    Specification<MODEL> spec) {
         return executor.findAll(spec).stream().map(mapper).collect(Collectors.toList());
     }
 }

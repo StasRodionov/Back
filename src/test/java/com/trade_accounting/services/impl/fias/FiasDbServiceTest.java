@@ -52,7 +52,7 @@ public class FiasDbServiceTest {
         assertEquals(3, resultList.size(), "failure - expected that size is 3");
         assertTrue(resultList.size() > 0, "failure - expected that a size of list greater than 0");
 
-        for(FiasAddressModelDto item : resultList){
+        for (FiasAddressModelDto item : resultList) {
             addressModelDtoIsCorrectlyInited(item);
         }
     }
@@ -83,7 +83,7 @@ public class FiasDbServiceTest {
         verify(repository).save(any(FiasAddressModel.class));
         assertNotNull(result, "failure - expected that a StreetDto not null");
         assertEquals(result, DtoStubs.getFiasAddressModelDto(1L));
-          addressModelDtoIsCorrectlyInited(result);
+        addressModelDtoIsCorrectlyInited(result);
     }
 
     @Test
@@ -93,25 +93,25 @@ public class FiasDbServiceTest {
     }
 
     @Test
-    public void findAllByLevelTest(){
+    public void findAllByLevelTest() {
         when(repository.findAllByLevel(anyString())).thenReturn(
                 Stream.of(
                         ModelStubs.getFiasAddressModel(1L),
                         ModelStubs.getFiasAddressModel(2L),
                         ModelStubs.getFiasAddressModel(3L)
-                        ).collect(Collectors.toList())
+                ).collect(Collectors.toList())
         );
         List<FiasAddressModelDto> resultList = service.findAllByLevel("HelloWorld");
         assertNotNull(resultList, "failure - expected that resultList is not null");
         assertEquals(3, resultList.size(), "failure - expected that size is 3");
         assertTrue(resultList.size() > 0, "failure - expected that a size of list greater than 0");
-        for(FiasAddressModelDto item : resultList){
+        for (FiasAddressModelDto item : resultList) {
             addressModelDtoIsCorrectlyInited(item);
         }
     }
 
     @Test
-    public void findAllByAoguid(){
+    public void findAllByAoguid() {
         when(repository.findAdressesByAoguid(anyString())).thenReturn(
                 Stream.of(
                         ModelStubs.getFiasAddressModel(1L),
@@ -123,7 +123,7 @@ public class FiasDbServiceTest {
         assertNotNull(resultList, "failure - expected that resultList is not null");
         assertEquals(3, resultList.size(), "failure - expected that size is 3");
         assertTrue(resultList.size() > 0, "failure - expected that a size of list greater than 0");
-        for(FiasAddressModelDto item : resultList){
+        for (FiasAddressModelDto item : resultList) {
             addressModelDtoIsCorrectlyInited(item);
         }
     }

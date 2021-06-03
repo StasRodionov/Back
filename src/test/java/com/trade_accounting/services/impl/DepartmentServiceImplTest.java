@@ -53,7 +53,7 @@ class DepartmentServiceImplTest {
         assertNotNull(departments, "Failure - expected that list of department not null");
         assertTrue(departments.size() > 0, "failure - expected that size of list of department greater than 0");
 
-        for(DepartmentDto departmentDto : departments){
+        for (DepartmentDto departmentDto : departments) {
             departmentDtoIsCorrectlyInited(departmentDto);
         }
     }
@@ -94,7 +94,7 @@ class DepartmentServiceImplTest {
     }
 
     @Test
-    void getByName_shouldReturnEmptyDepartmentDto(){
+    void getByName_shouldReturnEmptyDepartmentDto() {
         Optional<Department> departmentRepo = Optional.empty();
 
         when(departmentRepository.findByName(anyString()))

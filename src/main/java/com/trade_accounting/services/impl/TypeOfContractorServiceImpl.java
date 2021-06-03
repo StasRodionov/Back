@@ -46,7 +46,6 @@ public class TypeOfContractorServiceImpl implements TypeOfContractorService {
     }
 
 
-
     @Override
     public TypeOfContractorDto update(TypeOfContractorDto typeOfContractorDto) {
         return create(typeOfContractorDto);
@@ -58,7 +57,7 @@ public class TypeOfContractorServiceImpl implements TypeOfContractorService {
     }
 
     @Override
-    public TypeOfContractorDto getByName(String name){
+    public TypeOfContractorDto getByName(String name) {
         Optional<TypeOfContractor> typeOfContractor = typeOfContractorRepository.findByName(name);
         return dtoMapper.typeOfContractorToTypeOfContractorDto(typeOfContractor.orElse(new TypeOfContractor()));
     }

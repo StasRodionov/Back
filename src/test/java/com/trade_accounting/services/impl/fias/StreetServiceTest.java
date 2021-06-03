@@ -55,10 +55,11 @@ public class StreetServiceTest {
         assertEquals(3, streetList.size(), "failure - expected that size is 3");
         assertTrue(streetList.size() > 0, "failure - expected that a size of list of StreetDto greater than 0");
 
-        for(StreetDto item : streetList){
+        for (StreetDto item : streetList) {
             streetDtoIsCorrectlyInited(item);
         }
     }
+
     @Test
     public void getByIdTest() {
         Optional<Street> streetFromRepo = Optional.of(ModelStubs.getStreet(1L));
@@ -85,7 +86,7 @@ public class StreetServiceTest {
         verify(repository).save(any(Street.class));
         assertNotNull(result, "failure - expected that a StreetDto not null");
         assertEquals(result, DtoStubs.getStreetDto(1L));
-         streetDtoIsCorrectlyInited(result);
+        streetDtoIsCorrectlyInited(result);
     }
 
     @Test

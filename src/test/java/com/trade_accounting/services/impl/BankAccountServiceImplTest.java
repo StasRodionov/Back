@@ -53,7 +53,7 @@ class BankAccountServiceImplTest {
         assertNotNull(bankAccounts, "failure - expected that a list of bankAccountDto not null");
         assertTrue(bankAccounts.size() > 0, "failure - expected that a list of bankAccountDto grater than 0");
 
-        for(BankAccountDto bankAccount : bankAccounts) {
+        for (BankAccountDto bankAccount : bankAccounts) {
             bankAccountDtoIsCorrectlyInited(bankAccount);
         }
     }

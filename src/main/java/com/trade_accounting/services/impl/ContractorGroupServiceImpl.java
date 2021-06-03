@@ -31,7 +31,7 @@ public class ContractorGroupServiceImpl implements ContractorGroupService {
 
     @Override
     public ContractorGroupDto create(ContractorGroupDto dto) {
-      ContractorGroup contractorGroupSaved = contractorGroupRepository.save(dtoMapper.contractorGroupDtoToContractorGroup(dto));
+        ContractorGroup contractorGroupSaved = contractorGroupRepository.save(dtoMapper.contractorGroupDtoToContractorGroup(dto));
         dto.setId(contractorGroupSaved.getId());
         return dto;
     }

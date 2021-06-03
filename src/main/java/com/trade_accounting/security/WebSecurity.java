@@ -57,19 +57,19 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http
                 .cors()
                 .and()
-                    .csrf().disable()
-                    .exceptionHandling()
-                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .csrf().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 .and()
-                    .authorizeRequests()
-                    .antMatchers(AUTH_WHITELIST).permitAll()
-                    .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-                    .antMatchers(HttpMethod.POST, TOKEN_GENERATOR_URL).permitAll()
-                    .anyRequest().authenticated()
+                .authorizeRequests()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+                .antMatchers(HttpMethod.POST, TOKEN_GENERATOR_URL).permitAll()
+                .anyRequest().authenticated()
                 .and()
-                    .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                    .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
 

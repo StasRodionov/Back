@@ -52,6 +52,4 @@ public interface TypeOfContractorRepository extends JpaRepository<TypeOfContract
     TypeOfContractorDto getByName(String name);
 
 
-
-
 }
