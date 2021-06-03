@@ -129,12 +129,11 @@ public abstract class DtoMapper {
             AttributeOfCalculationObjectDto attributeOfCalculationObjectDto
     );
 
-<<<<<<< HEAD
     //Production
     public abstract ProductionDto productionToProductionDto(Production production);
 
     public abstract Production productionDtoToProduction(ProductionDto productionDto);
-=======
+
     //AccessParameters
     @Mappings({
             @Mapping(source = "employee.id", target = "employeeId"),
@@ -150,7 +149,7 @@ public abstract class DtoMapper {
                 .employee(employeeDtoToEmployee(employeeRepository.getById(accessParametersDto.getEmployeeId())))
                 .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
     }
->>>>>>> dev
+
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
@@ -546,7 +545,7 @@ public abstract class DtoMapper {
     })
     public abstract Region toRegion(RegionDto regionDto);
 
-<<<<<<< HEAD
+/*
     public abstract RegionDto toRegionDto(Region region);
 
     public abstract District toDistrict(DistrictDto districtDto);
@@ -561,8 +560,10 @@ public abstract class DtoMapper {
 
     public abstract StreetDto toStreetDto(Street street);
 
+ */
 
-=======
+
+
     @Mappings({
             @Mapping(source = "districts", target = "districtDtos")
     })
@@ -605,5 +606,4 @@ public abstract class DtoMapper {
     public abstract FiasAddressModel toFiasAddressModel(FiasAddressModelDto dto);
 
     public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
->>>>>>> dev
 }
