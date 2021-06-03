@@ -29,6 +29,9 @@ import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TaxSystem;
+import com.trade_accounting.models.TechnicalCard;
+import com.trade_accounting.models.TechnicalCardGroup;
+import com.trade_accounting.models.TechnicalCardProduction;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Unit;
@@ -62,6 +65,9 @@ import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
+import com.trade_accounting.models.dto.TechnicalCardDto;
+import com.trade_accounting.models.dto.TechnicalCardGroupDto;
+import com.trade_accounting.models.dto.TechnicalCardProductionDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
@@ -470,6 +476,37 @@ public abstract class DtoMapper {
     public abstract TaxSystemDto taxSystemToTaxSystemDto(TaxSystem taxSystem);
 
     public abstract TaxSystem taxSystemDtoToTaxSystem(TaxSystemDto taxSystemDto);
+
+    //TechnicalCard
+    @Mappings({
+            @Mapping(source = "technicalCardGroup", target = "technicalCardGroupDto"),
+            @Mapping(source = "finalProduction", target = "finalProductionDto"),
+            @Mapping(source = "materials", target = "materialsDto"),
+    })
+    public abstract TechnicalCardDto technicalCardToTechnicalCardDto(TechnicalCard technicalCard);
+
+    @Mappings({
+            @Mapping(source = "technicalCardGroupDto", target = "technicalCardGroup"),
+            @Mapping(source = "finalProductionDto", target = "finalProduction"),
+            @Mapping(source = "materialsDto", target = "materials"),
+    })
+    public abstract TechnicalCard technicalCardDtoToTechnicalCard(TechnicalCardDto technicalCardDto);
+
+    //TechnicalCardGroup
+    public abstract TechnicalCardGroupDto technicalCardGroupToTechnicalCardGroupDto(TechnicalCardGroup technicalCardGroup);
+
+    public abstract TechnicalCardGroup technicalCardGroupDtoToTechnicalCardGroup(TechnicalCardGroupDto technicalCardGroupDto);
+
+    //TechnicalCardProduction
+    @Mappings({
+            @Mapping(source = "product", target = "productDto"),
+    })
+    public abstract TechnicalCardProductionDto technicalCardProductionToTechnicalCardProductionDto(TechnicalCardProduction technicalCardProduction);
+
+    @Mappings({
+            @Mapping(source = "productDto", target = "product"),
+    })
+    public abstract TechnicalCardProduction technicalCardProductionDtoToTechnicalCardProduction(TechnicalCardProductionDto technicalCardProductionDto);
 
     //TypeOfContractor
     public abstract TypeOfContractorDto typeOfContractorToTypeOfContractorDto(TypeOfContractor typeOfContractor);
