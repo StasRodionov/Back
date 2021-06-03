@@ -18,6 +18,7 @@ import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
+import com.trade_accounting.models.PostingProduct;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
@@ -54,6 +55,7 @@ import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.PostingProductDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
@@ -579,4 +581,19 @@ public abstract class DtoMapper {
     public abstract FiasAddressModel toFiasAddressModel(FiasAddressModelDto dto);
 
     public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
+
+    //PostingProduct
+    @Mappings({
+            @Mapping(source = "company", target = "companyDto"),
+            @Mapping(source = "warehouse", target = "warehouseDto"),
+            @Mapping(source = "invoiceProduct", target = "invoiceProductDto")
+    })
+    public abstract PostingProductDto postingProductToPostingProductDto(PostingProduct postingProduct);
+
+    @Mappings({
+            @Mapping(source = "companyDto", target = "company"),
+            @Mapping(source = "warehouseDto", target = "warehouse"),
+            @Mapping(source = "invoiceProductDto", target = "invoiceProduct")
+    })
+    public abstract PostingProduct postingProductDtoToPostingProduct(PostingProductDto postingProductDto);
 }
