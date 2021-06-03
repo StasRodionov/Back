@@ -55,4 +55,8 @@ public interface CheckEntityService {
     void checkExistsContractorById(Long contractorId);
 
     void checkExistsBankAccountById(Long bankAccountId);
+
+    void checkExistsTechnicalCardById(Long technicalCardId);
+
+    void checkExistsTechnicalCardGroupById(Long technicalCardGroupId);
 }
