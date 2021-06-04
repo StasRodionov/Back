@@ -22,7 +22,7 @@ public interface ContractorGroupRepository extends JpaRepository<ContractorGroup
             "cg.id, " +
             "cg.name, " +
             "cg.sortNumber" +
-            ") " + 
+            ") " +
             "from ContractorGroup cg")
     List<ContractorGroupDto> getAll();
 
@@ -30,8 +30,8 @@ public interface ContractorGroupRepository extends JpaRepository<ContractorGroup
             "cg.id, " +
             "cg.name, " +
             "cg.sortNumber" +
-            ") " + 
-            "from ContractorGroup cg " + 
+            ") " +
+            "from ContractorGroup cg " +
             "where cg.id = :id")
     ContractorGroupDto getById(@Param("id") Long id);
 

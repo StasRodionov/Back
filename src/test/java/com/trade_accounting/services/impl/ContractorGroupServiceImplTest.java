@@ -43,7 +43,7 @@ class ContractorGroupServiceImplTest {
 
     @Test
     void getAllShouldReturnListOfContractorGroupDTO() {
-        var contractorGroupDtos =contractorGroupDtos();
+        var contractorGroupDtos = contractorGroupDtos();
         when(contractorGroupRepository.getAll()).thenReturn(contractorGroupDtos);
         contractorGroupDtos = contractorGroupService.getAll();
         assertNotNull(contractorGroupDtos, "ContractorGroupDtoList should not be null!");

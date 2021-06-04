@@ -43,7 +43,7 @@ public class Currency {
         this.letterCode = letterCode;
     }
 
-    public Currency(String shortName, String fullName, String digitalCode, String letterCode){
+    public Currency(String shortName, String fullName, String digitalCode, String letterCode) {
         this(shortName, digitalCode, letterCode);
         this.fullName = fullName;
     }

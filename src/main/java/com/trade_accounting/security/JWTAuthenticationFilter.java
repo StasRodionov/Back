@@ -39,7 +39,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         try {
             Employee creds = new ObjectMapper()
-                     .readValue(req.getInputStream(), Employee.class);
+                    .readValue(req.getInputStream(), Employee.class);
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -65,7 +65,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String body =
                 "{ \"email\":\"" + ((Employee) auth.getPrincipal()).getUsername() + "\"," +
-                "\"token\":\"" + token + "\" }";
+                        "\"token\":\"" + token + "\" }";
         // later: refactor to use Object with email and token fields (and some others, if needed)
 
         res.getWriter().write(body);

@@ -52,7 +52,7 @@ public class DistrictServiceTest {
         assertEquals(3, districtList.size(), "failure - expected that size is 3");
         assertTrue(districtList.size() > 0, "failure - expected that a size of list of DistrictDto greater than 0");
 
-        for(DistrictDto item : districtList){
+        for (DistrictDto item : districtList) {
             districtDtoIsCorrectlyInited(item);
         }
     }

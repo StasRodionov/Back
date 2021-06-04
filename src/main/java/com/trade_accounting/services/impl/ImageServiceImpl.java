@@ -30,10 +30,10 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List<ImageDto> getAll() {
-       return imageRepository.getAll()
-               .stream()
-               .map(dtoMapper::imageToImageDto)
-               .collect(Collectors.toList());
+        return imageRepository.getAll()
+                .stream()
+                .map(dtoMapper::imageToImageDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -48,7 +48,6 @@ public class ImageServiceImpl implements ImageService {
         dto.setId(image.getId());
         return dto;
     }
-
 
 
     @Override

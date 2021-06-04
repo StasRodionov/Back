@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @Tag(name = "Position Rest Controller", description = "CRUD операции с должностями")
 @Api(tags = "Position Rest Controller")
@@ -48,7 +47,6 @@ public class PositionRestController {
     )
     public ResponseEntity<List<PositionDto>> getAll() {
         List<PositionDto> positions = positionService.getAll();
-        log.info("Запрошен список PositionDto");
         return ResponseEntity.ok(positions);
     }
 
@@ -78,7 +76,6 @@ public class PositionRestController {
     )
     public ResponseEntity<?> create(@ApiParam(name = "PositionDto", value = "DTO должности, которую необходимо создать")
                                     @RequestBody PositionDto positionDto) {
-        log.info("Записан новый экземпляр PositionDto");
         return ResponseEntity.ok().body(positionService.create(positionDto));
     }
 
@@ -93,7 +90,6 @@ public class PositionRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "PositionDto", value = "DTO должности, которую необходимо обновить")
                                     @RequestBody PositionDto positionDto) {
-        log.info("Обновлен экземпляр PositionDto");
         return ResponseEntity.ok().body(positionService.update(positionDto));
     }
 
@@ -110,7 +106,6 @@ public class PositionRestController {
             value = "Переданный в URL id по которому необходимо удалить должность")
                                         @PathVariable(name = "id") Long id) {
         positionService.deleteById(id);
-        log.info("Удален экземпляр PositionDto с id= {}", id);
         return ResponseEntity.ok().build();
     }
 }

@@ -71,7 +71,7 @@ class EmployeeServiceImplTest {
         assertNotNull(employees, "failure - expected that a list of employeeDto not null");
         assertTrue(employees.size() > 0, "failure - expected that a size of list of employeeDto greater than 0");
 
-        for(EmployeeDto employee : employees) {
+        for (EmployeeDto employee : employees) {
             employeeDtoIsCorrectlyInited(employee);
         }
     }
@@ -104,7 +104,7 @@ class EmployeeServiceImplTest {
         assertNotNull(employees, "failure - expected that a list of employeeDto not null");
         assertTrue(employees.size() > 0, "failure - expected that a list of employeeDto greater than 0");
 
-        for(EmployeeDto employee : employees) {
+        for (EmployeeDto employee : employees) {
             employeeDtoIsCorrectlyInited(employee);
         }
     }
@@ -190,7 +190,6 @@ class EmployeeServiceImplTest {
 
         assertEquals(new EmployeeDto(), employee, "failure - expected that employee was empty");
     }
-
 
 
     void employeeDtoIsCorrectlyInited(EmployeeDto employee) {

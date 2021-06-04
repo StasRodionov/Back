@@ -57,7 +57,7 @@ class CompanyServiceImplTest {
                                 DtoStubs.getCompanyDto(2L),
                                 DtoStubs.getCompanyDto(3L)
                         )
-                        .collect(Collectors.toList())
+                                .collect(Collectors.toList())
                 );
 
         List<CompanyDto> companies = companyService.getAll();
@@ -65,7 +65,7 @@ class CompanyServiceImplTest {
         assertNotNull(companies, "Failure - expected that list of company not null");
         assertTrue(companies.size() > 0, "failure - expected that size of list of company greater than 0");
 
-        for(CompanyDto companyDto : companies) {
+        for (CompanyDto companyDto : companies) {
             companyDtoIsCorrectlyInited(companyDto);
         }
     }
@@ -74,7 +74,7 @@ class CompanyServiceImplTest {
     void getAll_shouldReturnEmptyListCompanyDto() {
         when(companyService.getAll())
                 .thenReturn(
-                    new ArrayList<>()
+                        new ArrayList<>()
                 );
 
         List<CompanyDto> companies = companyService.getAll();
@@ -101,7 +101,7 @@ class CompanyServiceImplTest {
         assertNotNull(companies, "Failure - expected that list of company not null");
         assertTrue(companies.size() > 0, "failure - expected that size of list of company greater than 0");
 
-        for(CompanyDto companyDto : companies) {
+        for (CompanyDto companyDto : companies) {
             companyDtoIsCorrectlyInited(companyDto);
         }
     }
@@ -110,7 +110,7 @@ class CompanyServiceImplTest {
     void search_shouldReturnEmptyListCompanyDto() {
         when(companyRepository.findAll(Mockito.<Specification<Company>>any()))
                 .thenReturn(
-                    new ArrayList<>()
+                        new ArrayList<>()
                 );
 
         List<CompanyDto> companies = companyService
