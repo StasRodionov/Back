@@ -48,7 +48,8 @@ public class Company {
     @Column(name = "payer_vat")
     private Boolean payerVat;
 
-    @Column(name = "address")
+   // @Column(name = "address")
+    @OneToOne(fetch = FetchType.LAZY)
     private Address address;
    // private String address;
 
