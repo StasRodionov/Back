@@ -84,8 +84,6 @@ class InvoiceServiceImplTest {
         );
 
 
-
-
         verify(invoiceRepository).findByTypeOfInvoice(any(TypeOfInvoice.class));
         for (InvoiceDto invoiceDto : invoiceDtoList) {
             invoiceListDtoIsCorrectlyInited(invoiceDto);

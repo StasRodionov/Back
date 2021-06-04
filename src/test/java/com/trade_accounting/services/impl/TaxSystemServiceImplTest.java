@@ -54,7 +54,7 @@ class TaxSystemServiceImplTest {
         assertNotNull(taxSystems, "Failure - expected that list of taxSystem not null");
         assertTrue(taxSystems.size() > 0, "failure - expected that size of list of taxSystem greater than 0");
 
-        for(TaxSystemDto taxSystemDto : taxSystems) {
+        for (TaxSystemDto taxSystemDto : taxSystems) {
             taxSystemDtoIsCorrectlyInited(taxSystemDto);
         }
     }

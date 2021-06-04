@@ -53,7 +53,7 @@ class RoleServiceImplTest {
         assertNotNull(roles, "failure - expected that a list of roleDto not null");
         assertTrue(roles.size() > 0, "failure - expected that a list of roleDto grater than 0");
 
-        for(RoleDto role : roles) {
+        for (RoleDto role : roles) {
             roleDtoIsCorrectlyInited(role);
         }
     }

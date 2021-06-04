@@ -57,7 +57,7 @@ public class ContractRestController {
         return ResponseEntity.ok(contracts);
     }
 
-    
+
     @GetMapping("/search/{searchContr}")
     @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых договоров")
     @ApiResponses(value = {
@@ -68,7 +68,7 @@ public class ContractRestController {
     )
     public ResponseEntity<List<ContractDto>> getAll(@ApiParam(name = "searchContr",
             value = "Переданный в URL searchTerm, по которому необходимо найти договор")
-                                                      @PathVariable(name = "searchContr") String searchContr) {
+                                                    @PathVariable(name = "searchContr") String searchContr) {
         List<ContractDto> contractDtoList = contractService.getAll(searchContr);
         return ResponseEntity.ok(contractDtoList);
     }
@@ -109,7 +109,7 @@ public class ContractRestController {
     )
     public ResponseEntity<ContractDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти договор")
-                                                   @PathVariable(name = "id") Long id) {
+                                               @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsContractById(id);
         return ResponseEntity.ok(contractService.getById(id));
     }

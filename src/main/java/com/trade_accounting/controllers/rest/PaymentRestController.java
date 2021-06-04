@@ -69,7 +69,7 @@ public class PaymentRestController {
     )
     public ResponseEntity<PaymentDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти платеж")
-                                              @PathVariable(name = "id") Long id){
+                                              @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsPaymentById(id);
         return ResponseEntity.ok(paymentService.getById(id));
     }
