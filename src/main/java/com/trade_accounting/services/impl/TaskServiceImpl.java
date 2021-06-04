@@ -75,7 +75,6 @@ public class TaskServiceImpl implements TaskService {
     }
 
 
-
     @Override
     public void createAll(List<TaskDto> tasks) {
         var entities = tasks

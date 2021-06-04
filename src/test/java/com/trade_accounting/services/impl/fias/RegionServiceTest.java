@@ -41,24 +41,24 @@ public class RegionServiceTest {
     @InjectMocks
     RegionServiceImpl service;
 
-@Test
-public void getAllTest() {
-    when(repository.findAll()).thenReturn(
-            Stream.of(
-                    ModelStubs.getRegion(1L),
-                    ModelStubs.getRegion(2L),
-                    ModelStubs.getRegion(3L)
-            ).collect(Collectors.toList())
-    );
-    List<RegionDto> regionList = service.getAll();
-    assertNotNull(regionList, "failure - expected that regionList is not null");
-    assertEquals(3, regionList.size(), "failure - expected that size is 3");
-    assertTrue(regionList.size() > 0, "failure - expected that a size of list of RegionDto greater than 0");
+    @Test
+    public void getAllTest() {
+        when(repository.findAll()).thenReturn(
+                Stream.of(
+                        ModelStubs.getRegion(1L),
+                        ModelStubs.getRegion(2L),
+                        ModelStubs.getRegion(3L)
+                ).collect(Collectors.toList())
+        );
+        List<RegionDto> regionList = service.getAll();
+        assertNotNull(regionList, "failure - expected that regionList is not null");
+        assertEquals(3, regionList.size(), "failure - expected that size is 3");
+        assertTrue(regionList.size() > 0, "failure - expected that a size of list of RegionDto greater than 0");
 
-    for(RegionDto item : regionList){
-        regionDtoIsCorrectlyInited(item);
+        for (RegionDto item : regionList) {
+            regionDtoIsCorrectlyInited(item);
+        }
     }
-}
 
     @Test
     public void getByIdTest() {

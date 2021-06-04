@@ -59,7 +59,7 @@ public class ProductGroupRestController {
     })
     public ResponseEntity<ProductGroupDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти товарную группу")
-            @PathVariable(name = "id") Long id) {
+                                                   @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsProductGroupById(id);
         return ResponseEntity.ok(productGroupService.getById(id));
     }

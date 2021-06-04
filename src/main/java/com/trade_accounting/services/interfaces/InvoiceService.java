@@ -13,7 +13,7 @@ public interface InvoiceService extends AbstractService<InvoiceDto>, SearchableS
     List<InvoiceDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice);
 
     @Transactional
-    default  List<InvoiceDto> getAll(String typeOfInvoice) {
+    default List<InvoiceDto> getAll(String typeOfInvoice) {
         return search((root, query, builder)
                 -> builder.equal(root.get("typeOfInvoice"), TypeOfInvoice.valueOf(typeOfInvoice)));
     }

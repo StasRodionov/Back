@@ -17,7 +17,7 @@ public class UnitDto {
 
     private String sortNumber;
 
-    public UnitDto(String shortName, String fullName, String sortNumber){
+    public UnitDto(String shortName, String fullName, String sortNumber) {
         this.shortName = shortName;
         this.fullName = fullName;
         this.sortNumber = sortNumber;

@@ -20,7 +20,6 @@ public class ContractorDto {
     private String commentToAddress;
     private String comment;
     private String discountCardNumber;
-
     private List<ContactDto> contactDto;
     private ContractorGroupDto contractorGroupDto;
     private TypeOfPriceDto typeOfPriceDto;

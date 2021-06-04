@@ -45,9 +45,9 @@ public class ContractorRestController {
                                     FiasDbService fiasDbService,
                                     AddressService addressService,
                                     CheckEntityService checkEntityService) {
-            this.contractorService = contractorService;
-            this.fiasDbService = fiasDbService;
-            this.addressService = addressService;
+        this.contractorService = contractorService;
+        this.fiasDbService = fiasDbService;
+        this.addressService = addressService;
         this.checkEntityService = checkEntityService;
     }
 

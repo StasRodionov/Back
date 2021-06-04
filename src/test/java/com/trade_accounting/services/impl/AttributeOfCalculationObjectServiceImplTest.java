@@ -59,7 +59,7 @@ class AttributeOfCalculationObjectServiceImplTest {
                 "failure - expected that a list of attributeOfCalculationObjectDto grater than 0"
         );
 
-        for(AttributeOfCalculationObjectDto attributeOfCalculationObject : attributeOfCalculationObjects) {
+        for (AttributeOfCalculationObjectDto attributeOfCalculationObject : attributeOfCalculationObjects) {
             attributeOfCalculationObjectDtoIsCorrectlyInited(attributeOfCalculationObject);
         }
     }
@@ -86,7 +86,7 @@ class AttributeOfCalculationObjectServiceImplTest {
     void getById_shouldReturnFilledAttributeOfCalculationObjectDto() {
         Optional<AttributeOfCalculationObject> attributeOfCalculationObjectFromRepo =
                 Optional.of(
-                    ModelStubs.getAttributeOfCalculationObject(1L)
+                        ModelStubs.getAttributeOfCalculationObject(1L)
                 );
 
         when(attributeOfCalculationObjectRepository.findById(anyLong()))

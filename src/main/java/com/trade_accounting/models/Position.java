@@ -22,13 +22,13 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (name = "name")
+    @Column(name = "name")
     private String name;
 
-    @Column (name = "sort_number")
+    @Column(name = "sort_number")
     private String sortNumber;
 
-    public Position(String name, String sortNumber){
+    public Position(String name, String sortNumber) {
         this.name = name;
         this.sortNumber = sortNumber;
     }

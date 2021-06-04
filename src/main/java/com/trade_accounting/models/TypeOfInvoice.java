@@ -3,9 +3,9 @@ package com.trade_accounting.models;
 /**
  * Класс-перечисление типов накладных
  *
- * @param RECEIPT - приход
- * @param EXPENSE - расход
- * @param POSTING - оприходование
+ * @param RECEIPT   - приход
+ * @param EXPENSE   - расход
+ * @param POSTING   - оприходование
  * @param WRITE_OFF - списание
  * @author Sanych
  * @see Invoice#typeOfInvoice

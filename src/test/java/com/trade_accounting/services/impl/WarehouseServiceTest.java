@@ -45,7 +45,7 @@ class WarehouseServiceTest {
         assertNotNull(warehouses, "failure - expected that a list of warehouseDto not null");
         assertTrue(warehouses.size() > 0, "failure - expected that a list of warehouseDto grater than 0");
 
-        for(WarehouseDto warehouse : warehouses) {
+        for (WarehouseDto warehouse : warehouses) {
             warehouseDtoIsCorrectlyInited(warehouse);
         }
     }
