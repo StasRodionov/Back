@@ -584,16 +584,14 @@ public abstract class DtoMapper {
 
     //PostingProduct
     @Mappings({
-            @Mapping(source = "company", target = "companyDto"),
-            @Mapping(source = "warehouse", target = "warehouseDto"),
-            @Mapping(source = "invoiceProduct", target = "invoiceProductDto")
+            @Mapping(source = "company.name", target = "companyName"),
+            @Mapping(source = "warehouse.name", target = "warehouseName"),
     })
     public abstract PostingProductDto postingProductToPostingProductDto(PostingProduct postingProduct);
 
     @Mappings({
-            @Mapping(source = "companyDto", target = "company"),
-            @Mapping(source = "warehouseDto", target = "warehouse"),
-            @Mapping(source = "invoiceProductDto", target = "invoiceProduct")
+            @Mapping(source = "companyName", target = "company.name"),
+            @Mapping(source = "warehouseName", target = "warehouse.name")
     })
     public abstract PostingProduct postingProductDtoToPostingProduct(PostingProductDto postingProductDto);
 }
