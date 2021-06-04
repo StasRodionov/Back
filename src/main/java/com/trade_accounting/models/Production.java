@@ -22,10 +22,11 @@ public class Production {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-/*
-   @ManyToOne(fetch = FetchType.LAZY)
-    private TechCards techCards;
 
+   @ManyToOne(fetch = FetchType.LAZY)
+    private TechnicalCard technicalCard;
+
+   /*
     @ManyToOne(fetch = FetchType.LAZY)
     private RequestProductions requestsProductions;
 
