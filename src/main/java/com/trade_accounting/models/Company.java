@@ -49,7 +49,8 @@ public class Company {
     private Boolean payerVat;
 
     @Column(name = "address")
-    private String address;
+    private Address address;
+   // private String address;
 
 
     @Column(name = "comment_to_address")

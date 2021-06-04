@@ -28,9 +28,9 @@ public class CompanyDto {
 
     private Boolean payerVat;
 
-    private String address;
+  //  private String address;
 
-  //  private Address address;
+    private Address address;
 
     private String commentToAddress;
 
@@ -58,8 +58,8 @@ public class CompanyDto {
                       String fax,
                       String email,
                       Boolean payerVat,
-                      String address,
-                    //  Address address,
+                    //  String address,
+                      Address address,
                       String commentToAddress,
                       String leader,
                       String leaderManagerPosition,
