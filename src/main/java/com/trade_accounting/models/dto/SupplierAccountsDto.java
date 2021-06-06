@@ -3,14 +3,13 @@ package com.trade_accounting.models.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InvoicesToCustomersDto {
+public class SupplierAccountsDto {
 
     @NotNull
     private Long id;
@@ -31,10 +30,10 @@ public class InvoicesToCustomersDto {
 
     private String comment;
 
-    public InvoicesToCustomersDto(Long id, LocalDateTime date,
-                                  Long companyId, Long contractId,
-                                  Long warehouseId, boolean isSpend,
-                                  String comment) {
+    public SupplierAccountsDto(Long id, LocalDateTime date,
+                               Long companyId, Long contractId,
+                               Long warehouseId, boolean isSpend,
+                               String comment) {
         this.id = id;
         this.date = date.toString();
         this.companyDto = new CompanyDto();
