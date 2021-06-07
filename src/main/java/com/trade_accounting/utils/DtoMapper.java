@@ -18,9 +18,11 @@ import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
+import com.trade_accounting.models.PostingProduct;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
+import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.Role;
@@ -54,9 +56,11 @@ import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.PostingProductDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
+import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
@@ -127,6 +131,13 @@ public abstract class DtoMapper {
             AttributeOfCalculationObjectDto attributeOfCalculationObjectDto
     );
 
+
+    //Production
+    public abstract ProductionDto productionToProductionDto(Production production);
+
+    public abstract Production productionDtoToProduction(ProductionDto productionDto);
+
+
     //AccessParameters
     @Mappings({
             @Mapping(source = "employee.id", target = "employeeId"),
@@ -142,6 +153,7 @@ public abstract class DtoMapper {
                 .employee(employeeDtoToEmployee(employeeRepository.getById(accessParametersDto.getEmployeeId())))
                 .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
     }
+
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
@@ -423,10 +435,6 @@ public abstract class DtoMapper {
     public abstract ProductPrice productPriceDtoToProductPrice(ProductPriceDto productPriceDto);
 
 
-    //Production
-    public abstract ProductionDto productionToProductionDto(Production production);
-
-    public abstract Production productionDtoToProduction(ProductionDto productionDto);
     //Project
     public abstract ProjectDto projectToProjectDto(Project project);
 
@@ -542,6 +550,7 @@ public abstract class DtoMapper {
     })
     public abstract Region toRegion(RegionDto regionDto);
 
+
     @Mappings({
             @Mapping(source = "districts", target = "districtDtos")
     })
@@ -584,4 +593,19 @@ public abstract class DtoMapper {
     public abstract FiasAddressModel toFiasAddressModel(FiasAddressModelDto dto);
 
     public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
+
+
+    //PostingProduct
+    @Mappings({
+            @Mapping(source = "company.name", target = "companyName"),
+            @Mapping(source = "warehouse.name", target = "warehouseName"),
+    })
+    public abstract PostingProductDto postingProductToPostingProductDto(PostingProduct postingProduct);
+
+    @Mappings({
+            @Mapping(source = "companyName", target = "company.name"),
+            @Mapping(source = "warehouseName", target = "warehouse.name")
+    })
+    public abstract PostingProduct postingProductDtoToPostingProduct(PostingProductDto postingProductDto);
+
 }

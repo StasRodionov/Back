@@ -33,10 +33,12 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
         return listInvoiceProductDto.stream().map(dtoMapper::invoiceProductToInvoiceProductDto)
                 .collect(Collectors.toList());
     }
+
     @Override
     public List<InvoiceProductDto> search(Specification<InvoiceProduct> spec) {
         return executeSearch(invoiceProductRepository, dtoMapper::invoiceProductToInvoiceProductDto, spec);
     }
+
     @Override
     public InvoiceProductDto getById(Long id) {
         Optional<InvoiceProduct> invoiceProductDto = invoiceProductRepository.findById(id);
@@ -45,7 +47,7 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
 
     @Override
     public InvoiceProductDto create(@NotNull InvoiceProductDto invoiceProductDto) {
-    InvoiceProduct invoiceProductSaved = invoiceProductRepository.save(dtoMapper.invoiceProductDtoToInvoiceProduct(invoiceProductDto));
+        InvoiceProduct invoiceProductSaved = invoiceProductRepository.save(dtoMapper.invoiceProductDtoToInvoiceProduct(invoiceProductDto));
         invoiceProductDto.setId(invoiceProductSaved.getId());
         return invoiceProductDto;
     }

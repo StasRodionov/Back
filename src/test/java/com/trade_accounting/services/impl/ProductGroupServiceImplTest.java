@@ -62,7 +62,7 @@ class ProductGroupServiceImplTest {
         assertNotNull(productGroupDtoList, "failure - expected that a list of productDto not null: " + productGroupDtoList);
         assertTrue(productGroupDtoList.size() > 0, "failure - expected that a size of list of productDto greater than 0: " + productGroupDtoList);
 
-        for(ProductGroupDto productGroupDto : productGroupDtoList) {
+        for (ProductGroupDto productGroupDto : productGroupDtoList) {
             productGroupDtoIsCorrectlyInited(productGroupDto);
         }
     }
@@ -84,7 +84,7 @@ class ProductGroupServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         ProductGroupDto productGroup = productGroupService.create(
-            getProductGroupDto(1L)
+                getProductGroupDto(1L)
         );
 
         verify(productGroupRepository).save(any(ProductGroup.class));
@@ -120,15 +120,15 @@ class ProductGroupServiceImplTest {
     //Util methods
     EmployeeDto getEmployeeDtoFromRepo(Long id) {
         return new EmployeeDto(id,
-                        "LastName",
-                        "FirstName",
-                        "MiddleName",
-                        String.valueOf(id),
-                        String.valueOf(id).repeat(11),
-                        String.valueOf(id).repeat(12),
-                        "Description",
-                        "email@email.com",
-                        "password");
+                "LastName",
+                "FirstName",
+                "MiddleName",
+                String.valueOf(id),
+                String.valueOf(id).repeat(11),
+                String.valueOf(id).repeat(12),
+                "Description",
+                "email@email.com",
+                "password");
     }
 
     ProductGroupDto getProductGroupDto(Long id) {
@@ -139,7 +139,7 @@ class ProductGroupServiceImplTest {
     }
 
     ProductGroup getProductGroup(Long id) {
-        if(id == 0) return null;
+        if (id == 0) return null;
 
         ProductGroup parentProductGroup = getProductGroup(id - 1);
 

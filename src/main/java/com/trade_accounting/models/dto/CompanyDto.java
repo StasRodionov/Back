@@ -30,7 +30,7 @@ public class CompanyDto {
 
     private String address;
 
-  //  private Address address;
+    //  private Address address;
 
     private String commentToAddress;
 
@@ -59,7 +59,7 @@ public class CompanyDto {
                       String email,
                       Boolean payerVat,
                       String address,
-                    //  Address address,
+                      //  Address address,
                       String commentToAddress,
                       String leader,
                       String leaderManagerPosition,

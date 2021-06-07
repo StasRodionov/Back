@@ -49,7 +49,7 @@ public class ContractDto {
                        Long legalDetailId) {
         this.id = id;
         this.number = number;
-       // this.contractDate = contractDate; //добавил
+        // this.contractDate = contractDate; //добавил
         this.contractDate = contractDate;
         this.companyDto = new CompanyDto();
         this.companyDto.setId(companyId);

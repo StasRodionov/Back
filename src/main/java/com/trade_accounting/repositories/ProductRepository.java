@@ -28,5 +28,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
     List<Product> search(@Param("query") String query);
 
     @Query("from Product p where concat(p.id, ' ', p.name, ' ', p.description) like concat('%', :query, '%') and p.service = false")
-    List<Product> searchService (@Param("query") String query);
+    List<Product> searchService(@Param("query") String query);
 }

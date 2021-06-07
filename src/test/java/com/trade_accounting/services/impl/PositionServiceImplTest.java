@@ -53,7 +53,7 @@ class PositionServiceImplTest {
         assertNotNull(positions, "failure - expected that list of position not null");
         assertTrue(positions.size() > 0, "failure - expected that size of list of position greater than 0");
 
-        for(PositionDto positionDto : positions){
+        for (PositionDto positionDto : positions) {
             positionDtoIsCorrectlyInited(positionDto);
         }
     }
@@ -94,7 +94,7 @@ class PositionServiceImplTest {
     }
 
     @Test
-    void getByName_shouldReturnEmptyPositionDto(){
+    void getByName_shouldReturnEmptyPositionDto() {
         Optional<Position> positionFromRepo = Optional.empty();
 
         when(positionRepository.findByName(anyString()))

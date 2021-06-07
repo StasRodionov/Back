@@ -22,7 +22,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpec
             "e.contractor.id," +
             "e.contract.id," +
             "e.project.id," +
-            "e.sum"+
+            "e.sum" +
             ") from Payment e")
     List<PaymentDto> getAll();
 
@@ -35,7 +35,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpec
             "e.contractor.id," +
             "e.contract.id," +
             "e.project.id," +
-            "e.sum"+
+            "e.sum" +
             ") from Payment e")
     PaymentDto getById(@Param("id") Long id);
 

@@ -53,7 +53,7 @@ class TypeOfPriceServiceImplTest {
         assertNotNull(typeOfPrices, "failure - expected that a list of typeOfPriceDto not null");
         assertTrue(typeOfPrices.size() > 0, "failure - expected that a list of typeOfPriceDto grater than 0");
 
-        for(TypeOfPriceDto typeOfPrice : typeOfPrices) {
+        for (TypeOfPriceDto typeOfPrice : typeOfPrices) {
             typeOfPriceDtoIsCorrectlyInited(typeOfPrice);
         }
     }

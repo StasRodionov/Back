@@ -70,7 +70,7 @@ class PaymentServiceImplTest {
         assertNotNull(payments, "Failure - expected that list of payments not null");
         assertTrue(payments.size() > 0, "Failure - expected that size of list of payments greater than 0");
 
-        for(PaymentDto payment : payments) {
+        for (PaymentDto payment : payments) {
             paymentDtoIsCorrectlyInited(payment);
         }
     }

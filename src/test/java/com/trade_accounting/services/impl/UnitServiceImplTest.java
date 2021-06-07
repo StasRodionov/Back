@@ -45,7 +45,7 @@ class UnitServiceImplTest {
         assertNotNull(units, "Failure - expected that list of units not null");
         assertTrue(units.size() > 0, "Failure - expected that size of list of units greater than 0");
 
-        for(UnitDto unit : units) {
+        for (UnitDto unit : units) {
             unitDtoIsCorrectlyInited(unit);
         }
     }

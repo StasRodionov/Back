@@ -16,13 +16,13 @@ public interface ProductService extends AbstractService<ProductDto>, SearchableS
     void deleteById(Long id);
 
     @Transactional
-    default  List<ProductDto> getAllByProductGroupId(Long id) {
+    default List<ProductDto> getAllByProductGroupId(Long id) {
         return search((root, query, builder) ->
                 builder.equal(root.get("productGroup").get("id"), id));
     }
 
     @Transactional
-    default  List<ProductDto> getAllByContractorId(Long id) {
+    default List<ProductDto> getAllByContractorId(Long id) {
         return search((root, query, builder) ->
                 builder.equal(root.get("contractor").get("id"), id));
     }

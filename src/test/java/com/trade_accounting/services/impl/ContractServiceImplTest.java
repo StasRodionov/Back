@@ -43,7 +43,7 @@ public class ContractServiceImplTest {
     ContractServiceImpl contractService;
 
     @Test
-    void getAllShouldReturnListOfContracts(){
+    void getAllShouldReturnListOfContracts() {
         when(contractRepository.findAll())
                 .thenReturn(
                         Stream.of(ModelStubs.getContract(1L),
@@ -61,7 +61,7 @@ public class ContractServiceImplTest {
     }
 
     @Test
-    void getAllShouldReturnEmptyListContractDto(){
+    void getAllShouldReturnEmptyListContractDto() {
         when(contractRepository.findAll()).thenReturn(new ArrayList<>());
 
         List<ContractDto> contractDtoList = contractService.getAll();
@@ -120,7 +120,7 @@ public class ContractServiceImplTest {
         verify(contractRepository).deleteById(anyLong());
     }
 
-    void contractDtoIsCorrectlyInitiated(ContractDto contractDto){
+    void contractDtoIsCorrectlyInitiated(ContractDto contractDto) {
         assertNotNull(contractDto.getId(), "Id should not be null");
         assertNotNull(contractDto.getContractorDto(), "Contractor should not be null");
         assertNotNull(contractDto.getCompanyDto(), "Company should not be null");
