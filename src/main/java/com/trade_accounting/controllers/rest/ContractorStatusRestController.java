@@ -51,7 +51,7 @@ public class ContractorStatusRestController {
     )
     public ResponseEntity<ContractorStatusDto> getById(@ApiParam(name = "id",
             value = "Переданный в URL id по которому необходимо найти статус")
-                                                 @PathVariable(name = "id") Long id) {
+                                                       @PathVariable(name = "id") Long id) {
         ContractorStatusDto statusDto = statusService.getById(id);
         return ResponseEntity.ok(statusDto);
     }

@@ -40,17 +40,17 @@ class TypeOfContractorServiceImplTest {
     void getAll_shouldReturnListFilledTypeOfContractorDto() {
         when(typeOfContractorRepository.findAll())
                 .thenReturn(Stream.of(
-                ModelStubs.getTypeOfContractor(1L),
-                ModelStubs.getTypeOfContractor(2L),
-                ModelStubs.getTypeOfContractor(3L)
-        ).collect(Collectors.toList()));
+                        ModelStubs.getTypeOfContractor(1L),
+                        ModelStubs.getTypeOfContractor(2L),
+                        ModelStubs.getTypeOfContractor(3L)
+                ).collect(Collectors.toList()));
 
         List<TypeOfContractorDto> typesOfContractors = typeOfContractorService.getAll();
 
         assertNotNull(typesOfContractors, "failure - expected that a list of typeOfContactorsDto not null");
         assertTrue(typesOfContractors.size() > 0, "failure - expected that a size of list of typeOfContactorsDto greater than 0");
 
-        for (TypeOfContractorDto typeOfContractorDto : typesOfContractors){
+        for (TypeOfContractorDto typeOfContractorDto : typesOfContractors) {
             typeOfContractorDtoIsCorrectlyInited(typeOfContractorDto);
         }
     }

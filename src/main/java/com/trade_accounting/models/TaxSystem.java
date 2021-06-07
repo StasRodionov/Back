@@ -28,8 +28,10 @@ public class TaxSystem {
     @Column(name = "sort_number")
     private String sortNumber;
 
-    public TaxSystem(String name, String sortNumber){
+    public TaxSystem(String name, String sortNumber) {
         this.name = name;
         this.sortNumber = sortNumber;
-    };
+    }
+
+    ;
 }

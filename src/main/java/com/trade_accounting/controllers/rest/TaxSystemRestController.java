@@ -59,7 +59,7 @@ public class TaxSystemRestController {
     @GetMapping("/{id}")
     public ResponseEntity<TaxSystemDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти налоговую систему")
-                                                    @PathVariable(name = "id") Long id) {
+                                                @PathVariable(name = "id") Long id) {
         checkEntityService.checkExistsTaxSystemById(id);
         return ResponseEntity.ok(taxSystemService.getById(id));
     }

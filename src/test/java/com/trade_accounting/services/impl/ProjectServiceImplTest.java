@@ -52,7 +52,7 @@ class ProjectServiceImplTest {
         assertNotNull(projects, "failure - expected that a list of projectDto not null");
         assertTrue(projects.size() > 0, "failure - expected that a list of projectDto grater than 0");
 
-        for(ProjectDto project : projects) {
+        for (ProjectDto project : projects) {
             projectDtoIsCorrectlyInited(project);
         }
     }

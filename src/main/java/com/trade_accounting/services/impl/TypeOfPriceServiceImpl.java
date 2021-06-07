@@ -41,7 +41,7 @@ public class TypeOfPriceServiceImpl implements TypeOfPriceService {
     @Override
     public TypeOfPriceDto create(TypeOfPriceDto typeOfPriceDto) {
         TypeOfPrice savedTypeOfPrice = typeOfPriceRepository.save(
-            dtoMapper.typeOfPriceDtoToTypeOfPrice(typeOfPriceDto)
+                dtoMapper.typeOfPriceDtoToTypeOfPrice(typeOfPriceDto)
         );
         typeOfPriceDto.setId(savedTypeOfPrice.getId());
         return dtoMapper.typeOfPriceToTypeOfPriceDto(savedTypeOfPrice);

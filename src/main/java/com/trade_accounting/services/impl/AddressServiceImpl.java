@@ -29,7 +29,8 @@ public class AddressServiceImpl implements AddressService {
         List<Address> all = addressRepository.findAll();
         return all.stream().map(dtoMapper::addressToAddressDto).collect(Collectors.toList());
     }
-//>>>>
+
+    //>>>>
     @Override
     public AddressDto getById(Long id) {
         Address address = addressRepository.getOne(id);

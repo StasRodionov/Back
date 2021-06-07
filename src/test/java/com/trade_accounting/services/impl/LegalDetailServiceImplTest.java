@@ -63,7 +63,7 @@ class LegalDetailServiceImplTest {
         assertNotNull(legalDetails, "Failure - expected that list of legalDetail not null");
         assertTrue(legalDetails.size() > 0, "failure - expected that size of list of legalDetail greater than 0");
 
-        for(LegalDetailDto legalDetailDto : legalDetails){
+        for (LegalDetailDto legalDetailDto : legalDetails) {
             legalDetailDtoIsCorrectlyInited(legalDetailDto);
         }
     }

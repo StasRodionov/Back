@@ -7,6 +7,7 @@ import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +41,7 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     public ProductGroupDto create(ProductGroupDto dto) {
         ProductGroup productGroup = dtoMapper.productGroupDtoToProductGroup(dto);
 
-        if(dto.getId() != null) {
+        if (dto.getId() != null) {
             productGroup.setProductGroup(
                     productGroupRepository.findById(dto.getParentId()).orElse(null)
             );

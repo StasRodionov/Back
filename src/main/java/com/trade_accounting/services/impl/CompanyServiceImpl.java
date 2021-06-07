@@ -65,13 +65,13 @@ public class CompanyServiceImpl implements CompanyService {
 
         company.setBankAccounts(
                 companyDto.getBankAccountDto().stream()
-                .map(
-                        bankAccount -> bankAccountRepository
-                        .save(dtoMapper.bankAccountDtoToBankAccount(bankAccount))
-                )
-                .collect(Collectors.toList())
+                        .map(
+                                bankAccount -> bankAccountRepository
+                                        .save(dtoMapper.bankAccountDtoToBankAccount(bankAccount))
+                        )
+                        .collect(Collectors.toList())
         );
-       Company companySaved = companyRepository.save(company);
+        Company companySaved = companyRepository.save(company);
         companyDto.setId(companySaved.getId());
         return companyDto;
     }

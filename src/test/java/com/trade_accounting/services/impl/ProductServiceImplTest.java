@@ -109,7 +109,8 @@ class ProductServiceImplTest {
         productService.deleteById(1L);
         verify(repository).deleteById(1L);
     }
-//ещё проблемный тест
+
+    //ещё проблемный тест
     @Test
     void getAllByContractorId() {
         List<Product> productList = Stream.of(ModelStubs.getProduct(1L)).collect(Collectors.toList());
