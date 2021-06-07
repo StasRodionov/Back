@@ -18,9 +18,11 @@ import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
+import com.trade_accounting.models.PostingProduct;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
+import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.Role;
@@ -54,9 +56,11 @@ import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.models.dto.PostingProductDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
+import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
@@ -127,6 +131,11 @@ public abstract class DtoMapper {
             AttributeOfCalculationObjectDto attributeOfCalculationObjectDto
     );
 
+    //Production
+    public abstract ProductionDto productionToProductionDto(Production production);
+
+    public abstract Production productionDtoToProduction(ProductionDto productionDto);
+
     //AccessParameters
     @Mappings({
             @Mapping(source = "employee.id", target = "employeeId"),
@@ -142,6 +151,7 @@ public abstract class DtoMapper {
                 .employee(employeeDtoToEmployee(employeeRepository.getById(accessParametersDto.getEmployeeId())))
                 .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
     }
+
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
@@ -196,7 +206,7 @@ public abstract class DtoMapper {
     })
     public abstract Contract contractDtoToContract(ContractDto contractDto);
 
-    public abstract List<ContractDto> toContractDtoList (List<Contract> contracts);
+    public abstract List<ContractDto> toContractDtoList(List<Contract> contracts);
 
     //Contractor
     @Mappings({
@@ -258,7 +268,7 @@ public abstract class DtoMapper {
 
     //Image
     public ImageDto imageToImageDto(Image image) {
-        if (image == null){
+        if (image == null) {
             return null;
         }
         return ImageDto.builder()
@@ -270,7 +280,7 @@ public abstract class DtoMapper {
 
     public Image imageDtoToImage(ImageDto imageDto, String imageDir) {
         String url = uploadImage(imageDto.getContent(), imageDir,
-                    new Date().getTime() + imageDto.getFileExtension());
+                new Date().getTime() + imageDto.getFileExtension());
         return Image.builder()
                 .id(imageDto.getId())
                 .imageUrl(url)
@@ -278,7 +288,7 @@ public abstract class DtoMapper {
     }
 
     public List<Image> toImage(Collection<ImageDto> imageDtos, String imageDir) {
-        if ( imageDtos == null ) {
+        if (imageDtos == null) {
             return new ArrayList<>();
         }
         List<Image> list = new ArrayList<>(imageDtos.size());
@@ -306,7 +316,7 @@ public abstract class DtoMapper {
     @SneakyThrows
     private byte[] downloadImage(String url) {
         Path path = Paths.get(url);
-        if (Files.exists(path)){
+        if (Files.exists(path)) {
             return Files.readAllBytes(path);
         } else {
             return new byte[0];
@@ -537,6 +547,25 @@ public abstract class DtoMapper {
     })
     public abstract Region toRegion(RegionDto regionDto);
 
+/*
+    public abstract RegionDto toRegionDto(Region region);
+
+    public abstract District toDistrict(DistrictDto districtDto);
+
+    public abstract DistrictDto toDistrictDto(District district);
+
+    public abstract City toCity(CityDto cityDto);
+
+    public abstract CityDto toCityDto(City city);
+
+    public abstract Street toStreet(StreetDto streetDto);
+
+    public abstract StreetDto toStreetDto(Street street);
+
+ */
+
+
+
     @Mappings({
             @Mapping(source = "districts", target = "districtDtos")
     })
@@ -579,4 +608,17 @@ public abstract class DtoMapper {
     public abstract FiasAddressModel toFiasAddressModel(FiasAddressModelDto dto);
 
     public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
+
+    //PostingProduct
+    @Mappings({
+            @Mapping(source = "company.name", target = "companyName"),
+            @Mapping(source = "warehouse.name", target = "warehouseName"),
+    })
+    public abstract PostingProductDto postingProductToPostingProductDto(PostingProduct postingProduct);
+
+    @Mappings({
+            @Mapping(source = "companyName", target = "company.name"),
+            @Mapping(source = "warehouseName", target = "warehouse.name")
+    })
+    public abstract PostingProduct postingProductDtoToPostingProduct(PostingProductDto postingProductDto);
 }
