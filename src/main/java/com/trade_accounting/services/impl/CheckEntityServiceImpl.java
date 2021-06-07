@@ -25,7 +25,6 @@ import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.PositionRepository;
-import com.trade_accounting.repositories.PostingProductRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
@@ -74,7 +73,6 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final ContractRepository contractRepository;
     private final ContractorRepository contractorRepository;
     private final PaymentRepository paymentRepository;
-    private final PostingProductRepository postingProductRepository;
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
     private final TechnicalCardRepository technicalCardRepository;
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
@@ -105,7 +103,6 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   ContractRepository contractRepository,
                                   ContractorRepository contractorRepository,
                                   PaymentRepository paymentRepository,
-                                  PostingProductRepository postingProductRepository,
                                   AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository,
                                   TechnicalCardRepository technicalCardRepository,
                                   TechnicalCardGroupRepository technicalCardGroupRepository) {
@@ -134,7 +131,6 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.contractRepository = contractRepository;
         this.contractorRepository = contractorRepository;
         this.paymentRepository = paymentRepository;
-        this.postingProductRepository = postingProductRepository;
         this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
         this.technicalCardRepository = technicalCardRepository;
         this.technicalCardGroupRepository = technicalCardGroupRepository;
@@ -189,12 +185,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
             throw new NotFoundEntityException("Склада с id=" + attributeOfCalculationObjectId + ", не найдено");
         }
     }
-    @Override
-    public void checkExistsPostingProductById(Long postingProductId) {
-        if(!postingProductRepository.existsById(postingProductId)) {
-            throw new NotFoundEntityException("Оприходование с id=" + postingProductId + ", не найдено");
-        }
-    }
+
     @Override
     public void checkForBadEmployee(EmployeeDto employee) {
         DepartmentDto department = employee.getDepartmentDto();

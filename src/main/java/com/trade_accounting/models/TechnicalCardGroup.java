@@ -25,6 +25,9 @@ public class TechnicalCardGroup {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "comment")
+    private String comment;
+
     @Column(name = "sort_number")
     private String sortNumber;
 }

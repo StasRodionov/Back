@@ -8,10 +8,13 @@ import com.trade_accounting.repositories.TechnicalCardProductionRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
 import com.trade_accounting.utils.DtoMapper;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,9 +81,15 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
 
     @Override
     public List<TechnicalCardDto> search(String searchTerm) {
-        return technicalCardRepository.search(searchTerm).stream()
-                .map(dtoMapper::technicalCardToTechnicalCardDto)
-                .collect(Collectors.toList());
+        if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
+            return technicalCardRepository.findAll().stream()
+                    .map(dtoMapper::technicalCardToTechnicalCardDto)
+                    .collect(Collectors.toList());
+        } else {
+            return technicalCardRepository.search(searchTerm).stream()
+                    .map(dtoMapper::technicalCardToTechnicalCardDto)
+                    .collect(Collectors.toList());
+        }
     }
 
     @Override
@@ -89,4 +98,10 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
                 .map(dtoMapper::technicalCardToTechnicalCardDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<TechnicalCardDto> search(Specification<TechnicalCard> spec) {
+        return executeSearch(technicalCardRepository, dtoMapper::technicalCardToTechnicalCardDto, spec);
+    }
+
 }
