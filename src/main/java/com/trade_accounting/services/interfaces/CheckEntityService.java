@@ -67,4 +67,6 @@ public interface CheckEntityService {
     void checkExistsTechnicalCardById(Long technicalCardId);
 
     void checkExistsTechnicalCardGroupById(Long technicalCardGroupId);
+
+    void checkExistsPostingProductById(Long postingProductId);
 }
