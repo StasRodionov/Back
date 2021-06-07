@@ -29,6 +29,7 @@ import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.repositories.RoleRepository;
+import com.trade_accounting.repositories.SupplierAccountsRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
 import com.trade_accounting.repositories.TaxSystemRepository;
@@ -72,6 +73,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final ContractorRepository contractorRepository;
     private final PaymentRepository paymentRepository;
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
+    private final SupplierAccountsRepository supplierAccountsRepository;
 
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
@@ -99,7 +101,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   ContractRepository contractRepository,
                                   ContractorRepository contractorRepository,
                                   PaymentRepository paymentRepository,
-                                  AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository) {
+                                  AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository, SupplierAccountsRepository supplierAccountsRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -126,6 +128,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.contractorRepository = contractorRepository;
         this.paymentRepository = paymentRepository;
         this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
+        this.supplierAccountsRepository = supplierAccountsRepository;
     }
 
 
@@ -391,6 +394,13 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsBankAccountById(Long bankAccountId) {
         if (!bankAccountRepository.existsById(bankAccountId)) {
             throw new NotFoundEntityException("Банковский счет с id=" + bankAccountId + ", не найден");
+        }
+    }
+
+    @Override
+    public void checkExistsSupplierAccountsById(Long supplierAccountsId) {
+        if(!supplierAccountsRepository.existsById(supplierAccountsId)) {
+            throw new NotFoundEntityException("Счет поставщика с id=" + supplierAccountsId + ", не найден");
         }
     }
 }

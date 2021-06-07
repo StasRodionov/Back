@@ -29,29 +29,29 @@ public class SupplierAccountsImpl implements SupplierAccountsService {
     @Override
     public List<SupplierAccountsDto> getAll() {
         return supplierAccountsRepository.findAll().stream()
-                .map(dtoMapper::InvoicesToCustomersToInvoicesToCustomersDto)
+                .map(dtoMapper::SupplierAccountsToSupplierAccountsDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public SupplierAccountsDto getById(Long id) {
         Optional<SupplierAccounts> invoicesToCustomers = supplierAccountsRepository.findById(id);
-        return dtoMapper.InvoicesToCustomersToInvoicesToCustomersDto(invoicesToCustomers.orElse(new SupplierAccounts()));
+        return dtoMapper.SupplierAccountsToSupplierAccountsDto(invoicesToCustomers.orElse(new SupplierAccounts()));
     }
 
     @Override
     public SupplierAccountsDto create(SupplierAccountsDto dto) {
         SupplierAccounts saveInvoices = supplierAccountsRepository.save(
-                dtoMapper.InvoicesToCustomersDtoToInvoicesToCustomers(dto));
+                dtoMapper.SupplierAccountsDtoToSupplierAccounts(dto));
         dto.setId(saveInvoices.getId());
-        return dtoMapper.InvoicesToCustomersToInvoicesToCustomersDto(saveInvoices);
+        return dtoMapper.SupplierAccountsToSupplierAccountsDto(saveInvoices);
     }
 
     @Override
     public SupplierAccountsDto update(SupplierAccountsDto dto) {
         SupplierAccounts updateInvoices = supplierAccountsRepository.save(
-                dtoMapper.InvoicesToCustomersDtoToInvoicesToCustomers(dto));
-        return dtoMapper.InvoicesToCustomersToInvoicesToCustomersDto(updateInvoices);
+                dtoMapper.SupplierAccountsDtoToSupplierAccounts(dto));
+        return dtoMapper.SupplierAccountsToSupplierAccountsDto(updateInvoices);
     }
 
     @Override
@@ -61,6 +61,6 @@ public class SupplierAccountsImpl implements SupplierAccountsService {
 
     @Override
     public List<SupplierAccountsDto> search(Specification<SupplierAccounts> spec) {
-        return executeSearch(supplierAccountsRepository, dtoMapper::InvoicesToCustomersToInvoicesToCustomersDto, spec);
+        return executeSearch(supplierAccountsRepository, dtoMapper::SupplierAccountsToSupplierAccountsDto, spec);
     }
 }

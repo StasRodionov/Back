@@ -343,20 +343,20 @@ public abstract class DtoMapper {
     })
     public abstract InvoiceProduct invoiceProductDtoToInvoiceProduct(InvoiceProductDto invoiceProductDto);
 
-    // InvoicesToCustomers
+    // SupplierAccounts
     @Mappings({
             @Mapping(source = "company", target = "companyDto"),
             @Mapping(source = "contract", target = "contractDto"),
             @Mapping(source = "warehouse", target = "warehouseDto"),
     })
-    public abstract SupplierAccountsDto InvoicesToCustomersToInvoicesToCustomersDto(SupplierAccounts SupplierAccounts);
+    public abstract SupplierAccountsDto SupplierAccountsToSupplierAccountsDto(SupplierAccounts SupplierAccounts);
 
     @Mappings({
-            @Mapping(source = "company", target = "companyDto"),
-            @Mapping(source = "contract", target = "contractDto"),
-            @Mapping(source = "warehouse", target = "warehouseDto"),
+            @Mapping(source = "companyDto", target = "company"),
+            @Mapping(source = "contractDto", target = "contract"),
+            @Mapping(source = "warehouseDto", target = "warehouse"),
     })
-    public abstract SupplierAccounts InvoicesToCustomersDtoToInvoicesToCustomers(SupplierAccountsDto SupplierAccountsDto);
+    public abstract SupplierAccounts SupplierAccountsDtoToSupplierAccounts(SupplierAccountsDto SupplierAccountsDto);
 
     //LegalDetail
     @Mappings({

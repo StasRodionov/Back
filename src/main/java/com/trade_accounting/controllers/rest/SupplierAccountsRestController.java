@@ -10,9 +10,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +23,8 @@ import java.util.List;
 
 @RestController
 @Tag(name="SupplierAccounts Rest Controller", description = "CRUD операции со счетами поставщиков")
-@Api(tags = "InvoicesToCustomers Rest Controller")
-@RequestMapping("api/invoicesToCustomers")
+@Api(tags = "SupplierAccounts Rest Controller")
+@RequestMapping("api/supplierAccounts")
 public class SupplierAccountsRestController {
 
     private final SupplierAccountsService invoices;
@@ -77,7 +79,7 @@ public class SupplierAccountsRestController {
 
     }
 
-    @PostMapping
+    @PutMapping
     @ApiOperation(value = "create", notes = "Изменение счета поставщика")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Информация о счете обновлена"),
@@ -92,6 +94,16 @@ public class SupplierAccountsRestController {
 
     }
 
+
+    @ApiOperation(value = "deleteById", notes = "Удаляет счет поставщика на основе переданного ID")
+    @DeleteMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Счет поставщика успешно удален"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
     public ResponseEntity<SupplierAccountsDto> deleteById(@ApiParam(name = "id", type = "Long",
                      value = "Переданный в URL id по которому необходимо удалить счет поставщика")
                                                              @PathVariable(name = "id") Long id) {
