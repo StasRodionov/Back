@@ -1,14 +1,14 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Position;
-import com.trade_accounting.models.dto.PositionDto;
-import com.trade_accounting.repositories.PositionRepository;
+import com.trade_accounting.models.PostingProduct;
+import com.trade_accounting.models.dto.PostingProductDto;
 import com.trade_accounting.repositories.PostingProductRepository;
 import com.trade_accounting.services.interfaces.PostingProductService;
 import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
