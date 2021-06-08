@@ -1,6 +1,5 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.Address;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.AccessParametersDto;
@@ -30,6 +29,9 @@ import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
+import com.trade_accounting.models.dto.TechnicalCardDto;
+import com.trade_accounting.models.dto.TechnicalCardGroupDto;
+import com.trade_accounting.models.dto.TechnicalCardProductionDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
@@ -61,6 +63,8 @@ import com.trade_accounting.services.interfaces.ContractorStatusService;
 import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
+import com.trade_accounting.services.interfaces.TechnicalCardGroupService;
+import com.trade_accounting.services.interfaces.TechnicalCardService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import com.trade_accounting.services.interfaces.UnitService;
@@ -114,6 +118,8 @@ public class DataInitializer {
     private final RetailStoreService retailStoreService;
     private final ContractorStatusService contractorStatusService;
     private final AccessParametersService accessParametersService;
+    private final TechnicalCardGroupService technicalCardGroupService;
+    private final TechnicalCardService technicalCardService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -144,8 +150,11 @@ public class DataInitializer {
             TaskCommentService commentService,
             RetailStoreService retailStoreService,
             AddressServiceImpl addressService,
-            FiasDbService fiasDbService, ContractorStatusService contractorStatusService,
-            AccessParametersService accessParametersService) {
+            FiasDbService fiasDbService,
+            ContractorStatusService contractorStatusService,
+            AccessParametersService accessParametersService,
+            TechnicalCardGroupService technicalCardGroupService,
+            TechnicalCardService technicalCardService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -178,6 +187,8 @@ public class DataInitializer {
         this.retailStoreService = retailStoreService;
         this.contractorStatusService = contractorStatusService;
         this.accessParametersService = accessParametersService;
+        this.technicalCardGroupService = technicalCardGroupService;
+        this.technicalCardService = technicalCardService;
     }
 
     @PostConstruct
@@ -213,6 +224,8 @@ public class DataInitializer {
         initTasks();
         initTaskComments();
         initRetailStores();
+        initTechnicalCardGroups();
+        initTechnicalCards();
     }
 
     private void initAccessParameters() {
@@ -1351,5 +1364,55 @@ public class DataInitializer {
 
     }
 
+    public void initTechnicalCardGroups() {
+        technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №1", "Комментарий1", "1"));
+        technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №2", "Комментарий2", "2"));
+    }
 
+    public void initTechnicalCards(){
+        technicalCardService.create(new TechnicalCardDto(
+                null,
+                "Техническая карта №1",
+                "Комментарий1",
+                "1000",
+                "1",
+                technicalCardGroupService.getById(1L),
+                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(1L)),
+                        new TechnicalCardProductionDto(null, 2L, productService.getById(2L))),
+                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(3L)),
+                        new TechnicalCardProductionDto(null, 2L, productService.getById(4L)))));
+        technicalCardService.create(new TechnicalCardDto(
+                null,
+                "Техническая карта №2",
+                "Комментарий2",
+                "1100",
+                "2",
+                technicalCardGroupService.getById(1L),
+                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(5L)),
+                        new TechnicalCardProductionDto(null, 2L, productService.getById(6L))),
+                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(7L)),
+                        new TechnicalCardProductionDto(null, 2L, productService.getById(8L)))));
+        technicalCardService.create(new TechnicalCardDto(
+                null,
+                "Техническая карта №3",
+                "Комментарий3",
+                "1200",
+                "3",
+                technicalCardGroupService.getById(2L),
+                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(9L)),
+                        new TechnicalCardProductionDto(null, 2L, productService.getById(10L))),
+                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(11L)),
+                        new TechnicalCardProductionDto(null, 2L, productService.getById(12L)))));
+        technicalCardService.create(new TechnicalCardDto(
+                null,
+                "Техническая карта №4",
+                "Комментарий4",
+                "1300",
+                "4",
+                technicalCardGroupService.getById(2L),
+                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(13L)),
+                        new TechnicalCardProductionDto(null, 2L, productService.getById(14L))),
+                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(15L)),
+                        new TechnicalCardProductionDto(null, 2L, productService.getById(16L)))));
+    }
 }

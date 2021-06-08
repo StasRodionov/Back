@@ -9,13 +9,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TechnicalCardGroupDto {
+public class ProductionDto {
 
     private Long id;
 
-    private String name;
+    private String tech_cards;
 
-    private String comment;
+    private String requests_production;
 
-    private String sortNumber;
+    private String tech_operations;
+
+
 }

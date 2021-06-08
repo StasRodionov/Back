@@ -1,8 +1,8 @@
 package com.trade_accounting.repositories;
 
-import com.trade_accounting.models.Product;
 import com.trade_accounting.models.TechnicalCard;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TechnicalCardRepository extends JpaRepository<TechnicalCard, Long> {
+public interface TechnicalCardRepository extends JpaRepository<TechnicalCard, Long>, JpaSpecificationExecutor<TechnicalCard> {
 
     @Query("from TechnicalCard t" +
             " where lower(concat(t.name, ' ', t.comment))" +

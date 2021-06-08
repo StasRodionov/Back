@@ -6,28 +6,33 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "technical_card_groups")
-public class TechnicalCardGroup {
-
+@Table(name = "productions")
+public class Production {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TechnicalCard technicalCard;
 
-    @Column(name = "comment")
-    private String comment;
+   /*
+    @ManyToOne(fetch = FetchType.LAZY)
+    private RequestProductions requestsProductions;
 
-    @Column(name = "sort_number")
-    private String sortNumber;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TechOperations techOperations;
+
+ */
+
 }
