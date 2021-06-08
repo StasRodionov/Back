@@ -51,8 +51,4 @@ public class PostingProduct {
 
     @Column(name = "comment")
     private String comment;
-
-    @NotNull
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<InvoiceProduct> invoiceProduct;
 }
