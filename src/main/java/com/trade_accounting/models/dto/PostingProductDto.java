@@ -17,10 +17,10 @@ public class PostingProductDto {
     private LocalDateTime date;
 
     @NotNull
-    private String warehouseName;
+    private WarehouseDto warehouseDto;
 
     @NotNull
-    private String companyName;
+    private CompanyDto companyDto;
 
     private boolean postingIsSent;
 
