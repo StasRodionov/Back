@@ -1365,8 +1365,8 @@ public class DataInitializer {
     }
 
     public void initTechnicalCardGroups() {
-        technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №1","1"));
-        technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №2","2"));
+        technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №1", "Комментарий1", "1"));
+        technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №2", "Комментарий2", "2"));
     }
 
     public void initTechnicalCards(){
