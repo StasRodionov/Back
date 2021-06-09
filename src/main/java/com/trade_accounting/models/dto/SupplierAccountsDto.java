@@ -26,14 +26,17 @@ public class SupplierAccountsDto {
     @NotNull
     private ContractDto contractDto;
 
+    @NotNull
+    private ContractorDto contractorDto;
+
     private boolean isSpend;
 
     private String comment;
 
     public SupplierAccountsDto(Long id, LocalDateTime date,
                                Long companyId, Long contractId,
-                               Long warehouseId, boolean isSpend,
-                               String comment) {
+                               Long warehouseId, Long contractorId,
+                               boolean isSpend, String comment) {
         this.id = id;
         this.date = date.toString();
         this.companyDto = new CompanyDto();
