@@ -612,7 +612,7 @@ public abstract class DtoMapper {
 //    Correction
     @Mappings({
             @Mapping(source = "warehouse.id", target = "warehouseId"),
-            @Mapping(source = "company.id", target = "companyName"),
+            @Mapping(source = "company.id", target = "companyId"),
     })
     public abstract CorrectionDto toCorrectionDto(Correction correction);
 
