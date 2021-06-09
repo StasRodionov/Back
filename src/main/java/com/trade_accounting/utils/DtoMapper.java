@@ -357,6 +357,7 @@ public abstract class DtoMapper {
     @Mappings({
             @Mapping(source = "company", target = "companyDto"),
             @Mapping(source = "contract", target = "contractDto"),
+            @Mapping(source = "contractor", target = "contractorDto"),
             @Mapping(source = "warehouse", target = "warehouseDto"),
     })
     public abstract SupplierAccountsDto SupplierAccountsToSupplierAccountsDto(SupplierAccounts SupplierAccounts);
@@ -364,6 +365,7 @@ public abstract class DtoMapper {
     @Mappings({
             @Mapping(source = "companyDto", target = "company"),
             @Mapping(source = "contractDto", target = "contract"),
+            @Mapping(source = "contractorDto", target = "contractor"),
             @Mapping(source = "warehouseDto", target = "warehouse"),
     })
     public abstract SupplierAccounts SupplierAccountsDtoToSupplierAccounts(SupplierAccountsDto SupplierAccountsDto);

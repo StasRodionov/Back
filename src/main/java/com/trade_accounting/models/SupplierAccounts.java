@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -28,7 +27,6 @@ public class SupplierAccounts {
     private Long id;
 
     @NotNull
-    @Column(name = "data")
     private LocalDateTime date;
 
     @NotNull
@@ -47,11 +45,9 @@ public class SupplierAccounts {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contract contract;
 
-    @Column(name = "is_Spend")
     @ColumnDefault("false")
     private boolean isSpend;
 
-    @Column(name = "comment")
     private String comment;
 
 
