@@ -20,6 +20,7 @@ public interface SupplierAccountsRepository extends JpaRepository<SupplierAccoun
             "e.company.id," +
             "e.warehouse.id," +
             "e.contract.id," +
+            "e.contractor.id," +
             "e.isSpend," +
             "e.comment) from SupplierAccounts  e")
     List<SupplierAccountsDto> getAll();
@@ -31,6 +32,7 @@ public interface SupplierAccountsRepository extends JpaRepository<SupplierAccoun
             "e.company.id," +
             "e.warehouse.id," +
             "e.contract.id," +
+            "e.contractor.id," +
             "e.isSpend," +
             "e.comment) from SupplierAccounts  e where  e.id = :id")
     SupplierAccountsDto getById(@Param("id") Long id);

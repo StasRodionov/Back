@@ -45,6 +45,8 @@ public class SupplierAccountsDto {
         this.contractDto.setId(contractId);
         this.warehouseDto = new WarehouseDto();
         this.warehouseDto.setId(warehouseId);
+        this.contractorDto = new ContractorDto();
+        this.contractorDto.setId(contractorId);
         this.isSpend = isSpend;
         this.comment = comment;
     }
