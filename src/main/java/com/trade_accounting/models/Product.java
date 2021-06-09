@@ -74,6 +74,23 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private AttributeOfCalculationObject attributeOfCalculationObject;
 
+    //Страна происхождения
+    @Column(name = "Country")
+    private String countryOrigin;
+
+    //Артикул(код товара присваеваемый производителем)
+    @Column(name = "itemNubmber")
+    private int itemNumber;
+
+    //НДС
+    @Column(name = "saleTax")
+    private String saleTax;
+
+    //Неснижаемый остаток
+    @Column(name = "minimumBalance")
+    private int minimumBalance;
+
+
     public Product(String name,
                    BigDecimal purchasePrice,
                    String description,

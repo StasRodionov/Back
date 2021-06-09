@@ -223,7 +223,10 @@ public class ProductRestController {
                     @Spec(path = "purchase_price", params = "purchase_price", spec = LikeIgnoreCase.class),
                     @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
                     @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
-                    @Spec(path = "archive", params = "archive", spec = LikeIgnoreCase.class)
+                    @Spec(path = "archive", params = "archive", spec = LikeIgnoreCase.class),
+                    @Spec(path = "countryOrigin", params = "countryOrigin", spec = LikeIgnoreCase.class),
+                    @Spec(path = "minimumBalance", params = "minimumBalance", spec = LikeIgnoreCase.class),
+                    @Spec(path = "saleTax", params = "saleTax", spec = LikeIgnoreCase.class)
             }) Specification<Product> specification,
             @RequestParam("column") String sortColumn,
             @RequestParam("direction") String sortDirection,
