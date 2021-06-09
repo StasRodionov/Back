@@ -25,16 +25,14 @@ import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.PositionRepository;
-import com.trade_accounting.repositories.PostingProductRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.repositories.RoleRepository;
+import com.trade_accounting.repositories.SupplierAccountsRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
 import com.trade_accounting.repositories.TaxSystemRepository;
-import com.trade_accounting.repositories.TechnicalCardGroupRepository;
-import com.trade_accounting.repositories.TechnicalCardRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.repositories.UnitRepository;
@@ -75,9 +73,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final ContractorRepository contractorRepository;
     private final PaymentRepository paymentRepository;
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
-    private final TechnicalCardRepository technicalCardRepository;
-    private final TechnicalCardGroupRepository technicalCardGroupRepository;
-    private final PostingProductRepository postingProductRepository;
+    private final SupplierAccountsRepository supplierAccountsRepository;
 
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
@@ -105,10 +101,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   ContractRepository contractRepository,
                                   ContractorRepository contractorRepository,
                                   PaymentRepository paymentRepository,
-                                  AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository,
-                                  TechnicalCardRepository technicalCardRepository,
-                                  TechnicalCardGroupRepository technicalCardGroupRepository,
-                                  PostingProductRepository postingProductRepository) {
+                                  AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository, SupplierAccountsRepository supplierAccountsRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -135,9 +128,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.contractorRepository = contractorRepository;
         this.paymentRepository = paymentRepository;
         this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
-        this.technicalCardRepository = technicalCardRepository;
-        this.technicalCardGroupRepository = technicalCardGroupRepository;
-        this.postingProductRepository = postingProductRepository;
+        this.supplierAccountsRepository = supplierAccountsRepository;
     }
 
 
@@ -265,13 +256,6 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistCompanyById(Long companyId) {
         if (!companyRepository.existsById(companyId)) {
             throw new NotFoundEntityException("Компания с id=" + companyId + " не найдена");
-        }
-    }
-
-    @Override
-    public void checkExistsPostingProductById(Long postingProductId) {
-        if(!postingProductRepository.existsById(postingProductId)) {
-            throw new NotFoundEntityException("Оприходование с id=" + postingProductId + ", не найдено");
         }
     }
 
@@ -414,16 +398,9 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     }
 
     @Override
-    public void checkExistsTechnicalCardById(Long technicalCardId) {
-        if(!technicalCardRepository.existsById(technicalCardId)) {
-            throw new NotFoundEntityException("Техническая карта с id=" + technicalCardId+ ", не найдена");
-        }
-    }
-
-    @Override
-    public void checkExistsTechnicalCardGroupById(Long technicalCardGroupId) {
-        if(!technicalCardGroupRepository.existsById(technicalCardGroupId)) {
-            throw new NotFoundEntityException("Группа технических карт с id=" + technicalCardGroupId+ ", не найдена");
+    public void checkExistsSupplierAccountsById(Long supplierAccountsId) {
+        if(!supplierAccountsRepository.existsById(supplierAccountsId)) {
+            throw new NotFoundEntityException("Счет поставщика с id=" + supplierAccountsId + ", не найден");
         }
     }
 }
