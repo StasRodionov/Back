@@ -24,9 +24,9 @@ public class CorrectionDto {
     @NotNull
     private Long companyId;
 
-    private Boolean postingIsSent = false;
+    private Boolean correctionIsSent = false;
 
-    private Boolean postingIsPrint = false;
+    private Boolean correctionIsPrint = false;
 
     private Boolean writeOff = false;
 

@@ -15,6 +15,6 @@ public interface CorrectionRepository extends JpaRepository<Correction, Long>,
     List<Correction> getAll();
 
     @Query("SELECT c FROM Correction c WHERE c.id =: id")
-    Correction getPostingById(@Param("id") Long id);
+    Correction getCorrectionById(@Param("id") Long id);
 }
 

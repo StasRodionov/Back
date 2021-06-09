@@ -43,11 +43,11 @@ public class Correction {
 
     @Column(name = "is_sent")
     @ColumnDefault("false")
-    private Boolean postingIsSent = false;
+    private Boolean correctionIsSent = false;
 
     @Column(name = "is_print")
     @ColumnDefault("false")
-    private Boolean postingIsPrint = false;
+    private Boolean correctionIsPrint = false;
 
     @Column(name = "write_off")
     @ColumnDefault("false")

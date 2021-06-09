@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@Tag(name = "Posting Product Rest Controller", description = "CRUD  операции с оприходованием")
-@Api(tags = "Posting Product Rest Controller")
+@Tag(name = "Correction Rest Controller", description = "CRUD  операции с оприходованием")
+@Api(tags = "Correction Rest Controller")
 @RequestMapping("/api/correction")
 public class CorrectionRestController {
 
@@ -72,10 +72,10 @@ public class CorrectionRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<CorrectionDto> create(@ApiParam(name = "postingProductDto",
+    public ResponseEntity<CorrectionDto> create(@ApiParam(name = "correctionDto",
             value = "DTO оприходования, которое необходимо создать")
-                                                    @RequestBody CorrectionDto postingProductDto) {
-        return ResponseEntity.ok(correctionService.create(postingProductDto));
+                                                    @RequestBody CorrectionDto correctionDto) {
+        return ResponseEntity.ok(correctionService.create(correctionDto));
     }
 
     @PutMapping
@@ -87,10 +87,10 @@ public class CorrectionRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<CorrectionDto> update(@ApiParam(name = "PostingProductDto",
+    public ResponseEntity<CorrectionDto> update(@ApiParam(name = "correctionDto",
             value = "DTO оприходования, которую необходимо обновить")
-                                                    @RequestBody CorrectionDto postingProductDto) {
-        return ResponseEntity.ok(correctionService.update(postingProductDto));
+                                                    @RequestBody CorrectionDto correctionDto) {
+        return ResponseEntity.ok(correctionService.update(correctionDto));
     }
 
     @DeleteMapping("/{id}")

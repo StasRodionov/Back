@@ -33,7 +33,7 @@ public class CorrectionServiceImpl implements CorrectionService {
     @Transactional(readOnly = true)
     @Override
     public CorrectionDto getById(Long id) {
-        Correction correction = correctionRepository.getPostingById(id);
+        Correction correction = correctionRepository.getCorrectionById(id);
         return dtoMapper.toCorrectionDto(correction);
     }
 
