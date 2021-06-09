@@ -6,11 +6,12 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostingProductDto {
+public class CorrectionDto {
 
     private Long id;
 
@@ -18,14 +19,18 @@ public class PostingProductDto {
     private LocalDateTime date;
 
     @NotNull
-    private String warehouseName;
+    private Long warehouseId;
 
     @NotNull
-    private String companyName;
+    private Long companyId;
 
-    private boolean postingIsSent;
+    private Boolean postingIsSent = false;
 
-    private boolean postingIsPrint;
+    private Boolean postingIsPrint = false;
+
+    private Boolean writeOff = false;
 
     private String comment;
+
+    private List<Long> correctionProductIds;
 }

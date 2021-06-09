@@ -22,8 +22,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "posting_products")
-public class PostingProduct {
+@Table(name = "corrections")
+public class Correction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,16 +43,20 @@ public class PostingProduct {
 
     @Column(name = "is_sent")
     @ColumnDefault("false")
-    private boolean postingIsSent;
+    private Boolean postingIsSent = false;
 
     @Column(name = "is_print")
     @ColumnDefault("false")
-    private boolean postingIsPrint;
+    private Boolean postingIsPrint = false;
+
+    @Column(name = "write_off")
+    @ColumnDefault("false")
+    private Boolean writeOff = false;
 
     @Column(name = "comment")
     private String comment;
 
-    @NotNull
     @OneToMany(fetch = FetchType.LAZY)
-    private List<InvoiceProduct> invoiceProduct;
+    private List<Correction> correctionProducts;
+//    Будет раскомментировано тогда, когда будет добавлена модель CorrectionProduct - в след мердж реквесте
 }

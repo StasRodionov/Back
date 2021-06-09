@@ -25,7 +25,7 @@ import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.PositionRepository;
-import com.trade_accounting.repositories.PostingProductRepository;
+import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
@@ -77,7 +77,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
     private final TechnicalCardRepository technicalCardRepository;
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
-    private final PostingProductRepository postingProductRepository;
+    private final CorrectionRepository correctionRepository;
 
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
@@ -108,7 +108,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository,
                                   TechnicalCardRepository technicalCardRepository,
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
-                                  PostingProductRepository postingProductRepository) {
+                                  CorrectionRepository correctionRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -137,7 +137,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
         this.technicalCardRepository = technicalCardRepository;
         this.technicalCardGroupRepository = technicalCardGroupRepository;
-        this.postingProductRepository = postingProductRepository;
+        this.correctionRepository = correctionRepository;
     }
 
 
@@ -269,9 +269,9 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     }
 
     @Override
-    public void checkExistsPostingProductById(Long postingProductId) {
-        if(!postingProductRepository.existsById(postingProductId)) {
-            throw new NotFoundEntityException("Оприходование с id=" + postingProductId + ", не найдено");
+    public void checkExistsCorrectionById(Long correctionId) {
+        if(!correctionRepository.existsById(correctionId)) {
+            throw new NotFoundEntityException("Оприходование с id=" + correctionId + ", не найдено");
         }
     }
 

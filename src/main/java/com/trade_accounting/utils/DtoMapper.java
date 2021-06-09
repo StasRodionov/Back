@@ -9,6 +9,7 @@ import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.Correction;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
@@ -18,7 +19,6 @@ import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
-import com.trade_accounting.models.PostingProduct;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
@@ -56,7 +56,7 @@ import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
-import com.trade_accounting.models.dto.PostingProductDto;
+import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
@@ -609,16 +609,12 @@ public abstract class DtoMapper {
 
     public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
 
-    //PostingProduct
+//    Correction
     @Mappings({
-            @Mapping(source = "company.name", target = "companyName"),
-            @Mapping(source = "warehouse.name", target = "warehouseName"),
+            @Mapping(source = "warehouse.id", target = "warehouseId"),
+            @Mapping(source = "company.id", target = "companyName"),
     })
-    public abstract PostingProductDto postingProductToPostingProductDto(PostingProduct postingProduct);
+    public abstract CorrectionDto toCorrectionDto(Correction correction);
 
-    @Mappings({
-            @Mapping(source = "companyName", target = "company.name"),
-            @Mapping(source = "warehouseName", target = "warehouse.name")
-    })
-    public abstract PostingProduct postingProductDtoToPostingProduct(PostingProductDto postingProductDto);
+    public abstract Correction toCorrection(CorrectionDto correctionDto);
 }
