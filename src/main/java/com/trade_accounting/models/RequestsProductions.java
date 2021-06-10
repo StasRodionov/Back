@@ -5,13 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
@@ -26,19 +24,15 @@ public class RequestsProductions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "number_of_the_certificate")
     private String numberOfTheCertificate;
 
-    @Column(name = "date_of_the_certificate")
     private LocalDate dateOfTheCertificate;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private TechnicalCard technicalCard;
 
-    @Column(name = "volume")
     private Integer volume;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private Warehouse warehouse;
-
 }
