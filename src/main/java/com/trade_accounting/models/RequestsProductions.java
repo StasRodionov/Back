@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,13 +32,13 @@ public class RequestsProductions {
     @Column(name = "date_of_the_certificate")
     private LocalDate dateOfTheCertificate;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private TechnicalCard technicalCard;
 
     @Column(name = "volume")
     private Integer volume;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private Warehouse warehouse;
 
 }
