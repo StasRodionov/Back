@@ -57,10 +57,9 @@ public class SupplierAccountsImpl implements SupplierAccountsService {
                 .company(dtoMapper.companyDtoToCompany(companyRepository.getById(dto.getNameCompany())))
                 .warehouse(dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getNameWarehouse())))
                 .contract(dtoMapper.contractDtoToContract(contractRepository.getById(dto.getNumberContract())))
-                .contractor(dtoMapper.contractorDtoToContractor(contractorRepository.getById(dto.getNameContractor())))
+                .contractor((contractorRepository.getOne(dto.getNameContractor())))
                 .build();
-
-        return dtoMapper.SupplierAccountsToSupplierAccountsDto(saveInvoices);
+        return dtoMapper.SupplierAccountsToSupplierAccountsDto(supplierAccountsRepository.save(saveInvoices));
     }
 
     @Override
