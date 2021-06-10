@@ -500,13 +500,10 @@ public abstract class DtoMapper {
 
     //TechnicalCardProduction
     @Mappings({
-            @Mapping(source = "product", target = "productDto"),
+            @Mapping(source = "product.id", target = "productId"),
     })
     public abstract TechnicalCardProductionDto technicalCardProductionToTechnicalCardProductionDto(TechnicalCardProduction technicalCardProduction);
 
-    @Mappings({
-            @Mapping(source = "productDto", target = "product"),
-    })
     public abstract TechnicalCardProduction technicalCardProductionDtoToTechnicalCardProduction(TechnicalCardProductionDto technicalCardProductionDto);
 
     //TypeOfContractor
