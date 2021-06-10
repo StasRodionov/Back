@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SupplierAccountsDto {
+public class SupplierAccountDto {
 
     @NotNull
     private Long id;
@@ -19,16 +19,16 @@ public class SupplierAccountsDto {
     private String date;
 
     @NotNull
-    private Long nameCompany;
+    private Long companyId;
 
     @NotNull
-    private Long nameWarehouse;
+    private Long warehouseId;
 
     @NotNull
-    private Long numberContract;
+    private Long contractId;
 
     @NotNull
-    private Long nameContractor;
+    private Long contractorId;
 
     private boolean isSpend;
 

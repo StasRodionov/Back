@@ -1,7 +1,7 @@
 package com.trade_accounting.repositories;
 
-import com.trade_accounting.models.SupplierAccounts;
-import com.trade_accounting.models.dto.SupplierAccountsDto;
+import com.trade_accounting.models.SupplierAccount;
+import com.trade_accounting.models.dto.SupplierAccountDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SupplierAccountsRepository extends JpaRepository<SupplierAccounts,Long>,
-                                                      JpaSpecificationExecutor<SupplierAccounts> {
+public interface SupplierAccountRepository extends JpaRepository<SupplierAccount,Long>,
+                                                      JpaSpecificationExecutor<SupplierAccount> {
 
-    @Query("select new com.trade_accounting.models.dto.SupplierAccountsDto (" +
+    @Query("select new com.trade_accounting.models.dto.SupplierAccountDto (" +
             "e.id," +
             "e.date," +
             "e.company.id," +
@@ -22,11 +22,11 @@ public interface SupplierAccountsRepository extends JpaRepository<SupplierAccoun
             "e.contract.id," +
             "e.contractor.id," +
             "e.isSpend," +
-            "e.comment) from SupplierAccounts  e")
-    List<SupplierAccountsDto> getAll();
+            "e.comment) from SupplierAccount  e")
+    List<SupplierAccountDto> getAll();
 
 
-    @Query("select new com.trade_accounting.models.dto.SupplierAccountsDto (" +
+    @Query("select new com.trade_accounting.models.dto.SupplierAccountDto (" +
             "e.id," +
             "e.date," +
             "e.company.id," +
@@ -34,6 +34,6 @@ public interface SupplierAccountsRepository extends JpaRepository<SupplierAccoun
             "e.contract.id," +
             "e.contractor.id," +
             "e.isSpend," +
-            "e.comment) from SupplierAccounts  e where  e.id = :id")
-    SupplierAccountsDto getById(@Param("id") Long id);
+            "e.comment) from SupplierAccount  e where  e.id = :id")
+    SupplierAccountDto getById(@Param("id") Long id);
 }

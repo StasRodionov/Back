@@ -1,8 +1,8 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.dto.SupplierAccountsDto;
+import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.services.interfaces.CheckEntityService;
-import com.trade_accounting.services.interfaces.SupplierAccountsService;
+import com.trade_accounting.services.interfaces.SupplierAccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,10 +27,10 @@ import java.util.List;
 @RequestMapping("api/supplierAccounts")
 public class SupplierAccountsRestController {
 
-    private final SupplierAccountsService invoices;
+    private final SupplierAccountService invoices;
     private final CheckEntityService checkEntityService;
 
-    public SupplierAccountsRestController(SupplierAccountsService invoices,
+    public SupplierAccountsRestController(SupplierAccountService invoices,
                                           CheckEntityService checkEntityService) {
         this.invoices = invoices;
         this.checkEntityService = checkEntityService;
@@ -44,8 +44,8 @@ public class SupplierAccountsRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<SupplierAccountsDto>> getAll() {
-        List<SupplierAccountsDto> getAll = invoices.getAll();
+    public ResponseEntity<List<SupplierAccountDto>> getAll() {
+        List<SupplierAccountDto> getAll = invoices.getAll();
         return ResponseEntity.ok(getAll);
     }
 
@@ -57,7 +57,7 @@ public class SupplierAccountsRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<SupplierAccountsDto> getById(@ApiParam(name = "id", type = "Long",
+    public ResponseEntity<SupplierAccountDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти счет поставщика")
                                                           @PathVariable(name = "id") Long id) {
             checkEntityService.checkExistsSupplierAccountsById(id);
@@ -73,8 +73,8 @@ public class SupplierAccountsRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<SupplierAccountsDto> create(@ApiParam(name = "invoice", value = "DTO счета, который необходимо создать")
-                                                         @RequestBody SupplierAccountsDto invoice) {
+    public ResponseEntity<SupplierAccountDto> create(@ApiParam(name = "invoice", value = "DTO счета, который необходимо создать")
+                                                         @RequestBody SupplierAccountDto invoice) {
         return ResponseEntity.ok().body(invoices.create(invoice));
 
     }
@@ -88,8 +88,8 @@ public class SupplierAccountsRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<SupplierAccountsDto> update(@ApiParam(name = "invoice", value = "DTO счета, который необходимо создать")
-                                                         @RequestBody SupplierAccountsDto invoice) {
+    public ResponseEntity<SupplierAccountDto> update(@ApiParam(name = "invoice", value = "DTO счета, который необходимо создать")
+                                                         @RequestBody SupplierAccountDto invoice) {
         return ResponseEntity.ok().body(invoices.update(invoice));
 
     }
@@ -104,7 +104,7 @@ public class SupplierAccountsRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<SupplierAccountsDto> deleteById(@ApiParam(name = "id", type = "Long",
+    public ResponseEntity<SupplierAccountDto> deleteById(@ApiParam(name = "id", type = "Long",
                      value = "Переданный в URL id по которому необходимо удалить счет поставщика")
                                                              @PathVariable(name = "id") Long id) {
         invoices.deleteById(id);

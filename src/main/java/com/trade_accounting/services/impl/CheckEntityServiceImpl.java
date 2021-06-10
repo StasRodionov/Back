@@ -30,7 +30,7 @@ import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.repositories.RoleRepository;
-import com.trade_accounting.repositories.SupplierAccountsRepository;
+import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
 import com.trade_accounting.repositories.TaxSystemRepository;
@@ -41,8 +41,6 @@ import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.repositories.UnitRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
-import com.trade_accounting.services.interfaces.PostingProductService;
-import com.trade_accounting.services.interfaces.TechnicalCardService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,7 +76,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final ContractorRepository contractorRepository;
     private final PaymentRepository paymentRepository;
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
-    private final SupplierAccountsRepository supplierAccountsRepository;
+    private final SupplierAccountRepository supplierAccountRepository;
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
     private  final TechnicalCardRepository technicalCardRepository;
     private final PostingProductRepository postingProductRepository;
@@ -110,7 +108,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   ContractorRepository contractorRepository,
                                   PaymentRepository paymentRepository,
                                   AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository,
-                                  SupplierAccountsRepository supplierAccountsRepository,
+                                  SupplierAccountRepository supplierAccountRepository,
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
                                   TechnicalCardRepository technicalCardRepository,
                                   PostingProductRepository postingProductRepository) {
@@ -140,7 +138,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.contractorRepository = contractorRepository;
         this.paymentRepository = paymentRepository;
         this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
-        this.supplierAccountsRepository = supplierAccountsRepository;
+        this.supplierAccountRepository = supplierAccountRepository;
         this.technicalCardGroupRepository = technicalCardGroupRepository;
         this.technicalCardRepository = technicalCardRepository;
         this.postingProductRepository = postingProductRepository;
@@ -413,9 +411,9 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     }
 
     @Override
-    public void checkExistsSupplierAccountsById(Long supplierAccountsId) {
-        if(!supplierAccountsRepository.existsById(supplierAccountsId)) {
-            throw new NotFoundEntityException("Счет поставщика с id=" + supplierAccountsId + ", не найден");
+    public void checkExistsSupplierAccountsById(Long supplierAccountId) {
+        if(!supplierAccountRepository.existsById(supplierAccountId)) {
+            throw new NotFoundEntityException("Счет поставщика с id=" + supplierAccountId + ", не найден");
         }
     }
 

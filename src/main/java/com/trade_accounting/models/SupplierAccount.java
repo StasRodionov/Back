@@ -20,8 +20,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "supplierAccounts")
-public class SupplierAccounts {
+@Table(name = "supplier_account")
+public class SupplierAccount {
 
     @Id
     @NotNull
