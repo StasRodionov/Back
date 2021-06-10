@@ -18,10 +18,10 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder
 @Table(name = "technical_operations")
 public class TechnicalOperations {
     @Id
@@ -34,7 +34,7 @@ public class TechnicalOperations {
     private String number;
 
     @Column
-    private LocalDate dateOfTheOperation;
+    private LocalDate dateOperation;
 
     @OneToOne(fetch = FetchType.LAZY)
     private TechnicalCard technicalCard;
