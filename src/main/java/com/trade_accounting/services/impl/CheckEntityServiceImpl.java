@@ -411,7 +411,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     }
 
     @Override
-    public void checkExistsSupplierAccountsById(Long supplierAccountId) {
+    public void checkExistsSupplierAccountById(Long supplierAccountId) {
         if(!supplierAccountRepository.existsById(supplierAccountId)) {
             throw new NotFoundEntityException("Счет поставщика с id=" + supplierAccountId + ", не найден");
         }

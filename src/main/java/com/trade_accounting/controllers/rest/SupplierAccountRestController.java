@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@Tag(name="SupplierAccounts Rest Controller", description = "CRUD операции со счетами поставщиков")
-@Api(tags = "SupplierAccounts Rest Controller")
-@RequestMapping("api/supplierAccounts")
-public class SupplierAccountsRestController {
+@Tag(name="SupplierAccount Rest Controller", description = "CRUD операции со счетами поставщиков")
+@Api(tags = "SupplierAccount Rest Controller")
+@RequestMapping("api/supplierAccount")
+public class SupplierAccountRestController {
 
     private final SupplierAccountService invoices;
     private final CheckEntityService checkEntityService;
 
-    public SupplierAccountsRestController(SupplierAccountService invoices,
-                                          CheckEntityService checkEntityService) {
+    public SupplierAccountRestController(SupplierAccountService invoices,
+                                         CheckEntityService checkEntityService) {
         this.invoices = invoices;
         this.checkEntityService = checkEntityService;
     }
@@ -60,7 +60,7 @@ public class SupplierAccountsRestController {
     public ResponseEntity<SupplierAccountDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти счет поставщика")
                                                           @PathVariable(name = "id") Long id) {
-            checkEntityService.checkExistsSupplierAccountsById(id);
+            checkEntityService.checkExistsSupplierAccountById(id);
             return ResponseEntity.ok(invoices.getById(id));
     }
 
