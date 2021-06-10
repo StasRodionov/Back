@@ -28,7 +28,7 @@ public class CorrectionDto {
 
     private Boolean correctionIsPrint = false;
 
-    private Boolean writeOff = false;
+    private Boolean writeOffProduct = false;
 
     private String comment;
 

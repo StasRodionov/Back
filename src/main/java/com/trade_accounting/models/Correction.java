@@ -49,9 +49,9 @@ public class Correction {
     @ColumnDefault("false")
     private Boolean correctionIsPrint = false;
 
-    @Column(name = "write_off")
+    @Column(name = "write_off_product")
     @ColumnDefault("false")
-    private Boolean writeOff = false;
+    private Boolean writeOffProduct = false;
 
     @Column(name = "comment")
     private String comment;
