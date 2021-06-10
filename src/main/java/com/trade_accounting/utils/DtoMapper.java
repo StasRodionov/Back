@@ -355,18 +355,18 @@ public abstract class DtoMapper {
 
     // SupplierAccounts
     @Mappings({
-            @Mapping(source = "company", target = "companyDto"),
-            @Mapping(source = "contract", target = "contractDto"),
-            @Mapping(source = "contractor", target = "contractorDto"),
-            @Mapping(source = "warehouse", target = "warehouseDto"),
+            @Mapping(source = "company.id", target = "nameCompany"),
+            @Mapping(source = "contract.id", target = "numberContract"),
+            @Mapping(source = "contractor.id", target = "nameContractor"),
+            @Mapping(source = "warehouse.id", target = "nameWarehouse"),
     })
     public abstract SupplierAccountsDto SupplierAccountsToSupplierAccountsDto(SupplierAccounts SupplierAccounts);
 
     @Mappings({
-            @Mapping(source = "companyDto", target = "company"),
-            @Mapping(source = "contractDto", target = "contract"),
-            @Mapping(source = "contractorDto", target = "contractor"),
-            @Mapping(source = "warehouseDto", target = "warehouse"),
+            @Mapping(source = "nameCompany", target = "company.id"),
+            @Mapping(source = "numberContract", target = "contract.id"),
+            @Mapping(source = "nameContractor", target = "contractor.id"),
+            @Mapping(source = "nameWarehouse", target = "warehouse.id"),
     })
     public abstract SupplierAccounts SupplierAccountsDtoToSupplierAccounts(SupplierAccountsDto SupplierAccountsDto);
 

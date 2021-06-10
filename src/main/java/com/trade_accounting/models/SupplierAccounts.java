@@ -3,6 +3,7 @@ package com.trade_accounting.models;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -13,9 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -27,7 +28,7 @@ public class SupplierAccounts {
     private Long id;
 
     @NotNull
-    private LocalDateTime date;
+    private String date;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

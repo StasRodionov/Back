@@ -1,12 +1,13 @@
 package com.trade_accounting.models.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class SupplierAccountsDto {
@@ -18,36 +19,19 @@ public class SupplierAccountsDto {
     private String date;
 
     @NotNull
-    private CompanyDto companyDto;
+    private Long nameCompany;
 
     @NotNull
-    private WarehouseDto warehouseDto;
+    private Long nameWarehouse;
 
     @NotNull
-    private ContractDto contractDto;
+    private Long numberContract;
 
     @NotNull
-    private ContractorDto contractorDto;
+    private Long nameContractor;
 
     private boolean isSpend;
 
     private String comment;
 
-    public SupplierAccountsDto(Long id, LocalDateTime date,
-                               Long companyId, Long contractId,
-                               Long warehouseId, Long contractorId,
-                               boolean isSpend, String comment) {
-        this.id = id;
-        this.date = date.toString();
-        this.companyDto = new CompanyDto();
-        this.companyDto.setId(companyId);
-        this.contractDto = new ContractDto();
-        this.contractDto.setId(contractId);
-        this.warehouseDto = new WarehouseDto();
-        this.warehouseDto.setId(warehouseId);
-        this.contractorDto = new ContractorDto();
-        this.contractorDto.setId(contractorId);
-        this.isSpend = isSpend;
-        this.comment = comment;
-    }
 }
