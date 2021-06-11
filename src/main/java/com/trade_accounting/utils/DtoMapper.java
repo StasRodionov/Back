@@ -15,6 +15,7 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
+import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
@@ -53,6 +54,7 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
+import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
@@ -350,6 +352,23 @@ public abstract class DtoMapper {
             @Mapping(source = "productDto", target = "product")
     })
     public abstract InvoiceProduct invoiceProductDtoToInvoiceProduct(InvoiceProductDto invoiceProductDto);
+
+    // SupplierAccounts
+    @Mappings({
+            @Mapping(source = "company.id", target = "companyId"),
+            @Mapping(source = "contract.id", target = "contractId"),
+            @Mapping(source = "contractor.id", target = "contractorId"),
+            @Mapping(source = "warehouse.id", target = "warehouseId"),
+    })
+    public abstract SupplierAccountDto SupplierAccountToSupplierAccountDto(SupplierAccount SupplierAccount);
+
+    @Mappings({
+            @Mapping(source = "companyId", target = "company.id"),
+            @Mapping(source = "contractId", target = "contract.id"),
+            @Mapping(source = "contractorId", target = "contractor.id"),
+            @Mapping(source = "warehouseId", target = "warehouse.id"),
+    })
+    public abstract SupplierAccount SupplierAccountDtoToSupplierAccount(SupplierAccountDto SupplierAccountDto);
 
     //LegalDetail
     @Mappings({

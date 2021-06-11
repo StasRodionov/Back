@@ -30,6 +30,7 @@ import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.repositories.RoleRepository;
+import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
 import com.trade_accounting.repositories.TaxSystemRepository;
@@ -75,8 +76,9 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final ContractorRepository contractorRepository;
     private final PaymentRepository paymentRepository;
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
-    private final TechnicalCardRepository technicalCardRepository;
+    private final SupplierAccountRepository supplierAccountRepository;
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
+    private  final TechnicalCardRepository technicalCardRepository;
     private final PostingProductRepository postingProductRepository;
 
 
@@ -106,8 +108,9 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   ContractorRepository contractorRepository,
                                   PaymentRepository paymentRepository,
                                   AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository,
-                                  TechnicalCardRepository technicalCardRepository,
+                                  SupplierAccountRepository supplierAccountRepository,
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
+                                  TechnicalCardRepository technicalCardRepository,
                                   PostingProductRepository postingProductRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
@@ -135,8 +138,9 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.contractorRepository = contractorRepository;
         this.paymentRepository = paymentRepository;
         this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
-        this.technicalCardRepository = technicalCardRepository;
+        this.supplierAccountRepository = supplierAccountRepository;
         this.technicalCardGroupRepository = technicalCardGroupRepository;
+        this.technicalCardRepository = technicalCardRepository;
         this.postingProductRepository = postingProductRepository;
     }
 
@@ -265,13 +269,6 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistCompanyById(Long companyId) {
         if (!companyRepository.existsById(companyId)) {
             throw new NotFoundEntityException("Компания с id=" + companyId + " не найдена");
-        }
-    }
-
-    @Override
-    public void checkExistsPostingProductById(Long postingProductId) {
-        if(!postingProductRepository.existsById(postingProductId)) {
-            throw new NotFoundEntityException("Оприходование с id=" + postingProductId + ", не найдено");
         }
     }
 
@@ -414,16 +411,30 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     }
 
     @Override
-    public void checkExistsTechnicalCardById(Long technicalCardId) {
-        if(!technicalCardRepository.existsById(technicalCardId)) {
-            throw new NotFoundEntityException("Техническая карта с id=" + technicalCardId+ ", не найдена");
+    public void checkExistsSupplierAccountById(Long supplierAccountId) {
+        if(!supplierAccountRepository.existsById(supplierAccountId)) {
+            throw new NotFoundEntityException("Счет поставщика с id=" + supplierAccountId + ", не найден");
         }
     }
 
     @Override
-    public void checkExistsTechnicalCardGroupById(Long technicalCardGroupId) {
-        if(!technicalCardGroupRepository.existsById(technicalCardGroupId)) {
-            throw new NotFoundEntityException("Группа технических карт с id=" + technicalCardGroupId+ ", не найдена");
+    public void checkExistsTechnicalCardById(Long id) {
+        if(!technicalCardRepository.existsById(id)) {
+            throw new NotFoundEntityException("Тех. карта с id=" + id + ", не найдена");
+        }
+    }
+
+    @Override
+    public void checkExistsTechnicalCardGroupById(Long id) {
+        if(!technicalCardGroupRepository.existsById(id)) {
+            throw new NotFoundEntityException("Тех. карта с id=" + id + ", не найдена");
+        }
+    }
+
+    @Override
+    public void checkExistsPostingProductById(Long id) {
+        if(!postingProductRepository.existsById(id)) {
+            throw new NotFoundEntityException("Оприходование  с id=" + id + ", не найдено");
         }
     }
 }
