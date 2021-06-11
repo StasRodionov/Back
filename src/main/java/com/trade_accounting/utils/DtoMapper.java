@@ -636,7 +636,7 @@ public abstract class DtoMapper {
     @Mappings({
             @Mapping(source = "product.id", target = "productId")
     })
-    public abstract CorrectionProductDto toCorrectionProductDto(Correction correction);
+    public abstract CorrectionProductDto toCorrectionProductDto(CorrectionProduct correction);
 
-    public abstract CorrectionProduct toCorrectionProduct(CorrectionDto correctionDto);
+    public abstract CorrectionProduct toCorrectionProduct(CorrectionProductDto correctionDto);
 }
