@@ -39,9 +39,7 @@ public class SupplierAccountImpl implements SupplierAccountService {
 
     @Override
     public List<SupplierAccountDto> getAll() {
-        return supplierAccountRepository.findAll().stream()
-                .map(dtoMapper::SupplierAccountToSupplierAccountDto)
-                .collect(Collectors.toList());
+        return supplierAccountRepository.getAll();
     }
 
     @Override
