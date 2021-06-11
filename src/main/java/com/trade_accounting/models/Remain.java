@@ -22,4 +22,29 @@ public class Remain {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
+    private String vendorCode;
+
+    private Integer balance;
+
+    private Integer irreducibleBalance;
+
+    private Integer reserve;
+
+    private Integer expectation;
+
+    private Integer available;
+
+    private Unit unit;
+
+    private Integer daysOnWarehouse;
+
+    private Integer costPrice;
+
+    private Integer sumOfCostPrice;
+
+    private Integer salesCost;
+
+    private Integer salesSum;
 }
