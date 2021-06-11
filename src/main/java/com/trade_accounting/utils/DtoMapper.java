@@ -628,10 +628,6 @@ public abstract class DtoMapper {
     public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
 
 //    Correction
-    @Mappings({
-            @Mapping(source = "warehouse.id", target = "warehouseId"),
-            @Mapping(source = "company.id", target = "companyId"),
-    })
     public abstract CorrectionDto toCorrectionDto(Correction correction);
 
     public abstract Correction toCorrection(CorrectionDto correctionDto);
