@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "supplier_account")
+@Table(name = "supplier_accounts")
 public class SupplierAccount {
 
     @Id
