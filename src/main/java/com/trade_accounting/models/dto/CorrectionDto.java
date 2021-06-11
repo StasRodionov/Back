@@ -1,6 +1,7 @@
 package com.trade_accounting.models.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,9 +26,9 @@ public class CorrectionDto {
     @NotNull
     private Long companyId;
 
-    private Boolean correctionIsSent = false;
+    private Boolean isSent = false;
 
-    private Boolean correctionIsPrint = false;
+    private Boolean isPrint = false;
 
     private Boolean writeOffProduct = false;
 

@@ -1,39 +1,38 @@
 package com.trade_accounting.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "productions")
-public class Production {
+@Table(name = "requsts_productions")
+public class RequestsProductions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    private String numberOfTheCertificate;
+
+    private LocalDate dateOfTheCertificate;
+
+    @OneToOne(fetch = FetchType.LAZY)
     private TechnicalCard technicalCard;
 
+    private Integer volume;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private RequestsProductions requestsProductions;
-
-/*
-    @ManyToOne(fetch = FetchType.LAZY)
-    private TechnicalOperations technicalOperations;
-
- */
-
+    @OneToOne(fetch = FetchType.LAZY)
+    private Warehouse warehouse;
 }
