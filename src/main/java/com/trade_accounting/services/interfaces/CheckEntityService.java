@@ -64,9 +64,11 @@ public interface CheckEntityService {
 
     void checkExistsBankAccountById(Long bankAccountId);
 
-    void checkExistsTechnicalCardById(Long technicalCardId);
+    void checkExistsSupplierAccountById(Long supplierAccountId);
 
-    void checkExistsTechnicalCardGroupById(Long technicalCardGroupId);
+    void checkExistsTechnicalCardById(Long id);
 
-    void checkExistsPostingProductById(Long postingProductId);
+    void checkExistsTechnicalCardGroupById(Long id);
+
+    void checkExistsPostingProductById(Long id);
 }

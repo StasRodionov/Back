@@ -1374,44 +1374,40 @@ public class DataInitializer {
                 "Техническая карта №1",
                 "Комментарий1",
                 "1000",
-                "1",
                 technicalCardGroupService.getById(1L),
-                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(1L)),
-                        new TechnicalCardProductionDto(null, 2L, productService.getById(2L))),
-                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(3L)),
-                        new TechnicalCardProductionDto(null, 2L, productService.getById(4L)))));
+                List.of(new TechnicalCardProductionDto(null, 2L, 1L),
+                        new TechnicalCardProductionDto(null, 2L, 2L)),
+                List.of(new TechnicalCardProductionDto(null, 2L, 3L),
+                        new TechnicalCardProductionDto(null, 2L, 4L))));
         technicalCardService.create(new TechnicalCardDto(
                 null,
                 "Техническая карта №2",
                 "Комментарий2",
                 "1100",
-                "2",
                 technicalCardGroupService.getById(1L),
-                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(5L)),
-                        new TechnicalCardProductionDto(null, 2L, productService.getById(6L))),
-                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(7L)),
-                        new TechnicalCardProductionDto(null, 2L, productService.getById(8L)))));
+                List.of(new TechnicalCardProductionDto(null, 2L, 5L),
+                        new TechnicalCardProductionDto(null, 2L, 6L)),
+                List.of(new TechnicalCardProductionDto(null, 2L, 7L),
+                        new TechnicalCardProductionDto(null, 2L, 8L))));
         technicalCardService.create(new TechnicalCardDto(
                 null,
                 "Техническая карта №3",
                 "Комментарий3",
                 "1200",
-                "3",
                 technicalCardGroupService.getById(2L),
-                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(9L)),
-                        new TechnicalCardProductionDto(null, 2L, productService.getById(10L))),
-                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(11L)),
-                        new TechnicalCardProductionDto(null, 2L, productService.getById(12L)))));
+                List.of(new TechnicalCardProductionDto(null, 2L, 9L),
+                        new TechnicalCardProductionDto(null, 2L, 10L)),
+                List.of(new TechnicalCardProductionDto(null, 2L, 11L),
+                        new TechnicalCardProductionDto(null, 2L, 12L))));
         technicalCardService.create(new TechnicalCardDto(
                 null,
                 "Техническая карта №4",
                 "Комментарий4",
                 "1300",
-                "4",
                 technicalCardGroupService.getById(2L),
-                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(13L)),
-                        new TechnicalCardProductionDto(null, 2L, productService.getById(14L))),
-                List.of(new TechnicalCardProductionDto(null, 2L, productService.getById(15L)),
-                        new TechnicalCardProductionDto(null, 2L, productService.getById(16L)))));
+                List.of(new TechnicalCardProductionDto(null, 2L, 13L),
+                        new TechnicalCardProductionDto(null, 2L, 14L)),
+                List.of(new TechnicalCardProductionDto(null, 2L, 15L),
+                        new TechnicalCardProductionDto(null, 2L, 16L))));
     }
 }
