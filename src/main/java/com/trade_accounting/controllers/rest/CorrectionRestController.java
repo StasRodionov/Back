@@ -1,8 +1,8 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.dto.PostingProductDto;
+import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.services.interfaces.CheckEntityService;
-import com.trade_accounting.services.interfaces.PostingProductService;
+import com.trade_accounting.services.interfaces.CorrectionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@Tag(name = "Posting Product Rest Controller", description = "CRUD  операции с оприходованием")
-@Api(tags = "Posting Product Rest Controller")
-@RequestMapping("/api/posting_product")
-public class PostingProductRestController {
+@Tag(name = "Correction Rest Controller", description = "CRUD  операции с оприходованием")
+@Api(tags = "Correction Rest Controller")
+@RequestMapping("/api/correction")
+public class CorrectionRestController {
 
-    private final PostingProductService postingProductService;
+    private final CorrectionService correctionService;
     private final CheckEntityService checkEntityService;
 
-    public PostingProductRestController(PostingProductService postingProductService, CheckEntityService checkEntityService) {
-        this.postingProductService = postingProductService;
+    public CorrectionRestController(CorrectionService correctionService, CheckEntityService checkEntityService) {
+        this.correctionService = correctionService;
         this.checkEntityService = checkEntityService;
     }
 
@@ -43,8 +43,8 @@ public class PostingProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<PostingProductDto>> getAll() {
-        return ResponseEntity.ok(postingProductService.getAll());
+    public ResponseEntity<List<CorrectionDto>> getAll() {
+        return ResponseEntity.ok(correctionService.getAll());
     }
 
     @GetMapping("/{id}")
@@ -55,12 +55,12 @@ public class PostingProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<PostingProductDto> getById(@ApiParam(name = "id", type = "Long",
+    public ResponseEntity<CorrectionDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти оприходование")
                                                      @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsPostingProductById(id);
+        checkEntityService.checkExistsCorrectionById(id);
 
-        return ResponseEntity.ok(postingProductService.getById(id));
+        return ResponseEntity.ok(correctionService.getById(id));
     }
 
     @PostMapping
@@ -72,10 +72,10 @@ public class PostingProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<PostingProductDto> create(@ApiParam(name = "postingProductDto",
+    public ResponseEntity<CorrectionDto> create(@ApiParam(name = "correctionDto",
             value = "DTO оприходования, которое необходимо создать")
-                                                    @RequestBody PostingProductDto postingProductDto) {
-        return ResponseEntity.ok(postingProductService.create(postingProductDto));
+                                                    @RequestBody CorrectionDto correctionDto) {
+        return ResponseEntity.ok(correctionService.create(correctionDto));
     }
 
     @PutMapping
@@ -87,10 +87,10 @@ public class PostingProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<PostingProductDto> update(@ApiParam(name = "PostingProductDto",
+    public ResponseEntity<CorrectionDto> update(@ApiParam(name = "correctionDto",
             value = "DTO оприходования, которую необходимо обновить")
-                                                    @RequestBody PostingProductDto postingProductDto) {
-        return ResponseEntity.ok(postingProductService.update(postingProductDto));
+                                                    @RequestBody CorrectionDto correctionDto) {
+        return ResponseEntity.ok(correctionService.update(correctionDto));
     }
 
     @DeleteMapping("/{id}")
@@ -102,11 +102,11 @@ public class PostingProductRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<PostingProductDto> deleteById(@ApiParam(name = "id", type = "Long",
+    public ResponseEntity<CorrectionDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить оприходование")
                                                         @PathVariable("id") Long id) {
-        checkEntityService.checkExistsPostingProductById(id);
-        postingProductService.deleteById(id);
+        checkEntityService.checkExistsCorrectionById(id);
+        correctionService.deleteById(id);
 
         return ResponseEntity.ok().build();
     }

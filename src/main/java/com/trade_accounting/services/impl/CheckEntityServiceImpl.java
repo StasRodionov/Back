@@ -25,7 +25,7 @@ import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.PositionRepository;
-import com.trade_accounting.repositories.PostingProductRepository;
+import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
@@ -79,8 +79,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final SupplierAccountRepository supplierAccountRepository;
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
     private  final TechnicalCardRepository technicalCardRepository;
-    private final PostingProductRepository postingProductRepository;
-
+    private final CorrectionRepository correctionRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository,
@@ -111,7 +110,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   SupplierAccountRepository supplierAccountRepository,
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
                                   TechnicalCardRepository technicalCardRepository,
-                                  PostingProductRepository postingProductRepository) {
+                                  CorrectionRepository correctionRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -141,7 +140,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.supplierAccountRepository = supplierAccountRepository;
         this.technicalCardGroupRepository = technicalCardGroupRepository;
         this.technicalCardRepository = technicalCardRepository;
-        this.postingProductRepository = postingProductRepository;
+        this.correctionRepository = correctionRepository;
     }
 
 
@@ -269,6 +268,13 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistCompanyById(Long companyId) {
         if (!companyRepository.existsById(companyId)) {
             throw new NotFoundEntityException("Компания с id=" + companyId + " не найдена");
+        }
+    }
+
+    @Override
+    public void checkExistsCorrectionById(Long correctionId) {
+        if(!correctionRepository.existsById(correctionId)) {
+            throw new NotFoundEntityException("Оприходование с id=" + correctionId + ", не найдено");
         }
     }
 
@@ -425,16 +431,9 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     }
 
     @Override
-    public void checkExistsTechnicalCardGroupById(Long id) {
-        if(!technicalCardGroupRepository.existsById(id)) {
-            throw new NotFoundEntityException("Тех. карта с id=" + id + ", не найдена");
-        }
-    }
-
-    @Override
-    public void checkExistsPostingProductById(Long id) {
-        if(!postingProductRepository.existsById(id)) {
-            throw new NotFoundEntityException("Оприходование  с id=" + id + ", не найдено");
+    public void checkExistsTechnicalCardGroupById(Long technicalCardGroupId) {
+        if(!technicalCardGroupRepository.existsById(technicalCardGroupId)) {
+            throw new NotFoundEntityException("Группа технических карт с id=" + technicalCardGroupId+ ", не найдена");
         }
     }
 }
