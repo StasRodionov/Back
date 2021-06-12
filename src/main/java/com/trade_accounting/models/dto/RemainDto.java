@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,7 +29,7 @@ public class RemainDto {
 
     private Integer available;
 
-    private Unit unit;
+    private List<UnitDto> unitDto;
 
     private Integer daysOnWarehouse;
 
