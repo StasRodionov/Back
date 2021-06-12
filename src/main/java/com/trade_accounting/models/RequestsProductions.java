@@ -30,11 +30,11 @@ public class RequestsProductions {
 
     private LocalDate dateOfTheCertificate;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @OneToOne(fetch = FetchType.LAZY)
     private TechnicalCard technicalCard;
 
     private Integer volume;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @OneToOne(fetch = FetchType.LAZY)
     private Warehouse warehouse;
 }
