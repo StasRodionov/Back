@@ -1,12 +1,9 @@
 package com.trade_accounting.models.dto;
 
-import com.trade_accounting.models.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @Builder
@@ -29,7 +26,7 @@ public class RemainDto {
 
     private Integer available;
 
-    private List<UnitDto> unitDto;
+    private UnitDto unitDto;
 
     private Integer daysOnWarehouse;
 
