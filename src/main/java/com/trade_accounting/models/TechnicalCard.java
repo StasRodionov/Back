@@ -37,9 +37,6 @@ public class TechnicalCard {
     @Column(name = "production_cost")
     private String productionCost;
 
-    @Column(name = "sort_number")
-    private String sortNumber;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private TechnicalCardGroup technicalCardGroup;
 

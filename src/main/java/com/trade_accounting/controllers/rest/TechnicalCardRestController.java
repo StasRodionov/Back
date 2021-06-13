@@ -1,5 +1,8 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.TechnicalCard;
+import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.TechnicalCardDto;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
@@ -9,6 +12,11 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -135,4 +143,13 @@ public class TechnicalCardRestController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/searchTechnicalCard")
+    @ApiOperation(value = "searchTechnicalCard", notes = "Получение списка технических карт по заданным параметрам")
+    public ResponseEntity<List<TechnicalCardDto>> getAllFilter(
+            @And({
+                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+                    @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class),
+            }) Specification<TechnicalCard> spec) {
+        return ResponseEntity.ok(technicalCardService.search(spec));
+    }
 }

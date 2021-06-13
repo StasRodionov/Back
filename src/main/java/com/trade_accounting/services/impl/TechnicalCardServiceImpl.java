@@ -8,10 +8,13 @@ import com.trade_accounting.repositories.TechnicalCardProductionRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
 import com.trade_accounting.utils.DtoMapper;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,21 +49,29 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
 
     @Override
     public TechnicalCardDto create(TechnicalCardDto dto) {
-        TechnicalCard technicalCard = TechnicalCard.builder().id(dto.getId()).name(dto.getName()).comment(dto.getComment())
-                .productionCost(dto.getProductionCost()).sortNumber(dto.getSortNumber())
+        TechnicalCard technicalCard = TechnicalCard.builder().id(dto.getId()).name(dto.getName())
+                .comment(dto.getComment()).productionCost(dto.getProductionCost())
                 .technicalCardGroup(dtoMapper.technicalCardGroupDtoToTechnicalCardGroup(dto.getTechnicalCardGroupDto()))
                 .build();
 
         List<TechnicalCardProduction> finalProduction = dto.getFinalProductionDto().stream()
-                .map(dtoMapper::technicalCardProductionDtoToTechnicalCardProduction).collect(Collectors.toList());
-        finalProduction.stream().forEach(fp -> {fp.setProduct(productRepository.save(fp.getProduct()));
-                                                technicalCardProductionRepository.save(fp);});
+                .map(x -> {
+                    TechnicalCardProduction tcp =
+                            dtoMapper.technicalCardProductionDtoToTechnicalCardProduction(x);
+                    tcp.setProduct(productRepository.getOne(x.getProductId()));
+                    return tcp;
+                }).collect(Collectors.toList());
+        finalProduction.stream().forEach(technicalCardProductionRepository::save);
         technicalCard.setFinalProduction(finalProduction);
 
         List<TechnicalCardProduction> materials = dto.getMaterialsDto().stream()
-                .map(dtoMapper::technicalCardProductionDtoToTechnicalCardProduction).collect(Collectors.toList());
-        materials.stream().forEach(m -> {m.setProduct(productRepository.save(m.getProduct()));
-                                        technicalCardProductionRepository.save(m);});
+                .map(x -> {
+                    TechnicalCardProduction tcp =
+                            dtoMapper.technicalCardProductionDtoToTechnicalCardProduction(x);
+                    tcp.setProduct(productRepository.getOne(x.getProductId()));
+                    return tcp;
+                }).collect(Collectors.toList());
+        materials.stream().forEach(technicalCardProductionRepository::save);
         technicalCard.setMaterials(materials);
 
         return dtoMapper.technicalCardToTechnicalCardDto(technicalCardRepository.save(technicalCard));
@@ -78,9 +89,15 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
 
     @Override
     public List<TechnicalCardDto> search(String searchTerm) {
-        return technicalCardRepository.search(searchTerm).stream()
-                .map(dtoMapper::technicalCardToTechnicalCardDto)
-                .collect(Collectors.toList());
+        if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
+            return technicalCardRepository.findAll().stream()
+                    .map(dtoMapper::technicalCardToTechnicalCardDto)
+                    .collect(Collectors.toList());
+        } else {
+            return technicalCardRepository.search(searchTerm).stream()
+                    .map(dtoMapper::technicalCardToTechnicalCardDto)
+                    .collect(Collectors.toList());
+        }
     }
 
     @Override
@@ -89,4 +106,10 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
                 .map(dtoMapper::technicalCardToTechnicalCardDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<TechnicalCardDto> search(Specification<TechnicalCard> spec) {
+        return executeSearch(technicalCardRepository, dtoMapper::technicalCardToTechnicalCardDto, spec);
+    }
+
 }
