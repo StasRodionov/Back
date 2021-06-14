@@ -1,5 +1,7 @@
 package com.trade_accounting.utils;
 
+import com.trade_accounting.models.Acceptance;
+import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
@@ -38,6 +40,8 @@ import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.AcceptanceDto;
+import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
@@ -154,6 +158,24 @@ public abstract class DtoMapper {
                 .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
     }
 
+    // Acceptance
+    @Mappings({
+            @Mapping(source = "contractor.id", target = "contractorId"),
+            @Mapping(source = "project.id", target = "projectId"),
+            @Mapping(source = "warehouse.id", target = "warehouseId"),
+            @Mapping(source = "contract.id", target = "contractId"),
+    })
+    public abstract AcceptanceDto acceptanceToAcceptanceDto(Acceptance acceptance);
+
+    public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
+
+    // AcceptanceProduction
+    @Mappings({
+            @Mapping(source = "product.id", target = "productId"),
+    })
+    public abstract AcceptanceProductionDto acceptanceProductionToAcceptanceProductionDto(AcceptanceProduction acceptanceProduction);
+
+    public abstract AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProduction);
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
