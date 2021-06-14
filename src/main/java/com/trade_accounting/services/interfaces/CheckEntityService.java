@@ -70,7 +70,7 @@ public interface CheckEntityService {
 
     void checkExistsTechnicalCardGroupById(Long id);
 
-    void checkExistsCorrectionById(Long CorrectionId);
+    void checkExistsCorrectionById(Long correctionId);
 
     void checkExistsCorrectionProductById(Long correctionProduct);
 }
