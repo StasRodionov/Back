@@ -11,6 +11,7 @@ import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
@@ -47,6 +48,7 @@ import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.services.interfaces.CorrectionProductService;
+import com.trade_accounting.services.interfaces.CorrectionService;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
@@ -123,6 +125,7 @@ public class DataInitializer {
     private final TechnicalCardGroupService technicalCardGroupService;
     private final TechnicalCardService technicalCardService;
     private final CorrectionProductService correctionProductService;
+    private final CorrectionService correctionService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -158,7 +161,8 @@ public class DataInitializer {
             AccessParametersService accessParametersService,
             TechnicalCardGroupService technicalCardGroupService,
             TechnicalCardService technicalCardService,
-            CorrectionProductService correctionProductService) {
+            CorrectionProductService correctionProductService,
+            CorrectionService correctionService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -194,6 +198,7 @@ public class DataInitializer {
         this.technicalCardGroupService = technicalCardGroupService;
         this.technicalCardService = technicalCardService;
         this.correctionProductService = correctionProductService;
+        this.correctionService = correctionService;
     }
 
     @PostConstruct
@@ -232,6 +237,7 @@ public class DataInitializer {
         initTechnicalCardGroups();
         initTechnicalCards();
         initCorrectionProduct();
+        initCorrection();
     }
 
     private void initAccessParameters() {
@@ -1420,11 +1426,32 @@ public class DataInitializer {
 
     public void initCorrectionProduct() {
 
-        for (Long i = 1L; i <= 10; i++) {
+        for (Long i = 1L; i <= 9; i++) {
             correctionProductService.create(
-                    new CorrectionProductDto(i, i, BigDecimal.valueOf(randomInt(50, 100)),
+                    new CorrectionProductDto(null, i, BigDecimal.valueOf(randomInt(50, 100)),
                             BigDecimal.valueOf(randomInt(50, 100)))
             );
         }
+    }
+
+    public void initCorrection() {
+        correctionService.create(
+                new CorrectionDto(
+                        null, LocalDateTime.now(), 1L, 1L, false, false, false, "Оприходование 1",
+                        List.of(1L, 2L, 3L)
+                )
+        );
+        correctionService.create(
+                new CorrectionDto(
+                        null, LocalDateTime.now(), 1L, 5L, false, false, false, "Оприходование 2",
+                        List.of(4L, 5L, 6L)
+                )
+        );
+        correctionService.create(
+                new CorrectionDto(
+                        null, LocalDateTime.now(), 1L, 10L, false, false, false, "Оприходование 3",
+                        List.of(7L, 8L, 9L)
+                )
+        );
     }
 }
