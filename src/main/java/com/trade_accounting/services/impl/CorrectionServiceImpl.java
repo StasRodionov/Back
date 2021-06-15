@@ -1,8 +1,14 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Correction;
+import com.trade_accounting.models.CorrectionProduct;
+import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.CorrectionDto;
+import com.trade_accounting.repositories.CompanyRepository;
+import com.trade_accounting.repositories.CorrectionProductRepository;
 import com.trade_accounting.repositories.CorrectionRepository;
+import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CorrectionService;
 import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
@@ -16,10 +22,20 @@ import java.util.stream.Collectors;
 public class CorrectionServiceImpl implements CorrectionService {
 
     private final CorrectionRepository correctionRepository;
+    private final WarehouseRepository warehouseRepository;
+    private final CompanyRepository companyRepository;
+    private final CorrectionProductRepository correctionProductRepository;
     private final DtoMapper dtoMapper;
 
-    public CorrectionServiceImpl(CorrectionRepository correctionRepository, DtoMapper dtoMapper) {
+    public CorrectionServiceImpl(CorrectionRepository correctionRepository,
+                                 WarehouseRepository warehouseRepository,
+                                 CompanyRepository companyRepository,
+                                 CorrectionProductRepository correctionProductRepository,
+                                 DtoMapper dtoMapper) {
         this.correctionRepository = correctionRepository;
+        this.warehouseRepository = warehouseRepository;
+        this.companyRepository = companyRepository;
+        this.correctionProductRepository = correctionProductRepository;
         this.dtoMapper = dtoMapper;
     }
 
@@ -32,25 +48,34 @@ public class CorrectionServiceImpl implements CorrectionService {
 
     @Override
     public CorrectionDto getById(Long id) {
-        Correction correction = correctionRepository.getCorrectionById(id);
-        return dtoMapper.toCorrectionDto(correction);
+        return dtoMapper.toCorrectionDto(correctionRepository.getCorrectionById(id));
     }
 
     @Override
     public CorrectionDto create(CorrectionDto dto) {
-        Correction correctionSave = correctionRepository.save(dtoMapper.toCorrection(dto));
-        return dtoMapper.toCorrectionDto(correctionSave);
+        return saveOrUpdateCorrection(dto);
     }
 
     @Override
     public CorrectionDto update(CorrectionDto dto) {
-        Correction correctionUpdate = correctionRepository.save(dtoMapper.toCorrection(dto));
-        return dtoMapper.toCorrectionDto(correctionUpdate);
+        return saveOrUpdateCorrection(dto);
     }
 
     @Override
     public void deleteById(Long id) {
         correctionRepository.deleteById(id);
+    }
+
+    private CorrectionDto saveOrUpdateCorrection(CorrectionDto dto) {
+        Correction correction = dtoMapper.toCorrection(dto);
+        Warehouse warehouse = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId()));
+        Company company = dtoMapper.companyDtoToCompany(companyRepository.getById(dto.getCompanyId()));
+        List<CorrectionProduct> correctionProducts = dto.getCorrectionProductIds().stream()
+                .map(id -> correctionProductRepository.findById(id).orElse(new CorrectionProduct())).collect(Collectors.toList());
+        correction.setWarehouse(warehouse);
+        correction.setCompany(company);
+        correction.setCorrectionProducts(correctionProducts);
+        return dtoMapper.toCorrectionDto(correctionRepository.save(correction));
     }
 }
 

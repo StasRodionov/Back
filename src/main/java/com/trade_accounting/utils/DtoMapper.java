@@ -104,6 +104,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class DtoMapper {
@@ -147,8 +148,8 @@ public abstract class DtoMapper {
     })
     public abstract AccessParametersDto AccessParametersToAccessParametersDto(AccessParameters accessParameters);
 
-    public AccessParameters AccessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto){
-        if (accessParametersDto == null){
+    public AccessParameters AccessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto) {
+        if (accessParametersDto == null) {
             return null;
         }
         return AccessParameters.builder().id(accessParametersDto.getId()).generalAccess(accessParametersDto.getGeneralAccess())
@@ -583,7 +584,6 @@ public abstract class DtoMapper {
  */
 
 
-
     @Mappings({
             @Mapping(source = "districts", target = "districtDtos")
     })
@@ -627,12 +627,44 @@ public abstract class DtoMapper {
 
     public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
 
-//    Correction
-    public abstract CorrectionDto toCorrectionDto(Correction correction);
+    //    Correction
+    public CorrectionDto toCorrectionDto(Correction correction) {
+        CorrectionDto correctionDto = new CorrectionDto();
+        if (correction == null) {
+            return null;
+        } else {
+            correctionDto.setId(correction.getId());
+            correctionDto.setDate(correction.getDate());
+            correctionDto.setIsSent(correction.getIsSent());
+            correctionDto.setIsPrint(correction.getIsPrint());
+            correctionDto.setWriteOffProduct(correction.getWriteOffProduct());
+            correctionDto.setComment(correction.getComment());
+
+            Warehouse warehouse = correction.getWarehouse();
+            if (warehouse == null) {
+                return null;
+            } else {
+                correctionDto.setWarehouseId(warehouse.getId());
+
+                Company company = correction.getCompany();
+                if (company == null) {
+                    return null;
+                } else {
+                    correctionDto.setCompanyId(company.getId());
+
+                    List<Long> correctionProductIds = correction.getCorrectionProducts().stream()
+                            .map(CorrectionProduct::getId)
+                            .collect(Collectors.toList());
+                    correctionDto.setCorrectionProductIds(correctionProductIds);
+                    return correctionDto;
+                }
+            }
+        }
+    }
 
     public abstract Correction toCorrection(CorrectionDto correctionDto);
 
-//    CorrectionProduct
+    //    CorrectionProduct
     @Mappings({
             @Mapping(source = "product.id", target = "productId")
     })
