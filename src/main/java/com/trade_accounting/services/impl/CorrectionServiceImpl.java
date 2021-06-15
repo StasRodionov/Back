@@ -53,12 +53,12 @@ public class CorrectionServiceImpl implements CorrectionService {
 
     @Override
     public CorrectionDto create(CorrectionDto dto) {
-        return saveOrUpdateCorrection(dto);
+        return saveOrUpdate(dto);
     }
 
     @Override
     public CorrectionDto update(CorrectionDto dto) {
-        return saveOrUpdateCorrection(dto);
+        return saveOrUpdate(dto);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class CorrectionServiceImpl implements CorrectionService {
         correctionRepository.deleteById(id);
     }
 
-    private CorrectionDto saveOrUpdateCorrection(CorrectionDto dto) {
+    private CorrectionDto saveOrUpdate(CorrectionDto dto) {
         Correction correction = dtoMapper.toCorrection(dto);
         Warehouse warehouse = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId()));
         Company company = dtoMapper.companyDtoToCompany(companyRepository.getById(dto.getCompanyId()));
