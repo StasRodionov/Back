@@ -61,7 +61,7 @@ public class CorrectionProductServiceImpl implements CorrectionProductService {
     private CorrectionProductDto saveOrUpdate(CorrectionProductDto dto) {
         Optional<Product> product = productRepository.findById(dto.getProductId());
         CorrectionProduct correctionProduct = dtoMapper.toCorrectionProduct(dto);
-        correctionProduct.setProduct(product.orElse(new Product()));
+        correctionProduct.setProduct(product.orElse(null));
         return dtoMapper.toCorrectionProductDto(correctionProductRepository.save(correctionProduct));
     }
 }
