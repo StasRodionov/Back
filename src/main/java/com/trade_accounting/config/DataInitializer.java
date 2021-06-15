@@ -1467,8 +1467,5 @@ public class DataInitializer {
                         List.of(7L, 8L, 9L)
                 )
         );
-
-        System.out.println(correctionService.getAll());
-        System.out.println(correctionService.getById(1L));
     }
 }
