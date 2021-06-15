@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class CorrectionServiceImpl implements CorrectionService {
 
     private final CorrectionRepository correctionRepository;
@@ -22,7 +23,6 @@ public class CorrectionServiceImpl implements CorrectionService {
         this.dtoMapper = dtoMapper;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<CorrectionDto> getAll() {
         return correctionRepository.getAll().stream()
@@ -30,28 +30,24 @@ public class CorrectionServiceImpl implements CorrectionService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     @Override
     public CorrectionDto getById(Long id) {
         Correction correction = correctionRepository.getCorrectionById(id);
         return dtoMapper.toCorrectionDto(correction);
     }
 
-    @Transactional
     @Override
     public CorrectionDto create(CorrectionDto dto) {
         Correction correctionSave = correctionRepository.save(dtoMapper.toCorrection(dto));
         return dtoMapper.toCorrectionDto(correctionSave);
     }
 
-    @Transactional
     @Override
     public CorrectionDto update(CorrectionDto dto) {
         Correction correctionUpdate = correctionRepository.save(dtoMapper.toCorrection(dto));
         return dtoMapper.toCorrectionDto(correctionUpdate);
     }
 
-    @Transactional
     @Override
     public void deleteById(Long id) {
         correctionRepository.deleteById(id);
