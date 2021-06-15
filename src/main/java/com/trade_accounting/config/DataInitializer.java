@@ -1436,21 +1436,36 @@ public class DataInitializer {
     public void initCorrection() {
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.now(), 1L, 1L, false, false, false, "Оприходование 1",
+                        null,
+                        LocalDateTime.now(),
+                        1L, 1L,
+                        false, false, false,
+                        "Оприходование 1",
                         List.of(1L, 2L, 3L)
                 )
         );
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.now(), 1L, 5L, false, false, false, "Оприходование 2",
+                        null,
+                        LocalDateTime.now(),
+                        1L, 5L,
+                        false, false, false,
+                        "Оприходование 2",
                         List.of(4L, 5L, 6L)
                 )
         );
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.now(), 1L, 10L, false, false, false, "Оприходование 3",
+                        null,
+                        LocalDateTime.now(),
+                        1L, 10L,
+                        false, false, false,
+                        "Оприходование 3",
                         List.of(7L, 8L, 9L)
                 )
         );
+
+        System.out.println(correctionService.getAll());
+        System.out.println(correctionService.getById(1L));
     }
 }
