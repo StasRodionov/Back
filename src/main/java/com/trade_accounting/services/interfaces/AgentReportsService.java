@@ -1,4 +1,7 @@
 package com.trade_accounting.services.interfaces;
 
-public interface AgentReportsService {
+import com.trade_accounting.models.dto.AgentReportsDto;
+
+public interface AgentReportsService extends AbstractService<AgentReportsDto> {
+
 }
