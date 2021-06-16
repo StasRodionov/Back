@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,7 +70,7 @@ public class AgentReportsRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<AgentReportsDto> create(@ApiParam(name = "agentReportsDto", value = "DTO отчёта комиссионера, который необходимо создать")
-                                                  @RequestBody AgentReportsDto agentReportsDto){
+                                                  @RequestBody AgentReportsDto agentReportsDto) {
         return ResponseEntity.ok().body(agentReportsService.create(agentReportsDto));
     }
 
@@ -83,10 +84,24 @@ public class AgentReportsRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<AgentReportsDto> update(@ApiParam(name = "agentReportsDto", value = "DTO отчёта комиссионера, который необходимо создать")
-                                                  @RequestBody AgentReportsDto agentReportsDto){
+                                                  @RequestBody AgentReportsDto agentReportsDto) {
         return ResponseEntity.ok().body(agentReportsService.update(agentReportsDto));
     }
 
-
+    @ApiOperation(value = "deleteById", notes = "Удаляет отчёт комиссионера на основе переданного ID")
+    @DeleteMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Отчёт комиссионера успешно удалён"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<AgentReportsDto> deleteById(@ApiParam(name = "id",
+            value = "ID отчёта комиссионера, который необходимо удалить")
+                                                      @PathVariable(name = "id") Long id) {
+        agentReportsService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 
 }
