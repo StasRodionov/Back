@@ -65,7 +65,7 @@ public class CorrectionProductRestController {
     @PostMapping
     @ApiOperation(value = "create", notes = "Добавление нового оприходованного товара")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Оприходованный товар товар добавлен"),
+            @ApiResponse(code = 200, message = "Оприходованный товар добавлен"),
             @ApiResponse(code = 201, message = "Запрос принят и оприходованный товар добавлен"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
