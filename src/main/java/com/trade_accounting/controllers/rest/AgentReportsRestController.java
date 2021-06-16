@@ -4,11 +4,13 @@ import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.services.interfaces.AgentReportsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +24,7 @@ public class AgentReportsRestController {
 
     private final AgentReportsService agentReportsService;
 
-    public AgentReportsRestController(AgentReportsService agentReportsService){
+    public AgentReportsRestController(AgentReportsService agentReportsService) {
         this.agentReportsService = agentReportsService;
     }
 
@@ -34,9 +36,25 @@ public class AgentReportsRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<List<AgentReportsDto>> getAll(){
+    public ResponseEntity<List<AgentReportsDto>> getAll() {
         List<AgentReportsDto> agentReportsDtoList = agentReportsService.getAll();
         return ResponseEntity.ok(agentReportsDtoList);
     }
+
+
+    @ApiOperation(value = "getById", notes = "Возвращает определенный отчёт комиссионера по Id")
+    @GetMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Отчёт комиссионера найден"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<AgentReportsDto> getById(@ApiParam(name = "id",
+            value = "ID переданный в URL по которому необходимо найти отчёт комиссионера") @PathVariable(name = "id") Long id) {
+        AgentReportsDto agentReportsDto = agentReportsService.getById(id);
+        return ResponseEntity.ok(agentReportsDto);
+    }
+
 
 }
