@@ -2,6 +2,7 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.Company;
+import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
@@ -64,9 +65,10 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyDto create(CompanyDto companyDto) {
         Company company = dtoMapper.companyDtoToCompany(companyDto);
-
-        Address address = dtoMapper.addressDtoToAddress(companyDto.getAddressDto());
-        company.setAddress(addressRepository.save(address));
+        System.out.println("------------------------fgrgrgrgrtgtrghrtgrtg---------");
+        System.out.println(companyDto);
+        System.out.println(companyDto.getAddressId());
+        company.setAddress(addressRepository.getOne(companyDto.getAddressId()));
 
         company.setLegalDetail(
                 dtoMapper.legalDetailDtoToLegalDetail(legalDetailRepository.getById(
@@ -89,7 +91,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyDto update(CompanyDto companyDto) {
         Company company = dtoMapper.companyDtoToCompany(companyDto);
-
+        company.setAddress(addressRepository.getOne(companyDto.getAddressId()));
         company.setLegalDetail(
                 legalDetailRepository.findById(
                         companyDto.getLegalDetailDto().getId()
@@ -105,9 +107,7 @@ public class CompanyServiceImpl implements CompanyService {
                         )
                         .collect(Collectors.toList())
         );
-
         companyRepository.save(company);
-
         return companyDto;
     }
 

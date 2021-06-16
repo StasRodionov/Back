@@ -27,7 +27,7 @@ public class CompanyDto {
 
     private Boolean payerVat;
 
-    private AddressDto addressDto;
+    private Long addressId;
 
     private String commentToAddress;
 
@@ -55,7 +55,7 @@ public class CompanyDto {
                       String fax,
                       String email,
                       Boolean payerVat,
-                      Long addressDtoId,
+                      Long addressId,
                       String commentToAddress,
                       String leader,
                       String leaderManagerPosition,
@@ -72,8 +72,7 @@ public class CompanyDto {
         this.fax = fax;
         this.email = email;
         this.payerVat = payerVat;
-        this.addressDto = new AddressDto();
-        this.addressDto.setId(addressDtoId);
+        this.addressId = addressId;
         this.commentToAddress = commentToAddress;
         this.leader = leader;
         this.leaderManagerPosition = leaderManagerPosition;

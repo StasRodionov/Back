@@ -10,6 +10,7 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
@@ -80,6 +81,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
     private  final TechnicalCardRepository technicalCardRepository;
     private final PostingProductRepository postingProductRepository;
+    private final AddressRepository addressRepository;
 
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
@@ -111,7 +113,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   SupplierAccountRepository supplierAccountRepository,
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
                                   TechnicalCardRepository technicalCardRepository,
-                                  PostingProductRepository postingProductRepository) {
+                                  PostingProductRepository postingProductRepository, AddressRepository addressRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -142,6 +144,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.technicalCardGroupRepository = technicalCardGroupRepository;
         this.technicalCardRepository = technicalCardRepository;
         this.postingProductRepository = postingProductRepository;
+        this.addressRepository = addressRepository;
     }
 
 
@@ -434,7 +437,14 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     @Override
     public void checkExistsPostingProductById(Long id) {
         if(!postingProductRepository.existsById(id)) {
-            throw new NotFoundEntityException("Оприходование  с id=" + id + ", не найдено");
+            throw new NotFoundEntityException("Оприходование с id=" + id + ", не найдено");
+        }
+    }
+
+    @Override
+    public void checkExistsAddressById(Long id) {
+        if(!addressRepository.existsById(id)) {
+            throw new NotFoundEntityException("Адрес с id=" + id + ", не найден");
         }
     }
 }
