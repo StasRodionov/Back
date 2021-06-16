@@ -12,6 +12,7 @@ import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,4 +72,17 @@ public class SupplierAccountImpl implements SupplierAccountService {
     }
 
 
+    @Override
+    public List<SupplierAccountDto> searchByNameFilter(String nameFilter) {
+        if(nameFilter.matches("[0-9]+")) {
+            List<SupplierAccountDto> searchForNumber = supplierAccountRepository.searchById(Long.parseLong(nameFilter));
+            return searchForNumber;
+        } else if ("null".equals(nameFilter) || nameFilter.isEmpty()) {
+            List<SupplierAccountDto> supplierAccountList = supplierAccountRepository.getAll();
+            return supplierAccountList;
+        } else {
+            List<SupplierAccountDto> supplierAccountListDto = supplierAccountRepository.searchByNameFilter(nameFilter);
+            return supplierAccountListDto;
+        }
+    }
 }
