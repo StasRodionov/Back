@@ -18,6 +18,9 @@ public class AgentReportsDto {
 
     private String documentType;
 
+    @NotNull
+    private String number;
+
     private LocalDateTime time;
 
     @NotNull

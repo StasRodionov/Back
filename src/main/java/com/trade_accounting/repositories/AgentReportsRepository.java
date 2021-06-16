@@ -1,4 +1,8 @@
 package com.trade_accounting.repositories;
 
-public interface AgentReportsRepository {
+import com.trade_accounting.models.AgentReports;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AgentReportsRepository extends JpaRepository<AgentReports, Long> {
+
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,10 @@ public class AgentReports {
     private Long id;
 
     private String documentType;
+
+    @NotNull
+    @ColumnDefault(value = "00001")
+    private String number;
 
     private LocalDateTime time;
 
