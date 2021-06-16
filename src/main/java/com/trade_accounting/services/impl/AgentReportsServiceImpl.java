@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -21,10 +22,13 @@ public class AgentReportsServiceImpl implements AgentReportsService {
         this.agentReportsRepository = agentReportsRepository;
         this.dtoMapper = dtoMapper;
     }
-    
+
     @Override
     public List<AgentReportsDto> getAll() {
-        return null;
+        final List<AgentReportsDto> collect = agentReportsRepository.findAll().stream()
+                .map(dtoMapper::agentReportsToAgentReportsDto)
+                .collect(Collectors.toList());
+        return collect;
     }
 
     @Override
