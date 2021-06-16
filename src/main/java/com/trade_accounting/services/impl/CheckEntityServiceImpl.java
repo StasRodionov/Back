@@ -114,7 +114,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   SupplierAccountRepository supplierAccountRepository,
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
                                   TechnicalCardRepository technicalCardRepository,
-                                  CorrectionRepository correctionRepository, RemainRepository remainRepository) {
+                                  CorrectionRepository correctionRepository, RemainRepository remainRepository,
                                   CorrectionProductRepository correctionProductRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
