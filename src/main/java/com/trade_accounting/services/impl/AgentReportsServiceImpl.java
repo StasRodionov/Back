@@ -46,11 +46,11 @@ public class AgentReportsServiceImpl implements AgentReportsService {
 
     @Override
     public AgentReportsDto update(AgentReportsDto dto) {
-        return null;
+        return create(dto);
     }
 
     @Override
     public void deleteById(Long id) {
-
+        agentReportsRepository.deleteById(id);
     }
 }
