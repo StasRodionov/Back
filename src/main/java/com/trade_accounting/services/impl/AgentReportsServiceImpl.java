@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.repositories.AgentReportsRepository;
 import com.trade_accounting.services.interfaces.AgentReportsService;
@@ -33,12 +34,14 @@ public class AgentReportsServiceImpl implements AgentReportsService {
 
     @Override
     public AgentReportsDto getById(Long id) {
-        return null;
+        return dtoMapper.agentReportsToAgentReportsDto(agentReportsRepository.findById(id).orElse(new AgentReports()));
     }
 
     @Override
     public AgentReportsDto create(AgentReportsDto dto) {
-        return null;
+        AgentReports agentReports = agentReportsRepository.save(dtoMapper.agentReportsDtoToAgentReports(dto));
+        dto.setId(agentReports.getId());
+        return dtoMapper.agentReportsToAgentReportsDto(agentReports);
     }
 
     @Override
