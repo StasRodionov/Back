@@ -1,16 +1,19 @@
 package com.trade_accounting.models.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostingProductDto {
+public class CorrectionDto {
 
     private Long id;
 
@@ -18,14 +21,18 @@ public class PostingProductDto {
     private LocalDateTime date;
 
     @NotNull
-    private String warehouseName;
+    private Long warehouseId;
 
     @NotNull
-    private String companyName;
+    private Long companyId;
 
-    private boolean postingIsSent;
+    private Boolean isSent = false;
 
-    private boolean postingIsPrint;
+    private Boolean isPrint = false;
+
+    private Boolean writeOffProduct = false;
 
     private String comment;
+
+    private List<Long> correctionProductIds;
 }

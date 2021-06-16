@@ -73,4 +73,9 @@ public interface CheckEntityService {
     void checkExistsPostingProductById(Long id);
 
     void checkExistsAddressById(Long id);
+    void checkExistsCorrectionById(Long correctionId);
+
+    void checkExistsRemainById(Long id);
+
+    void checkExistsCorrectionProductById(Long correctionProduct);
 }
