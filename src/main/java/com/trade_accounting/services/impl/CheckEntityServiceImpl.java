@@ -29,6 +29,7 @@ import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
+import com.trade_accounting.repositories.RemainRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.repositories.SupplierAccountRepository;
@@ -81,6 +82,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
     private  final TechnicalCardRepository technicalCardRepository;
     private final CorrectionRepository correctionRepository;
+    private final RemainRepository remainRepository;
     private final CorrectionProductRepository correctionProductRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
@@ -112,7 +114,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   SupplierAccountRepository supplierAccountRepository,
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
                                   TechnicalCardRepository technicalCardRepository,
-                                  CorrectionRepository correctionRepository,
+                                  CorrectionRepository correctionRepository, RemainRepository remainRepository,
                                   CorrectionProductRepository correctionProductRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
@@ -144,6 +146,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.technicalCardGroupRepository = technicalCardGroupRepository;
         this.technicalCardRepository = technicalCardRepository;
         this.correctionRepository = correctionRepository;
+        this.remainRepository = remainRepository;
         this.correctionProductRepository = correctionProductRepository;
     }
 
@@ -438,6 +441,12 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsTechnicalCardGroupById(Long technicalCardGroupId) {
         if(!technicalCardGroupRepository.existsById(technicalCardGroupId)) {
             throw new NotFoundEntityException("Группа технических карт с id=" + technicalCardGroupId+ ", не найдена");
+        }
+    }
+    @Override
+    public void checkExistsRemainById(Long id) {
+        if(!remainRepository.existsById(id)) {
+            throw new NotFoundEntityException("Остаток с id=" + id + ", не найден");
         }
     }
 

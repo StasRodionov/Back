@@ -13,9 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
@@ -65,6 +69,32 @@ public class ImageRestController {
         return ResponseEntity.ok(imageService.getById(id));
     }
 
+    @ApiOperation(value = "creatingNewImage", notes = "Добавляет в базу новое изображение")
+    @PostMapping
+    @ApiResponses( value = {
+            @ApiResponse(code = 200, message = "Фото успешно добавлено"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 200, message = "Нет доступа к данной операции")
+    })
+    public ResponseEntity<ImageDto> create(@ApiParam (name = "ImageDto", value = "Dto изображения, которое необходимо добавить")
+                                               @RequestBody ImageDto dto){
+        return ResponseEntity.ok(imageService.create(dto));
+    }
+
+    @ApiOperation(value = "UpdatingNewImage", notes = "Обновляет существующее изображение")
+    @PutMapping
+    @ApiResponses( value = {
+            @ApiResponse(code = 200, message = "Фото успешно обновлено"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 200, message = "Нет доступа к данной операции")
+    })
+    public ResponseEntity<ImageDto> update (@ApiParam (name = "ImageDto", value = "Dto изображения, которое необходимо обновить")
+                                           @RequestBody ImageDto dto){
+        checkEntityService.checkExistsImageById(dto.getId());
+        return ResponseEntity.ok(imageService.update(dto));
+    }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет фото на основе переданного ID")
     @DeleteMapping("/{id}")
