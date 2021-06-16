@@ -2,6 +2,7 @@ package com.trade_accounting.utils;
 
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
+import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
@@ -40,6 +41,7 @@ import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
+import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -159,6 +161,10 @@ public abstract class DtoMapper {
     public abstract AddressDto addressToAddressDto(Address address);
 
     public abstract Address addressDtoToAddress(AddressDto address);
+
+    //AgentReports
+    public abstract AgentReportsDto agentReportsToAgentReportsDto(AgentReports agentReports);
+    public abstract AgentReports agentReportsDtoToAgentReports(AgentReportsDto agentReportsDto);
 
     //BankAccount
     public abstract BankAccountDto bankAccountToBankAccountDto(BankAccount bankAccount);
