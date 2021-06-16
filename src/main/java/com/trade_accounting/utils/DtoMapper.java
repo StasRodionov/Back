@@ -10,6 +10,7 @@ import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.Correction;
+import com.trade_accounting.models.CorrectionProduct;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
@@ -48,6 +49,7 @@ import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.ContractorStatusDto;
+import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
@@ -629,4 +631,12 @@ public abstract class DtoMapper {
     public abstract CorrectionDto toCorrectionDto(Correction correction);
 
     public abstract Correction toCorrection(CorrectionDto correctionDto);
+
+//    CorrectionProduct
+    @Mappings({
+            @Mapping(source = "product.id", target = "productId")
+    })
+    public abstract CorrectionProductDto toCorrectionProductDto(CorrectionProduct correction);
+
+    public abstract CorrectionProduct toCorrectionProduct(CorrectionProductDto correctionDto);
 }

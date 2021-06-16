@@ -58,7 +58,6 @@ public class Correction {
     @Column(name = "comment")
     private String comment;
 
-//    @OneToMany(fetch = FetchType.LAZY)
-//    private List<CorrectionProduct> correctionProducts;
-//    Будет раскомментировано тогда, когда будет добавлена модель CorrectionProduct - в след мердж реквесте
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<CorrectionProduct> correctionProducts;
 }
