@@ -41,10 +41,10 @@ public class Task {
     private Employee taskAuthor;
 
     @NotNull
-    @Column(name = "creation_date_time", columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
+    @Column(name = "creation_date_time")
     private LocalDateTime creationDateTime;
 
-    @Column(name = "deadline_date_time", columnDefinition = "TIMESTAMP")
+    @Column(name = "deadline_date_time")
     private LocalDateTime deadlineDateTime;
 
     private boolean completed;
