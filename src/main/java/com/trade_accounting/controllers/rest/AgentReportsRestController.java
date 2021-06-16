@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,6 +71,20 @@ public class AgentReportsRestController {
     public ResponseEntity<AgentReportsDto> create(@ApiParam(name = "agentReportsDto", value = "DTO отчёта комиссионера, который необходимо создать")
                                                   @RequestBody AgentReportsDto agentReportsDto){
         return ResponseEntity.ok().body(agentReportsService.create(agentReportsDto));
+    }
+
+    @ApiOperation(value = "update", notes = "Обновляет отчёт комиссионера на основе переданных данных")
+    @PutMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Отчёт комиссионера успешно обновлён"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные обновлены"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<AgentReportsDto> update(@ApiParam(name = "agentReportsDto", value = "DTO отчёта комиссионера, который необходимо создать")
+                                                  @RequestBody AgentReportsDto agentReportsDto){
+        return ResponseEntity.ok().body(agentReportsService.update(agentReportsDto));
     }
 
 
