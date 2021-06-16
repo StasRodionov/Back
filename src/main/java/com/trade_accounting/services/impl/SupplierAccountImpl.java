@@ -9,6 +9,7 @@ import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.SupplierAccountService;
 import com.trade_accounting.utils.DtoMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,7 +74,7 @@ public class SupplierAccountImpl implements SupplierAccountService {
 
 
     @Override
-    public List<SupplierAccountDto> searchByNameFilter(String nameFilter) {
+    public List<SupplierAccountDto> searchByString(String nameFilter) {
         if(nameFilter.matches("[0-9]+")) {
             List<SupplierAccountDto> searchForNumber = supplierAccountRepository.searchById(Long.parseLong(nameFilter));
             return searchForNumber;
@@ -84,5 +85,10 @@ public class SupplierAccountImpl implements SupplierAccountService {
             List<SupplierAccountDto> supplierAccountListDto = supplierAccountRepository.searchByNameFilter(nameFilter);
             return supplierAccountListDto;
         }
+    }
+
+    @Override
+    public List<SupplierAccountDto> search(Specification<SupplierAccount> spec) {
+        return executeSearch(supplierAccountRepository, dtoMapper::SupplierAccountToSupplierAccountDto, spec);
     }
 }
