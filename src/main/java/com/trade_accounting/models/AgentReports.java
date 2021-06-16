@@ -29,7 +29,6 @@ public class AgentReports {
 
     private String documentType;
 
-    @Column(name = "time")
     private LocalDateTime time;
 
     @NotNull
@@ -40,6 +39,24 @@ public class AgentReports {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
-    
+    @NotNull
+    private Long sum;
+
+    @NotNull
+    private Long remunirationSum;
+
+    @NotNull
+    private Long comitentSum;
+
+    @NotNull
+    private Long paid;
+
+    private String status;
+
+    private Long sent;
+
+    private Long printed;
+
+    private String commentary;
 
 }
