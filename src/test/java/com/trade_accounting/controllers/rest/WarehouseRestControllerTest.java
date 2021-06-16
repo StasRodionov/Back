@@ -39,7 +39,7 @@ public class WarehouseRestControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void test() throws Exception {
+    public void testExistence() throws Exception {
         assertNotNull(warehouseRestController, "Warehouse Rest controller is null");
     }
 
@@ -89,7 +89,6 @@ public class WarehouseRestControllerTest {
                 .sortNumber("updated").address("updated").commentToAddress("updated")
                 .comment("updated").build();
         String updatedWarehouseJson = new Gson().toJson(updatedWarehouse);
-
         mockMvc.perform(put("/api/warehouse").contentType(MediaType.APPLICATION_JSON)
                 .content(updatedWarehouseJson))
                 .andDo(print())
