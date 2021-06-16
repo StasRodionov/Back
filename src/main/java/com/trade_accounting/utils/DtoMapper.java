@@ -28,6 +28,7 @@ import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
+import com.trade_accounting.models.Remain;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.ContractorStatus;
@@ -70,6 +71,7 @@ import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
+import com.trade_accounting.models.dto.RemainDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
@@ -143,6 +145,11 @@ public abstract class DtoMapper {
     public abstract ProductionDto productionToProductionDto(Production production);
 
     public abstract Production productionDtoToProduction(ProductionDto productionDto);
+
+    //Remain
+    public abstract RemainDto remainToRemainDto(Remain remain);
+
+    public abstract Remain remainDtoToRemain(RemainDto remainDto);
 
     //AccessParameters
     @Mappings({
