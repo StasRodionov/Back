@@ -17,6 +17,7 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
+import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
@@ -56,6 +57,7 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
+import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
@@ -410,6 +412,11 @@ public abstract class DtoMapper {
     public abstract PositionDto positionToPositionDto(Position position);
 
     public abstract Position positionDtoToPosition(PositionDto position);
+
+    //PriceList
+    public abstract PriceListDto priceListToPriceListDto(PriceList priceList);
+
+    public abstract PriceList priceListDtoToPriceList(PriceListDto priceListDto);
 
     //Product
     @Mappings({
