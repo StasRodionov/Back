@@ -4,11 +4,13 @@ import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.services.interfaces.PriceListService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,5 +40,20 @@ public class PriceListRestController {
         List<PriceListDto> priceListDtoList = priceListService.getAll();
         return ResponseEntity.ok(priceListDtoList);
     }
+
+    @ApiOperation(value = "getById", notes = "Возвращает определенный прайс-лист по Id")
+    @GetMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Прайс-лист найден"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<PriceListDto> getById(@ApiParam(name = "id",
+            value = "ID переданный в URL по которому необходимо найти прайс-лист") @PathVariable(name = "id") Long id){
+        PriceListDto priceListDto = priceListService.getById(id);
+       return ResponseEntity.ok(priceListDto);
+    }
+
 
 }
