@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ public class PriceListRestController {
 
     private final PriceListService priceListService;
 
-    public PriceListRestController(PriceListService priceListService){
+    public PriceListRestController(PriceListService priceListService) {
         this.priceListService = priceListService;
     }
 
@@ -39,7 +40,7 @@ public class PriceListRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<List<PriceListDto>> getAll(){
+    public ResponseEntity<List<PriceListDto>> getAll() {
         List<PriceListDto> priceListDtoList = priceListService.getAll();
         return ResponseEntity.ok(priceListDtoList);
     }
@@ -53,9 +54,9 @@ public class PriceListRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<PriceListDto> getById(@ApiParam(name = "id",
-            value = "ID переданный в URL по которому необходимо найти прайс-лист") @PathVariable(name = "id") Long id){
+            value = "ID переданный в URL по которому необходимо найти прайс-лист") @PathVariable(name = "id") Long id) {
         PriceListDto priceListDto = priceListService.getById(id);
-       return ResponseEntity.ok(priceListDto);
+        return ResponseEntity.ok(priceListDto);
     }
 
     @ApiOperation(value = "create", notes = "Создает прайс-лист на основе переданных данных")
@@ -68,7 +69,7 @@ public class PriceListRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<PriceListDto> create(@ApiParam(name = "priceListDto", value = "DTO прайс-листа, которое необходимо создать")
-                                               @RequestBody PriceListDto priceListDto){
+                                               @RequestBody PriceListDto priceListDto) {
         return ResponseEntity.ok().body(priceListService.create(priceListDto));
     }
 
@@ -82,9 +83,24 @@ public class PriceListRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<PriceListDto> update(@ApiParam(name = "priceListDto", value = "DTO прайс-листа, с обновлёнными данными")
-                                               @RequestBody PriceListDto priceListDto){
+                                               @RequestBody PriceListDto priceListDto) {
         return ResponseEntity.ok().body(priceListService.update(priceListDto));
     }
 
-
+    @ApiOperation(value = "deleteById", notes = "Удаляет прайс-лист на основе переданного ID")
+    @DeleteMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Прайс-лист успешно удален"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<PriceListDto> geleteById(@ApiParam(name = "id",
+            value = "ID прайс-листа, который необходимо удалить")
+                                                   @PathVariable(name = "id") Long id) {
+        priceListService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+    
 }
