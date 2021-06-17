@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.repositories.PriceListRepository;
 import com.trade_accounting.services.interfaces.PriceListService;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,26 +27,31 @@ public class PriceListServiceImpl implements PriceListService {
 
     @Override
     public List<PriceListDto> getAll() {
-        return null;
+        final List<PriceListDto> collect = priceListRepository.findAll().stream()
+                .map(dtoMapper::priceListToPriceListDto)
+                .collect(Collectors.toList());
+        return collect;
     }
 
     @Override
     public PriceListDto getById(Long id) {
-        return null;
+        return dtoMapper.priceListToPriceListDto(priceListRepository.findById(id).orElse(new PriceList()));
     }
 
     @Override
     public PriceListDto create(PriceListDto dto) {
-        return null;
+        PriceList priceList = priceListRepository.save(dtoMapper.priceListDtoToPriceList(dto));
+        dto.setId(priceList.getId());
+        return dtoMapper.priceListToPriceListDto(priceList);
     }
 
     @Override
     public PriceListDto update(PriceListDto dto) {
-        return null;
+        return create(dto);
     }
 
     @Override
     public void deleteById(Long id) {
-
+        priceListRepository.deleteById(id);
     }
 }
