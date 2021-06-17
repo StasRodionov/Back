@@ -9,6 +9,7 @@ import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.CorrectionProduct;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
@@ -28,6 +29,7 @@ import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.fias.City;
@@ -40,8 +42,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -318,5 +319,13 @@ public class ModelStubs {
                 .build();
     }
 
+    public static CorrectionProduct getCorrectionProduct(Long id) {
+        return new CorrectionProduct(
+                id,
+                getProduct(id),
+                BigDecimal.ONE,
+                BigDecimal.ONE
+        );
+    }
 }
 

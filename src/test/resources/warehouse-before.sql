@@ -1,4 +1,5 @@
 alter table invoice drop if exists warehouse_id;
+alter table corrections drop if exists warehouse_id;
 delete from warehouses;
 
 insert into warehouses(id, name, sort_number, address, comment_to_address, comment) values

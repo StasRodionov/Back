@@ -2,6 +2,7 @@ package com.trade_accounting.services.impl.Stubs;
 
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
@@ -152,5 +153,9 @@ public class DtoStubs {
 
     public static FiasAddressModelDto getFiasAddressModelDto(Long id){
         return dtoMapper.toFiasAddressModelDto(ModelStubs.getFiasAddressModel(id));
+    }
+
+    public static CorrectionProductDto getCorrectionProductDto(Long id) {
+        return dtoMapper.toCorrectionProductDto(ModelStubs.getCorrectionProduct(id));
     }
 }
