@@ -1334,8 +1334,8 @@ public class DataInitializer {
             dto.setDescription(String.format(descriptionFormat, i));
             dto.setEmployeeId(employeeIds[rnd.nextInt(idCount)]);
             dto.setTaskAuthorId(employeeIds[rnd.nextInt(idCount)]);
-            dto.setCreationDateTime(LocalDateTime.now().minusDays(rnd.nextInt(100)));
-            dto.setDeadlineDateTime(LocalDateTime.now().plusDays(rnd.nextInt(100)));
+            dto.setCreationDateTime(LocalDateTime.now().minusDays(rnd.nextInt(100)).toString());
+            dto.setDeadlineDateTime(LocalDateTime.now().plusDays(rnd.nextInt(100)).toString());
             dto.setCompleted(rnd.nextBoolean());
 
             tasks.add(dto);
@@ -1366,7 +1366,9 @@ public class DataInitializer {
                 var commentDTO = new TaskCommentDto();
                 commentDTO.setCommentContent(String.format(commentFormat, dto.getId(), i));
                 commentDTO.setPublisherId(employeeIds[rnd.nextInt(employeeIds.length)]);
-                commentDTO.setPublishedDateTime(dto.getCreationDateTime().plusHours(rnd.nextInt(25)));
+                commentDTO.setPublishedDateTime(LocalDateTime.
+                        parse(dto.getCreationDateTime())
+                        .plusHours(rnd.nextInt(25)).toString());
                 commentDTO.setTaskId(dto.getId());
                 commentDTOs.add(commentDTO);
             }

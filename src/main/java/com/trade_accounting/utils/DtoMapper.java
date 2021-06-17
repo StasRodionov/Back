@@ -1,7 +1,10 @@
 package com.trade_accounting.utils;
 
+import com.trade_accounting.models.Acceptance;
+import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
+import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
@@ -26,6 +29,7 @@ import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
+import com.trade_accounting.models.Remain;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.ContractorStatus;
@@ -39,8 +43,11 @@ import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.AcceptanceDto;
+import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
+import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -66,6 +73,7 @@ import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
+import com.trade_accounting.models.dto.RemainDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
@@ -141,6 +149,11 @@ public abstract class DtoMapper {
 
     public abstract Production productionDtoToProduction(ProductionDto productionDto);
 
+    //Remain
+    public abstract RemainDto remainToRemainDto(Remain remain);
+
+    public abstract Remain remainDtoToRemain(RemainDto remainDto);
+
     //AccessParameters
     @Mappings({
             @Mapping(source = "employee.id", target = "employeeId"),
@@ -157,11 +170,33 @@ public abstract class DtoMapper {
                 .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
     }
 
+    // Acceptance
+    @Mappings({
+            @Mapping(source = "contractor.id", target = "contractorId"),
+            @Mapping(source = "project.id", target = "projectId"),
+            @Mapping(source = "warehouse.id", target = "warehouseId"),
+            @Mapping(source = "contract.id", target = "contractId"),
+    })
+    public abstract AcceptanceDto acceptanceToAcceptanceDto(Acceptance acceptance);
+
+    public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
+
+    // AcceptanceProduction
+    @Mappings({
+            @Mapping(source = "product.id", target = "productId"),
+    })
+    public abstract AcceptanceProductionDto acceptanceProductionToAcceptanceProductionDto(AcceptanceProduction acceptanceProduction);
+
+    public abstract AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProduction);
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
 
     public abstract Address addressDtoToAddress(AddressDto address);
+
+    //AgentReports
+    public abstract AgentReportsDto agentReportsToAgentReportsDto(AgentReports agentReports);
+    public abstract AgentReports agentReportsDtoToAgentReports(AgentReportsDto agentReportsDto);
 
     //BankAccount
     public abstract BankAccountDto bankAccountToBankAccountDto(BankAccount bankAccount);
