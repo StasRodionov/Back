@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,11 +67,24 @@ public class PriceListRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<PriceListDto> create(@ApiParam(name = "priceListDto", value = "DTO производства, которое необходимо создать")
+    public ResponseEntity<PriceListDto> create(@ApiParam(name = "priceListDto", value = "DTO прайс-листа, которое необходимо создать")
                                                @RequestBody PriceListDto priceListDto){
         return ResponseEntity.ok().body(priceListService.create(priceListDto));
     }
 
+    @ApiOperation(value = "update", notes = "Обновляет прайс-лист на основе переданных данных")
+    @PutMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Прайс-лист успешно обновлен"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные обновлены"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<PriceListDto> update(@ApiParam(name = "priceListDto", value = "DTO прайс-листа, с обновлёнными данными")
+                                               @RequestBody PriceListDto priceListDto){
+        return ResponseEntity.ok().body(priceListService.update(priceListDto));
+    }
 
 
 }
