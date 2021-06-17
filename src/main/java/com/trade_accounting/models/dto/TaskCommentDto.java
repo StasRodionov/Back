@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,9 +16,23 @@ public class TaskCommentDto {
 
     private String commentContent;
 
+    @NotNull
     private Long publisherId;
 
-    private LocalDateTime publishedDateTime;
+    @NotNull
+    private String publishedDateTime;
 
     private Long taskId;
+
+    public TaskCommentDto(Long id
+            , String commentContent
+            , Long publisherId
+            , LocalDateTime publishedDateTime
+            , Long taskId) {
+        this.id = id;
+        this.commentContent = commentContent;
+        this.publisherId = publisherId;
+        this.publishedDateTime = publishedDateTime.toString();
+        this.taskId = taskId;
+    }
 }
