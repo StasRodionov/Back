@@ -43,6 +43,7 @@ public class DepartmentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
+
     public ResponseEntity<List<DepartmentDto>> getAll() {
         List<DepartmentDto> departmentDtos = departmentService.getAll();
         return ResponseEntity.ok(departmentDtos);
@@ -74,6 +75,7 @@ public class DepartmentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
+
     public ResponseEntity<?> create(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо создать") @RequestBody DepartmentDto departmentDto) {
         return ResponseEntity.ok().body(departmentService.create(departmentDto));
     }
