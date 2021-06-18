@@ -9,6 +9,7 @@ import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.Correction;
 import com.trade_accounting.models.CorrectionProduct;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
@@ -42,6 +43,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -49,7 +51,7 @@ import java.util.stream.Stream;
 public class ModelStubs {
     //TODO Вынести заглушки моделей из классов сервисов сюда
 
-    public static AccessParameters getAccessParameters(Long id){
+    public static AccessParameters getAccessParameters(Long id) {
         return new AccessParameters(id, false, getEmployee(id), getDepartment(id));
     }
 
@@ -157,7 +159,9 @@ public class ModelStubs {
                 .build();
     }
 
-    public static Department getDepartment(Long id){ return new Department(id, "name", "00001");}
+    public static Department getDepartment(Long id) {
+        return new Department(id, "name", "00001");
+    }
 
     public static TaxSystem getTaxSystem(Long id) {
         return new TaxSystem(id, "name", "00001");
@@ -190,6 +194,7 @@ public class ModelStubs {
                 .sortNumber("000" + id)
                 .build();
     }
+
     public static ImageDto getImageDto(Long id) {
         return ImageDto.builder()
                 .id(id)
@@ -245,8 +250,8 @@ public class ModelStubs {
         );
     }
 
-    public static Currency getCurrency(Long id){
-        return new Currency(id, "rubles", "Russian Rubles", "25", "rub","1");
+    public static Currency getCurrency(Long id) {
+        return new Currency(id, "rubles", "Russian Rubles", "25", "rub", "1");
     }
 
     public static Product getProduct(Long id) {
@@ -260,6 +265,7 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
+
     public static ProductDto getProductDto(Long id) {
         return ProductDto.builder()
                 .id(id)
@@ -271,7 +277,8 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
-    public static City getCity(Long id){
+
+    public static City getCity(Long id) {
         return City.builder()
                 .id(id)
                 .name("Petrpopavlovsk")
@@ -279,7 +286,8 @@ public class ModelStubs {
                 .streets(new ArrayList<>())
                 .build();
     }
-    public static District getDistrict(Long id){
+
+    public static District getDistrict(Long id) {
         return District.builder()
                 .id(id)
                 .name("Vasileostrivky")
@@ -287,14 +295,16 @@ public class ModelStubs {
                 .cities(new ArrayList<>())
                 .build();
     }
-    public static Region getRegion(Long id){
+
+    public static Region getRegion(Long id) {
         return Region.builder()
                 .id(id)
                 .name("SKO")
                 .districts(new ArrayList<>())
                 .build();
     }
-    public static FiasAddressModel getFiasAddressModel(Long id){
+
+    public static FiasAddressModel getFiasAddressModel(Long id) {
         return FiasAddressModel.builder()
                 .id(id)
                 .aoguid("example")
@@ -311,12 +321,20 @@ public class ModelStubs {
                 .name("Новый")
                 .build();
     }
-    public static Street getStreet(Long id){
+
+    public static Street getStreet(Long id) {
         return Street.builder()
                 .id(id)
                 .name("Volodarskogo")
                 .city(getCity(id))
                 .build();
+    }
+
+    public static Warehouse getWarehouse() {
+        return new Warehouse(
+                1L, "Склад 1", "1", "Володарского", "Комментарий 1",
+                "Комментарий 2"
+        );
     }
 
     public static CorrectionProduct getCorrectionProduct(Long id) {
@@ -325,6 +343,17 @@ public class ModelStubs {
                 getProduct(id),
                 BigDecimal.ONE,
                 BigDecimal.ONE
+        );
+    }
+
+    public static Correction getCorrection(Long id) {
+        return new Correction(
+                id, LocalDateTime.now(), getWarehouse(), getCompany(id),
+                false, false, false,
+                "Комментарий 1",
+                List.of(getCorrectionProduct(1L),
+                        getCorrectionProduct(2L),
+                        getCorrectionProduct(3L))
         );
     }
 }
