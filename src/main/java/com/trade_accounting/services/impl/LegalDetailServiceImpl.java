@@ -49,9 +49,9 @@ public class LegalDetailServiceImpl implements LegalDetailService {
     public LegalDetailDto create(LegalDetailDto legalDetailDto) {
         LegalDetail legalDetail = dtoMapper.legalDetailDtoToLegalDetail(legalDetailDto);
 
-        Address address = dtoMapper.addressDtoToAddress(legalDetailDto.getAddressDto());
-        addressRepository.save(address);
-        legalDetail.setAddress(address);
+        legalDetail.setAddress(addressRepository.getOne(
+                legalDetailDto.getAddressDtoId()
+        ));
 
         legalDetail.setTypeOfContractor(
                 typeOfContractorRepository.findById(
@@ -69,9 +69,7 @@ public class LegalDetailServiceImpl implements LegalDetailService {
     public LegalDetailDto update(LegalDetailDto legalDetailDto) {
         LegalDetail legalDetail = dtoMapper.legalDetailDtoToLegalDetail(legalDetailDto);
 
-        Address address = dtoMapper.addressDtoToAddress(legalDetailDto.getAddressDto());
-        addressRepository.save(address);
-        legalDetail.setAddress(address);
+        legalDetail.setAddress(addressRepository.getOne(legalDetailDto.getAddressDtoId()));
 
         legalDetail.setTypeOfContractor(
                 typeOfContractorRepository.findById(

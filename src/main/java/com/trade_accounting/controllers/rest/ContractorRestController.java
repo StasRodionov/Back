@@ -169,7 +169,9 @@ public class ContractorRestController {
     public ResponseEntity<ContractorDto> create(@ApiParam(name = "contractorDto",
             value = "DTO контрагента, которого необходимо создать")
                                                 @RequestBody ContractorDto contractorDto) {
-        addressService.create(contractorDto.getLegalDetailDto().getAddressDto());
+        //TODO это строка уже не нужна????, проверить через фронт, под адрес создан отделынй api
+        //запрос идет с фронта на создание адреса в legalDetail уже приходит id созданного address
+        //addressService.create(contractorDto.getLegalDetailDto().getAddressDto());
         return ResponseEntity.ok().body(contractorService.create(contractorDto));
     }
 

@@ -44,8 +44,6 @@ public interface CheckEntityService {
 
     void checkExistsRoleById(Long roleId);
 
-    void checkExistsPaymenById(Long paymenId);
-
     void checkExistsPaymentById(Long paymenId);
 
     void checkExistsInvoiceById(Long invoiceId);

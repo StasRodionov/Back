@@ -19,7 +19,7 @@ public class LegalDetailDto {
 
     private String middleName;
 
-    private AddressDto addressDto;
+    private Long addressDtoId;
 
     private String commentToAddress;
 
@@ -54,8 +54,7 @@ public class LegalDetailDto {
         this.lastName = lastName;
         this.firstName = firstName;
         this.middleName = middleName;
-        this.addressDto = new AddressDto();
-        this.addressDto.setId(addressDtoId);
+        this.addressDtoId = addressDtoId;
         this.commentToAddress = commentToAddress;
         this.inn = inn;
         this.kpp = kpp;

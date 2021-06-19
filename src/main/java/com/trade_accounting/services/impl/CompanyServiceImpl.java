@@ -64,6 +64,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyDto create(CompanyDto companyDto) {
+        System.out.println(companyDto);
         Company company = dtoMapper.companyDtoToCompany(companyDto);
         company.setAddress(addressRepository.getOne(companyDto.getAddressId()));
 

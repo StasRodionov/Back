@@ -691,7 +691,7 @@ public class DataInitializer {
                 "Иванов",
                 "Михаил",
                 "Сергеевич",
-                addressService.getById(3L),
+                addressService.getById(3L).getId(),
                 "comment to address",
                 "3664069397",
                 "79271669",
@@ -705,7 +705,7 @@ public class DataInitializer {
                 "Гордон",
                 "Андрей",
                 "Анатольевич",
-                addressService.getById(2L),
+                addressService.getById(2L).getId(),
                 "comment to address",
                 "3664069439", "34271669",
                 "79271647",
@@ -719,7 +719,7 @@ public class DataInitializer {
                 "Сергеева",
                 "Мария",
                 "Дмитриевна",
-                addressService.getById(3L),
+                addressService.getById(3L).getId(),
                 "comment to address",
                 "3664055588",
                 "35259831",
@@ -732,7 +732,7 @@ public class DataInitializer {
     }
 
     private void initCompanies() {
-        for (int i = 0; i < 110; i++) {
+        for (int i = 0; i < 3; i++) {
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №1\"",
@@ -755,7 +755,7 @@ public class DataInitializer {
                             "Иванов",
                             "Михаил",
                             "Сергеевич",
-                            addressService.getById(3L),
+                            addressService.getById(3L).getId(),
                             "comment to address",
                             "3664069397",
                             "79271669",
@@ -803,7 +803,7 @@ public class DataInitializer {
                             "Гордон",
                             "Андрей",
                             "Анатольевич",
-                            addressService.getById(2L),
+                            addressService.getById(2L).getId(),
                             "comment to address",
                             "3664069439", null,
                             "79271647",
@@ -852,7 +852,7 @@ public class DataInitializer {
                             "Сергеева",
                             "Мария",
                             "Дмитриевна",
-                            addressService.getById(1L),
+                            addressService.getById(1L).getId(),
                             "comment to address",
                             "3664055588",
                             null,
