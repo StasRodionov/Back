@@ -2,6 +2,7 @@ package com.trade_accounting.models;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -24,12 +25,14 @@ import javax.validation.constraints.NotNull;
  * @param isSend     - отправлено
  * @param isPrint    - напечатано
  * @param comment    - комментарий
+ * @param contract   - договор
  * @author Evstratov
  */
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "returns_suppliers")
 public class ReturnToSuppliers {
@@ -52,6 +55,10 @@ public class ReturnToSuppliers {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Contract contract;
 
     @ColumnDefault("false")
     private Boolean isSend;

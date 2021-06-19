@@ -1,9 +1,8 @@
 package com.trade_accounting.models.dto;
 
-import com.trade_accounting.models.Company;
-import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.Warehouse;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ReturnToSuppliersDto {
 
     @NotNull
@@ -21,13 +21,16 @@ public class ReturnToSuppliersDto {
     private String date;
 
     @NotNull
-    private Warehouse warehouse;
+    private Long warehouseId;
 
     @NotNull
-    private Company company;
+    private Long companyId;
 
     @NotNull
-    private Contractor contractor;
+    private Long contractorId;
+
+    @NotNull
+    private Long contractId;
 
     private Boolean isSend;
 
