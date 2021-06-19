@@ -732,7 +732,7 @@ public class DataInitializer {
     }
 
     private void initCompanies() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 110; i++) {
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №1\"",
