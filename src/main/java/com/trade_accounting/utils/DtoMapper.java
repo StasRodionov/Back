@@ -77,7 +77,7 @@ import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RemainDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
-import com.trade_accounting.models.dto.ReturnToSuppliersDto;
+import com.trade_accounting.models.dto.ReturnsToSuppliersDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
@@ -419,7 +419,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractor", target = "contractorDto"),
             @Mapping(source = "warehouse", target = "warehouseDto"),
     })
-    public abstract ReturnToSuppliersDto ReturnToSuppliersToReturnToSuppliersDto(ReturnsToSuppliers returnsToSuppliers);
+    public abstract ReturnsToSuppliersDto ReturnsToSuppliersToReturnToSuppliersDto(ReturnsToSuppliers returnsToSuppliers);
 
     @Mappings({
             @Mapping(source = "companyDto", target = "company"),
@@ -427,7 +427,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorDto", target = "contractor"),
             @Mapping(source = "warehouseDto", target = "warehouse"),
     })
-    public abstract ReturnsToSuppliers ReturnToSuppliersDtoToReturnToSuppliers(ReturnToSuppliersDto returnToSuppliersDto);
+    public abstract ReturnsToSuppliers ReturnsToSuppliersDtoToReturnToSuppliers(ReturnsToSuppliersDto returnsToSuppliersDto);
 
     //LegalDetail
     @Mappings({

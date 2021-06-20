@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReturnToSuppliersDto {
+public class ReturnsToSuppliersDto {
 
     @NotNull
     private Long id;
@@ -38,7 +38,7 @@ public class ReturnToSuppliersDto {
 
     private String comment;
 
-    public ReturnToSuppliersDto(Long id, String date, Long warehouseId, Long companyId, Long contractorId, Long contractId, Boolean isSend, Boolean isPrint, String comment) {
+    public ReturnsToSuppliersDto(Long id, String date, Long warehouseId, Long companyId, Long contractorId, Long contractId, Boolean isSend, Boolean isPrint, String comment) {
         this.id = id;
         this.date = date;
         this.warehouseDto = new WarehouseDto();
