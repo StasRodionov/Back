@@ -43,46 +43,7 @@ public class CompanyDto {
 
     private String stamp;
 
-    private LegalDetailDto legalDetailDto;
+    private Long legalDetailDtoId;
 
-    private List<BankAccountDto> bankAccountDto;
-
-    public CompanyDto(Long id,
-                      String name,
-                      String inn,
-                      String sortNumber,
-                      String phone,
-                      String fax,
-                      String email,
-                      Boolean payerVat,
-                      Long addressId,
-                      String commentToAddress,
-                      String leader,
-                      String leaderManagerPosition,
-                      String leaderSignature,
-                      String chiefAccountant,
-                      String chiefAccountantSignature,
-                      String stamp,
-                      Long legalDetailId) {
-        this.id = id;
-        this.name = name;
-        this.inn = inn;
-        this.sortNumber = sortNumber;
-        this.phone = phone;
-        this.fax = fax;
-        this.email = email;
-        this.payerVat = payerVat;
-        this.addressId = addressId;
-        this.commentToAddress = commentToAddress;
-        this.leader = leader;
-        this.leaderManagerPosition = leaderManagerPosition;
-        this.leaderSignature = leaderSignature;
-        this.chiefAccountant = chiefAccountant;
-        this.chiefAccountantSignature = chiefAccountantSignature;
-        this.stamp = stamp;
-        this.legalDetailDto = new LegalDetailDto();
-        this.legalDetailDto.setId(legalDetailId);
-    }
-
-
+    private List<Long> bankAccountDtoIds;
 }

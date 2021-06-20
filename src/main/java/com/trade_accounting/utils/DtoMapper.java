@@ -209,15 +209,15 @@ public abstract class DtoMapper {
     //Company
     @Mappings({
             @Mapping(source = "address.id", target = "addressId"),
-            @Mapping(source = "bankAccounts", target = "bankAccountDto"),
-            @Mapping(source = "legalDetail", target = "legalDetailDto")
+            //@Mapping(source = "bankAccounts.id", target = "bankAccountDtoIds"),
+            @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
     })
     public abstract CompanyDto companyToCompanyDto(Company company);
 
     @Mappings({
             @Mapping(source = "addressId", target = "address.id"),
-            @Mapping(source = "bankAccountDto", target = "bankAccounts"),
-            @Mapping(source = "legalDetailDto", target = "legalDetail")
+          //  @Mapping(source = "bankAccountDtoIds", target = "bankAccounts.id"),
+            @Mapping(source = "legalDetailDtoId", target = "legalDetail.id")
     })
     public abstract Company companyDtoToCompany(CompanyDto companyDto);
 
@@ -411,13 +411,13 @@ public abstract class DtoMapper {
 
     //LegalDetail
     @Mappings({
-            @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
+            @Mapping(source = "typeOfContractor.id", target = "typeOfContractorDtoId"),
             @Mapping(source = "address.id", target = "addressDtoId")
     })
     public abstract LegalDetailDto legalDetailToLegalDetailDto(LegalDetail legalDetail);
 
     @Mappings({
-            @Mapping(source = "typeOfContractorDto", target = "typeOfContractor"),
+            @Mapping(source = "typeOfContractorDtoId", target = "typeOfContractor.id"),
             @Mapping(source = "addressDtoId", target = "address.id")
     })
     public abstract LegalDetail legalDetailDtoToLegalDetail(LegalDetailDto legalDetailDto);

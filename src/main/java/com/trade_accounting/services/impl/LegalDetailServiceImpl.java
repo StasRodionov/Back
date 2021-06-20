@@ -53,11 +53,11 @@ public class LegalDetailServiceImpl implements LegalDetailService {
                 legalDetailDto.getAddressDtoId()
         ));
 
-        legalDetail.setTypeOfContractor(
-                typeOfContractorRepository.findById(
-                        legalDetailDto.getTypeOfContractorDto().getId()
-                ).orElse(null)
-        );
+//        legalDetail.setTypeOfContractor(
+//                typeOfContractorRepository.findByName(
+//                        legalDetailDto.getTypeOfContractorDto()
+//                ).orElse(null)
+//        );
 
         return dtoMapper.legalDetailToLegalDetailDto(
                 legalDetailRepository.save(legalDetail)
@@ -71,11 +71,11 @@ public class LegalDetailServiceImpl implements LegalDetailService {
 
         legalDetail.setAddress(addressRepository.getOne(legalDetailDto.getAddressDtoId()));
 
-        legalDetail.setTypeOfContractor(
-                typeOfContractorRepository.findById(
-                        legalDetailDto.getTypeOfContractorDto().getId()
-                ).orElse(null)
-        );
+//        legalDetail.setTypeOfContractor(
+//                typeOfContractorRepository.findByName(
+//                        legalDetailDto.getTypeOfContractorDto()
+//                ).orElse(null)
+//        );
 
         return dtoMapper.legalDetailToLegalDetailDto(
                 legalDetailRepository.save(legalDetail)
