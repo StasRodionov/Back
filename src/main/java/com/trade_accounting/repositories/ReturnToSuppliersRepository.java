@@ -1,6 +1,6 @@
 package com.trade_accounting.repositories;
 
-import com.trade_accounting.models.ReturnToSuppliers;
+import com.trade_accounting.models.ReturnsToSuppliers;
 import com.trade_accounting.models.dto.ReturnToSuppliersDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReturnToSuppliersRepository extends JpaRepository<ReturnToSuppliers, Long>, JpaSpecificationExecutor<ReturnToSuppliers> {
+public interface ReturnToSuppliersRepository extends JpaRepository<ReturnsToSuppliers, Long>, JpaSpecificationExecutor<ReturnsToSuppliers> {
 
     @Query("select new com.trade_accounting.models.dto.ReturnToSuppliersDto (" +
             "e.id," +
@@ -22,7 +22,7 @@ public interface ReturnToSuppliersRepository extends JpaRepository<ReturnToSuppl
             "e.contract.id," +
             "e.isSend," +
             "e.isPrint, " +
-            "e.comment) from ReturnToSuppliers  e")
+            "e.comment) from ReturnsToSuppliers  e")
     List<ReturnToSuppliersDto> getAll();
 
     @Query("select new com.trade_accounting.models.dto.ReturnToSuppliersDto (" +
@@ -34,7 +34,7 @@ public interface ReturnToSuppliersRepository extends JpaRepository<ReturnToSuppl
             "e.contract.id," +
             "e.isSend," +
             "e.isPrint, " +
-            "e.comment) from ReturnToSuppliers  e where  e.id = :id")
+            "e.comment) from ReturnsToSuppliers  e where  e.id = :id")
     ReturnToSuppliersDto getById(@Param("id") Long id);
 
     @Query(
@@ -47,7 +47,7 @@ public interface ReturnToSuppliersRepository extends JpaRepository<ReturnToSuppl
                     "e.contract.id," +
                     "e.isSend," +
                     "e.isPrint, " +
-                    "e.comment) from ReturnToSuppliers  e where  lower(e.comment) " +
+                    "e.comment) from ReturnsToSuppliers  e where  lower(e.comment) " +
                     "                                   like lower(concat('%', :nameFilter,'%'))"
     )
     List<ReturnToSuppliersDto> searchByNameFilter(@Param("nameFilter") String nameFilter);
@@ -61,7 +61,7 @@ public interface ReturnToSuppliersRepository extends JpaRepository<ReturnToSuppl
             "e.contract.id," +
             "e.isSend," +
             "e.isPrint, " +
-            "e.comment) from ReturnToSuppliers  e where  e.id = :nameFilter "
+            "e.comment) from ReturnsToSuppliers  e where  e.id = :nameFilter "
     )
     List<ReturnToSuppliersDto> searchById(@Param("nameFilter") Long nameFilter);
 

@@ -35,7 +35,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Entity
 @Table(name = "returns_suppliers")
-public class ReturnToSuppliers {
+public class ReturnsToSuppliers {
 
     @Id
     @NotNull
