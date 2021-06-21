@@ -67,7 +67,7 @@ public class CompanyRestController {
                     @Spec(path = "fax", params = "fax", spec = LikeIgnoreCase.class),
                     @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
                     @Spec(path = "payerVat", params = "payerVat", spec = Equal.class),
-                    @Spec(path = "address", params = "address", spec = LikeIgnoreCase.class),
+                   // @Spec(path = "address", params = "address", spec = LikeIgnoreCase.class),
                     @Spec(path = "commentToAddress", params = "commentToAddress", spec = LikeIgnoreCase.class),
                     @Spec(path = "leader", params = "leader", spec = LikeIgnoreCase.class),
                     @Spec(path = "leaderManagerPosition", params = "leaderManagerPosition", spec = LikeIgnoreCase.class),

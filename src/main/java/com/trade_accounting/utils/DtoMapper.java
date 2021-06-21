@@ -116,6 +116,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class DtoMapper {
@@ -184,7 +185,7 @@ public abstract class DtoMapper {
 
     public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
 
-    // AcceptanceProduction
+    // AcceptanceProductionService
     @Mappings({
             @Mapping(source = "product.id", target = "productId"),
     })
@@ -213,14 +214,16 @@ public abstract class DtoMapper {
 
     //Company
     @Mappings({
-            @Mapping(source = "bankAccounts", target = "bankAccountDto"),
-            @Mapping(source = "legalDetail", target = "legalDetailDto")
+            @Mapping(source = "address.id", target = "addressId"),
+            //@Mapping(source = "bankAccounts.id", target = "bankAccountDtoIds"),
+            @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
     })
     public abstract CompanyDto companyToCompanyDto(Company company);
 
     @Mappings({
-            @Mapping(source = "bankAccountDto", target = "bankAccounts"),
-            @Mapping(source = "legalDetailDto", target = "legalDetail")
+            @Mapping(source = "addressId", target = "address.id"),
+          //  @Mapping(source = "bankAccountDtoIds", target = "bankAccounts.id"),
+            @Mapping(source = "legalDetailDtoId", target = "legalDetail.id")
     })
     public abstract Company companyDtoToCompany(CompanyDto companyDto);
 
@@ -414,14 +417,14 @@ public abstract class DtoMapper {
 
     //LegalDetail
     @Mappings({
-            @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
-            @Mapping(source = "address", target = "addressDto")
+            @Mapping(source = "typeOfContractor.id", target = "typeOfContractorDtoId"),
+            @Mapping(source = "address.id", target = "addressDtoId")
     })
     public abstract LegalDetailDto legalDetailToLegalDetailDto(LegalDetail legalDetail);
 
     @Mappings({
-            @Mapping(source = "typeOfContractorDto", target = "typeOfContractor"),
-            @Mapping(source = "addressDto", target = "address")
+            @Mapping(source = "typeOfContractorDtoId", target = "typeOfContractor.id"),
+            @Mapping(source = "addressDtoId", target = "address.id")
     })
     public abstract LegalDetail legalDetailDtoToLegalDetail(LegalDetailDto legalDetailDto);
 
@@ -672,7 +675,39 @@ public abstract class DtoMapper {
     public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
 
     //    Correction
-    public abstract CorrectionDto toCorrectionDto(Correction correction);
+    public CorrectionDto toCorrectionDto(Correction correction) {
+        CorrectionDto correctionDto = new CorrectionDto();
+        if (correction == null) {
+            return null;
+        } else {
+            correctionDto.setId(correction.getId());
+            correctionDto.setDate(correction.getDate());
+            correctionDto.setIsSent(correction.getIsSent());
+            correctionDto.setIsPrint(correction.getIsPrint());
+            correctionDto.setWriteOffProduct(correction.getWriteOffProduct());
+            correctionDto.setComment(correction.getComment());
+
+            Warehouse warehouse = correction.getWarehouse();
+            if (warehouse == null) {
+                return null;
+            } else {
+                correctionDto.setWarehouseId(warehouse.getId());
+
+                Company company = correction.getCompany();
+                if (company == null) {
+                    return null;
+                } else {
+                    correctionDto.setCompanyId(company.getId());
+
+                    List<Long> correctionProductIds = correction.getCorrectionProducts().stream()
+                            .map(CorrectionProduct::getId)
+                            .collect(Collectors.toList());
+                    correctionDto.setCorrectionProductIds(correctionProductIds);
+                    return correctionDto;
+                }
+            }
+        }
+    }
 
     public abstract Correction toCorrection(CorrectionDto correctionDto);
 

@@ -11,6 +11,7 @@ import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
@@ -45,6 +46,7 @@ import com.trade_accounting.services.interfaces.ContactService;
 import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.ContractorService;
+import com.trade_accounting.services.interfaces.CorrectionProductService;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
@@ -120,6 +122,7 @@ public class DataInitializer {
     private final AccessParametersService accessParametersService;
     private final TechnicalCardGroupService technicalCardGroupService;
     private final TechnicalCardService technicalCardService;
+    private final CorrectionProductService correctionProductService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -154,7 +157,8 @@ public class DataInitializer {
             ContractorStatusService contractorStatusService,
             AccessParametersService accessParametersService,
             TechnicalCardGroupService technicalCardGroupService,
-            TechnicalCardService technicalCardService) {
+            TechnicalCardService technicalCardService,
+            CorrectionProductService correctionProductService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -189,6 +193,7 @@ public class DataInitializer {
         this.accessParametersService = accessParametersService;
         this.technicalCardGroupService = technicalCardGroupService;
         this.technicalCardService = technicalCardService;
+        this.correctionProductService = correctionProductService;
     }
 
     @PostConstruct
@@ -226,6 +231,7 @@ public class DataInitializer {
         initRetailStores();
         initTechnicalCardGroups();
         initTechnicalCards();
+        initCorrectionProduct();
     }
 
     private void initAccessParameters() {
@@ -691,35 +697,35 @@ public class DataInitializer {
                 "Иванов",
                 "Михаил",
                 "Сергеевич",
-                addressService.getById(3L),
+                addressService.getById(3L).getId(),
                 "comment to address",
                 "3664069397",
                 "79271669",
                 "1053600591197",
                 "236467", "432145",
                 LocalDate.of(2020, 10, 10),
-                typeOfContractorService.getByName("Юридическое лицо")
+                typeOfContractorService.getByName("Юридическое лицо").getId()
         ));
         legalDetailService.create(new LegalDetailDto(
                 null,
                 "Гордон",
                 "Андрей",
                 "Анатольевич",
-                addressService.getById(2L),
+                addressService.getById(2L).getId(),
                 "comment to address",
                 "3664069439", "34271669",
                 "79271647",
                 "1053600591285",
                 "432145",
                 LocalDate.of(2018, 2, 23),
-                typeOfContractorService.getByName("Индивидуальный предприниматель")
+                typeOfContractorService.getByName("Индивидуальный предприниматель").getId()
         ));
         legalDetailService.create(new LegalDetailDto(
                 null,
                 "Сергеева",
                 "Мария",
                 "Дмитриевна",
-                addressService.getById(3L),
+                addressService.getById(3L).getId(),
                 "comment to address",
                 "3664055588",
                 "35259831",
@@ -727,7 +733,7 @@ public class DataInitializer {
                 "1033600141277",
                 "342145",
                 LocalDate.of(2022, 4, 5),
-                typeOfContractorService.getByName("Физическое лицо")
+                typeOfContractorService.getByName("Физическое лицо").getId()
         ));
     }
 
@@ -742,8 +748,7 @@ public class DataInitializer {
                     "810-41-1234567890",
                     "organization" + 1 * (i + 1) + "@mail.com",
                     true,
-                    //  new AddressDto("123456","г.Москва","ул. Подвойского","д.14, стр.7"),
-                    "123456, г. Москва, ул. Подвойского, д. 14, стр. 7",
+                    addressService.create(new AddressDto("123456", "г.Москва", "ул. Подвойского", "д.14, стр.7")).getId(),
                     "something comment",
                     "Петров Сергей Петрович",
                     "Manager",
@@ -751,35 +756,37 @@ public class DataInitializer {
                     "Сергеев Петр Сергеевич",
                     "chief signature",
                     "stamp",
-                    new LegalDetailDto(
+                    legalDetailService.create(new LegalDetailDto(
                             null,
                             "Иванов",
                             "Михаил",
                             "Сергеевич",
-                            addressService.getById(3L),
+                            3L,
                             "comment to address",
-                            "3664069397",
+                            "861234" + String.format("%03d", i),
                             "79271669",
                             "1053600591197",
                             "236467", null, null,
-                            typeOfContractorService.getByName("Юридическое лицо")),
+                            typeOfContractorService.getByName("Юридическое лицо").getId()
+                    )).getId(),
 
-                    List.of(new BankAccountDto(
-                            null,
-                            "14593",
-                            "Сбербанк",
-                            "Москва ул. Ленина",
-                            "30101643600000000957",
-                            "42605998100001234567",
-                            true,
-                            "1"), new BankAccountDto(
-                            null, "55320",
-                            "Газпромбанк",
-                            "Москва ул. Катина",
-                            "30101643600000000123",
-                            "40702643100007654321",
-                            true,
-                            "2"))
+                    List.of(bankAccountService.create(new BankAccountDto(
+                                    null,
+                                    "14593",
+                                    "Сбербанк",
+                                    "Москва ул. Ленина",
+                                    "30101643600000000957",
+                                    "42605998100001234567",
+                                    true,
+                                    "1")).getId(),
+                            bankAccountService.create(new BankAccountDto(
+                                    null, "55320",
+                                    "Газпромбанк",
+                                    "Москва ул. Катина",
+                                    "30101643600000000123",
+                                    "40702643100007654321",
+                                    true,
+                                    "2")).getId())
             ));
 
             companyService.create(new CompanyDto(
@@ -791,7 +798,7 @@ public class DataInitializer {
                     "920-12-2365723233",
                     "organization" + 2 * (i + 1) + "@mail.com",
                     true,
-                    "123498, г. Москва, ул. Тверская, д. 20",
+                    addressService.create(new AddressDto("123498", "г. Москва", "ул. Тверская", "д. 20")).getId(),
                     "something comment",
                     "Иванова Мария Сергеевна",
                     "Executive director",
@@ -799,36 +806,38 @@ public class DataInitializer {
                     "Соболев Николай Андреевич",
                     "chief signature",
                     "stamp",
-                    new LegalDetailDto(
+                    legalDetailService.create(new LegalDetailDto(
                             null,
                             "Гордон",
                             "Андрей",
                             "Анатольевич",
-                            addressService.getById(2L),
+                            addressService.getById(2L).getId(),
                             "comment to address",
-                            "3664069439", null,
+                            "7712347" + String.format("%03d", i), null,
                             "79271647",
                             "1053600591285",
                             "432145",
                             LocalDate.of(2018, 2, 23),
-                            typeOfContractorService.getByName("Индивидуальный предприниматель")),
+                            typeOfContractorService.getByName("Индивидуальный предприниматель").getId()
+                    )).getId(),
 
-                    List.of(new BankAccountDto(
-                            null,
-                            "14593",
-                            "Сбербанк",
-                            "Москва ул. Ленина",
-                            "30101643600000000957",
-                            "42605998100001234567",
-                            true,
-                            "1"), new BankAccountDto(
-                            null, "55320",
-                            "Газпромбанк",
-                            "Москва ул. Катина",
-                            "30101643600000000123",
-                            "40702643100007654321",
-                            true,
-                            "2"))
+                    List.of(bankAccountService.create(new BankAccountDto(
+                                    null,
+                                    "14593",
+                                    "Сбербанк",
+                                    "Москва ул. Ленина",
+                                    "30101643600000000957",
+                                    "42605998100001234567",
+                                    true,
+                                    "1")).getId(),
+                            bankAccountService.create(new BankAccountDto(
+                                    null, "55320",
+                                    "Газпромбанк",
+                                    "Москва ул. Катина",
+                                    "30101643600000000123",
+                                    "40702643100007654321",
+                                    true,
+                                    "2")).getId())
             ));
 
             companyService.create(new CompanyDto(
@@ -840,7 +849,7 @@ public class DataInitializer {
                     "543-23-1234543221",
                     "organization" + 3 * (i + 1) + "@mail.com",
                     true,
-                    "432156, г. Самара, ул. Гагарина, д. 18",
+                    addressService.create(new AddressDto("432156", "г. Самара", "ул. Гагарина", "д. 18")).getId(),
                     "something comment",
                     "Сергеева Ксения Андреевна",
                     "Project manager",
@@ -848,36 +857,38 @@ public class DataInitializer {
                     "Стрелецкая Анастасия Михайловна",
                     "chief signature",
                     "stamp",
-                    new LegalDetailDto(
+                    legalDetailService.create(new LegalDetailDto(
                             null,
                             "Сергеева",
                             "Мария",
                             "Дмитриевна",
-                            addressService.getById(1L),
+                            addressService.getById(1L).getId(),
                             "comment to address",
-                            "3664055588",
+                            "7712348" + String.format("%03d", i),
                             null,
                             "70713032",
                             "1033600141277",
                             "342145",
                             LocalDate.of(2022, 4, 5),
-                            typeOfContractorService.getByName("Физическое лицо")),
-                    List.of(new BankAccountDto(
-                            null,
-                            "14593",
-                            "Сбербанк",
-                            "Москва ул. Ленина",
-                            "30101643600000000957",
-                            "40702643100007654321",
-                            true,
-                            "1"), new BankAccountDto(
-                            null, "55320",
-                            "Газпромбанк",
-                            "Москва ул. Катина",
-                            "30101643600000000123",
-                            "42605998100001234567",
-                            true,
-                            "2"))));
+                            typeOfContractorService.getByName("Индивидуальный предприниматель").getId()
+                    )).getId(),
+                    List.of(bankAccountService.create(new BankAccountDto(
+                                    null,
+                                    "14593",
+                                    "Сбербанк",
+                                    "Москва ул. Ленина",
+                                    "30101643600000000957",
+                                    "40702643100007654321",
+                                    true,
+                                    "1")).getId(),
+                            bankAccountService.create(new BankAccountDto(
+                                    null, "55320",
+                                    "Газпромбанк",
+                                    "Москва ул. Катина",
+                                    "30101643600000000123",
+                                    "42605998100001234567",
+                                    true,
+                                    "2")).getId())));
         }
     }
 
@@ -1371,7 +1382,7 @@ public class DataInitializer {
         technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №2", "Комментарий2", "2"));
     }
 
-    public void initTechnicalCards(){
+    public void initTechnicalCards() {
         technicalCardService.create(new TechnicalCardDto(
                 null,
                 "Техническая карта №1",
@@ -1412,5 +1423,14 @@ public class DataInitializer {
                         new TechnicalCardProductionDto(null, 2L, 14L)),
                 List.of(new TechnicalCardProductionDto(null, 2L, 15L),
                         new TechnicalCardProductionDto(null, 2L, 16L))));
+    }
+
+    public void initCorrectionProduct() {
+        for (Long i = 1L; i <= 10; i++) {
+            correctionProductService.create(
+                    new CorrectionProductDto(i, i, BigDecimal.valueOf(randomInt(50, 100)),
+                            BigDecimal.valueOf(randomInt(50, 100)))
+            );
+        }
     }
 }
