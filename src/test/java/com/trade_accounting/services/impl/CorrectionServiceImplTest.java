@@ -86,7 +86,7 @@ class CorrectionServiceImplTest {
     }
 
     private void saveOrUpdate() {
-        when(correctionRepository.save(any())).thenReturn(ModelStubs.getCorrection(1L));
+        when(correctionRepository.save(any(Correction.class))).thenReturn(ModelStubs.getCorrection(1L));
         CorrectionDto correctionDto = correctionService.create(DtoStubs.getCorrectionDto(1L));
         assertEquals(1, correctionDto.getId());
         verify(correctionRepository).save(any(Correction.class));
