@@ -76,7 +76,7 @@ class CorrectionProductServiceImplTest {
     }
 
     private void saveOrUpdate() {
-        when(correctionProductRepository.save(any())).thenReturn(ModelStubs.getCorrectionProduct(1L));
+        when(correctionProductRepository.save(any(CorrectionProduct.class))).thenReturn(ModelStubs.getCorrectionProduct(1L));
         correctionProductService.create(DtoStubs.getCorrectionProductDto(1L));
         verify(correctionProductRepository).save(any(CorrectionProduct.class));
     }
