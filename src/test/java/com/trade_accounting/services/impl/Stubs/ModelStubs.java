@@ -72,7 +72,7 @@ public class ModelStubs {
                 id, "name",
                 "inn", "00001",
                 "89040408488", "3420943",
-                "email", true, "address",
+                "email", true, getAddress(1L),
                 "commentToAddress", "leader",
                 "leaderManagerPos", "signatureOfLider",
                 "cheidAcc", "aaaaa", "stamp",

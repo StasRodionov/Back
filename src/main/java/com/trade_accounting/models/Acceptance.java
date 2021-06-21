@@ -32,6 +32,9 @@ public class Acceptance {
     @Column(name = "incoming_number")
     private String incomingNumber;
 
+    @Column(name = "comment")
+    private String comment;
+
     @Column(name = "incoming_number_date", columnDefinition = "date default current_date")
     private LocalDate incomingNumberDate;
 
