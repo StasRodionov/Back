@@ -24,7 +24,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpec
             "e.fax, " +
             "e.email, " +
             "e.payerVat, " +
-            "e.address, " +
+            "e.address.id, " +
             "e.commentToAddress, " +
             "e.leader, " +
             "e.leaderManagerPosition, " +
@@ -44,7 +44,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpec
             "e.fax, " +
             "e.email, " +
             "e.payerVat, " +
-            "e.address, " +
+            "e.address.id, " +
             "e.commentToAddress, " +
             "e.leader, " +
             "e.leaderManagerPosition, " +
@@ -64,7 +64,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpec
             "e.fax, " +
             "e.email, " +
             "e.payerVat, " +
-            "e.address, " +
+            "e.address.id, " +
             "e.commentToAddress, " +
             "e.leader, " +
             "e.leaderManagerPosition, " +
