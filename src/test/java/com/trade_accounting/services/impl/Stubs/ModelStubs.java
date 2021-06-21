@@ -213,8 +213,7 @@ public class ModelStubs {
                 "firstNAme", "middleName",
                 getAddress(1L), "commentToAddress",
                 "32432423", "kpp", "okpo", "ogrn",
-                "numberOfCertifacate", LocalDate.now(),
-                getTypeOfContractor(id)
+                "numberOfCertifacate", LocalDate.now(), getTypeOfContractor(id)
         );
     }
 

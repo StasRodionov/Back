@@ -42,7 +42,7 @@ public class LegalDetail {
     @Column(name = "comment_to_address")
     private String commentToAddress;
 
-    @Pattern(regexp = "^([0-9]{10}|[0-9]{12})$")
+   //@Pattern(regexp = "^([0-9]{10}|[0-9]{12})$")
     @Column(name = "inn", unique = true)
     private String inn;
 
