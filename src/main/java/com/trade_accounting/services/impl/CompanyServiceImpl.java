@@ -10,10 +10,12 @@ import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.utils.DtoMapper;
+import org.apache.commons.collections4.iterators.LazyIteratorChain;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,7 +45,12 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyDto> getAll() {
-        return companyRepository.getAll();
+        List<Company> companys = companyRepository.findAll();
+        List<CompanyDto> companyDtos = new ArrayList<>();
+        for (Company company:companys) {
+            companyDtos.add(dtoMapper.companyToCompanyDto(company));
+        }
+        return companyDtos;
     }
 
     @Override
@@ -59,24 +66,24 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyDto getByEmail(String email) {
-        return companyRepository.findByEmail(email);
+        return companyRepository.findCompanyByEmail(email);
     }
 
     @Override
     public CompanyDto create(CompanyDto companyDto) {
+        System.out.println(companyDto);
         Company company = dtoMapper.companyDtoToCompany(companyDto);
         company.setAddress(addressRepository.getOne(companyDto.getAddressId()));
 
         company.setLegalDetail(
-                dtoMapper.legalDetailDtoToLegalDetail(legalDetailRepository.getById(
-                        companyDto.getLegalDetailDto().getId()))
+                legalDetailRepository.getOne(companyDto.getLegalDetailDtoId())
         );
 
         company.setBankAccounts(
-                companyDto.getBankAccountDto().stream()
+                companyDto.getBankAccountDtoIds().stream()
                         .map(
-                                bankAccount -> bankAccountRepository
-                                        .save(dtoMapper.bankAccountDtoToBankAccount(bankAccount))
+                                bankAccountId -> bankAccountRepository
+                                        .getOne(bankAccountId)
                         )
                         .collect(Collectors.toList())
         );
@@ -90,17 +97,14 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = dtoMapper.companyDtoToCompany(companyDto);
         company.setAddress(addressRepository.getOne(companyDto.getAddressId()));
         company.setLegalDetail(
-                legalDetailRepository.findById(
-                        companyDto.getLegalDetailDto().getId()
-                ).orElse(null)
+                legalDetailRepository.getOne(companyDto.getLegalDetailDtoId())
         );
 
         company.setBankAccounts(
-                companyDto.getBankAccountDto().stream()
+                companyDto.getBankAccountDtoIds().stream()
                         .map(
-                                bankAccount -> bankAccountRepository
-                                        .findById(bankAccount.getId())
-                                        .orElse(null)
+                                bankAccountId -> bankAccountRepository
+                                        .getOne(bankAccountId)
                         )
                         .collect(Collectors.toList())
         );

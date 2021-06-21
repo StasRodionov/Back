@@ -134,7 +134,7 @@ class CompanyServiceImplTest {
     void getByEmail_shouldReturnFilledCompanyDto() {
         CompanyDto companyFromRepo = DtoStubs.getCompanyDto(1L);
 
-        when(companyRepository.findByEmail(anyString()))
+        when(companyRepository.findCompanyByEmail(anyString()))
                 .thenReturn(companyFromRepo);
 
         CompanyDto companyDto = companyService.getByEmail("email");
