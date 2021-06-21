@@ -70,6 +70,9 @@ public interface CheckEntityService {
 
     void checkExistsTechnicalCardGroupById(Long id);
 
+    void checkExistsPostingProductById(Long id);
+
+    void checkExistsAddressById(Long id);
     void checkExistsCorrectionById(Long correctionId);
 
     void checkExistsRemainById(Long id);
