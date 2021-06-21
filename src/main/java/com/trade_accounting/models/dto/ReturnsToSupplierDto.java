@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReturnsToSuppliersDto {
+public class ReturnsToSupplierDto {
 
     @NotNull
     private Long id;
