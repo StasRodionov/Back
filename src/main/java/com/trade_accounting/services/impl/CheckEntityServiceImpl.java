@@ -10,6 +10,7 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
@@ -84,6 +85,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final CorrectionRepository correctionRepository;
     private final RemainRepository remainRepository;
     private final CorrectionProductRepository correctionProductRepository;
+    private final AddressRepository addressRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository,
@@ -115,7 +117,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
                                   TechnicalCardRepository technicalCardRepository,
                                   CorrectionRepository correctionRepository, RemainRepository remainRepository,
-                                  CorrectionProductRepository correctionProductRepository) {
+                                  CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -148,6 +150,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.correctionRepository = correctionRepository;
         this.remainRepository = remainRepository;
         this.correctionProductRepository = correctionProductRepository;
+        this.addressRepository = addressRepository;
     }
 
 
@@ -443,6 +446,19 @@ public class CheckEntityServiceImpl implements CheckEntityService {
             throw new NotFoundEntityException("Группа технических карт с id=" + technicalCardGroupId+ ", не найдена");
         }
     }
+
+    @Override
+    public void checkExistsPostingProductById(Long id) {
+
+    }
+
+    @Override
+    public void checkExistsAddressById(Long id) {
+        if(!addressRepository.existsById(id)) {
+            throw new NotFoundEntityException("Адрес с id=" + id + ", не найден");
+        }
+    }
+
     @Override
     public void checkExistsRemainById(Long id) {
         if(!remainRepository.existsById(id)) {
