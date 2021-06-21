@@ -1,7 +1,6 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Correction;
-import com.trade_accounting.models.CorrectionProduct;
 import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.CorrectionProductRepository;
@@ -9,7 +8,6 @@ import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
