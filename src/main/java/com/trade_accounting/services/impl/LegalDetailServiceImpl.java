@@ -49,15 +49,15 @@ public class LegalDetailServiceImpl implements LegalDetailService {
     public LegalDetailDto create(LegalDetailDto legalDetailDto) {
         LegalDetail legalDetail = dtoMapper.legalDetailDtoToLegalDetail(legalDetailDto);
 
-        Address address = dtoMapper.addressDtoToAddress(legalDetailDto.getAddressDto());
-        addressRepository.save(address);
-        legalDetail.setAddress(address);
+        legalDetail.setAddress(addressRepository.getOne(
+                legalDetailDto.getAddressDtoId()
+        ));
 
-        legalDetail.setTypeOfContractor(
-                typeOfContractorRepository.findById(
-                        legalDetailDto.getTypeOfContractorDto().getId()
-                ).orElse(null)
-        );
+//        legalDetail.setTypeOfContractor(
+//                typeOfContractorRepository.findByName(
+//                        legalDetailDto.getTypeOfContractorDto()
+//                ).orElse(null)
+//        );
 
         return dtoMapper.legalDetailToLegalDetailDto(
                 legalDetailRepository.save(legalDetail)
@@ -69,15 +69,13 @@ public class LegalDetailServiceImpl implements LegalDetailService {
     public LegalDetailDto update(LegalDetailDto legalDetailDto) {
         LegalDetail legalDetail = dtoMapper.legalDetailDtoToLegalDetail(legalDetailDto);
 
-        Address address = dtoMapper.addressDtoToAddress(legalDetailDto.getAddressDto());
-        addressRepository.save(address);
-        legalDetail.setAddress(address);
+        legalDetail.setAddress(addressRepository.getOne(legalDetailDto.getAddressDtoId()));
 
-        legalDetail.setTypeOfContractor(
-                typeOfContractorRepository.findById(
-                        legalDetailDto.getTypeOfContractorDto().getId()
-                ).orElse(null)
-        );
+//        legalDetail.setTypeOfContractor(
+//                typeOfContractorRepository.findByName(
+//                        legalDetailDto.getTypeOfContractorDto()
+//                ).orElse(null)
+//        );
 
         return dtoMapper.legalDetailToLegalDetailDto(
                 legalDetailRepository.save(legalDetail)
