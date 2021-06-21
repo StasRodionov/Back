@@ -182,7 +182,7 @@ public abstract class DtoMapper {
 
     public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
 
-    // AcceptanceProduction
+    // AcceptanceProductionService
     @Mappings({
             @Mapping(source = "product.id", target = "productId"),
     })
