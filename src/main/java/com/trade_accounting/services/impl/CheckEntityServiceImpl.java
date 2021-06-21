@@ -85,7 +85,6 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final CorrectionRepository correctionRepository;
     private final RemainRepository remainRepository;
     private final CorrectionProductRepository correctionProductRepository;
-    private final ReturnsToSupplierRepository returnsToSupplierRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository,
@@ -150,7 +149,6 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.correctionRepository = correctionRepository;
         this.remainRepository = remainRepository;
         this.correctionProductRepository = correctionProductRepository;
-        this.returnsToSupplierRepository = returnsToSupplierRepository;
     }
 
 
@@ -458,13 +456,6 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsCorrectionProductById(Long correctionProduct) {
         if (!correctionProductRepository.existsById(correctionProduct)) {
             throw new NotFoundEntityException("Товар для корректировки остатков с id=" + correctionProduct + "не найден");
-        }
-    }
-
-    @Override
-    public void checkExistsReturnsToSuppliers(Long id) {
-        if (!returnsToSupplierRepository.existsById(id)) {
-            throw new NotFoundEntityException("Возврат поставщику с id=" + id + ", не найден");
         }
     }
 }
