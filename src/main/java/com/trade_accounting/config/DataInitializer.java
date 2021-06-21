@@ -1432,7 +1432,7 @@ public class DataInitializer {
     }
 
     public void initCorrectionProduct() {
-        for (Long i = 1L; i <= 10; i++) {
+        for (Long i = 1L; i <= 9; i++) {
             correctionProductService.create(
                     new CorrectionProductDto(null, i, BigDecimal.valueOf(randomInt(50, 100)),
                             BigDecimal.valueOf(randomInt(50, 100)))
