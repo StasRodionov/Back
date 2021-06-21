@@ -69,7 +69,7 @@ public class CorrectionServiceImpl implements CorrectionService {
     private CorrectionDto saveOrUpdate(CorrectionDto dto) {
         Correction correction = dtoMapper.toCorrection(dto);
         Warehouse warehouse = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId()));
-        Company company = dtoMapper.companyDtoToCompany(companyRepository.getById(dto.getCompanyId()));
+        Company company = dtoMapper.companyDtoToCompany(companyRepository.getCompanyById(dto.getCompanyId()));
 
         List<CorrectionProduct> correctionProducts = dto.getCorrectionProductIds().stream()
                 .map(id -> correctionProductRepository.findById(id).orElse(null)).collect(Collectors.toList());
