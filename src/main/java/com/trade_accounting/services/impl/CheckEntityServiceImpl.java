@@ -10,6 +10,7 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
@@ -80,10 +81,11 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
     private final SupplierAccountRepository supplierAccountRepository;
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
-    private  final TechnicalCardRepository technicalCardRepository;
+    private final TechnicalCardRepository technicalCardRepository;
     private final CorrectionRepository correctionRepository;
     private final RemainRepository remainRepository;
     private final CorrectionProductRepository correctionProductRepository;
+    private final AddressRepository addressRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository,
@@ -115,7 +117,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
                                   TechnicalCardRepository technicalCardRepository,
                                   CorrectionRepository correctionRepository, RemainRepository remainRepository,
-                                  CorrectionProductRepository correctionProductRepository) {
+                                  CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -148,6 +150,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.correctionRepository = correctionRepository;
         this.remainRepository = remainRepository;
         this.correctionProductRepository = correctionProductRepository;
+        this.addressRepository = addressRepository;
     }
 
 
@@ -280,35 +283,31 @@ public class CheckEntityServiceImpl implements CheckEntityService {
 
     @Override
     public void checkExistsCorrectionById(Long correctionId) {
-        if(!correctionRepository.existsById(correctionId)) {
+        if (!correctionRepository.existsById(correctionId)) {
             throw new NotFoundEntityException("Оприходование с id=" + correctionId + ", не найдено");
         }
     }
 
     @Override
     public void checkForBadCompany(CompanyDto company) {
-        LegalDetailDto legalDetail = company.getLegalDetailDto();
-        List<BankAccountDto> bankAccounts = company.getBankAccountDto();
 
-        boolean isLegalDetailFilled = legalDetail != null && legalDetail.getId() != null;
-        boolean bankAccountListFilled = bankAccounts != null && !bankAccounts.isEmpty();
-
-        if (isLegalDetailFilled && !legalDetailRepository.existsById(legalDetail.getId())) {
+        if (company.getLegalDetailDtoId() != 0 &&
+                legalDetailRepository.getById(company.getLegalDetailDtoId()) == null) {
             throw new BadRequestException(
-                    String.format("Юридических деталей с id %d не существует", legalDetail.getId())
+                    String.format("Юридических деталей с id %d не существует", company.getLegalDetailDtoId())
             );
         }
 
-        if (bankAccountListFilled) {
-            for (BankAccountDto bankAccount : bankAccounts) {
-                boolean isBankAccountFilled = bankAccount != null && bankAccount.getId() != null;
-
-                if (isBankAccountFilled && !bankAccountRepository.existsById(bankAccount.getId())) {
-                    throw new BadRequestException(
-                            String.format("Банковского счёта с id %d не существует.", bankAccount.getId())
+        if (!company.getBankAccountDtoIds().isEmpty()) {
+            company.getBankAccountDtoIds().stream()
+                    .forEach(
+                            id -> {
+                                if (bankAccountRepository.getById(id) == null) {
+                                    throw new BadRequestException(
+                                            String.format("Банковского счёта с id %d не существует.", id));
+                                }
+                            }
                     );
-                }
-            }
         }
     }
 
@@ -354,11 +353,6 @@ public class CheckEntityServiceImpl implements CheckEntityService {
             throw new NotFoundEntityException("Роли с id=" + roleId + ", не найдены");
         }
     }
-
-    @Override
-    public void checkExistsPaymenById(Long paymenId) {
-    }
-
 
     @Override
     public void checkExistsPaymentById(Long paymentId) {
@@ -425,34 +419,47 @@ public class CheckEntityServiceImpl implements CheckEntityService {
 
     @Override
     public void checkExistsSupplierAccountById(Long supplierAccountId) {
-        if(!supplierAccountRepository.existsById(supplierAccountId)) {
+        if (!supplierAccountRepository.existsById(supplierAccountId)) {
             throw new NotFoundEntityException("Счет поставщика с id=" + supplierAccountId + ", не найден");
         }
     }
 
     @Override
     public void checkExistsTechnicalCardById(Long id) {
-        if(!technicalCardRepository.existsById(id)) {
+        if (!technicalCardRepository.existsById(id)) {
             throw new NotFoundEntityException("Тех. карта с id=" + id + ", не найдена");
         }
     }
 
     @Override
     public void checkExistsTechnicalCardGroupById(Long technicalCardGroupId) {
-        if(!technicalCardGroupRepository.existsById(technicalCardGroupId)) {
-            throw new NotFoundEntityException("Группа технических карт с id=" + technicalCardGroupId+ ", не найдена");
+        if (!technicalCardGroupRepository.existsById(technicalCardGroupId)) {
+            throw new NotFoundEntityException("Группа технических карт с id=" + technicalCardGroupId + ", не найдена");
         }
     }
+
+    @Override
+    public void checkExistsPostingProductById(Long id) {
+
+    }
+
+    @Override
+    public void checkExistsAddressById(Long id) {
+        if (!addressRepository.existsById(id)) {
+            throw new NotFoundEntityException("Адрес с id=" + id + ", не найден");
+        }
+    }
+
     @Override
     public void checkExistsRemainById(Long id) {
-        if(!remainRepository.existsById(id)) {
+        if (!remainRepository.existsById(id)) {
             throw new NotFoundEntityException("Остаток с id=" + id + ", не найден");
         }
     }
 
     @Override
     public void checkExistsCorrectionProductById(Long correctionProduct) {
-        if(!correctionProductRepository.existsById(correctionProduct)) {
+        if (!correctionProductRepository.existsById(correctionProduct)) {
             throw new NotFoundEntityException("Товар для корректировки остатков с id=" + correctionProduct + "не найден");
         }
     }

@@ -9,9 +9,11 @@ import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.SupplierAccountService;
 import com.trade_accounting.utils.DtoMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,7 +54,7 @@ public class SupplierAccountImpl implements SupplierAccountService {
     public SupplierAccountDto create(SupplierAccountDto createSupplier) {
         SupplierAccount saveInvoices = SupplierAccount.builder().id(createSupplier.getId()).date(createSupplier.getDate())
                 .comment(createSupplier.getComment()).isSpend(createSupplier.isSpend())
-                .company(dtoMapper.companyDtoToCompany(companyRepository.getById(createSupplier.getCompanyId())))
+                .company(dtoMapper.companyDtoToCompany(companyRepository.getCompanyById(createSupplier.getCompanyId())))
                 .warehouse(dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(createSupplier.getWarehouseId())))
                 .contract(dtoMapper.contractDtoToContract(contractRepository.getById(createSupplier.getContractId())))
                 .contractor((contractorRepository.getOne(createSupplier.getContractorId())))
@@ -71,4 +73,22 @@ public class SupplierAccountImpl implements SupplierAccountService {
     }
 
 
+    @Override
+    public List<SupplierAccountDto> searchByString(String nameFilter) {
+        if(nameFilter.matches("[0-9]+")) {
+            List<SupplierAccountDto> searchForNumber = supplierAccountRepository.searchById(Long.parseLong(nameFilter));
+            return searchForNumber;
+        } else if ("null".equals(nameFilter) || nameFilter.isEmpty()) {
+            List<SupplierAccountDto> supplierAccountList = supplierAccountRepository.getAll();
+            return supplierAccountList;
+        } else {
+            List<SupplierAccountDto> supplierAccountListDto = supplierAccountRepository.searchByNameFilter(nameFilter);
+            return supplierAccountListDto;
+        }
+    }
+
+    @Override
+    public List<SupplierAccountDto> search(Specification<SupplierAccount> spec) {
+        return executeSearch(supplierAccountRepository, dtoMapper::SupplierAccountToSupplierAccountDto, spec);
+    }
 }

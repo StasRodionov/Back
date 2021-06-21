@@ -73,6 +73,7 @@ public class CorrectionServiceImpl implements CorrectionService {
 
         List<CorrectionProduct> correctionProducts = dto.getCorrectionProductIds().stream()
                 .map(id -> correctionProductRepository.findById(id).orElse(null)).collect(Collectors.toList());
+
         correction.setWarehouse(warehouse);
         correction.setCompany(company);
         correction.setCorrectionProducts(correctionProducts);

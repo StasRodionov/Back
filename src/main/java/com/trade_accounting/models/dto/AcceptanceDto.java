@@ -18,6 +18,8 @@ public class AcceptanceDto {
 
     private String incomingNumber;
 
+    private String comment;
+
     private LocalDate incomingNumberDate;
 
     private Long contractorId;

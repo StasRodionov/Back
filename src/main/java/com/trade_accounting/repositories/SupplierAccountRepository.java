@@ -36,4 +36,30 @@ public interface SupplierAccountRepository extends JpaRepository<SupplierAccount
             "e.isSpend," +
             "e.comment) from SupplierAccount  e where  e.id = :id")
     SupplierAccountDto getById(@Param("id") Long id);
+
+    @Query(
+            "select new com.trade_accounting.models.dto.SupplierAccountDto (" +
+                    "e.id," +
+                    "e.date," +
+                    "e.company.id," +
+                    "e.warehouse.id," +
+                    "e.contract.id," +
+                    "e.contractor.id," +
+                    "e.isSpend," +
+                    "e.comment) from SupplierAccount  e where  lower(e.comment) " +
+                    "                                   like lower(concat('%', :nameFilter,'%'))"
+    )
+    List<SupplierAccountDto> searchByNameFilter(@Param("nameFilter") String nameFilter);
+
+    @Query("select new com.trade_accounting.models.dto.SupplierAccountDto (" +
+            "e.id," +
+            "e.date," +
+            "e.company.id," +
+            "e.warehouse.id," +
+            "e.contract.id," +
+            "e.contractor.id," +
+            "e.isSpend," +
+            "e.comment) from SupplierAccount  e where  e.id = :nameFilter "
+    )
+    List<SupplierAccountDto> searchById(@Param("nameFilter") Long nameFilter);
 }

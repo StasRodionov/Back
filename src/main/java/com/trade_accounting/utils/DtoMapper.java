@@ -20,6 +20,7 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
+import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
@@ -63,6 +64,7 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
+import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
@@ -181,7 +183,7 @@ public abstract class DtoMapper {
 
     public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
 
-    // AcceptanceProduction
+    // AcceptanceProductionService
     @Mappings({
             @Mapping(source = "product.id", target = "productId"),
     })
@@ -209,14 +211,16 @@ public abstract class DtoMapper {
 
     //Company
     @Mappings({
-            @Mapping(source = "bankAccounts", target = "bankAccountDto"),
-            @Mapping(source = "legalDetail", target = "legalDetailDto")
+            @Mapping(source = "address.id", target = "addressId"),
+            //@Mapping(source = "bankAccounts.id", target = "bankAccountDtoIds"),
+            @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
     })
     public abstract CompanyDto companyToCompanyDto(Company company);
 
     @Mappings({
-            @Mapping(source = "bankAccountDto", target = "bankAccounts"),
-            @Mapping(source = "legalDetailDto", target = "legalDetail")
+            @Mapping(source = "addressId", target = "address.id"),
+          //  @Mapping(source = "bankAccountDtoIds", target = "bankAccounts.id"),
+            @Mapping(source = "legalDetailDtoId", target = "legalDetail.id")
     })
     public abstract Company companyDtoToCompany(CompanyDto companyDto);
 
@@ -410,14 +414,14 @@ public abstract class DtoMapper {
 
     //LegalDetail
     @Mappings({
-            @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
-            @Mapping(source = "address", target = "addressDto")
+            @Mapping(source = "typeOfContractor.id", target = "typeOfContractorDtoId"),
+            @Mapping(source = "address.id", target = "addressDtoId")
     })
     public abstract LegalDetailDto legalDetailToLegalDetailDto(LegalDetail legalDetail);
 
     @Mappings({
-            @Mapping(source = "typeOfContractorDto", target = "typeOfContractor"),
-            @Mapping(source = "addressDto", target = "address")
+            @Mapping(source = "typeOfContractorDtoId", target = "typeOfContractor.id"),
+            @Mapping(source = "addressDtoId", target = "address.id")
     })
     public abstract LegalDetail legalDetailDtoToLegalDetail(LegalDetailDto legalDetailDto);
 
@@ -442,6 +446,11 @@ public abstract class DtoMapper {
     public abstract PositionDto positionToPositionDto(Position position);
 
     public abstract Position positionDtoToPosition(PositionDto position);
+
+    //PriceList
+    public abstract PriceListDto priceListToPriceListDto(PriceList priceList);
+
+    public abstract PriceList priceListDtoToPriceList(PriceListDto priceListDto);
 
     //Product
     @Mappings({
