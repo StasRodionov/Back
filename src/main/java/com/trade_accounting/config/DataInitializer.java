@@ -11,6 +11,7 @@ import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
@@ -160,7 +161,8 @@ public class DataInitializer {
             AccessParametersService accessParametersService,
             TechnicalCardGroupService technicalCardGroupService,
             TechnicalCardService technicalCardService,
-            CorrectionProductService correctionProductService) {
+            CorrectionProductService correctionProductService,
+            CorrectionService correctionService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -196,6 +198,7 @@ public class DataInitializer {
         this.technicalCardGroupService = technicalCardGroupService;
         this.technicalCardService = technicalCardService;
         this.correctionProductService = correctionProductService;
+        this.correctionService = correctionService;
     }
 
     @PostConstruct
@@ -234,6 +237,7 @@ public class DataInitializer {
         initTechnicalCardGroups();
         initTechnicalCards();
         initCorrectionProduct();
+        initCorrection();
     }
 
     private void initAccessParameters() {
@@ -1439,9 +1443,7 @@ public class DataInitializer {
     public void initCorrection() {
         correctionService.create(
                 new CorrectionDto(
-                        null,
-                        LocalDateTime.now(),
-                        1L, 1L,
+                        null, LocalDateTime.now(), 1L, 1L,
                         false, false, false,
                         "Оприходование 1",
                         List.of(1L, 2L, 3L)
@@ -1449,9 +1451,7 @@ public class DataInitializer {
         );
         correctionService.create(
                 new CorrectionDto(
-                        null,
-                        LocalDateTime.now(),
-                        1L, 5L,
+                        null, LocalDateTime.now(), 1L, 5L,
                         false, false, false,
                         "Оприходование 2",
                         List.of(4L, 5L, 6L)
@@ -1459,9 +1459,7 @@ public class DataInitializer {
         );
         correctionService.create(
                 new CorrectionDto(
-                        null,
-                        LocalDateTime.now(),
-                        1L, 10L,
+                        null, LocalDateTime.now(), 1L, 10L,
                         false, false, false,
                         "Оприходование 3",
                         List.of(7L, 8L, 9L)
