@@ -1421,7 +1421,6 @@ public class DataInitializer {
     }
 
     public void initCorrectionProduct() {
-
         for (Long i = 1L; i <= 10; i++) {
             correctionProductService.create(
                     new CorrectionProductDto(i, i, BigDecimal.valueOf(randomInt(50, 100)),
