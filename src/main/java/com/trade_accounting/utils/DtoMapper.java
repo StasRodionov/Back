@@ -32,7 +32,7 @@ import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Remain;
 import com.trade_accounting.models.RetailStore;
-import com.trade_accounting.models.ReturnsToSupplier;
+import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.Task;
@@ -77,7 +77,7 @@ import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RemainDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
-import com.trade_accounting.models.dto.ReturnsToSupplierDto;
+import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
@@ -684,14 +684,14 @@ public abstract class DtoMapper {
 
     public abstract CorrectionProduct toCorrectionProduct(CorrectionProductDto correctionDto);
 
-    // ReturnToSuppliers
+    // ReturnToSupplier
     @Mappings({
             @Mapping(source = "company.id", target = "companyId"),
             @Mapping(source = "contract.id", target = "contractId"),
             @Mapping(source = "contractor.id", target = "contractorId"),
             @Mapping(source = "warehouse.id", target = "warehouseId"),
     })
-    public abstract ReturnsToSupplierDto ReturnsToSuppliersToReturnToSuppliersDto(ReturnsToSupplier returnsToSupplier);
+    public abstract ReturnToSupplierDto ReturnToSupplierToReturnToSupplierDto(ReturnToSupplier returnToSupplier);
 
     @Mappings({
             @Mapping(source = "companyId", target = "company.id"),
@@ -699,5 +699,5 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorId", target = "contractor.id"),
             @Mapping(source = "warehouseId", target = "warehouse.id"),
     })
-    public abstract ReturnsToSupplier ReturnsToSuppliersDtoToReturnToSuppliers(ReturnsToSupplierDto returnsToSupplierDto);
+    public abstract ReturnToSupplier ReturnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
 }

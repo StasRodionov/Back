@@ -34,8 +34,8 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "returns_supplier")
-public class ReturnsToSupplier {
+@Table(name = "return_supplier")
+public class ReturnToSupplier {
 
     @Id
     @NotNull

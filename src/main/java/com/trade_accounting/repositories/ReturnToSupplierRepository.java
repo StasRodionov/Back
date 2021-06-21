@@ -1,7 +1,7 @@
 package com.trade_accounting.repositories;
 
-import com.trade_accounting.models.ReturnsToSupplier;
-import com.trade_accounting.models.dto.ReturnsToSupplierDto;
+import com.trade_accounting.models.ReturnToSupplier;
+import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReturnsToSupplierRepository extends JpaRepository<ReturnsToSupplier, Long>, JpaSpecificationExecutor<ReturnsToSupplier> {
+public interface ReturnToSupplierRepository extends JpaRepository<ReturnToSupplier, Long>, JpaSpecificationExecutor<ReturnToSupplier> {
 
-    @Query("select new com.trade_accounting.models.dto.ReturnsToSupplierDto (" +
+    @Query("select new com.trade_accounting.models.dto.ReturnToSupplierDto (" +
             "e.id," +
             "e.date," +
             "e.warehouse.id," +
@@ -22,10 +22,10 @@ public interface ReturnsToSupplierRepository extends JpaRepository<ReturnsToSupp
             "e.contract.id," +
             "e.isSend," +
             "e.isPrint, " +
-            "e.comment) from ReturnsToSupplier  e")
-    List<ReturnsToSupplierDto> getAll();
+            "e.comment) from ReturnToSupplier  e")
+    List<ReturnToSupplierDto> getAll();
 
-    @Query("select new com.trade_accounting.models.dto.ReturnsToSupplierDto (" +
+    @Query("select new com.trade_accounting.models.dto.ReturnToSupplierDto (" +
             "e.id," +
             "e.date," +
             "e.warehouse.id," +
@@ -34,11 +34,11 @@ public interface ReturnsToSupplierRepository extends JpaRepository<ReturnsToSupp
             "e.contract.id," +
             "e.isSend," +
             "e.isPrint, " +
-            "e.comment) from ReturnsToSupplier  e where  e.id = :id")
-    ReturnsToSupplierDto getById(@Param("id") Long id);
+            "e.comment) from ReturnToSupplier  e where  e.id = :id")
+    ReturnToSupplierDto getById(@Param("id") Long id);
 
     @Query(
-            "select new com.trade_accounting.models.dto.ReturnsToSupplierDto (" +
+            "select new com.trade_accounting.models.dto.ReturnToSupplierDto (" +
                     "e.id," +
                     "e.date," +
                     "e.warehouse.id," +
@@ -47,12 +47,12 @@ public interface ReturnsToSupplierRepository extends JpaRepository<ReturnsToSupp
                     "e.contract.id," +
                     "e.isSend," +
                     "e.isPrint, " +
-                    "e.comment) from ReturnsToSupplier  e where  lower(e.comment) " +
+                    "e.comment) from ReturnToSupplier  e where  lower(e.comment) " +
                     "                                   like lower(concat('%', :nameFilter,'%'))"
     )
-    List<ReturnsToSupplierDto> searchByNameFilter(@Param("nameFilter") String nameFilter);
+    List<ReturnToSupplierDto> searchByNameFilter(@Param("nameFilter") String nameFilter);
 
-    @Query("select new com.trade_accounting.models.dto.ReturnsToSupplierDto (" +
+    @Query("select new com.trade_accounting.models.dto.ReturnToSupplierDto (" +
             "e.id," +
             "e.date," +
             "e.warehouse.id," +
@@ -61,9 +61,9 @@ public interface ReturnsToSupplierRepository extends JpaRepository<ReturnsToSupp
             "e.contract.id," +
             "e.isSend," +
             "e.isPrint, " +
-            "e.comment) from ReturnsToSupplier  e where  e.id = :nameFilter "
+            "e.comment) from ReturnToSupplier  e where  e.id = :nameFilter "
     )
-    List<ReturnsToSupplierDto> searchById(@Param("nameFilter") Long nameFilter);
+    List<ReturnToSupplierDto> searchById(@Param("nameFilter") Long nameFilter);
 
 
 }

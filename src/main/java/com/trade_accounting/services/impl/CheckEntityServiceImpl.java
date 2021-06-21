@@ -31,7 +31,7 @@ import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.RemainRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
-import com.trade_accounting.repositories.ReturnsToSupplierRepository;
+import com.trade_accounting.repositories.ReturnToSupplierRepository;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
@@ -116,7 +116,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
                                   TechnicalCardRepository technicalCardRepository,
                                   CorrectionRepository correctionRepository, RemainRepository remainRepository,
-                                  CorrectionProductRepository correctionProductRepository, ReturnsToSupplierRepository returnsToSupplierRepository) {
+                                  CorrectionProductRepository correctionProductRepository, ReturnToSupplierRepository returnToSupplierRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
