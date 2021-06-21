@@ -412,23 +412,6 @@ public abstract class DtoMapper {
     })
     public abstract SupplierAccount SupplierAccountDtoToSupplierAccount(SupplierAccountDto SupplierAccountDto);
 
-    // ReturnToSuppliers
-    @Mappings({
-            @Mapping(source = "company", target = "companyDto"),
-            @Mapping(source = "contract", target = "contractDto"),
-            @Mapping(source = "contractor", target = "contractorDto"),
-            @Mapping(source = "warehouse", target = "warehouseDto"),
-    })
-    public abstract ReturnsToSuppliersDto ReturnsToSuppliersToReturnToSuppliersDto(ReturnsToSuppliers returnsToSuppliers);
-
-    @Mappings({
-            @Mapping(source = "companyDto", target = "company"),
-            @Mapping(source = "contractDto", target = "contract"),
-            @Mapping(source = "contractorDto", target = "contractor"),
-            @Mapping(source = "warehouseDto", target = "warehouse"),
-    })
-    public abstract ReturnsToSuppliers ReturnsToSuppliersDtoToReturnToSuppliers(ReturnsToSuppliersDto returnsToSuppliersDto);
-
     //LegalDetail
     @Mappings({
             @Mapping(source = "typeOfContractor", target = "typeOfContractorDto"),
@@ -700,4 +683,21 @@ public abstract class DtoMapper {
     public abstract CorrectionProductDto toCorrectionProductDto(CorrectionProduct correction);
 
     public abstract CorrectionProduct toCorrectionProduct(CorrectionProductDto correctionDto);
+
+    // ReturnToSuppliers
+    @Mappings({
+            @Mapping(source = "company.id", target = "companyId"),
+            @Mapping(source = "contract.id", target = "contractId"),
+            @Mapping(source = "contractor.id", target = "contractorId"),
+            @Mapping(source = "warehouse.id", target = "warehouseId"),
+    })
+    public abstract ReturnsToSuppliersDto ReturnsToSuppliersToReturnToSuppliersDto(ReturnsToSuppliers returnsToSuppliers);
+
+    @Mappings({
+            @Mapping(source = "companyId", target = "company.id"),
+            @Mapping(source = "contractId", target = "contract.id"),
+            @Mapping(source = "contractorId", target = "contractor.id"),
+            @Mapping(source = "warehouseId", target = "warehouse.id"),
+    })
+    public abstract ReturnsToSuppliers ReturnsToSuppliersDtoToReturnToSuppliers(ReturnsToSuppliersDto returnsToSuppliersDto);
 }

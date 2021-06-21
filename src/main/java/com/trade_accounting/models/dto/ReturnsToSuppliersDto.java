@@ -21,16 +21,16 @@ public class ReturnsToSuppliersDto {
     private String date;
 
     @NotNull
-    private WarehouseDto warehouseDto;
+    private Long warehouseId;
 
     @NotNull
-    private CompanyDto companyDto;
+    private Long companyId;
 
     @NotNull
-    private ContractorDto contractorDto;
+    private Long contractorId;
 
     @NotNull
-    private ContractDto contractDto;
+    private Long contractId;
 
     private Boolean isSend;
 
@@ -38,19 +38,4 @@ public class ReturnsToSuppliersDto {
 
     private String comment;
 
-    public ReturnsToSuppliersDto(Long id, String date, Long warehouseId, Long companyId, Long contractorId, Long contractId, Boolean isSend, Boolean isPrint, String comment) {
-        this.id = id;
-        this.date = date;
-        this.warehouseDto = new WarehouseDto();
-        this.warehouseDto.setId(warehouseId);
-        this.companyDto = new CompanyDto();
-        this.companyDto.setId(companyId);
-        this.contractorDto = new ContractorDto();
-        this.contractorDto.setId(contractorId);
-        this.contractDto = new ContractDto();
-        this.contractDto.setId(contractId);
-        this.isSend = isSend;
-        this.isPrint = isPrint;
-        this.comment = comment;
-    }
 }

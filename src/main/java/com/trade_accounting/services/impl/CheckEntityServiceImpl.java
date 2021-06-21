@@ -17,6 +17,7 @@ import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.CorrectionProductRepository;
+import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.CurrencyRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
@@ -26,7 +27,6 @@ import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.PositionRepository;
-import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.RemainRepository;
@@ -80,7 +80,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
     private final SupplierAccountRepository supplierAccountRepository;
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
-    private  final TechnicalCardRepository technicalCardRepository;
+    private final TechnicalCardRepository technicalCardRepository;
     private final CorrectionRepository correctionRepository;
     private final RemainRepository remainRepository;
     private final CorrectionProductRepository correctionProductRepository;
@@ -280,7 +280,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
 
     @Override
     public void checkExistsCorrectionById(Long correctionId) {
-        if(!correctionRepository.existsById(correctionId)) {
+        if (!correctionRepository.existsById(correctionId)) {
             throw new NotFoundEntityException("Оприходование с id=" + correctionId + ", не найдено");
         }
     }
@@ -425,34 +425,35 @@ public class CheckEntityServiceImpl implements CheckEntityService {
 
     @Override
     public void checkExistsSupplierAccountById(Long supplierAccountId) {
-        if(!supplierAccountRepository.existsById(supplierAccountId)) {
+        if (!supplierAccountRepository.existsById(supplierAccountId)) {
             throw new NotFoundEntityException("Счет поставщика с id=" + supplierAccountId + ", не найден");
         }
     }
 
     @Override
     public void checkExistsTechnicalCardById(Long id) {
-        if(!technicalCardRepository.existsById(id)) {
+        if (!technicalCardRepository.existsById(id)) {
             throw new NotFoundEntityException("Тех. карта с id=" + id + ", не найдена");
         }
     }
 
     @Override
     public void checkExistsTechnicalCardGroupById(Long technicalCardGroupId) {
-        if(!technicalCardGroupRepository.existsById(technicalCardGroupId)) {
-            throw new NotFoundEntityException("Группа технических карт с id=" + technicalCardGroupId+ ", не найдена");
+        if (!technicalCardGroupRepository.existsById(technicalCardGroupId)) {
+            throw new NotFoundEntityException("Группа технических карт с id=" + technicalCardGroupId + ", не найдена");
         }
     }
+
     @Override
     public void checkExistsRemainById(Long id) {
-        if(!remainRepository.existsById(id)) {
+        if (!remainRepository.existsById(id)) {
             throw new NotFoundEntityException("Остаток с id=" + id + ", не найден");
         }
     }
 
     @Override
     public void checkExistsCorrectionProductById(Long correctionProduct) {
-        if(!correctionProductRepository.existsById(correctionProduct)) {
+        if (!correctionProductRepository.existsById(correctionProduct)) {
             throw new NotFoundEntityException("Товар для корректировки остатков с id=" + correctionProduct + "не найден");
         }
     }
