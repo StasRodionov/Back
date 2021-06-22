@@ -78,4 +78,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpec
 
     CompanyDto findCompanyByEmail(String email);
 
+    Company getCompaniesById(Long id);
+
 }
