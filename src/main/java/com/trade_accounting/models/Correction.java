@@ -1,5 +1,6 @@
 package com.trade_accounting.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +34,7 @@ public class Correction {
 
     @NotNull
     @Column(name = "date")
-    private LocalDateTime date;
+    private String date;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
