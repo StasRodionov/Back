@@ -12,6 +12,7 @@ import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.Correction;
 import com.trade_accounting.models.CorrectionProduct;
 import com.trade_accounting.models.Currency;
@@ -20,11 +21,10 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
-import com.trade_accounting.models.PriceList;
-import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
+import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
@@ -32,8 +32,9 @@ import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Remain;
 import com.trade_accounting.models.RetailStore;
+import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
-import com.trade_accounting.models.ContractorStatus;
+import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TaxSystem;
@@ -57,6 +58,7 @@ import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.ContractorStatusDto;
+import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
@@ -64,12 +66,10 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
-import com.trade_accounting.models.dto.PriceListDto;
-import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
-import com.trade_accounting.models.dto.CorrectionDto;
+import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
@@ -77,7 +77,9 @@ import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RemainDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
+import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -198,6 +200,7 @@ public abstract class DtoMapper {
 
     //AgentReports
     public abstract AgentReportsDto agentReportsToAgentReportsDto(AgentReports agentReports);
+
     public abstract AgentReports agentReportsDtoToAgentReports(AgentReportsDto agentReportsDto);
 
     //BankAccount
@@ -715,4 +718,21 @@ public abstract class DtoMapper {
     public abstract CorrectionProductDto toCorrectionProductDto(CorrectionProduct correction);
 
     public abstract CorrectionProduct toCorrectionProduct(CorrectionProductDto correctionDto);
+
+    // ReturnToSupplier
+    @Mappings({
+            @Mapping(source = "company.id", target = "companyId"),
+            @Mapping(source = "contract.id", target = "contractId"),
+            @Mapping(source = "contractor.id", target = "contractorId"),
+            @Mapping(source = "warehouse.id", target = "warehouseId"),
+    })
+    public abstract ReturnToSupplierDto ReturnToSupplierToReturnToSupplierDto(ReturnToSupplier returnToSupplier);
+
+    @Mappings({
+            @Mapping(source = "companyId", target = "company.id"),
+            @Mapping(source = "contractId", target = "contract.id"),
+            @Mapping(source = "contractorId", target = "contractor.id"),
+            @Mapping(source = "warehouseId", target = "warehouse.id"),
+    })
+    public abstract ReturnToSupplier ReturnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
 }
