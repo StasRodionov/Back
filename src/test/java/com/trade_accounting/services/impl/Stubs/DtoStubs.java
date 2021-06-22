@@ -3,6 +3,7 @@ package com.trade_accounting.services.impl.Stubs;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CurrencyDto;
+import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
@@ -64,7 +65,7 @@ public class DtoStubs {
         );
     }
 
-    public static TypeOfContractorDto getTypeOfContractorDto(Long id){
+    public static TypeOfContractorDto getTypeOfContractorDto(Long id) {
         return dtoMapper.typeOfContractorToTypeOfContractorDto(
                 ModelStubs.getTypeOfContractor(id)
         );
@@ -82,17 +83,17 @@ public class DtoStubs {
         );
     }
 
-    public static DepartmentDto getDepartmentDto(Long id){
+    public static DepartmentDto getDepartmentDto(Long id) {
         return dtoMapper.departmentToDepartmentDto(
                 ModelStubs.getDepartment(id));
     }
 
-    public static PositionDto getPositionDto(Long id){
+    public static PositionDto getPositionDto(Long id) {
         return dtoMapper.positionToPositionDto(
-            ModelStubs.getPosition(id));
+                ModelStubs.getPosition(id));
     }
 
-    public static ContractDto getContractDto(Long id){
+    public static ContractDto getContractDto(Long id) {
         return dtoMapper.contractToContractDto(ModelStubs.getContract(id));
     }
 
@@ -102,7 +103,7 @@ public class DtoStubs {
         );
     }
 
-    public static TaxSystemDto getTaxSystemDto(Long id){
+    public static TaxSystemDto getTaxSystemDto(Long id) {
         return dtoMapper.taxSystemToTaxSystemDto(
                 ModelStubs.getTaxSystem(id)
         );
@@ -134,23 +135,29 @@ public class DtoStubs {
         );
     }
 
-    public static CityDto getCityDto(Long id){
+    public static CityDto getCityDto(Long id) {
         return dtoMapper.toCityDto(ModelStubs.getCity(id));
     }
 
-    public static DistrictDto getDistrictDto(Long id){
+    public static DistrictDto getDistrictDto(Long id) {
         return dtoMapper.toDistrictDto(ModelStubs.getDistrict(id));
     }
 
-    public static StreetDto getStreetDto(Long id){
+    public static StreetDto getStreetDto(Long id) {
         return dtoMapper.toStreetDto(ModelStubs.getStreet(id));
     }
 
-    public static RegionDto getRegionDto(Long id){
+    public static RegionDto getRegionDto(Long id) {
         return dtoMapper.toRegionDto(ModelStubs.getRegion(id));
     }
 
-    public static FiasAddressModelDto getFiasAddressModelDto(Long id){
+    public static FiasAddressModelDto getFiasAddressModelDto(Long id) {
         return dtoMapper.toFiasAddressModelDto(ModelStubs.getFiasAddressModel(id));
+    }
+
+    public static ProductionDto getProductionDto(Long id) {
+        return dtoMapper.productionToProductionDto(
+                ModelStubs.getProduction(id)
+        );
     }
 }
