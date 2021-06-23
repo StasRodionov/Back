@@ -31,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
+@Sql(value = "/Correction-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
 class RestControllerCorrectionTest {
 
@@ -58,7 +59,7 @@ class RestControllerCorrectionTest {
     void testGetById() throws Exception {
         CorrectionDto correctionDto = CorrectionDto.builder()
                 .id(1L)
-                .date(LocalDateTime.of(2021, 6, 22, 15, 10)
+                .date(LocalDateTime.of(2021, 6, 23, 15, 10)
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-d HH:mm")))
                 .companyId(1L)
                 .warehouseId(1L)
@@ -76,13 +77,12 @@ class RestControllerCorrectionTest {
     }
 
     @Test
-    @Sql(value = "/Correction-afterCreateMethod.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void testCreate() throws Exception {
         CorrectionDto correctionDto = CorrectionDto.builder()
                 .id(4L)
-                .date("2021-06-23 15:20")
+                .date("2021-06-23 15:10")
                 .warehouseId(1L)
-                .companyId(7L)
+                .companyId(5L)
                 .isSent(false)
                 .isPrint(false)
                 .writeOffProduct(false)
@@ -107,7 +107,7 @@ class RestControllerCorrectionTest {
     void testUpdate() throws Exception {
         CorrectionDto correctionDtoUpdate = CorrectionDto.builder()
                 .id(3L)
-                .date("2021-06-23 15:20")
+                .date("2021-06-23 15:10")
                 .warehouseId(1L)
                 .companyId(7L)
                 .isSent(false)
@@ -128,7 +128,6 @@ class RestControllerCorrectionTest {
     }
 
     @Test
-    @Sql(value = "/Correction-afterDeleteMethod.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void testDelete() throws Exception {
         mockMvc.perform(delete("/api/correction/2"))
                 .andDo(print())
