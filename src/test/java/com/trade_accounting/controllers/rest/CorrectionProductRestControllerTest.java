@@ -87,7 +87,6 @@ class CorrectionProductRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(5)));
-
     }
 
     @Test
