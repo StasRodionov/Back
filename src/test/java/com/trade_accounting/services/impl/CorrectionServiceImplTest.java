@@ -46,7 +46,7 @@ class CorrectionServiceImplTest {
     CorrectionServiceImpl correctionService;
 
     @Test
-    void getAll() {
+    void getAll_shouldReturnFilledListCorrection() {
         when(correctionRepository.getAll()).thenReturn(
                 List.of(ModelStubs.getCorrection(1L),
                         ModelStubs.getCorrection(2L),
@@ -59,7 +59,7 @@ class CorrectionServiceImplTest {
     }
 
     @Test
-    void getById() {
+    void getById_shouldReturnFilledCorrection() {
         when(correctionRepository.getCorrectionById(anyLong())).thenReturn(ModelStubs.getCorrection(1L));
 
         CorrectionDto correctionDto = correctionService.getById(1L);
@@ -68,17 +68,17 @@ class CorrectionServiceImplTest {
     }
 
     @Test
-    void create() {
+    void create_shouldPassInstructionsSuccessfulCreate() {
         saveOrUpdate();
     }
 
     @Test
-    void update() {
+    void update_shouldPassInstructionsSuccessfulUpdate() {
         saveOrUpdate();
     }
 
     @Test
-    void deleteById() {
+    void deleteById_shouldPassInstructionsSuccessfulDelete() {
         correctionService.deleteById(anyLong());
         verify(correctionRepository).deleteById(anyLong());
     }
