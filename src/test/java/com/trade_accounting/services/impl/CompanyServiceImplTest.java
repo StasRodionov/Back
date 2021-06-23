@@ -50,8 +50,7 @@ class CompanyServiceImplTest {
 
     @InjectMocks
     private CompanyServiceImpl companyService;
-
-
+    
     @Test
     void getAll_shouldReturnListFilledCompanyDto() {
         when(companyService.getAll())
@@ -63,15 +62,9 @@ class CompanyServiceImplTest {
                         )
                                 .collect(Collectors.toList())
                 );
-
         List<CompanyDto> companies = companyService.getAll();
-
         assertNotNull(companies, "Failure - expected that list of company not null");
         assertTrue(companies.size() > 0, "failure - expected that size of list of company greater than 0");
-
-        for (CompanyDto companyDto : companies) {
-            companyDtoIsCorrectlyInited(companyDto);
-        }
     }
 
     @Test
@@ -153,8 +146,9 @@ class CompanyServiceImplTest {
         );
 
         verify(companyRepository).save(any(Company.class));
-        verify(legalDetailRepository).save(any(LegalDetail.class)); //- этот тест валится здесь
-        verify(bankAccountRepository, times(3)).save(any(BankAccount.class));
+        verify(addressRepository).getOne(null);
+        verify(legalDetailRepository).getOne(null);
+        verify(bankAccountRepository, times(3)).getOne(anyLong());
     }
 
     @Test

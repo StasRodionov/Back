@@ -131,8 +131,6 @@ public abstract class DtoMapper {
 
     private DepartmentRepository departmentRepository;
 
-   // private BankAccountRepository bankAccountRepository;
-
     @Autowired
     public final void setEmployeeRepository(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -142,11 +140,6 @@ public abstract class DtoMapper {
     public final void setDepartmentRepository(DepartmentRepository departmentRepository) {
         this.departmentRepository = departmentRepository;
     }
-
-//    @Autowired
-//    public final void setBankAccountRepository(BankAccountRepository bankAccountRepository) {
-//        this.bankAccountRepository = bankAccountRepository;
-//    }
 
     //AttributeOfCalculationObjectDto
     public abstract AttributeOfCalculationObjectDto
@@ -235,10 +228,6 @@ public abstract class DtoMapper {
         } else {
             List<Long> bankAccountDtoIds = company.getBankAccounts().stream()
                     .map(o->o.getId()).collect(Collectors.toList());
-//            List<Long> bankAccountDtoIds = new ArrayList<>();
-//            for (BankAccount bankAccount : company.getBankAccounts()) {
-//                bankAccountDtoIds.add(bankAccount.getId());
-//            }
             companyDto.setBankAccountDtoIds(bankAccountDtoIds);
         }
     }
