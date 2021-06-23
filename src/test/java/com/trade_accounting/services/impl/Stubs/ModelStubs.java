@@ -348,7 +348,7 @@ public class ModelStubs {
 
     public static Correction getCorrection(Long id) {
         return new Correction(
-                id, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")), getWarehouse(), getCompany(id),
+                id, LocalDateTime.now(), getWarehouse(), getCompany(id),
                 false, false, false,
                 "Комментарий 1",
                 List.of(getCorrectionProduct(1L),

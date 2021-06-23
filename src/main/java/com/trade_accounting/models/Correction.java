@@ -34,7 +34,7 @@ public class Correction {
 
     @NotNull
     @Column(name = "date")
-    private String date;
+    private LocalDateTime date;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

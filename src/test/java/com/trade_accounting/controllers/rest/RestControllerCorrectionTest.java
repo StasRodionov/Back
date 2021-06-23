@@ -59,8 +59,7 @@ class RestControllerCorrectionTest {
     void testGetById() throws Exception {
         CorrectionDto correctionDto = CorrectionDto.builder()
                 .id(1L)
-                .date(LocalDateTime.of(2021, 6, 23, 15, 10)
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-d HH:mm")))
+                .date("2021-06-23 15:10")
                 .companyId(1L)
                 .warehouseId(1L)
                 .isSent(false).isPrint(false).writeOffProduct(false)

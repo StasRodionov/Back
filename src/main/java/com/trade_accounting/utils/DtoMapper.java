@@ -112,6 +112,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -681,7 +682,7 @@ public abstract class DtoMapper {
             return null;
         } else {
             correctionDto.setId(correction.getId());
-            correctionDto.setDate(correction.getDate());
+            correctionDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(correction.getDate()));
             correctionDto.setIsSent(correction.getIsSent());
             correctionDto.setIsPrint(correction.getIsPrint());
             correctionDto.setWriteOffProduct(correction.getWriteOffProduct());
@@ -709,6 +710,7 @@ public abstract class DtoMapper {
         }
     }
 
+    @Mapping(target = "date", ignore = true)
     public abstract Correction toCorrection(CorrectionDto correctionDto);
 
     //    CorrectionProduct

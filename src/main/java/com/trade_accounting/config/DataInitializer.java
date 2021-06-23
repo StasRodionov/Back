@@ -1444,8 +1444,7 @@ public class DataInitializer {
     public void initCorrection() {
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.of(2021, 6, 22, 15, 10)
-                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        null, "2021-06-23 15:10",
                         1L, 1L,
                         false, false, false,
                         "Оприходование 1",
@@ -1454,8 +1453,7 @@ public class DataInitializer {
         );
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.of(2021, 6, 22, 15, 10)
-                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        null, "2021-06-23 15:10",
                         1L, 5L,
                         false, false, false,
                         "Оприходование 2",
@@ -1464,8 +1462,7 @@ public class DataInitializer {
         );
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.of(2021, 6, 22, 15, 10)
-                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        null, "2021-06-23 15:10",
                         1L, 10L,
                         false, false, false,
                         "Оприходование 3",
