@@ -39,7 +39,7 @@ class CorrectionProductServiceImplTest {
     CorrectionProductServiceImpl correctionProductService;
 
     @Test
-    void getAll() {
+    void getAll_shouldReturnFilledListCorrectionProduct() {
         when(correctionProductRepository.findAll())
                 .thenReturn(List.of(ModelStubs.getCorrectionProduct(1L),
                         ModelStubs.getCorrectionProduct(2L),
@@ -50,7 +50,7 @@ class CorrectionProductServiceImplTest {
     }
 
     @Test
-    void getById() {
+    void getById_shouldReturnFilledCorrectionProduct() {
         Optional<CorrectionProduct> correctionProduct = Optional.of(ModelStubs.getCorrectionProduct(1L));
 
         when(correctionProductRepository.findById(anyLong())).thenReturn(correctionProduct);
@@ -60,17 +60,17 @@ class CorrectionProductServiceImplTest {
     }
 
     @Test
-    void create() {
+    void create_shouldPassInstructionsSuccessfulCreate() {
         saveOrUpdate();
     }
 
     @Test
-    void update() {
+    void update_shouldPassInstructionsSuccessfulUpdate() {
         saveOrUpdate();
     }
 
     @Test
-    void deleteById() {
+    void deleteById_shouldPassInstructionsSuccessfulDelete() {
         correctionProductService.deleteById(anyLong());
         verify(correctionProductRepository).deleteById(anyLong());
     }
