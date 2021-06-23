@@ -219,8 +219,11 @@ public abstract class DtoMapper {
     //Company
     @Mappings({
             @Mapping(source = "address.id", target = "addressId"),
+           // @Mapping(source = "bankAccounts", target = "bankAccountDtoIds"),
             @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
     })
+    public abstract CompanyDto companyToCompanyDto(Company company);
+
     @AfterMapping
     public void listBankAccountsIdToListBankAccountDtoIds(Company company, @MappingTarget CompanyDto companyDto) {
         if (company.getBankAccounts() == null) {
@@ -231,12 +234,14 @@ public abstract class DtoMapper {
             companyDto.setBankAccountDtoIds(bankAccountDtoIds);
         }
     }
-    public abstract CompanyDto companyToCompanyDto(Company company);
+
 
     @Mappings({
             @Mapping(source = "addressId", target = "address.id"),
+          //  @Mapping(source = "bankAccountDtoIds", target = "bankAccounts"),
             @Mapping(source = "legalDetailDtoId", target = "legalDetail.id")
     })
+    public abstract Company companyDtoToCompany(CompanyDto companyDto);
 
     @AfterMapping
     public void listBankAccountsDtoIdsToListBankAccount(CompanyDto companyDto, @MappingTarget Company company, @Context BankAccountRepository bankAccountRepository) {
@@ -250,8 +255,6 @@ public abstract class DtoMapper {
             company.setBankAccounts(bankAccounts);
         }
     }
-    public abstract Company companyDtoToCompany(CompanyDto companyDto);
-
 
     //Contact
     public abstract ContactDto contactToContactDto(Contact contact);
@@ -762,3 +765,20 @@ public abstract class DtoMapper {
     })
     public abstract ReturnToSupplier ReturnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
 }
+
+//abstract class CustomDtoMapper extends DtoMapper {
+//
+//    @Override
+//    public CompanyDto companyToCompanyDto(Company company) {
+//        CompanyDto companyDto = new CompanyDto();
+//        if (company.getBankAccounts() == null) {
+//            companyDto.setBankAccountDtoIds(null);
+//        } else {
+//            List<Long> bankAccountDtoIds = company.getBankAccounts().stream()
+//                    .map(o -> o.getId()).collect(Collectors.toList());
+//            companyDto.setBankAccountDtoIds(bankAccountDtoIds);
+//        }
+//        return companyDto;
+//    }
+
+//}
