@@ -4,6 +4,7 @@ import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
@@ -40,6 +41,9 @@ class CompanyServiceImplTest {
 
     @Mock
     private BankAccountRepository bankAccountRepository;
+
+    @Mock
+    private AddressRepository addressRepository;
 
     @Spy
     private DtoMapperImpl dtoMapper;
@@ -160,8 +164,9 @@ class CompanyServiceImplTest {
         );
 
         verify(companyRepository).save(any(Company.class));
-        verify(legalDetailRepository).findById(anyLong());
-        verify(bankAccountRepository, times(3)).findById(anyLong());
+        verify(addressRepository).getOne(null);
+        verify(legalDetailRepository).getOne(null);
+        verify(bankAccountRepository, times(3)).getOne(anyLong());
     }
 
     @Test

@@ -100,11 +100,15 @@ import com.trade_accounting.models.fias.District;
 import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
+import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import lombok.SneakyThrows;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -127,6 +131,8 @@ public abstract class DtoMapper {
 
     private DepartmentRepository departmentRepository;
 
+   // private BankAccountRepository bankAccountRepository;
+
     @Autowired
     public final void setEmployeeRepository(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -136,6 +142,11 @@ public abstract class DtoMapper {
     public final void setDepartmentRepository(DepartmentRepository departmentRepository) {
         this.departmentRepository = departmentRepository;
     }
+
+//    @Autowired
+//    public final void setBankAccountRepository(BankAccountRepository bankAccountRepository) {
+//        this.bankAccountRepository = bankAccountRepository;
+//    }
 
     //AttributeOfCalculationObjectDto
     public abstract AttributeOfCalculationObjectDto
@@ -215,17 +226,43 @@ public abstract class DtoMapper {
     //Company
     @Mappings({
             @Mapping(source = "address.id", target = "addressId"),
-            //@Mapping(source = "bankAccounts.id", target = "bankAccountDtoIds"),
             @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
     })
+    @AfterMapping
+    public void listBankAccountsIdToListBankAccountDtoIds(Company company, @MappingTarget CompanyDto companyDto) {
+        if (company.getBankAccounts() == null) {
+            companyDto.setBankAccountDtoIds(null);
+        } else {
+            List<Long> bankAccountDtoIds = company.getBankAccounts().stream()
+                    .map(o->o.getId()).collect(Collectors.toList());
+//            List<Long> bankAccountDtoIds = new ArrayList<>();
+//            for (BankAccount bankAccount : company.getBankAccounts()) {
+//                bankAccountDtoIds.add(bankAccount.getId());
+//            }
+            companyDto.setBankAccountDtoIds(bankAccountDtoIds);
+        }
+    }
     public abstract CompanyDto companyToCompanyDto(Company company);
 
     @Mappings({
             @Mapping(source = "addressId", target = "address.id"),
-          //  @Mapping(source = "bankAccountDtoIds", target = "bankAccounts.id"),
             @Mapping(source = "legalDetailDtoId", target = "legalDetail.id")
     })
+
+    @AfterMapping
+    public void listBankAccountsDtoIdsToListBankAccount(CompanyDto companyDto, @MappingTarget Company company, @Context BankAccountRepository bankAccountRepository) {
+        if (companyDto.getBankAccountDtoIds() == null) {
+            company.setBankAccounts(null);
+        } else {
+            List<BankAccount> bankAccounts = companyDto.getBankAccountDtoIds()
+                    .stream()
+                    .map(id -> bankAccountRepository.getOne(id))
+                    .collect(Collectors.toList());
+            company.setBankAccounts(bankAccounts);
+        }
+    }
     public abstract Company companyDtoToCompany(CompanyDto companyDto);
+
 
     //Contact
     public abstract ContactDto contactToContactDto(Contact contact);
