@@ -1433,7 +1433,7 @@ public class DataInitializer {
     }
 
     public void initCorrectionProduct() {
-        for (Long i = 1L; i <= 9; i++) {
+        for (Long i = 1L; i <= 12; i++) {
             correctionProductService.create(
                     new CorrectionProductDto(null, i, BigDecimal.valueOf(randomInt(50, 100)),
                             BigDecimal.valueOf(randomInt(50, 100)))
@@ -1445,7 +1445,7 @@ public class DataInitializer {
         correctionService.create(
                 new CorrectionDto(
                         null, LocalDateTime.of(2021, 6, 22, 15, 10)
-                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")),
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
                         1L, 1L,
                         false, false, false,
                         "Оприходование 1",
@@ -1455,7 +1455,7 @@ public class DataInitializer {
         correctionService.create(
                 new CorrectionDto(
                         null, LocalDateTime.of(2021, 6, 22, 15, 10)
-                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")),
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
                         1L, 5L,
                         false, false, false,
                         "Оприходование 2",
@@ -1465,7 +1465,7 @@ public class DataInitializer {
         correctionService.create(
                 new CorrectionDto(
                         null, LocalDateTime.of(2021, 6, 22, 15, 10)
-                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")),
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
                         1L, 10L,
                         false, false, false,
                         "Оприходование 3",

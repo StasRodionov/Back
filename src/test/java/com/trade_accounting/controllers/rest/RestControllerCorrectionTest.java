@@ -1,22 +1,17 @@
 package com.trade_accounting.controllers.rest;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import com.trade_accounting.models.dto.CorrectionDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -26,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -62,7 +59,7 @@ class RestControllerCorrectionTest {
         CorrectionDto correctionDto = CorrectionDto.builder()
                 .id(1L)
                 .date(LocalDateTime.of(2021, 6, 22, 15, 10)
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")))
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-d HH:mm")))
                 .companyId(1L)
                 .warehouseId(1L)
                 .isSent(false).isPrint(false).writeOffProduct(false)
@@ -79,6 +76,59 @@ class RestControllerCorrectionTest {
     }
 
     @Test
+    @Sql(value = "/Correction-afterCreateMethod.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    void testCreate() throws Exception {
+        CorrectionDto correctionDto = CorrectionDto.builder()
+                .id(4L)
+                .date("2021-06-23 15:20")
+                .warehouseId(1L)
+                .companyId(7L)
+                .isSent(false)
+                .isPrint(false)
+                .writeOffProduct(false)
+                .comment("Оприходование 4")
+                .correctionProductIds(List.of(10L, 11L, 12L))
+                .build();
+        String correctionDtoJson = new Gson().toJson(correctionDto);
+        mockMvc.perform(post("/api/correction")
+                .contentType(MediaType.APPLICATION_JSON).content(correctionDtoJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(content().json(correctionDtoJson));
+        mockMvc.perform(get("/api/correction"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(jsonPath("$", hasSize(4)));
+    }
+
+    @Test
+    void testUpdate() throws Exception {
+        CorrectionDto correctionDtoUpdate = CorrectionDto.builder()
+                .id(3L)
+                .date("2021-06-23 15:20")
+                .warehouseId(1L)
+                .companyId(7L)
+                .isSent(false)
+                .isPrint(false)
+                .writeOffProduct(false)
+                .comment("Оприходование 3 UPDATE")
+                .correctionProductIds(List.of(7L, 8L, 9L))
+                .build();
+        String correctionDtoJson = new Gson().toJson(correctionDtoUpdate);
+        mockMvc.perform(put("/api/correction")
+                .contentType(MediaType.APPLICATION_JSON).content(correctionDtoJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(content().json(correctionDtoJson));
+        mockMvc.perform(get("/api/correction"))
+                .andDo(print());
+    }
+
+    @Test
+    @Sql(value = "/Correction-afterDeleteMethod.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void testDelete() throws Exception {
         mockMvc.perform(delete("/api/correction/2"))
                 .andDo(print())
