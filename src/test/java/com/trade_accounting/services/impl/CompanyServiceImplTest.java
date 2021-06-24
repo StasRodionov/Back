@@ -79,10 +79,15 @@ class CompanyServiceImplTest {
 
     @Test
     void search_shouldReturnListFilledCompanyDto() {
-        ArrayList<CompanyDto> companyDtos = new ArrayList<>();
-        companyDtos.add(dtoMapper.companyToCompanyDto(ModelStubs.getCompany(1L)));
-        companyDtos.add(dtoMapper.companyToCompanyDto(ModelStubs.getCompany(2L)));
-        when(companyService.search(Mockito.<Specification<Company>>any())).thenReturn(companyDtos);
+        when(companyRepository.findAll(Mockito.<Specification<Company>>any()))
+                .thenReturn(
+                        Stream.of(
+                                ModelStubs.getCompany(1L),
+                                ModelStubs.getCompany(2L),
+                                ModelStubs.getCompany(3L)
+                        )
+                                .collect(Collectors.toList())
+                );
 
         List<CompanyDto> companies = companyService
                 .search(SpecificationStubs.getCompanySpecificationStub());
@@ -90,7 +95,6 @@ class CompanyServiceImplTest {
         assertNotNull(companies, "Failure - expected that list of company not null");
         assertTrue(companies.size() > 0, "failure - expected that size of list of company greater than 0");
         verify(companyRepository).findAll(Mockito.<Specification<Company>>any());
-
         for (CompanyDto companyDto : companies) {
             companyDtoIsCorrectlyInited(companyDto);
         }
