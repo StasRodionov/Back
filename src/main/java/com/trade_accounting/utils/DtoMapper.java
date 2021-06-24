@@ -219,7 +219,6 @@ public abstract class DtoMapper {
     //Company
     @Mappings({
             @Mapping(source = "address.id", target = "addressId"),
-           // @Mapping(source = "bankAccounts", target = "bankAccountDtoIds"),
             @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
     })
     public abstract CompanyDto companyToCompanyDto(Company company);
@@ -238,7 +237,6 @@ public abstract class DtoMapper {
 
     @Mappings({
             @Mapping(source = "addressId", target = "address.id"),
-          //  @Mapping(source = "bankAccountDtoIds", target = "bankAccounts"),
             @Mapping(source = "legalDetailDtoId", target = "legalDetail.id")
     })
     public abstract Company companyDtoToCompany(CompanyDto companyDto);
