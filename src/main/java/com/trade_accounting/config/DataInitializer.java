@@ -27,6 +27,7 @@ import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
+import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
@@ -53,7 +54,6 @@ import com.trade_accounting.services.interfaces.CorrectionService;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
-import com.trade_accounting.services.interfaces.ImageService;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
@@ -147,7 +147,6 @@ public class DataInitializer {
             ContractorService contractorService,
             BankAccountService bankAccountService,
             EmployeeService employeeService,
-            ImageService imageService,
             ProductService productService,
             CurrencyService currencyService,
             InvoiceService invoiceService,
@@ -1469,7 +1468,17 @@ public class DataInitializer {
         );
     }
 
-    public void initReturnToSuppliers(){
-
+    public void initReturnToSuppliers() {
+        returnToSupplierService.create(ReturnToSupplierDto.builder()
+                .id(1L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 1")
+                .companyId(1L)
+                .contractorId(1L)
+                .contractId(1L)
+                .warehouseId(1L)
+                .isPrint(false)
+                .isSend(false)
+                .build());
     }
 }
