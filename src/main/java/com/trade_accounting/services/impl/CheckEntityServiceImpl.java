@@ -2,12 +2,10 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.exceptions.BadRequestException;
 import com.trade_accounting.exceptions.NotFoundEntityException;
-import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.AddressRepository;
@@ -48,7 +46,6 @@ import com.trade_accounting.services.interfaces.CheckEntityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -87,6 +84,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final RemainRepository remainRepository;
     private final CorrectionProductRepository correctionProductRepository;
     private final AddressRepository addressRepository;
+    private final ReturnToSupplierRepository returnToSupplierRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository,
@@ -118,7 +116,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
                                   TechnicalCardRepository technicalCardRepository,
                                   CorrectionRepository correctionRepository, RemainRepository remainRepository,
-                                  CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository) {
+                                  CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository, ReturnToSupplierRepository returnToSupplierRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -152,6 +150,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.remainRepository = remainRepository;
         this.correctionProductRepository = correctionProductRepository;
         this.addressRepository = addressRepository;
+        this.returnToSupplierRepository = returnToSupplierRepository;
     }
 
 
@@ -462,6 +461,13 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsCorrectionProductById(Long correctionProduct) {
         if (!correctionProductRepository.existsById(correctionProduct)) {
             throw new NotFoundEntityException("Товар для корректировки остатков с id=" + correctionProduct + "не найден");
+        }
+    }
+
+    @Override
+    public void checkExistsReturnToSupplierById(Long returnToSupplier) {
+        if (!returnToSupplierRepository.existsById(returnToSupplier)) {
+            throw new NotFoundEntityException("Возврат поставщика с id=" + returnToSupplier + "не найден");
         }
     }
 }
