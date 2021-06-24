@@ -221,6 +221,7 @@ public abstract class DtoMapper {
             @Mapping(source = "address.id", target = "addressId"),
             @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
     })
+    public abstract CompanyDto companyToCompanyDto(Company company);
     @AfterMapping
     public void listBankAccountsIdToListBankAccountDtoIds(Company company, @MappingTarget CompanyDto companyDto) {
         if (company.getBankAccounts() == null) {
@@ -231,12 +232,12 @@ public abstract class DtoMapper {
             companyDto.setBankAccountDtoIds(bankAccountDtoIds);
         }
     }
-    public abstract CompanyDto companyToCompanyDto(Company company);
 
     @Mappings({
             @Mapping(source = "addressId", target = "address.id"),
             @Mapping(source = "legalDetailDtoId", target = "legalDetail.id")
     })
+    public abstract Company companyDtoToCompany(CompanyDto companyDto);
 
     @AfterMapping
     public void listBankAccountsDtoIdsToListBankAccount(CompanyDto companyDto, @MappingTarget Company company, @Context BankAccountRepository bankAccountRepository) {
@@ -250,8 +251,6 @@ public abstract class DtoMapper {
             company.setBankAccounts(bankAccounts);
         }
     }
-    public abstract Company companyDtoToCompany(CompanyDto companyDto);
-
 
     //Contact
     public abstract ContactDto contactToContactDto(Contact contact);
