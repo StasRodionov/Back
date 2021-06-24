@@ -53,10 +53,10 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
     public ReturnToSupplierDto create(ReturnToSupplierDto dto) {
         ReturnToSupplier returnsToSuppliers = ReturnToSupplier.builder().id(dto.getId())
                 .date(dto.getDate())
-                .company(dtoMapper.companyDtoToCompany(companyRepository.getCompanyById(dto.getCompanyId())))
                 .contractor(contractorRepository.getOne(dto.getContractorId()))
                 .contract(dtoMapper.contractDtoToContract(contractRepository.getById(dto.getContractId())))
                 .warehouse(dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId())))
+                .company(companyRepository.getCompaniesById(dto.getCompanyId()))
                 .comment(dto.getComment())
                 .isPrint(dto.getIsPrint())
                 .isSend(dto.getIsSend())
