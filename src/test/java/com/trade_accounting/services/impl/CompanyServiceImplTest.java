@@ -44,7 +44,7 @@ class CompanyServiceImplTest {
     @Mock
     private AddressRepository addressRepository;
 
-    @Mock
+    @Spy
     private DtoMapperImpl dtoMapper;
 
     @InjectMocks
