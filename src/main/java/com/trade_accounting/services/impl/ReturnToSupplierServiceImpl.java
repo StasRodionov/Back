@@ -56,7 +56,7 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
                 .contractor(contractorRepository.getOne(dto.getContractorId()))
                 .contract(dtoMapper.contractDtoToContract(contractRepository.getById(dto.getContractId())))
                 .warehouse(dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId())))
-                .company(dtoMapper.companyDtoToCompany(companyRepository.getCompanyById(dto.getCompanyId())))
+                .company(companyRepository.getCompaniesById(dto.getCompanyId()))
                 .comment(dto.getComment())
                 .isPrint(dto.getIsPrint())
                 .isSend(dto.getIsSend())
