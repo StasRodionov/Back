@@ -11,6 +11,7 @@ import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
@@ -27,7 +28,6 @@ import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -47,6 +47,7 @@ import com.trade_accounting.services.interfaces.ContactService;
 import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.ContractorService;
+import com.trade_accounting.services.interfaces.ContractorStatusService;
 import com.trade_accounting.services.interfaces.CorrectionProductService;
 import com.trade_accounting.services.interfaces.CorrectionService;
 import com.trade_accounting.services.interfaces.CurrencyService;
@@ -63,7 +64,6 @@ import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.services.interfaces.RoleService;
-import com.trade_accounting.services.interfaces.ContractorStatusService;
 import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
@@ -1432,7 +1432,7 @@ public class DataInitializer {
     }
 
     public void initCorrectionProduct() {
-        for (Long i = 1L; i <= 9; i++) {
+        for (Long i = 1L; i <= 12; i++) {
             correctionProductService.create(
                     new CorrectionProductDto(null, i, BigDecimal.valueOf(randomInt(50, 100)),
                             BigDecimal.valueOf(randomInt(50, 100)))
@@ -1443,7 +1443,8 @@ public class DataInitializer {
     public void initCorrection() {
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.now(), 1L, 1L,
+                        null, "2021-06-23 15:10",
+                        1L, 1L,
                         false, false, false,
                         "Оприходование 1",
                         List.of(1L, 2L, 3L)
@@ -1451,7 +1452,8 @@ public class DataInitializer {
         );
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.now(), 1L, 5L,
+                        null, "2021-06-23 15:10",
+                        1L, 5L,
                         false, false, false,
                         "Оприходование 2",
                         List.of(4L, 5L, 6L)
@@ -1459,7 +1461,8 @@ public class DataInitializer {
         );
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.now(), 1L, 10L,
+                        null, "2021-06-23 15:10",
+                        1L, 10L,
                         false, false, false,
                         "Оприходование 3",
                         List.of(7L, 8L, 9L)
