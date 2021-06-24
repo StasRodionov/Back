@@ -116,6 +116,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -222,6 +223,7 @@ public abstract class DtoMapper {
             @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
     })
     public abstract CompanyDto companyToCompanyDto(Company company);
+
     @AfterMapping
     public void listBankAccountsIdToListBankAccountDtoIds(Company company, @MappingTarget CompanyDto companyDto) {
         if (company.getBankAccounts() == null) {
@@ -232,6 +234,7 @@ public abstract class DtoMapper {
             companyDto.setBankAccountDtoIds(bankAccountDtoIds);
         }
     }
+
 
     @Mappings({
             @Mapping(source = "addressId", target = "address.id"),
@@ -706,7 +709,7 @@ public abstract class DtoMapper {
             return null;
         } else {
             correctionDto.setId(correction.getId());
-            correctionDto.setDate(correction.getDate());
+            correctionDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(correction.getDate()));
             correctionDto.setIsSent(correction.getIsSent());
             correctionDto.setIsPrint(correction.getIsPrint());
             correctionDto.setWriteOffProduct(correction.getWriteOffProduct());
@@ -734,6 +737,7 @@ public abstract class DtoMapper {
         }
     }
 
+    @Mapping(target = "date", ignore = true)
     public abstract Correction toCorrection(CorrectionDto correctionDto);
 
     //    CorrectionProduct
@@ -761,3 +765,20 @@ public abstract class DtoMapper {
     })
     public abstract ReturnToSupplier ReturnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
 }
+
+//abstract class CustomDtoMapper extends DtoMapper {
+//
+//    @Override
+//    public CompanyDto companyToCompanyDto(Company company) {
+//        CompanyDto companyDto = new CompanyDto();
+//        if (company.getBankAccounts() == null) {
+//            companyDto.setBankAccountDtoIds(null);
+//        } else {
+//            List<Long> bankAccountDtoIds = company.getBankAccounts().stream()
+//                    .map(o -> o.getId()).collect(Collectors.toList());
+//            companyDto.setBankAccountDtoIds(bankAccountDtoIds);
+//        }
+//        return companyDto;
+//    }
+
+//}

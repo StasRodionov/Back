@@ -11,6 +11,7 @@ import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
@@ -26,8 +27,8 @@ import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
+import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -47,12 +48,12 @@ import com.trade_accounting.services.interfaces.ContactService;
 import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.ContractorService;
+import com.trade_accounting.services.interfaces.ContractorStatusService;
 import com.trade_accounting.services.interfaces.CorrectionProductService;
 import com.trade_accounting.services.interfaces.CorrectionService;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
-import com.trade_accounting.services.interfaces.ImageService;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
@@ -62,8 +63,8 @@ import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
+import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import com.trade_accounting.services.interfaces.RoleService;
-import com.trade_accounting.services.interfaces.ContractorStatusService;
 import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
@@ -108,7 +109,6 @@ public class DataInitializer {
     private final ContractorService contractorService;
     private final BankAccountService bankAccountService;
     private final EmployeeService employeeService;
-    private final ImageService imageService;
     private final ProductService productService;
     private final CurrencyService currencyService;
     private final InvoiceService invoiceService;
@@ -126,6 +126,7 @@ public class DataInitializer {
     private final TechnicalCardService technicalCardService;
     private final CorrectionProductService correctionProductService;
     private final CorrectionService correctionService;
+    private final ReturnToSupplierService returnToSupplierService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -146,7 +147,6 @@ public class DataInitializer {
             ContractorService contractorService,
             BankAccountService bankAccountService,
             EmployeeService employeeService,
-            ImageService imageService,
             ProductService productService,
             CurrencyService currencyService,
             InvoiceService invoiceService,
@@ -162,7 +162,7 @@ public class DataInitializer {
             TechnicalCardGroupService technicalCardGroupService,
             TechnicalCardService technicalCardService,
             CorrectionProductService correctionProductService,
-            CorrectionService correctionService) {
+            CorrectionService correctionService, ReturnToSupplierService returnToSupplierService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -181,7 +181,6 @@ public class DataInitializer {
         this.contractorService = contractorService;
         this.bankAccountService = bankAccountService;
         this.employeeService = employeeService;
-        this.imageService = imageService;
         this.productService = productService;
         this.currencyService = currencyService;
         this.invoiceService = invoiceService;
@@ -199,6 +198,7 @@ public class DataInitializer {
         this.technicalCardService = technicalCardService;
         this.correctionProductService = correctionProductService;
         this.correctionService = correctionService;
+        this.returnToSupplierService = returnToSupplierService;
     }
 
     @PostConstruct
@@ -238,6 +238,7 @@ public class DataInitializer {
         initTechnicalCards();
         initCorrectionProduct();
         initCorrection();
+        initReturnToSuppliers();
     }
 
     private void initAccessParameters() {
@@ -1432,7 +1433,7 @@ public class DataInitializer {
     }
 
     public void initCorrectionProduct() {
-        for (Long i = 1L; i <= 9; i++) {
+        for (Long i = 1L; i <= 12; i++) {
             correctionProductService.create(
                     new CorrectionProductDto(null, i, BigDecimal.valueOf(randomInt(50, 100)),
                             BigDecimal.valueOf(randomInt(50, 100)))
@@ -1443,7 +1444,8 @@ public class DataInitializer {
     public void initCorrection() {
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.now(), 1L, 1L,
+                        null, "2021-06-23 15:10",
+                        1L, 1L,
                         false, false, false,
                         "Оприходование 1",
                         List.of(1L, 2L, 3L)
@@ -1451,7 +1453,8 @@ public class DataInitializer {
         );
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.now(), 1L, 5L,
+                        null, "2021-06-23 15:10",
+                        1L, 5L,
                         false, false, false,
                         "Оприходование 2",
                         List.of(4L, 5L, 6L)
@@ -1459,11 +1462,70 @@ public class DataInitializer {
         );
         correctionService.create(
                 new CorrectionDto(
-                        null, LocalDateTime.now(), 1L, 10L,
+                        null, "2021-06-23 15:10",
+                        1L, 10L,
                         false, false, false,
                         "Оприходование 3",
                         List.of(7L, 8L, 9L)
                 )
         );
+    }
+
+    public void initReturnToSuppliers() {
+        returnToSupplierService.create(ReturnToSupplierDto.builder()
+                .id(1L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 1")
+                .contractorId(1L)
+                .contractId(1L)
+                .warehouseId(1L)
+                .companyId(1L)
+                .isPrint(false)
+                .isSend(false)
+                .build());
+        returnToSupplierService.create(ReturnToSupplierDto.builder()
+                .id(2L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 2")
+                .contractorId(2L)
+                .contractId(1L)
+                .warehouseId(1L)
+                .companyId(2L)
+                .isPrint(false)
+                .isSend(false)
+                .build());
+        returnToSupplierService.create(ReturnToSupplierDto.builder()
+                .id(3L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 3")
+                .contractorId(3L)
+                .contractId(1L)
+                .warehouseId(1L)
+                .companyId(3L)
+                .isPrint(false)
+                .isSend(false)
+                .build());
+        returnToSupplierService.create(ReturnToSupplierDto.builder()
+                .id(4L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 4")
+                .contractorId(4L)
+                .contractId(1L)
+                .warehouseId(1L)
+                .companyId(4L)
+                .isPrint(false)
+                .isSend(false)
+                .build());
+        returnToSupplierService.create(ReturnToSupplierDto.builder()
+                .id(5L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 5")
+                .contractorId(5L)
+                .contractId(1L)
+                .warehouseId(1L)
+                .companyId(5L)
+                .isPrint(false)
+                .isSend(false)
+                .build());
     }
 }

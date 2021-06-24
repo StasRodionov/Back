@@ -76,4 +76,6 @@ public interface CheckEntityService {
     void checkExistsRemainById(Long id);
 
     void checkExistsCorrectionProductById(Long correctionProduct);
+
+    void checkExistsReturnToSupplierById(Long returnToSupplier);
 }
