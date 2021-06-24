@@ -52,13 +52,16 @@ class CompanyServiceImplTest {
 
     @Test
     void getAll_shouldReturnListFilledCompanyDto() {
-        ArrayList<CompanyDto> companyDtos = new ArrayList<>();
-        companyDtos.add(DtoStubs.getCompanyDto(1L));
-        companyDtos.add(DtoStubs.getCompanyDto(2L));
-        when(companyService.getAll()).thenReturn(companyDtos);
-
+        when(companyRepository.findAll())
+                .thenReturn(
+                        Stream.of(
+                                ModelStubs.getCompany(1L),
+                                ModelStubs.getCompany(2L),
+                                ModelStubs.getCompany(3L)
+                        )
+                                .collect(Collectors.toList())
+                );
         List<CompanyDto> companies = companyService.getAll();
-
         assertNotNull(companies, "Failure - expected that list of company not null");
         assertTrue(companies.size() > 0, "failure - expected that size of list of company greater than 0");
         verify(companyRepository).findAll();
@@ -66,7 +69,7 @@ class CompanyServiceImplTest {
 
     @Test
     void getAll_shouldReturnEmptyListCompanyDto() {
-        when(companyService.getAll())
+        when(companyRepository.findAll())
                 .thenReturn(
                         new ArrayList<>()
                 );
@@ -75,6 +78,7 @@ class CompanyServiceImplTest {
 
         assertNotNull(companies, "Failure - expected that list of company not null");
         assertEquals(0, companies.size(), "failure - expected that size of list of company equals 0");
+        verify(companyRepository).findAll();
     }
 
     @Test
@@ -102,7 +106,7 @@ class CompanyServiceImplTest {
 
     @Test
     void search_shouldReturnEmptyListCompanyDto() {
-        when(companyService.search(Mockito.<Specification<Company>>any()))
+        when(companyRepository.findAll(Mockito.<Specification<Company>>any()))
                 .thenReturn(new ArrayList<>());
 
         List<CompanyDto> companies = companyService
