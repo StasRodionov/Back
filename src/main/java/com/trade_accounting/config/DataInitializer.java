@@ -11,6 +11,7 @@ import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
@@ -27,7 +28,6 @@ import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -47,6 +47,7 @@ import com.trade_accounting.services.interfaces.ContactService;
 import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.ContractorService;
+import com.trade_accounting.services.interfaces.ContractorStatusService;
 import com.trade_accounting.services.interfaces.CorrectionProductService;
 import com.trade_accounting.services.interfaces.CorrectionService;
 import com.trade_accounting.services.interfaces.CurrencyService;
@@ -62,8 +63,8 @@ import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
+import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import com.trade_accounting.services.interfaces.RoleService;
-import com.trade_accounting.services.interfaces.ContractorStatusService;
 import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
@@ -108,7 +109,6 @@ public class DataInitializer {
     private final ContractorService contractorService;
     private final BankAccountService bankAccountService;
     private final EmployeeService employeeService;
-    private final ImageService imageService;
     private final ProductService productService;
     private final CurrencyService currencyService;
     private final InvoiceService invoiceService;
@@ -126,6 +126,7 @@ public class DataInitializer {
     private final TechnicalCardService technicalCardService;
     private final CorrectionProductService correctionProductService;
     private final CorrectionService correctionService;
+    private final ReturnToSupplierService returnToSupplierService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -162,7 +163,7 @@ public class DataInitializer {
             TechnicalCardGroupService technicalCardGroupService,
             TechnicalCardService technicalCardService,
             CorrectionProductService correctionProductService,
-            CorrectionService correctionService) {
+            CorrectionService correctionService, ReturnToSupplierService returnToSupplierService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -181,7 +182,6 @@ public class DataInitializer {
         this.contractorService = contractorService;
         this.bankAccountService = bankAccountService;
         this.employeeService = employeeService;
-        this.imageService = imageService;
         this.productService = productService;
         this.currencyService = currencyService;
         this.invoiceService = invoiceService;
@@ -199,6 +199,7 @@ public class DataInitializer {
         this.technicalCardService = technicalCardService;
         this.correctionProductService = correctionProductService;
         this.correctionService = correctionService;
+        this.returnToSupplierService = returnToSupplierService;
     }
 
     @PostConstruct
