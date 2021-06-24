@@ -239,6 +239,7 @@ public class DataInitializer {
         initTechnicalCards();
         initCorrectionProduct();
         initCorrection();
+        initReturnToSuppliers();
     }
 
     private void initAccessParameters() {
@@ -1466,5 +1467,9 @@ public class DataInitializer {
                         List.of(7L, 8L, 9L)
                 )
         );
+    }
+
+    public void initReturnToSuppliers(){
+
     }
 }
