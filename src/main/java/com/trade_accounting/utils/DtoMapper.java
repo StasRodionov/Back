@@ -230,11 +230,10 @@ public abstract class DtoMapper {
             companyDto.setBankAccountDtoIds(null);
         } else {
             List<Long> bankAccountDtoIds = company.getBankAccounts().stream()
-                    .map(o->o.getId()).collect(Collectors.toList());
+                    .map(o -> o.getId()).collect(Collectors.toList());
             companyDto.setBankAccountDtoIds(bankAccountDtoIds);
         }
     }
-
 
     @Mappings({
             @Mapping(source = "addressId", target = "address.id"),
