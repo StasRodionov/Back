@@ -47,7 +47,7 @@ public class CompanyServiceImpl implements CompanyService {
     public List<CompanyDto> getAll() {
         List<Company> companys = companyRepository.findAll();
         List<CompanyDto> companyDtos = new ArrayList<>();
-        for (Company company:companys) {
+        for (Company company : companys) {
             companyDtos.add(dtoMapper.companyToCompanyDto(company));
         }
         return companyDtos;
@@ -60,8 +60,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyDto getById(Long id) {
-        Optional<Company> companyOptional = companyRepository.findById(id);
-        return dtoMapper.companyToCompanyDto(companyOptional.orElse(new Company()));
+        Company company = companyRepository.findById(id).orElse(new Company());
+        return dtoMapper.companyToCompanyDto(company);
     }
 
     @Override
@@ -69,9 +69,7 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.findCompanyByEmail(email);
     }
 
-    @Override
     public CompanyDto create(CompanyDto companyDto) {
-        System.out.println(companyDto);
         Company company = dtoMapper.companyDtoToCompany(companyDto);
         company.setAddress(addressRepository.getOne(companyDto.getAddressId()));
 
@@ -88,7 +86,9 @@ public class CompanyServiceImpl implements CompanyService {
                         .collect(Collectors.toList())
         );
         Company companySaved = companyRepository.save(company);
-        companyDto.setId(companySaved.getId());
+        if (companyDto.getId() == null) {
+            companyDto.setId(companySaved.getId());
+        }
         return companyDto;
     }
 

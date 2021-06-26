@@ -72,15 +72,15 @@ public class ModelStubs {
                 id, "name",
                 "inn", "00001",
                 "89040408488", "3420943",
-                "email", true, getAddress(1L),
+                "email", true, getAddress(id),
                 "commentToAddress", "leader",
                 "leaderManagerPos", "signatureOfLider",
                 "cheidAcc", "aaaaa", "stamp",
                 getLegalDetail(id),
                 Stream.of(
-                        getBankAccount(1L),
-                        getBankAccount(2L),
-                        getBankAccount(3L)
+                        getBankAccount(id),
+                        getBankAccount(id+1),
+                        getBankAccount(id+2)
                 ).collect(Collectors.toList())
         );
     }
@@ -214,7 +214,7 @@ public class ModelStubs {
         return new LegalDetail(
                 id, "lastName",
                 "firstNAme", "middleName",
-                getAddress(1L), "commentToAddress",
+                getAddress(id), "commentToAddress",
                 "32432423", "kpp", "okpo", "ogrn",
                 "numberOfCertifacate", LocalDate.now(), getTypeOfContractor(id)
         );
