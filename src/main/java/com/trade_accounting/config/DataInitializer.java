@@ -81,6 +81,7 @@ import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -1443,16 +1444,16 @@ public class DataInitializer {
     public void initCorrection() {
         correctionService.create(
                 new CorrectionDto(
-                        null, "2021-06-23 15:10",
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
                         1L, 1L,
-                        false, false, false,
+                        true, false, false,
                         "Оприходование 1",
                         List.of(1L, 2L, 3L)
                 )
         );
         correctionService.create(
                 new CorrectionDto(
-                        null, "2021-06-23 15:10",
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
                         1L, 5L,
                         false, false, false,
                         "Оприходование 2",
@@ -1461,9 +1462,9 @@ public class DataInitializer {
         );
         correctionService.create(
                 new CorrectionDto(
-                        null, "2021-06-23 15:10",
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
                         1L, 10L,
-                        false, false, false,
+                        false, true, false,
                         "Оприходование 3",
                         List.of(7L, 8L, 9L)
                 )
