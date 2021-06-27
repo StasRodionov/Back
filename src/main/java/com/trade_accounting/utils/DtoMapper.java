@@ -552,7 +552,9 @@ public abstract class DtoMapper {
 
     @Mappings({
             @Mapping(source = "employeeId", target = "taskEmployee.id"),
-            @Mapping(source = "taskAuthorId", target = "taskAuthor.id")
+            @Mapping(source = "taskAuthorId", target = "taskAuthor.id"),
+            @Mapping(target = "creationDateTime", ignore = true),
+            @Mapping(target = "deadlineDateTime", ignore = true)
     })
     public abstract Task taskDtoToTask(TaskDto taskDto);
 

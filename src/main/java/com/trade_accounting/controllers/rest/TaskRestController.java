@@ -98,7 +98,7 @@ public class TaskRestController {
                 .buildAndExpand(created.getId())
                 .normalize()
                 .toUri();
-        return ResponseEntity.created(taskURI).body(created);
+        return ResponseEntity.ok().body(created);
     }
 
     @ApiOperation(value = "update", notes = "Обновление задачи")
