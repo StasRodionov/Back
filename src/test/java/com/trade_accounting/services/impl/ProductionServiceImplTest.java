@@ -1,6 +1,5 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.repositories.ProductionRepository;
@@ -19,10 +18,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Optional.ofNullable;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ProductionServiceImplTest {
