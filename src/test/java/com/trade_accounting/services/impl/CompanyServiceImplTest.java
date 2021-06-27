@@ -1,15 +1,15 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
-import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
+import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,38 +41,35 @@ class CompanyServiceImplTest {
     @Mock
     private BankAccountRepository bankAccountRepository;
 
+    @Mock
+    private AddressRepository addressRepository;
+
     @Spy
     private DtoMapperImpl dtoMapper;
 
     @InjectMocks
     private CompanyServiceImpl companyService;
 
-
     @Test
     void getAll_shouldReturnListFilledCompanyDto() {
-        when(companyService.getAll())
+        when(companyRepository.findAll())
                 .thenReturn(
                         Stream.of(
-                                DtoStubs.getCompanyDto(1L),
-                                DtoStubs.getCompanyDto(2L),
-                                DtoStubs.getCompanyDto(3L)
+                                ModelStubs.getCompany(1L),
+                                ModelStubs.getCompany(2L),
+                                ModelStubs.getCompany(3L)
                         )
                                 .collect(Collectors.toList())
                 );
-
         List<CompanyDto> companies = companyService.getAll();
-
         assertNotNull(companies, "Failure - expected that list of company not null");
         assertTrue(companies.size() > 0, "failure - expected that size of list of company greater than 0");
-
-        for (CompanyDto companyDto : companies) {
-            companyDtoIsCorrectlyInited(companyDto);
-        }
+        verify(companyRepository).findAll();
     }
 
     @Test
     void getAll_shouldReturnEmptyListCompanyDto() {
-        when(companyService.getAll())
+        when(companyRepository.findAll())
                 .thenReturn(
                         new ArrayList<>()
                 );
@@ -81,6 +78,7 @@ class CompanyServiceImplTest {
 
         assertNotNull(companies, "Failure - expected that list of company not null");
         assertEquals(0, companies.size(), "failure - expected that size of list of company equals 0");
+        verify(companyRepository).findAll();
     }
 
     @Test
@@ -100,7 +98,7 @@ class CompanyServiceImplTest {
 
         assertNotNull(companies, "Failure - expected that list of company not null");
         assertTrue(companies.size() > 0, "failure - expected that size of list of company greater than 0");
-
+        verify(companyRepository).findAll(Mockito.<Specification<Company>>any());
         for (CompanyDto companyDto : companies) {
             companyDtoIsCorrectlyInited(companyDto);
         }
@@ -109,59 +107,56 @@ class CompanyServiceImplTest {
     @Test
     void search_shouldReturnEmptyListCompanyDto() {
         when(companyRepository.findAll(Mockito.<Specification<Company>>any()))
-                .thenReturn(
-                        new ArrayList<>()
-                );
+                .thenReturn(new ArrayList<>());
 
         List<CompanyDto> companies = companyService
                 .search(SpecificationStubs.getCompanySpecificationStub());
 
         assertNotNull(companies, "Failure - expected that list of company not null");
         assertEquals(0, companies.size(), "failure - expected that size of list of company greater than 0");
+        verify(companyRepository).findAll(Mockito.<Specification<Company>>any());
     }
 
     @Test
     void getById_shouldReturnFilledCompanyDto() {
-        when(companyService.getById(1L))
+        when(companyService.getById(anyLong()))
                 .thenReturn(DtoStubs.getCompanyDto(anyLong()));
 
         CompanyDto companyDto = companyService.getById(1L);
 
         companyDtoIsCorrectlyInited(companyDto);
+        verify(companyRepository, times(2)).findById(anyLong());
     }
 
     @Test
     void getByEmail_shouldReturnFilledCompanyDto() {
-        CompanyDto companyFromRepo = DtoStubs.getCompanyDto(1L);
-
-        when(companyRepository.findCompanyByEmail(anyString()))
-                .thenReturn(companyFromRepo);
+        when(companyService.getByEmail(anyString()))
+                .thenReturn(DtoStubs.getCompanyDto(1L));
 
         CompanyDto companyDto = companyService.getByEmail("email");
 
         companyDtoIsCorrectlyInited(companyDto);
+        verify(companyRepository).findCompanyByEmail(anyString());
     }
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        companyService.create(
-                DtoStubs.getCompanyDto(1L)
-        );
+        companyService.create(DtoStubs.getCompanyDto(1L));
 
         verify(companyRepository).save(any(Company.class));
-        verify(legalDetailRepository).save(any(LegalDetail.class)); //- этот тест валится здесь
-        verify(bankAccountRepository, times(3)).save(any(BankAccount.class));
+        verify(addressRepository).getOne(anyLong());
+        verify(legalDetailRepository).getOne(anyLong());
+        verify(bankAccountRepository, times(3)).getOne(anyLong());
     }
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        companyService.update(
-                DtoStubs.getCompanyDto(1L)
-        );
+        companyService.update(DtoStubs.getCompanyDto(1L));
 
         verify(companyRepository).save(any(Company.class));
-        verify(legalDetailRepository).findById(anyLong());
-        verify(bankAccountRepository, times(3)).findById(anyLong());
+        verify(addressRepository).getOne(anyLong());
+        verify(legalDetailRepository).getOne(anyLong());
+        verify(bankAccountRepository, times(3)).getOne(anyLong());
     }
 
     @Test

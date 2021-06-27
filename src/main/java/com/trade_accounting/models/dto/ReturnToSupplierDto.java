@@ -1,20 +1,20 @@
 package com.trade_accounting.models.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.util.List;
 
-@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CorrectionDto {
+@Builder
+public class ReturnToSupplierDto {
 
+    @NotNull
     private Long id;
 
     @NotNull
@@ -26,13 +26,16 @@ public class CorrectionDto {
     @NotNull
     private Long companyId;
 
-    private Boolean isSent = false;
+    @NotNull
+    private Long contractorId;
 
-    private Boolean isPrint = false;
+    @NotNull
+    private Long contractId;
 
-    private Boolean writeOffProduct = false;
+    private Boolean isSend;
+
+    private Boolean isPrint;
 
     private String comment;
 
-    private List<Long> correctionProductIds;
 }

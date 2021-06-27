@@ -35,25 +35,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpec
 //            "e.legalDetail.id) from Company e")
 //    List<CompanyDto> getAll();
 
-//    @Query("select new com.trade_accounting.models.dto.CompanyDto(" +
-//            "e.id, " +
-//            "e.name, " +
-//            "e.inn, " +
-//            "e.sortNumber, " +
-//            "e.phone, " +
-//            "e.fax, " +
-//            "e.email, " +
-//            "e.payerVat, " +
-//            "e.address.id, " +
-//            "e.commentToAddress, " +
-//            "e.leader, " +
-//            "e.leaderManagerPosition, " +
-//            "e.leaderSignature, " +
-//            "e.chiefAccountant, " +
-//            "e.chiefAccountantSignature, " +
-//            "e.stamp, " +
-//            "e.legalDetail.id) from Company e where e.id = :id")
-//    CompanyDto getById(@Param("id") Long id);
     CompanyDto getCompanyById(Long id);
 
 //    @Query("select new com.trade_accounting.models.dto.CompanyDto(" +
@@ -78,4 +59,5 @@ public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpec
 
     CompanyDto findCompanyByEmail(String email);
 
+    Company getCompaniesById(Long id);
 }
