@@ -1,10 +1,11 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Production;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.repositories.ProductionRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
-import com.trade_accounting.services.interfaces.ProductionService;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,14 +13,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.Optional.ofNullable;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProductionServiceImplTest {
@@ -35,39 +38,59 @@ class ProductionServiceImplTest {
 
     @Test
     void getAll_shouldReturnListFilledProductionDto() {
-        when(productionService.getAll())
+        when(productionRepository.findAll())
                 .thenReturn(
                         Stream.of(
-                                DtoStubs.getProductionDto(1L),
-                                DtoStubs.getProductionDto(10L),
-                                DtoStubs.getProductionDto(20L)
+                                ModelStubs.getProduction(1L),
+                                ModelStubs.getProduction(10L),
+                                ModelStubs.getProduction(20L)
                         )
                                 .collect(Collectors.toList())
                 );
         List<ProductionDto> productions = productionService.getAll();
 
         assertNotNull(productions, "Failure - expected that list of productions not null");
-        assertEquals(0, productions.size(), "failure - expected that size of list of productions greater than 0");
+        assertEquals(3, productions.size(), "failure - expected that size of list of productions greater than 0");
+        verify(productionRepository).findAll();
     }
 
     @Test
-    void getById() {
-        //получаем объект либо нулл
-        //проверяем запуск метода
+    void getById_shouldReturnFilledProductionDto() {
+        when(productionRepository.findById(anyLong()))
+                .thenReturn(ofNullable(ModelStubs.getProduction(1L)));
+        ProductionDto productionDto = productionService.getById(anyLong());
+
+        assertNotNull(productionDto, "Failure - expected that list of productions not null");
+        verify(productionRepository).findById(anyLong());
     }
 
     @Test
-    void create() {
-        //передаем объект без id получаем с ид
+    void create_shouldPassInstructionSuccessfulCreate() {
+        when(productionRepository.save(any(Production.class)))
+                .thenReturn(ModelStubs.getProduction(1L));
+
+        productionService.create(
+                DtoStubs.getProductionDto(1L)
+        );
+
+        verify(productionRepository).save(any(Production.class));
     }
 
     @Test
-    void update() {
-        //передаем объект, получаем объект с тем же ид
+    void update_shouldPassInstructionSuccessfulUpdate() {
+        when(productionRepository.save(any(Production.class)))
+                .thenReturn(ModelStubs.getProduction(1L));
+
+        productionService.update(
+                DtoStubs.getProductionDto(1L)
+        );
+
+        verify(productionRepository).save(any(Production.class));
     }
 
     @Test
-    void deleteById() {
-        //проверка вызова метода делет
+    void deleteById_shouldPassInstructionSuccessfulDelete() {
+        productionService.deleteById(1L);
+        verify(productionRepository).deleteById(anyLong());
     }
 }
