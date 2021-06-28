@@ -5,6 +5,7 @@ import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
+import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
@@ -27,6 +28,7 @@ import com.trade_accounting.models.dto.fias.RegionDto;
 import com.trade_accounting.models.dto.fias.StreetDto;
 import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.utils.DtoMapper;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.mapstruct.factory.Mappers;
 import com.trade_accounting.models.dto.LegalDetailDto;
 
@@ -162,5 +164,9 @@ public class DtoStubs {
 
     public static CorrectionDto getCorrectionDto(Long id) {
         return dtoMapper.toCorrectionDto(ModelStubs.getCorrection(id));
+    }
+
+    public static ProductionDto getProductionDto(Long id) {
+        return dtoMapper.productionToProductionDto(ModelStubs.getProduction(id));
     }
 }
