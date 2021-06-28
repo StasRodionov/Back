@@ -19,6 +19,8 @@ import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
+import com.trade_accounting.models.Inventarization;
+import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
@@ -64,6 +66,8 @@ import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.models.dto.InventarizationDto;
+import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
@@ -763,6 +767,51 @@ public abstract class DtoMapper {
             @Mapping(source = "warehouseId", target = "warehouse.id"),
     })
     public abstract ReturnToSupplier ReturnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
+
+    //Inventarization
+    public InventarizationDto toInventarizationDto(Inventarization inventarization) {
+
+        InventarizationDto inventarizationDto = new InventarizationDto();
+
+        if(inventarization == null) {
+            return null;
+        } else {
+            inventarizationDto.setId(inventarization.getId());
+            inventarizationDto.setDate(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm").format(inventarization.getDate()));
+            inventarizationDto.setStatus(inventarization.getStatus());
+            inventarizationDto.setComment(inventarization.getComment());
+
+            Warehouse warehouse = inventarization.getWarehouse();
+            if(warehouse == null) {
+                return null;
+            } else {
+                inventarizationDto.setWarehouseId(warehouse.getId());
+
+                Company company = inventarization.getCompany();
+                if(company == null) {
+                    return null;
+                } else {
+                    inventarizationDto.setCompanyId(company.getId());
+
+                    List<Long> listIds = inventarization.getInventarizationProducts()
+                            .stream()
+                            .map(InventarizationProduct::getId)
+                            .collect(Collectors.toList());
+
+                    inventarizationDto.setInventarizationProductIds(listIds);
+                }
+                return inventarizationDto;
+            }
+        }
+    }
+
+    @Mapping(target = "date", ignore = true)
+    public abstract Inventarization toInventarization(InventarizationDto inventarizationDto);
+
+    @Mapping(source = "product.id", target = "productId")
+    public abstract InventarizationProductDto toInventarizationProductDto(InventarizationProduct inventarizationProduct);
+
+    public abstract InventarizationProduct toInventarizationProduct(InventarizationProductDto inventarizationProductDto);
 }
 
 //abstract class CustomDtoMapper extends DtoMapper {
