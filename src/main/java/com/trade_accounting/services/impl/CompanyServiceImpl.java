@@ -60,8 +60,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyDto getById(Long id) {
-        Optional<Company> companyOptional = companyRepository.findById(id);
-        return dtoMapper.companyToCompanyDto(companyOptional.orElse(new Company()));
+        Company company = companyRepository.findById(id).orElse(new Company());
+        return dtoMapper.companyToCompanyDto(company);
     }
 
     @Override
@@ -69,7 +69,6 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.findCompanyByEmail(email);
     }
 
-    @Override
     public CompanyDto create(CompanyDto companyDto) {
         Company company = dtoMapper.companyDtoToCompany(companyDto);
         company.setAddress(addressRepository.getOne(companyDto.getAddressId()));
