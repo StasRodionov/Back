@@ -82,6 +82,7 @@ import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -1340,8 +1341,8 @@ public class DataInitializer {
             dto.setDescription(String.format(descriptionFormat, i));
             dto.setEmployeeId(employeeIds[rnd.nextInt(idCount)]);
             dto.setTaskAuthorId(employeeIds[rnd.nextInt(idCount)]);
-            dto.setCreationDateTime(LocalDateTime.now().minusDays(rnd.nextInt(100)).toString());
-            dto.setDeadlineDateTime(LocalDateTime.now().plusDays(rnd.nextInt(100)).toString());
+            dto.setCreationDateTime(LocalDateTime.now().minusDays(rnd.nextInt(100)).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            dto.setDeadlineDateTime(LocalDateTime.now().plusDays(rnd.nextInt(100)).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             dto.setCompleted(rnd.nextBoolean());
 
             tasks.add(dto);
