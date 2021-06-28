@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Data
@@ -19,7 +20,7 @@ public class InventarizationDto {
     private Long id;
 
     @NotNull
-    private LocalDateTime date;
+    private String date;
 
     @NotNull
     private Long warehouseId;
@@ -31,6 +32,5 @@ public class InventarizationDto {
 
     private String comment;
 
-    //LIST inventarization products!!!
-
+    private List<Long> inventarizationProductIds;
 }
