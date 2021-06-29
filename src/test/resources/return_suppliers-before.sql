@@ -1,1 +1,0 @@
-DELETE FROM return_suppliers;
