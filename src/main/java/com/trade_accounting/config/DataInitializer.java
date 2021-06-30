@@ -17,6 +17,8 @@ import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.InventarizationDto;
+import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
@@ -54,6 +56,8 @@ import com.trade_accounting.services.interfaces.CorrectionService;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
+import com.trade_accounting.services.interfaces.InventarizationProductService;
+import com.trade_accounting.services.interfaces.InventarizationService;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
@@ -127,6 +131,8 @@ public class DataInitializer {
     private final CorrectionProductService correctionProductService;
     private final CorrectionService correctionService;
     private final ReturnToSupplierService returnToSupplierService;
+    private final InventarizationService inventarizationService;
+    private final InventarizationProductService inventarizationProductService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -162,7 +168,9 @@ public class DataInitializer {
             TechnicalCardGroupService technicalCardGroupService,
             TechnicalCardService technicalCardService,
             CorrectionProductService correctionProductService,
-            CorrectionService correctionService, ReturnToSupplierService returnToSupplierService) {
+            CorrectionService correctionService, ReturnToSupplierService returnToSupplierService,
+            InventarizationService inventarizationService,
+            InventarizationProductService inventarizationProductService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -199,6 +207,8 @@ public class DataInitializer {
         this.correctionProductService = correctionProductService;
         this.correctionService = correctionService;
         this.returnToSupplierService = returnToSupplierService;
+        this.inventarizationService = inventarizationService;
+        this.inventarizationProductService = inventarizationProductService;
     }
 
     @PostConstruct
@@ -239,6 +249,8 @@ public class DataInitializer {
         initCorrectionProduct();
         initCorrection();
         initReturnToSuppliers();
+        initInventarizationProduct();
+        initInventarization();
     }
 
     private void initAccessParameters() {
@@ -1527,5 +1539,43 @@ public class DataInitializer {
                 .isPrint(false)
                 .isSend(false)
                 .build());
+    }
+
+    public void initInventarizationProduct() {
+        for (Long i = 1L; i <= 12; i++) {
+            inventarizationProductService.create(
+                    new InventarizationProductDto(null, i, BigDecimal.valueOf(randomInt(50, 100)),
+                            BigDecimal.valueOf(randomInt(50, 100)))
+            );
+        }
+    }
+
+    public void initInventarization() {
+        inventarizationService.create(
+                new InventarizationDto(
+                        null, "2021-06-29 14:14",
+                        1L, 1L,
+                        false, "Инвентаризация 1",
+                         List.of(1L, 2L, 3L)
+                )
+        );
+        inventarizationService.create(
+                new InventarizationDto(
+                        null, "2021-06-29 14:14",
+                        1L, 1L,
+                        false, "Инвентаризация 2",
+                        List.of(4L, 5L, 6L)
+                )
+        );
+        inventarizationService.create(
+                new InventarizationDto(
+                        null, "2021-06-29 14:14",
+                        1L, 1L,
+                        false, "Инвентаризация 3",
+                        List.of(7L, 8L, 9L)
+                )
+        );
+
+
     }
 }

@@ -730,6 +730,9 @@ public abstract class DtoMapper {
                 } else {
                     correctionDto.setCompanyId(company.getId());
 
+                    List<CorrectionProduct> listProduct = correction.getCorrectionProducts();
+                    System.out.println("Roman1"+listProduct);
+
                     List<Long> correctionProductIds = correction.getCorrectionProducts().stream()
                             .map(CorrectionProduct::getId)
                             .collect(Collectors.toList());
@@ -777,7 +780,7 @@ public abstract class DtoMapper {
             return null;
         } else {
             inventarizationDto.setId(inventarization.getId());
-            inventarizationDto.setDate(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm").format(inventarization.getDate()));
+            inventarizationDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(inventarization.getDate()));
             inventarizationDto.setStatus(inventarization.getStatus());
             inventarizationDto.setComment(inventarization.getComment());
 
@@ -793,14 +796,14 @@ public abstract class DtoMapper {
                 } else {
                     inventarizationDto.setCompanyId(company.getId());
 
-                    List<Long> listIds = inventarization.getInventarizationProducts()
-                            .stream()
+                    List<Long> listIds = inventarization.getInventarizationProducts().stream()
                             .map(InventarizationProduct::getId)
                             .collect(Collectors.toList());
 
                     inventarizationDto.setInventarizationProductIds(listIds);
+
+                    return inventarizationDto;
                 }
-                return inventarizationDto;
             }
         }
     }

@@ -52,6 +52,6 @@ public class Inventarization {
     @Column(name = "comment")
     private String comment;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<InventarizationProduct> inventarizationProducts;
 }
