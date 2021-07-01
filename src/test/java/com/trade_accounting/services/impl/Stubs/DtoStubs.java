@@ -6,6 +6,7 @@ import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.ProductionDto;
+import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
@@ -168,5 +169,9 @@ public class DtoStubs {
 
     public static ProductionDto getProductionDto(Long id) {
         return dtoMapper.productionToProductionDto(ModelStubs.getProduction(id));
+    }
+
+    public static ReturnToSupplierDto getReturnToSupplierDto(Long id){
+        return dtoMapper.returnToSupplierToReturnToSupplierDto(ModelStubs.getReturnToSupplier());
     }
 }
