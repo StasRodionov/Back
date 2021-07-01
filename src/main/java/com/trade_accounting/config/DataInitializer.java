@@ -1575,7 +1575,5 @@ public class DataInitializer {
                         List.of(7L, 8L, 9L)
                 )
         );
-
-
     }
 }

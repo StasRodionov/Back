@@ -4,7 +4,6 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Warehouse;
-import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.InventarizationProductRepository;
@@ -43,7 +42,6 @@ public class InventarizationServiceImpl implements InventarizationService {
         this.dtoMapper = dtoMapper;
     }
 
-
     @Override
     public List<InventarizationDto> getAll() {
         List<InventarizationDto> listInventarizationDto = inventarizationRepository.findAll()
@@ -75,18 +73,9 @@ public class InventarizationServiceImpl implements InventarizationService {
     }
 
     private InventarizationDto saveOrUpdate(InventarizationDto dto) {
-
         Inventarization inventarization = dtoMapper.toInventarization(dto);
-
         Warehouse warehouse = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId()));
-
-        Long id1 = dto.getCompanyId();
-        //CompanyDto companyDto = companyRepository.getCompanyById(id1);
-        //Company company = dtoMapper.companyDtoToCompany(companyDto);
-        //Company company = companyRepository.getCompaniesById(dto.getCompanyId());
-        Company company = companyRepository.getCompaniesById(id1);
-
-        //Company company = dtoMapper.companyDtoToCompany(companyRepository.getCompanyById(dto.getCompanyId()));
+        Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
         List<InventarizationProduct> inventarizationProducts = dto.getInventarizationProductIds()

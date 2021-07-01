@@ -730,9 +730,6 @@ public abstract class DtoMapper {
                 } else {
                     correctionDto.setCompanyId(company.getId());
 
-                    List<CorrectionProduct> listProduct = correction.getCorrectionProducts();
-                    System.out.println("Roman1"+listProduct);
-
                     List<Long> correctionProductIds = correction.getCorrectionProducts().stream()
                             .map(CorrectionProduct::getId)
                             .collect(Collectors.toList());
@@ -799,7 +796,6 @@ public abstract class DtoMapper {
                     List<Long> listIds = inventarization.getInventarizationProducts().stream()
                             .map(InventarizationProduct::getId)
                             .collect(Collectors.toList());
-
                     inventarizationDto.setInventarizationProductIds(listIds);
 
                     return inventarizationDto;
