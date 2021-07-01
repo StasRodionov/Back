@@ -14,6 +14,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,6 +69,10 @@ public class TaskServiceImpl implements TaskService {
 
         taskEntity.setTaskEmployee(employeeRepository.getOne(dto.getEmployeeId()));
         taskEntity.setTaskAuthor(employeeRepository.getOne(dto.getTaskAuthorId()));
+        LocalDateTime creationDateTime = LocalDateTime.parse(dto.getCreationDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime deadlineDateTime = LocalDateTime.parse(dto.getDeadlineDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        taskEntity.setCreationDateTime(creationDateTime);
+        taskEntity.setDeadlineDateTime(deadlineDateTime);
 
         var saved = taskRepository.save(taskEntity);
         dto.setId(saved.getId());
@@ -84,6 +90,11 @@ public class TaskServiceImpl implements TaskService {
 
                     taskEntity.setTaskEmployee(employeeRepository.getOne(dto.getEmployeeId()));
                     taskEntity.setTaskAuthor(employeeRepository.getOne(dto.getTaskAuthorId()));
+
+                    LocalDateTime creationDateTime = LocalDateTime.parse(dto.getCreationDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    LocalDateTime deadlineDateTime = LocalDateTime.parse(dto.getDeadlineDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    taskEntity.setCreationDateTime(creationDateTime);
+                    taskEntity.setDeadlineDateTime(deadlineDateTime);
 
                     return taskEntity;
                 })

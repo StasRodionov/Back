@@ -9,7 +9,6 @@ import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
-import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.Correction;
 import com.trade_accounting.models.CorrectionProduct;
 import com.trade_accounting.models.Currency;
@@ -22,9 +21,15 @@ import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
+import com.trade_accounting.models.RequestsProductions;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.TaxSystem;
+import com.trade_accounting.models.TechnicalCard;
+import com.trade_accounting.models.TechnicalCardGroup;
+import com.trade_accounting.models.TechnicalCardProduction;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
@@ -42,6 +47,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -49,7 +56,7 @@ import java.util.stream.Stream;
 public class ModelStubs {
     //TODO Вынести заглушки моделей из классов сервисов сюда
 
-    public static AccessParameters getAccessParameters(Long id) {
+    public static AccessParameters getAccessParameters(Long id){
         return new AccessParameters(id, false, getEmployee(id), getDepartment(id));
     }
 
@@ -72,15 +79,15 @@ public class ModelStubs {
                 id, "name",
                 "inn", "00001",
                 "89040408488", "3420943",
-                "email", true, getAddress(id),
+                "email", true, getAddress(1L),
                 "commentToAddress", "leader",
                 "leaderManagerPos", "signatureOfLider",
                 "cheidAcc", "aaaaa", "stamp",
                 getLegalDetail(id),
                 Stream.of(
-                        getBankAccount(id),
-                        getBankAccount(id+1),
-                        getBankAccount(id+2)
+                        getBankAccount(1L),
+                        getBankAccount(2L),
+                        getBankAccount(3L)
                 ).collect(Collectors.toList())
         );
     }
@@ -157,9 +164,7 @@ public class ModelStubs {
                 .build();
     }
 
-    public static Department getDepartment(Long id) {
-        return new Department(id, "name", "00001");
-    }
+    public static Department getDepartment(Long id){ return new Department(id, "name", "00001");}
 
     public static TaxSystem getTaxSystem(Long id) {
         return new TaxSystem(id, "name", "00001");
@@ -192,7 +197,6 @@ public class ModelStubs {
                 .sortNumber("000" + id)
                 .build();
     }
-
     public static ImageDto getImageDto(Long id) {
         return ImageDto.builder()
                 .id(id)
@@ -214,7 +218,7 @@ public class ModelStubs {
         return new LegalDetail(
                 id, "lastName",
                 "firstNAme", "middleName",
-                getAddress(id), "commentToAddress",
+                getAddress(1L), "commentToAddress",
                 "32432423", "kpp", "okpo", "ogrn",
                 "numberOfCertifacate", LocalDate.now(), getTypeOfContractor(id)
         );
@@ -247,8 +251,8 @@ public class ModelStubs {
         );
     }
 
-    public static Currency getCurrency(Long id) {
-        return new Currency(id, "rubles", "Russian Rubles", "25", "rub", "1");
+    public static Currency getCurrency(Long id){
+        return new Currency(id, "rubles", "Russian Rubles", "25", "rub","1");
     }
 
     public static Product getProduct(Long id) {
@@ -262,7 +266,6 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
-
     public static ProductDto getProductDto(Long id) {
         return ProductDto.builder()
                 .id(id)
@@ -274,8 +277,7 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
-
-    public static City getCity(Long id) {
+    public static City getCity(Long id){
         return City.builder()
                 .id(id)
                 .name("Petrpopavlovsk")
@@ -283,8 +285,7 @@ public class ModelStubs {
                 .streets(new ArrayList<>())
                 .build();
     }
-
-    public static District getDistrict(Long id) {
+    public static District getDistrict(Long id){
         return District.builder()
                 .id(id)
                 .name("Vasileostrivky")
@@ -292,16 +293,14 @@ public class ModelStubs {
                 .cities(new ArrayList<>())
                 .build();
     }
-
-    public static Region getRegion(Long id) {
+    public static Region getRegion(Long id){
         return Region.builder()
                 .id(id)
                 .name("SKO")
                 .districts(new ArrayList<>())
                 .build();
     }
-
-    public static FiasAddressModel getFiasAddressModel(Long id) {
+    public static FiasAddressModel getFiasAddressModel(Long id){
         return FiasAddressModel.builder()
                 .id(id)
                 .aoguid("example")
@@ -318,12 +317,78 @@ public class ModelStubs {
                 .name("Новый")
                 .build();
     }
-
-    public static Street getStreet(Long id) {
+    public static Street getStreet(Long id){
         return Street.builder()
                 .id(id)
                 .name("Volodarskogo")
                 .city(getCity(id))
+                .build();
+    }
+
+    public static Production getProduction(Long id) {
+        return Production.builder()
+                .id(id)
+                .technicalCard(getTechnicalCard(id))
+                .requestsProductions(getRequestsProductions(id))
+                .build();
+    }
+
+    public static TechnicalCard getTechnicalCard(Long id) {
+        return TechnicalCard.builder()
+                .id(id)
+                .name("name")
+                .comment("comment")
+                .productionCost("productionCost")
+                .technicalCardGroup(getTechnicalCardGroup(id))
+                .finalProduction(Stream.of(
+                        getTechnicalCardProduction(id),
+                        getTechnicalCardProduction(id + 1),
+                        getTechnicalCardProduction(id + 2)
+                ).collect(Collectors.toList()))
+                .materials(Stream.of(
+                        getTechnicalCardProduction(id + 3),
+                        getTechnicalCardProduction(id + 4),
+                        getTechnicalCardProduction(id + 5)
+                ).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static TechnicalCardGroup getTechnicalCardGroup(Long id) {
+        return TechnicalCardGroup.builder()
+                .id(id)
+                .name("name")
+                .comment("comment")
+                .sortNumber("sortNumber")
+                .build();
+    }
+
+    public static TechnicalCardProduction getTechnicalCardProduction(Long id) {
+        return TechnicalCardProduction.builder()
+                .id(id)
+                .amount(1L)
+                .product(getProduct(id))
+                .build();
+    }
+
+    public static RequestsProductions getRequestsProductions(Long id) {
+        return RequestsProductions.builder()
+                .id(id)
+                .numberOfTheCertificate("123")
+                .dateOfTheCertificate(LocalDate.ofEpochDay(2021 - 06 - 01))
+                .technicalCard(getTechnicalCard(id))
+                .volume(2)
+                .warehouse(getWarehouse(id))
+                .build();
+    }
+
+    public static Warehouse getWarehouse(Long id) {
+        return Warehouse.builder()
+                .id(id)
+                .name("name")
+                .sortNumber("sortNamber")
+                .address("address")
+                .commentToAddress("commentToAddress")
+                .comment("comment")
                 .build();
     }
 
