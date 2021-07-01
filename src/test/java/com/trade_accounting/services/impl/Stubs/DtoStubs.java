@@ -172,6 +172,6 @@ public class DtoStubs {
     }
 
     public static ReturnToSupplierDto getReturnToSupplierDto(Long id){
-        return dtoMapper.returnToSupplierToReturnToSupplierDto(ModelStubs.getReturnToSupplier());
+        return dtoMapper.returnToSupplierToReturnToSupplierDto(ModelStubs.getReturnToSupplier(id));
     }
 }

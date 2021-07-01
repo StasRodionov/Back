@@ -400,9 +400,9 @@ public class ModelStubs {
         );
     }
 
-    public static ReturnToSupplier getReturnToSupplier(){
+    public static ReturnToSupplier getReturnToSupplier(Long id){
         return ReturnToSupplier.builder()
-                .id(1L)
+                .id(id)
                 .comment("Комментарий 1")
                 .company(getCompany(1L))
                 .contract(getContract(1L))
