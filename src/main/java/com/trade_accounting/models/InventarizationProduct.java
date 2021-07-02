@@ -30,13 +30,9 @@ public class InventarizationProduct {
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 
-    //моделька остатков
-
     @Column(name = "actual_amount")
     private BigDecimal actualAmount;
 
-    //26-06 вернуть
-    //purchase price from correctionProduct?
     @Column(name = "price")
     private BigDecimal price;
 }
