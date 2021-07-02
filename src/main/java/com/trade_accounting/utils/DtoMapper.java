@@ -760,7 +760,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractor.id", target = "contractorId"),
             @Mapping(source = "warehouse.id", target = "warehouseId"),
     })
-    public abstract ReturnToSupplierDto ReturnToSupplierToReturnToSupplierDto(ReturnToSupplier returnToSupplier);
+    public abstract ReturnToSupplierDto returnToSupplierToReturnToSupplierDto(ReturnToSupplier returnToSupplier);
 
     @Mappings({
             @Mapping(source = "companyId", target = "company.id"),
@@ -768,7 +768,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorId", target = "contractor.id"),
             @Mapping(source = "warehouseId", target = "warehouse.id"),
     })
-    public abstract ReturnToSupplier ReturnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
+    public abstract ReturnToSupplier returnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
 
     //Inventarization
     public InventarizationDto toInventarizationDto(Inventarization inventarization) {
