@@ -26,6 +26,7 @@ import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.RequestsProductions;
+import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.TaxSystem;
@@ -400,6 +401,20 @@ public class ModelStubs {
                 1L, "Склад 1", "1", "Володарского", "Комментарий 1",
                 "Комментарий 2"
         );
+    }
+
+    public static ReturnToSupplier getReturnToSupplier(Long id){
+        return ReturnToSupplier.builder()
+                .id(id)
+                .comment("Комментарий 1")
+                .company(getCompany(1L))
+                .contract(getContract(1L))
+                .contractor(getContractor(1L))
+                .warehouse(getWarehouse(1L))
+                .date(LocalDateTime.now().toString())
+                .isPrint(false)
+                .isSend(false)
+                .build();
     }
 
     public static CorrectionProduct getCorrectionProduct(Long id) {

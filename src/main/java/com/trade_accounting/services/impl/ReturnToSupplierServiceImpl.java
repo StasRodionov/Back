@@ -46,7 +46,7 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
     @Override
     public ReturnToSupplierDto getById(Long id) {
         Optional<ReturnToSupplier> returnsToSuppliersById = returnsToSuppliersRepository.findById(id);
-        return dtoMapper.ReturnToSupplierToReturnToSupplierDto(returnsToSuppliersById.orElse(new ReturnToSupplier()));
+        return dtoMapper.returnToSupplierToReturnToSupplierDto(returnsToSuppliersById.orElse(new ReturnToSupplier()));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
                 .isPrint(dto.getIsPrint())
                 .isSend(dto.getIsSend())
                 .build();
-        return dtoMapper.ReturnToSupplierToReturnToSupplierDto(returnsToSuppliersRepository.save(returnsToSuppliers));
+        return dtoMapper.returnToSupplierToReturnToSupplierDto(returnsToSuppliersRepository.save(returnsToSuppliers));
     }
 
     @Override
@@ -87,6 +87,6 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
 
     @Override
     public List<ReturnToSupplierDto> search(Specification<ReturnToSupplier> spec) {
-        return executeSearch(returnsToSuppliersRepository, dtoMapper::ReturnToSupplierToReturnToSupplierDto, spec);
+        return executeSearch(returnsToSuppliersRepository, dtoMapper::returnToSupplierToReturnToSupplierDto, spec);
     }
 }
