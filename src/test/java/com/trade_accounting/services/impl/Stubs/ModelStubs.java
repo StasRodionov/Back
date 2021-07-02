@@ -15,6 +15,8 @@ import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
+import com.trade_accounting.models.Inventarization;
+import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
@@ -42,6 +44,7 @@ import com.trade_accounting.models.fias.District;
 import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
+import io.swagger.models.auth.In;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -416,6 +419,29 @@ public class ModelStubs {
                 List.of(getCorrectionProduct(1L),
                         getCorrectionProduct(2L),
                         getCorrectionProduct(3L))
+        );
+    }
+
+    public static InventarizationProduct getInventarizationProduct(Long id) {
+        return new InventarizationProduct(
+                id,
+                getProduct(id),
+                BigDecimal.ONE,
+                BigDecimal.ONE
+        );
+    }
+
+    public static Inventarization getInventarization(Long id) {
+        return new Inventarization(
+                id,
+                LocalDateTime.now(),
+                getWarehouse(id),
+                getCompany(id),
+                false,
+                "Комментарий 1",
+                List.of(getInventarizationProduct(1L),
+                        getInventarizationProduct(2L),
+                        getInventarizationProduct(3L))
         );
     }
 }

@@ -1,10 +1,12 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
+import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
@@ -168,5 +170,9 @@ public class DtoStubs {
 
     public static ProductionDto getProductionDto(Long id) {
         return dtoMapper.productionToProductionDto(ModelStubs.getProduction(id));
+    }
+
+    public static InventarizationDto getInventarizationDto(Long id) {
+        return dtoMapper.toInventarizationDto(ModelStubs.getInventarization(id));
     }
 }
