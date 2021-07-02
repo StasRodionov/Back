@@ -172,7 +172,7 @@ public class DtoStubs {
         return dtoMapper.productionToProductionDto(ModelStubs.getProduction(id));
     }
 
-    public static InventarizationDto getInventarizationDto(Long id) {
+    public static InventarizationDto getInvenratizationDto(Long id) {
         return dtoMapper.toInventarizationDto(ModelStubs.getInventarization(id));
     }
 }
