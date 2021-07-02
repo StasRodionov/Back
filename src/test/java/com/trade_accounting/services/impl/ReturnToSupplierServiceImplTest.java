@@ -1,8 +1,10 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.repositories.ReturnToSupplierRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,9 +14,13 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,6 +49,31 @@ class ReturnToSupplierServiceImplTest {
                                 DtoStubs.getReturnToSupplierDto(3L)));
         List<ReturnToSupplierDto> list = returnToSupplierService.getAll();
         assertEquals(3, list.size());
+    }
+
+    @Test
+    void getById_shouldReturnFilledReturnToSupplier() {
+        Optional<ReturnToSupplier> model = Optional.of(ModelStubs.getReturnToSupplier(1L));
+        when(returnToSupplierRepository.findById(anyLong())).thenReturn(model);
+        ReturnToSupplierDto dto = returnToSupplierService.getById(1L);
+        assertEquals(1L, dto.getId());
+    }
+
+    @Test
+    void create_shouldPassInstructionsSuccessfulCreate() {
+        saveOrUpdate();
+    }
+
+    @Test
+    void update_shouldPassInstructionsSuccessfulUpdate() {
+        saveOrUpdate();
+    }
+
+    private void saveOrUpdate() {
+        when(returnToSupplierRepository.save(any())).thenReturn(ModelStubs.getReturnToSupplier(1l));
+        ReturnToSupplierDto dto = returnToSupplierService.create(DtoStubs.getReturnToSupplierDto(1L));
+        assertEquals(1, dto.getId());
+        verify(returnToSupplierRepository).save(any(ReturnToSupplier.class));
     }
 
 }
