@@ -2,7 +2,11 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
+import com.trade_accounting.repositories.CompanyRepository;
+import com.trade_accounting.repositories.ContractRepository;
+import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.ReturnToSupplierRepository;
+import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
@@ -28,6 +32,18 @@ class ReturnToSupplierServiceImplTest {
 
     @Mock
     ReturnToSupplierRepository returnToSupplierRepository;
+
+    @Mock
+    CompanyRepository companyRepository;
+
+    @Mock
+    ContractRepository contractRepository;
+
+    @Mock
+    ContractorRepository contractorRepository;
+
+    @Mock
+    WarehouseRepository warehouseRepository;
 
     @Spy
     DtoMapperImpl dtoMapper;
@@ -69,8 +85,14 @@ class ReturnToSupplierServiceImplTest {
         saveOrUpdate();
     }
 
+    @Test
+    void deleteById_shouldPassInstructionsSuccessfulDelete(){
+        returnToSupplierService.deleteById(anyLong());
+        verify(returnToSupplierRepository).deleteById(anyLong());
+    }
+
     private void saveOrUpdate() {
-        when(returnToSupplierRepository.save(any())).thenReturn(ModelStubs.getReturnToSupplier(1l));
+        when(returnToSupplierRepository.save(any())).thenReturn(ModelStubs.getReturnToSupplier(1L));
         ReturnToSupplierDto dto = returnToSupplierService.create(DtoStubs.getReturnToSupplierDto(1L));
         assertEquals(1, dto.getId());
         verify(returnToSupplierRepository).save(any(ReturnToSupplier.class));
