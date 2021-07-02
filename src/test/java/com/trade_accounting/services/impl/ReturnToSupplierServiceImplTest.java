@@ -86,7 +86,7 @@ class ReturnToSupplierServiceImplTest {
     }
 
     @Test
-    void deleteById_shouldPassInstructionsSuccessfulDelete(){
+    void deleteById_shouldPassInstructionsSuccessfulDelete() {
         returnToSupplierService.deleteById(anyLong());
         verify(returnToSupplierRepository).deleteById(anyLong());
     }
