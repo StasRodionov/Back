@@ -7,6 +7,3 @@ VALUES (1, 'Комментарий 1', '2021-06-23 15:10', false, false, 1, 1, 1
        (2, 'Комментарий 2', '2021-06-23 15:10', true, false, 2, 1, 2, 1),
        (3, 'Комментарий 3', '2021-06-23 15:10', false, true, 3, 1, 3, 1),
        (4, 'Комментарий 4', '2021-06-23 15:10', true, true, 4, 1, 4, 1);
-
-SELECT setval('return_suppliers_id_seq', max(id))
-FROM return_suppliers;
