@@ -760,7 +760,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractor.id", target = "contractorId"),
             @Mapping(source = "warehouse.id", target = "warehouseId"),
     })
-    public abstract ReturnToSupplierDto ReturnToSupplierToReturnToSupplierDto(ReturnToSupplier returnToSupplier);
+    public abstract ReturnToSupplierDto returnToSupplierToReturnToSupplierDto(ReturnToSupplier returnToSupplier);
 
     @Mappings({
             @Mapping(source = "companyId", target = "company.id"),
@@ -768,7 +768,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorId", target = "contractor.id"),
             @Mapping(source = "warehouseId", target = "warehouse.id"),
     })
-    public abstract ReturnToSupplier ReturnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
+    public abstract ReturnToSupplier returnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
 
     //Inventarization
     public InventarizationDto toInventarizationDto(Inventarization inventarization) {
@@ -779,7 +779,7 @@ public abstract class DtoMapper {
             return null;
         } else {
             inventarizationDto.setId(inventarization.getId());
-            inventarizationDto.setDate(DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm").format(inventarization.getDate()));
+            inventarizationDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(inventarization.getDate()));
             inventarizationDto.setStatus(inventarization.getStatus());
             inventarizationDto.setComment(inventarization.getComment());
 
@@ -795,14 +795,13 @@ public abstract class DtoMapper {
                 } else {
                     inventarizationDto.setCompanyId(company.getId());
 
-                    List<Long> listIds = inventarization.getInventarizationProducts()
-                            .stream()
+                    List<Long> listIds = inventarization.getInventarizationProducts().stream()
                             .map(InventarizationProduct::getId)
                             .collect(Collectors.toList());
-
                     inventarizationDto.setInventarizationProductIds(listIds);
+
+                    return inventarizationDto;
                 }
-                return inventarizationDto;
             }
         }
     }
