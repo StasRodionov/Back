@@ -1,15 +1,15 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.BankAccount;
-import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.dto.BankAccountDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
@@ -58,5 +58,4 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
             "ba.sortNumber) from BankAccount ba " +
             "where ba.rcbic = :uniqBic")
     List<BankAccountDto> getBankByBic(@Param("uniqBic") String uniqBic);
-
 }
