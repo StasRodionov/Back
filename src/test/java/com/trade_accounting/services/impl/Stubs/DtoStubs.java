@@ -11,6 +11,7 @@ import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
@@ -171,5 +172,9 @@ public class DtoStubs {
 
     public static ReturnToSupplierDto getReturnToSupplierDto(Long id) {
         return dtoMapper.returnToSupplierToReturnToSupplierDto(ModelStubs.getReturnToSupplier(id));
+    }
+
+    public static InventarizationDto getInvenratizationDto(Long id) {
+        return dtoMapper.toInventarizationDto(ModelStubs.getInventarization(id));
     }
 }
