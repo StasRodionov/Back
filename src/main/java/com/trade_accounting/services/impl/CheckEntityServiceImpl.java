@@ -10,6 +10,7 @@ import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
+import com.trade_accounting.repositories.BalanceAdjustmentRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
@@ -89,6 +90,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final ReturnToSupplierRepository returnToSupplierRepository;
     private final InventarizationRepository inventarizationRepository;
     private final InventarizationProductRepository inventarizationProductRepository;
+    private final BalanceAdjustmentRepository balanceAdjustmentRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository,
@@ -122,7 +124,8 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   CorrectionRepository correctionRepository, RemainRepository remainRepository,
                                   CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository, ReturnToSupplierRepository returnToSupplierRepository,
                                   InventarizationRepository inventarizationRepository,
-                                  InventarizationProductRepository inventarizationProductRepository) {
+                                  InventarizationProductRepository inventarizationProductRepository,
+                                  BalanceAdjustmentRepository balanceAdjustmentRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -159,6 +162,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.returnToSupplierRepository = returnToSupplierRepository;
         this.inventarizationRepository = inventarizationRepository;
         this.inventarizationProductRepository = inventarizationProductRepository;
+        this.balanceAdjustmentRepository = balanceAdjustmentRepository;
     }
 
 
