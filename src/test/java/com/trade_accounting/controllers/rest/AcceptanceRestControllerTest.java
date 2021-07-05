@@ -2,7 +2,6 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.AcceptanceDto;
-import com.trade_accounting.models.dto.RemainDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -58,8 +56,8 @@ public class AcceptanceRestControllerTest {
                 .id(3L)
                 .comment("comment3")
                 .incomingNumber("333")
-                .incomingNumberDate("2021-07-03").contractorId(33333L)
-                .projectId(333333L).warehouseId(3333333L).contractId(33333333L)
+                .incomingNumberDate("2021-07-03").contractorId(3L)
+//                .projectId(3L).warehouseId(3L).contractId(3L)
                 .build());
         mockMvc.perform(get("/api/acceptance/3"))
                 .andDo(print())
@@ -74,8 +72,8 @@ public class AcceptanceRestControllerTest {
                 .id(3L)
                 .comment("comment3")
                 .incomingNumber("333")
-                .incomingNumberDate("2021-07-03").contractorId(33333L)
-                .projectId(333333L).warehouseId(3333333L).contractId(33333333L)
+                .incomingNumberDate("2021-07-03").contractorId(3L)
+//                .projectId(3L).warehouseId(3L).contractId(3L)
                 .build();
         String createdAcceptanceJson = new Gson().toJson(acceptanceDto);
         mockMvc.perform(post("/api/acceptance").contentType(MediaType.APPLICATION_JSON)
@@ -97,8 +95,8 @@ public class AcceptanceRestControllerTest {
                 .id(3L)
                 .comment("comment3")
                 .incomingNumber("333")
-                .incomingNumberDate("2021-07-03").contractorId(33333L)
-                .projectId(333333L).warehouseId(3333333L).contractId(33333333L)
+                .incomingNumberDate("2021-07-03").contractorId(3L)
+//                .projectId(3L).warehouseId(3L).contractId(3L)
                 .build();
         String updatedAcceptanceJson = new Gson().toJson(updatedAcceptance);
         mockMvc.perform(put("/api/acceptance").contentType(MediaType.APPLICATION_JSON)
