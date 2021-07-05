@@ -53,7 +53,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpec
 //            "e.chiefAccountantSignature, " +
 //            "e.stamp, " +
 //            "e.legalDetail.id) from Company e where e.id = :id")
-//    CompanyDto getById(@Param("id") Long id);
+    CompanyDto getById(@Param("id") Long id);
     CompanyDto getCompanyById(Long id);
 
 //    @Query("select new com.trade_accounting.models.dto.CompanyDto(" +

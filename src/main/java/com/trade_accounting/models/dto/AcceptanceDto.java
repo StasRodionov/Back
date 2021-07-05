@@ -20,7 +20,7 @@ public class AcceptanceDto {
 
     private String comment;
 
-    private LocalDate incomingNumberDate;
+    private String incomingNumberDate;
 
     private Long contractorId;
 

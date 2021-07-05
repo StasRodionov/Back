@@ -2,14 +2,14 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.exceptions.BadRequestException;
 import com.trade_accounting.exceptions.NotFoundEntityException;
-import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.repositories.AcceptanceProductionRepository;
+import com.trade_accounting.repositories.AcceptanceRepository;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
@@ -47,7 +47,6 @@ import com.trade_accounting.services.interfaces.CheckEntityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -86,6 +85,9 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final RemainRepository remainRepository;
     private final CorrectionProductRepository correctionProductRepository;
     private final AddressRepository addressRepository;
+    private final AcceptanceRepository acceptanceRepository;
+    private final AcceptanceProductionRepository acceptanceProductionRepository;
+
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository,
@@ -117,7 +119,8 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
                                   TechnicalCardRepository technicalCardRepository,
                                   CorrectionRepository correctionRepository, RemainRepository remainRepository,
-                                  CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository) {
+                                  CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository,
+                                  AcceptanceRepository acceptanceRepository, AcceptanceProductionRepository acceptanceProductionRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -151,6 +154,8 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.remainRepository = remainRepository;
         this.correctionProductRepository = correctionProductRepository;
         this.addressRepository = addressRepository;
+        this.acceptanceRepository = acceptanceRepository;
+        this.acceptanceProductionRepository = acceptanceProductionRepository;
     }
 
 
@@ -461,6 +466,20 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsCorrectionProductById(Long correctionProduct) {
         if (!correctionProductRepository.existsById(correctionProduct)) {
             throw new NotFoundEntityException("Товар для корректировки остатков с id=" + correctionProduct + "не найден");
+        }
+    }
+
+    @Override
+    public void checkExistsAcceptanceById(Long id) {
+        if (!acceptanceRepository.existsById(id)) {
+            throw new NotFoundEntityException("Приемка с id=" + id + "не найдена");
+        }
+    }
+
+    @Override
+    public void checkExistsAcceptanceProductionById(Long id) {
+        if (!acceptanceProductionRepository.existsById(id)) {
+            throw new NotFoundEntityException("Приемка товара с id=" + id + "не найдена");
         }
     }
 }
