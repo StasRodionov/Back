@@ -496,4 +496,12 @@ public class CheckEntityServiceImpl implements CheckEntityService {
             throw new NotFoundEntityException("Товар для инвентаризации с id=" + inventarizationProduct + "не найден");
         }
     }
+
+    @Override
+    public void checkExistsBalanceAdjustmentById(Long balanceAdjustment) {
+        if (!balanceAdjustmentRepository.existsById(balanceAdjustment)) {
+            throw new NotFoundEntityException("Корректировка баланса с id=" + balanceAdjustment + "не найден");
+        }
+    }
+
 }
