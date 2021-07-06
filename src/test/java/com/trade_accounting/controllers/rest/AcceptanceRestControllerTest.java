@@ -55,9 +55,9 @@ public class AcceptanceRestControllerTest {
         String acceptanceJson = new Gson().toJson(AcceptanceDto.builder()
                 .id(3L)
                 .comment("comment3")
-                .incomingNumber("333")
+                .incomingNumber("3")
                 .incomingNumberDate("2021-07-03").contractorId(3L)
-                .projectId(3L).warehouseId(3L)//.contractId(3L)
+                .projectId(3L).warehouseId(3L).contractId(3L)
                 .build());
         mockMvc.perform(get("/api/acceptance/3"))
                 .andDo(print())
@@ -73,7 +73,7 @@ public class AcceptanceRestControllerTest {
                 .comment("comment3")
                 .incomingNumber("333")
                 .incomingNumberDate("2021-07-03").contractorId(4L)
-                .projectId(4L).warehouseId(4L)//.contractId(4L)
+                .projectId(4L).warehouseId(4L).contractId(4L)
                 .build();
         String createdAcceptanceJson = new Gson().toJson(acceptanceDto);
         mockMvc.perform(post("/api/acceptance").contentType(MediaType.APPLICATION_JSON)
@@ -96,7 +96,7 @@ public class AcceptanceRestControllerTest {
                 .comment("comment3")
                 .incomingNumber("333")
                 .incomingNumberDate("2021-07-03").contractorId(3L)
-                .projectId(3L).warehouseId(3L)//.contractId(3L)
+                .projectId(3L).warehouseId(3L).contractId(3L)
                 .build();
         String updatedAcceptanceJson = new Gson().toJson(updatedAcceptance);
         mockMvc.perform(put("/api/acceptance").contentType(MediaType.APPLICATION_JSON)
