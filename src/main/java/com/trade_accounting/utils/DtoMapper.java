@@ -6,25 +6,28 @@ import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.AttributeOfCalculationObject;
+import com.trade_accounting.models.BalanceAdjustment;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.Correction;
 import com.trade_accounting.models.CorrectionProduct;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
+import com.trade_accounting.models.Inventarization;
+import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
-import com.trade_accounting.models.PriceList;
-import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
+import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
@@ -32,8 +35,9 @@ import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Remain;
 import com.trade_accounting.models.RetailStore;
+import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
-import com.trade_accounting.models.ContractorStatus;
+import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TaxSystem;
@@ -50,6 +54,7 @@ import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
+import com.trade_accounting.models.dto.BalanceAdjustmentDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContactDto;
@@ -57,19 +62,20 @@ import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.ContractorStatusDto;
+import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.models.dto.InventarizationDto;
+import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
-import com.trade_accounting.models.dto.PriceListDto;
-import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
-import com.trade_accounting.models.dto.CorrectionDto;
+import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
@@ -77,7 +83,9 @@ import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RemainDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
+import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -98,11 +106,15 @@ import com.trade_accounting.models.fias.District;
 import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
+import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import lombok.SneakyThrows;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -110,6 +122,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -198,6 +211,7 @@ public abstract class DtoMapper {
 
     //AgentReports
     public abstract AgentReportsDto agentReportsToAgentReportsDto(AgentReports agentReports);
+
     public abstract AgentReports agentReportsDtoToAgentReports(AgentReportsDto agentReportsDto);
 
     //BankAccount
@@ -212,17 +226,39 @@ public abstract class DtoMapper {
     //Company
     @Mappings({
             @Mapping(source = "address.id", target = "addressId"),
-            //@Mapping(source = "bankAccounts.id", target = "bankAccountDtoIds"),
             @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
     })
     public abstract CompanyDto companyToCompanyDto(Company company);
 
+    @AfterMapping
+    public void listBankAccountsIdToListBankAccountDtoIds(Company company, @MappingTarget CompanyDto companyDto) {
+        if (company.getBankAccounts() == null) {
+            companyDto.setBankAccountDtoIds(null);
+        } else {
+            List<Long> bankAccountDtoIds = company.getBankAccounts().stream()
+                    .map(o -> o.getId()).collect(Collectors.toList());
+            companyDto.setBankAccountDtoIds(bankAccountDtoIds);
+        }
+    }
+
     @Mappings({
             @Mapping(source = "addressId", target = "address.id"),
-          //  @Mapping(source = "bankAccountDtoIds", target = "bankAccounts.id"),
             @Mapping(source = "legalDetailDtoId", target = "legalDetail.id")
     })
     public abstract Company companyDtoToCompany(CompanyDto companyDto);
+
+    @AfterMapping
+    public void listBankAccountsDtoIdsToListBankAccount(CompanyDto companyDto, @MappingTarget Company company, @Context BankAccountRepository bankAccountRepository) {
+        if (companyDto.getBankAccountDtoIds() == null) {
+            company.setBankAccounts(null);
+        } else {
+            List<BankAccount> bankAccounts = companyDto.getBankAccountDtoIds()
+                    .stream()
+                    .map(id -> bankAccountRepository.getOne(id))
+                    .collect(Collectors.toList());
+            company.setBankAccounts(bankAccounts);
+        }
+    }
 
     //Contact
     public abstract ContactDto contactToContactDto(Contact contact);
@@ -522,7 +558,9 @@ public abstract class DtoMapper {
 
     @Mappings({
             @Mapping(source = "employeeId", target = "taskEmployee.id"),
-            @Mapping(source = "taskAuthorId", target = "taskAuthor.id")
+            @Mapping(source = "taskAuthorId", target = "taskAuthor.id"),
+            @Mapping(target = "creationDateTime", ignore = true),
+            @Mapping(target = "deadlineDateTime", ignore = true)
     })
     public abstract Task taskDtoToTask(TaskDto taskDto);
 
@@ -678,7 +716,7 @@ public abstract class DtoMapper {
             return null;
         } else {
             correctionDto.setId(correction.getId());
-            correctionDto.setDate(correction.getDate());
+            correctionDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(correction.getDate()));
             correctionDto.setIsSent(correction.getIsSent());
             correctionDto.setIsPrint(correction.getIsPrint());
             correctionDto.setWriteOffProduct(correction.getWriteOffProduct());
@@ -706,6 +744,7 @@ public abstract class DtoMapper {
         }
     }
 
+    @Mapping(target = "date", ignore = true)
     public abstract Correction toCorrection(CorrectionDto correctionDto);
 
     //    CorrectionProduct
@@ -715,4 +754,96 @@ public abstract class DtoMapper {
     public abstract CorrectionProductDto toCorrectionProductDto(CorrectionProduct correction);
 
     public abstract CorrectionProduct toCorrectionProduct(CorrectionProductDto correctionDto);
+
+    // ReturnToSupplier
+    @Mappings({
+            @Mapping(source = "company.id", target = "companyId"),
+            @Mapping(source = "contract.id", target = "contractId"),
+            @Mapping(source = "contractor.id", target = "contractorId"),
+            @Mapping(source = "warehouse.id", target = "warehouseId"),
+    })
+    public abstract ReturnToSupplierDto returnToSupplierToReturnToSupplierDto(ReturnToSupplier returnToSupplier);
+
+    @Mappings({
+            @Mapping(source = "companyId", target = "company.id"),
+            @Mapping(source = "contractId", target = "contract.id"),
+            @Mapping(source = "contractorId", target = "contractor.id"),
+            @Mapping(source = "warehouseId", target = "warehouse.id"),
+    })
+    public abstract ReturnToSupplier returnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
+
+    //Inventarization
+    public InventarizationDto toInventarizationDto(Inventarization inventarization) {
+
+        InventarizationDto inventarizationDto = new InventarizationDto();
+
+        if(inventarization == null) {
+            return null;
+        } else {
+            inventarizationDto.setId(inventarization.getId());
+            inventarizationDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(inventarization.getDate()));
+            inventarizationDto.setStatus(inventarization.getStatus());
+            inventarizationDto.setComment(inventarization.getComment());
+
+            Warehouse warehouse = inventarization.getWarehouse();
+            if(warehouse == null) {
+                return null;
+            } else {
+                inventarizationDto.setWarehouseId(warehouse.getId());
+
+                Company company = inventarization.getCompany();
+                if(company == null) {
+                    return null;
+                } else {
+                    inventarizationDto.setCompanyId(company.getId());
+
+                    List<Long> listIds = inventarization.getInventarizationProducts().stream()
+                            .map(InventarizationProduct::getId)
+                            .collect(Collectors.toList());
+                    inventarizationDto.setInventarizationProductIds(listIds);
+
+                    return inventarizationDto;
+                }
+            }
+        }
+    }
+
+    @Mapping(target = "date", ignore = true)
+    public abstract Inventarization toInventarization(InventarizationDto inventarizationDto);
+
+    @Mapping(source = "product.id", target = "productId")
+    public abstract InventarizationProductDto toInventarizationProductDto(InventarizationProduct inventarizationProduct);
+
+    public abstract InventarizationProduct toInventarizationProduct(InventarizationProductDto inventarizationProductDto);
+
+    //    BalanceAdjustment
+    @Mappings({
+            @Mapping(source = "company.id", target = "companyId"),
+            @Mapping(source = "contractor.id", target = "contractorId"),
+    })
+    public abstract BalanceAdjustmentDto BalanceAdjustmentToBalanceAdjustmentDto(BalanceAdjustment balanceAdjustment);
+
+    @Mappings({
+            @Mapping(source = "companyId", target = "company.id"),
+            @Mapping(source = "contractorId", target = "contractor.id"),
+    })
+    public abstract BalanceAdjustment BalanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
+
 }
+
+//abstract class CustomDtoMapper extends DtoMapper {
+//
+//    @Override
+//    public CompanyDto companyToCompanyDto(Company company) {
+//        CompanyDto companyDto = new CompanyDto();
+//        if (company.getBankAccounts() == null) {
+//            companyDto.setBankAccountDtoIds(null);
+//        } else {
+//            List<Long> bankAccountDtoIds = company.getBankAccounts().stream()
+//                    .map(o -> o.getId()).collect(Collectors.toList());
+//            companyDto.setBankAccountDtoIds(bankAccountDtoIds);
+//        }
+//        return companyDto;
+//    }
+
+//}

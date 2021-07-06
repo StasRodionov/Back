@@ -14,6 +14,8 @@ import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,13 +71,15 @@ public class CorrectionServiceImpl implements CorrectionService {
     private CorrectionDto saveOrUpdate(CorrectionDto dto) {
         Correction correction = dtoMapper.toCorrection(dto);
         Warehouse warehouse = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId()));
-        Company company = dtoMapper.companyDtoToCompany(companyRepository.getById(dto.getCompanyId()));
+        Company company = companyRepository.getCompaniesById(dto.getCompanyId());
+        LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
         List<CorrectionProduct> correctionProducts = dto.getCorrectionProductIds().stream()
                 .map(id -> correctionProductRepository.findById(id).orElse(null)).collect(Collectors.toList());
 
         correction.setWarehouse(warehouse);
         correction.setCompany(company);
+        correction.setDate(date);
         correction.setCorrectionProducts(correctionProducts);
 
         return dtoMapper.toCorrectionDto(correctionRepository.save(correction));

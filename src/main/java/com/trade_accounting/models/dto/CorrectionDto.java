@@ -18,7 +18,7 @@ public class CorrectionDto {
     private Long id;
 
     @NotNull
-    private LocalDateTime date;
+    private String date;
 
     @NotNull
     private Long warehouseId;

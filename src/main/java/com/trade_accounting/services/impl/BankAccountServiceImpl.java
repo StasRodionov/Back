@@ -1,13 +1,16 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.BankAccount;
+import com.trade_accounting.models.Company;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.repositories.BankAccountRepository;
+import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.services.interfaces.BankAccountService;
 import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,11 +19,13 @@ import java.util.stream.Collectors;
 public class BankAccountServiceImpl implements BankAccountService {
 
     private final BankAccountRepository bankAccountRepository;
+    private final CompanyRepository companyRepository;
 
     private final DtoMapper dtoMapper;
 
-    public BankAccountServiceImpl(BankAccountRepository bankAccountRepository, DtoMapper dtoMapper) {
+    public BankAccountServiceImpl(BankAccountRepository bankAccountRepository, CompanyRepository companyRepository, DtoMapper dtoMapper) {
         this.bankAccountRepository = bankAccountRepository;
+        this.companyRepository = companyRepository;
         this.dtoMapper = dtoMapper;
     }
 
@@ -64,6 +69,16 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     public void deleteById(Long id) {
+        BankAccount bankAccount = bankAccountRepository.getOne(id);
+        Company company = companyRepository.getCompanyByBankAccounts(bankAccount);
+        List<BankAccount> newBankAccountList = new ArrayList<>();
+        for (BankAccount item : company.getBankAccounts()) {
+            if (!item.equals(bankAccount)) {
+                newBankAccountList.add(item);
+            }
+        }
+        company.setBankAccounts(newBankAccountList);
+        companyRepository.save(company);
         bankAccountRepository.deleteById(id);
     }
 }

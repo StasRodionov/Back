@@ -36,7 +36,6 @@ public class ProductionServiceImpl implements ProductionService {
     @Override
     public ProductionDto getById(Long id) {
         return dtoMapper.productionToProductionDto(productionRepository.findById(id).orElse(new Production()));
-
     }
 
     @Override
@@ -44,7 +43,6 @@ public class ProductionServiceImpl implements ProductionService {
         Production production = productionRepository.save(dtoMapper.productionDtoToProduction(dto));
         dto.setId(production.getId());
         return dtoMapper.productionToProductionDto(production);
-
     }
 
     @Override

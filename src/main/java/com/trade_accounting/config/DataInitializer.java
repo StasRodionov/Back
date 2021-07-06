@@ -11,10 +11,14 @@ import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.models.dto.ContractorStatusDto;
+import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.InventarizationDto;
+import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
@@ -25,8 +29,8 @@ import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
+import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -46,11 +50,14 @@ import com.trade_accounting.services.interfaces.ContactService;
 import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import com.trade_accounting.services.interfaces.ContractorService;
+import com.trade_accounting.services.interfaces.ContractorStatusService;
 import com.trade_accounting.services.interfaces.CorrectionProductService;
+import com.trade_accounting.services.interfaces.CorrectionService;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
-import com.trade_accounting.services.interfaces.ImageService;
+import com.trade_accounting.services.interfaces.InventarizationProductService;
+import com.trade_accounting.services.interfaces.InventarizationService;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
@@ -60,8 +67,8 @@ import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
+import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import com.trade_accounting.services.interfaces.RoleService;
-import com.trade_accounting.services.interfaces.ContractorStatusService;
 import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
@@ -79,6 +86,7 @@ import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -106,7 +114,6 @@ public class DataInitializer {
     private final ContractorService contractorService;
     private final BankAccountService bankAccountService;
     private final EmployeeService employeeService;
-    private final ImageService imageService;
     private final ProductService productService;
     private final CurrencyService currencyService;
     private final InvoiceService invoiceService;
@@ -123,6 +130,10 @@ public class DataInitializer {
     private final TechnicalCardGroupService technicalCardGroupService;
     private final TechnicalCardService technicalCardService;
     private final CorrectionProductService correctionProductService;
+    private final CorrectionService correctionService;
+    private final ReturnToSupplierService returnToSupplierService;
+    private final InventarizationService inventarizationService;
+    private final InventarizationProductService inventarizationProductService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -143,7 +154,6 @@ public class DataInitializer {
             ContractorService contractorService,
             BankAccountService bankAccountService,
             EmployeeService employeeService,
-            ImageService imageService,
             ProductService productService,
             CurrencyService currencyService,
             InvoiceService invoiceService,
@@ -158,7 +168,10 @@ public class DataInitializer {
             AccessParametersService accessParametersService,
             TechnicalCardGroupService technicalCardGroupService,
             TechnicalCardService technicalCardService,
-            CorrectionProductService correctionProductService) {
+            CorrectionProductService correctionProductService,
+            CorrectionService correctionService, ReturnToSupplierService returnToSupplierService,
+            InventarizationService inventarizationService,
+            InventarizationProductService inventarizationProductService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -177,7 +190,6 @@ public class DataInitializer {
         this.contractorService = contractorService;
         this.bankAccountService = bankAccountService;
         this.employeeService = employeeService;
-        this.imageService = imageService;
         this.productService = productService;
         this.currencyService = currencyService;
         this.invoiceService = invoiceService;
@@ -194,6 +206,10 @@ public class DataInitializer {
         this.technicalCardGroupService = technicalCardGroupService;
         this.technicalCardService = technicalCardService;
         this.correctionProductService = correctionProductService;
+        this.correctionService = correctionService;
+        this.returnToSupplierService = returnToSupplierService;
+        this.inventarizationService = inventarizationService;
+        this.inventarizationProductService = inventarizationProductService;
     }
 
     @PostConstruct
@@ -232,6 +248,10 @@ public class DataInitializer {
         initTechnicalCardGroups();
         initTechnicalCards();
         initCorrectionProduct();
+        initCorrection();
+        initReturnToSuppliers();
+        initInventarizationProduct();
+        initInventarization();
     }
 
     private void initAccessParameters() {
@@ -1377,8 +1397,8 @@ public class DataInitializer {
             dto.setDescription(String.format(descriptionFormat, i));
             dto.setEmployeeId(employeeIds[rnd.nextInt(idCount)]);
             dto.setTaskAuthorId(employeeIds[rnd.nextInt(idCount)]);
-            dto.setCreationDateTime(LocalDateTime.now().minusDays(rnd.nextInt(100)).toString());
-            dto.setDeadlineDateTime(LocalDateTime.now().plusDays(rnd.nextInt(100)).toString());
+            dto.setCreationDateTime(LocalDateTime.now().minusDays(rnd.nextInt(100)).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            dto.setDeadlineDateTime(LocalDateTime.now().plusDays(rnd.nextInt(100)).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             dto.setCompleted(rnd.nextBoolean());
 
             tasks.add(dto);
@@ -1470,11 +1490,135 @@ public class DataInitializer {
     }
 
     public void initCorrectionProduct() {
-        for (Long i = 1L; i <= 10; i++) {
+        for (Long i = 1L; i <= 12; i++) {
             correctionProductService.create(
-                    new CorrectionProductDto(i, i, BigDecimal.valueOf(randomInt(50, 100)),
+                    new CorrectionProductDto(null, i, BigDecimal.valueOf(randomInt(50, 100)),
                             BigDecimal.valueOf(randomInt(50, 100)))
             );
         }
+    }
+
+    public void initCorrection() {
+        correctionService.create(
+                new CorrectionDto(
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        1L, 1L,
+                        true, false, false,
+                        "Оприходование 1",
+                        List.of(1L, 2L, 3L)
+                )
+        );
+        correctionService.create(
+                new CorrectionDto(
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        1L, 5L,
+                        false, false, false,
+                        "Оприходование 2",
+                        List.of(4L, 5L, 6L)
+                )
+        );
+        correctionService.create(
+                new CorrectionDto(
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        1L, 10L,
+                        false, true, false,
+                        "Оприходование 3",
+                        List.of(7L, 8L, 9L)
+                )
+        );
+    }
+
+    public void initReturnToSuppliers() {
+        returnToSupplierService.create(ReturnToSupplierDto.builder()
+                .id(1L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 1")
+                .contractorId(1L)
+                .contractId(1L)
+                .warehouseId(1L)
+                .companyId(1L)
+                .isPrint(false)
+                .isSend(false)
+                .build());
+        returnToSupplierService.create(ReturnToSupplierDto.builder()
+                .id(2L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 2")
+                .contractorId(2L)
+                .contractId(1L)
+                .warehouseId(1L)
+                .companyId(2L)
+                .isPrint(false)
+                .isSend(false)
+                .build());
+        returnToSupplierService.create(ReturnToSupplierDto.builder()
+                .id(3L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 3")
+                .contractorId(3L)
+                .contractId(1L)
+                .warehouseId(1L)
+                .companyId(3L)
+                .isPrint(false)
+                .isSend(false)
+                .build());
+        returnToSupplierService.create(ReturnToSupplierDto.builder()
+                .id(4L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 4")
+                .contractorId(4L)
+                .contractId(1L)
+                .warehouseId(1L)
+                .companyId(4L)
+                .isPrint(false)
+                .isSend(false)
+                .build());
+        returnToSupplierService.create(ReturnToSupplierDto.builder()
+                .id(5L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 5")
+                .contractorId(5L)
+                .contractId(1L)
+                .warehouseId(1L)
+                .companyId(5L)
+                .isPrint(false)
+                .isSend(false)
+                .build());
+    }
+
+    public void initInventarizationProduct() {
+        for (Long i = 1L; i <= 12; i++) {
+            inventarizationProductService.create(
+                    new InventarizationProductDto(null, i, BigDecimal.valueOf(randomInt(50, 100)),
+                            BigDecimal.valueOf(randomInt(50, 100)))
+            );
+        }
+    }
+
+    public void initInventarization() {
+        inventarizationService.create(
+                new InventarizationDto(
+                        null, "2021-06-29 14:14",
+                        1L, 1L,
+                        false, "Инвентаризация 1",
+                         List.of(1L, 2L, 3L)
+                )
+        );
+        inventarizationService.create(
+                new InventarizationDto(
+                        null, "2021-06-29 14:14",
+                        1L, 1L,
+                        false, "Инвентаризация 2",
+                        List.of(4L, 5L, 6L)
+                )
+        );
+        inventarizationService.create(
+                new InventarizationDto(
+                        null, "2021-06-29 14:14",
+                        1L, 1L,
+                        false, "Инвентаризация 3",
+                        List.of(7L, 8L, 9L)
+                )
+        );
     }
 }

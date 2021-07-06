@@ -9,20 +9,30 @@ import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.Correction;
+import com.trade_accounting.models.CorrectionProduct;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
+import com.trade_accounting.models.Inventarization;
+import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
+import com.trade_accounting.models.RequestsProductions;
+import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.TaxSystem;
+import com.trade_accounting.models.TechnicalCard;
+import com.trade_accounting.models.TechnicalCardGroup;
+import com.trade_accounting.models.TechnicalCardProduction;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
@@ -35,6 +45,7 @@ import com.trade_accounting.models.fias.District;
 import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
+import io.swagger.models.auth.In;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -42,6 +53,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -317,5 +329,135 @@ public class ModelStubs {
                 .build();
     }
 
+    public static Production getProduction(Long id) {
+        return Production.builder()
+                .id(id)
+                .technicalCard(getTechnicalCard(id))
+                .requestsProductions(getRequestsProductions(id))
+                .build();
+    }
+
+    public static TechnicalCard getTechnicalCard(Long id) {
+        return TechnicalCard.builder()
+                .id(id)
+                .name("name")
+                .comment("comment")
+                .productionCost("productionCost")
+                .technicalCardGroup(getTechnicalCardGroup(id))
+                .finalProduction(Stream.of(
+                        getTechnicalCardProduction(id),
+                        getTechnicalCardProduction(id + 1),
+                        getTechnicalCardProduction(id + 2)
+                ).collect(Collectors.toList()))
+                .materials(Stream.of(
+                        getTechnicalCardProduction(id + 3),
+                        getTechnicalCardProduction(id + 4),
+                        getTechnicalCardProduction(id + 5)
+                ).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static TechnicalCardGroup getTechnicalCardGroup(Long id) {
+        return TechnicalCardGroup.builder()
+                .id(id)
+                .name("name")
+                .comment("comment")
+                .sortNumber("sortNumber")
+                .build();
+    }
+
+    public static TechnicalCardProduction getTechnicalCardProduction(Long id) {
+        return TechnicalCardProduction.builder()
+                .id(id)
+                .amount(1L)
+                .product(getProduct(id))
+                .build();
+    }
+
+    public static RequestsProductions getRequestsProductions(Long id) {
+        return RequestsProductions.builder()
+                .id(id)
+                .numberOfTheCertificate("123")
+                .dateOfTheCertificate(LocalDate.ofEpochDay(2021 - 06 - 01))
+                .technicalCard(getTechnicalCard(id))
+                .volume(2)
+                .warehouse(getWarehouse(id))
+                .build();
+    }
+
+    public static Warehouse getWarehouse(Long id) {
+        return Warehouse.builder()
+                .id(id)
+                .name("name")
+                .sortNumber("sortNamber")
+                .address("address")
+                .commentToAddress("commentToAddress")
+                .comment("comment")
+                .build();
+    }
+
+    public static Warehouse getWarehouse() {
+        return new Warehouse(
+                1L, "Склад 1", "1", "Володарского", "Комментарий 1",
+                "Комментарий 2"
+        );
+    }
+
+    public static ReturnToSupplier getReturnToSupplier(Long id){
+        return ReturnToSupplier.builder()
+                .id(id)
+                .comment("Комментарий 1")
+                .company(getCompany(1L))
+                .contract(getContract(1L))
+                .contractor(getContractor(1L))
+                .warehouse(getWarehouse(1L))
+                .date(LocalDateTime.now().toString())
+                .isPrint(false)
+                .isSend(false)
+                .build();
+    }
+
+    public static CorrectionProduct getCorrectionProduct(Long id) {
+        return new CorrectionProduct(
+                id,
+                getProduct(id),
+                BigDecimal.ONE,
+                BigDecimal.ONE
+        );
+    }
+
+    public static Correction getCorrection(Long id) {
+        return new Correction(
+                id, LocalDateTime.now(), getWarehouse(), getCompany(id),
+                false, false, false,
+                "Комментарий 1",
+                List.of(getCorrectionProduct(1L),
+                        getCorrectionProduct(2L),
+                        getCorrectionProduct(3L))
+        );
+    }
+
+    public static InventarizationProduct getInventarizationProduct(Long id) {
+        return new InventarizationProduct(
+                id,
+                getProduct(id),
+                BigDecimal.ONE,
+                BigDecimal.ONE
+        );
+    }
+
+    public static Inventarization getInventarization(Long id) {
+        return new Inventarization(
+                id,
+                LocalDateTime.now(),
+                getWarehouse(id),
+                getCompany(id),
+                false,
+                "Комментарий 1",
+                List.of(getInventarizationProduct(1L),
+                        getInventarizationProduct(2L),
+                        getInventarizationProduct(3L))
+        );
+    }
 }
 

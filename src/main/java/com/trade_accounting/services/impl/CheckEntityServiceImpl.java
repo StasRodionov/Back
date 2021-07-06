@@ -8,30 +8,32 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.repositories.AcceptanceProductionRepository;
-import com.trade_accounting.repositories.AcceptanceRepository;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
+import com.trade_accounting.repositories.BalanceAdjustmentRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.CorrectionProductRepository;
+import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.CurrencyRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
+import com.trade_accounting.repositories.InventarizationProductRepository;
+import com.trade_accounting.repositories.InventarizationRepository;
 import com.trade_accounting.repositories.InvoiceProductRepository;
 import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.PositionRepository;
-import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.RemainRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
+import com.trade_accounting.repositories.ReturnToSupplierRepository;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
@@ -85,9 +87,10 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final RemainRepository remainRepository;
     private final CorrectionProductRepository correctionProductRepository;
     private final AddressRepository addressRepository;
-    private final AcceptanceRepository acceptanceRepository;
-    private final AcceptanceProductionRepository acceptanceProductionRepository;
-
+    private final ReturnToSupplierRepository returnToSupplierRepository;
+    private final InventarizationRepository inventarizationRepository;
+    private final InventarizationProductRepository inventarizationProductRepository;
+    private final BalanceAdjustmentRepository balanceAdjustmentRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository,
@@ -119,8 +122,10 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   TechnicalCardGroupRepository technicalCardGroupRepository,
                                   TechnicalCardRepository technicalCardRepository,
                                   CorrectionRepository correctionRepository, RemainRepository remainRepository,
-                                  CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository,
-                                  AcceptanceRepository acceptanceRepository, AcceptanceProductionRepository acceptanceProductionRepository) {
+                                  CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository, ReturnToSupplierRepository returnToSupplierRepository,
+                                  InventarizationRepository inventarizationRepository,
+                                  InventarizationProductRepository inventarizationProductRepository,
+                                  BalanceAdjustmentRepository balanceAdjustmentRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -154,8 +159,10 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.remainRepository = remainRepository;
         this.correctionProductRepository = correctionProductRepository;
         this.addressRepository = addressRepository;
-        this.acceptanceRepository = acceptanceRepository;
-        this.acceptanceProductionRepository = acceptanceProductionRepository;
+        this.returnToSupplierRepository = returnToSupplierRepository;
+        this.inventarizationRepository = inventarizationRepository;
+        this.inventarizationProductRepository = inventarizationProductRepository;
+        this.balanceAdjustmentRepository = balanceAdjustmentRepository;
     }
 
 
@@ -470,16 +477,23 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     }
 
     @Override
-    public void checkExistsAcceptanceById(Long id) {
-        if (!acceptanceRepository.existsById(id)) {
-            throw new NotFoundEntityException("Приемка с id=" + id + "не найдена");
+    public void checkExistsReturnToSupplierById(Long returnToSupplier) {
+        if (!returnToSupplierRepository.existsById(returnToSupplier)) {
+            throw new NotFoundEntityException("Возврат поставщика с id=" + returnToSupplier + "не найден");
         }
     }
 
     @Override
-    public void checkExistsAcceptanceProductionById(Long id) {
-        if (!acceptanceProductionRepository.existsById(id)) {
-            throw new NotFoundEntityException("Приемка товара с id=" + id + "не найдена");
+    public void checkExistsInventarizationById(Long inventarizationId) {
+        if (!inventarizationRepository.existsById(inventarizationId)) {
+            throw new NotFoundEntityException("Возврат инвентаризации с id=" + inventarizationId + "не найден");
+        }
+    }
+
+    @Override
+    public void checkExistsInventarizationProductById(Long inventarizationProduct) {
+        if (!inventarizationProductRepository.existsById(inventarizationProduct)) {
+            throw new NotFoundEntityException("Товар для инвентаризации с id=" + inventarizationProduct + "не найден");
         }
     }
 }

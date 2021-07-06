@@ -100,7 +100,7 @@ public class TaskCommentRestController {
                 .normalize()
                 .toUri();
 
-        return ResponseEntity.created(commentURI).body(created);
+        return ResponseEntity.ok().body(created);
     }
 
     @ApiOperation(value = "update", notes = "Обновление комментария")
