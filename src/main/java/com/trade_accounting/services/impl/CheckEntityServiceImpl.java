@@ -512,4 +512,18 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         }
     }
 
+    @Override
+    public void checkExistsAcceptanceById(Long id) {
+        if (!acceptanceRepository.existsById(id)) {
+            throw new NotFoundEntityException("Приемка с id=" + id + "не найдена");
+        }
+    }
+
+    @Override
+    public void checkExistsAcceptanceProductionById(Long id) {
+        if (!acceptanceProductionRepository.existsById(id)) {
+            throw new NotFoundEntityException("Приемка товара с id=" + id + "не найдена");
+        }
+    }
+
 }
