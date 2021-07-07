@@ -87,4 +87,6 @@ public interface CheckEntityService {
     void checkExistsInventarizationById(Long inventarizationId);
 
     void checkExistsInventarizationProductById(Long inventarizationProduct);
+
+    void checkExistsBalanceAdjustmentById(Long balanceAdjustment);
 }
