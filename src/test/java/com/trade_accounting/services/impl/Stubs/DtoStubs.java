@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -12,6 +13,7 @@ import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.InventarizationDto;
+import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
@@ -174,7 +176,11 @@ public class DtoStubs {
         return dtoMapper.returnToSupplierToReturnToSupplierDto(ModelStubs.getReturnToSupplier(id));
     }
 
-    public static InventarizationDto getInvenratizationDto(Long id) {
+    public static InventarizationDto getInventarizationDto(Long id) {
         return dtoMapper.toInventarizationDto(ModelStubs.getInventarization(id));
+    }
+
+    public static InventarizationProductDto getInventarizationProductDto(Long id) {
+        return dtoMapper.toInventarizationProductDto(ModelStubs.getInventarizationProduct(id));
     }
 }

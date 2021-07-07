@@ -81,7 +81,7 @@ public class InventarizationServiceImplTest {
 
     private void saveOrUpdate() {
         when(inventarizationRepository.save(any(Inventarization.class))).thenReturn(ModelStubs.getInventarization(1L));
-        InventarizationDto inventarizationDto = inventarizationService.create(DtoStubs.getInvenratizationDto(1L));
+        InventarizationDto inventarizationDto = inventarizationService.create(DtoStubs.getInventarizationDto(1L));
         assertEquals(1,inventarizationDto.getId());
         verify(inventarizationRepository).save(any(Inventarization.class));
     }
