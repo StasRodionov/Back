@@ -5,6 +5,7 @@ import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
+import com.trade_accounting.models.dto.BalanceAdjustmentDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContactDto;
@@ -44,6 +45,7 @@ import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.services.impl.AddressServiceImpl;
 import com.trade_accounting.services.interfaces.AccessParametersService;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
+import com.trade_accounting.services.interfaces.BalanceAdjustmentService;
 import com.trade_accounting.services.interfaces.BankAccountService;
 import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.ContactService;
@@ -134,6 +136,7 @@ public class DataInitializer {
     private final ReturnToSupplierService returnToSupplierService;
     private final InventarizationService inventarizationService;
     private final InventarizationProductService inventarizationProductService;
+    private final BalanceAdjustmentService balanceAdjustmentService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -171,7 +174,8 @@ public class DataInitializer {
             CorrectionProductService correctionProductService,
             CorrectionService correctionService, ReturnToSupplierService returnToSupplierService,
             InventarizationService inventarizationService,
-            InventarizationProductService inventarizationProductService) {
+            InventarizationProductService inventarizationProductService,
+            BalanceAdjustmentService balanceAdjustmentService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -210,6 +214,7 @@ public class DataInitializer {
         this.returnToSupplierService = returnToSupplierService;
         this.inventarizationService = inventarizationService;
         this.inventarizationProductService = inventarizationProductService;
+        this.balanceAdjustmentService = balanceAdjustmentService;
     }
 
     @PostConstruct
@@ -252,6 +257,7 @@ public class DataInitializer {
         initReturnToSuppliers();
         initInventarizationProduct();
         initInventarization();
+        initBalanceAdjustment();
     }
 
     private void initAccessParameters() {
@@ -1576,5 +1582,63 @@ public class DataInitializer {
                         List.of(7L, 8L, 9L)
                 )
         );
+    }
+
+    public void initBalanceAdjustment() {
+        balanceAdjustmentService.create(BalanceAdjustmentDto.builder()
+                .id(1L)
+                .date(LocalDateTime.now().toString())
+                .companyId(1L)
+                .contractorId(1L)
+                .account("Расчетный счет 1")
+                .cashOffice("Касса организации 1")
+                .comment("Комментарий 1")
+                .dateChanged(LocalDateTime.now().toString())
+                .whoChanged("Иванов")
+                .build());
+        balanceAdjustmentService.create(BalanceAdjustmentDto.builder()
+                .id(2L)
+                .date(LocalDateTime.now().toString())
+                .companyId(2L)
+                .contractorId(2L)
+                .account("Расчетный счет 2")
+                .cashOffice("Касса организации 2")
+                .comment("Комментарий 2")
+                .dateChanged(LocalDateTime.now().toString())
+                .whoChanged("Петров")
+                .build());
+        balanceAdjustmentService.create(BalanceAdjustmentDto.builder()
+                .id(3L)
+                .date(LocalDateTime.now().toString())
+                .companyId(3L)
+                .contractorId(3L)
+                .account("Расчетный счет 3")
+                .cashOffice("Касса организации 3")
+                .comment("Комментарий 3")
+                .dateChanged(LocalDateTime.now().toString())
+                .whoChanged("Сидоров")
+                .build());
+        balanceAdjustmentService.create(BalanceAdjustmentDto.builder()
+                .id(4L)
+                .date(LocalDateTime.now().toString())
+                .companyId(4L)
+                .contractorId(4L)
+                .account("Расчетный счет 4")
+                .cashOffice("Касса организации 4")
+                .comment("Комментарий 4")
+                .dateChanged(LocalDateTime.now().toString())
+                .whoChanged("Кузнецов")
+                .build());
+        balanceAdjustmentService.create(BalanceAdjustmentDto.builder()
+                .id(5L)
+                .date(LocalDateTime.now().toString())
+                .companyId(5L)
+                .contractorId(5L)
+                .account("Расчетный счет 5")
+                .cashOffice("Касса организации 5")
+                .comment("Комментарий 5")
+                .dateChanged(LocalDateTime.now().toString())
+                .whoChanged("Попов")
+                .build());
     }
 }
