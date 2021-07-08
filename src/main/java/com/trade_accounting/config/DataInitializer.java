@@ -82,6 +82,7 @@ import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import com.trade_accounting.services.interfaces.fias.FiasDbService;
 import com.trade_accounting.utils.fias.ExcelParser;
+import nonapi.io.github.classgraph.json.JSONUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -789,13 +790,12 @@ public class DataInitializer {
                             "Сергеевич",
                             3L,
                             "comment to address",
-                            "861234" + String.format("%03d", i),
+                            "861234" + String.format("%04d", i),
                             "79271669",
                             "1053600591197",
                             "236467", null, null,
                             typeOfContractorService.getByName("Юридическое лицо").getId()
                     )).getId(),
-
                     List.of(bankAccountService.create(new BankAccountDto(
                                     null,
                                     "14593",
@@ -814,7 +814,6 @@ public class DataInitializer {
                                     true,
                                     "2")).getId())
             ));
-
             companyService.create(new CompanyDto(
                     null,
                     "OOO \"Организация №2\"",
