@@ -1,23 +1,13 @@
 package com.trade_accounting.models.dto;
 
-import com.trade_accounting.models.Company;
 import com.trade_accounting.models.CorrectionProduct;
-import com.trade_accounting.models.Warehouse;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
@@ -29,16 +19,16 @@ public class MovementDto {
     private Long id;
 
     @NotNull
-    private LocalDateTime date;
+    private String date;
 
     @NotNull
-    private Warehouse warehouseFrom;
+    private Long warehouseFromId;
 
     @NotNull
-    private Warehouse warehouseTo;
+    private Long warehouseToId;
 
     @NotNull
-    private Company company;
+    private Long companyId;
 
     private Boolean isSent = false;
 
@@ -46,5 +36,5 @@ public class MovementDto {
 
     private String comment;
 
-    private List<CorrectionProduct> correctionProducts;
+    private List<CorrectionProduct> correctionProductsIds;
 }
