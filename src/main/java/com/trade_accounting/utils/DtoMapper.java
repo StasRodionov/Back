@@ -821,13 +821,13 @@ public abstract class DtoMapper {
             @Mapping(source = "company.id", target = "companyId"),
             @Mapping(source = "contractor.id", target = "contractorId"),
     })
-    public abstract BalanceAdjustmentDto BalanceAdjustmentToBalanceAdjustmentDto(BalanceAdjustment balanceAdjustment);
+    public abstract BalanceAdjustmentDto balanceAdjustmentToBalanceAdjustmentDto(BalanceAdjustment balanceAdjustment);
 
     @Mappings({
             @Mapping(source = "companyId", target = "company.id"),
             @Mapping(source = "contractorId", target = "contractor.id"),
     })
-    public abstract BalanceAdjustment BalanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
+    public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
 
 }
 

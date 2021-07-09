@@ -8,6 +8,8 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.repositories.AcceptanceProductionRepository;
+import com.trade_accounting.repositories.AcceptanceRepository;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.repositories.BalanceAdjustmentRepository;
@@ -91,6 +93,8 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final InventarizationRepository inventarizationRepository;
     private final InventarizationProductRepository inventarizationProductRepository;
     private final BalanceAdjustmentRepository balanceAdjustmentRepository;
+    private final AcceptanceRepository acceptanceRepository;
+    private final AcceptanceProductionRepository acceptanceProductionRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository,
@@ -125,7 +129,9 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository, ReturnToSupplierRepository returnToSupplierRepository,
                                   InventarizationRepository inventarizationRepository,
                                   InventarizationProductRepository inventarizationProductRepository,
-                                  BalanceAdjustmentRepository balanceAdjustmentRepository) {
+                                  BalanceAdjustmentRepository balanceAdjustmentRepository,
+                                  AcceptanceRepository acceptanceRepository,
+                                  AcceptanceProductionRepository acceptanceProductionRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -163,6 +169,8 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.inventarizationRepository = inventarizationRepository;
         this.inventarizationProductRepository = inventarizationProductRepository;
         this.balanceAdjustmentRepository = balanceAdjustmentRepository;
+        this.acceptanceRepository = acceptanceRepository;
+        this.acceptanceProductionRepository = acceptanceProductionRepository;
     }
 
 
@@ -496,4 +504,26 @@ public class CheckEntityServiceImpl implements CheckEntityService {
             throw new NotFoundEntityException("Товар для инвентаризации с id=" + inventarizationProduct + "не найден");
         }
     }
+
+    @Override
+    public void checkExistsBalanceAdjustmentById(Long balanceAdjustment) {
+        if (!balanceAdjustmentRepository.existsById(balanceAdjustment)) {
+            throw new NotFoundEntityException("Корректировка баланса с id=" + balanceAdjustment + "не найден");
+        }
+    }
+
+    @Override
+    public void checkExistsAcceptanceById(Long id) {
+        if (!acceptanceRepository.existsById(id)) {
+            throw new NotFoundEntityException("Приемка с id=" + id + "не найдена");
+        }
+    }
+
+    @Override
+    public void checkExistsAcceptanceProductionById(Long id) {
+        if (!acceptanceProductionRepository.existsById(id)) {
+            throw new NotFoundEntityException("Приемка товара с id=" + id + "не найдена");
+        }
+    }
+
 }
