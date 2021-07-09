@@ -842,9 +842,6 @@ public abstract class DtoMapper {
         } else {
             movementDto.setId(movement.getId());
             movementDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(movement.getDate()));
-//            movementDto.setWarehouseFromId(movement.getWarehouseFrom().getId());
-//            movementDto.setWarehouseToId(movement.getWarehouseTo().getId());
-//            movementDto.setCompanyId(movement.getCompany().getId());
             movementDto.setIsSent(movement.getIsSent());
             movementDto.setIsPrint(movement.getIsPrint());
             movementDto.setComment(movement.getComment());
@@ -871,32 +868,10 @@ public abstract class DtoMapper {
                                 .collect(Collectors.toList());
 
                         movementDto.setMovementProductsIds(movementProductIds);
-//                        movementDto.setMovementProductIds(movementProductIds);
                         return movementDto;
                     }
                 }
             }
-
-//// Убрать код ниже
-//            Warehouse warehouse = movement.getWarehouse();
-//            if (warehouse == null) {
-//                return null;
-//            } else {
-//                movementDto.setWarehouseId(warehouse.getId());
-//
-//                Company company = movement.getCompany();
-//                if (company == null) {
-//                    return null;
-//                } else {
-//                    movementDto.setCompanyId(company.getId());
-//
-//                    List<Long> movementProductIds = movement.getMovementProducts().stream()
-//                            .map(MovementProduct::getId)
-//                            .collect(Collectors.toList());
-//                    movementDto.setMovementProductIds(movementProductIds);
-//                    return movementDto;
-//                }
-//            }
         }
     }
 

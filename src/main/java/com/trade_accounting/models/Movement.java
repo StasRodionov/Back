@@ -59,5 +59,5 @@ public class Movement {
     private String comment;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<CorrectionProduct> movementProducts;
+    private List<MovementProduct> movementProducts;
 }
