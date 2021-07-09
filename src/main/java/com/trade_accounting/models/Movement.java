@@ -55,10 +55,6 @@ public class Movement {
     @ColumnDefault("false")
     private Boolean isPrint = false;
 
-//    @Column
-//    @ColumnDefault("false")
-//    private Boolean writeOffProduct = false;
-
     @Column(name = "comment")
     private String comment;
 
