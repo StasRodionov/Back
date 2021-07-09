@@ -281,7 +281,11 @@ public class DataInitializer {
     }
 
     public void initProject() {
+
         projectService.create(new ProjectDto(null, "name", "0000", "description"));
+        projectService.create(new ProjectDto(null, "name2", "0000", "description"));
+        projectService.create(new ProjectDto(null, "name3", "0000", "description"));
+        projectService.create(new ProjectDto(null, "name4", "0000", "description"));
     }
 
     public void initPayment() {
@@ -552,6 +556,9 @@ public class DataInitializer {
 
     private void initWarehouses() {
         warehouseService.create(new WarehouseDto("Основной склад", "1"));
+        warehouseService.create(new WarehouseDto("Основной склад1", "1"));
+        warehouseService.create(new WarehouseDto("Основной склад2", "1"));
+        warehouseService.create(new WarehouseDto("Основной склад3", "1"));
     }
 
     private void initUnits() {
@@ -1341,6 +1348,43 @@ public class DataInitializer {
                 false,
                 "no comments",
                 1L));
+
+        contractService.create(new ContractDto(
+                null,
+                "2",
+                LocalDate.now(),
+                1L,
+                3L,
+                1L,
+                BigDecimal.valueOf(200),
+                false,
+                "no comments",
+                1L));
+
+        contractService.create(new ContractDto(
+                null,
+                "3",
+                LocalDate.now(),
+                1L,
+                3L,
+                1L,
+                BigDecimal.valueOf(200),
+                false,
+                "no comments",
+                1L));
+
+        contractService.create(new ContractDto(
+                null,
+                "4",
+                LocalDate.now(),
+                1L,
+                3L,
+                1L,
+                BigDecimal.valueOf(200),
+                false,
+                "no comments",
+                1L));
+
     }
 
     private void initTasks() {
