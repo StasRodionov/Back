@@ -36,5 +36,5 @@ public class MovementDto {
 
     private String comment;
 
-    private List<CorrectionProduct> correctionProductsIds;
+    private List<Long> movementProductsIds;
 }
