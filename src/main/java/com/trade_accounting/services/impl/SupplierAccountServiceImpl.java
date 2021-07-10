@@ -13,14 +13,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class SupplierAccountImpl implements SupplierAccountService {
+public class SupplierAccountServiceImpl implements SupplierAccountService {
 
     private final SupplierAccountRepository supplierAccountRepository;
     private final DtoMapper dtoMapper;
@@ -29,8 +27,8 @@ public class SupplierAccountImpl implements SupplierAccountService {
     private final ContractRepository contractRepository;
     private final WarehouseRepository warehouseRepository;
 
-    public SupplierAccountImpl(SupplierAccountRepository supplierAccountRepository,
-                               DtoMapper dtoMapper, CompanyRepository companyRepository, ContractorRepository contractorRepository, ContractRepository contractRepository, WarehouseRepository warehouseRepository) {
+    public SupplierAccountServiceImpl(SupplierAccountRepository supplierAccountRepository,
+                                      DtoMapper dtoMapper, CompanyRepository companyRepository, ContractorRepository contractorRepository, ContractRepository contractRepository, WarehouseRepository warehouseRepository) {
         this.supplierAccountRepository = supplierAccountRepository;
         this.dtoMapper = dtoMapper;
         this.companyRepository = companyRepository;
@@ -47,7 +45,7 @@ public class SupplierAccountImpl implements SupplierAccountService {
     @Override
     public SupplierAccountDto getById(Long id) {
         Optional<SupplierAccount> invoicesToCustomers = supplierAccountRepository.findById(id);
-        return dtoMapper.SupplierAccountToSupplierAccountDto(invoicesToCustomers.orElse(new SupplierAccount()));
+        return dtoMapper.supplierAccountToSupplierAccountDto(invoicesToCustomers.orElse(new SupplierAccount()));
     }
 
     @Override
@@ -59,7 +57,7 @@ public class SupplierAccountImpl implements SupplierAccountService {
                 .contract(dtoMapper.contractDtoToContract(contractRepository.getById(createSupplier.getContractId())))
                 .contractor((contractorRepository.getOne(createSupplier.getContractorId())))
                 .build();
-        return dtoMapper.SupplierAccountToSupplierAccountDto(supplierAccountRepository.save(saveInvoices));
+        return dtoMapper.supplierAccountToSupplierAccountDto(supplierAccountRepository.save(saveInvoices));
     }
 
     @Override
@@ -89,6 +87,6 @@ public class SupplierAccountImpl implements SupplierAccountService {
 
     @Override
     public List<SupplierAccountDto> search(Specification<SupplierAccount> spec) {
-        return executeSearch(supplierAccountRepository, dtoMapper::SupplierAccountToSupplierAccountDto, spec);
+        return executeSearch(supplierAccountRepository, dtoMapper::supplierAccountToSupplierAccountDto, spec);
     }
 }

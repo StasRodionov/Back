@@ -438,7 +438,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractor.id", target = "contractorId"),
             @Mapping(source = "warehouse.id", target = "warehouseId"),
     })
-    public abstract SupplierAccountDto SupplierAccountToSupplierAccountDto(SupplierAccount SupplierAccount);
+    public abstract SupplierAccountDto supplierAccountToSupplierAccountDto(SupplierAccount SupplierAccount);
 
     @Mappings({
             @Mapping(source = "companyId", target = "company.id"),
@@ -446,7 +446,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorId", target = "contractor.id"),
             @Mapping(source = "warehouseId", target = "warehouse.id"),
     })
-    public abstract SupplierAccount SupplierAccountDtoToSupplierAccount(SupplierAccountDto SupplierAccountDto);
+    public abstract SupplierAccount supplierAccountDtoToSupplierAccount(SupplierAccountDto SupplierAccountDto);
 
     //LegalDetail
     @Mappings({
@@ -777,7 +777,7 @@ public abstract class DtoMapper {
 
         InventarizationDto inventarizationDto = new InventarizationDto();
 
-        if(inventarization == null) {
+        if (inventarization == null) {
             return null;
         } else {
             inventarizationDto.setId(inventarization.getId());
@@ -786,13 +786,13 @@ public abstract class DtoMapper {
             inventarizationDto.setComment(inventarization.getComment());
 
             Warehouse warehouse = inventarization.getWarehouse();
-            if(warehouse == null) {
+            if (warehouse == null) {
                 return null;
             } else {
                 inventarizationDto.setWarehouseId(warehouse.getId());
 
                 Company company = inventarization.getCompany();
-                if(company == null) {
+                if (company == null) {
                     return null;
                 } else {
                     inventarizationDto.setCompanyId(company.getId());
