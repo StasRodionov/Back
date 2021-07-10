@@ -3,6 +3,7 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,9 +13,11 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,5 +47,23 @@ class SupplierAccountServiceImplTest {
         List<SupplierAccountDto> list = service.getAll();
         assertNotNull(list, "list is not filled");
         assertEquals(3, list.size());
+    }
+
+    @Test
+    void getById_shouldReturnFilledSupplierAccount() {
+        when(repository.findById(anyLong()))
+                .thenReturn(Optional.of(ModelStubs.getSupplierAccount(anyLong())));
+        SupplierAccountDto dto = service.getById(1L);
+        assertNotNull(dto, "dto is not filled");
+    }
+
+    @Test
+    void create_shouldPassInstructionsSuccessfulCreate(){
+
+    }
+
+    @Test
+    void update_shouldPassInstructionsSuccessfulUpdate(){
+
     }
 }
