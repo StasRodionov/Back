@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -130,10 +131,12 @@ public class ReturnToSupplierRestController {
     public ResponseEntity<List<ReturnToSupplierDto>> getAllFilter(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
-                    @Spec(path = "date", params = "date", spec = Equal.class),
+                    @Spec(path = "date", params = "date", spec = GreaterThanOrEqual.class),
                     @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "company.name", params = "companyDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "warehouse.name", params = "warehouseDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "isSend", params = "send", spec = Equal.class),
+                    @Spec(path = "isPrint", params = "print", spec = Equal.class)
             }) Specification<ReturnToSupplier> supplier) {
         return ResponseEntity.ok(returnToSupplierService.search(supplier));
     }
