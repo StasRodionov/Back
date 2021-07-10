@@ -1,7 +1,11 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.dto.SupplierAccountDto;
+import com.trade_accounting.repositories.CompanyRepository;
+import com.trade_accounting.repositories.ContractRepository;
+import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.SupplierAccountRepository;
+import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
@@ -17,7 +21,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +34,18 @@ class SupplierAccountServiceImplTest {
 
     @Mock
     private SupplierAccountRepository repository;
+
+    @Mock
+    CompanyRepository companyRepository;
+
+    @Mock
+    ContractRepository contractRepository;
+
+    @Mock
+    ContractorRepository contractorRepository;
+
+    @Mock
+    WarehouseRepository warehouseRepository;
 
     @InjectMocks
     private SupplierAccountServiceImpl service;
@@ -58,12 +76,26 @@ class SupplierAccountServiceImplTest {
     }
 
     @Test
-    void create_shouldPassInstructionsSuccessfulCreate(){
-
+    void create_shouldPassInstructionsSuccessfulCreate() {
+        saveOrUpdate();
     }
 
     @Test
-    void update_shouldPassInstructionsSuccessfulUpdate(){
+    void update_shouldPassInstructionsSuccessfulUpdate() {
+        saveOrUpdate();
+    }
 
+    @Test
+    void deleteById_shouldPassInstructionsSuccessfulDelete() {
+        service.deleteById(anyLong());
+        verify(repository).deleteById(anyLong());
+    }
+
+    private void saveOrUpdate() {
+        when(repository.save(any())).thenReturn(ModelStubs.getSupplierAccount(1L));
+        SupplierAccountDto dto = service.create(DtoStubs.getSupplierAccountDto(1L));
+        assertNotNull(dto);
+        assertEquals(1, dto.getId());
+        verify(repository).save(any());
     }
 }
