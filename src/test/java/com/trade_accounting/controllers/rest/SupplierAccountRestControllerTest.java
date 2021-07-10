@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
-import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +41,7 @@ public class SupplierAccountRestControllerTest {
     }
 
     @Test
-    public void getAllTest() throws Exception {
+    public void testGetAll() throws Exception {
         mockMvc.perform(get("/api/supplierAccount"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -52,7 +51,7 @@ public class SupplierAccountRestControllerTest {
 
     @Test
     public void testGetById() throws Exception {
-        String supplierJson = new Gson().toJson(SupplierAccountDto.builder()
+        String modelJson = new Gson().toJson(SupplierAccountDto.builder()
                 .id(1L)
                 .comment("Комментарий 1")
                 .contractId(1L)
@@ -66,7 +65,72 @@ public class SupplierAccountRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(supplierJson));
+                .andExpect(content().json(modelJson));
+    }
+
+    @Test
+    public void testCreate() throws Exception {
+        String modelJson = new Gson().toJson(SupplierAccountDto.builder()
+                .id(4L)
+                .comment("Комментарий 4")
+                .contractId(1L)
+                .companyId(1L)
+                .contractorId(1L)
+                .warehouseId(1L)
+                .date("2021-07-23 15:10")
+                .isSpend(true)
+                .build());
+        mockMvc.perform(post("/api/supplierAccount")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(modelJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(content().json(modelJson));
+        mockMvc.perform(get("/api/supplierAccount"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(jsonPath("$", hasSize(4)));
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        String modelJson = new Gson().toJson(SupplierAccountDto.builder()
+                .id(2L)
+                .comment("Комментарий 200")
+                .contractId(1L)
+                .companyId(1L)
+                .contractorId(1L)
+                .warehouseId(1L)
+                .date("2021-07-23 15:10")
+                .isSpend(false)
+                .build());
+        mockMvc.perform(put("/api/supplierAccount")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(modelJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(content().json(modelJson));
+        mockMvc.perform(get("/api/supplierAccount"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(jsonPath("$", hasSize(3)));
+    }
+
+    @Test
+    public void testDeleteById() throws Exception {
+        mockMvc.perform(delete("/api/supplierAccount/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated());
+        mockMvc.perform(get("/api/supplierAccount"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 
 }
