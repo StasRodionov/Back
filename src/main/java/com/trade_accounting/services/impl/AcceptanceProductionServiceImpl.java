@@ -53,7 +53,6 @@ public class AcceptanceProductionServiceImpl implements AcceptanceProductionServ
     public AcceptanceProductionDto create(AcceptanceProductionDto dto) {
         AcceptanceProduction acceptanceProduction = dtoMapper.acceptanceProductionDtoToAcceptanceProduction(dto);
         acceptanceProduction.setProduct(productRepository.getOne(dto.getProductId()));
-        //acceptanceProduction.setProduct(dtoMapper.productDtoToProduct(productService.getById(dto.getProductId())));
         return dtoMapper.toAcceptanceProductionDto(acceptanceProductionRepository
                 .save(acceptanceProduction));
     }
