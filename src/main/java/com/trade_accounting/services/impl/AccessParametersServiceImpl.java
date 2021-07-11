@@ -40,7 +40,7 @@ public class AccessParametersServiceImpl implements AccessParametersService {
 
     @Override
     public AccessParametersDto getById(Long id) {
-        return dtoMapper.AccessParametersToAccessParametersDto(accessParametersRepository.findById(id).orElse(new AccessParameters()));
+        return dtoMapper.AccessParametersToAccessParametersDto(accessParametersRepository.getOne(id));
     }
 
     @Override
