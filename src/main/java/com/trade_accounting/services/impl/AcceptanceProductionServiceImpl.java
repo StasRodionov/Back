@@ -1,7 +1,6 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.AcceptanceProduction;
-import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.repositories.AcceptanceProductionRepository;
 import com.trade_accounting.repositories.ProductRepository;

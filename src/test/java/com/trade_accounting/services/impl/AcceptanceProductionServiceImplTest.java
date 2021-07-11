@@ -1,12 +1,7 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Acceptance;
 import com.trade_accounting.models.AcceptanceProduction;
-import com.trade_accounting.models.BankAccount;
-import com.trade_accounting.models.Correction;
 import com.trade_accounting.models.dto.AcceptanceProductionDto;
-import com.trade_accounting.models.dto.BankAccountDto;
-import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.repositories.AcceptanceProductionRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
@@ -18,14 +13,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
