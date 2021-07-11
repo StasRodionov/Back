@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AttributeOfCalculationObject;
@@ -457,6 +458,14 @@ public class ModelStubs {
                 List.of(getInventarizationProduct(1L),
                         getInventarizationProduct(2L),
                         getInventarizationProduct(3L))
+        );
+    }
+
+    public static AcceptanceProduction getAcceptanceProduction(Long id) {
+        return new AcceptanceProduction(
+                id,
+                1L,
+                getProduct(id)
         );
     }
 }

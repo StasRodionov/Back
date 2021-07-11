@@ -32,14 +32,15 @@ public class AcceptanceProductionServiceImpl implements AcceptanceProductionServ
     @Override
     public List<AcceptanceProductionDto> getAll() {
         return acceptanceProductionRepository.findAll().stream()
-                .map(dtoMapper::acceptanceProductionToAcceptanceProductionDto)
+                .map(dtoMapper::toAcceptanceProductionDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public AcceptanceProductionDto getById(Long id) {
-        return dtoMapper.acceptanceProductionToAcceptanceProductionDto(
-                acceptanceProductionRepository.findById(id).orElse(new AcceptanceProduction())
+        return dtoMapper.toAcceptanceProductionDto(
+                //acceptanceProductionRepository.findById(id).orElse(new AcceptanceProduction())
+                acceptanceProductionRepository.getOne(id)
         );
     }
 
@@ -47,7 +48,7 @@ public class AcceptanceProductionServiceImpl implements AcceptanceProductionServ
     public AcceptanceProductionDto create(AcceptanceProductionDto dto) {
         AcceptanceProduction acceptanceProduction = dtoMapper.acceptanceProductionDtoToAcceptanceProduction(dto);
         acceptanceProduction.setProduct(productRepository.getOne(dto.getProductId()));
-        return dtoMapper.acceptanceProductionToAcceptanceProductionDto(acceptanceProductionRepository
+        return dtoMapper.toAcceptanceProductionDto(acceptanceProductionRepository
                 .save(acceptanceProduction));
     }
 
