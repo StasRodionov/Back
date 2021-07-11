@@ -170,7 +170,7 @@ public abstract class DtoMapper {
     public abstract Remain remainDtoToRemain(RemainDto remainDto);
 
     //AccessParameters
-    public AccessParametersDto AccessParametersToAccessParametersDto(AccessParameters accessParameters) {
+    public AccessParametersDto accessParametersToAccessParametersDto(AccessParameters accessParameters) {
         if (accessParameters == null) {
             return null;
         } else {
@@ -183,7 +183,7 @@ public abstract class DtoMapper {
         }
     }
 
-    public AccessParameters AccessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto) {
+    public AccessParameters accessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto) {
         if (accessParametersDto == null) {
             return null;
         }
