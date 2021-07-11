@@ -32,7 +32,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class AcceptanceProductionServiceImplTest {
     @Mock
     AcceptanceProductionRepository acceptanceProductionRepository;
