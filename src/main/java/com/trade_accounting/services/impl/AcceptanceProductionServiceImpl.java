@@ -44,7 +44,6 @@ public class AcceptanceProductionServiceImpl implements AcceptanceProductionServ
     @Override
     public AcceptanceProductionDto getById(Long id) {
         return dtoMapper.toAcceptanceProductionDto(
-                //acceptanceProductionRepository.findById(id).orElse(new AcceptanceProduction())
                 acceptanceProductionRepository.getOne(id)
         );
     }
