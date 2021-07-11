@@ -1,11 +1,13 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.AcceptanceProduction;
+import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.repositories.AcceptanceProductionRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.AcceptanceProductionService;
 import com.trade_accounting.utils.DtoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,9 @@ import java.util.stream.Collectors;
 public class AcceptanceProductionServiceImpl implements AcceptanceProductionService {
 
     private final AcceptanceProductionRepository acceptanceProductionRepository;
+
+    @Autowired
+    private ProductServiceImpl productService;
 
     private final ProductRepository productRepository;
 
@@ -48,6 +53,7 @@ public class AcceptanceProductionServiceImpl implements AcceptanceProductionServ
     public AcceptanceProductionDto create(AcceptanceProductionDto dto) {
         AcceptanceProduction acceptanceProduction = dtoMapper.acceptanceProductionDtoToAcceptanceProduction(dto);
         acceptanceProduction.setProduct(productRepository.getOne(dto.getProductId()));
+        //acceptanceProduction.setProduct(dtoMapper.productDtoToProduct(productService.getById(dto.getProductId())));
         return dtoMapper.toAcceptanceProductionDto(acceptanceProductionRepository
                 .save(acceptanceProduction));
     }

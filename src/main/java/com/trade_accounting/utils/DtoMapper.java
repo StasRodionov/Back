@@ -202,7 +202,7 @@ public abstract class DtoMapper {
     })
     public abstract AcceptanceProductionDto acceptanceProductionToAcceptanceProductionDto(AcceptanceProduction acceptanceProduction);*/
 
-    public abstract AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProduction);
+    //public abstract AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProduction);
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
@@ -847,7 +847,7 @@ public abstract class DtoMapper {
         }
     }
 
-/*    public AcceptanceProduction toAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
+    public AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
         AcceptanceProduction acceptanceProduction = new AcceptanceProduction();
         if (acceptanceProductionDto == null) {
             return null;
@@ -855,12 +855,9 @@ public abstract class DtoMapper {
 
         acceptanceProduction.setId(acceptanceProductionDto.getId());
         acceptanceProduction.setAmount(acceptanceProductionDto.getAmount());
-        if (acceptanceProductionDto.getProductId() == null) {
-            return null;
-        } else {
-            //acceptanceProduction.setProduct();
-        }
-    }*/
+
+        return acceptanceProduction;
+    }
 
 }
 

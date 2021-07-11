@@ -271,6 +271,19 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
+
+    /*public static Product getProduct(Long id) {
+        return new Product(
+                id,
+                "Яблоко",
+                BigDecimal.TEN,
+                BigDecimal.TEN,
+                BigDecimal.ONE,
+                "Description",
+                false
+        );
+    }*/
+
     public static ProductDto getProductDto(Long id) {
         return ProductDto.builder()
                 .id(id)

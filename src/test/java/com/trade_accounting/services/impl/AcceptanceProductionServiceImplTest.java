@@ -18,6 +18,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class AcceptanceProductionServiceImplTest {
     @Mock
     AcceptanceProductionRepository acceptanceProductionRepository;
@@ -89,12 +92,14 @@ class AcceptanceProductionServiceImplTest {
         when(acceptanceProductionRepository.save(any(AcceptanceProduction.class)))
                 .thenReturn(ModelStubs.getAcceptanceProduction(1L));
 
-        //CorrectionDto correctionDto = correctionService.create(DtoStubs.getCorrectionDto(1L));
+        when(productRepository.getOne(anyLong()))
+                .thenReturn(ModelStubs.getProduct(1L));
+
         AcceptanceProductionDto acceptanceProductionDto =
                 acceptanceProductionService.create(DtoStubs.getAcceptanceProductionDto(1L));
-        //assertEquals(1, correctionDto.getId());
+
         assertEquals(1, acceptanceProductionDto.getId());
-        //verify(correctionRepository).save(any(Correction.class));
+
         verify(acceptanceProductionRepository).save(any(AcceptanceProduction.class));
     }
 }
