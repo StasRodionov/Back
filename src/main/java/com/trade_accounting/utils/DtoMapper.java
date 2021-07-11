@@ -48,6 +48,8 @@ import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.WriteOff;
+import com.trade_accounting.models.WriteOffProduct;
 import com.trade_accounting.models.dto.AcceptanceDto;
 import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.models.dto.AccessParametersDto;
@@ -96,6 +98,8 @@ import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.models.dto.WriteOffDto;
+import com.trade_accounting.models.dto.WriteOffProductDto;
 import com.trade_accounting.models.dto.fias.CityDto;
 import com.trade_accounting.models.dto.fias.DistrictDto;
 import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
@@ -107,8 +111,10 @@ import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
 import com.trade_accounting.repositories.BankAccountRepository;
+import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
+import com.trade_accounting.repositories.WarehouseRepository;
 import lombok.SneakyThrows;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Context;
@@ -122,6 +128,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -138,6 +145,10 @@ public abstract class DtoMapper {
 
     private DepartmentRepository departmentRepository;
 
+    private WarehouseRepository warehouseRepository;
+
+    private CompanyRepository companyRepository;
+
     @Autowired
     public final void setEmployeeRepository(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -146,6 +157,16 @@ public abstract class DtoMapper {
     @Autowired
     public final void setDepartmentRepository(DepartmentRepository departmentRepository) {
         this.departmentRepository = departmentRepository;
+    }
+
+    @Autowired
+    public final void setWarehouseRepository(WarehouseRepository warehouseRepository) {
+        this.warehouseRepository = warehouseRepository;
+    }
+
+    @Autowired
+    public final void setCompanyRepository(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
     }
 
     //AttributeOfCalculationObjectDto
@@ -829,6 +850,79 @@ public abstract class DtoMapper {
     })
     public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
 
+        //WriteOff
+    public WriteOffDto toWriteOffDto(WriteOff writeOff) {
+
+        WriteOffDto writeOffDto = new WriteOffDto();
+
+        if (writeOff == null) {
+            return null;
+        } else {
+            writeOffDto.setId(writeOff.getId());
+            writeOffDto.setDate(LocalDateTime.parse(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                    .format(writeOff.getDate())));
+            writeOffDto.setIsSent(writeOff.getIsSent());
+            writeOffDto.setIsPrint(writeOff.getIsPrint());
+            writeOffDto.setComment(writeOff.getComment());
+
+            Warehouse warehouse = writeOff.getWarehouse();
+            if (warehouse == null) {
+                return null;
+            } else {
+                writeOffDto.setWarehouseId(warehouse.getId());
+
+                Company company = writeOff.getCompany();
+                if (company == null) {
+                    return null;
+                } else {
+                    writeOffDto.setCompanyId(company.getId());
+
+
+                    List<Long> listId = writeOff.getWriteOffProducts().stream()
+                            .map(WriteOffProduct::getId)
+                            .collect(Collectors.toList());
+                    writeOffDto.setWriteOffProductIds(listId);
+
+                    return writeOffDto;
+                }
+            }
+        }
+    }
+
+    public WriteOff toWriteOff(WriteOffDto writeOffDto) {
+
+        WriteOff writeOff = new WriteOff();
+
+        if (writeOffDto == null) {
+            return null;
+        } else {
+            writeOff.setId(writeOffDto.getId());
+            writeOff.setDate(LocalDateTime.parse(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                    .format(writeOffDto.getDate())));
+            writeOff.setIsSent(writeOffDto.getIsSent());
+            writeOff.setIsPrint(writeOffDto.getIsPrint());
+            writeOff.setComment(writeOffDto.getComment());
+
+            Warehouse warehouse = warehouseRepository.getOne(writeOffDto.getId());
+            Company company = companyRepository.getOne(writeOffDto.getId());
+
+            if (warehouse == null || company == null) {
+                return null;
+            } else {
+                writeOff.setWarehouse(warehouse);
+                writeOff.setCompany(company);
+                return writeOff;
+            }
+        }
+    }
+
+    //    WriteOffProduct
+    @Mappings({
+            @Mapping(source = "product.id", target = "productId")
+    })
+    public abstract WriteOffProductDto toWriteOffProductDto(WriteOffProduct writeOffProduct);
+
+    public abstract WriteOffProduct toWriteOffProduct(WriteOffProductDto writeOffProductDto);
 }
 
 //abstract class CustomDtoMapper extends DtoMapper {
@@ -847,3 +941,5 @@ public abstract class DtoMapper {
 //    }
 
 //}
+
+
