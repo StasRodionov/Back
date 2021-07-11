@@ -202,7 +202,7 @@ public abstract class DtoMapper {
     })
     public abstract AcceptanceProductionDto acceptanceProductionToAcceptanceProductionDto(AcceptanceProduction acceptanceProduction);*/
 
-    //public abstract AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProduction);
+    public abstract AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProduction);
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
