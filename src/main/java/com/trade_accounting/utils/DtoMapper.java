@@ -170,13 +170,20 @@ public abstract class DtoMapper {
     public abstract Remain remainDtoToRemain(RemainDto remainDto);
 
     //AccessParameters
-    @Mappings({
-            @Mapping(source = "employee.id", target = "employeeId"),
-            @Mapping(source = "department.id", target = "departmentId")
-    })
-    public abstract AccessParametersDto AccessParametersToAccessParametersDto(AccessParameters accessParameters);
+    public AccessParametersDto accessParametersToAccessParametersDto(AccessParameters accessParameters) {
+        if (accessParameters == null) {
+            return null;
+        } else {
+            return new AccessParametersDto(
+                    accessParameters.getId(),
+                    accessParameters.getGeneralAccess(),
+                    accessParameters.getEmployee().getId(),
+                    accessParameters.getDepartment().getId()
+            );
+        }
+    }
 
-    public AccessParameters AccessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto) {
+    public AccessParameters accessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto) {
         if (accessParametersDto == null) {
             return null;
         }

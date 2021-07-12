@@ -34,18 +34,18 @@ public class AccessParametersServiceImpl implements AccessParametersService {
     @Override
     public List<AccessParametersDto> getAll() {
         return accessParametersRepository.findAll().stream()
-                .map(dtoMapper::AccessParametersToAccessParametersDto)
+                .map(dtoMapper::accessParametersToAccessParametersDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public AccessParametersDto getById(Long id) {
-        return dtoMapper.AccessParametersToAccessParametersDto(accessParametersRepository.findById(id).orElse(new AccessParameters()));
+        return dtoMapper.accessParametersToAccessParametersDto(accessParametersRepository.getOne(id));
     }
 
     @Override
     public AccessParametersDto create(AccessParametersDto dto) {
-        return dtoMapper.AccessParametersToAccessParametersDto(accessParametersRepository
+        return dtoMapper.accessParametersToAccessParametersDto(accessParametersRepository
                 .save(AccessParameters.builder().id(dto.getId()).generalAccess(dto.getGeneralAccess())
                         .employee(dtoMapper.employeeDtoToEmployee(employeeRepository.getById(dto.getEmployeeId())))
                         .department(dtoMapper.departmentDtoToDepartment(departmentRepository.getById(dto.getDepartmentId()))).build()));
