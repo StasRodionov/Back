@@ -35,7 +35,7 @@ public class RetailStore {
 
     @Column(name = "is_active")
     @ColumnDefault("false")
-    private boolean isActive;
+    private Boolean isActive;
 
     @Column(name = "activity_status")
     private String activityStatus;
@@ -58,7 +58,7 @@ public class RetailStore {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Employee> cashiers;
 
-    public RetailStore(String name, boolean isActive, String activityStatus, BigDecimal revenue,
+    public RetailStore(String name, Boolean isActive, String activityStatus, BigDecimal revenue,
                        Company organization, String salesInvoicePrefix, String defaultTaxationSystem,
                        String orderTaxationSystem, List<Employee> cashiers) {
         this.name = name;

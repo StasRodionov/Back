@@ -53,7 +53,7 @@ public class SupplierAccountImpl implements SupplierAccountService {
     @Override
     public SupplierAccountDto create(SupplierAccountDto createSupplier) {
         SupplierAccount saveInvoices = SupplierAccount.builder().id(createSupplier.getId()).date(createSupplier.getDate())
-                .comment(createSupplier.getComment()).isSpend(createSupplier.isSpend())
+                .comment(createSupplier.getComment()).isSpend(createSupplier.getIsSpend())
                 .company(companyRepository.getCompaniesById(createSupplier.getCompanyId()))
                 .warehouse(dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(createSupplier.getWarehouseId())))
                 .contract(dtoMapper.contractDtoToContract(contractRepository.getById(createSupplier.getContractId())))
