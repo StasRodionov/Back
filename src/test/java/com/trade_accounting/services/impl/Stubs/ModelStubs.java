@@ -30,6 +30,7 @@ import com.trade_accounting.models.RequestsProductions;
 import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.ContractorStatus;
+import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TechnicalCard;
 import com.trade_accounting.models.TechnicalCardGroup;
@@ -462,12 +463,17 @@ public class ModelStubs {
         );
     }
 
-    public static AcceptanceProduction getAcceptanceProduction(Long id) {
-        return new AcceptanceProduction(
-                id,
-                1L,
-                getProduct(id)
-        );
+    public static SupplierAccount getSupplierAccount(Long id){
+        return SupplierAccount.builder()
+                .id(id)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарйи " + id)
+                .isSpend(false)
+                .company(getCompany(1L))
+                .contract(getContract(1L))
+                .contractor(getContractor(1L))
+                .warehouse(getWarehouse(1L))
+                .build();
     }
 }
 

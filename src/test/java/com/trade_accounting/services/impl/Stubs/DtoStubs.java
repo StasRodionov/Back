@@ -1,7 +1,5 @@
 package com.trade_accounting.services.impl.Stubs;
 
-import com.trade_accounting.models.dto.AcceptanceProductionDto;
-import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
@@ -24,6 +22,7 @@ import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.models.dto.TypeOfPriceDto;
@@ -185,11 +184,7 @@ public class DtoStubs {
         return dtoMapper.toInventarizationProductDto(ModelStubs.getInventarizationProduct(id));
     }
 
-    public static AcceptanceProductionDto getAcceptanceProductionDto(Long id) {
-        return dtoMapper.toAcceptanceProductionDto(ModelStubs.getAcceptanceProduction(id));
-    }
-
-    public static AccessParametersDto getAccessParametersDto(Long id) {
-        return dtoMapper.accessParametersToAccessParametersDto(ModelStubs.getAccessParameters(id));
+    public static SupplierAccountDto getSupplierAccountDto(Long id) {
+        return dtoMapper.supplierAccountToSupplierAccountDto(ModelStubs.getSupplierAccount(id));
     }
 }
