@@ -1,8 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.MovementProductDto;
-import com.trade_accounting.repositories.MovementProductRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.MovementProductService;
 import io.swagger.annotations.Api;
@@ -60,7 +58,7 @@ public class MovementProductRestController {
     public ResponseEntity<MovementProductDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти перемещенный товар")
                                                       @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsCorrectionProductById(id);
+        checkEntityService.checkExistsMovementProductById(id);
         return ResponseEntity.ok(movementProductService.getById(id));
     }
 
@@ -106,7 +104,7 @@ public class MovementProductRestController {
     public ResponseEntity<MovementProductDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить перемещенный товар")
                                                          @PathVariable("id") Long id) {
-        checkEntityService.checkExistsCorrectionProductById(id);
+        checkEntityService.checkExistsMovementProductById(id);
         movementProductService.deleteById(id);
         return ResponseEntity.ok().build();
     }
