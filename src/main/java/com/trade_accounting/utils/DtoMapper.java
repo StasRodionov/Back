@@ -196,14 +196,6 @@ public abstract class DtoMapper {
 
     public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
 
-    // AcceptanceProductionService
-    @Mappings({
-            @Mapping(source = "product.id", target = "productId"),
-    })
-    public abstract AcceptanceProductionDto acceptanceProductionToAcceptanceProductionDto(AcceptanceProduction acceptanceProduction);
-
-    public abstract AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProduction);
-
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
 
@@ -828,6 +820,37 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorId", target = "contractor.id"),
     })
     public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
+
+    // AcceptanceProductionService
+    public AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
+        AcceptanceProductionDto acceptanceProductionDto = new AcceptanceProductionDto();
+        if (acceptanceProduction == null) {
+            return null;
+        } else {
+            acceptanceProductionDto.setId(acceptanceProduction.getId());
+            acceptanceProductionDto.setAmount(acceptanceProduction.getAmount());
+
+            Product product = acceptanceProduction.getProduct();
+            if (product == null) {
+                return null;
+            } else {
+                acceptanceProductionDto.setProductId(product.getId());
+                return acceptanceProductionDto;
+            }
+        }
+    }
+
+    public AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
+        AcceptanceProduction acceptanceProduction = new AcceptanceProduction();
+        if (acceptanceProductionDto == null) {
+            return null;
+        }
+
+        acceptanceProduction.setId(acceptanceProductionDto.getId());
+        acceptanceProduction.setAmount(acceptanceProductionDto.getAmount());
+
+        return acceptanceProduction;
+    }
 
 }
 
