@@ -35,6 +35,10 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private TypeOfPayment typeOfPayment;
 
+    @Column(name = "payment_methods")
+    @Enumerated(EnumType.STRING)
+    private PaymentMethods paymentMethods;
+
     @Column(name = "number")
     @NotNull
     @ColumnDefault(value = "00001")

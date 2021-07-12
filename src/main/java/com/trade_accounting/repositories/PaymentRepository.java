@@ -16,6 +16,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpec
     @Query("select new com.trade_accounting.models.dto.PaymentDto(" +
             "e.id," +
             "e.typeOfPayment," +
+            "e.paymentMethods," +
             "e.number," +
             "e.time," +
             "e.company.id," +
@@ -29,6 +30,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpec
     @Query("select new com.trade_accounting.models.dto.PaymentDto(" +
             "e.id," +
             "e.typeOfPayment," +
+            "e.paymentMethods," +
             "e.number," +
             "e.time," +
             "e.company.id," +
