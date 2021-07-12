@@ -30,7 +30,7 @@ public class SupplierAccountDto {
     @NotNull
     private Long contractorId;
 
-    private boolean isSpend;
+    private Boolean isSpend;
 
     private String comment;
 

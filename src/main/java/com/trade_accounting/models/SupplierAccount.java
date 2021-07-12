@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -47,7 +48,7 @@ public class SupplierAccount {
     private Contract contract;
 
     @ColumnDefault("false")
-    private boolean isSpend;
+    private Boolean isSpend;
 
     private String comment;
 

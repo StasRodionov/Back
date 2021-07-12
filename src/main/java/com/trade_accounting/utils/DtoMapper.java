@@ -170,13 +170,20 @@ public abstract class DtoMapper {
     public abstract Remain remainDtoToRemain(RemainDto remainDto);
 
     //AccessParameters
-    @Mappings({
-            @Mapping(source = "employee.id", target = "employeeId"),
-            @Mapping(source = "department.id", target = "departmentId")
-    })
-    public abstract AccessParametersDto AccessParametersToAccessParametersDto(AccessParameters accessParameters);
+    public AccessParametersDto accessParametersToAccessParametersDto(AccessParameters accessParameters) {
+        if (accessParameters == null) {
+            return null;
+        } else {
+            return new AccessParametersDto(
+                    accessParameters.getId(),
+                    accessParameters.getGeneralAccess(),
+                    accessParameters.getEmployee().getId(),
+                    accessParameters.getDepartment().getId()
+            );
+        }
+    }
 
-    public AccessParameters AccessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto) {
+    public AccessParameters accessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto) {
         if (accessParametersDto == null) {
             return null;
         }
@@ -195,14 +202,6 @@ public abstract class DtoMapper {
     public abstract AcceptanceDto acceptanceToAcceptanceDto(Acceptance acceptance);
 
     public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
-
-    // AcceptanceProductionService
-    @Mappings({
-            @Mapping(source = "product.id", target = "productId"),
-    })
-    public abstract AcceptanceProductionDto acceptanceProductionToAcceptanceProductionDto(AcceptanceProduction acceptanceProduction);
-
-    public abstract AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProduction);
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
@@ -438,7 +437,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractor.id", target = "contractorId"),
             @Mapping(source = "warehouse.id", target = "warehouseId"),
     })
-    public abstract SupplierAccountDto SupplierAccountToSupplierAccountDto(SupplierAccount SupplierAccount);
+    public abstract SupplierAccountDto supplierAccountToSupplierAccountDto(SupplierAccount SupplierAccount);
 
     @Mappings({
             @Mapping(source = "companyId", target = "company.id"),
@@ -446,7 +445,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorId", target = "contractor.id"),
             @Mapping(source = "warehouseId", target = "warehouse.id"),
     })
-    public abstract SupplierAccount SupplierAccountDtoToSupplierAccount(SupplierAccountDto SupplierAccountDto);
+    public abstract SupplierAccount supplierAccountDtoToSupplierAccount(SupplierAccountDto SupplierAccountDto);
 
     //LegalDetail
     @Mappings({
@@ -641,7 +640,7 @@ public abstract class DtoMapper {
             @Mapping(source = "organizationDto", target = "organization"),
             @Mapping(source = "cashiersDto", target = "cashiers"),
     })
-    public abstract RetailStore retailStoreDtoToRetailStore(RetailStoreDto retailStoreDto);
+    public abstract RetailStore toRetailStore(RetailStoreDto retailStoreDto);
 
     @Mappings({
             @Mapping(source = "districtDtos", target = "districts")
@@ -777,7 +776,7 @@ public abstract class DtoMapper {
 
         InventarizationDto inventarizationDto = new InventarizationDto();
 
-        if(inventarization == null) {
+        if (inventarization == null) {
             return null;
         } else {
             inventarizationDto.setId(inventarization.getId());
@@ -786,13 +785,13 @@ public abstract class DtoMapper {
             inventarizationDto.setComment(inventarization.getComment());
 
             Warehouse warehouse = inventarization.getWarehouse();
-            if(warehouse == null) {
+            if (warehouse == null) {
                 return null;
             } else {
                 inventarizationDto.setWarehouseId(warehouse.getId());
 
                 Company company = inventarization.getCompany();
-                if(company == null) {
+                if (company == null) {
                     return null;
                 } else {
                     inventarizationDto.setCompanyId(company.getId());
@@ -828,6 +827,37 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorId", target = "contractor.id"),
     })
     public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
+
+    // AcceptanceProductionService
+    public AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
+        AcceptanceProductionDto acceptanceProductionDto = new AcceptanceProductionDto();
+        if (acceptanceProduction == null) {
+            return null;
+        } else {
+            acceptanceProductionDto.setId(acceptanceProduction.getId());
+            acceptanceProductionDto.setAmount(acceptanceProduction.getAmount());
+
+            Product product = acceptanceProduction.getProduct();
+            if (product == null) {
+                return null;
+            } else {
+                acceptanceProductionDto.setProductId(product.getId());
+                return acceptanceProductionDto;
+            }
+        }
+    }
+
+    public AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
+        AcceptanceProduction acceptanceProduction = new AcceptanceProduction();
+        if (acceptanceProductionDto == null) {
+            return null;
+        }
+
+        acceptanceProduction.setId(acceptanceProductionDto.getId());
+        acceptanceProduction.setAmount(acceptanceProductionDto.getAmount());
+
+        return acceptanceProduction;
+    }
 
 }
 
