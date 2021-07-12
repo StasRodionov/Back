@@ -51,8 +51,8 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
     @Override
     public SupplierAccountDto create(SupplierAccountDto createSupplier) {
         SupplierAccount saveInvoices = SupplierAccount.builder().id(createSupplier.getId()).date(createSupplier.getDate())
-                .comment(createSupplier.getComment()).isSpend(createSupplier.isSpend())
-                .company(dtoMapper.companyDtoToCompany(companyRepository.getCompanyById(createSupplier.getCompanyId())))
+                .comment(createSupplier.getComment()).isSpend(createSupplier.getIsSpend())
+                .company(companyRepository.getCompaniesById(createSupplier.getCompanyId()))
                 .warehouse(dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(createSupplier.getWarehouseId())))
                 .contract(dtoMapper.contractDtoToContract(contractRepository.getById(createSupplier.getContractId())))
                 .contractor((contractorRepository.getOne(createSupplier.getContractorId())))

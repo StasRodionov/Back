@@ -1,6 +1,5 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Contact;
@@ -119,7 +118,7 @@ public class ContractorServiceImpl implements ContractorService {
         );
 
         contractor.setAccessParameters(
-                accessParametersRepository.save(dtoMapper.AccessParametersDtoToAccessParameters
+                accessParametersRepository.save(dtoMapper.accessParametersDtoToAccessParameters
                         (contractorDto.getAccessParametersDto()))
         );
 

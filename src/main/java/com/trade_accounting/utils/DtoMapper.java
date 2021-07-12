@@ -170,13 +170,20 @@ public abstract class DtoMapper {
     public abstract Remain remainDtoToRemain(RemainDto remainDto);
 
     //AccessParameters
-    @Mappings({
-            @Mapping(source = "employee.id", target = "employeeId"),
-            @Mapping(source = "department.id", target = "departmentId")
-    })
-    public abstract AccessParametersDto AccessParametersToAccessParametersDto(AccessParameters accessParameters);
+    public AccessParametersDto accessParametersToAccessParametersDto(AccessParameters accessParameters) {
+        if (accessParameters == null) {
+            return null;
+        } else {
+            return new AccessParametersDto(
+                    accessParameters.getId(),
+                    accessParameters.getGeneralAccess(),
+                    accessParameters.getEmployee().getId(),
+                    accessParameters.getDepartment().getId()
+            );
+        }
+    }
 
-    public AccessParameters AccessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto) {
+    public AccessParameters accessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto) {
         if (accessParametersDto == null) {
             return null;
         }
@@ -195,14 +202,6 @@ public abstract class DtoMapper {
     public abstract AcceptanceDto acceptanceToAcceptanceDto(Acceptance acceptance);
 
     public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
-
-    // AcceptanceProductionService
-    @Mappings({
-            @Mapping(source = "product.id", target = "productId"),
-    })
-    public abstract AcceptanceProductionDto acceptanceProductionToAcceptanceProductionDto(AcceptanceProduction acceptanceProduction);
-
-    public abstract AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProduction);
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
@@ -641,7 +640,7 @@ public abstract class DtoMapper {
             @Mapping(source = "organizationDto", target = "organization"),
             @Mapping(source = "cashiersDto", target = "cashiers"),
     })
-    public abstract RetailStore retailStoreDtoToRetailStore(RetailStoreDto retailStoreDto);
+    public abstract RetailStore toRetailStore(RetailStoreDto retailStoreDto);
 
     @Mappings({
             @Mapping(source = "districtDtos", target = "districts")
@@ -828,6 +827,37 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorId", target = "contractor.id"),
     })
     public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
+
+    // AcceptanceProductionService
+    public AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
+        AcceptanceProductionDto acceptanceProductionDto = new AcceptanceProductionDto();
+        if (acceptanceProduction == null) {
+            return null;
+        } else {
+            acceptanceProductionDto.setId(acceptanceProduction.getId());
+            acceptanceProductionDto.setAmount(acceptanceProduction.getAmount());
+
+            Product product = acceptanceProduction.getProduct();
+            if (product == null) {
+                return null;
+            } else {
+                acceptanceProductionDto.setProductId(product.getId());
+                return acceptanceProductionDto;
+            }
+        }
+    }
+
+    public AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
+        AcceptanceProduction acceptanceProduction = new AcceptanceProduction();
+        if (acceptanceProductionDto == null) {
+            return null;
+        }
+
+        acceptanceProduction.setId(acceptanceProductionDto.getId());
+        acceptanceProduction.setAmount(acceptanceProductionDto.getAmount());
+
+        return acceptanceProduction;
+    }
 
 }
 
