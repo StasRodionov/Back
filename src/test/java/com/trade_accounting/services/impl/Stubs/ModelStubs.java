@@ -496,5 +496,13 @@ public class ModelStubs {
                 .isSpend(false)
                 .build();
     }
+
+    public static AcceptanceProduction getAcceptanceProduction(Long id){
+        return AcceptanceProduction.builder()
+                .id(id)
+                .product(getProduct(1L))
+                .amount(1L)
+                .build();
+    }
 }
 

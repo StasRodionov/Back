@@ -1,6 +1,7 @@
 package com.trade_accounting.services.impl.Stubs;
 
 import com.trade_accounting.models.InventarizationProduct;
+import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
@@ -197,5 +198,9 @@ public class DtoStubs {
 
     public static AccessParametersDto getAccessParametersDto(Long id){
         return dtoMapper.accessParametersToAccessParametersDto(ModelStubs.getAccessParameters(id));
+    }
+
+    public static AcceptanceProductionDto getAcceptanceProductionDto(Long id){
+        return dtoMapper.toAcceptanceProductionDto(ModelStubs.getAcceptanceProduction(id));
     }
 }
