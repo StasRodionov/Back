@@ -32,6 +32,7 @@ import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
@@ -71,6 +72,7 @@ import com.trade_accounting.services.interfaces.ProjectService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import com.trade_accounting.services.interfaces.RoleService;
+import com.trade_accounting.services.interfaces.SupplierAccountService;
 import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
@@ -82,7 +84,6 @@ import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import com.trade_accounting.services.interfaces.fias.FiasDbService;
 import com.trade_accounting.utils.fias.ExcelParser;
-import nonapi.io.github.classgraph.json.JSONUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -138,6 +139,7 @@ public class DataInitializer {
     private final InventarizationService inventarizationService;
     private final InventarizationProductService inventarizationProductService;
     private final BalanceAdjustmentService balanceAdjustmentService;
+    private final SupplierAccountService supplierAccountService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -176,7 +178,7 @@ public class DataInitializer {
             CorrectionService correctionService, ReturnToSupplierService returnToSupplierService,
             InventarizationService inventarizationService,
             InventarizationProductService inventarizationProductService,
-            BalanceAdjustmentService balanceAdjustmentService) {
+            BalanceAdjustmentService balanceAdjustmentService, SupplierAccountService supplierAccountService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -216,6 +218,7 @@ public class DataInitializer {
         this.inventarizationService = inventarizationService;
         this.inventarizationProductService = inventarizationProductService;
         this.balanceAdjustmentService = balanceAdjustmentService;
+        this.supplierAccountService = supplierAccountService;
     }
 
     @PostConstruct
@@ -259,6 +262,7 @@ public class DataInitializer {
         initInventarizationProduct();
         initInventarization();
         initBalanceAdjustment();
+        initSupplierAccount();
     }
 
     private void initAccessParameters() {
@@ -1606,7 +1610,7 @@ public class DataInitializer {
                         null, "2021-06-29 14:14",
                         1L, 1L,
                         false, "Инвентаризация 1",
-                         List.of(1L, 2L, 3L)
+                        List.of(1L, 2L, 3L)
                 )
         );
         inventarizationService.create(
@@ -1683,5 +1687,53 @@ public class DataInitializer {
                 .dateChanged(LocalDateTime.now().toString())
                 .whoChanged("Попов")
                 .build());
+    }
+
+    private void initSupplierAccount() {
+        supplierAccountService.create(SupplierAccountDto.builder()
+                .id(1L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 1")
+                .isSpend(false)
+                .companyId(1L)
+                .warehouseId(1L)
+                .contractId(1L)
+                .contractorId(1L).build());
+        supplierAccountService.create(SupplierAccountDto.builder()
+                .id(2L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 2")
+                .isSpend(false)
+                .companyId(2L)
+                .warehouseId(1L)
+                .contractId(1L)
+                .contractorId(2L).build());
+        supplierAccountService.create(SupplierAccountDto.builder()
+                .id(3L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 3")
+                .isSpend(false)
+                .companyId(3L)
+                .warehouseId(1L)
+                .contractId(1L)
+                .contractorId(3L).build());
+        supplierAccountService.create(SupplierAccountDto.builder()
+                .id(4L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 4")
+                .isSpend(false)
+                .companyId(4L)
+                .warehouseId(1L)
+                .contractId(1L)
+                .contractorId(4L).build());
+        supplierAccountService.create(SupplierAccountDto.builder()
+                .id(5L)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 5")
+                .isSpend(false)
+                .companyId(5L)
+                .warehouseId(1L)
+                .contractId(1L)
+                .contractorId(5L).build());
     }
 }
