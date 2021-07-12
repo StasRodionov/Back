@@ -40,7 +40,7 @@ public class RetailStoreServiceImpl implements RetailStoreService {
 
     @Override
     public RetailStoreDto create(RetailStoreDto retailStoreDto) {
-        RetailStore retailStore = dtoMapper.retailStoreDtoToRetailStore(retailStoreDto);
+        RetailStore retailStore = dtoMapper.toRetailStore(retailStoreDto);
         retailStoreDto.setId(retailStore.getId());
         retailStoreRepository.save(retailStore);
         return retailStoreDto;

@@ -1,6 +1,7 @@
 package com.trade_accounting.models.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class RetailStoreDto {
 
     private Long id;
@@ -18,7 +20,7 @@ public class RetailStoreDto {
     @NotNull
     private String name;
 
-    private boolean isActive;
+    private Boolean isActive;
     private String activityStatus;
     private BigDecimal revenue;
     private CompanyDto organizationDto;
@@ -27,7 +29,7 @@ public class RetailStoreDto {
     private String orderTaxationSystem;
     private List<EmployeeDto> cashiersDto;
 
-    public RetailStoreDto(String name, boolean isActive, String activityStatus,
+    public RetailStoreDto(String name, Boolean isActive, String activityStatus,
                           BigDecimal revenue, CompanyDto organization,
                           String salesInvoicePrefix, String defaultTaxationSystem,
                           String orderTaxationSystem, List<EmployeeDto> cashiers) {
@@ -42,7 +44,7 @@ public class RetailStoreDto {
         this.cashiersDto = cashiers;
     }
 
-    public RetailStoreDto(Long id, String name, boolean isActive, String activityStatus,
+    public RetailStoreDto(Long id, String name, Boolean isActive, String activityStatus,
                           BigDecimal revenue, Long organizationId,
                           String salesInvoicePrefix, String defaultTaxationSystem,
                           String orderTaxationSystem) {
