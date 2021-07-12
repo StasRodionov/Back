@@ -2,6 +2,7 @@ package com.trade_accounting.services.impl.Stubs;
 
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
+import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
@@ -458,6 +459,26 @@ public class ModelStubs {
                         getInventarizationProduct(2L),
                         getInventarizationProduct(3L))
         );
+    }
+
+    public static AgentReports getAgentReports(Long id){
+        return AgentReports.builder()
+                .id(id)
+                .company(getCompany(1L))
+                .contractor(getContractor(1L))
+                .comitentSum(100L)
+                .commentary("Коммент 1")
+                .comitentSum(200L)
+                .documentType(".doc")
+                .number("1")
+                .paid(10L)
+                .printed(100L)
+                .remunirationSum(100L)
+                .sent(20L)
+                .status("status 1")
+                .time(LocalDateTime.now())
+                .sum(1000L)
+                .build();
     }
 }
 
