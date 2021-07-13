@@ -28,7 +28,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "internal_order_products")
-public class InternalOrderProducts {
+public class InternalOrderProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
