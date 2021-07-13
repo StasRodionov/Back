@@ -3,6 +3,7 @@ package com.trade_accounting.services.impl.Stubs;
 import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
+import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
@@ -463,16 +464,44 @@ public class ModelStubs {
         );
     }
 
+    public static AgentReports getAgentReports(Long id){
+        return AgentReports.builder()
+                .id(id)
+                .company(getCompany(1L))
+                .contractor(getContractor(1L))
+                .comitentSum(100L)
+                .commentary("Коммент 1")
+                .comitentSum(200L)
+                .documentType(".doc")
+                .number("1")
+                .paid(10L)
+                .printed(100L)
+                .remunirationSum(100L)
+                .sent(20L)
+                .status("status 1")
+                .time(LocalDateTime.now())
+                .sum(1000L)
+                .build();
+    }
+
     public static SupplierAccount getSupplierAccount(Long id){
         return SupplierAccount.builder()
                 .id(id)
-                .date(LocalDateTime.now().toString())
-                .comment("Комментарйи " + id)
-                .isSpend(false)
-                .company(getCompany(1L))
+                .warehouse(getWarehouse(1L))
                 .contract(getContract(1L))
                 .contractor(getContractor(1L))
-                .warehouse(getWarehouse(1L))
+                .company(getCompany(1L))
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий")
+                .isSpend(false)
+                .build();
+    }
+
+    public static AcceptanceProduction getAcceptanceProduction(Long id){
+        return AcceptanceProduction.builder()
+                .id(id)
+                .product(getProduct(1L))
+                .amount(1L)
                 .build();
     }
 }
