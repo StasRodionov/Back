@@ -485,5 +485,26 @@ public class ModelStubs {
                 .sum(1000L)
                 .build();
     }
+
+    public static SupplierAccount getSupplierAccount(Long id){
+        return SupplierAccount.builder()
+                .id(id)
+                .warehouse(getWarehouse(1L))
+                .contract(getContract(1L))
+                .contractor(getContractor(1L))
+                .company(getCompany(1L))
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий")
+                .isSpend(false)
+                .build();
+    }
+
+    public static AcceptanceProduction getAcceptanceProduction(Long id){
+        return AcceptanceProduction.builder()
+                .id(id)
+                .product(getProduct(1L))
+                .amount(1L)
+                .build();
+    }
 }
 

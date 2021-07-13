@@ -25,6 +25,8 @@ import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.Movement;
+import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.PriceList;
@@ -73,6 +75,8 @@ import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.models.dto.MovementDto;
+import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.PriceListDto;
@@ -828,6 +832,59 @@ public abstract class DtoMapper {
     })
     public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
 
+
+    //    Movement
+    public MovementDto toMovementDto(Movement movement) {
+        MovementDto movementDto = new MovementDto();
+        if (movement == null) {
+            return null;
+        } else {
+            movementDto.setId(movement.getId());
+            movementDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(movement.getDate()));
+            movementDto.setIsSent(movement.getIsSent());
+            movementDto.setIsPrint(movement.getIsPrint());
+            movementDto.setComment(movement.getComment());
+
+            Warehouse warehouseFrom = movement.getWarehouseFrom();
+            Warehouse warehouseTo = movement.getWarehouseTo();
+            if (warehouseFrom == null) {
+                return null;
+            } else {
+                movementDto.setWarehouseFromId(warehouseFrom.getId());
+                if (warehouseTo == null){
+                    return null;
+                } else {
+                    movementDto.setWarehouseToId(warehouseTo.getId());
+
+                    Company company = movement.getCompany();
+                    if (company == null){
+                        return null;
+                    } else {
+                        movementDto.setCompanyId(company.getId());
+
+                        List<Long> movementProductIds = movement.getMovementProducts().stream()
+                                .map(MovementProduct::getId)
+                                .collect(Collectors.toList());
+
+                        movementDto.setMovementProductsIds(movementProductIds);
+                        return movementDto;
+                    }
+                }
+            }
+        }
+    }
+
+    @Mapping(target = "date", ignore = true)
+    public abstract Movement toMovement(MovementDto movementDto);
+
+    //    MovementProduct
+    @Mappings({
+            @Mapping(source = "product.id", target = "productId")
+    })
+    public abstract MovementProductDto toMovementProductDto(MovementProduct movement);
+
+    public abstract MovementProduct toMovementProduct(MovementProductDto movementDto);
+
     // AcceptanceProductionService
     public AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
         AcceptanceProductionDto acceptanceProductionDto = new AcceptanceProductionDto();
@@ -860,6 +917,7 @@ public abstract class DtoMapper {
     }
 
 }
+
 
 //abstract class CustomDtoMapper extends DtoMapper {
 //
