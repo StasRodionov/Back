@@ -28,6 +28,7 @@ import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Movement;
 import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.Payment;
+import com.trade_accounting.models.Payouts;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.Product;
@@ -78,6 +79,7 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
+import com.trade_accounting.models.dto.PayoutsDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.models.dto.ProductDto;
@@ -915,6 +917,20 @@ public abstract class DtoMapper {
 
         return acceptanceProduction;
     }
+
+
+    //Payouts
+    @Mappings({
+            @Mapping(source = "retailStore.id", target = "retailStoreId"),
+            @Mapping(source = "company.id", target = "companyId")
+    })
+    public abstract PayoutsDto payoutsToPayoutsDto(Payouts payouts);
+
+    @Mappings({
+            @Mapping(source = "retailStoreId", target = "retailStore.id"),
+            @Mapping(source = "companyId", target = "company.id")
+    })
+    public abstract Payouts payoutsDtoToPayouts(PayoutsDto payoutsDto);
 
 }
 
