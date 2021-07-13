@@ -473,7 +473,6 @@ public class ModelStubs {
                 .contractor(getContractor(1L))
                 .comitentSum(100L)
                 .commentary("Коммент 1")
-                .comitentSum(200L)
                 .documentType(".doc")
                 .number("1")
                 .paid(10L)
