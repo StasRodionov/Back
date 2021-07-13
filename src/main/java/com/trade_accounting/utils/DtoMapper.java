@@ -21,7 +21,7 @@ import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.InternalOrder;
-import com.trade_accounting.models.InternalOrderProducts;
+import com.trade_accounting.models.InternalOrderProduct;
 import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
@@ -924,7 +924,8 @@ public abstract class DtoMapper {
      * @return InternalOrder
      */
     @Mappings({
-            @Mapping(source = "companyId", target = "company.id")
+            @Mapping(source = "companyId", target = "company.id"),
+            @Mapping(target = "date", ignore = true)
     })
     public abstract InternalOrder internalOrderDtoToInternalOrder(InternalOrderDto internalOrderDto);
 
@@ -943,7 +944,7 @@ public abstract class DtoMapper {
             internalOrderDto.setComment(internalOrder.getComment());
             internalOrderDto.setInternalOrderProductsIds(
                     internalOrder.getInternalOrderProducts().stream()
-                            .map(InternalOrderProducts::getId)
+                            .map(InternalOrderProduct::getId)
                             .collect(Collectors.toList())
             );
 
@@ -960,13 +961,13 @@ public abstract class DtoMapper {
      * @return InternalOrderProducts
      */
     @Mapping(source = "productId", target = "product.id")
-    public abstract InternalOrderProducts internalOrderProductsDtoToInternalOrderProducts(InternalOrderProductsDto internalOrderProductsDto);
+    public abstract InternalOrderProduct internalOrderProductsDtoToInternalOrderProducts(InternalOrderProductsDto internalOrderProductsDto);
 
     /**
      * @return InternalOrderProductsDto
      */
     @Mapping(source = "product.id", target = "productId")
-    public abstract InternalOrderProductsDto internalOrderProductsToInternalOrderProductsDto(InternalOrderProducts internalOrderProducts);
+    public abstract InternalOrderProductsDto internalOrderProductsToInternalOrderProductsDto(InternalOrderProduct internalOrderProduct);
 }
 
 

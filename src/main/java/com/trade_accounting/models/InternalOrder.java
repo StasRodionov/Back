@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Pavel Andrusov
  * @version 1.0.0
- * */
+ */
 
 @Builder
 @AllArgsConstructor
@@ -37,7 +37,7 @@ public class InternalOrder {
     private Long id;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<InternalOrderProducts> internalOrderProducts;
+    private List<InternalOrderProduct> internalOrderProducts;
 
     @NotNull
     private LocalDateTime date;
