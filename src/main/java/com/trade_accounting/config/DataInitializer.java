@@ -1,5 +1,6 @@
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.AccessParametersDto;
@@ -306,6 +307,7 @@ public class DataInitializer {
                         paymentService.create(new PaymentDto(
                                 null,
                                 TypeOfPayment.INCOMING,
+                                PaymentMethods.CASH,
                                 "0000" + count,
                                 localDateTime,
                                 companyDto.getId(),
@@ -313,6 +315,19 @@ public class DataInitializer {
                                 contractDto.getId(),
                                 projectDto.getId(),
                                 new BigDecimal("100.00")
+                        ));
+                        count++;
+                        paymentService.create(new PaymentDto(
+                                null,
+                                TypeOfPayment.OUTGOING,
+                                PaymentMethods.BANK,
+                                "0000" + count,
+                                localDateTime,
+                                companyDto.getId(),
+                                contractorDto.getId(),
+                                contractDto.getId(),
+                                projectDto.getId(),
+                                new BigDecimal("50.00")
                         ));
                         count++;
                     }

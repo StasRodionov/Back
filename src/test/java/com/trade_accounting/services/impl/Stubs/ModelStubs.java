@@ -23,6 +23,7 @@ import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
+import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Production;
@@ -74,6 +75,7 @@ public class ModelStubs {
     public static Payment getPayment(Long id) {
         return new Payment(
                 id, TypeOfPayment.INCOMING,
+                PaymentMethods.CASH,
                 "00001", LocalDateTime.now(),
                 getCompany(id), getContractor(id),
                 getContract(id), getProject(id),

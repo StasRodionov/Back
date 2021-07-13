@@ -3,6 +3,7 @@ package com.trade_accounting.models.dto;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.TypeOfPayment;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,8 @@ public class PaymentDto {
 
     private TypeOfPayment typeOfPayment;
 
+    private PaymentMethods paymentMethods;
+
     @NotNull
     private String number;
 
@@ -43,6 +46,7 @@ public class PaymentDto {
 
     public PaymentDto(Long id,
                       TypeOfPayment typeOfPayment,
+                      PaymentMethods paymentMethods,
                       String number,
                       LocalDateTime time,
                       Long companyId,
@@ -52,6 +56,7 @@ public class PaymentDto {
                       BigDecimal sum) {
         this.id = id;
         this.typeOfPayment = typeOfPayment;
+        this.paymentMethods = paymentMethods;
         this.number = number;
         this.time = time;
         this.companyDto = new CompanyDto();
