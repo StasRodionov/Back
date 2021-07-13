@@ -29,6 +29,8 @@ import com.trade_accounting.repositories.InventarizationRepository;
 import com.trade_accounting.repositories.InvoiceProductRepository;
 import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
+import com.trade_accounting.repositories.MovementProductRepository;
+import com.trade_accounting.repositories.MovementRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
@@ -95,6 +97,8 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final BalanceAdjustmentRepository balanceAdjustmentRepository;
     private final AcceptanceRepository acceptanceRepository;
     private final AcceptanceProductionRepository acceptanceProductionRepository;
+    private final MovementProductRepository movementProductRepository;
+    private final MovementRepository movementRepository;
 
     public CheckEntityServiceImpl(UnitRepository unitRepository,
                                   EmployeeRepository employeeRepository,
@@ -131,7 +135,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
                                   InventarizationProductRepository inventarizationProductRepository,
                                   BalanceAdjustmentRepository balanceAdjustmentRepository,
                                   AcceptanceRepository acceptanceRepository,
-                                  AcceptanceProductionRepository acceptanceProductionRepository) {
+                                  AcceptanceProductionRepository acceptanceProductionRepository, MovementProductRepository movementProductRepository, MovementRepository movementRepository) {
         this.unitRepository = unitRepository;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
@@ -171,6 +175,8 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         this.balanceAdjustmentRepository = balanceAdjustmentRepository;
         this.acceptanceRepository = acceptanceRepository;
         this.acceptanceProductionRepository = acceptanceProductionRepository;
+        this.movementProductRepository = movementProductRepository;
+        this.movementRepository = movementRepository;
     }
 
 
@@ -509,6 +515,20 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsBalanceAdjustmentById(Long balanceAdjustment) {
         if (!balanceAdjustmentRepository.existsById(balanceAdjustment)) {
             throw new NotFoundEntityException("Корректировка баланса с id=" + balanceAdjustment + "не найден");
+        }
+    }
+
+    @Override
+    public void checkExistsMovementById(Long id) {
+        if (!movementRepository.existsById(id)) {
+            throw new NotFoundEntityException("Перемещние с id " + id + " не найдено");
+        }
+    }
+
+    @Override
+    public void checkExistsMovementProductById(Long id) {
+        if (!movementProductRepository.existsById(id)) {
+            throw new NotFoundEntityException("Перемещние продукта с id " + id + " не найдено");
         }
     }
 
