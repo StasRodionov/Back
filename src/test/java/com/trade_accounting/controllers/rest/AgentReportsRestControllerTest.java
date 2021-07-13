@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@WithUserDetails
+@WithUserDetails(value = "karimogon@mail.ru")
 @AutoConfigureMockMvc
 @Sql(value = "/agentReports-before.sql")
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
