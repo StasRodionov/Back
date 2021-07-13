@@ -50,6 +50,7 @@ import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.repositories.UnitRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +58,7 @@ import java.util.Set;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CheckEntityServiceImpl implements CheckEntityService {
     private final UnitRepository unitRepository;
     private final EmployeeRepository employeeRepository;
@@ -99,86 +101,6 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final AcceptanceProductionRepository acceptanceProductionRepository;
     private final MovementProductRepository movementProductRepository;
     private final MovementRepository movementRepository;
-
-    public CheckEntityServiceImpl(UnitRepository unitRepository,
-                                  EmployeeRepository employeeRepository,
-                                  DepartmentRepository departmentRepository,
-                                  PositionRepository positionRepository,
-                                  ImageRepository imageRepository,
-                                  RoleRepository roleRepository,
-                                  WarehouseRepository warehouseRepository,
-                                  TaskRepository taskRepository,
-                                  RetailStoreRepository retailStoreRepository,
-                                  TaskCommentRepository taskCommentRepository,
-                                  ContractorGroupRepository contractorGroupRepository,
-                                  CurrencyRepository currencyRepository,
-                                  CompanyRepository companyRepository,
-                                  LegalDetailRepository legalDetailRepository,
-                                  BankAccountRepository bankAccountRepository,
-                                  TypeOfPriceRepository typeOfPriceRepository,
-                                  TypeOfContractorRepository typeOfContractorRepository,
-                                  ProjectRepository projectRepository,
-                                  ProductGroupRepository productGroupRepository,
-                                  TaxSystemRepository taxSystemRepository,
-                                  InvoiceRepository invoiceRepository,
-                                  InvoiceProductRepository invoiceProductRepository,
-                                  ContractRepository contractRepository,
-                                  ContractorRepository contractorRepository,
-                                  PaymentRepository paymentRepository,
-                                  AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository,
-                                  SupplierAccountRepository supplierAccountRepository,
-                                  TechnicalCardGroupRepository technicalCardGroupRepository,
-                                  TechnicalCardRepository technicalCardRepository,
-                                  CorrectionRepository correctionRepository, RemainRepository remainRepository,
-                                  CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository, ReturnToSupplierRepository returnToSupplierRepository,
-                                  InventarizationRepository inventarizationRepository,
-                                  InventarizationProductRepository inventarizationProductRepository,
-                                  BalanceAdjustmentRepository balanceAdjustmentRepository,
-                                  AcceptanceRepository acceptanceRepository,
-                                  AcceptanceProductionRepository acceptanceProductionRepository, MovementProductRepository movementProductRepository, MovementRepository movementRepository) {
-        this.unitRepository = unitRepository;
-        this.employeeRepository = employeeRepository;
-        this.departmentRepository = departmentRepository;
-        this.positionRepository = positionRepository;
-        this.imageRepository = imageRepository;
-        this.roleRepository = roleRepository;
-        this.warehouseRepository = warehouseRepository;
-        this.taskRepository = taskRepository;
-        this.taskCommentRepository = taskCommentRepository;
-        this.contractorGroupRepository = contractorGroupRepository;
-        this.currencyRepository = currencyRepository;
-        this.retailStoreRepository = retailStoreRepository;
-        this.companyRepository = companyRepository;
-        this.legalDetailRepository = legalDetailRepository;
-        this.bankAccountRepository = bankAccountRepository;
-        this.typeOfPriceRepository = typeOfPriceRepository;
-        this.projectRepository = projectRepository;
-        this.productGroupRepository = productGroupRepository;
-        this.taxSystemRepository = taxSystemRepository;
-        this.typeOfContractorRepository = typeOfContractorRepository;
-        this.invoiceRepository = invoiceRepository;
-        this.invoiceProductRepository = invoiceProductRepository;
-        this.contractRepository = contractRepository;
-        this.contractorRepository = contractorRepository;
-        this.paymentRepository = paymentRepository;
-        this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
-        this.supplierAccountRepository = supplierAccountRepository;
-        this.technicalCardGroupRepository = technicalCardGroupRepository;
-        this.technicalCardRepository = technicalCardRepository;
-        this.correctionRepository = correctionRepository;
-        this.remainRepository = remainRepository;
-        this.correctionProductRepository = correctionProductRepository;
-        this.addressRepository = addressRepository;
-        this.returnToSupplierRepository = returnToSupplierRepository;
-        this.inventarizationRepository = inventarizationRepository;
-        this.inventarizationProductRepository = inventarizationProductRepository;
-        this.balanceAdjustmentRepository = balanceAdjustmentRepository;
-        this.acceptanceRepository = acceptanceRepository;
-        this.acceptanceProductionRepository = acceptanceProductionRepository;
-        this.movementProductRepository = movementProductRepository;
-        this.movementRepository = movementRepository;
-    }
-
 
     @Override
     public void checkExistsUnitById(Long unitId) {
