@@ -8,6 +8,8 @@ import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.repositories.AcceptanceProductionRepository;
+import com.trade_accounting.repositories.AcceptanceRepository;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.repositories.BalanceAdjustmentRepository;
@@ -27,6 +29,8 @@ import com.trade_accounting.repositories.InventarizationRepository;
 import com.trade_accounting.repositories.InvoiceProductRepository;
 import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
+import com.trade_accounting.repositories.MovementProductRepository;
+import com.trade_accounting.repositories.MovementRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
@@ -46,6 +50,7 @@ import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.repositories.UnitRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,6 +58,7 @@ import java.util.Set;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CheckEntityServiceImpl implements CheckEntityService {
     private final UnitRepository unitRepository;
     private final EmployeeRepository employeeRepository;
@@ -91,80 +97,10 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final InventarizationRepository inventarizationRepository;
     private final InventarizationProductRepository inventarizationProductRepository;
     private final BalanceAdjustmentRepository balanceAdjustmentRepository;
-
-    public CheckEntityServiceImpl(UnitRepository unitRepository,
-                                  EmployeeRepository employeeRepository,
-                                  DepartmentRepository departmentRepository,
-                                  PositionRepository positionRepository,
-                                  ImageRepository imageRepository,
-                                  RoleRepository roleRepository,
-                                  WarehouseRepository warehouseRepository,
-                                  TaskRepository taskRepository,
-                                  RetailStoreRepository retailStoreRepository,
-                                  TaskCommentRepository taskCommentRepository,
-                                  ContractorGroupRepository contractorGroupRepository,
-                                  CurrencyRepository currencyRepository,
-                                  CompanyRepository companyRepository,
-                                  LegalDetailRepository legalDetailRepository,
-                                  BankAccountRepository bankAccountRepository,
-                                  TypeOfPriceRepository typeOfPriceRepository,
-                                  TypeOfContractorRepository typeOfContractorRepository,
-                                  ProjectRepository projectRepository,
-                                  ProductGroupRepository productGroupRepository,
-                                  TaxSystemRepository taxSystemRepository,
-                                  InvoiceRepository invoiceRepository,
-                                  InvoiceProductRepository invoiceProductRepository,
-                                  ContractRepository contractRepository,
-                                  ContractorRepository contractorRepository,
-                                  PaymentRepository paymentRepository,
-                                  AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository,
-                                  SupplierAccountRepository supplierAccountRepository,
-                                  TechnicalCardGroupRepository technicalCardGroupRepository,
-                                  TechnicalCardRepository technicalCardRepository,
-                                  CorrectionRepository correctionRepository, RemainRepository remainRepository,
-                                  CorrectionProductRepository correctionProductRepository, AddressRepository addressRepository, ReturnToSupplierRepository returnToSupplierRepository,
-                                  InventarizationRepository inventarizationRepository,
-                                  InventarizationProductRepository inventarizationProductRepository,
-                                  BalanceAdjustmentRepository balanceAdjustmentRepository) {
-        this.unitRepository = unitRepository;
-        this.employeeRepository = employeeRepository;
-        this.departmentRepository = departmentRepository;
-        this.positionRepository = positionRepository;
-        this.imageRepository = imageRepository;
-        this.roleRepository = roleRepository;
-        this.warehouseRepository = warehouseRepository;
-        this.taskRepository = taskRepository;
-        this.taskCommentRepository = taskCommentRepository;
-        this.contractorGroupRepository = contractorGroupRepository;
-        this.currencyRepository = currencyRepository;
-        this.retailStoreRepository = retailStoreRepository;
-        this.companyRepository = companyRepository;
-        this.legalDetailRepository = legalDetailRepository;
-        this.bankAccountRepository = bankAccountRepository;
-        this.typeOfPriceRepository = typeOfPriceRepository;
-        this.projectRepository = projectRepository;
-        this.productGroupRepository = productGroupRepository;
-        this.taxSystemRepository = taxSystemRepository;
-        this.typeOfContractorRepository = typeOfContractorRepository;
-        this.invoiceRepository = invoiceRepository;
-        this.invoiceProductRepository = invoiceProductRepository;
-        this.contractRepository = contractRepository;
-        this.contractorRepository = contractorRepository;
-        this.paymentRepository = paymentRepository;
-        this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
-        this.supplierAccountRepository = supplierAccountRepository;
-        this.technicalCardGroupRepository = technicalCardGroupRepository;
-        this.technicalCardRepository = technicalCardRepository;
-        this.correctionRepository = correctionRepository;
-        this.remainRepository = remainRepository;
-        this.correctionProductRepository = correctionProductRepository;
-        this.addressRepository = addressRepository;
-        this.returnToSupplierRepository = returnToSupplierRepository;
-        this.inventarizationRepository = inventarizationRepository;
-        this.inventarizationProductRepository = inventarizationProductRepository;
-        this.balanceAdjustmentRepository = balanceAdjustmentRepository;
-    }
-
+    private final AcceptanceRepository acceptanceRepository;
+    private final AcceptanceProductionRepository acceptanceProductionRepository;
+    private final MovementProductRepository movementProductRepository;
+    private final MovementRepository movementRepository;
 
     @Override
     public void checkExistsUnitById(Long unitId) {
@@ -501,6 +437,34 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsBalanceAdjustmentById(Long balanceAdjustment) {
         if (!balanceAdjustmentRepository.existsById(balanceAdjustment)) {
             throw new NotFoundEntityException("Корректировка баланса с id=" + balanceAdjustment + "не найден");
+        }
+    }
+
+    @Override
+    public void checkExistsMovementById(Long id) {
+        if (!movementRepository.existsById(id)) {
+            throw new NotFoundEntityException("Перемещние с id " + id + " не найдено");
+        }
+    }
+
+    @Override
+    public void checkExistsMovementProductById(Long id) {
+        if (!movementProductRepository.existsById(id)) {
+            throw new NotFoundEntityException("Перемещние продукта с id " + id + " не найдено");
+        }
+    }
+
+    @Override
+    public void checkExistsAcceptanceById(Long id) {
+        if (!acceptanceRepository.existsById(id)) {
+            throw new NotFoundEntityException("Приемка с id=" + id + "не найдена");
+        }
+    }
+
+    @Override
+    public void checkExistsAcceptanceProductionById(Long id) {
+        if (!acceptanceProductionRepository.existsById(id)) {
+            throw new NotFoundEntityException("Приемка товара с id=" + id + "не найдена");
         }
     }
 

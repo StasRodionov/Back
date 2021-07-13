@@ -1,67 +1,63 @@
 package com.trade_accounting.models;
 
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "payments")
-public class Payment {
-
+@Table(name = "movement")
+public class Movement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "type_of_payment")
-    @Enumerated(EnumType.STRING)
-    private TypeOfPayment typeOfPayment;
-
-    @Column(name = "payment_methods")
-    @Enumerated(EnumType.STRING)
-    private PaymentMethods paymentMethods;
-
-    @Column(name = "number")
     @NotNull
-    @ColumnDefault(value = "00001")
-    private String number;
+    @Column(name = "date")
+    private LocalDateTime date;
 
-    @Column(name = "time")
-    private LocalDateTime time;
+//    Со склада
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Warehouse warehouseFrom;
+// На склад
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Warehouse warehouseTo;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Contractor contractor;
+    @Column(name = "is_sent")
+    @ColumnDefault("false")
+    private Boolean isSent = false;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Contract contract;
+    @Column(name = "is_print")
+    @ColumnDefault("false")
+    private Boolean isPrint = false;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Project project;
+    @Column(name = "comment")
+    private String comment;
 
-    @Column(name = "sum")
-    private BigDecimal sum;
-
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<MovementProduct> movementProducts;
 }

@@ -1,37 +1,40 @@
 package com.trade_accounting.models.dto;
 
+import com.trade_accounting.models.CorrectionProduct;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.validation.constraints.NotNull;
 
-@Data
+import javax.validation.constraints.NotNull;
+import java.util.List;
+
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SupplierAccountDto {
+public class MovementDto {
 
-    @NotNull
     private Long id;
 
     @NotNull
     private String date;
 
     @NotNull
+    private Long warehouseFromId;
+
+    @NotNull
+    private Long warehouseToId;
+
+    @NotNull
     private Long companyId;
 
-    @NotNull
-    private Long warehouseId;
+    private Boolean isSent = false;
 
-    @NotNull
-    private Long contractId;
-
-    @NotNull
-    private Long contractorId;
-
-    private Boolean isSpend;
+    private Boolean isPrint = false;
 
     private String comment;
 
+    private List<Long> movementProductsIds;
 }

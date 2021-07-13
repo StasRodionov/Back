@@ -5,17 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ProjectDto {
+public class MovementProductDto {
 
     private Long id;
 
-    private String name;
+    private Long productId;
 
-    private String code;
+    private BigDecimal amount;
 
-    private String description;
+    private BigDecimal price;
 }

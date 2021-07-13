@@ -2,8 +2,10 @@ package com.trade_accounting.services.impl.Stubs;
 
 import com.trade_accounting.models.Acceptance;
 import com.trade_accounting.models.AcceptanceProduction;
+import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
+import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
@@ -459,30 +461,6 @@ public class ModelStubs {
                 List.of(getInventarizationProduct(1L),
                         getInventarizationProduct(2L),
                         getInventarizationProduct(3L))
-        );
-    }
-
-    public static AcceptanceProduction getAcceptanceProduction(Long id) {
-        return new AcceptanceProduction(
-                id,
-                BigDecimal.ONE,
-                getProduct(id)
-        );
-    }
-
-    public static Acceptance getAcceptance(Long id) {
-        return new Acceptance(
-                id,
-                "1",
-                "Комментарий 1",
-                LocalDate.now(),
-                getContractor(id),
-                getProject(id),
-                getWarehouse(id),
-                getContract(id),
-                List.of(getAcceptanceProduction(1L),
-                        getAcceptanceProduction(2L),
-                        getAcceptanceProduction(3L))
         );
     }
 }
