@@ -17,9 +17,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long>, JpaSpec
 
     Company getCompanyByBankAccounts(BankAccount bankAccount);
 
-    CompanyDto getCompanyById(Long id);
-
-    CompanyDto findCompanyByEmail(String email);
+    Company findCompanyByEmail(String email);
 
     Company getCompaniesById(Long id);
 }
