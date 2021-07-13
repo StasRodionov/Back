@@ -3,9 +3,8 @@ package com.trade_accounting.controllers.rest;
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.models.dto.CompanyDto;
-import com.trade_accounting.models.dto.ContractorDto;
+import com.trade_accounting.services.impl.CompanyServiceImpl;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,14 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.hasToString;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -68,8 +69,8 @@ class AgentReportsRestControllerTest {
     void createTest() throws Exception {
         String jsonDto = new Gson().toJson(AgentReportsDto.builder()
                 .id(4L)
-                .companyDto(DtoStubs.getCompanyDto(1L))
-                .contractorDto(DtoStubs.getContractorDto(1L))
+                .companyDto()
+                .contractorDto()
                 .comitentSum(1L)
                 .commentary("Комментарий 1")
                 .documentType(".doc")
@@ -98,8 +99,8 @@ class AgentReportsRestControllerTest {
     void updateTest() throws Exception {
         String jsonDto = new Gson().toJson(AgentReportsDto.builder()
                 .id(1L)
-                .companyDto(DtoStubs.getCompanyDto(1L))
-                .contractorDto(DtoStubs.getContractorDto(1L))
+                .companyDto()
+                .contractorDto()
                 .comitentSum(1L)
                 .commentary("Комментарий 1")
                 .documentType(".doc")
