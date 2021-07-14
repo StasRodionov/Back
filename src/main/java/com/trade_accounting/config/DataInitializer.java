@@ -30,6 +30,7 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
+import com.trade_accounting.models.dto.RemainDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
@@ -70,6 +71,7 @@ import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
+import com.trade_accounting.services.interfaces.RemainService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import com.trade_accounting.services.interfaces.RoleService;
@@ -141,6 +143,7 @@ public class DataInitializer {
     private final InventarizationProductService inventarizationProductService;
     private final BalanceAdjustmentService balanceAdjustmentService;
     private final SupplierAccountService supplierAccountService;
+    private final RemainService remainService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -179,7 +182,8 @@ public class DataInitializer {
             CorrectionService correctionService, ReturnToSupplierService returnToSupplierService,
             InventarizationService inventarizationService,
             InventarizationProductService inventarizationProductService,
-            BalanceAdjustmentService balanceAdjustmentService, SupplierAccountService supplierAccountService) {
+            BalanceAdjustmentService balanceAdjustmentService, SupplierAccountService supplierAccountService,
+            RemainService remainService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -220,6 +224,7 @@ public class DataInitializer {
         this.inventarizationProductService = inventarizationProductService;
         this.balanceAdjustmentService = balanceAdjustmentService;
         this.supplierAccountService = supplierAccountService;
+        this.remainService = remainService;
     }
 
     @PostConstruct
@@ -264,6 +269,7 @@ public class DataInitializer {
         initInventarization();
         initBalanceAdjustment();
         initSupplierAccount();
+        initRemain();
     }
 
     private void initAccessParameters() {
@@ -1750,5 +1756,59 @@ public class DataInitializer {
                 .warehouseId(1L)
                 .contractId(1L)
                 .contractorId(5L).build());
+    }
+
+
+    private void initRemain() {
+        remainService.create(RemainDto.builder()
+                .id(1L)
+                .name("Remain one")
+                .vendorCode("234789")
+                .balance(randomInt(20000, 100000))
+                .irreducibleBalance(randomInt(20000, 100000))
+                .reserve(randomInt(20000, 100000))
+                .expectation(randomInt(20000, 100000))
+                .available(randomInt(20000, 100000))
+                .unitDto(unitService.getById(38L))
+                .daysOnWarehouse(randomInt(5, 20))
+                .costPrice(randomInt(20000, 100000))
+                .sumOfCostPrice(randomInt(20000, 100000))
+                .salesCost(randomInt(20000, 100000))
+                .salesSum(randomInt(20000, 100000))
+                .build());
+
+        remainService.create(RemainDto.builder()
+                .id(2L)
+                .name("Remain two")
+                .vendorCode("451238")
+                .balance(randomInt(20000, 100000))
+                .irreducibleBalance(randomInt(20000, 100000))
+                .reserve(randomInt(20000, 100000))
+                .expectation(randomInt(20000, 100000))
+                .available(randomInt(20000, 100000))
+                .unitDto(unitService.getById(38L))
+                .daysOnWarehouse(randomInt(5, 20))
+                .costPrice(randomInt(20000, 100000))
+                .sumOfCostPrice(randomInt(20000, 100000))
+                .salesCost(randomInt(20000, 100000))
+                .salesSum(randomInt(20000, 100000))
+                .build());
+
+        remainService.create(RemainDto.builder()
+                .id(3L)
+                .name("Remain three")
+                .vendorCode("624380")
+                .balance(randomInt(20000, 100000))
+                .irreducibleBalance(randomInt(20000, 100000))
+                .reserve(randomInt(20000, 100000))
+                .expectation(randomInt(20000, 100000))
+                .available(randomInt(20000, 100000))
+                .unitDto(unitService.getById(38L))
+                .daysOnWarehouse(randomInt(5, 20))
+                .costPrice(randomInt(20000, 100000))
+                .sumOfCostPrice(randomInt(20000, 100000))
+                .salesCost(randomInt(20000, 100000))
+                .salesSum(randomInt(20000, 100000))
+                .build());
     }
 }
