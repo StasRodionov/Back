@@ -5,6 +5,7 @@ import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.AttributeOfCalculationObject;
+import com.trade_accounting.models.BalanceAdjustment;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contact;
@@ -504,6 +505,20 @@ public class ModelStubs {
                 .id(id)
                 .product(getProduct(1L))
                 .amount(1L)
+                .build();
+    }
+
+    public static BalanceAdjustment getBalanceAdjustment(Long id){
+        return BalanceAdjustment.builder()
+                .id(id)
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий 1")
+                .company(getCompany(1L))
+                .contractor(getContractor(1L))
+                .account("Счет 1")
+                .cashOffice("Касса 1")
+                .dateChanged("2021-06-23 15:10")
+                .whoChanged("1")
                 .build();
     }
 }
