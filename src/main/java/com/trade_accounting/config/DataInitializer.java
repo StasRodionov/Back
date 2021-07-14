@@ -276,8 +276,8 @@ public class DataInitializer {
         initInventarization();
         initBalanceAdjustment();
         initSupplierAccount();
-        initMovement();
         initMovementProduct();
+        initMovement();
 
     }
 
