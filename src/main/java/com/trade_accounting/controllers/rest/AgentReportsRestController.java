@@ -69,9 +69,9 @@ public class AgentReportsRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<AgentReportsDto> create(@ApiParam(name = "agentReportsDto", value = "DTO отчёта комиссионера, который необходимо создать")
-                                                  @RequestBody AgentReportsDto agentReportsDto) {
-        return ResponseEntity.ok().body(agentReportsService.create(agentReportsDto));
+    public ResponseEntity<AgentReportsDto> create(@ApiParam(name = "agentReportsDto",
+            value = "DTO отчёта комиссионера, который необходимо создать") @RequestBody AgentReportsDto agentReportsDto) {
+        return ResponseEntity.ok(agentReportsService.create(agentReportsDto));
     }
 
     @ApiOperation(value = "update", notes = "Обновляет отчёт комиссионера на основе переданных данных")

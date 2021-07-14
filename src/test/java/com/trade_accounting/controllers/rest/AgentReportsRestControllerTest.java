@@ -25,7 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -91,6 +92,7 @@ class AgentReportsRestControllerTest {
         mockMvc.perform(post("/api/agentReports").contentType(MediaType.APPLICATION_JSON)
                 .content(jsonDto))
                 .andDo(print())
+                .andExpect(status().isCreated())
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
         mockMvc.perform(get("/api/agentReports"))
@@ -114,7 +116,7 @@ class AgentReportsRestControllerTest {
                 .printed(1L)
                 .remunirationSum(1L)
                 .sent(1L)
-                .status("no_ok")
+                .status("error")
                 .time(LocalDateTime.parse("2015-10-06T06:37:59"))
                 .sum(1L)
                 .build());
@@ -123,7 +125,7 @@ class AgentReportsRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$.status", hasToString("no_ok")));
+                .andExpect(jsonPath("$.status", hasToString("error")));
         mockMvc.perform(get("/api/agentReports"))
                 .andDo(print())
                 .andExpect(status().isOk())
