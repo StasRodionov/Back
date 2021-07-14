@@ -30,7 +30,7 @@ public class PayoutsDto {
 
     Long id;
 
-    LocalDateTime date;
+    String date;
 
     Long retailStoreId;
 
