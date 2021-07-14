@@ -1,14 +1,4 @@
-delete from retail_stores;
-delete from invoice;
-delete from inventarizations_inventarization_products;
-delete from inventarizations;
-delete from corrections_correction_products;
-delete from corrections;
-delete from return_suppliers;
-delete from payments;
-delete from contracts;
-delete from companies_bank_accounts;
-delete from balance_adjustments;
+TRUNCATE companies CASCADE;
 delete from companies;
 
 insert into companies(id, name, inn, sort_number, phone, fax, email, payer_vat, comment_to_address, leader,
