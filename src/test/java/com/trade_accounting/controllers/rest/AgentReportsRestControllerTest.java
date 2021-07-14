@@ -5,6 +5,8 @@ import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.services.interfaces.ContractorService;
+import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,9 @@ class AgentReportsRestControllerTest {
 
     @Autowired
     ContractorService contractorService;
+
+    @Autowired
+    DtoMapperImpl dtoMapper;
 
     @Test
     void controllerIsNotNullTest() {
