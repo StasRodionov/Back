@@ -851,13 +851,13 @@ public abstract class DtoMapper {
                 return null;
             } else {
                 movementDto.setWarehouseFromId(warehouseFrom.getId());
-                if (warehouseTo == null){
+                if (warehouseTo == null) {
                     return null;
                 } else {
                     movementDto.setWarehouseToId(warehouseTo.getId());
 
                     Company company = movement.getCompany();
-                    if (company == null){
+                    if (company == null) {
                         return null;
                     } else {
                         movementDto.setCompanyId(company.getId());

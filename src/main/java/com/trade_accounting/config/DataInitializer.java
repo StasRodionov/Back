@@ -5,6 +5,7 @@ import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
+import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.models.dto.BalanceAdjustmentDto;
 import com.trade_accounting.models.dto.BankAccountDto;
@@ -46,6 +47,7 @@ import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.services.impl.AddressServiceImpl;
 import com.trade_accounting.services.interfaces.AccessParametersService;
+import com.trade_accounting.services.interfaces.AgentReportsService;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
 import com.trade_accounting.services.interfaces.BalanceAdjustmentService;
 import com.trade_accounting.services.interfaces.BankAccountService;
@@ -85,6 +87,7 @@ import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import com.trade_accounting.services.interfaces.fias.FiasDbService;
 import com.trade_accounting.utils.fias.ExcelParser;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -98,6 +101,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Component
 public class DataInitializer {
 
@@ -141,86 +145,7 @@ public class DataInitializer {
     private final InventarizationProductService inventarizationProductService;
     private final BalanceAdjustmentService balanceAdjustmentService;
     private final SupplierAccountService supplierAccountService;
-
-    public DataInitializer(
-            TypeOfPriceService typeOfPriceService,
-            RoleService roleService,
-            UnitService unitService,
-            PositionService positionService,
-            WarehouseService warehouseService,
-            AttributeOfCalculationObjectService attributeOfCalculationObjectService,
-            DepartmentService departmentService,
-            ContractorGroupService contractorGroupService,
-            TaxSystemService taxSystemService,
-            ProductGroupService productGroupService,
-            TypeOfContractorService typeOfContractorService,
-            CompanyService companyService,
-            LegalDetailService legalDetailService,
-            ContactService contactService,
-            ContractService contractService,
-            ContractorService contractorService,
-            BankAccountService bankAccountService,
-            EmployeeService employeeService,
-            ProductService productService,
-            CurrencyService currencyService,
-            InvoiceService invoiceService,
-            InvoiceProductService invoiceProductService, ProjectService projectService,
-            PaymentService paymentService,
-            TaskService taskService,
-            TaskCommentService commentService,
-            RetailStoreService retailStoreService,
-            AddressServiceImpl addressService,
-            FiasDbService fiasDbService,
-            ContractorStatusService contractorStatusService,
-            AccessParametersService accessParametersService,
-            TechnicalCardGroupService technicalCardGroupService,
-            TechnicalCardService technicalCardService,
-            CorrectionProductService correctionProductService,
-            CorrectionService correctionService, ReturnToSupplierService returnToSupplierService,
-            InventarizationService inventarizationService,
-            InventarizationProductService inventarizationProductService,
-            BalanceAdjustmentService balanceAdjustmentService, SupplierAccountService supplierAccountService) {
-        this.typeOfPriceService = typeOfPriceService;
-        this.roleService = roleService;
-        this.warehouseService = warehouseService;
-        this.unitService = unitService;
-        this.positionService = positionService;
-        this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
-        this.departmentService = departmentService;
-        this.contractorGroupService = contractorGroupService;
-        this.typeOfContractorService = typeOfContractorService;
-        this.taxSystemService = taxSystemService;
-        this.productGroupService = productGroupService;
-        this.companyService = companyService;
-        this.legalDetailService = legalDetailService;
-        this.contactService = contactService;
-        this.contractService = contractService;
-        this.contractorService = contractorService;
-        this.bankAccountService = bankAccountService;
-        this.employeeService = employeeService;
-        this.productService = productService;
-        this.currencyService = currencyService;
-        this.invoiceService = invoiceService;
-        this.invoiceProductService = invoiceProductService;
-        this.projectService = projectService;
-        this.paymentService = paymentService;
-        this.taskService = taskService;
-        this.commentService = commentService;
-        this.addressService = addressService;
-        this.fiasDbService = fiasDbService;
-        this.retailStoreService = retailStoreService;
-        this.contractorStatusService = contractorStatusService;
-        this.accessParametersService = accessParametersService;
-        this.technicalCardGroupService = technicalCardGroupService;
-        this.technicalCardService = technicalCardService;
-        this.correctionProductService = correctionProductService;
-        this.correctionService = correctionService;
-        this.returnToSupplierService = returnToSupplierService;
-        this.inventarizationService = inventarizationService;
-        this.inventarizationProductService = inventarizationProductService;
-        this.balanceAdjustmentService = balanceAdjustmentService;
-        this.supplierAccountService = supplierAccountService;
-    }
+    private final AgentReportsService agentReportsService;
 
     @PostConstruct
     public void init() {
@@ -264,6 +189,7 @@ public class DataInitializer {
         initInventarization();
         initBalanceAdjustment();
         initSupplierAccount();
+        initAgentReport();
     }
 
     private void initAccessParameters() {
@@ -1750,5 +1676,56 @@ public class DataInitializer {
                 .warehouseId(1L)
                 .contractId(1L)
                 .contractorId(5L).build());
+    }
+
+    private void initAgentReport() {
+        agentReportsService.create(AgentReportsDto.builder()
+                .id(1L)
+                .companyDto(companyService.getById(1L))
+                .contractorDto(contractorService.getById(1L))
+                .comitentSum(1L)
+                .commentary("Комментарий 1")
+                .documentType(".doc")
+                .number("1")
+                .paid(1L)
+                .printed(1L)
+                .remunirationSum(1L)
+                .sent(1L)
+                .status("ok")
+                .time(LocalDateTime.now())
+                .sum(1L)
+                .build());
+        agentReportsService.create(AgentReportsDto.builder()
+                .id(2L)
+                .companyDto(companyService.getById(2L))
+                .contractorDto(contractorService.getById(2L))
+                .comitentSum(2L)
+                .commentary("Комментарий 2")
+                .documentType(".txt")
+                .number("2")
+                .paid(2L)
+                .printed(2L)
+                .remunirationSum(2L)
+                .sent(2L)
+                .status("ok")
+                .time(LocalDateTime.now())
+                .sum(2L)
+                .build());
+        agentReportsService.create(AgentReportsDto.builder()
+                .id(3L)
+                .companyDto(companyService.getById(3L))
+                .contractorDto(contractorService.getById(3L))
+                .comitentSum(3L)
+                .commentary("Комментарий 3")
+                .documentType(".pdf")
+                .number("3")
+                .paid(3L)
+                .printed(3L)
+                .remunirationSum(3L)
+                .sent(3L)
+                .status("error")
+                .time(LocalDateTime.now())
+                .sum(3L)
+                .build());
     }
 }

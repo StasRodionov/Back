@@ -2,9 +2,9 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.AgentReportsDto;
-import com.trade_accounting.models.dto.CompanyDto;
-import com.trade_accounting.services.impl.CompanyServiceImpl;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
+import com.trade_accounting.services.interfaces.CompanyService;
+import com.trade_accounting.services.interfaces.ContractorService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -41,6 +40,12 @@ class AgentReportsRestControllerTest {
 
     @Autowired
     AgentReportsRestController restController;
+
+    @Autowired
+    CompanyService companyService;
+
+    @Autowired
+    ContractorService contractorService;
 
     @Test
     void controllerIsNotNullTest() {
@@ -69,8 +74,8 @@ class AgentReportsRestControllerTest {
     void createTest() throws Exception {
         String jsonDto = new Gson().toJson(AgentReportsDto.builder()
                 .id(4L)
-                .companyDto()
-                .contractorDto()
+                .companyDto(companyService.getById(1L))
+                .contractorDto(contractorService.getById(1L))
                 .comitentSum(1L)
                 .commentary("Комментарий 1")
                 .documentType(".doc")
@@ -83,7 +88,7 @@ class AgentReportsRestControllerTest {
                 .time(LocalDateTime.now())
                 .sum(1L)
                 .build());
-        mockMvc.perform(post("/api/agentReports/").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/api/agentReports").contentType(MediaType.APPLICATION_JSON)
                 .content(jsonDto))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -99,8 +104,8 @@ class AgentReportsRestControllerTest {
     void updateTest() throws Exception {
         String jsonDto = new Gson().toJson(AgentReportsDto.builder()
                 .id(1L)
-                .companyDto()
-                .contractorDto()
+                .companyDto(DtoStubs.getCompanyDto(1L))
+                .contractorDto(DtoStubs.getContractorDto(1L))
                 .comitentSum(1L)
                 .commentary("Комментарий 1")
                 .documentType(".doc")
@@ -113,7 +118,7 @@ class AgentReportsRestControllerTest {
                 .time(LocalDateTime.parse("2015-10-06T06:37:59"))
                 .sum(1L)
                 .build());
-        mockMvc.perform(put("/api/agentReports/").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/api/agentReports").contentType(MediaType.APPLICATION_JSON)
                 .content(jsonDto))
                 .andDo(print())
                 .andExpect(status().isOk())

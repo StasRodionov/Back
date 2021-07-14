@@ -19,17 +19,16 @@ public class AgentReportsServiceImpl implements AgentReportsService {
 
     private final DtoMapper dtoMapper;
 
-    public AgentReportsServiceImpl(AgentReportsRepository agentReportsRepository, DtoMapper dtoMapper){
+    public AgentReportsServiceImpl(AgentReportsRepository agentReportsRepository, DtoMapper dtoMapper) {
         this.agentReportsRepository = agentReportsRepository;
         this.dtoMapper = dtoMapper;
     }
 
     @Override
     public List<AgentReportsDto> getAll() {
-        final List<AgentReportsDto> collect = agentReportsRepository.findAll().stream()
+        return agentReportsRepository.findAll().stream()
                 .map(dtoMapper::agentReportsToAgentReportsDto)
                 .collect(Collectors.toList());
-        return collect;
     }
 
     @Override
@@ -39,9 +38,23 @@ public class AgentReportsServiceImpl implements AgentReportsService {
 
     @Override
     public AgentReportsDto create(AgentReportsDto dto) {
-        AgentReports agentReports = agentReportsRepository.save(dtoMapper.agentReportsDtoToAgentReports(dto));
-        dto.setId(agentReports.getId());
-        return dtoMapper.agentReportsToAgentReportsDto(agentReports);
+        AgentReports model = AgentReports.builder()
+                .id(dto.getId())
+                .comitentSum(dto.getComitentSum())
+                .company(dtoMapper.companyDtoToCompany(dto.getCompanyDto()))
+                .commentary(dto.getCommentary())
+                .contractor(dtoMapper.contractorDtoToContractor(dto.getContractorDto()))
+                .documentType(dto.getDocumentType())
+                .number(dto.getNumber())
+                .paid(dto.getPaid())
+                .printed(dto.getPrinted())
+                .sent(dto.getSent())
+                .remunirationSum(dto.getRemunirationSum())
+                .status(dto.getStatus())
+                .sum(dto.getSum())
+                .time(dto.getTime())
+                .build();
+        return dtoMapper.agentReportsToAgentReportsDto(agentReportsRepository.save(model));
     }
 
     @Override
