@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.Acceptance;
+import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
@@ -23,7 +25,6 @@ import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
-import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Production;
@@ -32,7 +33,6 @@ import com.trade_accounting.models.RequestsProductions;
 import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.ContractorStatus;
-import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TechnicalCard;
 import com.trade_accounting.models.TechnicalCardGroup;
@@ -75,7 +75,6 @@ public class ModelStubs {
     public static Payment getPayment(Long id) {
         return new Payment(
                 id, TypeOfPayment.INCOMING,
-                PaymentMethods.CASH,
                 "00001", LocalDateTime.now(),
                 getCompany(id), getContractor(id),
                 getContract(id), getProject(id),
@@ -275,7 +274,6 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
-
     public static ProductDto getProductDto(Long id) {
         return ProductDto.builder()
                 .id(id)
@@ -464,47 +462,6 @@ public class ModelStubs {
                         getInventarizationProduct(2L),
                         getInventarizationProduct(3L))
         );
-    }
-
-    public static AgentReports getAgentReports(Long id){
-        return AgentReports.builder()
-                .id(id)
-                .company(getCompany(1L))
-                .contractor(getContractor(1L))
-                .comitentSum(100L)
-                .commentary("Коммент 1")
-                .comitentSum(200L)
-                .documentType(".doc")
-                .number("1")
-                .paid(10L)
-                .printed(100L)
-                .remunirationSum(100L)
-                .sent(20L)
-                .status("status 1")
-                .time(LocalDateTime.now())
-                .sum(1000L)
-                .build();
-    }
-
-    public static SupplierAccount getSupplierAccount(Long id){
-        return SupplierAccount.builder()
-                .id(id)
-                .warehouse(getWarehouse(1L))
-                .contract(getContract(1L))
-                .contractor(getContractor(1L))
-                .company(getCompany(1L))
-                .date(LocalDateTime.now().toString())
-                .comment("Комментарий")
-                .isSpend(false)
-                .build();
-    }
-
-    public static AcceptanceProduction getAcceptanceProduction(Long id){
-        return AcceptanceProduction.builder()
-                .id(id)
-                .product(getProduct(1L))
-                .amount(1L)
-                .build();
     }
 }
 
