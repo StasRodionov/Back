@@ -24,6 +24,7 @@ import com.trade_accounting.repositories.CurrencyRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
+import com.trade_accounting.repositories.InternalOrderRepository;
 import com.trade_accounting.repositories.InventarizationProductRepository;
 import com.trade_accounting.repositories.InventarizationRepository;
 import com.trade_accounting.repositories.InvoiceProductRepository;
@@ -101,6 +102,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final AcceptanceProductionRepository acceptanceProductionRepository;
     private final MovementProductRepository movementProductRepository;
     private final MovementRepository movementRepository;
+    private final InternalOrderRepository internalOrderRepository;
 
     @Override
     public void checkExistsUnitById(Long unitId) {
@@ -451,6 +453,13 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsMovementProductById(Long id) {
         if (!movementProductRepository.existsById(id)) {
             throw new NotFoundEntityException("Перемещние продукта с id " + id + " не найдено");
+        }
+    }
+
+    @Override
+    public void checkExistsInternalOrderById(Long id) {
+        if (!internalOrderRepository.existsById(id)) {
+            throw new NotFoundEntityException("Внутренний заказ с id " + id + " не найден");
         }
     }
 

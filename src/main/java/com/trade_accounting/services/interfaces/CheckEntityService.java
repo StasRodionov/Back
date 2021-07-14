@@ -93,4 +93,6 @@ public interface CheckEntityService {
     void checkExistsMovementById(Long id);
 
     void checkExistsMovementProductById(Long id);
+
+    void checkExistsInternalOrderById(Long id);
 }
