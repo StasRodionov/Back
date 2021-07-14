@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.TechnicalCardDto;
+import com.trade_accounting.models.dto.TechnicalCardProductionDto;
 import com.trade_accounting.services.interfaces.TechnicalCardGroupService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -78,6 +81,8 @@ public class TechnicalCardRestControllerTest {
                 .name("Техническая карта №4")
                 .productionCost("4000")
                 .technicalCardGroupDto(technicalCardGroupService.getById(2L))
+                .finalProductionDto(List.of(new TechnicalCardProductionDto(1L, 1L, 1L)))
+                .materialsDto(List.of(new TechnicalCardProductionDto(1L, 1L, 1L)))
                 .build();
 
         String technicalCardDtoJson = new Gson().toJson(technicalCardDto);
@@ -103,6 +108,8 @@ public class TechnicalCardRestControllerTest {
                 .name("Техническая карта №1")
                 .productionCost("1000")
                 .technicalCardGroupDto(technicalCardGroupService.getById(1L))
+                .finalProductionDto(List.of(new TechnicalCardProductionDto(1L, 1L, 1L)))
+                .materialsDto(List.of(new TechnicalCardProductionDto(1L, 1L, 1L)))
                 .build();
 
         String technicalCardDtoJson = new Gson().toJson(technicalCardDto);
