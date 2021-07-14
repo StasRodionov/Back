@@ -291,33 +291,33 @@ public class DataInitializer {
     }
 
     private void initMovement() {
-//        movementService.create(
-//                new MovementDto(
-//                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-//                        1L, 1L,
-//                        true, false, false,
-//                        "Оприходование 1",
-//                        List.of(1L, 2L, 3L)
-//                )
-//        );
-//        correctionService.create(
-//                new CorrectionDto(
-//                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-//                        1L, 5L,
-//                        false, false, false,
-//                        "Оприходование 2",
-//                        List.of(4L, 5L, 6L)
-//                )
-//        );
-//        correctionService.create(
-//                new CorrectionDto(
-//                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-//                        1L, 10L,
-//                        false, true, false,
-//                        "Оприходование 3",
-//                        List.of(7L, 8L, 9L)
-//                )
-//        );
+        movementService.create(
+                new MovementDto(
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        1L, 2L,
+                        1L, false, false,
+                        "Перемещение 1",
+                        List.of(1L, 2L, 3L)
+                )
+        );
+        movementService.create(
+                new MovementDto(
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        1L, 3L,
+                        2L, false, false,
+                        "Перемещение 2",
+                        List.of(4L, 5L, 6L)
+                )
+        );
+        movementService.create(
+                new MovementDto(
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        2L, 1L,
+                        1L, true, false,
+                        "Перемещение 3",
+                        List.of(7L, 8L, 9L)
+                )
+        );
     }
 
     private void initAccessParameters() {
