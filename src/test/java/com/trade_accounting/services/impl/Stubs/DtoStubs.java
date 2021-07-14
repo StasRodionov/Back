@@ -15,6 +15,7 @@ import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
@@ -202,5 +203,10 @@ public class DtoStubs {
 
     public static AcceptanceProductionDto getAcceptanceProductionDto(Long id){
         return dtoMapper.toAcceptanceProductionDto(ModelStubs.getAcceptanceProduction(id));
+    }
+
+    public static InternalOrderDto getInternalOrderDto(Long id) {
+        InternalOrderDto internalOrderDto = dtoMapper.internalOrderToInternalOrderDto(ModelStubs.getInternalOrder(id));
+        return internalOrderDto;//dtoMapper.internalOrderToInternalOrderDto(ModelStubs.getInternalOrder(id));
     }
 }

@@ -923,11 +923,19 @@ public abstract class DtoMapper {
     /**
      * @return InternalOrder
      */
-    @Mappings({
-            @Mapping(source = "companyId", target = "company.id"),
-            @Mapping(target = "date", ignore = true)
-    })
-    public abstract InternalOrder internalOrderDtoToInternalOrder(InternalOrderDto internalOrderDto);
+    public InternalOrder internalOrderDtoToInternalOrder(InternalOrderDto internalOrderDto) {
+        InternalOrder internalOrder = new InternalOrder();
+        if (internalOrderDto == null) {
+            return null;
+        }
+
+        internalOrder.setId(internalOrderDto.getId());
+        internalOrder.setIsPrint(internalOrderDto.getIsPrint());
+        internalOrder.setIsSent(internalOrderDto.getIsSent());
+        internalOrder.setComment(internalOrderDto.getComment());
+
+        return internalOrder;
+    }
 
     /**
      * @return InternalOrderDto

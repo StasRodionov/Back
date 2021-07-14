@@ -62,13 +62,13 @@ public class InternalOrderServiceImpl implements InternalOrderService {
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
-        List<InternalOrderProduct> correctionProducts = dto.getInternalOrderProductsIds().stream()
+        List<InternalOrderProduct> internalOrderProducts = dto.getInternalOrderProductsIds().stream()
                 .map(id -> internalOrderProductRepository.findById(id).orElse(null))
                 .collect(Collectors.toList());
 
         internalOrder.setCompany(company);
         internalOrder.setDate(date);
-        internalOrder.setInternalOrderProducts(correctionProducts);
+        internalOrder.setInternalOrderProducts(internalOrderProducts);
 
         return dtoMapper.internalOrderToInternalOrderDto(internalOrderRepository.save(internalOrder));
     }
