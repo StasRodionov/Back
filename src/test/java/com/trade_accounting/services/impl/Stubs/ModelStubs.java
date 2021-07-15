@@ -2,7 +2,6 @@ package com.trade_accounting.services.impl.Stubs;
 
 import com.trade_accounting.models.Acceptance;
 import com.trade_accounting.models.AcceptanceProduction;
-import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AgentReports;
@@ -13,6 +12,7 @@ import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
+import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.Correction;
 import com.trade_accounting.models.CorrectionProduct;
 import com.trade_accounting.models.Currency;
@@ -25,6 +25,7 @@ import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
+import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Production;
@@ -32,7 +33,7 @@ import com.trade_accounting.models.Project;
 import com.trade_accounting.models.RequestsProductions;
 import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
-import com.trade_accounting.models.ContractorStatus;
+import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TechnicalCard;
 import com.trade_accounting.models.TechnicalCardGroup;
@@ -49,14 +50,11 @@ import com.trade_accounting.models.fias.District;
 import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
-import io.swagger.models.auth.In;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -64,7 +62,7 @@ import java.util.stream.Stream;
 public class ModelStubs {
     //TODO Вынести заглушки моделей из классов сервисов сюда
 
-    public static AccessParameters getAccessParameters(Long id){
+    public static AccessParameters getAccessParameters(Long id) {
         return new AccessParameters(id, false, getEmployee(id), getDepartment(id));
     }
 
@@ -73,13 +71,23 @@ public class ModelStubs {
     }
 
     public static Payment getPayment(Long id) {
-        return new Payment(
-                id, TypeOfPayment.INCOMING,
-                "00001", LocalDateTime.now(),
-                getCompany(id), getContractor(id),
-                getContract(id), getProject(id),
-                BigDecimal.ONE
-        );
+        return Payment.builder()
+                .id(id)
+                .company(getCompany(1L))
+                .contract(getContract(1L))
+                .contractor(getContractor(1L))
+                .paymentMethods(PaymentMethods.BANK)
+                .number("100")
+                .sum(BigDecimal.valueOf(100L))
+                .time(LocalDateTime.now())
+                .typeOfPayment(TypeOfPayment.INCOMING)
+                .project(Project.builder()
+                        .id(1L)
+                        .name("name")
+                        .code("code")
+                        .description("description")
+                        .build())
+                .build();
     }
 
     public static Company getCompany(Long id) {
@@ -172,7 +180,9 @@ public class ModelStubs {
                 .build();
     }
 
-    public static Department getDepartment(Long id){ return new Department(id, "name", "00001");}
+    public static Department getDepartment(Long id) {
+        return new Department(id, "name", "00001");
+    }
 
     public static TaxSystem getTaxSystem(Long id) {
         return new TaxSystem(id, "name", "00001");
@@ -205,6 +215,7 @@ public class ModelStubs {
                 .sortNumber("000" + id)
                 .build();
     }
+
     public static ImageDto getImageDto(Long id) {
         return ImageDto.builder()
                 .id(id)
@@ -259,8 +270,8 @@ public class ModelStubs {
         );
     }
 
-    public static Currency getCurrency(Long id){
-        return new Currency(id, "rubles", "Russian Rubles", "25", "rub","1");
+    public static Currency getCurrency(Long id) {
+        return new Currency(id, "rubles", "Russian Rubles", "25", "rub", "1");
     }
 
     public static Product getProduct(Long id) {
@@ -274,6 +285,7 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
+
     public static ProductDto getProductDto(Long id) {
         return ProductDto.builder()
                 .id(id)
@@ -285,7 +297,8 @@ public class ModelStubs {
                 .archive(false)
                 .build();
     }
-    public static City getCity(Long id){
+
+    public static City getCity(Long id) {
         return City.builder()
                 .id(id)
                 .name("Petrpopavlovsk")
@@ -293,7 +306,8 @@ public class ModelStubs {
                 .streets(new ArrayList<>())
                 .build();
     }
-    public static District getDistrict(Long id){
+
+    public static District getDistrict(Long id) {
         return District.builder()
                 .id(id)
                 .name("Vasileostrivky")
@@ -301,14 +315,16 @@ public class ModelStubs {
                 .cities(new ArrayList<>())
                 .build();
     }
-    public static Region getRegion(Long id){
+
+    public static Region getRegion(Long id) {
         return Region.builder()
                 .id(id)
                 .name("SKO")
                 .districts(new ArrayList<>())
                 .build();
     }
-    public static FiasAddressModel getFiasAddressModel(Long id){
+
+    public static FiasAddressModel getFiasAddressModel(Long id) {
         return FiasAddressModel.builder()
                 .id(id)
                 .aoguid("example")
@@ -325,7 +341,8 @@ public class ModelStubs {
                 .name("Новый")
                 .build();
     }
-    public static Street getStreet(Long id){
+
+    public static Street getStreet(Long id) {
         return Street.builder()
                 .id(id)
                 .name("Volodarskogo")
@@ -407,7 +424,7 @@ public class ModelStubs {
         );
     }
 
-    public static ReturnToSupplier getReturnToSupplier(Long id){
+    public static ReturnToSupplier getReturnToSupplier(Long id) {
         return ReturnToSupplier.builder()
                 .id(id)
                 .comment("Комментарий 1")
@@ -463,5 +480,65 @@ public class ModelStubs {
                         getInventarizationProduct(3L))
         );
     }
+
+    public static AcceptanceProduction getAcceptanceProduction(Long id) {
+        return AcceptanceProduction.builder()
+                .id(id)
+                .product(getProduct(1L))
+                .amount(100L)
+                .build();
+    }
+
+    public static Acceptance getAcceptance(Long id) {
+        return Acceptance.builder()
+                .id(id)
+                .acceptanceProduction(new ArrayList<>())
+                .contract(getContract(1L))
+                .contractor(getContractor(1L))
+                .comment("Комментарий " + id)
+                .incomingNumber("100")
+                .incomingNumberDate(LocalDate.now())
+                .warehouse(getWarehouse(1L))
+                .project(Project.builder()
+                        .id(1L)
+                        .name("name")
+                        .description("decr")
+                        .code("code")
+                        .build())
+                .build();
+    }
+
+    public static AgentReports getAgentReports(Long id){
+        return AgentReports.builder()
+                .id(id)
+                .company(getCompany(1L))
+                .contractor(getContractor(1L))
+                .comitentSum(100L)
+                .commentary("Коммент 1")
+                .documentType(".doc")
+                .number("1")
+                .paid(10L)
+                .printed(100L)
+                .remunirationSum(100L)
+                .sent(20L)
+                .status("status 1")
+                .time(LocalDateTime.now())
+                .sum(1000L)
+                .build();
+    }
+
+    public static SupplierAccount getSupplierAccount(Long id){
+        return SupplierAccount.builder()
+                .id(id)
+                .warehouse(getWarehouse(1L))
+                .contract(getContract(1L))
+                .contractor(getContractor(1L))
+                .company(getCompany(1L))
+                .date(LocalDateTime.now().toString())
+                .comment("Комментарий")
+                .isSpend(false)
+                .build();
+    }
+
 }
 

@@ -28,7 +28,7 @@ public class AcceptanceProduction {
     private Long id;
 
     @Column(name = "amount")
-    private BigDecimal amount;
+    private Long amount;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Product product;
