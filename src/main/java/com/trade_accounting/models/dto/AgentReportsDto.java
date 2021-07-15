@@ -21,13 +21,13 @@ public class AgentReportsDto {
     @NotNull
     private String number;
 
-    private LocalDateTime time;
+    private String date;
 
     @NotNull
-    private CompanyDto companyDto;
+    private Long companyId;
 
     @NotNull
-    private ContractorDto contractorDto;
+    private Long contractorId;
 
     @NotNull
     private Long sum;

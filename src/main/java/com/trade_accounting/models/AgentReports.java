@@ -34,7 +34,7 @@ public class AgentReports {
     @ColumnDefault(value = "00001")
     private String number;
 
-    private LocalDateTime time;
+    private String date;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
