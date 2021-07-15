@@ -194,7 +194,9 @@ public class DataInitializer {
             InventarizationProductService inventarizationProductService,
             BalanceAdjustmentService balanceAdjustmentService,
             SupplierAccountService supplierAccountService,
-            InternalOrderService internalOrderService, InternalOrderProductService internalOrderProductService, MovementService movementService,
+            MovementService movementService,
+            InternalOrderService internalOrderService,
+            InternalOrderProductService internalOrderProductService,
             MovementProductService movementProductService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
