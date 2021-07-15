@@ -55,8 +55,9 @@ public class AgentReportsServiceImpl implements AgentReportsService {
                 .sent(dto.getSent())
                 .remunirationSum(dto.getRemunirationSum())
                 .status(dto.getStatus())
+                .sum(dto.getSum())
                 .build();
-        return dtoMapper.agentReportsToAgentReportsDto(agentReports);
+        return dtoMapper.agentReportsToAgentReportsDto(agentReportsRepository.save(agentReports));
     }
 
     @Override

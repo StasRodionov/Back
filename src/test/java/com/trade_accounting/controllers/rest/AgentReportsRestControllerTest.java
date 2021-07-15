@@ -91,7 +91,10 @@ class AgentReportsRestControllerTest {
         mockMvc.perform(post("/api/agentReports").contentType(MediaType.APPLICATION_JSON)
                 .content(jsonDto))
                 .andDo(print())
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
+                .andExpect(authenticated());
+        mockMvc.perform(get("/api/agentReports/4"))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
         mockMvc.perform(get("/api/agentReports"))
