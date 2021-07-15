@@ -39,30 +39,22 @@ public class BalanceAdjustment {
     @NotNull
     private Long id;
 
-    @NotNull
     private String date;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
-    @NotNull
     private String account;
 
-    @NotNull
     private String cashOffice;
 
-    @NotNull
     private String comment;
 
-    @NotNull
     private String dateChanged;
 
-    @NotNull
     private String whoChanged;
 
 }

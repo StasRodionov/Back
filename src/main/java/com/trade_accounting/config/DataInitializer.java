@@ -24,6 +24,8 @@ import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.models.dto.MovementDto;
+import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
@@ -71,7 +73,6 @@ import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
-import com.trade_accounting.services.interfaces.RemainService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import com.trade_accounting.services.interfaces.RoleService;
@@ -143,7 +144,8 @@ public class DataInitializer {
     private final InventarizationProductService inventarizationProductService;
     private final BalanceAdjustmentService balanceAdjustmentService;
     private final SupplierAccountService supplierAccountService;
-    private final RemainService remainService;
+    private final MovementService movementService;
+    private final MovementProductService movementProductService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -182,8 +184,7 @@ public class DataInitializer {
             CorrectionService correctionService, ReturnToSupplierService returnToSupplierService,
             InventarizationService inventarizationService,
             InventarizationProductService inventarizationProductService,
-            BalanceAdjustmentService balanceAdjustmentService, SupplierAccountService supplierAccountService,
-            RemainService remainService) {
+            BalanceAdjustmentService balanceAdjustmentService, SupplierAccountService supplierAccountService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -224,7 +225,6 @@ public class DataInitializer {
         this.inventarizationProductService = inventarizationProductService;
         this.balanceAdjustmentService = balanceAdjustmentService;
         this.supplierAccountService = supplierAccountService;
-        this.remainService = remainService;
     }
 
     @PostConstruct
@@ -269,7 +269,48 @@ public class DataInitializer {
         initInventarization();
         initBalanceAdjustment();
         initSupplierAccount();
+        initMovementProduct();
+        initMovement();
         initRemain();
+    }
+
+    private void initMovementProduct() {
+        for (Long i = 1L; i <= 12; i++) {
+            movementProductService.create(
+                    new MovementProductDto(null, i, BigDecimal.valueOf(randomInt(50, 100)),
+                            BigDecimal.valueOf(randomInt(50, 100)))
+            );
+        }
+    }
+
+    private void initMovement() {
+        movementService.create(
+                new MovementDto(
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        1L, 2L,
+                        1L, false, false,
+                        "Перемещение 1",
+                        List.of(1L, 2L, 3L)
+                )
+        );
+        movementService.create(
+                new MovementDto(
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        1L, 3L,
+                        2L, false, false,
+                        "Перемещение 2",
+                        List.of(4L, 5L, 6L)
+                )
+        );
+        movementService.create(
+                new MovementDto(
+                        null, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        2L, 1L,
+                        1L, true, false,
+                        "Перемещение 3",
+                        List.of(7L, 8L, 9L)
+                )
+        );
     }
 
     private void initAccessParameters() {
