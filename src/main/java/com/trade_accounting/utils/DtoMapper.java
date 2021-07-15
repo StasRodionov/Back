@@ -20,6 +20,8 @@ import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
+import com.trade_accounting.models.InternalOrder;
+import com.trade_accounting.models.InternalOrderProduct;
 import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
@@ -79,7 +81,6 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
-import com.trade_accounting.models.dto.PayoutsDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.models.dto.ProductDto;
@@ -918,6 +919,53 @@ public abstract class DtoMapper {
         return acceptanceProduction;
     }
 
+    /**
+     * @return InternalOrder
+     */
+    @Mappings({
+            @Mapping(source = "companyId", target = "company.id")
+    })
+    public abstract InternalOrder internalOrderDtoToInternalOrder(InternalOrderDto internalOrderDto);
+
+    /**
+     * @return InternalOrderDto
+     */
+    public InternalOrderDto internalOrderToInternalOrderDto(InternalOrder internalOrder) {
+        InternalOrderDto internalOrderDto = new InternalOrderDto();
+        if (internalOrder == null) {
+            return null;
+        } else {
+            internalOrderDto.setId(internalOrder.getId());
+            internalOrderDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(internalOrder.getDate()));
+            internalOrderDto.setIsSent(internalOrder.getIsSent());
+            internalOrderDto.setIsPrint(internalOrder.getIsPrint());
+            internalOrderDto.setComment(internalOrder.getComment());
+            internalOrderDto.setInternalOrderProductsIds(
+                    internalOrder.getInternalOrderProducts().stream()
+                            .map(InternalOrderProduct::getId)
+                            .collect(Collectors.toList())
+            );
+
+            if (internalOrder.getCompany() == null) {
+                return null;
+            } else {
+                internalOrderDto.setCompanyId(internalOrder.getCompany().getId());
+                return internalOrderDto;
+            }
+        }
+    }
+
+    /**
+     * @return InternalOrderProducts
+     */
+    @Mapping(source = "productId", target = "product.id")
+    public abstract InternalOrderProduct internalOrderProductsDtoToInternalOrderProducts(InternalOrderProductsDto internalOrderProductsDto);
+
+    /**
+     * @return InternalOrderProductsDto
+     */
+    @Mapping(source = "product.id", target = "productId")
+    public abstract InternalOrderProductsDto internalOrderProductsToInternalOrderProductsDto(InternalOrderProduct internalOrderProduct);
 
     //Payouts
     @Mappings({
