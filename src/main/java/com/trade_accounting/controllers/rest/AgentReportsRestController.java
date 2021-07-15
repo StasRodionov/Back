@@ -32,8 +32,8 @@ public class AgentReportsRestController {
         this.agentReportsService = agentReportsService;
     }
 
-    @ApiOperation(value = "getAll", notes = "Возвращает список всех отчётов комиссионера")
     @GetMapping
+    @ApiOperation(value = "getAll", notes = "Возвращает список всех отчётов комиссионера")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Успешное получение списка всех отчётов комиссионера"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
@@ -46,8 +46,8 @@ public class AgentReportsRestController {
     }
 
 
-    @ApiOperation(value = "getById", notes = "Возвращает определенный отчёт комиссионера по Id")
     @GetMapping("/{id}")
+    @ApiOperation(value = "getById", notes = "Возвращает определенный отчёт комиссионера по Id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Отчёт комиссионера найден"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
@@ -60,8 +60,8 @@ public class AgentReportsRestController {
         return ResponseEntity.ok(agentReportsDto);
     }
 
-    @ApiOperation(value = "create", notes = "Создает отчёт комиссионера на основе переданных данных")
     @PostMapping
+    @ApiOperation(value = "create", notes = "Создает отчёт комиссионера на основе переданных данных")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Отчёт комиссионера успешно создан"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
@@ -71,11 +71,11 @@ public class AgentReportsRestController {
     })
     public ResponseEntity<AgentReportsDto> create(@ApiParam(name = "agentReportsDto", value = "DTO отчёта комиссионера, который необходимо создать")
                                                   @RequestBody AgentReportsDto agentReportsDto) {
-        return ResponseEntity.ok().body(agentReportsService.create(agentReportsDto));
+        return ResponseEntity.ok(agentReportsService.create(agentReportsDto));
     }
 
-    @ApiOperation(value = "update", notes = "Обновляет отчёт комиссионера на основе переданных данных")
     @PutMapping
+    @ApiOperation(value = "update", notes = "Обновляет отчёт комиссионера на основе переданных данных")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Отчёт комиссионера успешно обновлён"),
             @ApiResponse(code = 201, message = "Запрос принят и данные обновлены"),
@@ -85,11 +85,11 @@ public class AgentReportsRestController {
     })
     public ResponseEntity<AgentReportsDto> update(@ApiParam(name = "agentReportsDto", value = "DTO отчёта комиссионера, который необходимо создать")
                                                   @RequestBody AgentReportsDto agentReportsDto) {
-        return ResponseEntity.ok().body(agentReportsService.update(agentReportsDto));
+        return ResponseEntity.ok(agentReportsService.update(agentReportsDto));
     }
 
-    @ApiOperation(value = "deleteById", notes = "Удаляет отчёт комиссионера на основе переданного ID")
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "deleteById", notes = "Удаляет отчёт комиссионера на основе переданного ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Отчёт комиссионера успешно удалён"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
