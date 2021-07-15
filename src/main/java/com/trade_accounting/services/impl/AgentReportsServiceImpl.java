@@ -6,7 +6,7 @@ import com.trade_accounting.repositories.AgentReportsRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.services.interfaces.AgentReportsService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.AgentReportsMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class AgentReportsServiceImpl implements AgentReportsService {
+public class AgentReportsServiceImpl implements AgentReportsService, AgentReportsMapper {
 
     private final AgentReportsRepository agentReportsRepository;
 
@@ -25,26 +25,24 @@ public class AgentReportsServiceImpl implements AgentReportsService {
 
     private final ContractorRepository contractorRepository;
 
-    private final DtoMapper dtoMapper;
-
     @Override
     public List<AgentReportsDto> getAll() {
         return agentReportsRepository.findAll().stream()
-                .map(dtoMapper::agentReportsToAgentReportsDto)
+                .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public AgentReportsDto getById(Long id) {
-        return dtoMapper.agentReportsToAgentReportsDto(agentReportsRepository.findById(id).orElse(new AgentReports()));
+        return toDto(agentReportsRepository.findById(id).orElse(new AgentReports()));
     }
 
     @Override
     public AgentReportsDto create(AgentReportsDto dto) {
         AgentReports agentReports = AgentReports.builder()
                 .id(dto.getId())
-                .company(companyRepository.getCompaniesById(1L))
-                .contractor(contractorRepository.getOne(1L))
+                .company(companyRepository.getCompaniesById(dto.getId()))
+                .contractor(contractorRepository.getOne(dto.getId()))
                 .comitentSum(dto.getComitentSum())
                 .date(dto.getDate())
                 .commentary(dto.getCommentary())
@@ -57,7 +55,7 @@ public class AgentReportsServiceImpl implements AgentReportsService {
                 .status(dto.getStatus())
                 .sum(dto.getSum())
                 .build();
-        return dtoMapper.agentReportsToAgentReportsDto(agentReportsRepository.save(agentReports));
+        return toDto(agentReportsRepository.save(agentReports));
     }
 
     @Override
@@ -69,4 +67,5 @@ public class AgentReportsServiceImpl implements AgentReportsService {
     public void deleteById(Long id) {
         agentReportsRepository.deleteById(id);
     }
+
 }

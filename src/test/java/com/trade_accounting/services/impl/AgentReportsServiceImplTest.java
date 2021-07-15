@@ -28,6 +28,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class AgentReportsServiceImplTest {
 
+    @Spy
+    DtoStubs dtoStubs;
+
     @InjectMocks
     private AgentReportsServiceImpl service;
 
@@ -67,7 +70,7 @@ class AgentReportsServiceImplTest {
     void createTest() {
         when(repository.save(any()))
                 .thenReturn(ModelStubs.getAgentReports(1L));
-        AgentReportsDto dto = service.create(DtoStubs.getAgentReportsDto(1L));
+        AgentReportsDto dto = service.create(dtoStubs.getAgentReportsDto(1L));
         assertNotNull(dto);
         assertEquals(1, dto.getId());
         verify(repository).save(any(AgentReports.class));
@@ -77,7 +80,7 @@ class AgentReportsServiceImplTest {
     void updateTest() {
         when(repository.save(any()))
                 .thenReturn(ModelStubs.getAgentReports(anyLong()));
-        AgentReportsDto dto = service.update(DtoStubs.getAgentReportsDto(1L));
+        AgentReportsDto dto = service.update(dtoStubs.getAgentReportsDto(1L));
         assertNotNull(dto);
         verify(repository).save(any(AgentReports.class));
     }

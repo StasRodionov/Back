@@ -36,11 +36,14 @@ import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
 import com.trade_accounting.models.dto.fias.RegionDto;
 import com.trade_accounting.models.dto.fias.StreetDto;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.AgentReportsMapper;
 import org.mapstruct.factory.Mappers;
 
 
-public class DtoStubs {
+public class DtoStubs implements AgentReportsMapper {
     public static DtoMapper dtoMapper = Mappers.getMapper(DtoMapper.class);
+
+    private ModelStubs modelStubs;
 
     public static PaymentDto getPaymentDto(Long id) {
         return dtoMapper.paymentToPaymentDto(ModelStubs.getPayment(id));
@@ -200,8 +203,8 @@ public class DtoStubs {
         return dtoMapper.accessParametersToAccessParametersDto(ModelStubs.getAccessParameters(id));
     }
 
-    public static AgentReportsDto getAgentReportsDto(Long id) {
-        return dtoMapper.agentReportsToAgentReportsDto(ModelStubs.getAgentReports(id));
+    public AgentReportsDto getAgentReportsDto(Long id) {
+        return toDto(modelStubs.getAgentReports(id));
     }
 
     public static SupplierAccountDto getSupplierAccountDto(Long id) {
