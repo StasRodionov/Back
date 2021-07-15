@@ -127,7 +127,6 @@ import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -218,8 +217,16 @@ public abstract class DtoMapper {
     public abstract Address addressDtoToAddress(AddressDto address);
 
     //AgentReports
+    @Mappings({
+            @Mapping(source = "company.id", target = "companyId"),
+            @Mapping(source = "contractor.id", target = "contractorId")
+    })
     public abstract AgentReportsDto agentReportsToAgentReportsDto(AgentReports agentReports);
 
+    @Mappings({
+            @Mapping(source = "companyId", target = "company.id"),
+            @Mapping(source = "contractorId", target = "contractor.id")
+    })
     public abstract AgentReports agentReportsDtoToAgentReports(AgentReportsDto agentReportsDto);
 
     //BankAccount

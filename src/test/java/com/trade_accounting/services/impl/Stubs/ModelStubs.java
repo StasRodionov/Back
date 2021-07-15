@@ -508,7 +508,7 @@ public class ModelStubs {
                 .build();
     }
 
-    public static AgentReports getAgentReports(Long id){
+    public static AgentReports getAgentReports(Long id) {
         return AgentReports.builder()
                 .id(id)
                 .company(getCompany(1L))
@@ -522,12 +522,12 @@ public class ModelStubs {
                 .remunirationSum(100L)
                 .sent(20L)
                 .status("status 1")
-                .time(LocalDateTime.now())
+                .date(LocalDateTime.now().toString())
                 .sum(1000L)
                 .build();
     }
 
-    public static SupplierAccount getSupplierAccount(Long id){
+    public static SupplierAccount getSupplierAccount(Long id) {
         return SupplierAccount.builder()
                 .id(id)
                 .warehouse(getWarehouse(1L))
