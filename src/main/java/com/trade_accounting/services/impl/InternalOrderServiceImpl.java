@@ -10,6 +10,7 @@ import com.trade_accounting.repositories.InternalOrderRepository;
 import com.trade_accounting.services.interfaces.InternalOrderProductService;
 import com.trade_accounting.services.interfaces.InternalOrderService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.InternalOrderMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,20 +26,19 @@ import java.util.stream.Collectors;
 public class InternalOrderServiceImpl implements InternalOrderService {
     private final InternalOrderRepository internalOrderRepository;
     private final InternalOrderProductRepository internalOrderProductRepository;
-    private final InternalOrderProductService internalOrderProductService;
     private final CompanyRepository companyRepository;
-    private final DtoMapper dtoMapper;
+    private final InternalOrderMapper internalOrderMapper;
 
     @Override
     public List<InternalOrderDto> getAll() {
         return internalOrderRepository.findAll().stream()
-                .map(dtoMapper::internalOrderToInternalOrderDto)
+                .map(internalOrderMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public InternalOrderDto getById(Long id) {
-        return dtoMapper.internalOrderToInternalOrderDto(internalOrderRepository.getOne(id));
+        return internalOrderMapper.toDto(internalOrderRepository.getOne(id));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class InternalOrderServiceImpl implements InternalOrderService {
     }
 
     private InternalOrderDto saveOrUpdate(InternalOrderDto dto) {
-        InternalOrder internalOrder = dtoMapper.internalOrderDtoToInternalOrder(dto);
+        InternalOrder internalOrder = internalOrderMapper.toModel(dto);
 
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
@@ -70,6 +70,6 @@ public class InternalOrderServiceImpl implements InternalOrderService {
         internalOrder.setDate(date);
         internalOrder.setInternalOrderProducts(internalOrderProducts);
 
-        return dtoMapper.internalOrderToInternalOrderDto(internalOrderRepository.save(internalOrder));
+        return internalOrderMapper.toDto(internalOrderRepository.save(internalOrder));
     }
 }

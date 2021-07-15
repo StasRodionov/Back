@@ -8,6 +8,8 @@ import com.trade_accounting.repositories.InternalOrderRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.InternalOrderProductService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.InternalOrderMapper;
+import com.trade_accounting.utils.mapper.InternalOrderProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,21 +23,19 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class InternalOrderProductServiceImpl implements InternalOrderProductService {
     private final InternalOrderProductRepository internalOrderProductRepository;
-    private final InternalOrderRepository internalOrderRepository;
     private final ProductRepository productRepository;
-    private final DtoMapper dtoMapper;
-
+    private final InternalOrderProductMapper internalOrderProductMapper;
 
     @Override
     public List<InternalOrderProductsDto> getAll() {
         return internalOrderProductRepository.findAll().stream()
-                .map(dtoMapper::internalOrderProductsToInternalOrderProductsDto)
+                .map(internalOrderProductMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public InternalOrderProductsDto getById(Long id) {
-        return dtoMapper.internalOrderProductsToInternalOrderProductsDto(internalOrderProductRepository.getOne(id));
+        return internalOrderProductMapper.toDto(internalOrderProductRepository.getOne(id));
     }
 
     @Override
@@ -56,10 +56,10 @@ public class InternalOrderProductServiceImpl implements InternalOrderProductServ
     private InternalOrderProductsDto saveOrUpdate(InternalOrderProductsDto dto) {
         Optional<Product> product = productRepository.findById(dto.getProductId());
 
-        InternalOrderProduct internalOrderProduct = dtoMapper.internalOrderProductsDtoToInternalOrderProducts(dto);
+        InternalOrderProduct internalOrderProduct = internalOrderProductMapper.toModel(dto);
 
         internalOrderProduct.setProduct(product.orElse(null));
 
-        return dtoMapper.internalOrderProductsToInternalOrderProductsDto(internalOrderProductRepository.save(internalOrderProduct));
+        return internalOrderProductMapper.toDto(internalOrderProductRepository.save(internalOrderProduct));
     }
 }

@@ -7,7 +7,10 @@ import com.trade_accounting.repositories.InternalOrderProductRepository;
 import com.trade_accounting.repositories.InternalOrderRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.InternalOrderDtoStubs;
+import com.trade_accounting.services.impl.Stubs.model.InternalOrderModelStubs;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.InternalOrderMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,16 +41,16 @@ class InternalOrderServiceImplTest {
     private CompanyRepository companyRepository;
 
     @Spy
-    private DtoMapper dtoMapper;
+    private InternalOrderMapper dtoMapper;
 
     @Test
     void getAll() {
         when(internalOrderRepository.findAll())
                 .thenReturn(
                         List.of(
-                                ModelStubs.getInternalOrder(1L),
-                                ModelStubs.getInternalOrder(2L),
-                                ModelStubs.getInternalOrder(3L)
+                                InternalOrderModelStubs.getInternalOrder(1L),
+                                InternalOrderModelStubs.getInternalOrder(2L),
+                                InternalOrderModelStubs.getInternalOrder(3L)
                         ));
 
         List<InternalOrderDto> internalOrderDtos = internalOrderService.getAll();
@@ -58,7 +61,7 @@ class InternalOrderServiceImplTest {
     @Test
     void getById() {
         when(internalOrderRepository.getOne(anyLong()))
-                .thenReturn(ModelStubs.getInternalOrder(1L));
+                .thenReturn(InternalOrderModelStubs.getInternalOrder(1L));
 
         InternalOrderDto internalOrderDto = internalOrderService.getById(1L);
 
@@ -83,10 +86,10 @@ class InternalOrderServiceImplTest {
 
     private void saveOrUpdate() {
         when(internalOrderRepository.save(any(InternalOrder.class)))
-                .thenReturn(ModelStubs.getInternalOrder(1L));
+                .thenReturn(InternalOrderModelStubs.getInternalOrder(1L));
 
         InternalOrderDto internalOrderDto = internalOrderService
-                .create(DtoStubs.getInternalOrderDto(1L));
+                .create(InternalOrderDtoStubs.getDto(1L));
 
         assertEquals(1, internalOrderDto.getId());
         verify(internalOrderRepository).save(any(InternalOrder.class));

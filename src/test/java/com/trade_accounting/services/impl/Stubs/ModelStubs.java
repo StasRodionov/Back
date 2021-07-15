@@ -514,29 +514,8 @@ public class ModelStubs {
                 .build();
     }
 
-    public static InternalOrderProduct getInternalOrderProduct(Long id) {
-        return InternalOrderProduct.builder()
-                .id(id)
-                .product(getProduct(id))
-                .amount(BigDecimal.ONE)
-                .price(BigDecimal.ONE)
-                .build();
-    }
 
-    public static InternalOrder getInternalOrder(Long id) {
-        return InternalOrder.builder()
-                .id(id)
-                .internalOrderProducts(List.of(
-                        getInternalOrderProduct(1L),
-                        getInternalOrderProduct(2L),
-                        getInternalOrderProduct(3L)
-                ))
-                .date(LocalDateTime.now())
-                .company(getCompany(1L))
-                .isSent(false)
-                .isPrint(true)
-                .comment("Comment " + id)
-                .build();
-    }
+
+
 }
 

@@ -919,63 +919,6 @@ public abstract class DtoMapper {
 
         return acceptanceProduction;
     }
-
-    /**
-     * @return InternalOrder
-     */
-    public InternalOrder internalOrderDtoToInternalOrder(InternalOrderDto internalOrderDto) {
-        InternalOrder internalOrder = new InternalOrder();
-        if (internalOrderDto == null) {
-            return null;
-        }
-
-        internalOrder.setId(internalOrderDto.getId());
-        internalOrder.setIsPrint(internalOrderDto.getIsPrint());
-        internalOrder.setIsSent(internalOrderDto.getIsSent());
-        internalOrder.setComment(internalOrderDto.getComment());
-
-        return internalOrder;
-    }
-
-    /**
-     * @return InternalOrderDto
-     */
-    public InternalOrderDto internalOrderToInternalOrderDto(InternalOrder internalOrder) {
-        InternalOrderDto internalOrderDto = new InternalOrderDto();
-        if (internalOrder == null) {
-            return null;
-        } else {
-            internalOrderDto.setId(internalOrder.getId());
-            internalOrderDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(internalOrder.getDate()));
-            internalOrderDto.setIsSent(internalOrder.getIsSent());
-            internalOrderDto.setIsPrint(internalOrder.getIsPrint());
-            internalOrderDto.setComment(internalOrder.getComment());
-            internalOrderDto.setInternalOrderProductsIds(
-                    internalOrder.getInternalOrderProducts().stream()
-                            .map(InternalOrderProduct::getId)
-                            .collect(Collectors.toList())
-            );
-
-            if (internalOrder.getCompany() == null) {
-                return null;
-            } else {
-                internalOrderDto.setCompanyId(internalOrder.getCompany().getId());
-                return internalOrderDto;
-            }
-        }
-    }
-
-    /**
-     * @return InternalOrderProducts
-     */
-    @Mapping(source = "productId", target = "product.id")
-    public abstract InternalOrderProduct internalOrderProductsDtoToInternalOrderProducts(InternalOrderProductsDto internalOrderProductsDto);
-
-    /**
-     * @return InternalOrderProductsDto
-     */
-    @Mapping(source = "product.id", target = "productId")
-    public abstract InternalOrderProductsDto internalOrderProductsToInternalOrderProductsDto(InternalOrderProduct internalOrderProduct);
 }
 
 

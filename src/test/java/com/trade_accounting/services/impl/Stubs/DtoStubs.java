@@ -204,9 +204,4 @@ public class DtoStubs {
     public static AcceptanceProductionDto getAcceptanceProductionDto(Long id){
         return dtoMapper.toAcceptanceProductionDto(ModelStubs.getAcceptanceProduction(id));
     }
-
-    public static InternalOrderDto getInternalOrderDto(Long id) {
-        InternalOrderDto internalOrderDto = dtoMapper.internalOrderToInternalOrderDto(ModelStubs.getInternalOrder(id));
-        return internalOrderDto;//dtoMapper.internalOrderToInternalOrderDto(ModelStubs.getInternalOrder(id));
-    }
 }
