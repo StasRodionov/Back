@@ -24,6 +24,8 @@ import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.Movement;
+import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
@@ -419,6 +421,26 @@ public class ModelStubs {
                 .isPrint(false)
                 .isSend(false)
                 .build();
+    }
+
+    public static MovementProduct getMovementProduct(Long id) {
+        return new MovementProduct(
+                id,
+                getProduct(id),
+                BigDecimal.ONE,
+                BigDecimal.ONE
+        );
+    }
+
+    public static Movement getMovement(Long id) {
+        return new Movement(
+                id, LocalDateTime.now(), getWarehouse(), getWarehouse(), getCompany(id),
+                false, false,
+                "Комментарий 1",
+                List.of(getMovementProduct(1L),
+                        getMovementProduct(2L),
+                        getMovementProduct(3L))
+        );
     }
 
     public static CorrectionProduct getCorrectionProduct(Long id) {
