@@ -204,8 +204,8 @@ public class DataInitializer {
         initMovementProduct();
         initMovement();
         initRemain();
-        initInternalOrder();
         initInternalOrderProduct();
+        initInternalOrder();
     }
 
     private void initMovementProduct() {
