@@ -563,5 +563,18 @@ public class ModelStubs {
                 .build();
     }
 
+    public static BalanceAdjustment getBalanceAdjustment(Long id) {
+        return BalanceAdjustment.builder()
+                .id(id)
+                .date(LocalDateTime.now().toString())
+                .company(getCompany(1L))
+                .contractor(getContractor(1L))
+                .account("Account 1")
+                .cashOffice("Cash Office 1")
+                .comment("Comment 1")
+                .dateChanged(LocalDateTime.now().toString())
+                .whoChanged("Who changed 1")
+                .build();
+    }
 }
 
