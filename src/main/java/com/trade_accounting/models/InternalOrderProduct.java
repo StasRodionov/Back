@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 /**
  * @author Pavel Andrusov
  * @version 1.0.0
- * */
+ */
 
 @Builder
 @AllArgsConstructor
