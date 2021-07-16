@@ -1,4 +1,4 @@
-package com.trade_accounting.utils.mappers;
+package com.trade_accounting.utils.mapper;
 
 import com.trade_accounting.models.InternalOrder;
 import com.trade_accounting.models.InternalOrderProduct;
