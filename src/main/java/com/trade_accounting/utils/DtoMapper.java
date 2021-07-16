@@ -73,6 +73,8 @@ import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.models.dto.InternalOrderDto;
+import com.trade_accounting.models.dto.InternalOrderProductsDto;
 import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
@@ -174,12 +176,12 @@ public abstract class DtoMapper {
 
     //Remain
     @Mappings({
-            @Mapping(source = "unit.id", target = "unitDtoId")
+            @Mapping(source = "unit.id", target = "unitId")
     })
     public abstract RemainDto remainToRemainDto(Remain remain);
 
     @Mappings({
-            @Mapping(source = "unitDtoId", target = "unit.id")
+            @Mapping(source = "unitId", target = "unit.id")
     })
     public abstract Remain remainDtoToRemain(RemainDto remainDto);
 
