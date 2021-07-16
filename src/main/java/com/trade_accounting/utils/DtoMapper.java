@@ -30,6 +30,7 @@ import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Movement;
 import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.Payment;
+import com.trade_accounting.models.Payout;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.Product;
@@ -72,8 +73,6 @@ import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.InternalOrderDto;
-import com.trade_accounting.models.dto.InternalOrderProductsDto;
 import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
@@ -82,6 +81,7 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
+import com.trade_accounting.models.dto.PayoutDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.models.dto.ProductDto;
@@ -127,7 +127,6 @@ import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -862,13 +861,13 @@ public abstract class DtoMapper {
                 return null;
             } else {
                 movementDto.setWarehouseFromId(warehouseFrom.getId());
-                if (warehouseTo == null) {
+                if (warehouseTo == null){
                     return null;
                 } else {
                     movementDto.setWarehouseToId(warehouseTo.getId());
 
                     Company company = movement.getCompany();
-                    if (company == null) {
+                    if (company == null){
                         return null;
                     } else {
                         movementDto.setCompanyId(company.getId());
@@ -974,6 +973,20 @@ public abstract class DtoMapper {
      */
     @Mapping(source = "product.id", target = "productId")
     public abstract InternalOrderProductsDto internalOrderProductsToInternalOrderProductsDto(InternalOrderProduct internalOrderProduct);
+
+    //Payout
+    @Mappings({
+            @Mapping(source = "retailStore.id", target = "retailStoreId"),
+            @Mapping(source = "company.id", target = "companyId")
+    })
+    public abstract PayoutDto payoutToPayoutDto(Payout payout);
+
+    @Mappings({
+            @Mapping(source = "retailStoreId", target = "retailStore.id"),
+            @Mapping(source = "companyId", target = "company.id")
+    })
+    public abstract Payout payoutDtoToPayout(PayoutDto payoutsDto);
+
 }
 
 
