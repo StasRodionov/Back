@@ -72,11 +72,14 @@ import com.trade_accounting.services.interfaces.InventarizationService;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
+import com.trade_accounting.services.interfaces.MovementProductService;
+import com.trade_accounting.services.interfaces.MovementService;
 import com.trade_accounting.services.interfaces.PaymentService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
+import com.trade_accounting.services.interfaces.RemainService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import com.trade_accounting.services.interfaces.RoleService;
@@ -152,6 +155,7 @@ public class DataInitializer {
     private final InternalOrderProductService internalOrderProductService;
     private final MovementService movementService;
     private final MovementProductService movementProductService;
+    private final RemainService remainService;
 
     public DataInitializer(
             TypeOfPriceService typeOfPriceService,
@@ -196,8 +200,7 @@ public class DataInitializer {
             MovementService movementService,
             InternalOrderService internalOrderService,
             InternalOrderProductService internalOrderProductService,
-            MovementProductService movementProductService) {
-            BalanceAdjustmentService balanceAdjustmentService, SupplierAccountService supplierAccountService) {
+            MovementProductService movementProductService, RemainService remainService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -242,6 +245,7 @@ public class DataInitializer {
         this.internalOrderProductService = internalOrderProductService;
         this.movementService = movementService;
         this.movementProductService = movementProductService;
+        this.remainService = remainService;
     }
 
     @PostConstruct
@@ -1884,7 +1888,6 @@ public class DataInitializer {
                 .salesSum(randomInt(20000, 100000))
                 .build());
     }
-}
 
     public void initInternalOrder() {
         for (long i = 1L; i <= 15; i += 3) {
