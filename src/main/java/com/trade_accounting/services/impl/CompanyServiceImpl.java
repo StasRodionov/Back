@@ -1,8 +1,6 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Address;
 import com.trade_accounting.models.Company;
-import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
@@ -10,14 +8,12 @@ import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.services.interfaces.CompanyService;
 import com.trade_accounting.utils.DtoMapper;
-import org.apache.commons.collections4.iterators.LazyIteratorChain;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,7 +62,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyDto getByEmail(String email) {
-        return companyRepository.findCompanyByEmail(email);
+        Company company = companyRepository.findCompanyByEmail(email);
+        return dtoMapper.companyToCompanyDto(company);
     }
 
     public CompanyDto create(CompanyDto companyDto) {

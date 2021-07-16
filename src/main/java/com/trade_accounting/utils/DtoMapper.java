@@ -172,8 +172,14 @@ public abstract class DtoMapper {
     public abstract Production productionDtoToProduction(ProductionDto productionDto);
 
     //Remain
+    @Mappings({
+            @Mapping(source = "unit.id", target = "unitDtoId")
+    })
     public abstract RemainDto remainToRemainDto(Remain remain);
 
+    @Mappings({
+            @Mapping(source = "unitDtoId", target = "unit.id")
+    })
     public abstract Remain remainDtoToRemain(RemainDto remainDto);
 
     //AccessParameters
