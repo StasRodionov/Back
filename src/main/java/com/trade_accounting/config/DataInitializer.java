@@ -34,6 +34,7 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
+import com.trade_accounting.models.dto.RemainDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
@@ -71,8 +72,6 @@ import com.trade_accounting.services.interfaces.InventarizationService;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
-import com.trade_accounting.services.interfaces.MovementProductService;
-import com.trade_accounting.services.interfaces.MovementService;
 import com.trade_accounting.services.interfaces.PaymentService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
@@ -198,6 +197,7 @@ public class DataInitializer {
             InternalOrderService internalOrderService,
             InternalOrderProductService internalOrderProductService,
             MovementProductService movementProductService) {
+            BalanceAdjustmentService balanceAdjustmentService, SupplierAccountService supplierAccountService) {
         this.typeOfPriceService = typeOfPriceService;
         this.roleService = roleService;
         this.warehouseService = warehouseService;
@@ -290,7 +290,7 @@ public class DataInitializer {
         initInternalOrder();
         initMovementProduct();
         initMovement();
-
+        initRemain();
     }
 
     private void initMovementProduct() {
@@ -1830,6 +1830,61 @@ public class DataInitializer {
             );
         }
     }
+
+
+    private void initRemain() {
+        remainService.create(RemainDto.builder()
+                .id(1L)
+                .name("Remain one")
+                .vendorCode("234789")
+                .balance(randomInt(20000, 100000))
+                .irreducibleBalance(randomInt(20000, 100000))
+                .reserve(randomInt(20000, 100000))
+                .expectation(randomInt(20000, 100000))
+                .available(randomInt(20000, 100000))
+                .unitId(38L)
+                .daysOnWarehouse(randomInt(5, 20))
+                .costPrice(randomInt(20000, 100000))
+                .sumOfCostPrice(randomInt(20000, 100000))
+                .salesCost(randomInt(20000, 100000))
+                .salesSum(randomInt(20000, 100000))
+                .build());
+
+        remainService.create(RemainDto.builder()
+                .id(2L)
+                .name("Remain two")
+                .vendorCode("451238")
+                .balance(randomInt(20000, 100000))
+                .irreducibleBalance(randomInt(20000, 100000))
+                .reserve(randomInt(20000, 100000))
+                .expectation(randomInt(20000, 100000))
+                .available(randomInt(20000, 100000))
+                .unitId(38L)
+                .daysOnWarehouse(randomInt(5, 20))
+                .costPrice(randomInt(20000, 100000))
+                .sumOfCostPrice(randomInt(20000, 100000))
+                .salesCost(randomInt(20000, 100000))
+                .salesSum(randomInt(20000, 100000))
+                .build());
+
+        remainService.create(RemainDto.builder()
+                .id(3L)
+                .name("Remain three")
+                .vendorCode("624380")
+                .balance(randomInt(20000, 100000))
+                .irreducibleBalance(randomInt(20000, 100000))
+                .reserve(randomInt(20000, 100000))
+                .expectation(randomInt(20000, 100000))
+                .available(randomInt(20000, 100000))
+                .unitId(38L)
+                .daysOnWarehouse(randomInt(5, 20))
+                .costPrice(randomInt(20000, 100000))
+                .sumOfCostPrice(randomInt(20000, 100000))
+                .salesCost(randomInt(20000, 100000))
+                .salesSum(randomInt(20000, 100000))
+                .build());
+    }
+}
 
     public void initInternalOrder() {
         for (long i = 1L; i <= 15; i += 3) {
