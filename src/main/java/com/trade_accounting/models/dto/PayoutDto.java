@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PayoutsDto {
+public class PayoutDto {
 
     Long id;
 

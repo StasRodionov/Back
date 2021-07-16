@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity(name = "payouts")
-public class Payouts {
+public class Payout {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
