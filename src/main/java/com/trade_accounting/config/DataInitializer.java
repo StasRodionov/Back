@@ -1800,7 +1800,7 @@ public class DataInitializer {
     }
 
     public void initInternalOrder() {
-        for (long i = 1L; i <= 15; i += 3) {
+        for (long i = 1L; i <= 13; i += 3) {
             internalOrderService.create(InternalOrderDto.builder()
                     .internalOrderProductsIds(List.of(i, i + 1L, i + 2L))
                     .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
