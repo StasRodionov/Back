@@ -26,7 +26,7 @@ public class RemainDto {
 
     private Integer available;
 
-    private Long unitId;
+    private Long unitDtoId;
 
     private Integer daysOnWarehouse;
 
