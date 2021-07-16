@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
@@ -19,10 +20,18 @@ public interface InternalOrderMapper {
     /**
      * @return InternalOrder
      */
-    @Mappings({
-            @Mapping(source = "companyId", target = "company.id")
-    })
-    InternalOrder toModel(InternalOrderDto internalOrderDto);
+    default InternalOrder toModel(InternalOrderDto internalOrderDto) {
+        if (internalOrderDto == null) {
+            return null;
+        }
+
+        return InternalOrder.builder()
+                .id(internalOrderDto.getId())
+                .isSent(internalOrderDto.getIsSent())
+                .isPrint(internalOrderDto.getIsPrint())
+                .comment(internalOrderDto.getComment())
+                .build();
+    }
 
     /**
      * @return InternalOrderDto
