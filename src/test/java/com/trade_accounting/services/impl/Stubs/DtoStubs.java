@@ -5,6 +5,7 @@ import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
+import com.trade_accounting.models.dto.BalanceAdjustmentDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContractDto;
@@ -206,5 +207,9 @@ public class DtoStubs {
 
     public static SupplierAccountDto getSupplierAccountDto(Long id) {
         return dtoMapper.supplierAccountToSupplierAccountDto(ModelStubs.getSupplierAccount(id));
+    }
+
+    public static BalanceAdjustmentDto getBalanceAdjustmentDto(Long id) {
+        return dtoMapper.balanceAdjustmentToBalanceAdjustmentDto(ModelStubs.getBalanceAdjustment(id));
     }
 }
