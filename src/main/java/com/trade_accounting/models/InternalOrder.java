@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Pavel Andrusov
  * @version 1.0.0
- * */
+ */
 
 @Builder
 @AllArgsConstructor
