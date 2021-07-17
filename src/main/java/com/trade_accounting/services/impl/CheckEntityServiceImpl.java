@@ -473,7 +473,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     @Override
     public void checkExistsPayoutById(Long payoutId) {
         if (!payoutRepository.existsById(payoutId)) {
-            throw new NotFoundEntityException("Приемка товара с id=" + payoutId + "не найдена");
+            throw new NotFoundEntityException("Выплата с id=" + payoutId + "не найдена");
         }
     }
 
