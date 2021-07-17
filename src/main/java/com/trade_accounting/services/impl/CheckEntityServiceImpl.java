@@ -472,8 +472,12 @@ public class CheckEntityServiceImpl implements CheckEntityService {
 
     @Override
     public void checkExists(JpaRepository<Entity, Long> repository, Long id) {
+        String repositoryName = repository.getClass().getInterfaces()[0].getSimpleName();
+
         if (!repository.existsById(id)) {
-            throw new NotFoundEntityException("Entity с id=" + id + "не найден");
+            throw new NotFoundEntityException(
+                     "Запись с id=" + id + " не найдена в репозитории " + repositoryName
+            );
         }
     }
 }
