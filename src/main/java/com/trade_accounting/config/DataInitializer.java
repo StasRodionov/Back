@@ -29,6 +29,7 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
+import com.trade_accounting.models.dto.PayoutDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
@@ -75,6 +76,7 @@ import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.MovementProductService;
 import com.trade_accounting.services.interfaces.MovementService;
 import com.trade_accounting.services.interfaces.PaymentService;
+import com.trade_accounting.services.interfaces.PayoutService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
@@ -95,7 +97,6 @@ import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import com.trade_accounting.services.interfaces.fias.FiasDbService;
 import com.trade_accounting.utils.fias.ExcelParser;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -110,7 +111,6 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
 public class DataInitializer {
 
     private final TypeOfPriceService typeOfPriceService;
@@ -158,6 +158,93 @@ public class DataInitializer {
     private final RemainService remainService;
     private final InternalOrderService internalOrderService;
     private final InternalOrderProductService internalOrderProductService;
+    private final PayoutService payoutService;
+
+    public DataInitializer(
+            TypeOfPriceService typeOfPriceService,
+            RoleService roleService,
+            UnitService unitService,
+            PositionService positionService,
+            WarehouseService warehouseService,
+            AttributeOfCalculationObjectService attributeOfCalculationObjectService,
+            DepartmentService departmentService,
+            ContractorGroupService contractorGroupService,
+            TaxSystemService taxSystemService,
+            ProductGroupService productGroupService,
+            TypeOfContractorService typeOfContractorService,
+            CompanyService companyService,
+            LegalDetailService legalDetailService,
+            ContactService contactService,
+            ContractService contractService,
+            ContractorService contractorService,
+            BankAccountService bankAccountService,
+            EmployeeService employeeService,
+            ProductService productService,
+            CurrencyService currencyService,
+            InvoiceService invoiceService,
+            InvoiceProductService invoiceProductService, ProjectService projectService,
+            PaymentService paymentService,
+            TaskService taskService,
+            TaskCommentService commentService,
+            RetailStoreService retailStoreService,
+            AddressServiceImpl addressService,
+            FiasDbService fiasDbService,
+            ContractorStatusService contractorStatusService,
+            AccessParametersService accessParametersService,
+            TechnicalCardGroupService technicalCardGroupService,
+            TechnicalCardService technicalCardService,
+            CorrectionProductService correctionProductService,
+            CorrectionService correctionService, ReturnToSupplierService returnToSupplierService,
+            InventarizationService inventarizationService,
+            InventarizationProductService inventarizationProductService,
+            BalanceAdjustmentService balanceAdjustmentService, SupplierAccountService supplierAccountService, MovementService movementService, MovementProductService movementProductService, RemainService remainService, InternalOrderService internalOrderService, InternalOrderProductService internalOrderProductService, PayoutService payoutService) {
+        this.typeOfPriceService = typeOfPriceService;
+        this.roleService = roleService;
+        this.warehouseService = warehouseService;
+        this.unitService = unitService;
+        this.positionService = positionService;
+        this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
+        this.departmentService = departmentService;
+        this.contractorGroupService = contractorGroupService;
+        this.typeOfContractorService = typeOfContractorService;
+        this.taxSystemService = taxSystemService;
+        this.productGroupService = productGroupService;
+        this.companyService = companyService;
+        this.legalDetailService = legalDetailService;
+        this.contactService = contactService;
+        this.contractService = contractService;
+        this.contractorService = contractorService;
+        this.bankAccountService = bankAccountService;
+        this.employeeService = employeeService;
+        this.productService = productService;
+        this.currencyService = currencyService;
+        this.invoiceService = invoiceService;
+        this.invoiceProductService = invoiceProductService;
+        this.projectService = projectService;
+        this.paymentService = paymentService;
+        this.taskService = taskService;
+        this.commentService = commentService;
+        this.addressService = addressService;
+        this.fiasDbService = fiasDbService;
+        this.retailStoreService = retailStoreService;
+        this.contractorStatusService = contractorStatusService;
+        this.accessParametersService = accessParametersService;
+        this.technicalCardGroupService = technicalCardGroupService;
+        this.technicalCardService = technicalCardService;
+        this.correctionProductService = correctionProductService;
+        this.correctionService = correctionService;
+        this.returnToSupplierService = returnToSupplierService;
+        this.inventarizationService = inventarizationService;
+        this.inventarizationProductService = inventarizationProductService;
+        this.balanceAdjustmentService = balanceAdjustmentService;
+        this.supplierAccountService = supplierAccountService;
+        this.movementService = movementService;
+        this.movementProductService = movementProductService;
+        this.remainService = remainService;
+        this.internalOrderService = internalOrderService;
+        this.internalOrderProductService = internalOrderProductService;
+        this.payoutService = payoutService;
+    }
 
     @PostConstruct
     public void init() {
@@ -206,6 +293,7 @@ public class DataInitializer {
         initRemain();
         initInternalOrderProduct();
         initInternalOrder();
+        initPayout();
     }
 
     private void initMovementProduct() {
@@ -1812,4 +1900,41 @@ public class DataInitializer {
             );
         }
     }
+
+    public void initPayout() {
+
+        payoutService.create(PayoutDto.builder()
+                .id(1L)
+                .date(LocalDateTime.now().toString())
+                .retailStoreId(1L)
+                .whoWasPaid("Сергеев Петр Сергеевич")
+                .companyId(1L)
+                .isSent(true)
+                .isPrint(true)
+                .comment("Коммент")
+                .build());
+
+        payoutService.create(PayoutDto.builder()
+                .id(2L)
+                .date(LocalDateTime.now().toString())
+                .retailStoreId(2L)
+                .whoWasPaid("Стрелецкая Анастасия Михайловна")
+                .companyId(6L)
+                .isSent(false)
+                .isPrint(true)
+                .comment("Комментарий")
+                .build());
+
+        payoutService.create(PayoutDto.builder()
+                .id(3L)
+                .date(LocalDateTime.now().toString())
+                .retailStoreId(3L)
+                .whoWasPaid("Стрелецкая Анастасия Михайловна")
+                .companyId(9L)
+                .isSent(true)
+                .isPrint(false)
+                .comment("Комментарий комментария")
+                .build());
+    }
+
 }
