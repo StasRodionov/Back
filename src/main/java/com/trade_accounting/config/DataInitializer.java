@@ -19,6 +19,8 @@ import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.InternalOrderDto;
+import com.trade_accounting.models.dto.InternalOrderProductsDto;
 import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
@@ -32,6 +34,7 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProjectDto;
+import com.trade_accounting.models.dto.RemainDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
@@ -62,6 +65,8 @@ import com.trade_accounting.services.interfaces.CorrectionService;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
+import com.trade_accounting.services.interfaces.InternalOrderProductService;
+import com.trade_accounting.services.interfaces.InternalOrderService;
 import com.trade_accounting.services.interfaces.InventarizationProductService;
 import com.trade_accounting.services.interfaces.InventarizationService;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
@@ -74,6 +79,7 @@ import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.ProjectService;
+import com.trade_accounting.services.interfaces.RemainService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import com.trade_accounting.services.interfaces.RoleService;
@@ -89,6 +95,7 @@ import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import com.trade_accounting.services.interfaces.fias.FiasDbService;
 import com.trade_accounting.utils.fias.ExcelParser;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -103,6 +110,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class DataInitializer {
 
     private final TypeOfPriceService typeOfPriceService;
@@ -147,92 +155,9 @@ public class DataInitializer {
     private final SupplierAccountService supplierAccountService;
     private final MovementService movementService;
     private final MovementProductService movementProductService;
-
-    public DataInitializer(
-            TypeOfPriceService typeOfPriceService,
-            RoleService roleService,
-            UnitService unitService,
-            PositionService positionService,
-            WarehouseService warehouseService,
-            AttributeOfCalculationObjectService attributeOfCalculationObjectService,
-            DepartmentService departmentService,
-            ContractorGroupService contractorGroupService,
-            TaxSystemService taxSystemService,
-            ProductGroupService productGroupService,
-            TypeOfContractorService typeOfContractorService,
-            CompanyService companyService,
-            LegalDetailService legalDetailService,
-            ContactService contactService,
-            ContractService contractService,
-            ContractorService contractorService,
-            BankAccountService bankAccountService,
-            EmployeeService employeeService,
-            ProductService productService,
-            CurrencyService currencyService,
-            InvoiceService invoiceService,
-            InvoiceProductService invoiceProductService, ProjectService projectService,
-            PaymentService paymentService,
-            TaskService taskService,
-            TaskCommentService commentService,
-            RetailStoreService retailStoreService,
-            AddressServiceImpl addressService,
-            FiasDbService fiasDbService,
-            ContractorStatusService contractorStatusService,
-            AccessParametersService accessParametersService,
-            TechnicalCardGroupService technicalCardGroupService,
-            TechnicalCardService technicalCardService,
-            CorrectionProductService correctionProductService,
-            CorrectionService correctionService,
-            ReturnToSupplierService returnToSupplierService,
-            InventarizationService inventarizationService,
-            InventarizationProductService inventarizationProductService,
-            BalanceAdjustmentService balanceAdjustmentService,
-            SupplierAccountService supplierAccountService,
-            MovementService movementService,
-            MovementProductService movementProductService) {
-        this.typeOfPriceService = typeOfPriceService;
-        this.roleService = roleService;
-        this.warehouseService = warehouseService;
-        this.unitService = unitService;
-        this.positionService = positionService;
-        this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
-        this.departmentService = departmentService;
-        this.contractorGroupService = contractorGroupService;
-        this.typeOfContractorService = typeOfContractorService;
-        this.taxSystemService = taxSystemService;
-        this.productGroupService = productGroupService;
-        this.companyService = companyService;
-        this.legalDetailService = legalDetailService;
-        this.contactService = contactService;
-        this.contractService = contractService;
-        this.contractorService = contractorService;
-        this.bankAccountService = bankAccountService;
-        this.employeeService = employeeService;
-        this.productService = productService;
-        this.currencyService = currencyService;
-        this.invoiceService = invoiceService;
-        this.invoiceProductService = invoiceProductService;
-        this.projectService = projectService;
-        this.paymentService = paymentService;
-        this.taskService = taskService;
-        this.commentService = commentService;
-        this.addressService = addressService;
-        this.fiasDbService = fiasDbService;
-        this.retailStoreService = retailStoreService;
-        this.contractorStatusService = contractorStatusService;
-        this.accessParametersService = accessParametersService;
-        this.technicalCardGroupService = technicalCardGroupService;
-        this.technicalCardService = technicalCardService;
-        this.correctionProductService = correctionProductService;
-        this.correctionService = correctionService;
-        this.returnToSupplierService = returnToSupplierService;
-        this.inventarizationService = inventarizationService;
-        this.inventarizationProductService = inventarizationProductService;
-        this.balanceAdjustmentService = balanceAdjustmentService;
-        this.supplierAccountService = supplierAccountService;
-        this.movementService = movementService;
-        this.movementProductService = movementProductService;
-    }
+    private final RemainService remainService;
+    private final InternalOrderService internalOrderService;
+    private final InternalOrderProductService internalOrderProductService;
 
     @PostConstruct
     public void init() {
@@ -278,7 +203,9 @@ public class DataInitializer {
         initSupplierAccount();
         initMovementProduct();
         initMovement();
-
+        initRemain();
+        initInternalOrderProduct();
+        initInternalOrder();
     }
 
     private void initMovementProduct() {
@@ -1804,5 +1731,85 @@ public class DataInitializer {
                 .warehouseId(1L)
                 .contractId(1L)
                 .contractorId(5L).build());
+    }
+
+
+    private void initRemain() {
+        remainService.create(RemainDto.builder()
+                .id(1L)
+                .name("Remain one")
+                .vendorCode("234789")
+                .balance(randomInt(20000, 100000))
+                .irreducibleBalance(randomInt(20000, 100000))
+                .reserve(randomInt(20000, 100000))
+                .expectation(randomInt(20000, 100000))
+                .available(randomInt(20000, 100000))
+                .unitId(38L)
+                .daysOnWarehouse(randomInt(5, 20))
+                .costPrice(randomInt(20000, 100000))
+                .sumOfCostPrice(randomInt(20000, 100000))
+                .salesCost(randomInt(20000, 100000))
+                .salesSum(randomInt(20000, 100000))
+                .build());
+
+        remainService.create(RemainDto.builder()
+                .id(2L)
+                .name("Remain two")
+                .vendorCode("451238")
+                .balance(randomInt(20000, 100000))
+                .irreducibleBalance(randomInt(20000, 100000))
+                .reserve(randomInt(20000, 100000))
+                .expectation(randomInt(20000, 100000))
+                .available(randomInt(20000, 100000))
+                .unitId(38L)
+                .daysOnWarehouse(randomInt(5, 20))
+                .costPrice(randomInt(20000, 100000))
+                .sumOfCostPrice(randomInt(20000, 100000))
+                .salesCost(randomInt(20000, 100000))
+                .salesSum(randomInt(20000, 100000))
+                .build());
+
+        remainService.create(RemainDto.builder()
+                .id(3L)
+                .name("Remain three")
+                .vendorCode("624380")
+                .balance(randomInt(20000, 100000))
+                .irreducibleBalance(randomInt(20000, 100000))
+                .reserve(randomInt(20000, 100000))
+                .expectation(randomInt(20000, 100000))
+                .available(randomInt(20000, 100000))
+                .unitId(38L)
+                .daysOnWarehouse(randomInt(5, 20))
+                .costPrice(randomInt(20000, 100000))
+                .sumOfCostPrice(randomInt(20000, 100000))
+                .salesCost(randomInt(20000, 100000))
+                .salesSum(randomInt(20000, 100000))
+                .build());
+    }
+
+    public void initInternalOrderProduct() {
+        for (long i = 1L; i <= 15; i++) {
+            internalOrderProductService.create(
+                    InternalOrderProductsDto.builder()
+                            .amount(BigDecimal.valueOf(randomInt(10, 100)))
+                            .price(BigDecimal.valueOf(randomInt(10, 100)))
+                            .productId(i)
+                            .build()
+            );
+        }
+    }
+
+    public void initInternalOrder() {
+        for (long i = 1L; i <= 13; i += 3) {
+            internalOrderService.create(InternalOrderDto.builder()
+                    .internalOrderProductsIds(List.of(i, i + 1L, i + 2L))
+                    .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                    .companyId(i)
+                    .isSent(false)
+                    .isPrint(false)
+                    .comment("Внутренний заказ " + i)
+                    .build()
+            );
+        }
     }
 }

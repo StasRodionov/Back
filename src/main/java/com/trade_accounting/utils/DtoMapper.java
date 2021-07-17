@@ -30,6 +30,7 @@ import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Movement;
 import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.Payment;
+import com.trade_accounting.models.Payout;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.Product;
@@ -82,6 +83,7 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
+import com.trade_accounting.models.dto.PayoutDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.models.dto.ProductDto;
@@ -127,7 +129,6 @@ import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -174,8 +175,14 @@ public abstract class DtoMapper {
     public abstract Production productionDtoToProduction(ProductionDto productionDto);
 
     //Remain
+    @Mappings({
+            @Mapping(source = "unit.id", target = "unitId")
+    })
     public abstract RemainDto remainToRemainDto(Remain remain);
 
+    @Mappings({
+            @Mapping(source = "unitId", target = "unit.id")
+    })
     public abstract Remain remainDtoToRemain(RemainDto remainDto);
 
     //AccessParameters
@@ -856,13 +863,13 @@ public abstract class DtoMapper {
                 return null;
             } else {
                 movementDto.setWarehouseFromId(warehouseFrom.getId());
-                if (warehouseTo == null) {
+                if (warehouseTo == null){
                     return null;
                 } else {
                     movementDto.setWarehouseToId(warehouseTo.getId());
 
                     Company company = movement.getCompany();
-                    if (company == null) {
+                    if (company == null){
                         return null;
                     } else {
                         movementDto.setCompanyId(company.getId());
@@ -921,53 +928,19 @@ public abstract class DtoMapper {
         return acceptanceProduction;
     }
 
-    /**
-     * @return InternalOrder
-     */
+    //Payout
     @Mappings({
+            @Mapping(source = "retailStore.id", target = "retailStoreId"),
+            @Mapping(source = "company.id", target = "companyId")
+    })
+    public abstract PayoutDto payoutToPayoutDto(Payout payout);
+
+    @Mappings({
+            @Mapping(source = "retailStoreId", target = "retailStore.id"),
             @Mapping(source = "companyId", target = "company.id")
     })
-    public abstract InternalOrder internalOrderDtoToInternalOrder(InternalOrderDto internalOrderDto);
+    public abstract Payout payoutDtoToPayout(PayoutDto payoutsDto);
 
-    /**
-     * @return InternalOrderDto
-     */
-    public InternalOrderDto internalOrderToInternalOrderDto(InternalOrder internalOrder) {
-        InternalOrderDto internalOrderDto = new InternalOrderDto();
-        if (internalOrder == null) {
-            return null;
-        } else {
-            internalOrderDto.setId(internalOrder.getId());
-            internalOrderDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(internalOrder.getDate()));
-            internalOrderDto.setIsSent(internalOrder.getIsSent());
-            internalOrderDto.setIsPrint(internalOrder.getIsPrint());
-            internalOrderDto.setComment(internalOrder.getComment());
-            internalOrderDto.setInternalOrderProductsIds(
-                    internalOrder.getInternalOrderProducts().stream()
-                            .map(InternalOrderProduct::getId)
-                            .collect(Collectors.toList())
-            );
-
-            if (internalOrder.getCompany() == null) {
-                return null;
-            } else {
-                internalOrderDto.setCompanyId(internalOrder.getCompany().getId());
-                return internalOrderDto;
-            }
-        }
-    }
-
-    /**
-     * @return InternalOrderProducts
-     */
-    @Mapping(source = "productId", target = "product.id")
-    public abstract InternalOrderProduct internalOrderProductsDtoToInternalOrderProducts(InternalOrderProductsDto internalOrderProductsDto);
-
-    /**
-     * @return InternalOrderProductsDto
-     */
-    @Mapping(source = "product.id", target = "productId")
-    public abstract InternalOrderProductsDto internalOrderProductsToInternalOrderProductsDto(InternalOrderProduct internalOrderProduct);
 }
 
 

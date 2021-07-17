@@ -1,56 +1,56 @@
 package com.trade_accounting.models;
 
+
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.ColumnDefault;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
-import java.util.List;
 
-/**
- * @author Pavel Andrusov
- * @version 1.0.0
- */
-
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@Entity
-@Table(name = "internal_order")
-public class InternalOrder {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity(name = "payouts")
+public class Payout {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<InternalOrderProduct> internalOrderProducts;
+    @Column(name = "date")
+    LocalDateTime date;
 
-    @NotNull
-    private LocalDateTime date;
-
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    private Company company;
+    RetailStore retailStore;
 
+    @Column(name = "who_was_paid")
+    String whoWasPaid;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    Company company;
+
+    @Column(name = "is_sent")
     @ColumnDefault("false")
-    private Boolean isSent = null;
+    Boolean isSent = false;
 
+    @Column(name = "is_print")
     @ColumnDefault("false")
-    private Boolean isPrint = null;
+    Boolean isPrint = false;
 
-    private String comment;
+    @Column(name = "comment")
+    String comment;
 }
