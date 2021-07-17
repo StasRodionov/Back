@@ -97,6 +97,7 @@ import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import com.trade_accounting.services.interfaces.fias.FiasDbService;
 import com.trade_accounting.utils.fias.ExcelParser;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -111,6 +112,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class DataInitializer {
 
     private final TypeOfPriceService typeOfPriceService;
@@ -159,92 +161,6 @@ public class DataInitializer {
     private final InternalOrderService internalOrderService;
     private final InternalOrderProductService internalOrderProductService;
     private final PayoutService payoutService;
-
-    public DataInitializer(
-            TypeOfPriceService typeOfPriceService,
-            RoleService roleService,
-            UnitService unitService,
-            PositionService positionService,
-            WarehouseService warehouseService,
-            AttributeOfCalculationObjectService attributeOfCalculationObjectService,
-            DepartmentService departmentService,
-            ContractorGroupService contractorGroupService,
-            TaxSystemService taxSystemService,
-            ProductGroupService productGroupService,
-            TypeOfContractorService typeOfContractorService,
-            CompanyService companyService,
-            LegalDetailService legalDetailService,
-            ContactService contactService,
-            ContractService contractService,
-            ContractorService contractorService,
-            BankAccountService bankAccountService,
-            EmployeeService employeeService,
-            ProductService productService,
-            CurrencyService currencyService,
-            InvoiceService invoiceService,
-            InvoiceProductService invoiceProductService, ProjectService projectService,
-            PaymentService paymentService,
-            TaskService taskService,
-            TaskCommentService commentService,
-            RetailStoreService retailStoreService,
-            AddressServiceImpl addressService,
-            FiasDbService fiasDbService,
-            ContractorStatusService contractorStatusService,
-            AccessParametersService accessParametersService,
-            TechnicalCardGroupService technicalCardGroupService,
-            TechnicalCardService technicalCardService,
-            CorrectionProductService correctionProductService,
-            CorrectionService correctionService, ReturnToSupplierService returnToSupplierService,
-            InventarizationService inventarizationService,
-            InventarizationProductService inventarizationProductService,
-            BalanceAdjustmentService balanceAdjustmentService, SupplierAccountService supplierAccountService, MovementService movementService, MovementProductService movementProductService, RemainService remainService, InternalOrderService internalOrderService, InternalOrderProductService internalOrderProductService, PayoutService payoutService) {
-        this.typeOfPriceService = typeOfPriceService;
-        this.roleService = roleService;
-        this.warehouseService = warehouseService;
-        this.unitService = unitService;
-        this.positionService = positionService;
-        this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
-        this.departmentService = departmentService;
-        this.contractorGroupService = contractorGroupService;
-        this.typeOfContractorService = typeOfContractorService;
-        this.taxSystemService = taxSystemService;
-        this.productGroupService = productGroupService;
-        this.companyService = companyService;
-        this.legalDetailService = legalDetailService;
-        this.contactService = contactService;
-        this.contractService = contractService;
-        this.contractorService = contractorService;
-        this.bankAccountService = bankAccountService;
-        this.employeeService = employeeService;
-        this.productService = productService;
-        this.currencyService = currencyService;
-        this.invoiceService = invoiceService;
-        this.invoiceProductService = invoiceProductService;
-        this.projectService = projectService;
-        this.paymentService = paymentService;
-        this.taskService = taskService;
-        this.commentService = commentService;
-        this.addressService = addressService;
-        this.fiasDbService = fiasDbService;
-        this.retailStoreService = retailStoreService;
-        this.contractorStatusService = contractorStatusService;
-        this.accessParametersService = accessParametersService;
-        this.technicalCardGroupService = technicalCardGroupService;
-        this.technicalCardService = technicalCardService;
-        this.correctionProductService = correctionProductService;
-        this.correctionService = correctionService;
-        this.returnToSupplierService = returnToSupplierService;
-        this.inventarizationService = inventarizationService;
-        this.inventarizationProductService = inventarizationProductService;
-        this.balanceAdjustmentService = balanceAdjustmentService;
-        this.supplierAccountService = supplierAccountService;
-        this.movementService = movementService;
-        this.movementProductService = movementProductService;
-        this.remainService = remainService;
-        this.internalOrderService = internalOrderService;
-        this.internalOrderProductService = internalOrderProductService;
-        this.payoutService = payoutService;
-    }
 
     @PostConstruct
     public void init() {
