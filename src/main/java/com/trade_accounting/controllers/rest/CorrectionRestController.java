@@ -58,7 +58,6 @@ public class CorrectionRestController {
     public ResponseEntity<CorrectionDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти оприходование")
                                                      @PathVariable(name = "id") Long id) {
-        //checkEntityService.checkExistsCorrectionById(id);
         checkEntityService.checkExists((JpaRepository) correctionRepository, id);
 
         return ResponseEntity.ok(correctionService.getById(id));
