@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 public class MovementDtoStubs {
     private static final MovementMapper mapper = Mappers.getMapper(MovementMapper.class);
 
-    public static MovementDto getDto(Long id) {
+    public static MovementDto getMovementDto(Long id) {
         return mapper.toMovementDto(MovementModelStubs.getMovement(id));
     }
 }
