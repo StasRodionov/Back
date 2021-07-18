@@ -441,25 +441,25 @@ public class ModelStubs {
                 .build();
     }
 
-    public static MovementProduct getMovementProduct(Long id) {
-        return new MovementProduct(
-                id,
-                getProduct(id),
-                BigDecimal.ONE,
-                BigDecimal.ONE
-        );
-    }
+//    public static MovementProduct getMovementProduct(Long id) {
+//        return new MovementProduct(
+//                id,
+//                getProduct(id),
+//                BigDecimal.ONE,
+//                BigDecimal.ONE
+//        );
+//    }
 
-    public static Movement getMovement(Long id) {
-        return new Movement(
-                id, LocalDateTime.now(), getWarehouse(), getWarehouse(), getCompany(id),
-                false, false,
-                "Комментарий 1",
-                List.of(getMovementProduct(1L),
-                        getMovementProduct(2L),
-                        getMovementProduct(3L))
-        );
-    }
+//    public static Movement getMovement(Long id) {
+//        return new Movement(
+//                id, LocalDateTime.now(), getWarehouse(), getWarehouse(), getCompany(id),
+//                false, false,
+//                "Комментарий 1",
+//                List.of(getMovementProduct(1L),
+//                        getMovementProduct(2L),
+//                        getMovementProduct(3L))
+//        );
+//    }
 
     public static CorrectionProduct getCorrectionProduct(Long id) {
         return new CorrectionProduct(

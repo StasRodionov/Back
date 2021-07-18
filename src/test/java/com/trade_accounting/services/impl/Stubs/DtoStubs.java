@@ -167,13 +167,13 @@ public class DtoStubs {
         return dtoMapper.toFiasAddressModelDto(ModelStubs.getFiasAddressModel(id));
     }
 
-    public static MovementProductDto getMovementProductDto(Long id) {
-        return dtoMapper.toMovementProductDto(ModelStubs.getMovementProduct(id));
-    }
-
-    public static MovementDto getMovementDto(Long id) {
-        return dtoMapper.toMovementDto(ModelStubs.getMovement(id));
-    }
+//    public static MovementProductDto getMovementProductDto(Long id) {
+//        return dtoMapper.toMovementProductDto(ModelStubs.getMovementProduct(id));
+//    }
+//
+//    public static MovementDto getMovementDto(Long id) {
+//        return dtoMapper.toMovementDto(ModelStubs.getMovement(id));
+//    }
 
 
     public static CorrectionProductDto getCorrectionProductDto(Long id) {
