@@ -15,11 +15,11 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class InternalOrderInit {
+public class InternalOrderInit extends InitData{
     private final InternalOrderService internalOrderService;
     private final InternalOrderProductService internalOrderProductService;
 
-    @PostConstruct
+    @Override
     public void init() {
         initInternalOrderProduct();
         initInternalOrder();
