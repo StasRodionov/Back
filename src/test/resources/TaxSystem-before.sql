@@ -1,5 +1,4 @@
-TRUNCATE products CASCADE;
-DELETE FROM tax_systems;
+TRUNCATE tax_systems CASCADE;
 
 INSERT INTO tax_systems (id, name, sort_number)
 VALUES (1, 'ОСН', '1'),
