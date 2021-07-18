@@ -105,7 +105,7 @@ public class CorrectionRestController {
     public ResponseEntity<CorrectionDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить оприходование")
                                                         @PathVariable("id") Long id) {
-        checkEntityService.checkExistsCorrectionById(id);
+        checkEntityService.checkExists((JpaRepository) correctionRepository, id);
         correctionService.deleteById(id);
 
         return ResponseEntity.ok().build();
