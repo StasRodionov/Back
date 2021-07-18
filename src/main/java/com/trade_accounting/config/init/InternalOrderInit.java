@@ -29,8 +29,8 @@ public class InternalOrderInit extends InitData{
         for (long i = 1L; i <= 15; i++) {
             internalOrderProductService.create(
                     InternalOrderProductsDto.builder()
-                            .amount(BigDecimal.valueOf((Math.random() * ((100 - 10) + 1)) + 10))
-                            .price(BigDecimal.valueOf((Math.random() * ((100 - 10) + 1)) + 10))
+                            .amount(BigDecimal.valueOf(randomInt(10, 100)))
+                            .price(BigDecimal.valueOf(randomInt(10, 100)))
                             .productId(i)
                             .build()
             );
