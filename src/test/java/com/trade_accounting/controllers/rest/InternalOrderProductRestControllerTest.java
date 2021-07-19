@@ -19,8 +19,7 @@ import java.math.BigDecimal;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -89,8 +88,32 @@ class InternalOrderProductRestControllerTest {
     }
 
     @Test
-    void update() {
+    void update() throws Exception {
+        String internalOrderProductDtoJson = new Gson().toJson(InternalOrderProductsDto.builder()
+                .id(5L)
+                .amount(BigDecimal.valueOf(555L))
+                .price(BigDecimal.valueOf(555L))
+                .productId(55L)
+                .build());
 
+        mockMvc.perform(put("/api/internalorder/product")
+                .contentType(MediaType.APPLICATION_JSON).content(internalOrderProductDtoJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(content().json(internalOrderProductDtoJson));
+
+        mockMvc.perform(get("/api/internalorder/product/5"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(content().json(internalOrderProductDtoJson));
+
+        mockMvc.perform(get("/api/internalorder/product"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(jsonPath("$", hasSize(5)));
     }
 
     @Test
