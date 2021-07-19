@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.Entity;
 import java.util.List;
 
 @RestController
@@ -61,7 +63,7 @@ public class PayoutRestController {
             value = "Переданный в URL id, по которому необходимо найти информацию о выплате")
                                              @PathVariable Long id) {
 
-        checkEntityService.checkExistsPayoutById(id);
+        checkEntityService.checkExists((JpaRepository) payoutService, id);
 
         return ResponseEntity.ok(payoutService.getById(id));
     }
@@ -108,7 +110,7 @@ public class PayoutRestController {
     public ResponseEntity<PayoutDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить выплату")
                                                     @PathVariable Long id) {
-        checkEntityService.checkExistsPayoutById(id);
+        checkEntityService.checkExists((JpaRepository) payoutService, id);
         payoutService.deleteById(id);
 
         return ResponseEntity.ok().build();
