@@ -729,7 +729,7 @@ public class DataInitializer {
                 "79271669",
                 "1053600591197",
                 "236467", "432145",
-                LocalDate.of(2020, 10, 10),
+                LocalDate.of(2020, 10, 10).toString(),
                 typeOfContractorService.getByName("Юридическое лицо").getId()
         ));
         legalDetailService.create(new LegalDetailDto(
@@ -743,7 +743,7 @@ public class DataInitializer {
                 "79271647",
                 "1053600591285",
                 "432145",
-                LocalDate.of(2018, 2, 23),
+                LocalDate.of(2018, 2, 23).toString(),
                 typeOfContractorService.getByName("Индивидуальный предприниматель").getId()
         ));
         legalDetailService.create(new LegalDetailDto(
@@ -758,7 +758,7 @@ public class DataInitializer {
                 "70713032",
                 "1033600141277",
                 "342145",
-                LocalDate.of(2022, 4, 5),
+                LocalDate.of(2022, 4, 5).toString(),
                 typeOfContractorService.getByName("Физическое лицо").getId()
         ));
     }
@@ -841,7 +841,7 @@ public class DataInitializer {
                             "79271647",
                             "1053600591285",
                             "432145",
-                            LocalDate.of(2018, 2, 23),
+                            LocalDate.of(2018, 2, 23).toString(),
                             typeOfContractorService.getByName("Индивидуальный предприниматель").getId()
                     )).getId(),
 
@@ -893,7 +893,7 @@ public class DataInitializer {
                             "70713032",
                             "1033600141277",
                             "342145",
-                            LocalDate.of(2022, 4, 5),
+                            LocalDate.of(2022, 4, 5).toString(),
                             typeOfContractorService.getByName("Индивидуальный предприниматель").getId()
                     )).getId(),
                     List.of(bankAccountService.create(new BankAccountDto(

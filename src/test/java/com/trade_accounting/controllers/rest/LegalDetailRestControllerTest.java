@@ -63,7 +63,7 @@ public class LegalDetailRestControllerTest {
         String legalDetailJson = new Gson().toJson(LegalDetailDto.builder()
                 .id(3L)
                 .commentToAddress("comment to address")
-               // .dateOfTheCertificate(LocalDate.of(2018,06,06))
+                .dateOfTheCertificate(LocalDate.of(2018,06,06).toString())
                 .firstName("Сергей")
                 .inn("3661564265")
                 .kpp("79196813")
