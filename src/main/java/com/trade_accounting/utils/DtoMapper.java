@@ -835,38 +835,38 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorId", target = "contractor.id"),
     })
     public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
-//ffff
 
-    // AcceptanceProductionService
-    public AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
-        AcceptanceProductionDto acceptanceProductionDto = new AcceptanceProductionDto();
-        if (acceptanceProduction == null) {
-            return null;
-        } else {
-            acceptanceProductionDto.setId(acceptanceProduction.getId());
-            acceptanceProductionDto.setAmount(acceptanceProduction.getAmount());
 
-            Product product = acceptanceProduction.getProduct();
-            if (product == null) {
-                return null;
-            } else {
-                acceptanceProductionDto.setProductId(product.getId());
-                return acceptanceProductionDto;
-            }
-        }
-    }
-
-    public AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
-        AcceptanceProduction acceptanceProduction = new AcceptanceProduction();
-        if (acceptanceProductionDto == null) {
-            return null;
-        }
-
-        acceptanceProduction.setId(acceptanceProductionDto.getId());
-        acceptanceProduction.setAmount(acceptanceProductionDto.getAmount());
-
-        return acceptanceProduction;
-    }
+//    // AcceptanceProductionService - перенесен в интерфейс AcceptanceProductionMapper 19/07/2021
+//    public AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
+//        AcceptanceProductionDto acceptanceProductionDto = new AcceptanceProductionDto();
+//        if (acceptanceProduction == null) {
+//            return null;
+//        } else {
+//            acceptanceProductionDto.setId(acceptanceProduction.getId());
+//            acceptanceProductionDto.setAmount(acceptanceProduction.getAmount());
+//
+//            Product product = acceptanceProduction.getProduct();
+//            if (product == null) {
+//                return null;
+//            } else {
+//                acceptanceProductionDto.setProductId(product.getId());
+//                return acceptanceProductionDto;
+//            }
+//        }
+//    }
+//
+//    public AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
+//        AcceptanceProduction acceptanceProduction = new AcceptanceProduction();
+//        if (acceptanceProductionDto == null) {
+//            return null;
+//        }
+//
+//        acceptanceProduction.setId(acceptanceProductionDto.getId());
+//        acceptanceProduction.setAmount(acceptanceProductionDto.getAmount());
+//
+//        return acceptanceProduction;
+//    }
 
     //Payout
     @Mappings({

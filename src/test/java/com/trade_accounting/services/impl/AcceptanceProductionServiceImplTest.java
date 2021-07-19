@@ -6,6 +6,7 @@ import com.trade_accounting.repositories.AcceptanceProductionRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.AcceptanceProductionDtoStubs;
 import com.trade_accounting.utils.DtoMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +33,7 @@ class AcceptanceProductionServiceImplTest {
 
     @Spy
     DtoMapper dtoMapper;
+    
 
     @InjectMocks
     AcceptanceProductionServiceImpl acceptanceProductionService;
@@ -86,7 +88,7 @@ class AcceptanceProductionServiceImplTest {
                 .thenReturn(ModelStubs.getProduct(1L));
 
         AcceptanceProductionDto acceptanceProductionDto =
-                acceptanceProductionService.create(DtoStubs.getAcceptanceProductionDto(1L));
+                acceptanceProductionService.create(AcceptanceProductionDtoStubs.getAcceptanceProductionDto(1L));
 
         assertEquals(1, acceptanceProductionDto.getId());
 

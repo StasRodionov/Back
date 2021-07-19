@@ -190,9 +190,9 @@ public class DtoStubs {
         return dtoMapper.toInventarizationProductDto(ModelStubs.getInventarizationProduct(id));
     }
 
-    public static AcceptanceProductionDto getAcceptanceProductionDto(Long id) {
-        return dtoMapper.toAcceptanceProductionDto(ModelStubs.getAcceptanceProduction(id));
-    }
+//    public static AcceptanceProductionDto getAcceptanceProductionDto(Long id) {
+//        return dtoMapper.toAcceptanceProductionDto(ModelStubs.getAcceptanceProduction(id));
+//    }
 
     public static AcceptanceDto getAcceptanceDto(Long id) {
         return dtoMapper.acceptanceToAcceptanceDto(ModelStubs.getAcceptance(id));
