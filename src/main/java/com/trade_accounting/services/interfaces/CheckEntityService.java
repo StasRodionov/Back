@@ -2,6 +2,9 @@ package com.trade_accounting.services.interfaces;
 
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import javax.persistence.Entity;
 
 public interface CheckEntityService {
     void checkExistsUnitById(Long unitId);
@@ -93,4 +96,7 @@ public interface CheckEntityService {
     void checkExistsMovementById(Long id);
 
     void checkExistsMovementProductById(Long id);
+
+    void checkExists(JpaRepository<Entity, Long> repository, Long id);
+    
 }
