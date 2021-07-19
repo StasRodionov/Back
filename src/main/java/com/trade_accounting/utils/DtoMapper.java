@@ -835,7 +835,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorId", target = "contractor.id"),
     })
     public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
-
+//ffff
 
     // AcceptanceProductionService
     public AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
