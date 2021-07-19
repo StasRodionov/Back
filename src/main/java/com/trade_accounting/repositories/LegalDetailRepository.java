@@ -17,55 +17,11 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
 
     Optional<LegalDetail> findByInn(String name);
 
-    @Query("select new com.trade_accounting.models.dto.LegalDetailDto(" +
-            "e.id, " +
-            "e.lastName, " +
-            "e.firstName, " +
-            "e.middleName, " +
-            "e.address.id, " +
-            "e.commentToAddress, " +
-            "e.inn, " +
-            "e.kpp, " +
-            "e.okpo, " +
-            "e.ogrn, " +
-            "e.numberOfTheCertificate, " +
-            "e.dateOfTheCertificate, " +
-            "e.typeOfContractor.id) from LegalDetail e")
-    List<LegalDetailDto> getAll();
+    @Query("SELECT c FROM LegalDetail c")
+    List<LegalDetail> getAll();
 
-    @Query("select new com.trade_accounting.models.dto.LegalDetailDto(" +
-            "e.id, " +
-            "e.lastName, " +
-            "e.firstName, " +
-            "e.middleName, " +
-            "e.address.id, " +
-            "e.commentToAddress, " +
-            "e.inn, e.kpp, " +
-            "e.okpo, " +
-            "e.ogrn, " +
-            "e.numberOfTheCertificate, " +
-            "e.dateOfTheCertificate, " +
-            "e.typeOfContractor.id) from LegalDetail e where e.id = :id")
-    LegalDetailDto getById(@Param("id") Long id);
+    @Query("SELECT c FROM LegalDetail c WHERE c.id = :id")
+    LegalDetail getById(@Param("id") Long id);
 
-    @Query("select new com.trade_accounting.models.dto.LegalDetailDto(" +
-            "e.legalDetail.id, " +
-            "e.legalDetail.lastName, " +
-            "e.legalDetail.firstName, " +
-            "e.legalDetail.middleName, " +
-            "e.legalDetail.address.id, " +
-            "e.legalDetail.commentToAddress, " +
-            "e.legalDetail.inn, " +
-            "e.legalDetail.kpp, " +
-            "e.legalDetail.okpo, " +
-            "e.legalDetail.ogrn, " +
-            "e.legalDetail.numberOfTheCertificate, " +
-            "e.legalDetail.dateOfTheCertificate, " +
-            "e.legalDetail.typeOfContractor.id) from Contractor e where e.id = :id")
-    LegalDetailDto getLegalDetailByContractorId(@Param("id") Long id);
-
-
-//    Optional<LegalDetail> getEntityName(String name);
-//    JpaPersistentEntity<LegalDetail>,
 
 }
