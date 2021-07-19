@@ -25,6 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.Entity;
 import java.util.List;
 
+/**
+ * @author Pavel Andrusov
+ * @since 19.07.2021
+ */
+
 @RestController
 @Tag(name = "Internal Order Rest Controller", description = "CRUD  операции со внутренними заказами")
 @Api(tags = "Internal Order Rest Controller")
