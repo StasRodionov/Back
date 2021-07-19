@@ -52,9 +52,11 @@ import com.trade_accounting.repositories.UnitRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Entity;
 import java.util.Set;
 
 @Service
@@ -477,4 +479,14 @@ public class CheckEntityServiceImpl implements CheckEntityService {
         }
     }
 
+    @Override
+    public void checkExists(JpaRepository<Entity, Long> repository, Long id) {
+        String repositoryName = repository.getClass().getInterfaces()[0].getSimpleName();
+
+        if (!repository.existsById(id)) {
+            throw new NotFoundEntityException(
+                     "Запись с id=" + id + " не найдена в репозитории " + repositoryName
+            );
+        }
+    }
 }
