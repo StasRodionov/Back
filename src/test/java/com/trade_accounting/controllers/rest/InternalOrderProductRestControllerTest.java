@@ -1,5 +1,8 @@
 package com.trade_accounting.controllers.rest;
 
+import com.google.gson.Gson;
+import com.trade_accounting.models.dto.InternalOrderDto;
+import com.trade_accounting.models.dto.InternalOrderProductsDto;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +13,14 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -45,7 +49,19 @@ class InternalOrderProductRestControllerTest {
     }
 
     @Test
-    void getById() {
+    void getById() throws Exception {
+        String internalOrderProductDtoJson = new Gson().toJson(InternalOrderProductsDto.builder()
+                .id(1L)
+                .amount(BigDecimal.valueOf(2L))
+                .price(BigDecimal.valueOf(3L))
+                .productId(4L)
+                .build());
+
+        mockMvc.perform(get("/api/internalorder/product/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(content().json(internalOrderProductDtoJson));
     }
 
     @Test
