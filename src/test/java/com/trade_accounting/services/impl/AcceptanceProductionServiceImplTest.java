@@ -7,7 +7,9 @@ import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.AcceptanceProductionDtoStubs;
+import com.trade_accounting.services.impl.Stubs.model.AcceptanceProductionModelStubs;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.AcceptanceProductionMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,7 +35,10 @@ class AcceptanceProductionServiceImplTest {
 
     @Spy
     DtoMapper dtoMapper;
-    
+
+    @Spy
+    AcceptanceProductionMapper acceptanceProductionMapper;
+
 
     @InjectMocks
     AcceptanceProductionServiceImpl acceptanceProductionService;
@@ -43,9 +48,9 @@ class AcceptanceProductionServiceImplTest {
         when(acceptanceProductionRepository.findAll())
                 .thenReturn(
                         List.of(
-                                ModelStubs.getAcceptanceProduction(1L),
-                                ModelStubs.getAcceptanceProduction(2L),
-                                ModelStubs.getAcceptanceProduction(3L)
+                                AcceptanceProductionModelStubs.getAcceptanceProduction(1L),
+                                AcceptanceProductionModelStubs.getAcceptanceProduction(2L),
+                                AcceptanceProductionModelStubs.getAcceptanceProduction(3L)
                         )
                 );
 
@@ -57,7 +62,7 @@ class AcceptanceProductionServiceImplTest {
     @Test
     void getById_shouldReturnFilledAcceptanceProduction() {
         when(acceptanceProductionRepository.getOne(anyLong()))
-                .thenReturn(ModelStubs.getAcceptanceProduction(1L));
+                .thenReturn(AcceptanceProductionModelStubs.getAcceptanceProduction(1L));
 
         AcceptanceProductionDto acceptanceProductionDto = acceptanceProductionService.getById(1L);
 
@@ -82,7 +87,7 @@ class AcceptanceProductionServiceImplTest {
 
     private void saveOrUpdate() {
         when(acceptanceProductionRepository.save(any(AcceptanceProduction.class)))
-                .thenReturn(ModelStubs.getAcceptanceProduction(1L));
+                .thenReturn(AcceptanceProductionModelStubs.getAcceptanceProduction(1L));
 
         when(productRepository.getOne(anyLong()))
                 .thenReturn(ModelStubs.getProduct(1L));

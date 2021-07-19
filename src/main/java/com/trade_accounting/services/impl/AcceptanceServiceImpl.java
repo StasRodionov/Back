@@ -9,6 +9,7 @@ import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.AcceptanceService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.AcceptanceMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,37 +31,41 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     private final WarehouseRepository warehouseRepository;
 
-    private final DtoMapper dtoMapper;
+    private final AcceptanceMapper acceptanceMapper;
 
-    public AcceptanceServiceImpl(AcceptanceRepository acceptanceRepository, ContractRepository contractRepository, ContractorRepository contractorRepository, ProjectRepository projectRepository, WarehouseRepository warehouseRepository, DtoMapper dtoMapper) {
+    public AcceptanceServiceImpl(AcceptanceRepository acceptanceRepository,
+                                 ContractRepository contractRepository,
+                                 ContractorRepository contractorRepository,
+                                 ProjectRepository projectRepository,
+                                 WarehouseRepository warehouseRepository,
+                                 AcceptanceMapper acceptanceMapper) {
         this.acceptanceRepository = acceptanceRepository;
         this.contractRepository = contractRepository;
         this.contractorRepository = contractorRepository;
         this.projectRepository = projectRepository;
         this.warehouseRepository = warehouseRepository;
-        this.dtoMapper = dtoMapper;
+        this.acceptanceMapper = acceptanceMapper;
     }
-
 
     @Override
     public List<AcceptanceDto> getAll() {
         List<Acceptance> acceptanceList = acceptanceRepository.findAll();
-        return acceptanceList.stream().map(dtoMapper::acceptanceToAcceptanceDto).collect(Collectors.toList());
+        return acceptanceList.stream().map(acceptanceMapper::acceptanceToAcceptanceDto).collect(Collectors.toList());
     }
 
     @Override
     public AcceptanceDto getById(Long id) {
-        return dtoMapper.acceptanceToAcceptanceDto(acceptanceRepository.getOne(id));
+        return acceptanceMapper.acceptanceToAcceptanceDto(acceptanceRepository.getOne(id));
     }
 
     @Override
     public AcceptanceDto create(AcceptanceDto dto) {
-        Acceptance acceptance = dtoMapper.acceptanceDtoToAcceptance(dto);
+        Acceptance acceptance = acceptanceMapper.acceptanceDtoToAcceptance(dto);
         acceptance.setContract(contractRepository.getOne(dto.getContractId()));
         acceptance.setContractor(contractorRepository.getOne(dto.getContractorId()));
         acceptance.setProject(projectRepository.getOne(dto.getProjectId()));
         acceptance.setWarehouse(warehouseRepository.getOne(dto.getWarehouseId()));
-        return dtoMapper.acceptanceToAcceptanceDto(acceptanceRepository.save(acceptance));
+        return acceptanceMapper.acceptanceToAcceptanceDto(acceptanceRepository.save(acceptance));
     }
 
     @Override
@@ -77,17 +82,17 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     public List<AcceptanceDto> searchByNumberAndComment(String searchTerm) {
         if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
             return acceptanceRepository.findAll().stream()
-                    .map(dtoMapper::acceptanceToAcceptanceDto)
+                    .map(acceptanceMapper::acceptanceToAcceptanceDto)
                     .collect(Collectors.toList());
         } else {
             return acceptanceRepository.search(searchTerm).stream()
-                    .map(dtoMapper::acceptanceToAcceptanceDto)
+                    .map(acceptanceMapper::acceptanceToAcceptanceDto)
                     .collect(Collectors.toList());
         }
     }
 
     @Override
     public List<AcceptanceDto> search(Specification<Acceptance> spec) {
-        return executeSearch(acceptanceRepository, dtoMapper::acceptanceToAcceptanceDto, spec);
+        return executeSearch(acceptanceRepository, acceptanceMapper::acceptanceToAcceptanceDto, spec);
     }
 }

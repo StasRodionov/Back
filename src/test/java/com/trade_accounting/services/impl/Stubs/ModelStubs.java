@@ -482,32 +482,32 @@ public class ModelStubs {
         );
     }
 
-    public static AcceptanceProduction getAcceptanceProduction(Long id) {
-        return AcceptanceProduction.builder()
-                .id(id)
-                .product(getProduct(1L))
-                .amount(100L)
-                .build();
-    }
+//    public static AcceptanceProduction getAcceptanceProduction(Long id) {
+//        return AcceptanceProduction.builder()
+//                .id(id)
+//                .product(getProduct(1L))
+//                .amount(100L)
+//                .build();
+//    }
 
-    public static Acceptance getAcceptance(Long id) {
-        return Acceptance.builder()
-                .id(id)
-                .acceptanceProduction(new ArrayList<>())
-                .contract(getContract(1L))
-                .contractor(getContractor(1L))
-                .comment("Комментарий " + id)
-                .incomingNumber("100")
-                .incomingNumberDate(LocalDate.now())
-                .warehouse(getWarehouse(1L))
-                .project(Project.builder()
-                        .id(1L)
-                        .name("name")
-                        .description("decr")
-                        .code("code")
-                        .build())
-                .build();
-    }
+//    public static Acceptance getAcceptance(Long id) {
+//        return Acceptance.builder()
+//                .id(id)
+//                .acceptanceProduction(new ArrayList<>())
+//                .contract(getContract(1L))
+//                .contractor(getContractor(1L))
+//                .comment("Комментарий " + id)
+//                .incomingNumber("100")
+//                .incomingNumberDate(LocalDate.now())
+//                .warehouse(getWarehouse(1L))
+//                .project(Project.builder()
+//                        .id(1L)
+//                        .name("name")
+//                        .description("decr")
+//                        .code("code")
+//                        .build())
+//                .build();
+//    }
 
     public static AgentReports getAgentReports(Long id) {
         return AgentReports.builder()

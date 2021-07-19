@@ -3,7 +3,9 @@ package com.trade_accounting.utils.mapper;
 import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.AcceptanceProductionDto;
+import org.mapstruct.Mapper;
 
+@Mapper(componentModel = "spring")
 public interface AcceptanceProductionMapper {
     // AcceptanceProductionService
     default AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {

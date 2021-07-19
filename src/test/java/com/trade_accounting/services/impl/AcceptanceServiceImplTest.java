@@ -7,11 +7,14 @@ import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.AcceptanceDtoStubs;
+import com.trade_accounting.services.impl.Stubs.model.AcceptanceModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
-import org.junit.jupiter.api.Test;
+import com.trade_accounting.utils.mapper.AcceptanceMapper;
+import com.trade_accounting.utils.mapper.AcceptanceMapperImpl;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -48,15 +51,18 @@ public class AcceptanceServiceImplTest {
     @Spy
     DtoMapperImpl dtoMapper;
 
+    @Spy
+    AcceptanceMapperImpl acceptanceMapper;
+
     @InjectMocks
     AcceptanceServiceImpl acceptanceService;
 
     @Test
     public void getAll() {
         when(acceptanceRepository.findAll()).thenReturn(
-                List.of(ModelStubs.getAcceptance(1L),
-                        ModelStubs.getAcceptance(2L),
-                        ModelStubs.getAcceptance(3L))
+                List.of(AcceptanceModelStubs.getAcceptance(1L),
+                        AcceptanceModelStubs.getAcceptance(2L),
+                        AcceptanceModelStubs.getAcceptance(3L))
         );
 
         List<AcceptanceDto> acceptanceDtos = acceptanceService.getAll();
@@ -66,7 +72,7 @@ public class AcceptanceServiceImplTest {
 
     @Test
     public void getById() {
-        when(acceptanceRepository.getOne(anyLong())).thenReturn(ModelStubs.getAcceptance(1L));
+        when(acceptanceRepository.getOne(anyLong())).thenReturn(AcceptanceModelStubs.getAcceptance(1L));
 
         AcceptanceDto acceptanceDto = acceptanceService.getById(1L);
 
@@ -91,8 +97,8 @@ public class AcceptanceServiceImplTest {
 
 
     private void saveOrUpdate() {
-        when(acceptanceRepository.save(any(Acceptance.class))).thenReturn(ModelStubs.getAcceptance(1L));
-        AcceptanceDto acceptanceDto = acceptanceService.create(DtoStubs.getAcceptanceDto(1L));
+        when(acceptanceRepository.save(any(Acceptance.class))).thenReturn(AcceptanceModelStubs.getAcceptance(1L));
+        AcceptanceDto acceptanceDto = acceptanceService.create(AcceptanceDtoStubs.getAcceptanceDto(1L));
         assertEquals(1, acceptanceDto.getId());
         verify(acceptanceRepository).save(any(Acceptance.class));
     }

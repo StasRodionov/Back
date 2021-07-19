@@ -194,9 +194,9 @@ public class DtoStubs {
 //        return dtoMapper.toAcceptanceProductionDto(ModelStubs.getAcceptanceProduction(id));
 //    }
 
-    public static AcceptanceDto getAcceptanceDto(Long id) {
-        return dtoMapper.acceptanceToAcceptanceDto(ModelStubs.getAcceptance(id));
-    }
+//    public static AcceptanceDto getAcceptanceDto(Long id) {
+//        return dtoMapper.acceptanceToAcceptanceDto(ModelStubs.getAcceptance(id));
+//    }
 
     public static AccessParametersDto getAccessParametersDto(Long id) {
         return dtoMapper.accessParametersToAccessParametersDto(ModelStubs.getAccessParameters(id));

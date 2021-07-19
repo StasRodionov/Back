@@ -200,16 +200,16 @@ public abstract class DtoMapper {
                 .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
     }
 
-    // Acceptance
-    @Mappings({
-            @Mapping(source = "contractor.id", target = "contractorId"),
-            @Mapping(source = "project.id", target = "projectId"),
-            @Mapping(source = "warehouse.id", target = "warehouseId"),
-            @Mapping(source = "contract.id", target = "contractId"),
-    })
-    public abstract AcceptanceDto acceptanceToAcceptanceDto(Acceptance acceptance);
-
-    public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
+//    // Acceptance
+//    @Mappings({
+//            @Mapping(source = "contractor.id", target = "contractorId"),
+//            @Mapping(source = "project.id", target = "projectId"),
+//            @Mapping(source = "warehouse.id", target = "warehouseId"),
+//            @Mapping(source = "contract.id", target = "contractId"),
+//    })
+//    public abstract AcceptanceDto acceptanceToAcceptanceDto(Acceptance acceptance);
+//
+//    public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
