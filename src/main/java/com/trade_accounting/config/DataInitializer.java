@@ -27,7 +27,6 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
-import com.trade_accounting.models.dto.PayoutDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
@@ -72,7 +71,6 @@ import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.MovementProductService;
 import com.trade_accounting.services.interfaces.MovementService;
 import com.trade_accounting.services.interfaces.PaymentService;
-import com.trade_accounting.services.interfaces.PayoutService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
@@ -154,7 +152,6 @@ public class DataInitializer {
     private final MovementService movementService;
     private final MovementProductService movementProductService;
     private final RemainService remainService;
-    private final PayoutService payoutService;
 
     @PostConstruct
     public void init() {
@@ -201,7 +198,6 @@ public class DataInitializer {
         initMovementProduct();
         initMovement();
         initRemain();
-        initPayout();
     }
 
     private void initMovementProduct() {
@@ -1782,41 +1778,4 @@ public class DataInitializer {
                 .salesSum(randomInt(20000, 100000))
                 .build());
     }
-
-    public void initPayout() {
-
-        payoutService.create(PayoutDto.builder()
-                .id(1L)
-                .date(LocalDateTime.now().toString())
-                .retailStoreId(1L)
-                .whoWasPaid("Сергеев Петр Сергеевич")
-                .companyId(1L)
-                .isSent(true)
-                .isPrint(true)
-                .comment("Коммент")
-                .build());
-
-        payoutService.create(PayoutDto.builder()
-                .id(2L)
-                .date(LocalDateTime.now().toString())
-                .retailStoreId(2L)
-                .whoWasPaid("Стрелецкая Анастасия Михайловна")
-                .companyId(6L)
-                .isSent(false)
-                .isPrint(true)
-                .comment("Комментарий")
-                .build());
-
-        payoutService.create(PayoutDto.builder()
-                .id(3L)
-                .date(LocalDateTime.now().toString())
-                .retailStoreId(3L)
-                .whoWasPaid("Стрелецкая Анастасия Михайловна")
-                .companyId(9L)
-                .isSent(true)
-                .isPrint(false)
-                .comment("Комментарий комментария")
-                .build());
-    }
-
 }
