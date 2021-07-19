@@ -8,4 +8,4 @@ VALUES (1, 2, 3, 4),
        (5, 7, 8, 9);
 
 SELECT setval('internal_order_products_id_seq', max(id))
-FROM corrections;
+FROM internal_order_products;
