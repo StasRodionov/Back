@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -19,6 +20,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -65,11 +67,30 @@ class InternalOrderProductRestControllerTest {
     }
 
     @Test
-    void create() {
+    void create() throws Exception {
+        String internalOrderProductDtoJson = new Gson().toJson(InternalOrderProductsDto.builder()
+                .amount(BigDecimal.valueOf(8L))
+                .price(BigDecimal.valueOf(9L))
+                .productId(10L)
+                .build());
+
+        mockMvc.perform(post("/api/internalorder/product")
+                .contentType(MediaType.APPLICATION_JSON).content(internalOrderProductDtoJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(content().json(internalOrderProductDtoJson));
+
+        mockMvc.perform(get("/api/internalorder/product"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(jsonPath("$", hasSize(6)));
     }
 
     @Test
     void update() {
+
     }
 
     @Test
