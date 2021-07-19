@@ -117,6 +117,15 @@ class InternalOrderProductRestControllerTest {
     }
 
     @Test
-    void deleteById() {
+    void deleteById() throws Exception {
+        mockMvc.perform(delete("/api/internalorder/product/2"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated());
+        mockMvc.perform(get("/api/internalorder/product"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(jsonPath("$", hasSize(4)));
     }
 }
