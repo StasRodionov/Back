@@ -32,7 +32,6 @@ import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.MovementProductRepository;
 import com.trade_accounting.repositories.MovementRepository;
 import com.trade_accounting.repositories.PaymentRepository;
-import com.trade_accounting.repositories.PayoutRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
