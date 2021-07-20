@@ -24,10 +24,10 @@ public class AgentReportsDto {
     private LocalDateTime time;
 
     @NotNull
-    private CompanyDto companyDto;
+    private Long companyId;
 
     @NotNull
-    private ContractorDto contractorDto;
+    private Long contractorId;
 
     @NotNull
     private Long sum;
