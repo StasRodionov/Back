@@ -32,6 +32,7 @@ import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.MovementProductRepository;
 import com.trade_accounting.repositories.MovementRepository;
 import com.trade_accounting.repositories.PaymentRepository;
+import com.trade_accounting.repositories.PayoutRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.repositories.ProjectRepository;
@@ -103,6 +104,7 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final AcceptanceProductionRepository acceptanceProductionRepository;
     private final MovementProductRepository movementProductRepository;
     private final MovementRepository movementRepository;
+    private final PayoutRepository payoutRepository;
 
     @Override
     public void checkExistsUnitById(Long unitId) {
@@ -453,6 +455,13 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     public void checkExistsMovementProductById(Long id) {
         if (!movementProductRepository.existsById(id)) {
             throw new NotFoundEntityException("Перемещние продукта с id " + id + " не найдено");
+        }
+    }
+
+    @Override
+    public void checkExistsPayoutById(Long id) {
+        if (!payoutRepository.existsById(id)) {
+            throw new NotFoundEntityException("Выплата с id " + id + " не найдено");
         }
     }
 

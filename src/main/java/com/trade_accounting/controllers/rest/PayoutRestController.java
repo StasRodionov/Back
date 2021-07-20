@@ -63,7 +63,7 @@ public class PayoutRestController {
             value = "Переданный в URL id, по которому необходимо найти информацию о выплате")
                                              @PathVariable Long id) {
 
-        checkEntityService.checkExists((JpaRepository) payoutService, id);
+        checkEntityService.checkExistsPayoutById(id);
 
         return ResponseEntity.ok(payoutService.getById(id));
     }
@@ -110,7 +110,8 @@ public class PayoutRestController {
     public ResponseEntity<PayoutDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить выплату")
                                                     @PathVariable Long id) {
-        checkEntityService.checkExists((JpaRepository) payoutService, id);
+
+        checkEntityService.checkExistsPayoutById(id);
         payoutService.deleteById(id);
 
         return ResponseEntity.ok().build();

@@ -97,5 +97,7 @@ public interface CheckEntityService {
 
     void checkExistsMovementProductById(Long id);
 
+    void checkExistsPayoutById(Long id);
+
     void checkExists(JpaRepository<Entity, Long> repository, Long id);
 }

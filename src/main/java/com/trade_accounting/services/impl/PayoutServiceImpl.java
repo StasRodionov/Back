@@ -39,7 +39,9 @@ public class PayoutServiceImpl implements PayoutService {
     @Override
     public PayoutDto create(PayoutDto payoutDto) {
         Payout payout = payoutRepository.save(dtoMapper.payoutDtoToPayout(payoutDto));
-        payout.setId(payoutDto.getId());
+        if (payoutDto.getId() == null) {
+            payoutDto.setId(payout.getId());
+        }
         return dtoMapper.payoutToPayoutDto(payout);
     }
 

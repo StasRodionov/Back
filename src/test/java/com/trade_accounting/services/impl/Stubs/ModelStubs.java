@@ -29,11 +29,13 @@ import com.trade_accounting.models.Movement;
 import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.PaymentMethods;
+import com.trade_accounting.models.Payout;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.RequestsProductions;
+import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.SupplierAccount;
@@ -574,6 +576,34 @@ public class ModelStubs {
                 .comment("Comment 1")
                 .dateChanged(LocalDateTime.now().toString())
                 .whoChanged("Who changed 1")
+                .build();
+    }
+
+    public static RetailStore getRetailStore(Long id) {
+        return RetailStore.builder()
+                .id(id)
+                .name("name")
+                .isActive(true)
+                .activityStatus("active")
+                .revenue(BigDecimal.valueOf(1234))
+                .organization(getCompany(id))
+                .salesInvoicePrefix("prefix")
+                .defaultTaxationSystem("sistem")
+                .orderTaxationSystem("order")
+                .cashiers(List.of(getEmployee(id)))
+                .build();
+    }
+
+    public static Payout getPayout(Long id) {
+        return Payout.builder()
+                .id(id)
+                .date(LocalDateTime.parse(LocalDateTime.now().toString()))
+                .retailStore(getRetailStore(id))
+                .whoWasPaid("whoPaid")
+                .company(getCompany(id))
+                .isSent(true)
+                .isPrint(true)
+                .comment("comment")
                 .build();
     }
 }
