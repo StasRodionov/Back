@@ -1,6 +1,7 @@
 package com.trade_accounting.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -23,6 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "retail_stores")
+@Builder
 public class RetailStore {
 
     @Id
@@ -44,7 +46,7 @@ public class RetailStore {
     private BigDecimal revenue;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Company organization;
+    private Company company;
 
     @Column(name = "sales_invoice_prefix")
     private String salesInvoicePrefix;
@@ -58,18 +60,17 @@ public class RetailStore {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Employee> cashiers;
 
-    public RetailStore(String name, Boolean isActive, String activityStatus, BigDecimal revenue,
-                       Company organization, String salesInvoicePrefix, String defaultTaxationSystem,
-                       String orderTaxationSystem, List<Employee> cashiers) {
-        this.name = name;
-        this.isActive = isActive;
-        this.activityStatus = activityStatus;
-        this.revenue = revenue;
-        this.organization = organization;
-        this.salesInvoicePrefix = salesInvoicePrefix;
-        this.defaultTaxationSystem = defaultTaxationSystem;
-        this.orderTaxationSystem = orderTaxationSystem;
-        this.cashiers = cashiers;
-    }
-
+//    public RetailStore(String name, Boolean isActive, String activityStatus, BigDecimal revenue,
+//                       Company organization, String salesInvoicePrefix, String defaultTaxationSystem,
+//                       String orderTaxationSystem, List<Employee> cashiers) {
+//        this.name = name;
+//        this.isActive = isActive;
+//        this.activityStatus = activityStatus;
+//        this.revenue = revenue;
+//        this.organization = organization;
+//        this.salesInvoicePrefix = salesInvoicePrefix;
+//        this.defaultTaxationSystem = defaultTaxationSystem;
+//        this.orderTaxationSystem = orderTaxationSystem;
+//        this.cashiers = cashiers;
+//    }
 }

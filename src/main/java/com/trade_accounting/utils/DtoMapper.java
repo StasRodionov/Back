@@ -646,16 +646,40 @@ public abstract class DtoMapper {
     public abstract Warehouse warehouseDtoToWarehouse(WarehouseDto warehouseDto);
 
     //RetailStore
-    @Mappings({
-            @Mapping(source = "organization", target = "organizationDto"),
-            @Mapping(source = "cashiers", target = "cashiersDto"),
-    })
-    public abstract RetailStoreDto retailStoreToRetailStoreDto(RetailStore retailStore);
+    public RetailStoreDto retailStoreToRetailStoreDto(RetailStore retailStore) {
+        RetailStoreDto retailStoreDto = new RetailStoreDto();
+        if (retailStore == null) {
+            return null;
+        } else {
+            retailStoreDto.setId(retailStore.getId());
+            retailStoreDto.setName(retailStore.getName());
+            retailStoreDto.setIsActive(retailStore.getIsActive());
+            retailStoreDto.setActivityStatus(retailStore.getActivityStatus());
+            retailStoreDto.setRevenue(retailStore.getRevenue());
+            retailStoreDto.setSalesInvoicePrefix(retailStore.getSalesInvoicePrefix());
+            retailStoreDto.setDefaultTaxationSystem(retailStore.getDefaultTaxationSystem());
+            retailStoreDto.setOrderTaxationSystem(retailStore.getOrderTaxationSystem());
 
-    @Mappings({
-            @Mapping(source = "organizationDto", target = "organization"),
-            @Mapping(source = "cashiersDto", target = "cashiers"),
-    })
+            Company company = retailStore.getCompany();
+            if (company == null) {
+                return null;
+            } else {
+                retailStoreDto.setCompanyId(company.getId());
+
+                List<Long> retailStoreIds = retailStore.getCashiers().stream()
+                        .map(Employee::getId)
+                        .collect(Collectors.toList());
+                retailStoreDto.setCashiersIds(retailStoreIds);
+
+                return retailStoreDto;
+            }
+        }
+    }
+
+//    @Mappings({
+//            @Mapping(source = "organizationDto", target = "organization"),
+//           //@Mapping(source = "cashiersDto", target = "cashiers"),
+//    })
     public abstract RetailStore toRetailStore(RetailStoreDto retailStoreDto);
 
     @Mappings({

@@ -64,7 +64,7 @@ public class RetailStoreRestControllerTest {
                 .orderTaxationSystem("УСН. Доход")
                 .revenue(BigDecimal.valueOf(12000))
                 .salesInvoicePrefix("SI")
-                .organizationDto(companyService.getById(1L))
+                .companyId(1L)
                 .build();
 
         String retailStroreDtoJson = new Gson().toJson(retailStoreDto);
@@ -87,7 +87,7 @@ public class RetailStoreRestControllerTest {
                 .orderTaxationSystem("УСН. Доход")
                 .revenue(BigDecimal.valueOf(12000))
                 .salesInvoicePrefix("SI")
-                .organizationDto(companyService.getById(1L))
+                .companyId(4L)
                 .build();
 
         String retailStoreDtoJson = new Gson().toJson(retailStoreDto);
@@ -116,7 +116,7 @@ public class RetailStoreRestControllerTest {
                 .orderTaxationSystem("УСН. Доход")
                 .revenue(BigDecimal.valueOf(12000))
                 .salesInvoicePrefix("SI")
-                .organizationDto(companyService.getById(1L))
+                .companyId(1L)
                 .build();
 
         String retailStoreDtoJson = new Gson().toJson(retailStoreDto);
