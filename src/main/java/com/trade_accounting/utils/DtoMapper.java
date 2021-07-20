@@ -212,7 +212,6 @@ public abstract class DtoMapper {
     // Acceptance
     @Mappings({
             @Mapping(source = "contractor.id", target = "contractorId"),
-            @Mapping(source = "project.id", target = "projectId"),
             @Mapping(source = "warehouse.id", target = "warehouseId"),
             @Mapping(source = "contract.id", target = "contractId"),
     })

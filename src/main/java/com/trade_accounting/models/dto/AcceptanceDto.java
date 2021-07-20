@@ -24,11 +24,13 @@ public class AcceptanceDto {
 
     private Long contractorId;
 
-    private Long projectId;
-
     private Long warehouseId;
 
     private Long contractId;
+
+    Boolean isSent;
+
+    Boolean isPrint;
 
     private List<AcceptanceProductionDto> acceptanceProduction;
 }
