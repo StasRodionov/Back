@@ -104,7 +104,6 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final AcceptanceProductionRepository acceptanceProductionRepository;
     private final MovementProductRepository movementProductRepository;
     private final MovementRepository movementRepository;
-    private final PayoutRepository payoutRepository;
 
     @Override
     public void checkExistsUnitById(Long unitId) {
