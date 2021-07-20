@@ -42,6 +42,7 @@ public class InternalOrderInit extends InitData{
                     .internalOrderProductsIds(List.of(i, i + 1L, i + 2L))
                     .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                     .companyId(i)
+                    .warehouseId(1L)
                     .isSent(false)
                     .isPrint(false)
                     .comment("Внутренний заказ " + i)

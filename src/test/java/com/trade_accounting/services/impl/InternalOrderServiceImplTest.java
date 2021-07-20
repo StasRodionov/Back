@@ -5,6 +5,7 @@ import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.InternalOrderProductRepository;
 import com.trade_accounting.repositories.InternalOrderRepository;
+import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.impl.Stubs.dto.InternalOrderDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.InternalOrderModelStubs;
 import com.trade_accounting.utils.mapper.InternalOrderMapper;
@@ -36,6 +37,9 @@ class InternalOrderServiceImplTest {
 
     @Mock
     private CompanyRepository companyRepository;
+
+    @Mock
+    private WarehouseRepository warehouseRepository;
 
     @Spy
     private InternalOrderMapper dtoMapper;

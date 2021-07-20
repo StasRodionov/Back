@@ -30,6 +30,9 @@ public class InternalOrderDto {
     @NotNull
     private Long companyId;
 
+    @NotNull
+    private Long warehouseId;
+
     private Boolean isSent = null;
 
     private Boolean isPrint = null;

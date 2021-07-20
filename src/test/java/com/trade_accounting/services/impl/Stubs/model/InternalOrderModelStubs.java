@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.trade_accounting.services.impl.Stubs.ModelStubs.getCompany;
+import static com.trade_accounting.services.impl.Stubs.ModelStubs.getWarehouse;
 import static com.trade_accounting.services.impl.Stubs.model.InternalOrderProductModelStubs.getInternalOrderProduct;
 
 public class InternalOrderModelStubs {
@@ -19,6 +20,7 @@ public class InternalOrderModelStubs {
                 ))
                 .date(LocalDateTime.now())
                 .company(getCompany(1L))
+                .warehouse(getWarehouse(1L))
                 .isSent(false)
                 .isPrint(true)
                 .comment("Comment " + id)

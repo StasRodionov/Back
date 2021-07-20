@@ -62,6 +62,7 @@ class InternalOrderRestControllerTest {
                 .isSent(false)
                 .isPrint(false)
                 .companyId(1L)
+                .warehouseId(1L)
                 .comment("Комментарий 1")
                 .date("1234-12-12 12:34")
                 .build());
@@ -80,6 +81,7 @@ class InternalOrderRestControllerTest {
                 .isSent(true)
                 .isPrint(true)
                 .companyId(4L)
+                .warehouseId(1L)
                 .comment("Комментарий 1")
                 .internalOrderProductsIds(List.of(1L, 2L, 3L))
                 .build()
@@ -108,6 +110,7 @@ class InternalOrderRestControllerTest {
                 .isPrint(true)
                 .comment("Комментарий 3 _UPDATED_")
                 .companyId(3L)
+                .warehouseId(1L)
                 .internalOrderProductsIds(List.of(1L, 2L, 3L))
                 .build()
         );
