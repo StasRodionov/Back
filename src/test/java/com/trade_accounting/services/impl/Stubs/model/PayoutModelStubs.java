@@ -5,7 +5,7 @@ import com.trade_accounting.models.Payout;
 import java.time.LocalDateTime;
 
 import static com.trade_accounting.services.impl.Stubs.ModelStubs.getCompany;
-import static com.trade_accounting.services.impl.Stubs.ModelStubs.getRetailStore;
+import static com.trade_accounting.services.impl.Stubs.model.RetailStoreModelStubs.getRetailStore;
 
 public class PayoutModelStubs {
     public static Payout getPayout(Long id) {
