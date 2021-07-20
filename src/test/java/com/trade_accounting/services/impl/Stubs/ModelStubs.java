@@ -593,18 +593,5 @@ public class ModelStubs {
                 .cashiers(List.of(getEmployee(id)))
                 .build();
     }
-
-    public static Payout getPayout(Long id) {
-        return Payout.builder()
-                .id(id)
-                .date(LocalDateTime.parse(LocalDateTime.now().toString()))
-                .retailStore(getRetailStore(id))
-                .whoWasPaid("whoPaid")
-                .company(getCompany(id))
-                .isSent(true)
-                .isPrint(true)
-                .comment("comment")
-                .build();
-    }
 }
 

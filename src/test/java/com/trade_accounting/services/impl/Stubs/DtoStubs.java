@@ -225,8 +225,4 @@ public class DtoStubs {
     public static BalanceAdjustmentDto getBalanceAdjustmentDto(Long id) {
         return dtoMapper.balanceAdjustmentToBalanceAdjustmentDto(ModelStubs.getBalanceAdjustment(id));
     }
-
-    public static PayoutDto getPayoutDto(Long id) {
-        return dtoMapper.payoutToPayoutDto(ModelStubs.getPayout(id));
-    }
 }

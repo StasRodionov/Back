@@ -3,8 +3,8 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.Payout;
 import com.trade_accounting.models.dto.PayoutDto;
 import com.trade_accounting.repositories.PayoutRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.PayoutDtoStubs;
+import com.trade_accounting.services.impl.Stubs.model.PayoutModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,9 +42,9 @@ class PayoutServiceImplTest {
         when(payoutRepository.findAll())
                 .thenReturn(
                         Stream.of(
-                                ModelStubs.getPayout(1L),
-                                ModelStubs.getPayout(2L),
-                                ModelStubs.getPayout(3L)
+                                PayoutModelStubs.getPayout(1L),
+                                PayoutModelStubs.getPayout(2L),
+                                PayoutModelStubs.getPayout(3L)
                         )
                                 .collect(Collectors.toList())
                 );
@@ -70,7 +70,7 @@ class PayoutServiceImplTest {
     @Test
     void getById_shouldReturnFilledPayoutDto() {
         when(payoutRepository.getOne(anyLong()))
-                .thenReturn(ModelStubs.getPayout(1L));
+                .thenReturn(PayoutModelStubs.getPayout(1L));
 
         PayoutDto payoutDto = payoutService.getById(1L);
 
@@ -79,14 +79,14 @@ class PayoutServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        payoutService.create(DtoStubs.getPayoutDto(1L));
+        payoutService.create(PayoutDtoStubs.getDto(1L));
 
         verify(payoutRepository).save(any(Payout.class));
     }
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        payoutService.update(DtoStubs.getPayoutDto(1L));
+        payoutService.update(PayoutDtoStubs.getDto(1L));
 
         verify(payoutRepository).save(any(Payout.class));
     }
