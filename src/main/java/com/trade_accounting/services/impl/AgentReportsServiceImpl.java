@@ -5,43 +5,49 @@ import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.repositories.AgentReportsRepository;
 import com.trade_accounting.services.interfaces.AgentReportsService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.AgentReportsMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AgentReportsServiceImpl implements AgentReportsService {
 
     private final AgentReportsRepository agentReportsRepository;
-
-    private final DtoMapper dtoMapper;
-
-    public AgentReportsServiceImpl(AgentReportsRepository agentReportsRepository, DtoMapper dtoMapper){
-        this.agentReportsRepository = agentReportsRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final AgentReportsMapper agentReportsMapper;
 
     @Override
     public List<AgentReportsDto> getAll() {
-        final List<AgentReportsDto> collect = agentReportsRepository.findAll().stream()
-                .map(dtoMapper::agentReportsToAgentReportsDto)
-                .collect(Collectors.toList());
-        return collect;
+        /*List<AgentReportsDto> res = agentReportsRepository.findAll().stream()
+                .map(agentReportsMapper::toDto)
+                .collect(Collectors.toList());*/
+        List<AgentReportsDto> res = new ArrayList<>();
+        AgentReportsDto dto;
+        for (AgentReports agentReports : agentReportsRepository.findAll()) {
+            dto = agentReportsMapper.toDto(agentReports);
+            res.add(dto);
+        }
+
+        return res;
     }
 
     @Override
     public AgentReportsDto getById(Long id) {
-        return dtoMapper.agentReportsToAgentReportsDto(agentReportsRepository.findById(id).orElse(new AgentReports()));
+        return agentReportsMapper.toDto(agentReportsRepository.findById(id).orElse(new AgentReports()));
     }
 
     @Override
     public AgentReportsDto create(AgentReportsDto dto) {
-        AgentReports agentReports = agentReportsRepository.save(dtoMapper.agentReportsDtoToAgentReports(dto));
+        AgentReports agentReports = agentReportsRepository.save(agentReportsMapper.toModel(dto));
         dto.setId(agentReports.getId());
-        return dtoMapper.agentReportsToAgentReportsDto(agentReports);
+        AgentReportsDto agentReportsDto = agentReportsMapper.toDto(agentReports);
+        return agentReportsDto;
     }
 
     @Override

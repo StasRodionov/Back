@@ -75,8 +75,8 @@ class AgentReportsRestControllerTest {
     void createTest() throws Exception {
         String jsonDto = new Gson().toJson(AgentReportsDto.builder()
                 .id(4L)
-                .companyDto(companyService.getById(1L))
-                .contractorDto(contractorService.getById(1L))
+                .companyId(1L)
+                .contractorId(1L)
                 .comitentSum(1L)
                 .commentary("Комментарий 1")
                 .documentType(".doc")
@@ -106,8 +106,8 @@ class AgentReportsRestControllerTest {
     void updateTest() throws Exception {
         String jsonDto = new Gson().toJson(AgentReportsDto.builder()
                 .id(1L)
-                .companyDto(DtoStubs.getCompanyDto(1L))
-                .contractorDto(DtoStubs.getContractorDto(1L))
+                .companyId(1L)
+                .contractorId(1L)
                 .comitentSum(1L)
                 .commentary("Комментарий 1")
                 .documentType(".doc")
