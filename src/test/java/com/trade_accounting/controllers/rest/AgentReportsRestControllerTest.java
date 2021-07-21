@@ -2,9 +2,6 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.AgentReportsDto;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
-import com.trade_accounting.services.interfaces.CompanyService;
-import com.trade_accounting.services.interfaces.ContractorService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +13,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.hasToString;
@@ -32,25 +27,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @WithUserDetails(value = "karimogon@mail.ru")
 @AutoConfigureMockMvc
-@Sql(value = "/agentReports-before.sql")
+@Sql(value = "/agentReports-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 class AgentReportsRestControllerTest {
 
     @Autowired
+    AgentReportsRestController agentReportsRestController;
+
+    @Autowired
     MockMvc mockMvc;
-
-    @Autowired
-    AgentReportsRestController restController;
-
-    @Autowired
-    CompanyService companyService;
-
-    @Autowired
-    ContractorService contractorService;
 
     @Test
     void controllerIsNotNullTest() {
-        assertNotNull(restController, "rest controller is null");
+        assertNotNull(agentReportsRestController, "rest controller is null");
     }
 
     @Test
@@ -74,7 +63,6 @@ class AgentReportsRestControllerTest {
     @Test
     void createTest() throws Exception {
         String jsonDto = new Gson().toJson(AgentReportsDto.builder()
-                .id(4L)
                 .companyId(1L)
                 .contractorId(1L)
                 .comitentSum(1L)
@@ -86,13 +74,13 @@ class AgentReportsRestControllerTest {
                 .remunirationSum(1L)
                 .sent(1L)
                 .status("ok")
-                .time(LocalDateTime.now())
+                .time("1234-12-12 12:34")
                 .sum(1L)
                 .build());
-        mockMvc.perform(post("/api/agentReports").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/api/agentReports")
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonDto))
                 .andDo(print())
-                .andExpect(status().isCreated())
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
         mockMvc.perform(get("/api/agentReports"))
@@ -117,7 +105,7 @@ class AgentReportsRestControllerTest {
                 .remunirationSum(1L)
                 .sent(1L)
                 .status("error")
-                .time(LocalDateTime.parse("2015-10-06T06:37:59"))
+                .time("1234-12-12 12:34")
                 .sum(1L)
                 .build());
         mockMvc.perform(put("/api/agentReports").contentType(MediaType.APPLICATION_JSON)
