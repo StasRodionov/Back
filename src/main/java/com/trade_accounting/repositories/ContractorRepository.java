@@ -1,7 +1,6 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.dto.ContractorDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -27,4 +26,6 @@ public interface ContractorRepository extends JpaRepository<Contractor, Long>, J
                     "      or c.comment like concat('%', :searchTerm, '%')"
     )
     List<Contractor> search(@Param("searchTerm") String searchTerm);
+
+    Contractor getContractorById(Long id);
 }

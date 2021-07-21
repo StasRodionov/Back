@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,6 +33,7 @@ public class AgentReports {
     @ColumnDefault(value = "00001")
     private String number;
 
+    @NotNull
     private LocalDateTime time;
 
     @NotNull

@@ -124,6 +124,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -457,12 +458,14 @@ public abstract class DtoMapper {
 
     //LegalDetail
     @Mappings({
+            @Mapping(source = "dateOfTheCertificate", target = "dateOfTheCertificate"),
             @Mapping(source = "typeOfContractor.id", target = "typeOfContractorDtoId"),
             @Mapping(source = "address.id", target = "addressDtoId")
     })
     public abstract LegalDetailDto legalDetailToLegalDetailDto(LegalDetail legalDetail);
 
     @Mappings({
+            @Mapping(target = "dateOfTheCertificate", ignore = true),
             @Mapping(source = "typeOfContractorDtoId", target = "typeOfContractor.id"),
             @Mapping(source = "addressDtoId", target = "address.id")
     })
