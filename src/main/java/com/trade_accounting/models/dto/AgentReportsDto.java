@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -21,13 +20,13 @@ public class AgentReportsDto {
     @NotNull
     private String number;
 
-    private LocalDateTime time;
+    private String time;
 
     @NotNull
-    private CompanyDto companyDto;
+    private Long companyId;
 
     @NotNull
-    private ContractorDto contractorDto;
+    private Long contractorId;
 
     @NotNull
     private Long sum;
