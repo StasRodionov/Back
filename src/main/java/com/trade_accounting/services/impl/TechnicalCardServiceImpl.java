@@ -6,32 +6,34 @@ import com.trade_accounting.models.dto.TechnicalCardDto;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.repositories.TechnicalCardProductionRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
+import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
 import com.trade_accounting.utils.DtoMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TechnicalCardServiceImpl implements TechnicalCardService {
 
     private final TechnicalCardRepository technicalCardRepository;
     private final TechnicalCardProductionRepository technicalCardProductionRepository;
     private final ProductRepository productRepository;
+//    private final ProductService productService;
     private final DtoMapper dtoMapper;
 
-    public TechnicalCardServiceImpl(TechnicalCardRepository technicalCardRepository, TechnicalCardProductionRepository technicalCardProductionRepository, ProductRepository productRepository, DtoMapper dtoMapper) {
-        this.technicalCardRepository = technicalCardRepository;
-        this.technicalCardProductionRepository = technicalCardProductionRepository;
-        this.productRepository = productRepository;
-        this.dtoMapper = dtoMapper;
-    }
+//    public TechnicalCardServiceImpl(TechnicalCardRepository technicalCardRepository, TechnicalCardProductionRepository technicalCardProductionRepository, ProductRepository productRepository, DtoMapper dtoMapper) {
+//        this.technicalCardRepository = technicalCardRepository;
+//        this.technicalCardProductionRepository = technicalCardProductionRepository;
+//        this.productRepository = productRepository;
+//        this.dtoMapper = dtoMapper;
+//    }
 
     @Override
     public List<TechnicalCardDto> getAll() {
