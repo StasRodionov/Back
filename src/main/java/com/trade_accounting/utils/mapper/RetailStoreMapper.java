@@ -6,7 +6,6 @@ import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import org.mapstruct.Mapper;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,15 +19,6 @@ public interface RetailStoreMapper {
             return null;
         }
 
-//                        .id(1L)
-//                .activityStatus("Был в сети вчера")
-//                .defaultTaxationSystem("ОСН")
-//                .isActive(true)
-//                .name("Ozon")
-//                .orderTaxationSystem("УСН. Доход")
-//                .revenue(BigDecimal.valueOf(12000))
-//                .salesInvoicePrefix("SI")
-//                .companyId(1L)
         return RetailStore.builder()
                 .id(retailStoreDto.getId())
                 .activityStatus(retailStoreDto.getActivityStatus())
@@ -38,7 +28,6 @@ public interface RetailStoreMapper {
                 .orderTaxationSystem(retailStoreDto.getOrderTaxationSystem())
                 .revenue(retailStoreDto.getRevenue())
                 .salesInvoicePrefix(retailStoreDto.getSalesInvoicePrefix())
-                //.company(retailStoreDto.getCompanyId())
                 .build();
     }
 
