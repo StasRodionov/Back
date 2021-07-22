@@ -1,4 +1,3 @@
---DELETE FROM retail_stores;
 TRUNCATE retail_stores CASCADE;
 
 INSERT INTO retail_stores (id, activity_status, default_taxation_system, is_active, name, order_taxation_system, revenue, sales_invoice_prefix, company_id)
