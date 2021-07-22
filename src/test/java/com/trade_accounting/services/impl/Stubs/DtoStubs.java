@@ -27,7 +27,6 @@ import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
-import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
@@ -225,8 +224,4 @@ public class DtoStubs {
     public static BalanceAdjustmentDto getBalanceAdjustmentDto(Long id) {
         return dtoMapper.balanceAdjustmentToBalanceAdjustmentDto(ModelStubs.getBalanceAdjustment(id));
     }
-
-//    public static RetailStoreDto getRetailStoreDto(Long id) {
-//        return dtoMapper.retailStoreToRetailStoreDto(ModelStubs.getRetailStore(id));
-//    }
 }

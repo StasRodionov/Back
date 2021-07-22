@@ -8,7 +8,6 @@ import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.services.interfaces.RetailStoreService;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.RetailStoreMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,17 +22,14 @@ public class RetailStoreServiceImpl implements RetailStoreService {
 
     private final RetailStoreRepository retailStoreRepository;
     private final CompanyRepository companyRepository;
-    //private final DtoMapper dtoMapper;
     private final EmployeeRepository employeeRepository;
     private final RetailStoreMapper retailStoreMapper;
 
     public RetailStoreServiceImpl(RetailStoreRepository retailStoreRepository,
                                   CompanyRepository companyRepository,
-                                  DtoMapper dtoMapper,
                                   EmployeeRepository employeeRepository, RetailStoreMapper retailStoreMapper) {
         this.retailStoreRepository = retailStoreRepository;
         this.companyRepository = companyRepository;
-        //this.dtoMapper = dtoMapper;
         this.employeeRepository = employeeRepository;
         this.retailStoreMapper = retailStoreMapper;
     }
@@ -41,7 +37,6 @@ public class RetailStoreServiceImpl implements RetailStoreService {
     @Override
     public List<RetailStoreDto> getAll() {
         return retailStoreRepository.findAll().stream()
-                //.map(dtoMapper::retailStoreToRetailStoreDto)
                 .map(retailStoreMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -49,14 +44,12 @@ public class RetailStoreServiceImpl implements RetailStoreService {
     @Override
     public RetailStoreDto getById(Long id) {
         Optional<RetailStore> retailStore = retailStoreRepository.findById(id);
-        //return dtoMapper.retailStoreToRetailStoreDto(
         return retailStoreMapper.toDto(
                 retailStore.orElse(new RetailStore()));
     }
 
     @Override
     public RetailStoreDto create(RetailStoreDto retailStoreDto) {
-        //RetailStore retailStore = dtoMapper.toRetailStore(retailStoreDto);
         RetailStore retailStore = retailStoreMapper.toModel(retailStoreDto);
         Company company = companyRepository.getCompaniesById(retailStoreDto.getCompanyId());
 
@@ -66,7 +59,6 @@ public class RetailStoreServiceImpl implements RetailStoreService {
         retailStore.setCashiers(cashiers);
         retailStore.setCompany(company);
 
-        //return dtoMapper.retailStoreToRetailStoreDto(retailStoreRepository.save(retailStore));
         return retailStoreMapper.toDto(retailStoreRepository.save(retailStore));
     }
 

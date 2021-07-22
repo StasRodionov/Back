@@ -645,38 +645,6 @@ public abstract class DtoMapper {
 
     public abstract Warehouse warehouseDtoToWarehouse(WarehouseDto warehouseDto);
 
-    //RetailStore
-    public RetailStoreDto retailStoreToRetailStoreDto(RetailStore retailStore) {
-        RetailStoreDto retailStoreDto = new RetailStoreDto();
-        if (retailStore == null) {
-            return null;
-        } else {
-            retailStoreDto.setId(retailStore.getId());
-            retailStoreDto.setName(retailStore.getName());
-            retailStoreDto.setIsActive(retailStore.getIsActive());
-            retailStoreDto.setActivityStatus(retailStore.getActivityStatus());
-            retailStoreDto.setRevenue(retailStore.getRevenue());
-            retailStoreDto.setSalesInvoicePrefix(retailStore.getSalesInvoicePrefix());
-            retailStoreDto.setDefaultTaxationSystem(retailStore.getDefaultTaxationSystem());
-            retailStoreDto.setOrderTaxationSystem(retailStore.getOrderTaxationSystem());
-
-            Company company = retailStore.getCompany();
-            if (company == null) {
-                return null;
-            } else {
-                retailStoreDto.setCompanyId(company.getId());
-
-                List<Long> retailStoreIds = retailStore.getCashiers().stream()
-                        .map(Employee::getId)
-                        .collect(Collectors.toList());
-                retailStoreDto.setCashiersIds(retailStoreIds);
-
-                return retailStoreDto;
-            }
-        }
-    }
-
-    public abstract RetailStore toRetailStore(RetailStoreDto retailStoreDto);
 
     @Mappings({
             @Mapping(source = "districtDtos", target = "districts")

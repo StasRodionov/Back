@@ -1,10 +1,7 @@
 package com.trade_accounting.services.impl.Stubs.dto;
 
-import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
-import com.trade_accounting.services.impl.Stubs.model.InternalOrderModelStubs;
 import com.trade_accounting.services.impl.Stubs.model.RetailStoreModelStubs;
-import com.trade_accounting.utils.mapper.InternalOrderMapper;
 import com.trade_accounting.utils.mapper.RetailStoreMapper;
 import org.mapstruct.factory.Mappers;
 

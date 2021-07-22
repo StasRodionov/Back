@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -81,15 +80,6 @@ public class RetailStoreRestControllerTest {
     @Test
     void testCreate() throws Exception {
         RetailStoreDto retailStoreDto = RetailStoreDto.builder()
-//                .id(4L)
-//                .activityStatus("Был в сети вчера")
-//                .defaultTaxationSystem("ОСН")
-//                .isActive(true)
-//                .name("Ozon")
-//                .orderTaxationSystem("УСН. Доход")
-//                .revenue(BigDecimal.valueOf(12000))
-//                .salesInvoicePrefix("SI")
-//                .companyId(4L)
                 .id(4L)
                 .activityStatus("Был в сети вчера")
                 .defaultTaxationSystem("ОСН")
