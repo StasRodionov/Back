@@ -1,15 +1,16 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.RetailStore;
-import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.RetailStoreDtoStubs;
+import com.trade_accounting.services.impl.Stubs.model.RetailStoreModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.RetailStoreMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -40,13 +41,17 @@ public class RetailStoreServiceTest {
     @InjectMocks
     RetailStoreServiceImpl retailStoreService;
 
+//    @Spy
+//    DtoMapperImpl dtoMapper;
+
     @Spy
-    DtoMapperImpl dtoMapper;
+    RetailStoreMapper retailStoreMapper;
 
     @Test
     void getAll_shouldReturnFilledListRetailStore() {
         when(retailStoreRepository.findAll()).thenReturn(
-                List.of(ModelStubs.getRetailStore(1L))
+                //List.of(ModelStubs.getRetailStore(1L))
+                List.of(RetailStoreModelStubs.getRetailStore(1L))
         );
 
         List<RetailStoreDto> listInv = retailStoreService.getAll();
@@ -55,7 +60,8 @@ public class RetailStoreServiceTest {
 
     @Test
     void getById_shouldReturnFilledRetailStore() {
-        when(retailStoreRepository.findById(anyLong())).thenReturn(java.util.Optional.of(ModelStubs.getRetailStore(1L)));
+        //when(retailStoreRepository.findById(anyLong())).thenReturn(java.util.Optional.of(ModelStubs.getRetailStore(1L)));
+        when(retailStoreRepository.findById(anyLong())).thenReturn(java.util.Optional.of(RetailStoreModelStubs.getRetailStore(1L)));
 
         RetailStoreDto retailStoreDto = retailStoreService.getById(1L);
         assertEquals(1, retailStoreDto.getId());
@@ -78,8 +84,10 @@ public class RetailStoreServiceTest {
     }
 
     private void saveOrUpdate() {
-        when(retailStoreRepository.save(any(RetailStore.class))).thenReturn(ModelStubs.getRetailStore(1L));
-        RetailStoreDto retailStoreDto = retailStoreService.create(DtoStubs.getRetailStoreDto(1L));
+        //when(retailStoreRepository.save(any(RetailStore.class))).thenReturn(ModelStubs.getRetailStore(1L));
+        when(retailStoreRepository.save(any(RetailStore.class))).thenReturn(RetailStoreModelStubs.getRetailStore(1L));
+        //RetailStoreDto retailStoreDto = retailStoreService.create(DtoStubs.getRetailStoreDto(1L));
+        RetailStoreDto retailStoreDto = retailStoreService.create(RetailStoreDtoStubs.getDto(1L));
         assertEquals(1,retailStoreDto.getId());
         verify(retailStoreRepository).save(any(RetailStore.class));
     }

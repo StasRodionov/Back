@@ -1,4 +1,5 @@
-DELETE FROM retail_stores;
+--DELETE FROM retail_stores;
+TRUNCATE retail_stores CASCADE;
 
 INSERT INTO retail_stores (id, activity_status, default_taxation_system, is_active, name, order_taxation_system, revenue, sales_invoice_prefix, company_id)
 VALUES (1, 'Был в сети вчера', 'ОСН', true, 'Ozon', 'УСН. Доход', 12000, 'SI', 1),

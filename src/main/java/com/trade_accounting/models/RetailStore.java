@@ -45,6 +45,7 @@ public class RetailStore {
     @Column(name = "revenue")
     private BigDecimal revenue;
 
+    @NotNull
     @OneToOne(fetch = FetchType.LAZY)
     private Company company;
 
@@ -59,18 +60,4 @@ public class RetailStore {
 
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Employee> cashiers;
-
-//    public RetailStore(String name, Boolean isActive, String activityStatus, BigDecimal revenue,
-//                       Company organization, String salesInvoicePrefix, String defaultTaxationSystem,
-//                       String orderTaxationSystem, List<Employee> cashiers) {
-//        this.name = name;
-//        this.isActive = isActive;
-//        this.activityStatus = activityStatus;
-//        this.revenue = revenue;
-//        this.organization = organization;
-//        this.salesInvoicePrefix = salesInvoicePrefix;
-//        this.defaultTaxationSystem = defaultTaxationSystem;
-//        this.orderTaxationSystem = orderTaxationSystem;
-//        this.cashiers = cashiers;
-//    }
 }

@@ -36,36 +36,4 @@ public class RetailStoreDto {
     private String orderTaxationSystem;
 
     private List<Long> cashiersIds;
-
-//    public RetailStoreDto(String name, Boolean isActive, String activityStatus,
-//                          BigDecimal revenue, CompanyDto organization,
-//                          String salesInvoicePrefix, String defaultTaxationSystem,
-//                          String orderTaxationSystem, List<EmployeeDto> cashiers) {
-//        this.name = name;
-//        this.isActive = isActive;
-//        this.activityStatus = activityStatus;
-//        this.revenue = revenue;
-//        this.organizationDto = organization;
-//        this.salesInvoicePrefix = salesInvoicePrefix;
-//        this.defaultTaxationSystem = defaultTaxationSystem;
-//        this.orderTaxationSystem = orderTaxationSystem;
-//        this.cashiersDto = cashiers;
-//    }
-//
-//    public RetailStoreDto(Long id, String name, Boolean isActive, String activityStatus,
-//                          BigDecimal revenue, Long organizationId,
-//                          String salesInvoicePrefix, String defaultTaxationSystem,
-//                          String orderTaxationSystem) {
-//        this.id = id;
-//        this.name = name;
-//        this.isActive = isActive;
-//        this.activityStatus = activityStatus;
-//        this.revenue = revenue;
-//        this.organizationDto = new CompanyDto();
-//        this.organizationDto.setId(organizationId);
-//        this.salesInvoicePrefix = salesInvoicePrefix;
-//        this.defaultTaxationSystem = defaultTaxationSystem;
-//        this.orderTaxationSystem = orderTaxationSystem;
-//    }
-
 }

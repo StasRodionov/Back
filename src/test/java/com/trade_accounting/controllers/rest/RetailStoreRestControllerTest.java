@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -79,15 +81,25 @@ public class RetailStoreRestControllerTest {
     @Test
     void testCreate() throws Exception {
         RetailStoreDto retailStoreDto = RetailStoreDto.builder()
+//                .id(4L)
+//                .activityStatus("Был в сети вчера")
+//                .defaultTaxationSystem("ОСН")
+//                .isActive(true)
+//                .name("Ozon")
+//                .orderTaxationSystem("УСН. Доход")
+//                .revenue(BigDecimal.valueOf(12000))
+//                .salesInvoicePrefix("SI")
+//                .companyId(4L)
                 .id(4L)
                 .activityStatus("Был в сети вчера")
                 .defaultTaxationSystem("ОСН")
                 .isActive(true)
-                .name("Ozon")
+                .name("Ozon111")
                 .orderTaxationSystem("УСН. Доход")
                 .revenue(BigDecimal.valueOf(12000))
                 .salesInvoicePrefix("SI")
                 .companyId(4L)
+                .cashiersIds(List.of(1L, 2L, 3L))
                 .build();
 
         String retailStoreDtoJson = new Gson().toJson(retailStoreDto);
@@ -112,11 +124,12 @@ public class RetailStoreRestControllerTest {
                 .activityStatus("Был в сети вчера")
                 .defaultTaxationSystem("ОСН")
                 .isActive(true)
-                .name("Ozon")
+                .name("Ozon111")
                 .orderTaxationSystem("УСН. Доход")
                 .revenue(BigDecimal.valueOf(12000))
                 .salesInvoicePrefix("SI")
-                .companyId(1L)
+                .companyId(4L)
+                .cashiersIds(List.of(1L, 2L, 3L))
                 .build();
 
         String retailStoreDtoJson = new Gson().toJson(retailStoreDto);

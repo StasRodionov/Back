@@ -676,10 +676,6 @@ public abstract class DtoMapper {
         }
     }
 
-//    @Mappings({
-//            @Mapping(source = "organizationDto", target = "organization"),
-//           //@Mapping(source = "cashiersDto", target = "cashiers"),
-//    })
     public abstract RetailStore toRetailStore(RetailStoreDto retailStoreDto);
 
     @Mappings({

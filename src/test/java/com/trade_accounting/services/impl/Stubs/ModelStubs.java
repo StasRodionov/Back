@@ -578,19 +578,19 @@ public class ModelStubs {
                 .build();
     }
 
-    public static RetailStore getRetailStore(Long id) {
-        return RetailStore.builder()
-                .id(1L)
-                .activityStatus("Был в сети вчера")
-                .defaultTaxationSystem("ОСН")
-                .isActive(true)
-                .name("Ozon111")
-                .orderTaxationSystem("УСН. Доход")
-                .revenue(BigDecimal.valueOf(12000))
-                .salesInvoicePrefix("SI")
-                .company(getCompany(1L))
-                .cashiers(new ArrayList<>())
-                .build();
-    }
+//    public static RetailStore getRetailStore(Long id) {
+//        return RetailStore.builder()
+//                .id(1L)
+//                .activityStatus("Был в сети вчера")
+//                .defaultTaxationSystem("ОСН")
+//                .isActive(true)
+//                .name("Ozon111")
+//                .orderTaxationSystem("УСН. Доход")
+//                .revenue(BigDecimal.valueOf(12000))
+//                .salesInvoicePrefix("SI")
+//                .company(getCompany(1L))
+//                .cashiers(new ArrayList<>())
+//                .build();
+//    }
 }
 

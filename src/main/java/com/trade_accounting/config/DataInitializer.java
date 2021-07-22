@@ -272,9 +272,17 @@ public class DataInitializer {
         retailStoreService.create(
                 new RetailStoreDto(
                         null, "Магазин 2", true,
-                        "Онлайн2", BigDecimal.valueOf(10000),
+                        "Был в сети вчера", BigDecimal.valueOf(20000),
                         2L, "SI", "ОСН2",
-                        "ОСН", List.of(1L, 2L, 3L)
+                        "УСН. Доход", List.of(1L, 2L, 3L)
+                )
+        );
+        retailStoreService.create(
+                new RetailStoreDto(
+                        null, "Магазин 3", true,
+                        "Был в сети 2 часа назад", BigDecimal.valueOf(15700),
+                        3L, "SI", "ОСН2",
+                        "ЕСХН", List.of(1L, 2L, 3L)
                 )
         );
     }

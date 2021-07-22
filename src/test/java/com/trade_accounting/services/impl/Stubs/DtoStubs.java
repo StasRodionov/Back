@@ -226,7 +226,7 @@ public class DtoStubs {
         return dtoMapper.balanceAdjustmentToBalanceAdjustmentDto(ModelStubs.getBalanceAdjustment(id));
     }
 
-    public static RetailStoreDto getRetailStoreDto(Long id) {
-        return dtoMapper.retailStoreToRetailStoreDto(ModelStubs.getRetailStore(id));
-    }
+//    public static RetailStoreDto getRetailStoreDto(Long id) {
+//        return dtoMapper.retailStoreToRetailStoreDto(ModelStubs.getRetailStore(id));
+//    }
 }
