@@ -53,7 +53,13 @@ public interface InternalOrderMapper {
                 return null;
             } else {
                 internalOrderDto.setCompanyId(internalOrder.getCompany().getId());
-                return internalOrderDto;
+
+                if (internalOrder.getWarehouse() == null) {
+                    return null;
+                } else {
+                    internalOrderDto.setWarehouseId(internalOrder.getWarehouse().getId());
+                    return internalOrderDto;
+                }
             }
         }
     }

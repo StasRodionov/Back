@@ -19,8 +19,6 @@ import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.InternalOrderDto;
-import com.trade_accounting.models.dto.InternalOrderProductsDto;
 import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
@@ -65,8 +63,6 @@ import com.trade_accounting.services.interfaces.CorrectionService;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
-import com.trade_accounting.services.interfaces.InternalOrderProductService;
-import com.trade_accounting.services.interfaces.InternalOrderService;
 import com.trade_accounting.services.interfaces.InventarizationProductService;
 import com.trade_accounting.services.interfaces.InventarizationService;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
@@ -156,8 +152,6 @@ public class DataInitializer {
     private final MovementService movementService;
     private final MovementProductService movementProductService;
     private final RemainService remainService;
-    private final InternalOrderService internalOrderService;
-    private final InternalOrderProductService internalOrderProductService;
 
     @PostConstruct
     public void init() {
@@ -204,8 +198,6 @@ public class DataInitializer {
         initMovementProduct();
         initMovement();
         initRemain();
-        initInternalOrderProduct();
-        initInternalOrder();
     }
 
     private void initMovementProduct() {
@@ -758,7 +750,7 @@ public class DataInitializer {
                 "79271669",
                 "1053600591197",
                 "236467", "432145",
-                LocalDate.of(2020, 10, 10),
+                LocalDate.of(2020, 10, 10).toString(),
                 typeOfContractorService.getByName("Юридическое лицо").getId()
         ));
         legalDetailService.create(new LegalDetailDto(
@@ -772,7 +764,7 @@ public class DataInitializer {
                 "79271647",
                 "1053600591285",
                 "432145",
-                LocalDate.of(2018, 2, 23),
+                LocalDate.of(2018, 2, 23).toString(),
                 typeOfContractorService.getByName("Индивидуальный предприниматель").getId()
         ));
         legalDetailService.create(new LegalDetailDto(
@@ -787,7 +779,7 @@ public class DataInitializer {
                 "70713032",
                 "1033600141277",
                 "342145",
-                LocalDate.of(2022, 4, 5),
+                LocalDate.of(2022, 4, 5).toString(),
                 typeOfContractorService.getByName("Физическое лицо").getId()
         ));
     }
@@ -870,7 +862,7 @@ public class DataInitializer {
                             "79271647",
                             "1053600591285",
                             "432145",
-                            LocalDate.of(2018, 2, 23),
+                            LocalDate.of(2018, 2, 23).toString(),
                             typeOfContractorService.getByName("Индивидуальный предприниматель").getId()
                     )).getId(),
 
@@ -922,7 +914,7 @@ public class DataInitializer {
                             "70713032",
                             "1033600141277",
                             "342145",
-                            LocalDate.of(2022, 4, 5),
+                            LocalDate.of(2022, 4, 5).toString(),
                             typeOfContractorService.getByName("Индивидуальный предприниматель").getId()
                     )).getId(),
                     List.of(bankAccountService.create(new BankAccountDto(
@@ -1806,31 +1798,5 @@ public class DataInitializer {
                 .salesCost(randomInt(20000, 100000))
                 .salesSum(randomInt(20000, 100000))
                 .build());
-    }
-
-    public void initInternalOrderProduct() {
-        for (long i = 1L; i <= 15; i++) {
-            internalOrderProductService.create(
-                    InternalOrderProductsDto.builder()
-                            .amount(BigDecimal.valueOf(randomInt(10, 100)))
-                            .price(BigDecimal.valueOf(randomInt(10, 100)))
-                            .productId(i)
-                            .build()
-            );
-        }
-    }
-
-    public void initInternalOrder() {
-        for (long i = 1L; i <= 13; i += 3) {
-            internalOrderService.create(InternalOrderDto.builder()
-                    .internalOrderProductsIds(List.of(i, i + 1L, i + 2L))
-                    .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
-                    .companyId(i)
-                    .isSent(false)
-                    .isPrint(false)
-                    .comment("Внутренний заказ " + i)
-                    .build()
-            );
-        }
     }
 }

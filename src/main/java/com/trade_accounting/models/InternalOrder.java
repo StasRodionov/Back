@@ -46,6 +46,10 @@ public class InternalOrder {
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Warehouse warehouse;
+
     @ColumnDefault("false")
     private Boolean isSent = null;
 

@@ -3,9 +3,11 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.repositories.AgentReportsRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.repositories.CompanyRepository;
+import com.trade_accounting.repositories.ContractorRepository;
+import com.trade_accounting.services.impl.Stubs.dto.AgentReportsDtoStubs;
+import com.trade_accounting.services.impl.Stubs.model.AgentReportsModelStubs;
+import com.trade_accounting.utils.mapper.AgentReportsMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,10 +16,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static java.util.Optional.ofNullable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,63 +28,75 @@ import static org.mockito.Mockito.when;
 class AgentReportsServiceImplTest {
 
     @InjectMocks
-    private AgentReportsServiceImpl service;
+    private AgentReportsServiceImpl agentReportsService;
 
     @Mock
-    private AgentReportsRepository repository;
+    private AgentReportsRepository agentReportsRepository;
+
+    @Mock
+    private CompanyRepository companyRepository;
+
+    @Mock
+    private ContractorRepository contractorRepository;
 
     @Spy
-    private DtoMapperImpl dtoMapper;
+    private AgentReportsMapper agentReportsMapper;
 
     @Test
     void repositoryIsNotNullTest() {
-        assertNotNull(repository, "Repository is not filled");
+        assertNotNull(agentReportsRepository, "Repository is not filled");
     }
 
     @Test
     void getAllTest() {
-        when(repository.findAll()).thenReturn(
-                Stream.of(ModelStubs.getAgentReports(1L),
-                        ModelStubs.getAgentReports(2L),
-                        ModelStubs.getAgentReports(3L)).collect(Collectors.toList())
+        when(agentReportsRepository.findAll()).thenReturn(
+                List.of(
+                        AgentReportsModelStubs.getAgentReports(1L),
+                        AgentReportsModelStubs.getAgentReports(2L),
+                        AgentReportsModelStubs.getAgentReports(3L)
+                )
         );
-        List<AgentReportsDto> list = service.getAll();
+        List<AgentReportsDto> list = agentReportsService.getAll();
         assertEquals(3, list.size());
     }
 
     @Test
     void getByIdTest() {
-        when(repository.findById(anyLong()))
-                .thenReturn(ofNullable(ModelStubs.getAgentReports(1L)));
-        AgentReportsDto dto = service.getById(1L);
-        assertNotNull(dto);
+        AgentReports reports = AgentReportsModelStubs.getAgentReports(1L);
+
+        when(agentReportsRepository.getOne(anyLong()))
+                .thenReturn(reports);
+        AgentReportsDto dto = agentReportsService.getById(1L);
+
         assertEquals(1, dto.getId());
-        verify(repository).findById(anyLong());
     }
 
     @Test
     void createTest() {
-        when(repository.save(any()))
-                .thenReturn(ModelStubs.getAgentReports(1L));
-        AgentReportsDto dto = service.create(DtoStubs.getAgentReportsDto(1L));
-        assertNotNull(dto);
-        assertEquals(1, dto.getId());
-        verify(repository).save(any(AgentReports.class));
+        saveOrUpdate();
     }
 
     @Test
     void updateTest() {
-        when(repository.save(any()))
-                .thenReturn(ModelStubs.getAgentReports(anyLong()));
-        AgentReportsDto dto = service.update(DtoStubs.getAgentReportsDto(1L));
-        assertNotNull(dto);
-        verify(repository).save(any(AgentReports.class));
+        saveOrUpdate();
     }
 
     @Test
     void deleteById() {
-        service.deleteById(1L);
-        verify(repository).deleteById(anyLong());
+        agentReportsService.deleteById(1L);
+        verify(agentReportsRepository).deleteById(anyLong());
     }
 
+    private void saveOrUpdate() {
+        when(agentReportsRepository.save(any(AgentReports.class)))
+                .thenReturn(AgentReportsModelStubs.getAgentReports(1L));
+
+        AgentReportsDto stubs = AgentReportsDtoStubs.getDto(1L);
+
+        AgentReportsDto agentReportsDto = agentReportsService
+                .create(stubs);
+
+        assertEquals(1, agentReportsDto.getId());
+        verify(agentReportsRepository).save(any(AgentReports.class));
+    }
 }
