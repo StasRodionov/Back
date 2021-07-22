@@ -3,9 +3,10 @@ package com.trade_accounting.services.impl.Stubs.model;
 import com.trade_accounting.models.RetailStore;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.List;
 
 import static com.trade_accounting.services.impl.Stubs.ModelStubs.getCompany;
+import static com.trade_accounting.services.impl.Stubs.ModelStubs.getEmployee;
 
 public class RetailStoreModelStubs {
     public static RetailStore getRetailStore(Long id) {
@@ -19,7 +20,7 @@ public class RetailStoreModelStubs {
                 .revenue(BigDecimal.valueOf(12000))
                 .salesInvoicePrefix("SI")
                 .company(getCompany(1L))
-                .cashiers(new ArrayList<>())
+                .cashiers(List.of(getEmployee(id)))
                 .build();
     }
 }
