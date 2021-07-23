@@ -25,8 +25,6 @@ import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
-import com.trade_accounting.models.Movement;
-import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.Position;
@@ -441,26 +439,6 @@ public class ModelStubs {
                 .build();
     }
 
-    public static MovementProduct getMovementProduct(Long id) {
-        return new MovementProduct(
-                id,
-                getProduct(id),
-                BigDecimal.ONE,
-                BigDecimal.ONE
-        );
-    }
-
-    public static Movement getMovement(Long id) {
-        return new Movement(
-                id, LocalDateTime.now(), getWarehouse(), getWarehouse(), getCompany(id),
-                false, false,
-                "Комментарий 1",
-                List.of(getMovementProduct(1L),
-                        getMovementProduct(2L),
-                        getMovementProduct(3L))
-        );
-    }
-
     public static CorrectionProduct getCorrectionProduct(Long id) {
         return new CorrectionProduct(
                 id,
@@ -504,34 +482,34 @@ public class ModelStubs {
         );
     }
 
-    public static AcceptanceProduction getAcceptanceProduction(Long id) {
-        return AcceptanceProduction.builder()
-                .id(id)
-                .product(getProduct(1L))
-                .amount(100L)
-                .build();
-    }
+//    public static AcceptanceProduction getAcceptanceProduction(Long id) {
+//        return AcceptanceProduction.builder()
+//                .id(id)
+//                .product(getProduct(1L))
+//                .amount(100L)
+//                .build();
+//    }
 
-    public static Acceptance getAcceptance(Long id) {
-        return Acceptance.builder()
-                .id(id)
-                .acceptanceProduction(new ArrayList<>())
-                .contract(getContract(1L))
-                .contractor(getContractor(1L))
-                .comment("Комментарий " + id)
-                .incomingNumber("100")
-                .incomingNumberDate(LocalDate.now())
-                .warehouse(getWarehouse(1L))
-                .project(Project.builder()
-                        .id(1L)
-                        .name("name")
-                        .description("decr")
-                        .code("code")
-                        .build())
-                .build();
-    }
+//    public static Acceptance getAcceptance(Long id) {
+//        return Acceptance.builder()
+//                .id(id)
+//                .acceptanceProduction(new ArrayList<>())
+//                .contract(getContract(1L))
+//                .contractor(getContractor(1L))
+//                .comment("Комментарий " + id)
+//                .incomingNumber("100")
+//                .incomingNumberDate(LocalDate.now())
+//                .warehouse(getWarehouse(1L))
+//                .project(Project.builder()
+//                        .id(1L)
+//                        .name("name")
+//                        .description("decr")
+//                        .code("code")
+//                        .build())
+//                .build();
+//    }
 
-    public static AgentReports getAgentReports(Long id){
+    public static AgentReports getAgentReports(Long id) {
         return AgentReports.builder()
                 .id(id)
                 .company(getCompany(1L))
@@ -550,7 +528,7 @@ public class ModelStubs {
                 .build();
     }
 
-    public static SupplierAccount getSupplierAccount(Long id){
+    public static SupplierAccount getSupplierAccount(Long id) {
         return SupplierAccount.builder()
                 .id(id)
                 .warehouse(getWarehouse(1L))

@@ -6,6 +6,7 @@ import com.trade_accounting.repositories.AcceptanceProductionRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.AcceptanceProductionService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.AcceptanceProductionMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,34 +21,35 @@ public class AcceptanceProductionServiceImpl implements AcceptanceProductionServ
 
     private final ProductRepository productRepository;
 
-    private final DtoMapper dtoMapper;
+    private final AcceptanceProductionMapper acceptanceProductionMapper;
 
-    public AcceptanceProductionServiceImpl(AcceptanceProductionRepository acceptanceProductionRepository, ProductRepository productRepository, DtoMapper dtoMapper) {
+    public AcceptanceProductionServiceImpl(AcceptanceProductionRepository acceptanceProductionRepository,
+                                           ProductRepository productRepository,
+                                           AcceptanceProductionMapper acceptanceProductionMapper) {
         this.acceptanceProductionRepository = acceptanceProductionRepository;
         this.productRepository = productRepository;
-        this.dtoMapper = dtoMapper;
+        this.acceptanceProductionMapper = acceptanceProductionMapper;
     }
-
 
     @Override
     public List<AcceptanceProductionDto> getAll() {
         return acceptanceProductionRepository.findAll().stream()
-                .map(dtoMapper::toAcceptanceProductionDto)
+                .map(acceptanceProductionMapper::toAcceptanceProductionDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public AcceptanceProductionDto getById(Long id) {
-        return dtoMapper.toAcceptanceProductionDto(
+        return acceptanceProductionMapper.toAcceptanceProductionDto(
                 acceptanceProductionRepository.getOne(id)
         );
     }
 
     @Override
     public AcceptanceProductionDto create(AcceptanceProductionDto dto) {
-        AcceptanceProduction acceptanceProduction = dtoMapper.acceptanceProductionDtoToAcceptanceProduction(dto);
+        AcceptanceProduction acceptanceProduction = acceptanceProductionMapper.acceptanceProductionDtoToAcceptanceProduction(dto);
         acceptanceProduction.setProduct(productRepository.getOne(dto.getProductId()));
-        return dtoMapper.toAcceptanceProductionDto(acceptanceProductionRepository
+        return acceptanceProductionMapper.toAcceptanceProductionDto(acceptanceProductionRepository
                 .save(acceptanceProduction));
     }
 
