@@ -185,7 +185,7 @@ public class DataInitializer {
         initPayment();
         initTasks();
         initTaskComments();
-        //initRetailStores();
+        initRetailStores();
         initTechnicalCardGroups();
         initTechnicalCards();
         initCorrectionProduct();
@@ -252,32 +252,32 @@ public class DataInitializer {
         accessParametersService.create(new AccessParametersDto(null, false, 5L, 5L));
     }
 
-//    public void initRetailStores() {
-//        retailStoreService.create(
-//                new RetailStoreDto(
-//                        null, "Магазин 1", true,
-//                        "Онлайн", BigDecimal.valueOf(10000),
-//                        1L, "SI", "ОСН",
-//                        "ОСН", List.of(1L, 2L, 3L)
-//                )
-//        );
-//        retailStoreService.create(
-//                new RetailStoreDto(
-//                        null, "Магазин 2", true,
-//                        "Был в сети вчера", BigDecimal.valueOf(20000),
-//                        2L, "SI", "ОСН2",
-//                        "УСН. Доход", List.of(1L, 2L, 3L)
-//                )
-//        );
-//        retailStoreService.create(
-//                new RetailStoreDto(
-//                        null, "Магазин 3", true,
-//                        "Был в сети 2 часа назад", BigDecimal.valueOf(15700),
-//                        3L, "SI", "ОСН2",
-//                        "ЕСХН", List.of(1L, 2L, 3L)
-//                )
-//        );
-//    }
+    public void initRetailStores() {
+        retailStoreService.create(
+                new RetailStoreDto(
+                        null, "Магазин 1", true,
+                        "Онлайн", BigDecimal.valueOf(10000),
+                        1L, "SI", "ОСН",
+                        "ОСН", List.of(1L, 2L, 3L)
+                )
+        );
+        retailStoreService.create(
+                new RetailStoreDto(
+                        null, "Магазин 2", true,
+                        "Был в сети вчера", BigDecimal.valueOf(20000),
+                        2L, "SI", "ОСН2",
+                        "УСН. Доход", List.of(1L, 2L, 3L)
+                )
+        );
+        retailStoreService.create(
+                new RetailStoreDto(
+                        null, "Магазин 3", true,
+                        "Был в сети 2 часа назад", BigDecimal.valueOf(15700),
+                        3L, "SI", "ОСН2",
+                        "ЕСХН", List.of(1L, 2L, 3L)
+                )
+        );
+    }
 
     public void initProject() {
 
