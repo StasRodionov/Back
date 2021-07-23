@@ -3,6 +3,7 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.TechnicalCard;
 import com.trade_accounting.models.dto.TechnicalCardDto;
 import com.trade_accounting.repositories.ProductRepository;
+import com.trade_accounting.repositories.TechnicalCardProductionRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.TechnicalCardDtoStubs;
@@ -31,6 +32,9 @@ public class TechnicalCardServiceImplTest {
 
     @Mock
     private TechnicalCardRepository technicalCardRepository;
+
+    @Mock
+    private TechnicalCardProductionRepository technicalCardProductionRepository;
 
     @InjectMocks
     private TechnicalCardServiceImpl technicalCardService;
@@ -81,9 +85,6 @@ public class TechnicalCardServiceImplTest {
     }
 
     private void saveOrUpdate() {
-//        when(productRepository.getOne(anyLong()))
-//                .thenReturn(ModelStubs.getProduct(1L));
-
         when(technicalCardRepository.save(any(TechnicalCard.class)))
                 .thenReturn(TechnicalCardModelStubs.getTechnicalCard(1L));
 

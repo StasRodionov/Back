@@ -25,15 +25,7 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
     private final TechnicalCardRepository technicalCardRepository;
     private final TechnicalCardProductionRepository technicalCardProductionRepository;
     private final ProductRepository productRepository;
-//    private final ProductService productService;
     private final DtoMapper dtoMapper;
-
-//    public TechnicalCardServiceImpl(TechnicalCardRepository technicalCardRepository, TechnicalCardProductionRepository technicalCardProductionRepository, ProductRepository productRepository, DtoMapper dtoMapper) {
-//        this.technicalCardRepository = technicalCardRepository;
-//        this.technicalCardProductionRepository = technicalCardProductionRepository;
-//        this.productRepository = productRepository;
-//        this.dtoMapper = dtoMapper;
-//    }
 
     @Override
     public List<TechnicalCardDto> getAll() {
@@ -45,8 +37,7 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
     @Override
     public TechnicalCardDto getById(Long id) {
         return dtoMapper.technicalCardToTechnicalCardDto(
-                technicalCardRepository.findById(id).orElse(new TechnicalCard())
-        );
+                technicalCardRepository.getOne(id));
     }
 
     @Override
