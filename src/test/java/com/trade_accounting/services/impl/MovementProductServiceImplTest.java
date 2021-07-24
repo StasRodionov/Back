@@ -6,7 +6,11 @@ import com.trade_accounting.repositories.MovementProductRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.MovementProductDtoStubs;
+import com.trade_accounting.services.impl.Stubs.model.MovementProductModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.MovementProductMapper;
+import com.trade_accounting.utils.mapper.MovementProductMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,15 +39,18 @@ public class MovementProductServiceImplTest {
     @Spy
     DtoMapperImpl dtoMapper;
 
+    @Spy
+    MovementProductMapperImpl movementProductMapper;
+
     @InjectMocks
     MovementProductServiceImpl movementProductService;
 
     @Test
     void getAll_shouldReturnFilledListMovementProduct() {
         when(movementProductRepository.findAll())
-                .thenReturn(List.of(ModelStubs.getMovementProduct(1L),
-                        ModelStubs.getMovementProduct(2L),
-                        ModelStubs.getMovementProduct(3L)));
+                .thenReturn(List.of(MovementProductModelStubs.getMovementProduct(1L),
+                        MovementProductModelStubs.getMovementProduct(2L),
+                        MovementProductModelStubs.getMovementProduct(3L)));
 
         List<MovementProductDto> movementProductDtos = movementProductService.getAll();
         assertEquals(3, movementProductDtos.size());
@@ -51,7 +58,7 @@ public class MovementProductServiceImplTest {
 
     @Test
     void getById_shouldReturnFilledMovementProduct() {
-        Optional<MovementProduct> movementProduct = Optional.of(ModelStubs.getMovementProduct(1L));
+        Optional<MovementProduct> movementProduct = Optional.of(MovementProductModelStubs.getMovementProduct(1L));
 
         when(movementProductRepository.findById(anyLong())).thenReturn(movementProduct);
 
@@ -76,8 +83,8 @@ public class MovementProductServiceImplTest {
     }
 
     private void saveOrUpdate() {
-        when(movementProductRepository.save(any())).thenReturn(ModelStubs.getMovementProduct(1L));
-        MovementProductDto movementProductDto = movementProductService.create(DtoStubs.getMovementProductDto(1L));
+        when(movementProductRepository.save(any())).thenReturn(MovementProductModelStubs.getMovementProduct(1L));
+        MovementProductDto movementProductDto = movementProductService.create(MovementProductDtoStubs.getMovementProductDto(1L));
         assertEquals(1, movementProductDto.getId());
         verify(movementProductRepository).save(any(MovementProduct.class));
     }

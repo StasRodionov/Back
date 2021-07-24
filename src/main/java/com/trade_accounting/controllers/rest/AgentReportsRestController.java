@@ -41,10 +41,9 @@ public class AgentReportsRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<List<AgentReportsDto>> getAll() {
-        List<AgentReportsDto> agentReportsDtoList = agentReportsService.getAll();
-        return ResponseEntity.ok(agentReportsDtoList);
+        List<AgentReportsDto> res = agentReportsService.getAll();
+        return ResponseEntity.ok(res);
     }
-
 
     @ApiOperation(value = "getById", notes = "Возвращает определенный отчёт комиссионера по Id")
     @GetMapping("/{id}")

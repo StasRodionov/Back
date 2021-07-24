@@ -209,15 +209,16 @@ public abstract class DtoMapper {
                 .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
     }
 
-    // Acceptance
-    @Mappings({
-            @Mapping(source = "contractor.id", target = "contractorId"),
-            @Mapping(source = "warehouse.id", target = "warehouseId"),
-            @Mapping(source = "contract.id", target = "contractId"),
-    })
-    public abstract AcceptanceDto acceptanceToAcceptanceDto(Acceptance acceptance);
-
-    public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
+//    // Acceptance
+//    @Mappings({
+//            @Mapping(source = "contractor.id", target = "contractorId"),
+//            @Mapping(source = "project.id", target = "projectId"),
+//            @Mapping(source = "warehouse.id", target = "warehouseId"),
+//            @Mapping(source = "contract.id", target = "contractId"),
+//    })
+//    public abstract AcceptanceDto acceptanceToAcceptanceDto(Acceptance acceptance);
+//
+//    public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
@@ -847,88 +848,36 @@ public abstract class DtoMapper {
     public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
 
 
-    //    Movement
-    public MovementDto toMovementDto(Movement movement) {
-        MovementDto movementDto = new MovementDto();
-        if (movement == null) {
-            return null;
-        } else {
-            movementDto.setId(movement.getId());
-            movementDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(movement.getDate()));
-            movementDto.setIsSent(movement.getIsSent());
-            movementDto.setIsPrint(movement.getIsPrint());
-            movementDto.setComment(movement.getComment());
-
-            Warehouse warehouseFrom = movement.getWarehouseFrom();
-            Warehouse warehouseTo = movement.getWarehouseTo();
-            if (warehouseFrom == null) {
-                return null;
-            } else {
-                movementDto.setWarehouseFromId(warehouseFrom.getId());
-                if (warehouseTo == null){
-                    return null;
-                } else {
-                    movementDto.setWarehouseToId(warehouseTo.getId());
-
-                    Company company = movement.getCompany();
-                    if (company == null){
-                        return null;
-                    } else {
-                        movementDto.setCompanyId(company.getId());
-
-                        List<Long> movementProductIds = movement.getMovementProducts().stream()
-                                .map(MovementProduct::getId)
-                                .collect(Collectors.toList());
-
-                        movementDto.setMovementProductsIds(movementProductIds);
-                        return movementDto;
-                    }
-                }
-            }
-        }
-    }
-
-    @Mapping(target = "date", ignore = true)
-    public abstract Movement toMovement(MovementDto movementDto);
-
-    //    MovementProduct
-    @Mappings({
-            @Mapping(source = "product.id", target = "productId")
-    })
-    public abstract MovementProductDto toMovementProductDto(MovementProduct movement);
-
-    public abstract MovementProduct toMovementProduct(MovementProductDto movementDto);
-
-    // AcceptanceProductionService
-    public AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
-        AcceptanceProductionDto acceptanceProductionDto = new AcceptanceProductionDto();
-        if (acceptanceProduction == null) {
-            return null;
-        } else {
-            acceptanceProductionDto.setId(acceptanceProduction.getId());
-            acceptanceProductionDto.setAmount(acceptanceProduction.getAmount());
-
-            Product product = acceptanceProduction.getProduct();
-            if (product == null) {
-                return null;
-            } else {
-                acceptanceProductionDto.setProductId(product.getId());
-                return acceptanceProductionDto;
-            }
-        }
-    }
-
-    public AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
-        AcceptanceProduction acceptanceProduction = new AcceptanceProduction();
-        if (acceptanceProductionDto == null) {
-            return null;
-        }
-
-        acceptanceProduction.setId(acceptanceProductionDto.getId());
-        acceptanceProduction.setAmount(acceptanceProductionDto.getAmount());
-
-        return acceptanceProduction;
-    }
+//    // AcceptanceProductionService - перенесен в интерфейс AcceptanceProductionMapper 19/07/2021
+//    public AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
+//        AcceptanceProductionDto acceptanceProductionDto = new AcceptanceProductionDto();
+//        if (acceptanceProduction == null) {
+//            return null;
+//        } else {
+//            acceptanceProductionDto.setId(acceptanceProduction.getId());
+//            acceptanceProductionDto.setAmount(acceptanceProduction.getAmount());
+//
+//            Product product = acceptanceProduction.getProduct();
+//            if (product == null) {
+//                return null;
+//            } else {
+//                acceptanceProductionDto.setProductId(product.getId());
+//                return acceptanceProductionDto;
+//            }
+//        }
+//    }
+//
+//    public AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
+//        AcceptanceProduction acceptanceProduction = new AcceptanceProduction();
+//        if (acceptanceProductionDto == null) {
+//            return null;
+//        }
+//
+//        acceptanceProduction.setId(acceptanceProductionDto.getId());
+//        acceptanceProduction.setAmount(acceptanceProductionDto.getAmount());
+//
+//        return acceptanceProduction;
+//    }
 
     //Payout
     @Mappings({
