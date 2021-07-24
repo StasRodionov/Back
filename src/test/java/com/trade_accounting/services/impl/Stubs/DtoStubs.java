@@ -21,8 +21,6 @@ import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
-import com.trade_accounting.models.dto.MovementDto;
-import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductionDto;
@@ -167,15 +165,6 @@ public class DtoStubs {
         return dtoMapper.toFiasAddressModelDto(ModelStubs.getFiasAddressModel(id));
     }
 
-    public static MovementProductDto getMovementProductDto(Long id) {
-        return dtoMapper.toMovementProductDto(ModelStubs.getMovementProduct(id));
-    }
-
-    public static MovementDto getMovementDto(Long id) {
-        return dtoMapper.toMovementDto(ModelStubs.getMovement(id));
-    }
-
-
     public static CorrectionProductDto getCorrectionProductDto(Long id) {
         return dtoMapper.toCorrectionProductDto(ModelStubs.getCorrectionProduct(id));
     }
@@ -201,13 +190,13 @@ public class DtoStubs {
         return dtoMapper.toInventarizationProductDto(ModelStubs.getInventarizationProduct(id));
     }
 
-    public static AcceptanceProductionDto getAcceptanceProductionDto(Long id) {
-        return dtoMapper.toAcceptanceProductionDto(ModelStubs.getAcceptanceProduction(id));
-    }
+//    public static AcceptanceProductionDto getAcceptanceProductionDto(Long id) {
+//        return dtoMapper.toAcceptanceProductionDto(ModelStubs.getAcceptanceProduction(id));
+//    }
 
-    public static AcceptanceDto getAcceptanceDto(Long id) {
-        return dtoMapper.acceptanceToAcceptanceDto(ModelStubs.getAcceptance(id));
-    }
+//    public static AcceptanceDto getAcceptanceDto(Long id) {
+//        return dtoMapper.acceptanceToAcceptanceDto(ModelStubs.getAcceptance(id));
+//    }
 
     public static AccessParametersDto getAccessParametersDto(Long id) {
         return dtoMapper.accessParametersToAccessParametersDto(ModelStubs.getAccessParameters(id));

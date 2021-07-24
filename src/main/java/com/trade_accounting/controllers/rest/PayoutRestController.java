@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 
 import com.trade_accounting.models.dto.PayoutDto;
+import com.trade_accounting.repositories.PayoutRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.PayoutService;
 import io.swagger.annotations.Api;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.Entity;
 import java.util.List;
 
 @RestController
@@ -34,9 +34,13 @@ public class PayoutRestController {
 
     private final CheckEntityService checkEntityService;
 
-    public PayoutRestController(PayoutService payoutService, CheckEntityService checkEntityService) {
+    private final PayoutRepository payoutRepository;
+
+    public PayoutRestController(PayoutService payoutService, CheckEntityService checkEntityService,
+                                PayoutRepository payoutRepository, PayoutRepository payoutRepository1) {
         this.payoutService = payoutService;
         this.checkEntityService = checkEntityService;
+        this.payoutRepository = payoutRepository1;
     }
 
     @GetMapping
@@ -63,7 +67,7 @@ public class PayoutRestController {
             value = "Переданный в URL id, по которому необходимо найти информацию о выплате")
                                              @PathVariable Long id) {
 
-        checkEntityService.checkExists((JpaRepository) payoutService, id);
+        checkEntityService.checkExists((JpaRepository) payoutRepository, id);
 
         return ResponseEntity.ok(payoutService.getById(id));
     }
@@ -110,7 +114,8 @@ public class PayoutRestController {
     public ResponseEntity<PayoutDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить выплату")
                                                     @PathVariable Long id) {
-        checkEntityService.checkExists((JpaRepository) payoutService, id);
+
+        checkEntityService.checkExists((JpaRepository) payoutRepository, id);
         payoutService.deleteById(id);
 
         return ResponseEntity.ok().build();

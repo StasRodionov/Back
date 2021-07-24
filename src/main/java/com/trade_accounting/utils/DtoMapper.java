@@ -20,15 +20,11 @@ import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
-import com.trade_accounting.models.InternalOrder;
-import com.trade_accounting.models.InternalOrderProduct;
 import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
-import com.trade_accounting.models.Movement;
-import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.Payout;
 import com.trade_accounting.models.Position;
@@ -73,15 +69,11 @@ import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.InternalOrderDto;
-import com.trade_accounting.models.dto.InternalOrderProductsDto;
 import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
-import com.trade_accounting.models.dto.MovementDto;
-import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PayoutDto;
 import com.trade_accounting.models.dto.PositionDto;
@@ -209,15 +201,16 @@ public abstract class DtoMapper {
                 .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
     }
 
-    // Acceptance
-    @Mappings({
-            @Mapping(source = "contractor.id", target = "contractorId"),
-            @Mapping(source = "warehouse.id", target = "warehouseId"),
-            @Mapping(source = "contract.id", target = "contractId"),
-    })
-    public abstract AcceptanceDto acceptanceToAcceptanceDto(Acceptance acceptance);
-
-    public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
+//    // Acceptance
+//    @Mappings({
+//            @Mapping(source = "contractor.id", target = "contractorId"),
+//            @Mapping(source = "project.id", target = "projectId"),
+//            @Mapping(source = "warehouse.id", target = "warehouseId"),
+//            @Mapping(source = "contract.id", target = "contractId"),
+//    })
+//    public abstract AcceptanceDto acceptanceToAcceptanceDto(Acceptance acceptance);
+//
+//    public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
 
     // Address
     public abstract AddressDto addressToAddressDto(Address address);
@@ -847,88 +840,36 @@ public abstract class DtoMapper {
     public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
 
 
-    //    Movement
-    public MovementDto toMovementDto(Movement movement) {
-        MovementDto movementDto = new MovementDto();
-        if (movement == null) {
-            return null;
-        } else {
-            movementDto.setId(movement.getId());
-            movementDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(movement.getDate()));
-            movementDto.setIsSent(movement.getIsSent());
-            movementDto.setIsPrint(movement.getIsPrint());
-            movementDto.setComment(movement.getComment());
-
-            Warehouse warehouseFrom = movement.getWarehouseFrom();
-            Warehouse warehouseTo = movement.getWarehouseTo();
-            if (warehouseFrom == null) {
-                return null;
-            } else {
-                movementDto.setWarehouseFromId(warehouseFrom.getId());
-                if (warehouseTo == null){
-                    return null;
-                } else {
-                    movementDto.setWarehouseToId(warehouseTo.getId());
-
-                    Company company = movement.getCompany();
-                    if (company == null){
-                        return null;
-                    } else {
-                        movementDto.setCompanyId(company.getId());
-
-                        List<Long> movementProductIds = movement.getMovementProducts().stream()
-                                .map(MovementProduct::getId)
-                                .collect(Collectors.toList());
-
-                        movementDto.setMovementProductsIds(movementProductIds);
-                        return movementDto;
-                    }
-                }
-            }
-        }
-    }
-
-    @Mapping(target = "date", ignore = true)
-    public abstract Movement toMovement(MovementDto movementDto);
-
-    //    MovementProduct
-    @Mappings({
-            @Mapping(source = "product.id", target = "productId")
-    })
-    public abstract MovementProductDto toMovementProductDto(MovementProduct movement);
-
-    public abstract MovementProduct toMovementProduct(MovementProductDto movementDto);
-
-    // AcceptanceProductionService
-    public AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
-        AcceptanceProductionDto acceptanceProductionDto = new AcceptanceProductionDto();
-        if (acceptanceProduction == null) {
-            return null;
-        } else {
-            acceptanceProductionDto.setId(acceptanceProduction.getId());
-            acceptanceProductionDto.setAmount(acceptanceProduction.getAmount());
-
-            Product product = acceptanceProduction.getProduct();
-            if (product == null) {
-                return null;
-            } else {
-                acceptanceProductionDto.setProductId(product.getId());
-                return acceptanceProductionDto;
-            }
-        }
-    }
-
-    public AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
-        AcceptanceProduction acceptanceProduction = new AcceptanceProduction();
-        if (acceptanceProductionDto == null) {
-            return null;
-        }
-
-        acceptanceProduction.setId(acceptanceProductionDto.getId());
-        acceptanceProduction.setAmount(acceptanceProductionDto.getAmount());
-
-        return acceptanceProduction;
-    }
+//    // AcceptanceProductionService - перенесен в интерфейс AcceptanceProductionMapper 19/07/2021
+//    public AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
+//        AcceptanceProductionDto acceptanceProductionDto = new AcceptanceProductionDto();
+//        if (acceptanceProduction == null) {
+//            return null;
+//        } else {
+//            acceptanceProductionDto.setId(acceptanceProduction.getId());
+//            acceptanceProductionDto.setAmount(acceptanceProduction.getAmount());
+//
+//            Product product = acceptanceProduction.getProduct();
+//            if (product == null) {
+//                return null;
+//            } else {
+//                acceptanceProductionDto.setProductId(product.getId());
+//                return acceptanceProductionDto;
+//            }
+//        }
+//    }
+//
+//    public AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
+//        AcceptanceProduction acceptanceProduction = new AcceptanceProduction();
+//        if (acceptanceProductionDto == null) {
+//            return null;
+//        }
+//
+//        acceptanceProduction.setId(acceptanceProductionDto.getId());
+//        acceptanceProduction.setAmount(acceptanceProductionDto.getAmount());
+//
+//        return acceptanceProduction;
+//    }
 
     //Payout
     @Mappings({

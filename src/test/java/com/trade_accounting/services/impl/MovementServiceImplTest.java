@@ -12,7 +12,10 @@ import com.trade_accounting.repositories.MovementRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.MovementDtoStubs;
+import com.trade_accounting.services.impl.Stubs.model.MovementModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.MovementMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -46,15 +49,18 @@ public class MovementServiceImplTest {
     @Spy
     DtoMapperImpl dtoMapper;
 
+    @Spy
+    MovementMapperImpl movementMapper;
+
     @InjectMocks
     MovementServiceImpl movementService;
 
     @Test
     void getAll_shouldReturnFilledListMovement() {
         when(movementRepository.getAll()).thenReturn(
-                List.of(ModelStubs.getMovement(1L),
-                        ModelStubs.getMovement(2L),
-                        ModelStubs.getMovement(3L))
+                List.of(MovementModelStubs.getMovement(1L),
+                        MovementModelStubs.getMovement(2L),
+                        MovementModelStubs.getMovement(3L))
         );
 
         List<MovementDto> movementDtos = movementService.getAll();
@@ -64,7 +70,7 @@ public class MovementServiceImplTest {
 
     @Test
     void getById_shouldReturnFilledMovement() {
-        when(movementRepository.getMovementById(anyLong())).thenReturn(ModelStubs.getMovement(1L));
+        when(movementRepository.getMovementById(anyLong())).thenReturn(MovementModelStubs.getMovement(1L));
 
         MovementDto movementDto = movementService.getById(1L);
 
@@ -88,8 +94,8 @@ public class MovementServiceImplTest {
     }
 
     private void saveOrUpdate() {
-        when(movementRepository.save(any(Movement.class))).thenReturn(ModelStubs.getMovement(1L));
-        MovementDto movementDto = movementService.create(DtoStubs.getMovementDto(1L));
+        when(movementRepository.save(any(Movement.class))).thenReturn(MovementModelStubs.getMovement(1L));
+        MovementDto movementDto = movementService.create(MovementDtoStubs.getMovementDto(1L));
         assertEquals(1, movementDto.getId());
         verify(movementRepository).save(any(Movement.class));
     }
