@@ -19,12 +19,6 @@ public class AcceptanceModelStubs {
                 .incomingNumber("100")
                 .incomingNumberDate(LocalDate.now())
                 .warehouse(getWarehouse(1L))
-                .project(Project.builder()
-                        .id(1L)
-                        .name("name")
-                        .description("decr")
-                        .code("code")
-                        .build())
                 .build();
     }
 }
