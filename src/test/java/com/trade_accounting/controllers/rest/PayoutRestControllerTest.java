@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
-import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.PayoutDto;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -15,12 +14,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Locale;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -57,6 +50,18 @@ class PayoutRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$.length()").value(2));
+    }
+
+    @SneakyThrows
+    @Test
+    void getAllByParametersTest() {
+        mockMvc.perform(get("/api/payout/search/whoWho"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(jsonPath("$.id").value(2))
+                .andExpect(jsonPath("$.isSent").value(false));
     }
 
     @SneakyThrows
