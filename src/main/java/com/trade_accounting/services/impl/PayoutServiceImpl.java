@@ -1,8 +1,6 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.Payout;
-import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.PayoutDto;
 import com.trade_accounting.repositories.PayoutRepository;
 import com.trade_accounting.services.interfaces.PayoutService;
