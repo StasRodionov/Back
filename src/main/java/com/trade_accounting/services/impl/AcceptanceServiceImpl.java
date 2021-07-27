@@ -63,7 +63,6 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         Acceptance acceptance = acceptanceMapper.acceptanceDtoToAcceptance(dto);
         acceptance.setContract(contractRepository.getOne(dto.getContractId()));
         acceptance.setContractor(contractorRepository.getOne(dto.getContractorId()));
-        acceptance.setProject(projectRepository.getOne(dto.getProjectId()));
         acceptance.setWarehouse(warehouseRepository.getOne(dto.getWarehouseId()));
         return acceptanceMapper.acceptanceToAcceptanceDto(acceptanceRepository.save(acceptance));
     }
