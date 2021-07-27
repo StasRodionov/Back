@@ -649,17 +649,17 @@ public abstract class DtoMapper {
     public abstract Warehouse warehouseDtoToWarehouse(WarehouseDto warehouseDto);
 
     //RetailStore
-    @Mappings({
-            @Mapping(source = "organization", target = "organizationDto"),
-            @Mapping(source = "cashiers", target = "cashiersDto"),
-    })
-    public abstract RetailStoreDto retailStoreToRetailStoreDto(RetailStore retailStore);
-
-    @Mappings({
-            @Mapping(source = "organizationDto", target = "organization"),
-            @Mapping(source = "cashiersDto", target = "cashiers"),
-    })
-    public abstract RetailStore toRetailStore(RetailStoreDto retailStoreDto);
+//    @Mappings({
+//            @Mapping(source = "organization", target = "organizationDto"),
+//            @Mapping(source = "cashiers", target = "cashiersDto"),
+//    })
+//    public abstract RetailStoreDto retailStoreToRetailStoreDto(RetailStore retailStore);
+//
+//    @Mappings({
+//            @Mapping(source = "organizationDto", target = "organization"),
+//            @Mapping(source = "cashiersDto", target = "cashiers"),
+//    })
+//    public abstract RetailStore toRetailStore(RetailStoreDto retailStoreDto);
 
     @Mappings({
             @Mapping(source = "districtDtos", target = "districts")

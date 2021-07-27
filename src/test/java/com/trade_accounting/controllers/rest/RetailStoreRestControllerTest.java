@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -64,7 +65,7 @@ public class RetailStoreRestControllerTest {
                 .orderTaxationSystem("УСН. Доход")
                 .revenue(BigDecimal.valueOf(12000))
                 .salesInvoicePrefix("SI")
-                .organizationDto(companyService.getById(1L))
+                .companyId(1L)
                 .build();
 
         String retailStroreDtoJson = new Gson().toJson(retailStoreDto);
@@ -83,11 +84,12 @@ public class RetailStoreRestControllerTest {
                 .activityStatus("Был в сети вчера")
                 .defaultTaxationSystem("ОСН")
                 .isActive(true)
-                .name("Ozon")
+                .name("Ozon111")
                 .orderTaxationSystem("УСН. Доход")
                 .revenue(BigDecimal.valueOf(12000))
                 .salesInvoicePrefix("SI")
-                .organizationDto(companyService.getById(1L))
+                .companyId(4L)
+                .cashiersIds(List.of(1L, 2L, 3L))
                 .build();
 
         String retailStoreDtoJson = new Gson().toJson(retailStoreDto);
@@ -112,11 +114,12 @@ public class RetailStoreRestControllerTest {
                 .activityStatus("Был в сети вчера")
                 .defaultTaxationSystem("ОСН")
                 .isActive(true)
-                .name("Ozon")
+                .name("Ozon111")
                 .orderTaxationSystem("УСН. Доход")
                 .revenue(BigDecimal.valueOf(12000))
                 .salesInvoicePrefix("SI")
-                .organizationDto(companyService.getById(1L))
+                .companyId(4L)
+                .cashiersIds(List.of(1L, 2L, 3L))
                 .build();
 
         String retailStoreDtoJson = new Gson().toJson(retailStoreDto);
