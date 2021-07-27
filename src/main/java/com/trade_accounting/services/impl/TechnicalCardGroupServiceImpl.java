@@ -35,8 +35,7 @@ public class TechnicalCardGroupServiceImpl implements TechnicalCardGroupService 
     @Override
     public TechnicalCardGroupDto getById(Long id) {
         return dtoMapper.technicalCardGroupToTechnicalCardGroupDto(
-                technicalCardGroupRepository.findById(id).orElse(new TechnicalCardGroup())
-        );
+                technicalCardGroupRepository.getOne(id));
     }
 
     @Override
