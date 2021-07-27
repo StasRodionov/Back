@@ -27,6 +27,7 @@ import java.util.List;
 @Api(tags = "Type Of Contractor Rest Controller")
 @RequestMapping("/api/typeofcontractor")
 public class TypeOfContractorRestController<СheckEntityService> {
+
     private final TypeOfContractorService typeOfContractorService;
     private final CheckEntityService checkEntityService;
 
