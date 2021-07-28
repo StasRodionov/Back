@@ -26,7 +26,7 @@ public class ContractorStatusServiceImpl implements ContractorStatusService {
 
     @Override
     public ContractorStatusDto getById(Long id) {
-        return dtoMapper.statusToStatusDto(contractorStatusRepository.findById(id).orElse(new ContractorStatus()));
+        return dtoMapper.statusToStatusDto(contractorStatusRepository.getOne(id));
     }
 
     @Override
