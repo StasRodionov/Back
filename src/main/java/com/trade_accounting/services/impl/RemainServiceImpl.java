@@ -35,7 +35,7 @@ public class RemainServiceImpl implements RemainService {
 
     @Override
     public RemainDto getById(Long id) {
-        return dtoMapper.remainToRemainDto(remainRepository.findById(id).orElse(new Remain()));
+        return dtoMapper.remainToRemainDto(remainRepository.getOne(id));
     }
 
     @Override
