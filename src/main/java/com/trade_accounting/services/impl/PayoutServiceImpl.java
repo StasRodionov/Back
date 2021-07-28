@@ -54,4 +54,15 @@ public class PayoutServiceImpl implements PayoutService {
     public void deleteById(Long id) {
         payoutRepository.deleteById(id);
     }
+
+    @Override
+    public List<PayoutDto> getAllByParametrs(String searchTerm) {
+        if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
+            List<Payout> all = payoutRepository.findAll();
+            return all.stream().map(dtoMapper::payoutToPayoutDto).collect(Collectors.toList());
+        } else {
+            List<Payout> list = payoutRepository.search(searchTerm);
+            return list.stream().map(dtoMapper::payoutToPayoutDto).collect(Collectors.toList());
+        }
+    }
 }

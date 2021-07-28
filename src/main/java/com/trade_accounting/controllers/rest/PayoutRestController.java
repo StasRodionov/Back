@@ -55,6 +55,21 @@ public class PayoutRestController {
         return ResponseEntity.ok(payoutService.getAll());
     }
 
+    @GetMapping("/search/{searchTerm}")
+    @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых выплат")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение отф. списка выплат"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<PayoutDto>> getAllByParameters(@ApiParam(name = "searchTerm",
+            value = "Переданный в URL searchTerm, по которому необходимо найти выплаты")
+                                                      @PathVariable(name = "searchTerm") String searchTerm) {
+        List<PayoutDto> payoutDtoList = payoutService.getAllByParametrs(searchTerm);
+        return ResponseEntity.ok(payoutDtoList);
+    }
+
     @GetMapping("/{id}")
     @ApiOperation(value = "getById", notes = "Получение данных о выплате")
     @ApiResponses(value = {
