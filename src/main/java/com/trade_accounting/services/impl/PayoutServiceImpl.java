@@ -27,22 +27,22 @@ public class PayoutServiceImpl implements PayoutService {
     @Override
     public List<PayoutDto> getAll() {
         return payoutRepository.findAll().stream()
-                .map(payoutMapper::payoutToPayoutDto)
+                .map(payoutMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public PayoutDto getById(Long id) {
-        return payoutMapper.payoutToPayoutDto(payoutRepository.getOne(id));
+        return payoutMapper.toDto(payoutRepository.getOne(id));
     }
 
     @Override
     public PayoutDto create(PayoutDto payoutDto) {
-        Payout payout = payoutRepository.save(payoutMapper.payoutDtoToPayout(payoutDto));
+        Payout payout = payoutRepository.save(payoutMapper.toModel(payoutDto));
         if (payoutDto.getId() == null) {
             payoutDto.setId(payout.getId());
         }
-        return payoutMapper.payoutToPayoutDto(payout);
+        return payoutMapper.toDto(payout);
     }
 
     @Override
@@ -59,10 +59,10 @@ public class PayoutServiceImpl implements PayoutService {
     public List<PayoutDto> getAllByParametrs(String searchTerm) {
         if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
             List<Payout> all = payoutRepository.findAll();
-            return all.stream().map(payoutMapper::payoutToPayoutDto).collect(Collectors.toList());
+            return all.stream().map(payoutMapper::toDto).collect(Collectors.toList());
         } else {
             List<Payout> list = payoutRepository.search(searchTerm);
-            return list.stream().map(payoutMapper::payoutToPayoutDto).collect(Collectors.toList());
+            return list.stream().map(payoutMapper::toDto).collect(Collectors.toList());
         }
     }
 }

@@ -13,13 +13,13 @@ public interface PayoutMapper {
             @Mapping(source = "retailStore.id", target = "retailStoreId"),
             @Mapping(source = "company.id", target = "companyId")
     })
-    PayoutDto payoutToPayoutDto(Payout payout);
+    PayoutDto toDto(Payout payout);
 
     @Mappings({
             @Mapping(source = "retailStoreId", target = "retailStore.id"),
             @Mapping(source = "companyId", target = "company.id")
     })
-    Payout payoutDtoToPayout(PayoutDto payoutsDto);
+    Payout toModel(PayoutDto payoutsDto);
 
 }
 
