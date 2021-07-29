@@ -182,13 +182,13 @@ public class DtoStubs {
         return dtoMapper.returnToSupplierToReturnToSupplierDto(ModelStubs.getReturnToSupplier(id));
     }
 
-    public static InventarizationDto getInventarizationDto(Long id) {
-        return dtoMapper.toInventarizationDto(ModelStubs.getInventarization(id));
-    }
+//    public static InventarizationDto getInventarizationDto(Long id) {
+//        return dtoMapper.toInventarizationDto(ModelStubs.getInventarization(id));
+//    }
 
-    public static InventarizationProductDto getInventarizationProductDto(Long id) {
-        return dtoMapper.toInventarizationProductDto(ModelStubs.getInventarizationProduct(id));
-    }
+//    public static InventarizationProductDto getInventarizationProductDto(Long id) {
+//        return dtoMapper.toInventarizationProductDto(ModelStubs.getInventarizationProduct(id));
+//    }
 
 //    public static AcceptanceProductionDto getAcceptanceProductionDto(Long id) {
 //        return dtoMapper.toAcceptanceProductionDto(ModelStubs.getAcceptanceProduction(id));
