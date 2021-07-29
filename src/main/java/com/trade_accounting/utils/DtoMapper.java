@@ -4,7 +4,6 @@ import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.AttributeOfCalculationObject;
-import com.trade_accounting.models.BalanceAdjustment;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contact;
@@ -49,7 +48,6 @@ import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AgentReportsDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
-import com.trade_accounting.models.dto.BalanceAdjustmentDto;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContactDto;
@@ -817,19 +815,19 @@ public abstract class DtoMapper {
 
     public abstract InventarizationProduct toInventarizationProduct(InventarizationProductDto inventarizationProductDto);
 
-    //    BalanceAdjustment
-    @Mappings({
-            @Mapping(source = "company.id", target = "companyId"),
-            @Mapping(source = "contractor.id", target = "contractorId"),
-    })
-    public abstract BalanceAdjustmentDto balanceAdjustmentToBalanceAdjustmentDto(BalanceAdjustment balanceAdjustment);
+//    //    BalanceAdjustment
+//    @Mappings({
+//            @Mapping(source = "company.id", target = "companyId"),
+//            @Mapping(source = "contractor.id", target = "contractorId"),
+//    })
+//    public abstract BalanceAdjustmentDto balanceAdjustmentToBalanceAdjustmentDto(BalanceAdjustment balanceAdjustment);
+//
+//    @Mappings({
+//            @Mapping(source = "companyId", target = "company.id"),
+//            @Mapping(source = "contractorId", target = "contractor.id"),
+//    })
+//    public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
 
-    @Mappings({
-            @Mapping(source = "companyId", target = "company.id"),
-            @Mapping(source = "contractorId", target = "contractor.id"),
-    })
-    public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
-}
 
 
 //    // AcceptanceProductionService - перенесен в интерфейс AcceptanceProductionMapper 19/07/2021
@@ -894,4 +892,4 @@ public abstract class DtoMapper {
 //        return companyDto;
 //    }
 
-//}
+}

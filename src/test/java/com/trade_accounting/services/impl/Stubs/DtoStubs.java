@@ -210,7 +210,7 @@ public class DtoStubs {
         return dtoMapper.supplierAccountToSupplierAccountDto(ModelStubs.getSupplierAccount(id));
     }
 
-    public static BalanceAdjustmentDto getBalanceAdjustmentDto(Long id) {
-        return dtoMapper.balanceAdjustmentToBalanceAdjustmentDto(ModelStubs.getBalanceAdjustment(id));
-    }
+//    public static BalanceAdjustmentDto getBalanceAdjustmentDto(Long id) {
+//        return dtoMapper.balanceAdjustmentToBalanceAdjustmentDto(ModelStubs.getBalanceAdjustment(id));
+//    }
 }
