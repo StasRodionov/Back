@@ -1,7 +1,5 @@
 package com.trade_accounting.utils;
 
-import com.trade_accounting.models.Acceptance;
-import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AgentReports;
@@ -20,17 +18,12 @@ import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
-import com.trade_accounting.models.InternalOrder;
-import com.trade_accounting.models.InternalOrderProduct;
 import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
-import com.trade_accounting.models.Movement;
-import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.Payment;
-import com.trade_accounting.models.Payout;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.Product;
@@ -39,7 +32,6 @@ import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Remain;
-import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.SupplierAccount;
@@ -53,8 +45,6 @@ import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.TypeOfPrice;
 import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.Warehouse;
-import com.trade_accounting.models.dto.AcceptanceDto;
-import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AgentReportsDto;
@@ -73,17 +63,12 @@ import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.InternalOrderDto;
-import com.trade_accounting.models.dto.InternalOrderProductsDto;
 import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
-import com.trade_accounting.models.dto.MovementDto;
-import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
-import com.trade_accounting.models.dto.PayoutDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.models.dto.ProductDto;
@@ -92,7 +77,6 @@ import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RemainDto;
-import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
@@ -132,7 +116,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -846,6 +829,7 @@ public abstract class DtoMapper {
             @Mapping(source = "contractorId", target = "contractor.id"),
     })
     public abstract BalanceAdjustment balanceAdjustmentDtoToBalanceAdjustment(BalanceAdjustmentDto balanceAdjustmentDto);
+}
 
 
 //    // AcceptanceProductionService - перенесен в интерфейс AcceptanceProductionMapper 19/07/2021
@@ -879,20 +863,20 @@ public abstract class DtoMapper {
 //        return acceptanceProduction;
 //    }
 
-    //Payout
-    @Mappings({
-            @Mapping(source = "retailStore.id", target = "retailStoreId"),
-            @Mapping(source = "company.id", target = "companyId")
-    })
-    public abstract PayoutDto payoutToPayoutDto(Payout payout);
-
-    @Mappings({
-            @Mapping(source = "retailStoreId", target = "retailStore.id"),
-            @Mapping(source = "companyId", target = "company.id")
-    })
-    public abstract Payout payoutDtoToPayout(PayoutDto payoutsDto);
-
-}
+//    //Payout
+//    @Mappings({
+//            @Mapping(source = "retailStore.id", target = "retailStoreId"),
+//            @Mapping(source = "company.id", target = "companyId")
+//    })
+//    public abstract PayoutDto payoutToPayoutDto(Payout payout);
+//
+//    @Mappings({
+//            @Mapping(source = "retailStoreId", target = "retailStore.id"),
+//            @Mapping(source = "companyId", target = "company.id")
+//    })
+//    public abstract Payout payoutDtoToPayout(PayoutDto payoutsDto);
+//
+//}
 
 
 //abstract class CustomDtoMapper extends DtoMapper {
