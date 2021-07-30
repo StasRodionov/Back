@@ -26,7 +26,8 @@ public class PaymentDto {
     @NotNull
     private String number;
 
-    private LocalDateTime time;
+    private String time;
+//    private LocalDateTime time;
 
     @NotNull
     private CompanyDto companyDto;
@@ -44,7 +45,8 @@ public class PaymentDto {
                       TypeOfPayment typeOfPayment,
                       PaymentMethods paymentMethods,
                       String number,
-                      LocalDateTime time,
+//                      LocalDateTime time,
+                      String time,
                       Long companyId,
                       Long contractorId,
                       Long contractId,
