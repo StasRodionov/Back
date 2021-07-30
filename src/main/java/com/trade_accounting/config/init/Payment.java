@@ -52,7 +52,7 @@ public class Payment extends InitData {
                                         .sum(BigDecimal.valueOf(100))
                                         .paymentMethods(PaymentMethods.CASH)
                                         .typeOfPayment(TypeOfPayment.INCOMING)
-                                        .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                                        .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                                         .companyDto(CompanyDto.builder()
                                                 .id(companyDto.getId())
                                                 .build())
@@ -68,26 +68,14 @@ public class Payment extends InitData {
                                         .build()
                         );
                         count++;
-//                        paymentService.create(new PaymentDto(
-//                                null,
-//                                TypeOfPayment.INCOMING,
-//                                PaymentMethods.CASH,
-//                                "0000" + count,
-//                                localDateTime,
-//                                companyDto.getId(),
-//                                contractorDto.getId(),
-//                                contractDto.getId(),
-//                                projectDto.getId(),
-//                                new BigDecimal("100.00")
-//                        ));
-//                        count++;
+
                         paymentService.create(PaymentDto.builder()
                                 .id(null)
                                 .number("0000" + count)
                                 .sum(BigDecimal.valueOf(50))
                                 .paymentMethods(PaymentMethods.BANK)
                                 .typeOfPayment(TypeOfPayment.OUTGOING)
-                                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                                .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                                 .companyDto(CompanyDto.builder()
                                         .id(companyDto.getId())
                                         .build())
@@ -103,19 +91,6 @@ public class Payment extends InitData {
                                 .build()
                         );
                         count++;
-//                        paymentService.create(new PaymentDto(
-//                                null,
-//                                TypeOfPayment.OUTGOING,
-//                                PaymentMethods.BANK,
-//                                "0000" + count,
-//                                localDateTime,
-//                                companyDto.getId(),
-//                                contractorDto.getId(),
-//                                contractDto.getId(),
-//                                projectDto.getId(),
-//                                new BigDecimal("50.00")
-//                        ));
-//                        count++;
                     }
                 }
             }
