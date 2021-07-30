@@ -708,43 +708,43 @@ public abstract class DtoMapper {
 
     public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
 
-    //    Correction
-    public CorrectionDto toCorrectionDto(Correction correction) {
-        CorrectionDto correctionDto = new CorrectionDto();
-        if (correction == null) {
-            return null;
-        } else {
-            correctionDto.setId(correction.getId());
-            correctionDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(correction.getDate()));
-            correctionDto.setIsSent(correction.getIsSent());
-            correctionDto.setIsPrint(correction.getIsPrint());
-            correctionDto.setWriteOffProduct(correction.getWriteOffProduct());
-            correctionDto.setComment(correction.getComment());
-
-            Warehouse warehouse = correction.getWarehouse();
-            if (warehouse == null) {
-                return null;
-            } else {
-                correctionDto.setWarehouseId(warehouse.getId());
-
-                Company company = correction.getCompany();
-                if (company == null) {
-                    return null;
-                } else {
-                    correctionDto.setCompanyId(company.getId());
-
-                    List<Long> correctionProductIds = correction.getCorrectionProducts().stream()
-                            .map(CorrectionProduct::getId)
-                            .collect(Collectors.toList());
-                    correctionDto.setCorrectionProductIds(correctionProductIds);
-                    return correctionDto;
-                }
-            }
-        }
-    }
-
-    @Mapping(target = "date", ignore = true)
-    public abstract Correction toCorrection(CorrectionDto correctionDto);
+//    //    Correction
+//    public CorrectionDto toCorrectionDto(Correction correction) {
+//        CorrectionDto correctionDto = new CorrectionDto();
+//        if (correction == null) {
+//            return null;
+//        } else {
+//            correctionDto.setId(correction.getId());
+//            correctionDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(correction.getDate()));
+//            correctionDto.setIsSent(correction.getIsSent());
+//            correctionDto.setIsPrint(correction.getIsPrint());
+//            correctionDto.setWriteOffProduct(correction.getWriteOffProduct());
+//            correctionDto.setComment(correction.getComment());
+//
+//            Warehouse warehouse = correction.getWarehouse();
+//            if (warehouse == null) {
+//                return null;
+//            } else {
+//                correctionDto.setWarehouseId(warehouse.getId());
+//
+//                Company company = correction.getCompany();
+//                if (company == null) {
+//                    return null;
+//                } else {
+//                    correctionDto.setCompanyId(company.getId());
+//
+//                    List<Long> correctionProductIds = correction.getCorrectionProducts().stream()
+//                            .map(CorrectionProduct::getId)
+//                            .collect(Collectors.toList());
+//                    correctionDto.setCorrectionProductIds(correctionProductIds);
+//                    return correctionDto;
+//                }
+//            }
+//        }
+//    }
+//
+//    @Mapping(target = "date", ignore = true)
+//    public abstract Correction toCorrection(CorrectionDto correctionDto);
 
 //    //    CorrectionProduct
 //    @Mappings({

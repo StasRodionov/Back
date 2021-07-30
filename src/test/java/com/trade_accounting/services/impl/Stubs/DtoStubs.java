@@ -169,9 +169,9 @@ public class DtoStubs {
 //        return dtoMapper.toCorrectionProductDto(ModelStubs.getCorrectionProduct(id));
 //    }
 
-    public static CorrectionDto getCorrectionDto(Long id) {
-        return dtoMapper.toCorrectionDto(ModelStubs.getCorrection(id));
-    }
+//    public static CorrectionDto getCorrectionDto(Long id) {
+//        return dtoMapper.toCorrectionDto(ModelStubs.getCorrection(id));
+//    }
 
 
     public static ProductionDto getProductionDto(Long id) {
