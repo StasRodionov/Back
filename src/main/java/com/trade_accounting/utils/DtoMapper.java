@@ -754,22 +754,22 @@ public abstract class DtoMapper {
 
     public abstract CorrectionProduct toCorrectionProduct(CorrectionProductDto correctionDto);
 
-    // ReturnToSupplier
-    @Mappings({
-            @Mapping(source = "company.id", target = "companyId"),
-            @Mapping(source = "contract.id", target = "contractId"),
-            @Mapping(source = "contractor.id", target = "contractorId"),
-            @Mapping(source = "warehouse.id", target = "warehouseId"),
-    })
-    public abstract ReturnToSupplierDto returnToSupplierToReturnToSupplierDto(ReturnToSupplier returnToSupplier);
-
-    @Mappings({
-            @Mapping(source = "companyId", target = "company.id"),
-            @Mapping(source = "contractId", target = "contract.id"),
-            @Mapping(source = "contractorId", target = "contractor.id"),
-            @Mapping(source = "warehouseId", target = "warehouse.id"),
-    })
-    public abstract ReturnToSupplier returnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
+//    // ReturnToSupplier
+//    @Mappings({
+//            @Mapping(source = "company.id", target = "companyId"),
+//            @Mapping(source = "contract.id", target = "contractId"),
+//            @Mapping(source = "contractor.id", target = "contractorId"),
+//            @Mapping(source = "warehouse.id", target = "warehouseId"),
+//    })
+//    public abstract ReturnToSupplierDto returnToSupplierToReturnToSupplierDto(ReturnToSupplier returnToSupplier);
+//
+//    @Mappings({
+//            @Mapping(source = "companyId", target = "company.id"),
+//            @Mapping(source = "contractId", target = "contract.id"),
+//            @Mapping(source = "contractorId", target = "contractor.id"),
+//            @Mapping(source = "warehouseId", target = "warehouse.id"),
+//    })
+//    public abstract ReturnToSupplier returnToSupplierDtoToReturnToSupplier(ReturnToSupplierDto returnToSupplierDto);
 
 //    //Inventarization
 //    public InventarizationDto toInventarizationDto(Inventarization inventarization) {

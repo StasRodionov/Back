@@ -178,9 +178,9 @@ public class DtoStubs {
         return dtoMapper.productionToProductionDto(ModelStubs.getProduction(id));
     }
 
-    public static ReturnToSupplierDto getReturnToSupplierDto(Long id) {
-        return dtoMapper.returnToSupplierToReturnToSupplierDto(ModelStubs.getReturnToSupplier(id));
-    }
+//    public static ReturnToSupplierDto getReturnToSupplierDto(Long id) {
+//        return dtoMapper.returnToSupplierToReturnToSupplierDto(ModelStubs.getReturnToSupplier(id));
+//    }
 
 //    public static InventarizationDto getInventarizationDto(Long id) {
 //        return dtoMapper.toInventarizationDto(ModelStubs.getInventarization(id));

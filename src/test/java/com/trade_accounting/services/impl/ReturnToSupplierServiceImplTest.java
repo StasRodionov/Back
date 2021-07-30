@@ -9,6 +9,7 @@ import com.trade_accounting.repositories.ReturnToSupplierRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.ReturnToSupplierDtoStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,6 +49,9 @@ class ReturnToSupplierServiceImplTest {
     @Spy
     DtoMapperImpl dtoMapper;
 
+    @Spy
+    ReturnToSupplierDtoStubs returnToSupplierDtoStubs;
+
     @InjectMocks
     ReturnToSupplierServiceImpl returnToSupplierService;
 
@@ -60,9 +64,9 @@ class ReturnToSupplierServiceImplTest {
     void getAll_shouldReturnFilledListReturnToSuppliers() {
         when(returnToSupplierRepository.getAll())
                 .thenReturn(
-                        List.of(DtoStubs.getReturnToSupplierDto(1L),
-                                DtoStubs.getReturnToSupplierDto(2L),
-                                DtoStubs.getReturnToSupplierDto(3L)));
+                        List.of(ReturnToSupplierDtoStubs.getReturnToSupplierDto(1L),
+                                ReturnToSupplierDtoStubs.getReturnToSupplierDto(2L),
+                                ReturnToSupplierDtoStubs.getReturnToSupplierDto(3L)));
         List<ReturnToSupplierDto> list = returnToSupplierService.getAll();
         assertEquals(3, list.size());
     }
@@ -93,7 +97,7 @@ class ReturnToSupplierServiceImplTest {
 
     private void saveOrUpdate() {
         when(returnToSupplierRepository.save(any())).thenReturn(ModelStubs.getReturnToSupplier(1L));
-        ReturnToSupplierDto dto = returnToSupplierService.create(DtoStubs.getReturnToSupplierDto(1L));
+        ReturnToSupplierDto dto = returnToSupplierService.create(ReturnToSupplierDtoStubs.getReturnToSupplierDto(1L));
         assertEquals(1, dto.getId());
         verify(returnToSupplierRepository).save(any(ReturnToSupplier.class));
     }
