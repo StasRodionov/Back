@@ -746,13 +746,13 @@ public abstract class DtoMapper {
     @Mapping(target = "date", ignore = true)
     public abstract Correction toCorrection(CorrectionDto correctionDto);
 
-    //    CorrectionProduct
-    @Mappings({
-            @Mapping(source = "product.id", target = "productId")
-    })
-    public abstract CorrectionProductDto toCorrectionProductDto(CorrectionProduct correction);
-
-    public abstract CorrectionProduct toCorrectionProduct(CorrectionProductDto correctionDto);
+//    //    CorrectionProduct
+//    @Mappings({
+//            @Mapping(source = "product.id", target = "productId")
+//    })
+//    public abstract CorrectionProductDto toCorrectionProductDto(CorrectionProduct correction);
+//
+//    public abstract CorrectionProduct toCorrectionProduct(CorrectionProductDto correctionDto);
 
 //    // ReturnToSupplier
 //    @Mappings({
