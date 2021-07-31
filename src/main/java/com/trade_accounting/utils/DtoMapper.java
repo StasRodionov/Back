@@ -670,17 +670,17 @@ public abstract class DtoMapper {
 //    })
 //    public abstract RegionDto toRegionDto(Region region);
 
-    @Mappings({
-            @Mapping(source = "regionDto", target = "region"),
-            @Mapping(source = "citiesDto", target = "cities")
-    })
-    public abstract District toDistrict(DistrictDto districtDto);
-
-    @Mappings({
-            @Mapping(source = "region", target = "regionDto"),
-            @Mapping(source = "cities", target = "citiesDto")
-    })
-    public abstract DistrictDto toDistrictDto(District district);
+//    @Mappings({
+//            @Mapping(source = "regionDto", target = "region"),
+//            @Mapping(source = "citiesDto", target = "cities")
+//    })
+//    public abstract District toDistrict(DistrictDto districtDto);
+//
+//    @Mappings({
+//            @Mapping(source = "region", target = "regionDto"),
+//            @Mapping(source = "cities", target = "citiesDto")
+//    })
+//    public abstract DistrictDto toDistrictDto(District district);
 
     @Mappings({
             @Mapping(source = "districtDto", target = "district"),

@@ -149,9 +149,9 @@ public class DtoStubs {
         return dtoMapper.toCityDto(ModelStubs.getCity(id));
     }
 
-    public static DistrictDto getDistrictDto(Long id) {
-        return dtoMapper.toDistrictDto(ModelStubs.getDistrict(id));
-    }
+//    public static DistrictDto getDistrictDto(Long id) {
+//        return dtoMapper.toDistrictDto(ModelStubs.getDistrict(id));
+//    }
 
     public static StreetDto getStreetDto(Long id) {
         return dtoMapper.toStreetDto(ModelStubs.getStreet(id));
