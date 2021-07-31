@@ -473,17 +473,17 @@ public abstract class DtoMapper {
 
     public abstract List<ProductDto> toProductDto(Collection<Product> products);
 
-    //ProductGroup
-    //На момент написания не известно работает или нет из-за рекурсии
-    @Mappings({
-            @Mapping(source = "productGroup.id", target = "parentId")
-    })
-    public abstract ProductGroupDto productGroupToProductGroupDto(ProductGroup productGroup);
-
-    @Mappings({
-            @Mapping(source = "parentId", target = "productGroup.id")
-    })
-    public abstract ProductGroup productGroupDtoToProductGroup(ProductGroupDto productGroupDto);
+//    //ProductGroup
+//    //На момент написания не известно работает или нет из-за рекурсии
+//    @Mappings({
+//            @Mapping(source = "productGroup.id", target = "parentId")
+//    })
+//    public abstract ProductGroupDto productGroupToProductGroupDto(ProductGroup productGroup);
+//
+//    @Mappings({
+//            @Mapping(source = "parentId", target = "productGroup.id")
+//    })
+//    public abstract ProductGroup productGroupDtoToProductGroup(ProductGroupDto productGroupDto);
 
 //    //ProductPrice
 //    @Mappings({
