@@ -125,9 +125,9 @@ public class DtoStubs {
         );
     }
 
-    public static InvoiceProductDto getInvoiceProductDto(Long id) {
-        return dtoMapper.invoiceProductToInvoiceProductDto(ModelStubs.getInvoiceProduct(id));
-    }
+//    public static InvoiceProductDto getInvoiceProductDto(Long id) {
+//        return dtoMapper.invoiceProductToInvoiceProductDto(ModelStubs.getInvoiceProduct(id));
+//    }
 
 //    public static LegalDetailDto getLegalDetailDto(Long id) {
 //        return dtoMapper.legalDetailToLegalDetailDto(ModelStubs.getLegalDetail(1L));

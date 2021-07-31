@@ -378,18 +378,18 @@ public abstract class DtoMapper {
     })
     public abstract Invoice invoiceDtoToInvoice(InvoiceDto emp);
 
-    //InvoiceProduct
-    @Mappings({
-            @Mapping(source = "invoice", target = "invoiceDto"),
-            @Mapping(source = "product", target = "productDto")
-    })
-    public abstract InvoiceProductDto invoiceProductToInvoiceProductDto(InvoiceProduct invoiceProduct);
-
-    @Mappings({
-            @Mapping(source = "invoiceDto", target = "invoice"),
-            @Mapping(source = "productDto", target = "product")
-    })
-    public abstract InvoiceProduct invoiceProductDtoToInvoiceProduct(InvoiceProductDto invoiceProductDto);
+//    //InvoiceProduct
+//    @Mappings({
+//            @Mapping(source = "invoice", target = "invoiceDto"),
+//            @Mapping(source = "product", target = "productDto")
+//    })
+//    public abstract InvoiceProductDto invoiceProductToInvoiceProductDto(InvoiceProduct invoiceProduct);
+//
+//    @Mappings({
+//            @Mapping(source = "invoiceDto", target = "invoice"),
+//            @Mapping(source = "productDto", target = "product")
+//    })
+//    public abstract InvoiceProduct invoiceProductDtoToInvoiceProduct(InvoiceProductDto invoiceProductDto);
 
 //    // SupplierAccounts
 //    @Mappings({
