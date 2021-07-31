@@ -450,28 +450,28 @@ public abstract class DtoMapper {
 
     public abstract PriceList priceListDtoToPriceList(PriceListDto priceListDto);
 
-    //Product
-    @Mappings({
-            @Mapping(source = "unit", target = "unitDto"),
-            @Mapping(source = "contractor", target = "contractorDto"),
-            @Mapping(source = "productPrices", target = "productPriceDtos"),
-            @Mapping(source = "taxSystem", target = "taxSystemDto"),
-            @Mapping(source = "productGroup", target = "productGroupDto"),
-            @Mapping(source = "attributeOfCalculationObject", target = "attributeOfCalculationObjectDto")
-    })
-    public abstract ProductDto productToProductDto(Product product);
-
-    @Mappings({
-            @Mapping(source = "unitDto", target = "unit"),
-            @Mapping(source = "contractorDto", target = "contractor"),
-            @Mapping(source = "productPriceDtos", target = "productPrices"),
-            @Mapping(source = "taxSystemDto", target = "taxSystem"),
-            @Mapping(source = "productGroupDto", target = "productGroup"),
-            @Mapping(source = "attributeOfCalculationObjectDto", target = "attributeOfCalculationObject")
-    })
-    public abstract Product productDtoToProduct(ProductDto productDto);
-
-    public abstract List<ProductDto> toProductDto(Collection<Product> products);
+//    //Product
+//    @Mappings({
+//            @Mapping(source = "unit", target = "unitDto"),
+//            @Mapping(source = "contractor", target = "contractorDto"),
+//            @Mapping(source = "productPrices", target = "productPriceDtos"),
+//            @Mapping(source = "taxSystem", target = "taxSystemDto"),
+//            @Mapping(source = "productGroup", target = "productGroupDto"),
+//            @Mapping(source = "attributeOfCalculationObject", target = "attributeOfCalculationObjectDto")
+//    })
+//    public abstract ProductDto productToProductDto(Product product);
+//
+//    @Mappings({
+//            @Mapping(source = "unitDto", target = "unit"),
+//            @Mapping(source = "contractorDto", target = "contractor"),
+//            @Mapping(source = "productPriceDtos", target = "productPrices"),
+//            @Mapping(source = "taxSystemDto", target = "taxSystem"),
+//            @Mapping(source = "productGroupDto", target = "productGroup"),
+//            @Mapping(source = "attributeOfCalculationObjectDto", target = "attributeOfCalculationObject")
+//    })
+//    public abstract Product productDtoToProduct(ProductDto productDto);
+//
+//    public abstract List<ProductDto> toProductDto(Collection<Product> products);
 
 //    //ProductGroup
 //    //На момент написания не известно работает или нет из-за рекурсии
