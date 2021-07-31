@@ -423,22 +423,22 @@ public abstract class DtoMapper {
     })
     public abstract LegalDetail legalDetailDtoToLegalDetail(LegalDetailDto legalDetailDto);
 
-    //Payment
-    @Mappings({
-            @Mapping(source = "company", target = "companyDto"),
-            @Mapping(source = "contractor", target = "contractorDto"),
-            @Mapping(source = "contract", target = "contractDto"),
-            @Mapping(source = "project", target = "projectDto")
-    })
-    public abstract PaymentDto paymentToPaymentDto(Payment payment);
-
-    @Mappings({
-            @Mapping(source = "companyDto", target = "company"),
-            @Mapping(source = "contractorDto", target = "contractor"),
-            @Mapping(source = "contractDto", target = "contract"),
-            @Mapping(source = "projectDto", target = "project")
-    })
-    public abstract Payment paymentDtoToPayment(PaymentDto paymentDto);
+//    //Payment
+//    @Mappings({
+//            @Mapping(source = "company", target = "companyDto"),
+//            @Mapping(source = "contractor", target = "contractorDto"),
+//            @Mapping(source = "contract", target = "contractDto"),
+//            @Mapping(source = "project", target = "projectDto")
+//    })
+//    public abstract PaymentDto paymentToPaymentDto(Payment payment);
+//
+//    @Mappings({
+//            @Mapping(source = "companyDto", target = "company"),
+//            @Mapping(source = "contractorDto", target = "contractor"),
+//            @Mapping(source = "contractDto", target = "contract"),
+//            @Mapping(source = "projectDto", target = "project")
+//    })
+//    public abstract Payment paymentDtoToPayment(PaymentDto paymentDto);
 
 //    //Position
 //    public abstract PositionDto positionToPositionDto(Position position);

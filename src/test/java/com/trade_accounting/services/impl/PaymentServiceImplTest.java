@@ -9,7 +9,10 @@ import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.PaymentDtoStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.PaymentMapper;
+import com.trade_accounting.utils.mapper.PaymentMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -49,6 +52,9 @@ class PaymentServiceImplTest {
 
     @Spy
     private DtoMapperImpl dtoMapper;
+
+    @Spy
+    private PaymentMapperImpl paymentMapper;
 
     @InjectMocks
     private PaymentServiceImpl paymentService;
@@ -103,7 +109,7 @@ class PaymentServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         paymentService.create(
-                DtoStubs.getPaymentDto(1L)
+                PaymentDtoStubs.getPaymentDto(1L)
         );
 
         verify(paymentRepository).save(any(Payment.class));
@@ -116,7 +122,7 @@ class PaymentServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         paymentService.update(
-                DtoStubs.getPaymentDto(1L)
+                PaymentDtoStubs.getPaymentDto(1L)
         );
 
         verify(paymentRepository).save(any(Payment.class));
