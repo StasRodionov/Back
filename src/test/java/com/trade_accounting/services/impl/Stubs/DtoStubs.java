@@ -75,11 +75,11 @@ public class DtoStubs {
         );
     }
 
-    public static TypeOfContractorDto getTypeOfContractorDto(Long id) {
-        return dtoMapper.typeOfContractorToTypeOfContractorDto(
-                ModelStubs.getTypeOfContractor(id)
-        );
-    }
+//    public static TypeOfContractorDto getTypeOfContractorDto(Long id) {
+//        return dtoMapper.typeOfContractorToTypeOfContractorDto(
+//                ModelStubs.getTypeOfContractor(id)
+//        );
+//    }
 
     public static AttributeOfCalculationObjectDto getAttributeOfCalculationObjectDto(Long id) {
         return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
