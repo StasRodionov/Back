@@ -619,10 +619,10 @@ public abstract class DtoMapper {
 
     public abstract TypeOfPrice typeOfPriceDtoToTypeOfPrice(TypeOfPriceDto typeOfPriceDto);
 
-    //Unit
-    public abstract UnitDto unitToUnitDto(Unit unit);
-
-    public abstract Unit unitDtoToUnit(UnitDto unitDto);
+//    //Unit
+//    public abstract UnitDto unitToUnitDto(Unit unit);
+//
+//    public abstract Unit unitDtoToUnit(UnitDto unitDto);
 
 //    //Warehouse
 //    public abstract WarehouseDto warehouseToWarehouseDto(Warehouse warehouse);
