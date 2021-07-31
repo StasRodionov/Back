@@ -6,9 +6,9 @@ import com.trade_accounting.models.dto.TechnicalCardDto;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.repositories.TechnicalCardProductionRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
-import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.TechnicalCardProductionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -26,6 +26,7 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
     private final TechnicalCardProductionRepository technicalCardProductionRepository;
     private final ProductRepository productRepository;
     private final DtoMapper dtoMapper;
+    private final TechnicalCardProductionMapper technicalCardProductionMapper;
 
     @Override
     public List<TechnicalCardDto> getAll() {
@@ -50,7 +51,7 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
         List<TechnicalCardProduction> finalProduction = dto.getFinalProductionDto().stream()
                 .map(x -> {
                     TechnicalCardProduction tcp =
-                            dtoMapper.technicalCardProductionDtoToTechnicalCardProduction(x);
+                            technicalCardProductionMapper.toModel(x);
                     tcp.setProduct(productRepository.getOne(x.getProductId()));
                     return tcp;
                 }).collect(Collectors.toList());
@@ -60,7 +61,7 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
         List<TechnicalCardProduction> materials = dto.getMaterialsDto().stream()
                 .map(x -> {
                     TechnicalCardProduction tcp =
-                            dtoMapper.technicalCardProductionDtoToTechnicalCardProduction(x);
+                            technicalCardProductionMapper.toModel(x);
                     tcp.setProduct(productRepository.getOne(x.getProductId()));
                     return tcp;
                 }).collect(Collectors.toList());

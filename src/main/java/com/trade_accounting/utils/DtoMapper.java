@@ -601,13 +601,13 @@ public abstract class DtoMapper {
 
     public abstract TechnicalCardGroup technicalCardGroupDtoToTechnicalCardGroup(TechnicalCardGroupDto technicalCardGroupDto);
 
-    //TechnicalCardProduction
-    @Mappings({
-            @Mapping(source = "product.id", target = "productId"),
-    })
-    public abstract TechnicalCardProductionDto technicalCardProductionToTechnicalCardProductionDto(TechnicalCardProduction technicalCardProduction);
-
-    public abstract TechnicalCardProduction technicalCardProductionDtoToTechnicalCardProduction(TechnicalCardProductionDto technicalCardProductionDto);
+//    //TechnicalCardProduction
+//    @Mappings({
+//            @Mapping(source = "product.id", target = "productId"),
+//    })
+//    public abstract TechnicalCardProductionDto technicalCardProductionToTechnicalCardProductionDto(TechnicalCardProduction technicalCardProduction);
+//
+//    public abstract TechnicalCardProduction technicalCardProductionDtoToTechnicalCardProduction(TechnicalCardProductionDto technicalCardProductionDto);
 
 //    //TypeOfContractor
 //    public abstract TypeOfContractorDto typeOfContractorToTypeOfContractorDto(TypeOfContractor typeOfContractor);
