@@ -17,6 +17,7 @@ import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.LegalDetailMapper;
 import com.trade_accounting.utils.mapper.TypeOfPriceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -42,6 +43,7 @@ public class ContractorServiceImpl implements ContractorService {
     private final DepartmentRepository departmentRepository;
     private final BankAccountRepository bankAccountRepository;
     private final DtoMapper dtoMapper;
+    private final LegalDetailMapper legalDetailMapper;
     private final TypeOfPriceMapper typeOfPriceMapper;
 
     @Override
@@ -109,7 +111,7 @@ public class ContractorServiceImpl implements ContractorService {
 
         contractor.setLegalDetail(
                 legalDetailRepository.save(
-                        dtoMapper.legalDetailDtoToLegalDetail(
+                        legalDetailMapper.toModel(
                                 contractorDto.getLegalDetailDto()
                         )
                 )

@@ -408,20 +408,20 @@ public abstract class DtoMapper {
     })
     public abstract SupplierAccount supplierAccountDtoToSupplierAccount(SupplierAccountDto SupplierAccountDto);
 
-    //LegalDetail
-    @Mappings({
-            @Mapping(source = "dateOfTheCertificate", target = "dateOfTheCertificate"),
-            @Mapping(source = "typeOfContractor.id", target = "typeOfContractorDtoId"),
-            @Mapping(source = "address.id", target = "addressDtoId")
-    })
-    public abstract LegalDetailDto legalDetailToLegalDetailDto(LegalDetail legalDetail);
-
-    @Mappings({
-            @Mapping(target = "dateOfTheCertificate", ignore = true),
-            @Mapping(source = "typeOfContractorDtoId", target = "typeOfContractor.id"),
-            @Mapping(source = "addressDtoId", target = "address.id")
-    })
-    public abstract LegalDetail legalDetailDtoToLegalDetail(LegalDetailDto legalDetailDto);
+//    //LegalDetail
+//    @Mappings({
+//            @Mapping(source = "dateOfTheCertificate", target = "dateOfTheCertificate"),
+//            @Mapping(source = "typeOfContractor.id", target = "typeOfContractorDtoId"),
+//            @Mapping(source = "address.id", target = "addressDtoId")
+//    })
+//    public abstract LegalDetailDto legalDetailToLegalDetailDto(LegalDetail legalDetail);
+//
+//    @Mappings({
+//            @Mapping(target = "dateOfTheCertificate", ignore = true),
+//            @Mapping(source = "typeOfContractorDtoId", target = "typeOfContractor.id"),
+//            @Mapping(source = "addressDtoId", target = "address.id")
+//    })
+//    public abstract LegalDetail legalDetailDtoToLegalDetail(LegalDetailDto legalDetailDto);
 
 //    //Payment
 //    @Mappings({
