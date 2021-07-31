@@ -614,10 +614,10 @@ public abstract class DtoMapper {
 
     public abstract TypeOfContractor typeOfContractorDtoToTypeOfContractor(TypeOfContractorDto typeOfContractorDto);
 
-    //TypeOfPrice
-    public abstract TypeOfPriceDto typeOfPriceToTypeOfPriceDto(TypeOfPrice typeOfPrice);
-
-    public abstract TypeOfPrice typeOfPriceDtoToTypeOfPrice(TypeOfPriceDto typeOfPriceDto);
+//    //TypeOfPrice
+//    public abstract TypeOfPriceDto typeOfPriceToTypeOfPriceDto(TypeOfPrice typeOfPrice);
+//
+//    public abstract TypeOfPrice typeOfPriceDtoToTypeOfPrice(TypeOfPriceDto typeOfPriceDto);
 
 //    //Unit
 //    public abstract UnitDto unitToUnitDto(Unit unit);

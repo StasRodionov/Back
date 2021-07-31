@@ -53,9 +53,9 @@ public class DtoStubs {
         );
     }
 
-    public static TypeOfPriceDto getTypeOfPriceDto(Long id) {
-        return dtoMapper.typeOfPriceToTypeOfPriceDto(ModelStubs.getTypeOfPrice(id));
-    }
+//    public static TypeOfPriceDto getTypeOfPriceDto(Long id) {
+//        return dtoMapper.typeOfPriceToTypeOfPriceDto(ModelStubs.getTypeOfPrice(id));
+//    }
 
     public static BankAccountDto getBankAccountDto(Long id) {
         return dtoMapper.bankAccountToBankAccountDto(
