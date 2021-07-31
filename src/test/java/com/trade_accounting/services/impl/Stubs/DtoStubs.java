@@ -69,11 +69,11 @@ public class DtoStubs {
         );
     }
 
-    public static ProjectDto getProjectDto(Long id) {
-        return dtoMapper.projectToProjectDto(
-                ModelStubs.getProject(id)
-        );
-    }
+//    public static ProjectDto getProjectDto(Long id) {
+//        return dtoMapper.projectToProjectDto(
+//                ModelStubs.getProject(id)
+//        );
+//    }
 
 //    public static TypeOfContractorDto getTypeOfContractorDto(Long id) {
 //        return dtoMapper.typeOfContractorToTypeOfContractorDto(
