@@ -445,10 +445,10 @@ public abstract class DtoMapper {
 
     public abstract Position positionDtoToPosition(PositionDto position);
 
-    //PriceList
-    public abstract PriceListDto priceListToPriceListDto(PriceList priceList);
-
-    public abstract PriceList priceListDtoToPriceList(PriceListDto priceListDto);
+//    //PriceList
+//    public abstract PriceListDto priceListToPriceListDto(PriceList priceList);
+//
+//    public abstract PriceList priceListDtoToPriceList(PriceListDto priceListDto);
 
 //    //Product
 //    @Mappings({

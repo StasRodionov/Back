@@ -6,6 +6,9 @@ import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
+import com.trade_accounting.utils.mapper.PriceListMapperImpl;
+import com.trade_accounting.utils.mapper.ProductGroupMapper;
+import com.trade_accounting.utils.mapper.ProductGroupMapperImpl;
 import com.trade_accounting.utils.mapper.TaskCommentMapperImpl;
 import com.trade_accounting.utils.mapper.TaskMapperImpl;
 import org.junit.jupiter.api.Test;
@@ -22,6 +25,9 @@ class DtoMapperTest {
     private DtoMapperImpl dtoMapper;
 
     @Spy
+    private ProductGroupMapperImpl productGroupMapper;
+
+    @Spy
     private TaskMapperImpl taskMapper;
 
     @Spy
@@ -32,7 +38,7 @@ class DtoMapperTest {
         ProductGroupDto productGroupDto = new ProductGroupDto();
         productGroupDto.setParentId(1L);
 
-        ProductGroup productGroup = dtoMapper.productGroupDtoToProductGroup(productGroupDto);
+        ProductGroup productGroup = productGroupMapper.toModel(productGroupDto);
         assertEquals(productGroupDto.getParentId(), productGroup.getProductGroup().getId());
     }
 
