@@ -206,9 +206,9 @@ public class DtoStubs {
         return dtoMapper.agentReportsToAgentReportsDto(ModelStubs.getAgentReports(id));
     }
 
-    public static SupplierAccountDto getSupplierAccountDto(Long id) {
-        return dtoMapper.supplierAccountToSupplierAccountDto(ModelStubs.getSupplierAccount(id));
-    }
+//    public static SupplierAccountDto getSupplierAccountDto(Long id) {
+//        return dtoMapper.supplierAccountToSupplierAccountDto(ModelStubs.getSupplierAccount(id));
+//    }
 
 //    public static BalanceAdjustmentDto getBalanceAdjustmentDto(Long id) {
 //        return dtoMapper.balanceAdjustmentToBalanceAdjustmentDto(ModelStubs.getBalanceAdjustment(id));

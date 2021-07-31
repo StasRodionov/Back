@@ -9,6 +9,7 @@ import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.SupplierAccountService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.SupplierAccountMapper;
 import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,6 +26,7 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
 
     private final SupplierAccountRepository supplierAccountRepository;
     private final DtoMapper dtoMapper;
+    private final SupplierAccountMapper supplierAccountMapper;
     private final WarehouseMapper warehouseMapper;
     private final CompanyRepository companyRepository;
     private final ContractorRepository contractorRepository;
@@ -39,7 +41,7 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
     @Override
     public SupplierAccountDto getById(Long id) {
         Optional<SupplierAccount> invoicesToCustomers = supplierAccountRepository.findById(id);
-        return dtoMapper.supplierAccountToSupplierAccountDto(invoicesToCustomers.orElse(new SupplierAccount()));
+        return supplierAccountMapper.toDto(invoicesToCustomers.orElse(new SupplierAccount()));
     }
 
     @Override
@@ -51,7 +53,7 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
                 .contract(dtoMapper.contractDtoToContract(contractRepository.getById(createSupplier.getContractId())))
                 .contractor((contractorRepository.getOne(createSupplier.getContractorId())))
                 .build();
-        return dtoMapper.supplierAccountToSupplierAccountDto(supplierAccountRepository.save(saveInvoices));
+        return supplierAccountMapper.toDto(supplierAccountRepository.save(saveInvoices));
     }
 
     @Override
@@ -81,6 +83,6 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
 
     @Override
     public List<SupplierAccountDto> search(Specification<SupplierAccount> spec) {
-        return executeSearch(supplierAccountRepository, dtoMapper::supplierAccountToSupplierAccountDto, spec);
+        return executeSearch(supplierAccountRepository, supplierAccountMapper::toDto, spec);
     }
 }
