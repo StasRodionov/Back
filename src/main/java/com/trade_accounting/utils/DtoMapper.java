@@ -526,18 +526,18 @@ public abstract class DtoMapper {
     })
     public abstract Task taskDtoToTask(TaskDto taskDto);
 
-    //TaskComment *Test
-    @Mappings({
-            @Mapping(source = "publisher.id", target = "publisherId"),
-            @Mapping(source = "task.id", target = "taskId"),
-    })
-    public abstract TaskCommentDto taskCommentToTaskCommentDto(TaskComment taskComment);
-
-    @Mappings({
-            @Mapping(source = "publisherId", target = "publisher.id"),
-            @Mapping(source = "taskId", target = "task.id")
-    })
-    public abstract TaskComment taskCommentDtoToTaskComment(TaskCommentDto taskCommentDto);
+//    //TaskComment *Test
+//    @Mappings({
+//            @Mapping(source = "publisher.id", target = "publisherId"),
+//            @Mapping(source = "task.id", target = "taskId"),
+//    })
+//    public abstract TaskCommentDto taskCommentToTaskCommentDto(TaskComment taskComment);
+//
+//    @Mappings({
+//            @Mapping(source = "publisherId", target = "publisher.id"),
+//            @Mapping(source = "taskId", target = "task.id")
+//    })
+//    public abstract TaskComment taskCommentDtoToTaskComment(TaskCommentDto taskCommentDto);
 
 //    //TaxSystem
 //    public abstract TaxSystemDto taxSystemToTaxSystemDto(TaxSystem taxSystem);
