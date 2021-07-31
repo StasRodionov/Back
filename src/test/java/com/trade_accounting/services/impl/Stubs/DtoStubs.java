@@ -113,11 +113,11 @@ public class DtoStubs {
         );
     }
 
-    public static TaxSystemDto getTaxSystemDto(Long id) {
-        return dtoMapper.taxSystemToTaxSystemDto(
-                ModelStubs.getTaxSystem(id)
-        );
-    }
+//    public static TaxSystemDto getTaxSystemDto(Long id) {
+//        return dtoMapper.taxSystemToTaxSystemDto(
+//                ModelStubs.getTaxSystem(id)
+//        );
+//    }
 
     public static InvoiceDto getInvoiceDto(Long id) {
         return dtoMapper.invoiceToInvoiceDto(

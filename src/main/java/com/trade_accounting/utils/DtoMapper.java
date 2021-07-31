@@ -31,7 +31,6 @@ import com.trade_accounting.models.Role;
 import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
-import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AgentReportsDto;
@@ -63,7 +62,6 @@ import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
-import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
@@ -541,10 +539,10 @@ public abstract class DtoMapper {
     })
     public abstract TaskComment taskCommentDtoToTaskComment(TaskCommentDto taskCommentDto);
 
-    //TaxSystem
-    public abstract TaxSystemDto taxSystemToTaxSystemDto(TaxSystem taxSystem);
-
-    public abstract TaxSystem taxSystemDtoToTaxSystem(TaxSystemDto taxSystemDto);
+//    //TaxSystem
+//    public abstract TaxSystemDto taxSystemToTaxSystemDto(TaxSystem taxSystem);
+//
+//    public abstract TaxSystem taxSystemDtoToTaxSystem(TaxSystemDto taxSystemDto);
 
 //    //TechnicalCard
 //    @Mappings({
