@@ -133,11 +133,11 @@ public class DtoStubs {
         return dtoMapper.legalDetailToLegalDetailDto(ModelStubs.getLegalDetail(1L));
     }
 
-    public static RoleDto getRoleDto(Long id) {
-        return dtoMapper.roleToRoleDto(
-                ModelStubs.getRole(id)
-        );
-    }
+//    public static RoleDto getRoleDto(Long id) {
+//        return dtoMapper.roleToRoleDto(
+//                ModelStubs.getRole(id)
+//        );
+//    }
 
     public static CurrencyDto getCurrencyDto(Long id) {
         return dtoMapper.currencyToCurrencyDto(

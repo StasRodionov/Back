@@ -501,10 +501,10 @@ public abstract class DtoMapper {
 
     public abstract Project projectDtoToProject(ProjectDto projectDto);
 
-    //Role
-    public abstract RoleDto roleToRoleDto(Role role);
-
-    public abstract Role roleDtoToRole(RoleDto role);
+//    //Role
+//    public abstract RoleDto roleToRoleDto(Role role);
+//
+//    public abstract Role roleDtoToRole(RoleDto role);
 
 //    //ContractorStatus
 //    public abstract ContractorStatusDto statusToStatusDto(ContractorStatus contractorStatus);

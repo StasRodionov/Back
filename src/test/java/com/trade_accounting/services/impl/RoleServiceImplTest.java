@@ -5,7 +5,9 @@ import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.RoleDtoStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.RoleMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,6 +35,9 @@ class RoleServiceImplTest {
 
     @Spy
     private DtoMapperImpl dtoMapper;
+
+    @Spy
+    private RoleMapper roleMapper;
 
     @InjectMocks
     private RoleServiceImpl roleService;
@@ -85,7 +90,7 @@ class RoleServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         roleService.create(
-                DtoStubs.getRoleDto(1L)
+                RoleDtoStubs.getRoleDto(1L)
         );
 
         verify(roleRepository).save(any(Role.class));
@@ -94,7 +99,7 @@ class RoleServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         roleService.update(
-                DtoStubs.getRoleDto(1L)
+                RoleDtoStubs.getRoleDto(1L)
         );
 
         verify(roleRepository).save(any(Role.class));
