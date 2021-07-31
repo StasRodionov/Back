@@ -98,10 +98,10 @@ public class DtoStubs {
                 ModelStubs.getDepartment(id));
     }
 
-    public static PositionDto getPositionDto(Long id) {
-        return dtoMapper.positionToPositionDto(
-                ModelStubs.getPosition(id));
-    }
+//    public static PositionDto getPositionDto(Long id) {
+//        return dtoMapper.positionToPositionDto(
+//                ModelStubs.getPosition(id));
+//    }
 
     public static ContractDto getContractDto(Long id) {
         return dtoMapper.contractToContractDto(ModelStubs.getContract(id));

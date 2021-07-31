@@ -440,10 +440,10 @@ public abstract class DtoMapper {
     })
     public abstract Payment paymentDtoToPayment(PaymentDto paymentDto);
 
-    //Position
-    public abstract PositionDto positionToPositionDto(Position position);
-
-    public abstract Position positionDtoToPosition(PositionDto position);
+//    //Position
+//    public abstract PositionDto positionToPositionDto(Position position);
+//
+//    public abstract Position positionDtoToPosition(PositionDto position);
 
 //    //PriceList
 //    public abstract PriceListDto priceListToPriceListDto(PriceList priceList);
