@@ -694,15 +694,15 @@ public abstract class DtoMapper {
 //    })
 //    public abstract CityDto toCityDto(City city);
 
-    @Mappings({
-            @Mapping(source = "cityDto", target = "city")
-    })
-    public abstract Street toStreet(StreetDto streetDto);
-
-    @Mappings({
-            @Mapping(source = "city", target = "cityDto")
-    })
-    public abstract StreetDto toStreetDto(Street street);
+//    @Mappings({
+//            @Mapping(source = "cityDto", target = "city")
+//    })
+//    public abstract Street toStreet(StreetDto streetDto);
+//
+//    @Mappings({
+//            @Mapping(source = "city", target = "cityDto")
+//    })
+//    public abstract StreetDto toStreetDto(Street street);
 
     public abstract FiasAddressModel toFiasAddressModel(FiasAddressModelDto dto);
 

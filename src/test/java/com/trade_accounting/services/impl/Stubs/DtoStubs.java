@@ -153,9 +153,9 @@ public class DtoStubs {
 //        return dtoMapper.toDistrictDto(ModelStubs.getDistrict(id));
 //    }
 
-    public static StreetDto getStreetDto(Long id) {
-        return dtoMapper.toStreetDto(ModelStubs.getStreet(id));
-    }
+//    public static StreetDto getStreetDto(Long id) {
+//        return dtoMapper.toStreetDto(ModelStubs.getStreet(id));
+//    }
 
 //    public static RegionDto getRegionDto(Long id) {
 //        return dtoMapper.toRegionDto(ModelStubs.getRegion(id));

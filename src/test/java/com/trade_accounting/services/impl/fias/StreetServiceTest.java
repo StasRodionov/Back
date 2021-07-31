@@ -7,8 +7,10 @@ import com.trade_accounting.models.fias.Street;
 import com.trade_accounting.repositories.fias.StreetRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.StreetDtoStubs;
 import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.StreetMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -37,6 +39,9 @@ public class StreetServiceTest {
 
     @Spy
     DtoMapperImpl dtoMapper;
+
+    @Spy
+    StreetMapper streetMapper;
 
     @InjectMocks
     StreetServiceImpl service;
@@ -72,20 +77,20 @@ public class StreetServiceTest {
     @Test
     public void createTest() {
         when(repository.save(any())).thenReturn(ModelStubs.getStreet(1L));
-        StreetDto result = service.create(DtoStubs.getStreetDto(1L));
+        StreetDto result = service.create(StreetDtoStubs.getStreetDto(1L));
         verify(repository).save(any(Street.class));
         assertNotNull(result, "failure - expected that a StreetDto not null");
-        assertEquals(result, DtoStubs.getStreetDto(1L));
+        assertEquals(result, StreetDtoStubs.getStreetDto(1L));
         streetDtoIsCorrectlyInited(result);
     }
 
     @Test
     public void updateTest() {
         when(repository.save(any())).thenReturn(ModelStubs.getStreet(1L));
-        StreetDto result = service.update(DtoStubs.getStreetDto(1L));
+        StreetDto result = service.update(StreetDtoStubs.getStreetDto(1L));
         verify(repository).save(any(Street.class));
         assertNotNull(result, "failure - expected that a StreetDto not null");
-        assertEquals(result, DtoStubs.getStreetDto(1L));
+        assertEquals(result, StreetDtoStubs.getStreetDto(1L));
         streetDtoIsCorrectlyInited(result);
     }
 
