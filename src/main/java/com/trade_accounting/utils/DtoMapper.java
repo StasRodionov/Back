@@ -11,14 +11,10 @@ import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.ContractorStatus;
-import com.trade_accounting.models.Correction;
-import com.trade_accounting.models.CorrectionProduct;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
-import com.trade_accounting.models.Inventarization;
-import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
@@ -31,19 +27,11 @@ import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Remain;
-import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TaxSystem;
-import com.trade_accounting.models.TechnicalCard;
-import com.trade_accounting.models.TechnicalCardGroup;
-import com.trade_accounting.models.TechnicalCardProduction;
-import com.trade_accounting.models.TypeOfContractor;
-import com.trade_accounting.models.TypeOfPrice;
-import com.trade_accounting.models.Unit;
-import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AgentReportsDto;
@@ -55,14 +43,10 @@ import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.models.dto.ContractorStatusDto;
-import com.trade_accounting.models.dto.CorrectionDto;
-import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.InventarizationDto;
-import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
@@ -75,29 +59,11 @@ import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RemainDto;
-import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.models.dto.TaxSystemDto;
-import com.trade_accounting.models.dto.TechnicalCardDto;
-import com.trade_accounting.models.dto.TechnicalCardGroupDto;
-import com.trade_accounting.models.dto.TechnicalCardProductionDto;
-import com.trade_accounting.models.dto.TypeOfContractorDto;
-import com.trade_accounting.models.dto.TypeOfPriceDto;
-import com.trade_accounting.models.dto.UnitDto;
-import com.trade_accounting.models.dto.WarehouseDto;
-import com.trade_accounting.models.dto.fias.CityDto;
-import com.trade_accounting.models.dto.fias.DistrictDto;
-import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
-import com.trade_accounting.models.dto.fias.RegionDto;
-import com.trade_accounting.models.dto.fias.StreetDto;
-import com.trade_accounting.models.fias.City;
-import com.trade_accounting.models.fias.District;
-import com.trade_accounting.models.fias.FiasAddressModel;
-import com.trade_accounting.models.fias.Region;
-import com.trade_accounting.models.fias.Street;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
@@ -114,7 +80,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -581,25 +546,25 @@ public abstract class DtoMapper {
 
     public abstract TaxSystem taxSystemDtoToTaxSystem(TaxSystemDto taxSystemDto);
 
-    //TechnicalCard
-    @Mappings({
-            @Mapping(source = "technicalCardGroup", target = "technicalCardGroupDto"),
-            @Mapping(source = "finalProduction", target = "finalProductionDto"),
-            @Mapping(source = "materials", target = "materialsDto"),
-    })
-    public abstract TechnicalCardDto technicalCardToTechnicalCardDto(TechnicalCard technicalCard);
+//    //TechnicalCard
+//    @Mappings({
+//            @Mapping(source = "technicalCardGroup", target = "technicalCardGroupDto"),
+//            @Mapping(source = "finalProduction", target = "finalProductionDto"),
+//            @Mapping(source = "materials", target = "materialsDto"),
+//    })
+//    public abstract TechnicalCardDto technicalCardToTechnicalCardDto(TechnicalCard technicalCard);
+//
+//    @Mappings({
+//            @Mapping(source = "technicalCardGroupDto", target = "technicalCardGroup"),
+//            @Mapping(source = "finalProductionDto", target = "finalProduction"),
+//            @Mapping(source = "materialsDto", target = "materials"),
+//    })
+//    public abstract TechnicalCard technicalCardDtoToTechnicalCard(TechnicalCardDto technicalCardDto);
 
-    @Mappings({
-            @Mapping(source = "technicalCardGroupDto", target = "technicalCardGroup"),
-            @Mapping(source = "finalProductionDto", target = "finalProduction"),
-            @Mapping(source = "materialsDto", target = "materials"),
-    })
-    public abstract TechnicalCard technicalCardDtoToTechnicalCard(TechnicalCardDto technicalCardDto);
-
-    //TechnicalCardGroup
-    public abstract TechnicalCardGroupDto technicalCardGroupToTechnicalCardGroupDto(TechnicalCardGroup technicalCardGroup);
-
-    public abstract TechnicalCardGroup technicalCardGroupDtoToTechnicalCardGroup(TechnicalCardGroupDto technicalCardGroupDto);
+//    //TechnicalCardGroup
+//    public abstract TechnicalCardGroupDto technicalCardGroupToTechnicalCardGroupDto(TechnicalCardGroup technicalCardGroup);
+//
+//    public abstract TechnicalCardGroup technicalCardGroupDtoToTechnicalCardGroup(TechnicalCardGroupDto technicalCardGroupDto);
 
 //    //TechnicalCardProduction
 //    @Mappings({
