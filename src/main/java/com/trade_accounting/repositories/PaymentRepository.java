@@ -12,34 +12,6 @@ import java.util.List;
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpecificationExecutor<Payment> {
 
-    @Query("select new com.trade_accounting.models.dto.PaymentDto(" +
-            "e.id," +
-            "e.typeOfPayment," +
-            "e.paymentMethods," +
-            "e.number," +
-            "e.time," +
-            "e.company.id," +
-            "e.contractor.id," +
-            "e.contract.id," +
-            "e.project.id," +
-            "e.sum" +
-            ") from Payment e")
-    List<PaymentDto> getAll();
-
-    @Query("select new com.trade_accounting.models.dto.PaymentDto(" +
-            "e.id," +
-            "e.typeOfPayment," +
-            "e.paymentMethods," +
-            "e.number," +
-            "e.time," +
-            "e.company.id," +
-            "e.contractor.id," +
-            "e.contract.id," +
-            "e.project.id," +
-            "e.sum" +
-            ") from Payment e")
-    PaymentDto getById(@Param("id") Long id);
-
     void deleteAllByContractId(@Param("id") Long id);
 
     @Query("from Payment e" +
