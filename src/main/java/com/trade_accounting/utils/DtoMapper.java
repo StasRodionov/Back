@@ -485,16 +485,16 @@ public abstract class DtoMapper {
     })
     public abstract ProductGroup productGroupDtoToProductGroup(ProductGroupDto productGroupDto);
 
-    //ProductPrice
-    @Mappings({
-            @Mapping(source = "typeOfPrice", target = "typeOfPriceDto")
-    })
-    public abstract ProductPriceDto productPriceToProductPriceDto(ProductPrice productPrice);
-
-    @Mappings({
-            @Mapping(source = "typeOfPriceDto", target = "typeOfPrice")
-    })
-    public abstract ProductPrice productPriceDtoToProductPrice(ProductPriceDto productPriceDto);
+//    //ProductPrice
+//    @Mappings({
+//            @Mapping(source = "typeOfPrice", target = "typeOfPriceDto")
+//    })
+//    public abstract ProductPriceDto productPriceToProductPriceDto(ProductPrice productPrice);
+//
+//    @Mappings({
+//            @Mapping(source = "typeOfPriceDto", target = "typeOfPrice")
+//    })
+//    public abstract ProductPrice productPriceDtoToProductPrice(ProductPriceDto productPriceDto);
 
 //    //Project
 //    public abstract ProjectDto projectToProjectDto(Project project);
