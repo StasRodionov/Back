@@ -511,20 +511,20 @@ public abstract class DtoMapper {
 
     public abstract ContractorStatus statusDtoToStatus(ContractorStatusDto status);
 
-    //Task *Test
-    @Mappings({
-            @Mapping(source = "taskEmployee.id", target = "employeeId"),
-            @Mapping(source = "taskAuthor.id", target = "taskAuthorId")
-    })
-    public abstract TaskDto taskToTaskDto(Task task);
-
-    @Mappings({
-            @Mapping(source = "employeeId", target = "taskEmployee.id"),
-            @Mapping(source = "taskAuthorId", target = "taskAuthor.id"),
-            @Mapping(target = "creationDateTime", ignore = true),
-            @Mapping(target = "deadlineDateTime", ignore = true)
-    })
-    public abstract Task taskDtoToTask(TaskDto taskDto);
+//    //Task *Test
+//    @Mappings({
+//            @Mapping(source = "taskEmployee.id", target = "employeeId"),
+//            @Mapping(source = "taskAuthor.id", target = "taskAuthorId")
+//    })
+//    public abstract TaskDto taskToTaskDto(Task task);
+//
+//    @Mappings({
+//            @Mapping(source = "employeeId", target = "taskEmployee.id"),
+//            @Mapping(source = "taskAuthorId", target = "taskAuthor.id"),
+//            @Mapping(target = "creationDateTime", ignore = true),
+//            @Mapping(target = "deadlineDateTime", ignore = true)
+//    })
+//    public abstract Task taskDtoToTask(TaskDto taskDto);
 
 //    //TaskComment *Test
 //    @Mappings({

@@ -7,7 +7,7 @@ import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TaskService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.TaskMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
@@ -29,12 +29,12 @@ public class TaskServiceImpl implements TaskService {
     private final EmployeeRepository employeeRepository;
     private final TaskCommentRepository commentRepository;
     private final CheckEntityService checkEntityService;
-    private final DtoMapper dtoMapper;
+    private final TaskMapper taskMapper;
 
     @Override
     public List<TaskDto> search(Specification<Task> specification) {
         return taskRepository.findAll(specification).stream()
-                .map(dtoMapper::taskToTaskDto)
+                .map(taskMapper::taskToTaskDto)
                 .peek(dto -> dto.setCommentCount(commentRepository.countTaskCommentByTaskId(dto.getId())))
                 .collect(Collectors.toList());
     }
@@ -43,7 +43,7 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDto> getAll() {
         return taskRepository.findAll()
                 .stream()
-                .map(dtoMapper::taskToTaskDto)
+                .map(taskMapper::taskToTaskDto)
                 .peek(dto -> dto.setCommentCount(commentRepository.countTaskCommentByTaskId(dto.getId())))
                 .collect(Collectors.toList());
     }
@@ -54,7 +54,7 @@ public class TaskServiceImpl implements TaskService {
 
         return taskEntity
                 .map(entity -> {
-                    var dto = dtoMapper.taskToTaskDto(entity);
+                    var dto = taskMapper.taskToTaskDto(entity);
                     dto.setCommentCount(commentRepository.countTaskCommentByTaskId(id));
                     return dto;
                 }).orElse(new TaskDto());
@@ -62,7 +62,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDto create(TaskDto dto) {
-        var taskEntity = dtoMapper.taskDtoToTask(dto);
+        var taskEntity = taskMapper.taskDtoToTask(dto);
 
         checkEntityService.checkExistsEmployeeById(dto.getEmployeeId());
         checkEntityService.checkExistsEmployeeById(dto.getTaskAuthorId());
@@ -77,7 +77,7 @@ public class TaskServiceImpl implements TaskService {
         var saved = taskRepository.save(taskEntity);
         dto.setId(saved.getId());
 
-        return dtoMapper.taskToTaskDto(saved);
+        return taskMapper.taskToTaskDto(saved);
     }
 
 
@@ -86,7 +86,7 @@ public class TaskServiceImpl implements TaskService {
         var entities = tasks
                 .stream()
                 .map(dto -> {
-                    var taskEntity = dtoMapper.taskDtoToTask(dto);
+                    var taskEntity = taskMapper.taskDtoToTask(dto);
 
                     taskEntity.setTaskEmployee(employeeRepository.getOne(dto.getEmployeeId()));
                     taskEntity.setTaskAuthor(employeeRepository.getOne(dto.getTaskAuthorId()));

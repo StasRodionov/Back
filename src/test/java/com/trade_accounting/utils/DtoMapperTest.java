@@ -7,6 +7,7 @@ import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.utils.mapper.TaskCommentMapperImpl;
+import com.trade_accounting.utils.mapper.TaskMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
@@ -19,6 +20,9 @@ class DtoMapperTest {
 
     @Spy
     private DtoMapperImpl dtoMapper;
+
+    @Spy
+    private TaskMapperImpl taskMapper;
 
     @Spy
     private TaskCommentMapperImpl taskCommentMapper;
@@ -38,10 +42,10 @@ class DtoMapperTest {
         taskDto.setEmployeeId(1L);
         taskDto.setTaskAuthorId(1L);
 
-        Task taskEmployee = dtoMapper.taskDtoToTask(taskDto);
+        Task taskEmployee = taskMapper.taskDtoToTask(taskDto);
         assertEquals(taskDto.getEmployeeId(), taskEmployee.getTaskEmployee().getId());
 
-        Task taskAuthor = dtoMapper.taskDtoToTask(taskDto);
+        Task taskAuthor = taskMapper.taskDtoToTask(taskDto);
         assertEquals(taskDto.getTaskAuthorId(), taskAuthor.getTaskAuthor().getId());
     }
 
