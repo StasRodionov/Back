@@ -642,10 +642,10 @@ public abstract class DtoMapper {
 //    })
 //    public abstract RetailStore toRetailStore(RetailStoreDto retailStoreDto);
 
-    @Mappings({
-            @Mapping(source = "districtDtos", target = "districts")
-    })
-    public abstract Region toRegion(RegionDto regionDto);
+//    @Mappings({
+//            @Mapping(source = "districtDtos", target = "districts")
+//    })
+//    public abstract Region toRegion(RegionDto regionDto);
 
 /*
     public abstract RegionDto toRegionDto(Region region);
@@ -665,10 +665,10 @@ public abstract class DtoMapper {
  */
 
 
-    @Mappings({
-            @Mapping(source = "districts", target = "districtDtos")
-    })
-    public abstract RegionDto toRegionDto(Region region);
+//    @Mappings({
+//            @Mapping(source = "districts", target = "districtDtos")
+//    })
+//    public abstract RegionDto toRegionDto(Region region);
 
     @Mappings({
             @Mapping(source = "regionDto", target = "region"),

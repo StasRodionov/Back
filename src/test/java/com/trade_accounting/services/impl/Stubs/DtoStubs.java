@@ -157,9 +157,9 @@ public class DtoStubs {
         return dtoMapper.toStreetDto(ModelStubs.getStreet(id));
     }
 
-    public static RegionDto getRegionDto(Long id) {
-        return dtoMapper.toRegionDto(ModelStubs.getRegion(id));
-    }
+//    public static RegionDto getRegionDto(Long id) {
+//        return dtoMapper.toRegionDto(ModelStubs.getRegion(id));
+//    }
 
     public static FiasAddressModelDto getFiasAddressModelDto(Long id) {
         return dtoMapper.toFiasAddressModelDto(ModelStubs.getFiasAddressModel(id));
