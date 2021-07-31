@@ -624,10 +624,10 @@ public abstract class DtoMapper {
 
     public abstract Unit unitDtoToUnit(UnitDto unitDto);
 
-    //Warehouse
-    public abstract WarehouseDto warehouseToWarehouseDto(Warehouse warehouse);
-
-    public abstract Warehouse warehouseDtoToWarehouse(WarehouseDto warehouseDto);
+//    //Warehouse
+//    public abstract WarehouseDto warehouseToWarehouseDto(Warehouse warehouse);
+//
+//    public abstract Warehouse warehouseDtoToWarehouse(WarehouseDto warehouseDto);
 
     //RetailStore
 //    @Mappings({

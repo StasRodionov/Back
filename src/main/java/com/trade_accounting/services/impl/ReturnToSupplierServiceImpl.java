@@ -10,6 +10,7 @@ import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.ReturnToSupplierMapper;
+import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
 
     private final ReturnToSupplierRepository returnsToSuppliersRepository;
     private final DtoMapper dtoMapper;
+    private final WarehouseMapper warehouseMapper;
     private final CompanyRepository companyRepository;
     private final ContractorRepository contractorRepository;
     private final ContractRepository contractRepository;
@@ -48,7 +50,7 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
                 .date(dto.getDate())
                 .contractor(contractorRepository.getOne(dto.getContractorId()))
                 .contract(dtoMapper.contractDtoToContract(contractRepository.getById(dto.getContractId())))
-                .warehouse(dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId())))
+                .warehouse(warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseId())))
                 .company(companyRepository.getCompaniesById(dto.getCompanyId()))
                 .comment(dto.getComment())
                 .isPrint(dto.getIsPrint())

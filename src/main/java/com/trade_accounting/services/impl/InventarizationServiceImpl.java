@@ -10,8 +10,8 @@ import com.trade_accounting.repositories.InventarizationProductRepository;
 import com.trade_accounting.repositories.InventarizationRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.InventarizationService;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.InventarizationMapper;
+import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,7 @@ public class InventarizationServiceImpl implements InventarizationService {
     private final InventarizationProductRepository inventarizationProductRepository;
     private final WarehouseRepository warehouseRepository;
     private final CompanyRepository companyRepository;
-    private final DtoMapper dtoMapper;
+    private final WarehouseMapper warehouseMapper;
     private final InventarizationMapper inventarizationMapper;
 
     @Override
@@ -66,7 +66,7 @@ public class InventarizationServiceImpl implements InventarizationService {
 
     private InventarizationDto saveOrUpdate(InventarizationDto dto) {
         Inventarization inventarization = inventarizationMapper.toModel(dto);
-        Warehouse warehouse = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId()));
+        Warehouse warehouse = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseId()));
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 

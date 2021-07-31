@@ -9,6 +9,8 @@ import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.SupplierAccountService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.WarehouseMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,24 +20,16 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class SupplierAccountServiceImpl implements SupplierAccountService {
 
     private final SupplierAccountRepository supplierAccountRepository;
     private final DtoMapper dtoMapper;
+    private final WarehouseMapper warehouseMapper;
     private final CompanyRepository companyRepository;
     private final ContractorRepository contractorRepository;
     private final ContractRepository contractRepository;
     private final WarehouseRepository warehouseRepository;
-
-    public SupplierAccountServiceImpl(SupplierAccountRepository supplierAccountRepository,
-                                      DtoMapper dtoMapper, CompanyRepository companyRepository, ContractorRepository contractorRepository, ContractRepository contractRepository, WarehouseRepository warehouseRepository) {
-        this.supplierAccountRepository = supplierAccountRepository;
-        this.dtoMapper = dtoMapper;
-        this.companyRepository = companyRepository;
-        this.contractorRepository = contractorRepository;
-        this.contractRepository = contractRepository;
-        this.warehouseRepository = warehouseRepository;
-    }
 
     @Override
     public List<SupplierAccountDto> getAll() {
@@ -53,7 +47,7 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
         SupplierAccount saveInvoices = SupplierAccount.builder().id(createSupplier.getId()).date(createSupplier.getDate())
                 .comment(createSupplier.getComment()).isSpend(createSupplier.getIsSpend())
                 .company(companyRepository.getCompaniesById(createSupplier.getCompanyId()))
-                .warehouse(dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(createSupplier.getWarehouseId())))
+                .warehouse(warehouseMapper.toModel(warehouseRepository.getById(createSupplier.getWarehouseId())))
                 .contract(dtoMapper.contractDtoToContract(contractRepository.getById(createSupplier.getContractId())))
                 .contractor((contractorRepository.getOne(createSupplier.getContractorId())))
                 .build();
