@@ -506,10 +506,10 @@ public abstract class DtoMapper {
 
     public abstract Role roleDtoToRole(RoleDto role);
 
-    //ContractorStatus
-    public abstract ContractorStatusDto statusToStatusDto(ContractorStatus contractorStatus);
-
-    public abstract ContractorStatus statusDtoToStatus(ContractorStatusDto status);
+//    //ContractorStatus
+//    public abstract ContractorStatusDto statusToStatusDto(ContractorStatus contractorStatus);
+//
+//    public abstract ContractorStatus statusDtoToStatus(ContractorStatusDto status);
 
 //    //Task *Test
 //    @Mappings({
