@@ -704,9 +704,9 @@ public abstract class DtoMapper {
 //    })
 //    public abstract StreetDto toStreetDto(Street street);
 
-    public abstract FiasAddressModel toFiasAddressModel(FiasAddressModelDto dto);
-
-    public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
+//    public abstract FiasAddressModel toFiasAddressModel(FiasAddressModelDto dto);
+//
+//    public abstract FiasAddressModelDto toFiasAddressModelDto(FiasAddressModel model);
 
 //    //    Correction
 //    public CorrectionDto toCorrectionDto(Correction correction) {

@@ -161,9 +161,9 @@ public class DtoStubs {
 //        return dtoMapper.toRegionDto(ModelStubs.getRegion(id));
 //    }
 
-    public static FiasAddressModelDto getFiasAddressModelDto(Long id) {
-        return dtoMapper.toFiasAddressModelDto(ModelStubs.getFiasAddressModel(id));
-    }
+//    public static FiasAddressModelDto getFiasAddressModelDto(Long id) {
+//        return dtoMapper.toFiasAddressModelDto(ModelStubs.getFiasAddressModel(id));
+//    }
 
 //    public static CorrectionProductDto getCorrectionProductDto(Long id) {
 //        return dtoMapper.toCorrectionProductDto(ModelStubs.getCorrectionProduct(id));
