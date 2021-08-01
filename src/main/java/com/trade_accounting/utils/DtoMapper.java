@@ -220,14 +220,14 @@ public abstract class DtoMapper {
         }
     }
 
-    //Contact
-    public abstract ContactDto contactToContactDto(Contact contact);
-
-    public abstract Contact contactDtoToContact(ContactDto contactDto);
-
-    public abstract List<Contact> contactDtoListToContactList(List<ContactDto> contactDtoList);
-
-    public abstract List<ContactDto> contactListToContactDtoList(List<Contact> contactList);
+//    //Contact
+//    public abstract ContactDto contactToContactDto(Contact contact);
+//
+//    public abstract Contact contactDtoToContact(ContactDto contactDto);
+//
+//    public abstract List<Contact> contactDtoListToContactList(List<ContactDto> contactDtoList);
+//
+//    public abstract List<ContactDto> contactListToContactDtoList(List<Contact> contactList);
 
     //Contract
     @Mappings({
