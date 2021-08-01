@@ -56,4 +56,5 @@ public class Loss {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<LossProduct> lossProducts;
+
 }

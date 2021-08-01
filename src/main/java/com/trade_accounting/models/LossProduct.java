@@ -32,4 +32,5 @@ public class LossProduct {
     private BigDecimal amount;
 
     private BigDecimal price;
+
 }

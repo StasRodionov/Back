@@ -32,4 +32,5 @@ public class LossDto {
     private String comment;
 
     private List<Long> lossProductsIds;
+
 }

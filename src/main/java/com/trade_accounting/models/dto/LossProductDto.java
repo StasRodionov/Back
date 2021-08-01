@@ -20,4 +20,5 @@ public class LossProductDto {
     private BigDecimal amount;
 
     private BigDecimal price;
+
 }
