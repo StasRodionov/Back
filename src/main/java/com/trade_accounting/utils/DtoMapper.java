@@ -164,10 +164,10 @@ public abstract class DtoMapper {
 //
 //    public abstract Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
 
-    // Address
-    public abstract AddressDto addressToAddressDto(Address address);
-
-    public abstract Address addressDtoToAddress(AddressDto address);
+//    // Address
+//    public abstract AddressDto addressToAddressDto(Address address);
+//
+//    public abstract Address addressDtoToAddress(AddressDto address);
 
     //AgentReports
     public abstract AgentReportsDto agentReportsToAgentReportsDto(AgentReports agentReports);

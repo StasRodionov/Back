@@ -17,6 +17,7 @@ import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.AddressMapper;
 import com.trade_accounting.utils.mapper.LegalDetailMapper;
 import com.trade_accounting.utils.mapper.TypeOfPriceMapper;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,7 @@ public class ContractorServiceImpl implements ContractorService {
     private final DepartmentRepository departmentRepository;
     private final BankAccountRepository bankAccountRepository;
     private final DtoMapper dtoMapper;
+    private final AddressMapper addressMapper;
     private final LegalDetailMapper legalDetailMapper;
     private final TypeOfPriceMapper typeOfPriceMapper;
 
@@ -82,7 +84,7 @@ public class ContractorServiceImpl implements ContractorService {
     public ContractorDto create(ContractorDto contractorDto) {
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
 
-        Address address = dtoMapper.addressDtoToAddress(contractorDto.getAddressDto());
+        Address address = addressMapper.toModel(contractorDto.getAddressDto());
         contractor.setAddress(addressRepository.save(address));
 
         List<Contact> contactList = dtoMapper.contactDtoListToContactList(contractorDto.getContactDto());
@@ -125,7 +127,7 @@ public class ContractorServiceImpl implements ContractorService {
     public ContractorDto update(ContractorDto contractorDto) {
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
 
-        Address address = dtoMapper.addressDtoToAddress(contractorDto.getAddressDto());
+        Address address = addressMapper.toModel(contractorDto.getAddressDto());
         addressRepository.save(address);
         contractor.setAddress(address);
 
