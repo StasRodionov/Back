@@ -174,14 +174,14 @@ public abstract class DtoMapper {
 
     public abstract AgentReports agentReportsDtoToAgentReports(AgentReportsDto agentReportsDto);
 
-    //BankAccount
-    public abstract BankAccountDto bankAccountToBankAccountDto(BankAccount bankAccount);
-
-    public abstract BankAccount bankAccountDtoToBankAccount(BankAccountDto bankAccountDto);
-
-    public abstract List<BankAccount> bankAccountDtoListToBankAccountList(List<BankAccountDto> bankAccountDtoList);
-
-    public abstract List<BankAccountDto> bankAccountListToBankAccountDtoList(List<BankAccount> bankAccountList);
+//    //BankAccount
+//    public abstract BankAccountDto bankAccountToBankAccountDto(BankAccount bankAccount);
+//
+//    public abstract BankAccount bankAccountDtoToBankAccount(BankAccountDto bankAccountDto);
+//
+//    public abstract List<BankAccount> bankAccountDtoListToBankAccountList(List<BankAccountDto> bankAccountDtoList);
+//
+//    public abstract List<BankAccountDto> bankAccountListToBankAccountDtoList(List<BankAccount> bankAccountList);
 
     //Company
     @Mappings({

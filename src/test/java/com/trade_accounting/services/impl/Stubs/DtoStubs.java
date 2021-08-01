@@ -57,11 +57,11 @@ public class DtoStubs {
 //        return dtoMapper.typeOfPriceToTypeOfPriceDto(ModelStubs.getTypeOfPrice(id));
 //    }
 
-    public static BankAccountDto getBankAccountDto(Long id) {
-        return dtoMapper.bankAccountToBankAccountDto(
-                ModelStubs.getBankAccount(id)
-        );
-    }
+//    public static BankAccountDto getBankAccountDto(Long id) {
+//        return dtoMapper.bankAccountToBankAccountDto(
+//                ModelStubs.getBankAccount(id)
+//        );
+//    }
 
     public static CompanyDto getCompanyDto(Long id) {
         return dtoMapper.companyToCompanyDto(

@@ -18,6 +18,7 @@ import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.AddressMapper;
+import com.trade_accounting.utils.mapper.BankAccountMapper;
 import com.trade_accounting.utils.mapper.LegalDetailMapper;
 import com.trade_accounting.utils.mapper.TypeOfPriceMapper;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,7 @@ public class ContractorServiceImpl implements ContractorService {
     private final DepartmentRepository departmentRepository;
     private final BankAccountRepository bankAccountRepository;
     private final DtoMapper dtoMapper;
+    private final BankAccountMapper bankAccountMapper;
     private final AddressMapper addressMapper;
     private final LegalDetailMapper legalDetailMapper;
     private final TypeOfPriceMapper typeOfPriceMapper;
@@ -90,7 +92,7 @@ public class ContractorServiceImpl implements ContractorService {
         List<Contact> contactList = dtoMapper.contactDtoListToContactList(contractorDto.getContactDto());
         contractor.setContact(contactRepository.saveAll(contactList));
 
-        List<BankAccount> bankAccountList = dtoMapper.bankAccountDtoListToBankAccountList(contractorDto.getBankAccountDto());
+        List<BankAccount> bankAccountList = bankAccountMapper.bankAccountDtoListToBankAccountList(contractorDto.getBankAccountDto());
         contractor.setBankAccounts(bankAccountRepository.saveAll(bankAccountList));
 
         contractor.setContractorGroup(
