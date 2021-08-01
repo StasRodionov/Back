@@ -50,7 +50,7 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
                 .comment(createSupplier.getComment()).isSpend(createSupplier.getIsSpend())
                 .company(companyRepository.getCompaniesById(createSupplier.getCompanyId()))
                 .warehouse(warehouseMapper.toModel(warehouseRepository.getById(createSupplier.getWarehouseId())))
-                .contract(contractMapper.contractDtoToContract(contractRepository.getById(createSupplier.getContractId())))
+                .contract(contractMapper.toModel(contractRepository.getById(createSupplier.getContractId())))
                 .contractor((contractorRepository.getOne(createSupplier.getContractorId())))
                 .build();
         return supplierAccountMapper.toDto(supplierAccountRepository.save(saveInvoices));

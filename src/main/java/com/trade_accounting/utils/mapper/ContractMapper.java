@@ -17,7 +17,7 @@ public interface ContractMapper {
             @Mapping(source = "contractor", target = "contractorDto"),
             @Mapping(source = "legalDetail", target = "legalDetailDto")
     })
-     ContractDto contractToContractDto(Contract contract);
+     ContractDto toDto(Contract contract);
 
     @Mappings({
             @Mapping(source = "companyDto", target = "company"),
@@ -25,7 +25,7 @@ public interface ContractMapper {
             @Mapping(source = "contractorDto", target = "contractor"),
             @Mapping(source = "legalDetailDto", target = "legalDetail")
     })
-     Contract contractDtoToContract(ContractDto contractDto);
+     Contract toModel(ContractDto contractDto);
 
-     List<ContractDto> toContractDtoList(List<Contract> contracts);
+     List<ContractDto> toListDto(List<Contract> contracts);
 }

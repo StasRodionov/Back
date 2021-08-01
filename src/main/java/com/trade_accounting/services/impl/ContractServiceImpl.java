@@ -25,40 +25,40 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<ContractDto> getAll() {
-        return contractMapper.toContractDtoList(contractRepository.findAll());
+        return contractMapper.toListDto(contractRepository.findAll());
     }
 
     @Override
     public List<ContractDto> getAll(String searchContr) {
         if ("null".equals(searchContr) || searchContr.isEmpty()) {
             List<Contract> all = contractRepository.findAll();
-            return all.stream().map(contractMapper::contractToContractDto).collect(Collectors.toList());
+            return all.stream().map(contractMapper::toDto).collect(Collectors.toList());
         } else {
             List<Contract> list = contractRepository.search(searchContr);
-            return list.stream().map(contractMapper::contractToContractDto).collect(Collectors.toList());
+            return list.stream().map(contractMapper::toDto).collect(Collectors.toList());
         }
     }
 
     @Override
     public List<ContractDto> search(Specification<Contract> specification) {
-        return executeSearch(contractRepository, contractMapper::contractToContractDto, specification);
+        return executeSearch(contractRepository, contractMapper::toDto, specification);
     }
 
     @Override
     public ContractDto getById(Long id) {
-        return contractMapper.contractToContractDto(contractRepository.getOne(id));
+        return contractMapper.toDto(contractRepository.getOne(id));
     }
 
     @Override
     public ContractDto create(ContractDto contractDto) {
-        Contract contractSaved = contractRepository.save(contractMapper.contractDtoToContract(contractDto));
+        Contract contractSaved = contractRepository.save(contractMapper.toModel(contractDto));
         contractDto.setId(contractSaved.getId());
         return contractDto;
     }
 
     @Override
     public ContractDto update(ContractDto contractDto) {
-        contractRepository.save(contractMapper.contractDtoToContract(contractDto));
+        contractRepository.save(contractMapper.toModel(contractDto));
         return contractDto;
     }
 
