@@ -30,7 +30,7 @@ public class Loss {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    //
     @NotNull
     private LocalDateTime date;
 

@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LossDto {
-
+    //
     private Long id;
 
     @NotNull
