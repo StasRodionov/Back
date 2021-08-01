@@ -229,24 +229,24 @@ public abstract class DtoMapper {
 //
 //    public abstract List<ContactDto> contactListToContactDtoList(List<Contact> contactList);
 
-    //Contract
-    @Mappings({
-            @Mapping(source = "company", target = "companyDto"),
-            @Mapping(source = "bankAccount", target = "bankAccountDto"),
-            @Mapping(source = "contractor", target = "contractorDto"),
-            @Mapping(source = "legalDetail", target = "legalDetailDto")
-    })
-    public abstract ContractDto contractToContractDto(Contract contract);
-
-    @Mappings({
-            @Mapping(source = "companyDto", target = "company"),
-            @Mapping(source = "bankAccountDto", target = "bankAccount"),
-            @Mapping(source = "contractorDto", target = "contractor"),
-            @Mapping(source = "legalDetailDto", target = "legalDetail")
-    })
-    public abstract Contract contractDtoToContract(ContractDto contractDto);
-
-    public abstract List<ContractDto> toContractDtoList(List<Contract> contracts);
+//    //Contract
+//    @Mappings({
+//            @Mapping(source = "company", target = "companyDto"),
+//            @Mapping(source = "bankAccount", target = "bankAccountDto"),
+//            @Mapping(source = "contractor", target = "contractorDto"),
+//            @Mapping(source = "legalDetail", target = "legalDetailDto")
+//    })
+//    public abstract ContractDto contractToContractDto(Contract contract);
+//
+//    @Mappings({
+//            @Mapping(source = "companyDto", target = "company"),
+//            @Mapping(source = "bankAccountDto", target = "bankAccount"),
+//            @Mapping(source = "contractorDto", target = "contractor"),
+//            @Mapping(source = "legalDetailDto", target = "legalDetail")
+//    })
+//    public abstract Contract contractDtoToContract(ContractDto contractDto);
+//
+//    public abstract List<ContractDto> toContractDtoList(List<Contract> contracts);
 
     //Contractor
     @Mappings({

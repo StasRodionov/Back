@@ -8,7 +8,7 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.SupplierAccountService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.ContractMapper;
 import com.trade_accounting.utils.mapper.SupplierAccountMapper;
 import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ import java.util.Optional;
 public class SupplierAccountServiceImpl implements SupplierAccountService {
 
     private final SupplierAccountRepository supplierAccountRepository;
-    private final DtoMapper dtoMapper;
+    private final ContractMapper contractMapper;
     private final SupplierAccountMapper supplierAccountMapper;
     private final WarehouseMapper warehouseMapper;
     private final CompanyRepository companyRepository;
@@ -50,7 +50,7 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
                 .comment(createSupplier.getComment()).isSpend(createSupplier.getIsSpend())
                 .company(companyRepository.getCompaniesById(createSupplier.getCompanyId()))
                 .warehouse(warehouseMapper.toModel(warehouseRepository.getById(createSupplier.getWarehouseId())))
-                .contract(dtoMapper.contractDtoToContract(contractRepository.getById(createSupplier.getContractId())))
+                .contract(contractMapper.contractDtoToContract(contractRepository.getById(createSupplier.getContractId())))
                 .contractor((contractorRepository.getOne(createSupplier.getContractorId())))
                 .build();
         return supplierAccountMapper.toDto(supplierAccountRepository.save(saveInvoices));

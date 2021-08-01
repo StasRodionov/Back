@@ -103,9 +103,9 @@ public class DtoStubs {
 //                ModelStubs.getPosition(id));
 //    }
 
-    public static ContractDto getContractDto(Long id) {
-        return dtoMapper.contractToContractDto(ModelStubs.getContract(id));
-    }
+//    public static ContractDto getContractDto(Long id) {
+//        return dtoMapper.contractToContractDto(ModelStubs.getContract(id));
+//    }
 
     public static ContractorGroupDto getContractorGroupDto(Long id) {
         return dtoMapper.contractorGroupToContractorGroupDto(
