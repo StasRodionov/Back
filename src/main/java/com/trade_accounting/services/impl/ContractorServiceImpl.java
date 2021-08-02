@@ -20,6 +20,7 @@ import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.AddressMapper;
 import com.trade_accounting.utils.mapper.BankAccountMapper;
 import com.trade_accounting.utils.mapper.ContactMapper;
+import com.trade_accounting.utils.mapper.ContractorMapper;
 import com.trade_accounting.utils.mapper.LegalDetailMapper;
 import com.trade_accounting.utils.mapper.TypeOfPriceMapper;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,7 @@ public class ContractorServiceImpl implements ContractorService {
     private final DepartmentRepository departmentRepository;
     private final BankAccountRepository bankAccountRepository;
     private final DtoMapper dtoMapper;
+    private final ContractorMapper contractorMapper;
     private final ContactMapper contactMapper;
     private final BankAccountMapper bankAccountMapper;
     private final AddressMapper addressMapper;
@@ -54,14 +56,14 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<ContractorDto> search(Specification<Contractor> specification) {
-        return executeSearch(contractorRepository, dtoMapper::contractorToContractorDto, specification);
+        return executeSearch(contractorRepository, contractorMapper::contractorToContractorDto, specification);
     }
 
     @Override
     public List<ContractorDto> getAll() {
         List<Contractor> list = contractorRepository.findAll();
         return list.stream()
-                .map(dtoMapper::contractorToContractorDto)
+                .map(contractorMapper::contractorToContractorDto)
                 .collect(Collectors.toList());
 
     }
@@ -70,23 +72,23 @@ public class ContractorServiceImpl implements ContractorService {
     public List<ContractorDto> getAll(String searchTerm) {
         if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
             List<Contractor> all = contractorRepository.findAll();
-            return all.stream().map(dtoMapper::contractorToContractorDto).collect(Collectors.toList());
+            return all.stream().map(contractorMapper::contractorToContractorDto).collect(Collectors.toList());
         } else {
             List<Contractor> list = contractorRepository.search(searchTerm);
-            return list.stream().map(dtoMapper::contractorToContractorDto).collect(Collectors.toList());
+            return list.stream().map(contractorMapper::contractorToContractorDto).collect(Collectors.toList());
         }
     }
 
     @Override
     public ContractorDto getById(Long id) {
-        return dtoMapper.contractorToContractorDto(
+        return contractorMapper.contractorToContractorDto(
                 contractorRepository.findById(id).orElse(new Contractor())
         );
     }
 
     @Override
     public ContractorDto create(ContractorDto contractorDto) {
-        Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
+        Contractor contractor = contractorMapper.contractorDtoToContractor(contractorDto);
 
         Address address = addressMapper.toModel(contractorDto.getAddressDto());
         contractor.setAddress(addressRepository.save(address));
@@ -123,13 +125,13 @@ public class ContractorServiceImpl implements ContractorService {
                 )
         );
 
-        return dtoMapper.contractorToContractorDto(contractorRepository.save(contractor));
+        return contractorMapper.contractorToContractorDto(contractorRepository.save(contractor));
     }
 
 
     @Override
     public ContractorDto update(ContractorDto contractorDto) {
-        Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
+        Contractor contractor = contractorMapper.contractorDtoToContractor(contractorDto);
 
         Address address = addressMapper.toModel(contractorDto.getAddressDto());
         addressRepository.save(address);

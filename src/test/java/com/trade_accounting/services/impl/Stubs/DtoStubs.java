@@ -47,11 +47,11 @@ public class DtoStubs {
 //        return dtoMapper.paymentToPaymentDto(ModelStubs.getPayment(id));
 //    }
 
-    public static ContractorDto getContractorDto(Long id) {
-        return dtoMapper.contractorToContractorDto(
-                ModelStubs.getContractor(id)
-        );
-    }
+//    public static ContractorDto getContractorDto(Long id) {
+//        return dtoMapper.contractorToContractorDto(
+//                ModelStubs.getContractor(id)
+//        );
+//    }
 
 //    public static TypeOfPriceDto getTypeOfPriceDto(Long id) {
 //        return dtoMapper.typeOfPriceToTypeOfPriceDto(ModelStubs.getTypeOfPrice(id));
