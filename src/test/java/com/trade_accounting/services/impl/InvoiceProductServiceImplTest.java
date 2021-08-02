@@ -5,7 +5,9 @@ import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.repositories.InvoiceProductRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.InvoiceProductDtoStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.InvoiceProductMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,6 +37,9 @@ class InvoiceProductServiceImplTest {
 
     @Spy
     private DtoMapperImpl dtoMapper;
+
+    @Spy
+    private InvoiceProductMapperImpl invoiceProductMapper;
 
     @Test
     void getAll_shouldReturnListFilledInvoiceProductDto() {
@@ -101,7 +106,7 @@ class InvoiceProductServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         invoiceProductService.create(
-                DtoStubs.getInvoiceProductDto(1L)
+                InvoiceProductDtoStubs.getInvoiceProductDto(1L)
         );
 
         verify(invoiceProductRepository).save(any(InvoiceProduct.class));
@@ -110,7 +115,7 @@ class InvoiceProductServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         invoiceProductService.update(
-                DtoStubs.getInvoiceProductDto(1L)
+                InvoiceProductDtoStubs.getInvoiceProductDto(1L)
         );
         verify(invoiceProductRepository).save(any(InvoiceProduct.class));
     }

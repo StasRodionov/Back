@@ -1,10 +1,10 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.TechnicalCardGroup;
 import com.trade_accounting.models.dto.TechnicalCardGroupDto;
 import com.trade_accounting.repositories.TechnicalCardGroupRepository;
 import com.trade_accounting.services.interfaces.TechnicalCardGroupService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.TechnicalCardGroupMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,35 +13,30 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TechnicalCardGroupServiceImpl implements TechnicalCardGroupService {
 
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
 
-    private final DtoMapper dtoMapper;
-
-    public TechnicalCardGroupServiceImpl(TechnicalCardGroupRepository technicalCardGroupRepository, DtoMapper dtoMapper) {
-        this.technicalCardGroupRepository = technicalCardGroupRepository;
-        this.dtoMapper = dtoMapper;
-    }
-
+    private final TechnicalCardGroupMapper technicalCardGroupMapper;
 
     @Override
     public List<TechnicalCardGroupDto> getAll() {
         return technicalCardGroupRepository.findAll().stream()
-                .map(dtoMapper::technicalCardGroupToTechnicalCardGroupDto)
+                .map(technicalCardGroupMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public TechnicalCardGroupDto getById(Long id) {
-        return dtoMapper.technicalCardGroupToTechnicalCardGroupDto(
+        return technicalCardGroupMapper.toDto(
                 technicalCardGroupRepository.getOne(id));
     }
 
     @Override
     public TechnicalCardGroupDto create(TechnicalCardGroupDto dto) {
-        return dtoMapper.technicalCardGroupToTechnicalCardGroupDto(technicalCardGroupRepository
-                .save(dtoMapper.technicalCardGroupDtoToTechnicalCardGroup(dto)));
+        return technicalCardGroupMapper.toDto(technicalCardGroupRepository
+                .save(technicalCardGroupMapper.toModel(dto)));
     }
 
     @Override

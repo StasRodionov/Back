@@ -6,7 +6,7 @@ import com.trade_accounting.repositories.BalanceAdjustmentRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.services.interfaces.BalanceAdjustmentService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.BalanceAdjustmentMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,15 +18,15 @@ import java.util.Optional;
 @Transactional
 public class BalanceAdjustmentServiceImpl implements BalanceAdjustmentService {
     private final BalanceAdjustmentRepository balanceAdjustmentsRepository;
-    private final DtoMapper dtoMapper;
+    private final BalanceAdjustmentMapper balanceAdjustmentMapper;
     private final CompanyRepository companyRepository;
     private final ContractorRepository contractorRepository;
 
     public BalanceAdjustmentServiceImpl(BalanceAdjustmentRepository balanceAdjustmentsRepository,
-                                       DtoMapper dtoMapper, CompanyRepository companyRepository,
-                                       ContractorRepository contractorRepository) {
+                                        BalanceAdjustmentMapper balanceAdjustmentMapper, CompanyRepository companyRepository,
+                                        ContractorRepository contractorRepository) {
         this.balanceAdjustmentsRepository = balanceAdjustmentsRepository;
-        this.dtoMapper = dtoMapper;
+        this.balanceAdjustmentMapper = balanceAdjustmentMapper;
         this.companyRepository = companyRepository;
         this.contractorRepository = contractorRepository;
 
@@ -40,7 +40,7 @@ public class BalanceAdjustmentServiceImpl implements BalanceAdjustmentService {
     @Override
     public BalanceAdjustmentDto getById(Long id) {
         Optional<BalanceAdjustment> balanceAdjustmentsById = balanceAdjustmentsRepository.findById(id);
-        return dtoMapper.balanceAdjustmentToBalanceAdjustmentDto(balanceAdjustmentsById.orElse(new BalanceAdjustment()));
+        return balanceAdjustmentMapper.toDto(balanceAdjustmentsById.orElse(new BalanceAdjustment()));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class BalanceAdjustmentServiceImpl implements BalanceAdjustmentService {
                 .dateChanged(dto.getDateChanged())
                 .whoChanged(dto.getWhoChanged())
                 .build();
-        return dtoMapper.balanceAdjustmentToBalanceAdjustmentDto(balanceAdjustmentsRepository.save(balanceAdjustments));
+        return balanceAdjustmentMapper.toDto(balanceAdjustmentsRepository.save(balanceAdjustments));
     }
 
     @Override
@@ -81,6 +81,6 @@ public class BalanceAdjustmentServiceImpl implements BalanceAdjustmentService {
 
     @Override
     public List<BalanceAdjustmentDto> search(Specification<BalanceAdjustment> spec) {
-        return executeSearch(balanceAdjustmentsRepository, dtoMapper::balanceAdjustmentToBalanceAdjustmentDto, spec);
+        return executeSearch(balanceAdjustmentsRepository, balanceAdjustmentMapper::toDto, spec);
     }
 }

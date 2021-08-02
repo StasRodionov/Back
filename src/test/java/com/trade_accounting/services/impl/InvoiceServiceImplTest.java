@@ -6,6 +6,7 @@ import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.InvoiceDtoStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -133,7 +134,7 @@ class InvoiceServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         invoiceService.create(
-                DtoStubs.getInvoiceDto(1L)
+                InvoiceDtoStubs.getInvoiceDto(1L)
         );
 
         verify(invoiceRepository).save(any(Invoice.class));
@@ -142,7 +143,7 @@ class InvoiceServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         invoiceService.update(
-                DtoStubs.getInvoiceDto(1L)
+                InvoiceDtoStubs.getInvoiceDto(1L)
         );
 
         verify(invoiceRepository).save(any(Invoice.class));

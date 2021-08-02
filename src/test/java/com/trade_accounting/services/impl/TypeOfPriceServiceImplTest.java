@@ -5,7 +5,9 @@ import com.trade_accounting.models.dto.TypeOfPriceDto;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.TypeOfPriceDtoStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.TypeOfPriceMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,6 +35,9 @@ class TypeOfPriceServiceImplTest {
 
     @Spy
     private DtoMapperImpl dtoMapper;
+
+    @Spy
+    TypeOfPriceMapper typeOfPriceMapper;
 
     @InjectMocks
     private TypeOfPriceServiceImpl typeOfPriceService;
@@ -86,7 +91,7 @@ class TypeOfPriceServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         typeOfPriceService.create(
-                DtoStubs.getTypeOfPriceDto(1L)
+                TypeOfPriceDtoStubs.getTypeOfPriceDto(1L)
         );
 
         verify(typeOfPriceRepository).save(any(TypeOfPrice.class));
@@ -95,7 +100,7 @@ class TypeOfPriceServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         typeOfPriceService.update(
-                DtoStubs.getTypeOfPriceDto(1L)
+                TypeOfPriceDtoStubs.getTypeOfPriceDto(1L)
         );
 
         verify(typeOfPriceRepository).save(any(TypeOfPrice.class));

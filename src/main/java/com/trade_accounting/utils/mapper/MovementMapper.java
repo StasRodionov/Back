@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface MovementMapper {
     //    Movement
-    default MovementDto toMovementDto(Movement movement) {
+    default MovementDto toDto(Movement movement) {
         MovementDto movementDto = new MovementDto();
         if (movement == null) {
             return null;
@@ -56,5 +56,5 @@ public interface MovementMapper {
     }
 
     @Mapping(target = "date", ignore = true)
-    Movement toMovement(MovementDto movementDto);
+    Movement toModel(MovementDto movementDto);
 }

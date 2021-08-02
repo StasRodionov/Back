@@ -4,7 +4,8 @@ import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.repositories.ProductGroupRepository;
 import com.trade_accounting.services.interfaces.ProductGroupService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.ProductGroupMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,33 +14,29 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ProductGroupServiceImpl implements ProductGroupService {
 
     private final ProductGroupRepository productGroupRepository;
-    private final DtoMapper dtoMapper;
-
-    public ProductGroupServiceImpl(ProductGroupRepository productGroupRepository, DtoMapper dtoMapper) {
-        this.productGroupRepository = productGroupRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final ProductGroupMapper productGroupMapper;
 
     @Override
     public List<ProductGroupDto> getAll() {
         return productGroupRepository.findAll().stream()
-                .map(dtoMapper::productGroupToProductGroupDto)
+                .map(productGroupMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public ProductGroupDto getById(Long id) {
-        return dtoMapper.productGroupToProductGroupDto(
+        return productGroupMapper.toDto(
                 productGroupRepository.findById(id).orElse(new ProductGroup())
         );
     }
 
     @Override
     public ProductGroupDto create(ProductGroupDto dto) {
-        ProductGroup productGroup = dtoMapper.productGroupDtoToProductGroup(dto);
+        ProductGroup productGroup = productGroupMapper.toModel(dto);
 
         if (dto.getId() != null) {
             productGroup.setProductGroup(

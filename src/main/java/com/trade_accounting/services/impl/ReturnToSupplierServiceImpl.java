@@ -8,7 +8,10 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.ReturnToSupplierRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.ReturnToSupplierService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.ContractMapper;
+import com.trade_accounting.utils.mapper.ReturnToSupplierMapper;
+import com.trade_accounting.utils.mapper.WarehouseMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,25 +21,17 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
 
     private final ReturnToSupplierRepository returnsToSuppliersRepository;
-    private final DtoMapper dtoMapper;
+    private final ContractMapper contractMapper;
+    private final WarehouseMapper warehouseMapper;
     private final CompanyRepository companyRepository;
     private final ContractorRepository contractorRepository;
     private final ContractRepository contractRepository;
     private final WarehouseRepository warehouseRepository;
-
-    public ReturnToSupplierServiceImpl(ReturnToSupplierRepository returnsToSuppliersRepository,
-                                       DtoMapper dtoMapper, CompanyRepository companyRepository,
-                                       ContractorRepository contractorRepository, ContractRepository contractRepository, WarehouseRepository warehouseRepository) {
-        this.returnsToSuppliersRepository = returnsToSuppliersRepository;
-        this.dtoMapper = dtoMapper;
-        this.companyRepository = companyRepository;
-        this.contractorRepository = contractorRepository;
-        this.contractRepository = contractRepository;
-        this.warehouseRepository = warehouseRepository;
-    }
+    private final ReturnToSupplierMapper returnToSupplierMapper;
 
     @Override
     public List<ReturnToSupplierDto> getAll() {
@@ -46,7 +41,7 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
     @Override
     public ReturnToSupplierDto getById(Long id) {
         Optional<ReturnToSupplier> returnsToSuppliersById = returnsToSuppliersRepository.findById(id);
-        return dtoMapper.returnToSupplierToReturnToSupplierDto(returnsToSuppliersById.orElse(new ReturnToSupplier()));
+        return returnToSupplierMapper.toDto(returnsToSuppliersById.orElse(new ReturnToSupplier()));
     }
 
     @Override
@@ -54,14 +49,14 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
         ReturnToSupplier returnsToSuppliers = ReturnToSupplier.builder().id(dto.getId())
                 .date(dto.getDate())
                 .contractor(contractorRepository.getOne(dto.getContractorId()))
-                .contract(dtoMapper.contractDtoToContract(contractRepository.getById(dto.getContractId())))
-                .warehouse(dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId())))
+                .contract(contractMapper.toModel(contractRepository.getById(dto.getContractId())))
+                .warehouse(warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseId())))
                 .company(companyRepository.getCompaniesById(dto.getCompanyId()))
                 .comment(dto.getComment())
                 .isPrint(dto.getIsPrint())
                 .isSend(dto.getIsSend())
                 .build();
-        return dtoMapper.returnToSupplierToReturnToSupplierDto(returnsToSuppliersRepository.save(returnsToSuppliers));
+        return returnToSupplierMapper.toDto(returnsToSuppliersRepository.save(returnsToSuppliers));
     }
 
     @Override
@@ -87,6 +82,6 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
 
     @Override
     public List<ReturnToSupplierDto> search(Specification<ReturnToSupplier> spec) {
-        return executeSearch(returnsToSuppliersRepository, dtoMapper::returnToSupplierToReturnToSupplierDto, spec);
+        return executeSearch(returnsToSuppliersRepository, returnToSupplierMapper::toDto, spec);
     }
 }

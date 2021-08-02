@@ -7,7 +7,10 @@ import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.LegalDetailDtoStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.LegalDetailMapper;
+import com.trade_accounting.utils.mapper.LegalDetailMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,6 +44,9 @@ class LegalDetailServiceImplTest {
 
     @Spy
     private DtoMapperImpl dtoMapper;
+
+    @Spy
+    private LegalDetailMapperImpl legalDetailMapper;
 
     @InjectMocks
     LegalDetailServiceImpl legalDetailService;
@@ -97,7 +103,7 @@ class LegalDetailServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         legalDetailService.create(
-                DtoStubs.getLegalDetailDto(1L)
+                LegalDetailDtoStubs.getLegalDetailDto(1L)
         );
 
         verify(legalDetailRepository).save(any(LegalDetail.class));
@@ -107,7 +113,7 @@ class LegalDetailServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         legalDetailService.update(
-                DtoStubs.getLegalDetailDto(1L)
+                LegalDetailDtoStubs.getLegalDetailDto(1L)
         );
 
         verify(legalDetailRepository).save(any(LegalDetail.class));

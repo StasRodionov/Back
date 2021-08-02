@@ -8,7 +8,6 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.AcceptanceService;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.AcceptanceMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -50,21 +49,21 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     @Override
     public List<AcceptanceDto> getAll() {
         List<Acceptance> acceptanceList = acceptanceRepository.findAll();
-        return acceptanceList.stream().map(acceptanceMapper::acceptanceToAcceptanceDto).collect(Collectors.toList());
+        return acceptanceList.stream().map(acceptanceMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
     public AcceptanceDto getById(Long id) {
-        return acceptanceMapper.acceptanceToAcceptanceDto(acceptanceRepository.getOne(id));
+        return acceptanceMapper.toDto(acceptanceRepository.getOne(id));
     }
 
     @Override
     public AcceptanceDto create(AcceptanceDto dto) {
-        Acceptance acceptance = acceptanceMapper.acceptanceDtoToAcceptance(dto);
+        Acceptance acceptance = acceptanceMapper.toModel(dto);
         acceptance.setContract(contractRepository.getOne(dto.getContractId()));
         acceptance.setContractor(contractorRepository.getOne(dto.getContractorId()));
         acceptance.setWarehouse(warehouseRepository.getOne(dto.getWarehouseId()));
-        return acceptanceMapper.acceptanceToAcceptanceDto(acceptanceRepository.save(acceptance));
+        return acceptanceMapper.toDto(acceptanceRepository.save(acceptance));
     }
 
     @Override
@@ -81,17 +80,17 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     public List<AcceptanceDto> searchByNumberAndComment(String searchTerm) {
         if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
             return acceptanceRepository.findAll().stream()
-                    .map(acceptanceMapper::acceptanceToAcceptanceDto)
+                    .map(acceptanceMapper::toDto)
                     .collect(Collectors.toList());
         } else {
             return acceptanceRepository.search(searchTerm).stream()
-                    .map(acceptanceMapper::acceptanceToAcceptanceDto)
+                    .map(acceptanceMapper::toDto)
                     .collect(Collectors.toList());
         }
     }
 
     @Override
     public List<AcceptanceDto> search(Specification<Acceptance> spec) {
-        return executeSearch(acceptanceRepository, acceptanceMapper::acceptanceToAcceptanceDto, spec);
+        return executeSearch(acceptanceRepository, acceptanceMapper::toDto, spec);
     }
 }

@@ -6,7 +6,8 @@ import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.services.interfaces.BankAccountService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.BankAccountMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,18 +17,13 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class BankAccountServiceImpl implements BankAccountService {
 
     private final BankAccountRepository bankAccountRepository;
     private final CompanyRepository companyRepository;
 
-    private final DtoMapper dtoMapper;
-
-    public BankAccountServiceImpl(BankAccountRepository bankAccountRepository, CompanyRepository companyRepository, DtoMapper dtoMapper) {
-        this.bankAccountRepository = bankAccountRepository;
-        this.companyRepository = companyRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final BankAccountMapper bankAccountMapper;
 
     @Override
     public BankAccountDto getBankByBic(String bic) {
@@ -42,13 +38,13 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public List<BankAccountDto> getAll() {
         return bankAccountRepository.findAll().stream()
-                .map(dtoMapper::bankAccountToBankAccountDto)
+                .map(bankAccountMapper::bankAccountToBankAccountDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public BankAccountDto getById(Long id) {
-        return dtoMapper.bankAccountToBankAccountDto(
+        return bankAccountMapper.bankAccountToBankAccountDto(
                 bankAccountRepository.findById(id).orElse(new BankAccount())
         );
     }
@@ -56,10 +52,10 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public BankAccountDto create(BankAccountDto dto) {
         BankAccount bankAccount = bankAccountRepository.save(
-                dtoMapper.bankAccountDtoToBankAccount(dto)
+                bankAccountMapper.bankAccountDtoToBankAccount(dto)
         );
         dto.setId(bankAccount.getId());
-        return dtoMapper.bankAccountToBankAccountDto(bankAccount);
+        return bankAccountMapper.bankAccountToBankAccountDto(bankAccount);
     }
 
     @Override

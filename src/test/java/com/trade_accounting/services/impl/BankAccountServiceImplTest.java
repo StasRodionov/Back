@@ -5,7 +5,10 @@ import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.BankAccountDtoStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.BankAccountMapper;
+import com.trade_accounting.utils.mapper.BankAccountMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,6 +36,9 @@ class BankAccountServiceImplTest {
 
     @Spy
     private DtoMapperImpl dtoMapper;
+
+    @Spy
+    private BankAccountMapperImpl bankAccountMapper;
 
     @InjectMocks
     private BankAccountServiceImpl bankAccountService;
@@ -87,7 +93,7 @@ class BankAccountServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         bankAccountService.create(
-                DtoStubs.getBankAccountDto(1L)
+                BankAccountDtoStubs.getBankAccountDto(1L)
         );
 
         verify(bankAccountRepository).save(any(BankAccount.class));
@@ -96,7 +102,7 @@ class BankAccountServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         bankAccountService.update(
-                DtoStubs.getBankAccountDto(1L)
+                BankAccountDtoStubs.getBankAccountDto(1L)
         );
 
         verify(bankAccountRepository).save(any(BankAccount.class));

@@ -8,6 +8,7 @@ import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.ProductMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,6 +44,9 @@ class ProductServiceImplTest {
     @Spy
     private DtoMapperImpl dtoMapper;
 
+    @Spy
+    private ProductMapperImpl productMapper;
+
 
     @Test
     void getById() {
@@ -56,7 +60,7 @@ class ProductServiceImplTest {
 
         ProductDto fact = productService.getById(1L);
 
-        verify(dtoMapper).productToProductDto(product);
+        verify(productMapper).toDto(product);
         verify(dtoMapper).toImageDto(product.getImages());
         assertEquals(productDto, fact);
     }
@@ -100,7 +104,7 @@ class ProductServiceImplTest {
         productService.create(productDto);
         verify(dtoMapper).toImage(any(List.class), anyString());
         verify(imageRepository).saveAll(any(List.class));
-        verify(dtoMapper).productDtoToProduct(productDto);
+        verify(productMapper).toModel(productDto);
         verify(repository).saveAndFlush(any(Product.class));
     }
 
@@ -119,8 +123,8 @@ class ProductServiceImplTest {
         List<ProductDto> allByContractorId = productService.getAllByContractorId(1L);
 
         verify(repository).getAllByContractorId(1L);// здесь
-        verify(dtoMapper).toProductDto(any(List.class));
-        assertEquals(dtoMapper.toProductDto(productList), allByContractorId);// и здесь
+        verify(productMapper).toListDto(any(List.class));
+        assertEquals(productMapper.toListDto(productList), allByContractorId);// и здесь
     }
 
     @Test
@@ -132,7 +136,7 @@ class ProductServiceImplTest {
         List<ProductDto> expectedCollect = Stream.of(ModelStubs.getProductDto(1L)).collect(Collectors.toList());
 
         List<ProductDto> factCollect = productService.search(searchValue);
-        verify(dtoMapper).toProductDto(stubProductList);
+        verify(productMapper).toListDto(stubProductList);
         assertEquals(expectedCollect, factCollect);
     }
 

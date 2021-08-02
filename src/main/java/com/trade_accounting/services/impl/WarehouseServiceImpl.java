@@ -4,8 +4,9 @@ import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.WarehouseService;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.SortNumberConverter;
+import com.trade_accounting.utils.mapper.WarehouseMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,28 +16,24 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class WarehouseServiceImpl implements WarehouseService {
 
     private final WarehouseRepository warehouseRepository;
 
-    private final DtoMapper dtoMapper;
-
-    public WarehouseServiceImpl(WarehouseRepository warehouseRepository, DtoMapper dtoMapper) {
-        this.warehouseRepository = warehouseRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final WarehouseMapper warehouseMapper;
 
     @Override
     public List<WarehouseDto> getAll() {
         return warehouseRepository.findAll().stream()
-                .map(dtoMapper::warehouseToWarehouseDto)
+                .map(warehouseMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public WarehouseDto getById(Long id) {
         Optional<Warehouse> warehouse = warehouseRepository.findById(id);
-        return dtoMapper.warehouseToWarehouseDto(
+        return warehouseMapper.toDto(
                 warehouse.orElse(
                         new Warehouse()
                 )
@@ -45,7 +42,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public WarehouseDto create(WarehouseDto warehouseDto) {
-        Warehouse warehouse = dtoMapper.warehouseDtoToWarehouse(warehouseDto);
+        Warehouse warehouse = warehouseMapper.toModel(warehouseDto);
         warehouse.setSortNumber(
                 SortNumberConverter.convert(warehouseDto.getSortNumber())
         );
