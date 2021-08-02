@@ -3,11 +3,8 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.repositories.PositionRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.PositionDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
-import com.trade_accounting.utils.mapper.PositionMapper;
 import com.trade_accounting.utils.mapper.PositionMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,9 +29,6 @@ class PositionServiceImplTest {
 
     @Mock
     private PositionRepository positionRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private PositionMapperImpl positionMapper;

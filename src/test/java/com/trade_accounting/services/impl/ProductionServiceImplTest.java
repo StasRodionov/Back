@@ -3,10 +3,8 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.repositories.ProductionRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.ProductionDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.ProductionMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,9 +33,6 @@ class ProductionServiceImplTest {
 
     @Mock
     private ProductionRepository productionRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private ProductionMapperImpl productionMapper;

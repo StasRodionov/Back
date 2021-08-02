@@ -4,7 +4,6 @@ import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.services.impl.Stubs.dto.ContractorGroupDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.ContractorGroupMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,9 +26,6 @@ import static org.mockito.Mockito.when;
 class ContractorGroupServiceImplTest {
     @Mock
     ContractorGroupRepository contractorGroupRepository;
-
-    @Spy
-    DtoMapperImpl dtoMapper;
 
     @Spy
     ContractorGroupMapperImpl contractorGroupMapper;

@@ -4,7 +4,6 @@ import com.trade_accounting.models.Image;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.ImageMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,9 +26,6 @@ import static org.mockito.Mockito.when;
 class ImageServiceImplTest {
     @Mock
     private ImageRepository imageRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private ImageMapperImpl imageMapper;

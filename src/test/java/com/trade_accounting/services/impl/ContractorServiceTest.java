@@ -9,10 +9,8 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.ContractorDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.ContractorMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,8 +45,7 @@ public class ContractorServiceTest {
     private LegalDetailRepository legalDetailRepository;
     @Spy
     private AddressRepository addressRepository;
-    @Spy
-    private DtoMapperImpl dtoMapper;
+
     @Spy
     private ContractorMapperImpl contractorMapper;
     @Spy

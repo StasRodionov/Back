@@ -7,10 +7,8 @@ import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.ReturnToSupplierRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.ReturnToSupplierDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -45,9 +43,6 @@ class ReturnToSupplierServiceImplTest {
 
     @Mock
     WarehouseRepository warehouseRepository;
-
-    @Spy
-    DtoMapperImpl dtoMapper;
 
     @Spy
     ReturnToSupplierDtoStubs returnToSupplierDtoStubs;

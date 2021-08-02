@@ -5,13 +5,10 @@ import com.trade_accounting.models.dto.RemainDto;
 import com.trade_accounting.repositories.RemainRepository;
 import com.trade_accounting.services.impl.Stubs.dto.RemainDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.RemainModelStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -24,9 +21,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class RemainServiceImplTest {
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Mock
     private RemainRepository remainRepository;

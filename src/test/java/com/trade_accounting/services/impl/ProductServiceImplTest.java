@@ -7,7 +7,6 @@ import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.ImageMapperImpl;
 import com.trade_accounting.utils.mapper.ProductMapperImpl;
 import org.junit.jupiter.api.Test;
@@ -41,9 +40,6 @@ class ProductServiceImplTest {
 
     @InjectMocks
     private ProductServiceImpl productService;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private ImageMapperImpl imageMapper;

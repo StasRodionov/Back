@@ -3,12 +3,10 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.repositories.UnitRepository;
-import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -27,9 +25,6 @@ class UnitServiceImplTest {
 
     @Mock
     private UnitRepository unitRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @InjectMocks
     private UnitServiceImpl unitService;

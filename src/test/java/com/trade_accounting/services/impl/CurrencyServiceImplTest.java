@@ -6,7 +6,6 @@ import com.trade_accounting.repositories.CurrencyRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
 import com.trade_accounting.services.impl.Stubs.dto.CurrencyDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.CurrencyMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,9 +30,6 @@ class CurrencyServiceImplTest {
 
     @Mock
     private CurrencyRepository currencyRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private CurrencyMapperImpl currencyMapper;

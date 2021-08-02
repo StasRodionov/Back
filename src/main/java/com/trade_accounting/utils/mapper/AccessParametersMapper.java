@@ -4,7 +4,6 @@ import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
-import com.trade_accounting.utils.DtoMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
@@ -25,7 +24,6 @@ public interface AccessParametersMapper {
     }
 
     default AccessParameters toModel(AccessParametersDto accessParametersDto,
-                                     DtoMapper dtoMapper,
                                      EmployeeRepository employeeRepository,
                                      DepartmentRepository departmentRepository,
                                      DepartmentMapper departmentMapper,

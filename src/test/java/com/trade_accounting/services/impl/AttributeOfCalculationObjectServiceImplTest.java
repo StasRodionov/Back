@@ -3,10 +3,8 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.AttributeOfCalculationObjectDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.AttributeOfCalculationObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,9 +30,6 @@ class AttributeOfCalculationObjectServiceImplTest {
 
     @Mock
     private AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private AttributeOfCalculationObjectMapper attributeOfCalculationObjectMapper;

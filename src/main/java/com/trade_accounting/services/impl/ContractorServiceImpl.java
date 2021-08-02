@@ -16,7 +16,6 @@ import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.AccessParametersMapper;
 import com.trade_accounting.utils.mapper.AddressMapper;
 import com.trade_accounting.utils.mapper.BankAccountMapper;
@@ -50,7 +49,6 @@ public class ContractorServiceImpl implements ContractorService {
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
     private final BankAccountRepository bankAccountRepository;
-    private final DtoMapper dtoMapper;
     private final AccessParametersMapper accessParametersMapper;
     private final ContractorGroupMapper contractorGroupMapper;
     private final ContractorMapper contractorMapper;
@@ -117,7 +115,7 @@ public class ContractorServiceImpl implements ContractorService {
 
         contractor.setAccessParameters(
                 accessParametersRepository.save(accessParametersMapper.toModel
-                        (contractorDto.getAccessParametersDto(),dtoMapper,employeeRepository,departmentRepository,departmentMapper, employeeMapper))
+                        (contractorDto.getAccessParametersDto(),employeeRepository,departmentRepository,departmentMapper, employeeMapper))
         );
 
         contractor.setTypeOfPrice(

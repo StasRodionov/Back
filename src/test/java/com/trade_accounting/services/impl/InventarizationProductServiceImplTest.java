@@ -4,10 +4,8 @@ import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.repositories.InventarizationProductRepository;
 import com.trade_accounting.repositories.ProductRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.InventarizationProductDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,7 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,9 +32,6 @@ public class InventarizationProductServiceImplTest {
 
     @InjectMocks
     InventarizationProductServiceImpl inventarizationProductService;
-
-//    @Spy
-//    DtoMapperImpl dtoMapper;
 
     @Spy
     InventarizationProductDtoStubs inventarizationProductDtoStubs;

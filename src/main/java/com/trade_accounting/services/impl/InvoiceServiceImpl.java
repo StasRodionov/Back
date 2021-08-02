@@ -8,7 +8,6 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.InvoiceService;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.CompanyMapper;
 import com.trade_accounting.utils.mapper.ContractorMapper;
 import com.trade_accounting.utils.mapper.InvoiceMapper;
@@ -30,7 +29,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final CompanyRepository companyRepository;
     private final ContractorRepository contractorRepository;
     private final WarehouseRepository warehouseRepository;
-    private final DtoMapper dtoMapper;
     private final ContractorMapper contractorMapper;
     private final CompanyMapper companyMapper;
     private final InvoiceMapper invoiceMapper;

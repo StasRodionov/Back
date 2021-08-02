@@ -6,13 +6,9 @@ import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
 import com.trade_accounting.services.impl.Stubs.dto.CompanyDtoStubs;
-import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.DtoMapperImpl;
-import com.trade_accounting.utils.mapper.CompanyMapper;
 import com.trade_accounting.utils.mapper.CompanyMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,9 +42,6 @@ class CompanyServiceImplTest {
 
     @Mock
     private AddressRepository addressRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private CompanyMapperImpl companyMapper;

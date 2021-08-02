@@ -1,15 +1,10 @@
 package com.trade_accounting.services.impl.fias;
 
-import com.trade_accounting.models.dto.fias.DistrictDto;
 import com.trade_accounting.models.dto.fias.RegionDto;
-import com.trade_accounting.models.fias.District;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.repositories.fias.RegionRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.RegionDtoStubs;
-import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.RegionMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,9 +31,6 @@ public class RegionServiceTest {
 
     @Mock
     RegionRepository repository;
-
-    @Spy
-    DtoMapperImpl dtoMapper;
 
     @Spy
     RegionMapper regionMapper;
