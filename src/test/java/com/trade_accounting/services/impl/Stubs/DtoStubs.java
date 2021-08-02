@@ -202,9 +202,9 @@ public class DtoStubs {
         return dtoMapper.accessParametersToAccessParametersDto(ModelStubs.getAccessParameters(id));
     }
 
-    public static AgentReportsDto getAgentReportsDto(Long id) {
-        return dtoMapper.agentReportsToAgentReportsDto(ModelStubs.getAgentReports(id));
-    }
+//    public static AgentReportsDto getAgentReportsDto(Long id) {
+//        return dtoMapper.agentReportsToAgentReportsDto(ModelStubs.getAgentReports(id));
+//    }
 
 //    public static SupplierAccountDto getSupplierAccountDto(Long id) {
 //        return dtoMapper.supplierAccountToSupplierAccountDto(ModelStubs.getSupplierAccount(id));

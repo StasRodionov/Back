@@ -169,10 +169,10 @@ public abstract class DtoMapper {
 //
 //    public abstract Address addressDtoToAddress(AddressDto address);
 
-    //AgentReports
-    public abstract AgentReportsDto agentReportsToAgentReportsDto(AgentReports agentReports);
-
-    public abstract AgentReports agentReportsDtoToAgentReports(AgentReportsDto agentReportsDto);
+//    //AgentReports
+//    public abstract AgentReportsDto agentReportsToAgentReportsDto(AgentReports agentReports);
+//
+//    public abstract AgentReports agentReportsDtoToAgentReports(AgentReportsDto agentReportsDto);
 
 //    //BankAccount
 //    public abstract BankAccountDto bankAccountToBankAccountDto(BankAccount bankAccount);
