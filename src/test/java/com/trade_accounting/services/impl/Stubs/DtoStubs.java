@@ -107,11 +107,11 @@ public class DtoStubs {
 //        return dtoMapper.contractToContractDto(ModelStubs.getContract(id));
 //    }
 
-    public static ContractorGroupDto getContractorGroupDto(Long id) {
-        return dtoMapper.contractorGroupToContractorGroupDto(
-                ModelStubs.getContractorGroup(id)
-        );
-    }
+//    public static ContractorGroupDto getContractorGroupDto(Long id) {
+//        return dtoMapper.contractorGroupToContractorGroupDto(
+//                ModelStubs.getContractorGroup(id)
+//        );
+//    }
 
 //    public static TaxSystemDto getTaxSystemDto(Long id) {
 //        return dtoMapper.taxSystemToTaxSystemDto(

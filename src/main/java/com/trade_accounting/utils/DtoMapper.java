@@ -273,10 +273,10 @@ public abstract class DtoMapper {
 //    })
 //    public abstract Contractor contractorDtoToContractor(ContractorDto contractorDto);
 
-    //ContractorGroup
-    public abstract ContractorGroupDto contractorGroupToContractorGroupDto(ContractorGroup contractorGroup);
-
-    public abstract ContractorGroup contractorGroupDtoToContractorGroup(ContractorGroupDto contractorGroupDto);
+//    //ContractorGroup
+//    public abstract ContractorGroupDto contractorGroupToContractorGroupDto(ContractorGroup contractorGroup);
+//
+//    public abstract ContractorGroup contractorGroupDtoToContractorGroup(ContractorGroupDto contractorGroupDto);
 
     //Currency
     public abstract CurrencyDto currencyToCurrencyDto(Currency currency);

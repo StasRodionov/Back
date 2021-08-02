@@ -20,6 +20,7 @@ import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.AddressMapper;
 import com.trade_accounting.utils.mapper.BankAccountMapper;
 import com.trade_accounting.utils.mapper.ContactMapper;
+import com.trade_accounting.utils.mapper.ContractorGroupMapper;
 import com.trade_accounting.utils.mapper.ContractorMapper;
 import com.trade_accounting.utils.mapper.LegalDetailMapper;
 import com.trade_accounting.utils.mapper.TypeOfPriceMapper;
@@ -47,6 +48,7 @@ public class ContractorServiceImpl implements ContractorService {
     private final DepartmentRepository departmentRepository;
     private final BankAccountRepository bankAccountRepository;
     private final DtoMapper dtoMapper;
+    private final ContractorGroupMapper contractorGroupMapper;
     private final ContractorMapper contractorMapper;
     private final ContactMapper contactMapper;
     private final BankAccountMapper bankAccountMapper;
@@ -101,7 +103,7 @@ public class ContractorServiceImpl implements ContractorService {
 
         contractor.setContractorGroup(
                 contractorGroupRepository
-                        .save(dtoMapper.contractorGroupDtoToContractorGroup(
+                        .save(contractorGroupMapper.contractorGroupDtoToContractorGroup(
                                 contractorDto.getContractorGroupDto()
                         ))
         );

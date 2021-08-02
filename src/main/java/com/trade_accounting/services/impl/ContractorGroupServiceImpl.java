@@ -4,7 +4,7 @@ import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.ContractorGroupMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ import java.util.List;
 public class ContractorGroupServiceImpl implements ContractorGroupService {
 
     private final ContractorGroupRepository contractorGroupRepository;
-    private final DtoMapper dtoMapper;
+    private final ContractorGroupMapper contractorGroupMapper;
 
     @Override
     public List<ContractorGroupDto> getAll() {
@@ -31,7 +31,7 @@ public class ContractorGroupServiceImpl implements ContractorGroupService {
 
     @Override
     public ContractorGroupDto create(ContractorGroupDto dto) {
-        ContractorGroup contractorGroupSaved = contractorGroupRepository.save(dtoMapper.contractorGroupDtoToContractorGroup(dto));
+        ContractorGroup contractorGroupSaved = contractorGroupRepository.save(contractorGroupMapper.contractorGroupDtoToContractorGroup(dto));
         dto.setId(contractorGroupSaved.getId());
         return dto;
     }
