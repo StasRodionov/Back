@@ -563,8 +563,16 @@ public class DataInitializer {
     }
 
     private void initRoles() {
-        roleService.create(new RoleDto("admin", "1"));
-        roleService.create(new RoleDto("user", "2"));
+        roleService.create(RoleDto.builder()
+                .name("admin")
+                .sortNumber("1")
+                .build()
+        );
+        roleService.create(RoleDto.builder()
+                .name("user")
+                .sortNumber("2")
+                .build()
+        );
     }
 
     private void initWarehouses() {
