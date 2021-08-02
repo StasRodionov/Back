@@ -1,7 +1,7 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.Invoice;
-import com.trade_accounting.models.TypeOfInvoice;
+
 import com.trade_accounting.models.dto.InvoiceDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -14,9 +14,9 @@ import java.util.List;
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpecificationExecutor<Invoice> {
 
-    List<Invoice> findByTypeOfInvoice(TypeOfInvoice typeOfInvoice);
+    List<InvoiceDto> findByTypeOfInvoice(String typeOfInvoice);
 
-    @Query("select new com.trade_accounting.models.dto.InvoiceDto(" +
+    @Query("select new com.trade_accounting.models.dto.InvoiceDto("+
             "e.id," +
             "e.date," +
             "e.typeOfInvoice," +
@@ -38,7 +38,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.comment) from Invoice e where lower(concat(e.id, e.comment)) " +
             "like concat('%', :search, '%') and e.typeOfInvoice = :typeOfInvoice")
     List<InvoiceDto> findBySearchAndTypeOfInvoice(@Param("search") String search,
-                                                  @Param("typeOfInvoice") TypeOfInvoice typeOfInvoice);
+                                                  @Param("typeOfInvoice") String typeOfInvoice);
 
     @Query("select new com.trade_accounting.models.dto.InvoiceDto(" +
             "e.id," +
@@ -57,9 +57,9 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.typeOfInvoice, " +
             "e.company.id," +
             "e.contractor.id," +
-            "e.warehouse.id, " +
+            "e.warehouse.id," +
             "e.isSpend," +
             "e.comment) from Invoice e " +
             "where lower(concat(e.id, e.comment)) like lower(concat('%', :query,'%')) and e.typeOfInvoice = :typeOfInvoice")
-    List<InvoiceDto> search(@Param("query") String query, @Param("typeOfInvoice") TypeOfInvoice typeOfInvoice);
+    List<InvoiceDto> search(@Param("query") String query, @Param("typeOfInvoice") String typeOfInvoice);
 }

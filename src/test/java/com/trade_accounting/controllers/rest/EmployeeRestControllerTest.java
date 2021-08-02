@@ -106,7 +106,8 @@ public class EmployeeRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(updatedEmployeeJson));
-    }
+            }
+
 
     @Test
     public void testDeleteById() throws Exception {
@@ -120,4 +121,6 @@ public class EmployeeRestControllerTest {
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
+
+
 }

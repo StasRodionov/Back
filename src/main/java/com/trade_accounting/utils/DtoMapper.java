@@ -423,14 +423,14 @@ public abstract class DtoMapper {
     @Mappings({
             @Mapping(source = "company", target = "companyDto"),
             @Mapping(source = "contractor", target = "contractorDto"),
-            @Mapping(source = "warehouse", target = "warehouseDto"),
+            @Mapping(source = "warehouse", target = "warehouseDto")
     })
     public abstract InvoiceDto invoiceToInvoiceDto(Invoice invoice);
 
     @Mappings({
             @Mapping(source = "companyDto", target = "company"),
             @Mapping(source = "contractorDto", target = "contractor"),
-            @Mapping(source = "warehouseDto", target = "warehouse"),
+            @Mapping(source = "warehouseDto", target = "warehouse")
     })
     public abstract Invoice invoiceDtoToInvoice(InvoiceDto emp);
 

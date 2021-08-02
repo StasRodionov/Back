@@ -65,11 +65,11 @@ class InvoiceServiceImplTest {
     void getAll_shouldReturnListFilledInvoiceDtoByType() { //этот тест не проходит вообще
         when(invoiceRepository.findByTypeOfInvoice(any(TypeOfInvoice.class)))
                 .thenReturn(
-                        Stream.of(
+                         Stream.of(
                                 ModelStubs.getInvoice(1L),
-                                ModelStubs.getInvoice(2L),
-                                ModelStubs.getInvoice(3L)
-                        ).collect(Collectors.toList())
+                                 ModelStubs.getInvoice(2L),
+                                 ModelStubs.getInvoice(3L)
+                       ).collect(Collectors.toList())
                 );
         List<InvoiceDto> invoiceDtoList = invoiceService.getAll("RECEIPT");
         assertNotNull(

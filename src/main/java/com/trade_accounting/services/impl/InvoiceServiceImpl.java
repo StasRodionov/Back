@@ -1,7 +1,11 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.TypeOfInvoice;
+import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
@@ -46,14 +50,18 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<InvoiceDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice) {
-        List<InvoiceDto> invoiceDtoList = invoiceRepository.findBySearchAndTypeOfInvoice(search, typeOfInvoice);
-        for (InvoiceDto invoice : invoiceDtoList) {
-            invoice.setCompanyDto(dtoMapper.companyToCompanyDto(companyRepository.getCompaniesById(invoice.getCompanyDto().getId())));
-            invoice.setContractorDto(dtoMapper.contractorToContractorDto(
-                    contractorRepository.getOne(invoice.getContractorDto().getId())));
-            invoice.setWarehouseDto(warehouseRepository.getById(invoice.getWarehouseDto().getId()));
+        List<InvoiceDto> invoiceList = invoiceRepository.findBySearchAndTypeOfInvoice(search, typeOfInvoice);
+        for (InvoiceDto invoice : invoiceList) {
+            Invoice invoice1 = invoiceRepository.getOne(invoice.getId());
+            Company company = companyRepository.getCompaniesById(invoice1.getCompany().getId());
+            Contractor contractor = contractorRepository.getContractorById(invoice1.getContractor().getId());
+            Warehouse warehouse = warehouseRepository.getOne(invoice1.getWarehouse().getId());
+            invoice.setCompanyId((warehouse.getId()));
+            invoice.setContractorId(contractor.getId());
+            invoice.setWarehouseId(warehouse.getId());
+
         }
-        return invoiceDtoList;
+        return invoiceList;
     }
 
     @Override

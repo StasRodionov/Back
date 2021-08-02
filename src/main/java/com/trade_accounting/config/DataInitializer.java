@@ -345,9 +345,9 @@ public class DataInitializer {
                             "Комментарий " + i++,
                             LocalDateTime.now().toString(),
                             typeOfInvoices.get(randomInt(0, 1)),
-                            companyDto,
-                            contractorDto,
-                            warehouseDto,
+                            companyDto.getId(),
+                            contractorDto.getId(),
+                            warehouseDto.getId(),
                             false));
                 }
             }

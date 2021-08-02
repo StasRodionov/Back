@@ -137,7 +137,7 @@ public class EmployeeRestController {
     @PostMapping
     @ApiOperation(value = "create", notes = "Регистрация нового работника")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Работник успешно зарегестрирован"),
+            @ApiResponse(code = 200, message = "Работник успешно зарегистрирован"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
             @ApiResponse(code = 404, message = "Данный контролер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
