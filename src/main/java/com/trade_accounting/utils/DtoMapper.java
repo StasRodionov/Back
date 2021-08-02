@@ -130,28 +130,28 @@ public abstract class DtoMapper {
     })
     public abstract Remain remainDtoToRemain(RemainDto remainDto);
 
-    //AccessParameters
-    public AccessParametersDto accessParametersToAccessParametersDto(AccessParameters accessParameters) {
-        if (accessParameters == null) {
-            return null;
-        } else {
-            return new AccessParametersDto(
-                    accessParameters.getId(),
-                    accessParameters.getGeneralAccess(),
-                    accessParameters.getEmployee().getId(),
-                    accessParameters.getDepartment().getId()
-            );
-        }
-    }
-
-    public AccessParameters accessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto) {
-        if (accessParametersDto == null) {
-            return null;
-        }
-        return AccessParameters.builder().id(accessParametersDto.getId()).generalAccess(accessParametersDto.getGeneralAccess())
-                .employee(employeeDtoToEmployee(employeeRepository.getById(accessParametersDto.getEmployeeId())))
-                .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
-    }
+//    //AccessParameters
+//    public AccessParametersDto accessParametersToAccessParametersDto(AccessParameters accessParameters) {
+//        if (accessParameters == null) {
+//            return null;
+//        } else {
+//            return new AccessParametersDto(
+//                    accessParameters.getId(),
+//                    accessParameters.getGeneralAccess(),
+//                    accessParameters.getEmployee().getId(),
+//                    accessParameters.getDepartment().getId()
+//            );
+//        }
+//    }
+//
+//    public AccessParameters accessParametersDtoToAccessParameters(AccessParametersDto accessParametersDto) {
+//        if (accessParametersDto == null) {
+//            return null;
+//        }
+//        return AccessParameters.builder().id(accessParametersDto.getId()).generalAccess(accessParametersDto.getGeneralAccess())
+//                .employee(employeeDtoToEmployee(employeeRepository.getById(accessParametersDto.getEmployeeId())))
+//                .department(departmentDtoToDepartment(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
+//    }
 
 //    // Acceptance
 //    @Mappings({

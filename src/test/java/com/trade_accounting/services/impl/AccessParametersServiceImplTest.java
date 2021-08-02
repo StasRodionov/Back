@@ -7,7 +7,9 @@ import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.AccessParametersDtoStubs;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.AccessParametersMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,6 +38,9 @@ class AccessParametersServiceImplTest {
 
     @Spy
     private DtoMapper dtoMapper;
+
+    @Spy
+    private AccessParametersMapper accessParametersMapper;
 
     @InjectMocks
     private AccessParametersServiceImpl accessParametersService;
@@ -87,7 +92,7 @@ class AccessParametersServiceImplTest {
                 .thenReturn(ModelStubs.getAccessParameters(1L));
 
         AccessParametersDto accessParametersDto =
-                accessParametersService.create(DtoStubs.getAccessParametersDto(1L));
+                accessParametersService.create(AccessParametersDtoStubs.getAccessParametersDto(1L));
 
         assertEquals(1, accessParametersDto.getId());
 
