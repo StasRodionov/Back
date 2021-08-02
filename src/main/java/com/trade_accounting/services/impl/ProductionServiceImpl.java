@@ -4,7 +4,8 @@ import com.trade_accounting.models.Production;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.repositories.ProductionRepository;
 import com.trade_accounting.services.interfaces.ProductionService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.ProductionMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,21 +14,17 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ProductionServiceImpl implements ProductionService {
 
     private final ProductionRepository productionRepository;
 
-    private final DtoMapper dtoMapper;
-
-    public ProductionServiceImpl(ProductionRepository productionRepository, DtoMapper dtoMapper) {
-        this.productionRepository = productionRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final ProductionMapper productionMapper;
 
     @Override
     public List<ProductionDto> getAll() {
         final List<ProductionDto> collect = productionRepository.findAll().stream()
-                .map(dtoMapper::productionToProductionDto)
+                .map(productionMapper::toDto)
                 .collect(Collectors.toList());
         return collect;
     }
@@ -35,14 +32,14 @@ public class ProductionServiceImpl implements ProductionService {
 
     @Override
     public ProductionDto getById(Long id) {
-        return dtoMapper.productionToProductionDto(productionRepository.findById(id).orElse(new Production()));
+        return productionMapper.toDto(productionRepository.findById(id).orElse(new Production()));
     }
 
     @Override
     public ProductionDto create(ProductionDto dto) {
-        Production production = productionRepository.save(dtoMapper.productionDtoToProduction(dto));
+        Production production = productionRepository.save(productionMapper.toModel(dto));
         dto.setId(production.getId());
-        return dtoMapper.productionToProductionDto(production);
+        return productionMapper.toDto(production);
     }
 
     @Override

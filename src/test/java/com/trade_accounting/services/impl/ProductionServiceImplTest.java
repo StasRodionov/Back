@@ -5,7 +5,9 @@ import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.repositories.ProductionRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.ProductionDtoStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.ProductionMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,6 +38,9 @@ class ProductionServiceImplTest {
 
     @Spy
     private DtoMapperImpl dtoMapper;
+
+    @Spy
+    private ProductionMapperImpl productionMapper;
 
     @Test
     void getAll_shouldReturnListFilledProductionDto() {
@@ -71,7 +76,7 @@ class ProductionServiceImplTest {
                 .thenReturn(ModelStubs.getProduction(1L));
 
         productionService.create(
-                DtoStubs.getProductionDto(1L)
+                ProductionDtoStubs.getProductionDto(1L)
         );
 
         verify(productionRepository).save(any(Production.class));
@@ -83,7 +88,7 @@ class ProductionServiceImplTest {
                 .thenReturn(ModelStubs.getProduction(1L));
 
         productionService.update(
-                DtoStubs.getProductionDto(1L)
+                ProductionDtoStubs.getProductionDto(1L)
         );
 
         verify(productionRepository).save(any(Production.class));

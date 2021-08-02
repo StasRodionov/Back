@@ -114,10 +114,10 @@ public abstract class DtoMapper {
             AttributeOfCalculationObjectDto attributeOfCalculationObjectDto
     );
 
-    //Production
-    public abstract ProductionDto productionToProductionDto(Production production);
-
-    public abstract Production productionDtoToProduction(ProductionDto productionDto);
+//    //Production
+//    public abstract ProductionDto productionToProductionDto(Production production);
+//
+//    public abstract Production productionDtoToProduction(ProductionDto productionDto);
 
 //    //Remain
 //    @Mappings({
