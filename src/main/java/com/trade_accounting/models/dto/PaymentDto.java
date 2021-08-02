@@ -1,22 +1,18 @@
 package com.trade_accounting.models.dto;
 
-import com.trade_accounting.models.Company;
-import com.trade_accounting.models.Contract;
-import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.PaymentMethods;
-import com.trade_accounting.models.Project;
 import com.trade_accounting.models.TypeOfPayment;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentDto {
@@ -30,7 +26,8 @@ public class PaymentDto {
     @NotNull
     private String number;
 
-    private LocalDateTime time;
+    private String time;
+//    private LocalDateTime time;
 
     @NotNull
     private CompanyDto companyDto;
@@ -48,7 +45,8 @@ public class PaymentDto {
                       TypeOfPayment typeOfPayment,
                       PaymentMethods paymentMethods,
                       String number,
-                      LocalDateTime time,
+//                      LocalDateTime time,
+                      String time,
                       Long companyId,
                       Long contractorId,
                       Long contractId,

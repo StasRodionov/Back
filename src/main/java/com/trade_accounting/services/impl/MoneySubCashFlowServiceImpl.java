@@ -50,13 +50,13 @@ public class MoneySubCashFlowServiceImpl implements MoneySubCashFlowService {
         List<PaymentDto> paymentDtos = paymentService.getAll();
 
         //Получение Листа с датами платежей
-        List date = paymentDtos.stream().map(c -> c.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).distinct().sorted().collect(Collectors.toList());
+        List date = paymentDtos.stream().map(c -> c.getTime().format(String.valueOf(DateTimeFormatter.ofPattern("yyyy-MM-dd")))).distinct().sorted().collect(Collectors.toList());
 
         //Добавление Платежей внутри одной даты
         for (Object i:date) {
         //Наличные
             List<PaymentDto> cashComingPaymentDto = paymentDtos.stream()
-                    .filter(t -> t.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(i.toString()))
+                    .filter(t -> t.getTime().format(String.valueOf(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).equals(i.toString()))
                     .filter(a -> a.getPaymentMethods().toString().equals("CASH"))
                     .filter(c -> c.getTypeOfPayment().toString().equals("INCOMING")).collect(Collectors.toList());
             if (cashComingPaymentDto.isEmpty()) {
@@ -65,7 +65,7 @@ public class MoneySubCashFlowServiceImpl implements MoneySubCashFlowService {
                 cashComing = cashComingPaymentDto.stream().map(PaymentDto::getSum).reduce(BigDecimal::add).get();
             }
             List<PaymentDto> cashExpensePaymentDto = paymentDtos.stream()
-                    .filter(t -> t.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(i.toString()))
+                    .filter(t -> t.getTime().format(String.valueOf(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).equals(i.toString()))
                     .filter(a -> a.getPaymentMethods().toString().equals("CASH"))
                     .filter(c -> c.getTypeOfPayment().toString().equals("OUTGOING")).collect(Collectors.toList());
             if (cashExpensePaymentDto.isEmpty()) {
@@ -78,7 +78,7 @@ public class MoneySubCashFlowServiceImpl implements MoneySubCashFlowService {
 
             //Безнал
             List<PaymentDto> bankComingPaymentDto = paymentDtos.stream()
-                    .filter(t -> t.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(i.toString()))
+                    .filter(t -> t.getTime().format(String.valueOf(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).equals(i.toString()))
                     .filter(a -> a.getPaymentMethods().toString().equals("BANK"))
                     .filter(c -> c.getTypeOfPayment().toString().equals("INCOMING")).collect(Collectors.toList());
             if (bankComingPaymentDto.isEmpty()) {
@@ -87,7 +87,7 @@ public class MoneySubCashFlowServiceImpl implements MoneySubCashFlowService {
                 bankComing = bankComingPaymentDto.stream().map(PaymentDto::getSum).reduce(BigDecimal::add).get();
             }
             List<PaymentDto> bankExpensePaymentDto = paymentDtos.stream()
-                    .filter(t -> t.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(i.toString()))
+                    .filter(t -> t.getTime().format(String.valueOf(DateTimeFormatter.ofPattern("yyyy-MM-dd"))).equals(i.toString()))
                     .filter(a -> a.getPaymentMethods().toString().equals("BANK"))
                     .filter(c -> c.getTypeOfPayment().toString().equals("OUTGOING")).collect(Collectors.toList());
             if (bankExpensePaymentDto.isEmpty()) {

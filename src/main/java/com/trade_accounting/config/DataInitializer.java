@@ -182,7 +182,7 @@ public class DataInitializer {
         initInvoices();
         initInvoiceProducts();
         initProject();
-        initPayment();
+//        initPayment();
         initTasks();
         initTaskComments();
         initRetailStores();
@@ -287,48 +287,48 @@ public class DataInitializer {
         projectService.create(new ProjectDto(null, "name4", "0000", "description"));
     }
 
-    public void initPayment() {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
-        List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
-        List<ProjectDto> projectDtos = projectService.getAll().stream().limit(3).collect(Collectors.toList());
-        List<ContractDto> contractDtos = contractService.getAll().stream().limit(3).collect(Collectors.toList());
-        int count = 1;
-        for (CompanyDto companyDto : companyDtos) {
-            for (ContractorDto contractorDto : contractorDtos) {
-                for (ContractDto contractDto : contractDtos) {
-                    for (ProjectDto projectDto : projectDtos) {
-                        paymentService.create(new PaymentDto(
-                                null,
-                                TypeOfPayment.INCOMING,
-                                PaymentMethods.CASH,
-                                "0000" + count,
-                                localDateTime,
-                                companyDto.getId(),
-                                contractorDto.getId(),
-                                contractDto.getId(),
-                                projectDto.getId(),
-                                new BigDecimal("100.00")
-                        ));
-                        count++;
-                        paymentService.create(new PaymentDto(
-                                null,
-                                TypeOfPayment.OUTGOING,
-                                PaymentMethods.BANK,
-                                "0000" + count,
-                                localDateTime,
-                                companyDto.getId(),
-                                contractorDto.getId(),
-                                contractDto.getId(),
-                                projectDto.getId(),
-                                new BigDecimal("50.00")
-                        ));
-                        count++;
-                    }
-                }
-            }
-        }
-    }
+//    public void initPayment() {
+//        LocalDateTime localDateTime = LocalDateTime.now();
+//        List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
+//        List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
+//        List<ProjectDto> projectDtos = projectService.getAll().stream().limit(3).collect(Collectors.toList());
+//        List<ContractDto> contractDtos = contractService.getAll().stream().limit(3).collect(Collectors.toList());
+//        int count = 1;
+//        for (CompanyDto companyDto : companyDtos) {
+//            for (ContractorDto contractorDto : contractorDtos) {
+//                for (ContractDto contractDto : contractDtos) {
+//                    for (ProjectDto projectDto : projectDtos) {
+//                        paymentService.create(new PaymentDto(
+//                                null,
+//                                TypeOfPayment.INCOMING,
+//                                PaymentMethods.CASH,
+//                                "0000" + count,
+//                                localDateTime,
+//                                companyDto.getId(),
+//                                contractorDto.getId(),
+//                                contractDto.getId(),
+//                                projectDto.getId(),
+//                                new BigDecimal("100.00")
+//                        ));
+//                        count++;
+//                        paymentService.create(new PaymentDto(
+//                                null,
+//                                TypeOfPayment.OUTGOING,
+//                                PaymentMethods.BANK,
+//                                "0000" + count,
+//                                localDateTime,
+//                                companyDto.getId(),
+//                                contractorDto.getId(),
+//                                contractDto.getId(),
+//                                projectDto.getId(),
+//                                new BigDecimal("50.00")
+//                        ));
+//                        count++;
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     public void initInvoices() {
         List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
@@ -563,8 +563,16 @@ public class DataInitializer {
     }
 
     private void initRoles() {
-        roleService.create(new RoleDto("admin", "1"));
-        roleService.create(new RoleDto("user", "2"));
+        roleService.create(RoleDto.builder()
+                .name("admin")
+                .sortNumber("1")
+                .build()
+        );
+        roleService.create(RoleDto.builder()
+                .name("user")
+                .sortNumber("2")
+                .build()
+        );
     }
 
     private void initWarehouses() {

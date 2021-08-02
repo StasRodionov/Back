@@ -8,13 +8,17 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.services.interfaces.PaymentService;
+import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.PaymentMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,8 +33,8 @@ public class PaymentServiceImpl implements PaymentService {
     private final ContractorRepository contractorRepository;
     private final ContractRepository contractRepository;
     private final ProjectRepository projectRepository;
-
     private final PaymentMapper paymentMapper;
+
 
     @Override
     public List<PaymentDto> getAll() {
@@ -73,6 +77,9 @@ public class PaymentServiceImpl implements PaymentService {
                         paymentDto.getProjectDto().getId()
                 ).orElse(null)
         );
+
+        LocalDateTime time = LocalDateTime.parse(paymentDto.getTime().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        payment.setTime(time);
         return paymentMapper.toDto(paymentRepository.save(payment));
     }
 
