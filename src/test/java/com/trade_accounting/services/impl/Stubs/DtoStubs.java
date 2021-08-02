@@ -93,10 +93,10 @@ public class DtoStubs {
         );
     }
 
-    public static DepartmentDto getDepartmentDto(Long id) {
-        return dtoMapper.departmentToDepartmentDto(
-                ModelStubs.getDepartment(id));
-    }
+//    public static DepartmentDto getDepartmentDto(Long id) {
+//        return dtoMapper.departmentToDepartmentDto(
+//                ModelStubs.getDepartment(id));
+//    }
 
 //    public static PositionDto getPositionDto(Long id) {
 //        return dtoMapper.positionToPositionDto(

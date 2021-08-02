@@ -23,6 +23,7 @@ import com.trade_accounting.utils.mapper.BankAccountMapper;
 import com.trade_accounting.utils.mapper.ContactMapper;
 import com.trade_accounting.utils.mapper.ContractorGroupMapper;
 import com.trade_accounting.utils.mapper.ContractorMapper;
+import com.trade_accounting.utils.mapper.DepartmentMapper;
 import com.trade_accounting.utils.mapper.LegalDetailMapper;
 import com.trade_accounting.utils.mapper.TypeOfPriceMapper;
 import lombok.RequiredArgsConstructor;
@@ -57,6 +58,8 @@ public class ContractorServiceImpl implements ContractorService {
     private final AddressMapper addressMapper;
     private final LegalDetailMapper legalDetailMapper;
     private final TypeOfPriceMapper typeOfPriceMapper;
+    private final DepartmentMapper departmentMapper;
+
 
     @Override
     public List<ContractorDto> search(Specification<Contractor> specification) {
@@ -112,7 +115,7 @@ public class ContractorServiceImpl implements ContractorService {
 
         contractor.setAccessParameters(
                 accessParametersRepository.save(accessParametersMapper.toModel
-                        (contractorDto.getAccessParametersDto(),dtoMapper,employeeRepository,departmentRepository))
+                        (contractorDto.getAccessParametersDto(),dtoMapper,employeeRepository,departmentRepository,departmentMapper))
         );
 
         contractor.setTypeOfPrice(

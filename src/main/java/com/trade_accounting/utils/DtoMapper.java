@@ -283,10 +283,10 @@ public abstract class DtoMapper {
 //
 //    public abstract Currency currencyDtoToCurrency(CurrencyDto currencyDto);
 
-    //Department
-    public abstract DepartmentDto departmentToDepartmentDto(Department department);
-
-    public abstract Department departmentDtoToDepartment(DepartmentDto department);
+//    //Department
+//    public abstract DepartmentDto departmentToDepartmentDto(Department department);
+//
+//    public abstract Department departmentDtoToDepartment(DepartmentDto department);
 
     // Employee
     @Mappings({
