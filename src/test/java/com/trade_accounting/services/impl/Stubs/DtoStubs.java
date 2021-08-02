@@ -63,11 +63,11 @@ public class DtoStubs {
 //        );
 //    }
 
-    public static CompanyDto getCompanyDto(Long id) {
-        return dtoMapper.companyToCompanyDto(
-                ModelStubs.getCompany(id)
-        );
-    }
+//    public static CompanyDto getCompanyDto(Long id) {
+//        return dtoMapper.companyToCompanyDto(
+//                ModelStubs.getCompany(id)
+//        );
+//    }
 
 //    public static ProjectDto getProjectDto(Long id) {
 //        return dtoMapper.projectToProjectDto(

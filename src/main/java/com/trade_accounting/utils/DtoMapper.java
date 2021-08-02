@@ -183,42 +183,42 @@ public abstract class DtoMapper {
 //
 //    public abstract List<BankAccountDto> bankAccountListToBankAccountDtoList(List<BankAccount> bankAccountList);
 
-    //Company
-    @Mappings({
-            @Mapping(source = "address.id", target = "addressId"),
-            @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
-    })
-    public abstract CompanyDto companyToCompanyDto(Company company);
-
-    @AfterMapping
-    public void listBankAccountsIdToListBankAccountDtoIds(Company company, @MappingTarget CompanyDto companyDto) {
-        if (company.getBankAccounts() == null) {
-            companyDto.setBankAccountDtoIds(null);
-        } else {
-            List<Long> bankAccountDtoIds = company.getBankAccounts().stream()
-                    .map(o -> o.getId()).collect(Collectors.toList());
-            companyDto.setBankAccountDtoIds(bankAccountDtoIds);
-        }
-    }
-
-    @Mappings({
-            @Mapping(source = "addressId", target = "address.id"),
-            @Mapping(source = "legalDetailDtoId", target = "legalDetail.id")
-    })
-    public abstract Company companyDtoToCompany(CompanyDto companyDto);
-
-    @AfterMapping
-    public void listBankAccountsDtoIdsToListBankAccount(CompanyDto companyDto, @MappingTarget Company company, @Context BankAccountRepository bankAccountRepository) {
-        if (companyDto.getBankAccountDtoIds() == null) {
-            company.setBankAccounts(null);
-        } else {
-            List<BankAccount> bankAccounts = companyDto.getBankAccountDtoIds()
-                    .stream()
-                    .map(id -> bankAccountRepository.getOne(id))
-                    .collect(Collectors.toList());
-            company.setBankAccounts(bankAccounts);
-        }
-    }
+//    //Company
+//    @Mappings({
+//            @Mapping(source = "address.id", target = "addressId"),
+//            @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
+//    })
+//    public abstract CompanyDto companyToCompanyDto(Company company);
+//
+//    @AfterMapping
+//    public void listBankAccountsIdToListBankAccountDtoIds(Company company, @MappingTarget CompanyDto companyDto) {
+//        if (company.getBankAccounts() == null) {
+//            companyDto.setBankAccountDtoIds(null);
+//        } else {
+//            List<Long> bankAccountDtoIds = company.getBankAccounts().stream()
+//                    .map(o -> o.getId()).collect(Collectors.toList());
+//            companyDto.setBankAccountDtoIds(bankAccountDtoIds);
+//        }
+//    }
+//
+//    @Mappings({
+//            @Mapping(source = "addressId", target = "address.id"),
+//            @Mapping(source = "legalDetailDtoId", target = "legalDetail.id")
+//    })
+//    public abstract Company companyDtoToCompany(CompanyDto companyDto);
+//
+//    @AfterMapping
+//    public void listBankAccountsDtoIdsToListBankAccount(CompanyDto companyDto, @MappingTarget Company company, @Context BankAccountRepository bankAccountRepository) {
+//        if (companyDto.getBankAccountDtoIds() == null) {
+//            company.setBankAccounts(null);
+//        } else {
+//            List<BankAccount> bankAccounts = companyDto.getBankAccountDtoIds()
+//                    .stream()
+//                    .map(id -> bankAccountRepository.getOne(id))
+//                    .collect(Collectors.toList());
+//            company.setBankAccounts(bankAccounts);
+//        }
+//    }
 
 //    //Contact
 //    public abstract ContactDto contactToContactDto(Contact contact);
