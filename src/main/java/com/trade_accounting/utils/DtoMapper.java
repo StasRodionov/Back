@@ -1,93 +1,18 @@
 package com.trade_accounting.utils;
 
-import com.trade_accounting.models.AccessParameters;
-import com.trade_accounting.models.Address;
-import com.trade_accounting.models.AgentReports;
-import com.trade_accounting.models.AttributeOfCalculationObject;
-import com.trade_accounting.models.BankAccount;
-import com.trade_accounting.models.Company;
-import com.trade_accounting.models.Contact;
-import com.trade_accounting.models.Contract;
-import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.ContractorGroup;
-import com.trade_accounting.models.ContractorStatus;
-import com.trade_accounting.models.Currency;
-import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
-import com.trade_accounting.models.Image;
-import com.trade_accounting.models.Invoice;
-import com.trade_accounting.models.InvoiceProduct;
-import com.trade_accounting.models.LegalDetail;
-import com.trade_accounting.models.Payment;
-import com.trade_accounting.models.Position;
-import com.trade_accounting.models.PriceList;
-import com.trade_accounting.models.Product;
-import com.trade_accounting.models.ProductGroup;
-import com.trade_accounting.models.ProductPrice;
-import com.trade_accounting.models.Production;
-import com.trade_accounting.models.Project;
-import com.trade_accounting.models.Remain;
-import com.trade_accounting.models.Role;
-import com.trade_accounting.models.SupplierAccount;
-import com.trade_accounting.models.Task;
-import com.trade_accounting.models.TaskComment;
-import com.trade_accounting.models.dto.AccessParametersDto;
-import com.trade_accounting.models.dto.AddressDto;
-import com.trade_accounting.models.dto.AgentReportsDto;
-import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
-import com.trade_accounting.models.dto.BankAccountDto;
-import com.trade_accounting.models.dto.CompanyDto;
-import com.trade_accounting.models.dto.ContactDto;
-import com.trade_accounting.models.dto.ContractDto;
-import com.trade_accounting.models.dto.ContractorDto;
-import com.trade_accounting.models.dto.ContractorGroupDto;
-import com.trade_accounting.models.dto.ContractorStatusDto;
-import com.trade_accounting.models.dto.CurrencyDto;
-import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.ImageDto;
-import com.trade_accounting.models.dto.InvoiceDto;
-import com.trade_accounting.models.dto.InvoiceProductDto;
-import com.trade_accounting.models.dto.LegalDetailDto;
-import com.trade_accounting.models.dto.PaymentDto;
-import com.trade_accounting.models.dto.PositionDto;
-import com.trade_accounting.models.dto.PriceListDto;
-import com.trade_accounting.models.dto.ProductDto;
-import com.trade_accounting.models.dto.ProductGroupDto;
-import com.trade_accounting.models.dto.ProductPriceDto;
-import com.trade_accounting.models.dto.ProductionDto;
-import com.trade_accounting.models.dto.ProjectDto;
-import com.trade_accounting.models.dto.RemainDto;
-import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.models.dto.SupplierAccountDto;
-import com.trade_accounting.models.dto.TaskCommentDto;
-import com.trade_accounting.models.dto.TaskDto;
-import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
-import lombok.SneakyThrows;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class DtoMapper {
 
-    private static final String UPLOAD_DIR = "images";
+//    private static final String UPLOAD_DIR = "images";
 
     private EmployeeRepository employeeRepository;
 
@@ -306,62 +231,62 @@ public abstract class DtoMapper {
     })
     public abstract Employee employeeDtoToEmployee(EmployeeDto emp);
 
-    //Image
-    public ImageDto imageToImageDto(Image image) {
-        if (image == null) {
-            return null;
-        }
-        return ImageDto.builder()
-                .id(image.getId())
-                .content(downloadImage(image.getImageUrl()))
-                .sortNumber(image.getSortNumber())
-                .build();
-    }
-
-    public Image imageDtoToImage(ImageDto imageDto, String imageDir) {
-        String url = uploadImage(imageDto.getContent(), imageDir,
-                new Date().getTime() + imageDto.getFileExtension());
-        return Image.builder()
-                .id(imageDto.getId())
-                .imageUrl(url)
-                .build();
-    }
-
-    public List<Image> toImage(Collection<ImageDto> imageDtos, String imageDir) {
-        if (imageDtos == null) {
-            return new ArrayList<>();
-        }
-        List<Image> list = new ArrayList<>(imageDtos.size());
-        for (ImageDto imageDto : imageDtos) {
-            list.add(imageDtoToImage(imageDto, imageDir));
-        }
-        return list;
-    }
-
-    public abstract List<ImageDto> toImageDto(Collection<Image> images);
-
-    @SneakyThrows
-    private String uploadImage(byte[] content, String imageDir, String fileName) {
-        Path path = Paths.get(UPLOAD_DIR + File.separator + imageDir);
-        if (!Files.exists(path)) {
-            Files.createDirectories(path);
-        }
-        path = Paths.get(path.toString() + File.separator + fileName);
-        if (content != null) {
-            Files.write(path, content);
-        }
-        return path.toString();
-    }
-
-    @SneakyThrows
-    private byte[] downloadImage(String url) {
-        Path path = Paths.get(url);
-        if (Files.exists(path)) {
-            return Files.readAllBytes(path);
-        } else {
-            return new byte[0];
-        }
-    }
+//    //Image
+//    public ImageDto imageToImageDto(Image image) {
+//        if (image == null) {
+//            return null;
+//        }
+//        return ImageDto.builder()
+//                .id(image.getId())
+//                .content(downloadImage(image.getImageUrl()))
+//                .sortNumber(image.getSortNumber())
+//                .build();
+//    }
+//
+//    public Image imageDtoToImage(ImageDto imageDto, String imageDir) {
+//        String url = uploadImage(imageDto.getContent(), imageDir,
+//                new Date().getTime() + imageDto.getFileExtension());
+//        return Image.builder()
+//                .id(imageDto.getId())
+//                .imageUrl(url)
+//                .build();
+//    }
+//
+//    public List<Image> toImage(Collection<ImageDto> imageDtos, String imageDir) {
+//        if (imageDtos == null) {
+//            return new ArrayList<>();
+//        }
+//        List<Image> list = new ArrayList<>(imageDtos.size());
+//        for (ImageDto imageDto : imageDtos) {
+//            list.add(imageDtoToImage(imageDto, imageDir));
+//        }
+//        return list;
+//    }
+//
+//    public abstract List<ImageDto> toImageDto(Collection<Image> images);
+//
+//    @SneakyThrows
+//    private String uploadImage(byte[] content, String imageDir, String fileName) {
+//        Path path = Paths.get(UPLOAD_DIR + File.separator + imageDir);
+//        if (!Files.exists(path)) {
+//            Files.createDirectories(path);
+//        }
+//        path = Paths.get(path.toString() + File.separator + fileName);
+//        if (content != null) {
+//            Files.write(path, content);
+//        }
+//        return path.toString();
+//    }
+//
+//    @SneakyThrows
+//    private byte[] downloadImage(String url) {
+//        Path path = Paths.get(url);
+//        if (Files.exists(path)) {
+//            return Files.readAllBytes(path);
+//        } else {
+//            return new byte[0];
+//        }
+//    }
 
 //    //Invoice
 //    @Mappings({

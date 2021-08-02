@@ -7,7 +7,7 @@ import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.ProductService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.ImageMapper;
 import com.trade_accounting.utils.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
 
-    private final DtoMapper dtoMapper;
+    private final ImageMapper imageMapper;
     private final ProductMapper productMapper;
 
     @Override
@@ -41,14 +41,14 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.getOne(id);
 
         ProductDto productDto = productMapper.toDto(product);
-        productDto.setImageDtos(dtoMapper.toImageDto(product.getImages()));
+        productDto.setImageDtos(imageMapper.toListDto(product.getImages()));
 
         return productDto;
     }
 
     @Override
     public ProductDto create(@NotNull ProductDto dto) {
-        List<Image> preparedImages = dtoMapper.toImage(dto.getImageDtos(), "product");
+        List<Image> preparedImages = imageMapper.toListModel(dto.getImageDtos(), "product");
         List<Image> savedImages = imageRepository.saveAll(preparedImages);
         Product product = productMapper.toModel(dto);
         product.setImages(savedImages);
@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto update(ProductDto dto) {
-        List<Image> preparedImages = dtoMapper.toImage(dto.getImageDtos(), "product");
+        List<Image> preparedImages = imageMapper.toListModel(dto.getImageDtos(), "product");
         List<Image> savedImages = imageRepository.saveAll(preparedImages);
         Product product = productMapper.toModel(dto);
         product.setImages(savedImages);

@@ -5,6 +5,7 @@ import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.ImageMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,6 +30,9 @@ class ImageServiceImplTest {
 
     @Spy
     private DtoMapperImpl dtoMapper;
+
+    @Spy
+    private ImageMapperImpl imageMapper;
 
     @InjectMocks
     private ImageServiceImpl imageService;
@@ -55,7 +59,7 @@ class ImageServiceImplTest {
         Image image = ModelStubs.getImage(1L);
         when(imageRepository.getOne(anyLong())).thenReturn(image);
 
-        ImageDto imageDto1 = dtoMapper.imageToImageDto(imageRepository.getOne(1L));
+        ImageDto imageDto1 = imageMapper.toDto(imageRepository.getOne(1L));
         ImageDto imageDto2 = imageService.getById(1L);
         assertEquals(imageDto1, imageDto2);
     }

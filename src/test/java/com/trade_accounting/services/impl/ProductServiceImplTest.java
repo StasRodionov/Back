@@ -8,6 +8,7 @@ import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.ImageMapperImpl;
 import com.trade_accounting.utils.mapper.ProductMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,6 +46,9 @@ class ProductServiceImplTest {
     private DtoMapperImpl dtoMapper;
 
     @Spy
+    private ImageMapperImpl imageMapper;
+
+    @Spy
     private ProductMapperImpl productMapper;
 
 
@@ -61,7 +65,7 @@ class ProductServiceImplTest {
         ProductDto fact = productService.getById(1L);
 
         verify(productMapper).toDto(product);
-        verify(dtoMapper).toImageDto(product.getImages());
+        verify(imageMapper).toListDto(product.getImages());
         assertEquals(productDto, fact);
     }
 
@@ -102,7 +106,7 @@ class ProductServiceImplTest {
         ProductDto productDto = ModelStubs.getProductDto(1L);
         productDto.setImageDtos(imageDtoList);
         productService.create(productDto);
-        verify(dtoMapper).toImage(any(List.class), anyString());
+        verify(imageMapper).toListModel(any(List.class), anyString());
         verify(imageRepository).saveAll(any(List.class));
         verify(productMapper).toModel(productDto);
         verify(repository).saveAndFlush(any(Product.class));
