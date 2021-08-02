@@ -24,6 +24,7 @@ import com.trade_accounting.utils.mapper.ContactMapper;
 import com.trade_accounting.utils.mapper.ContractorGroupMapper;
 import com.trade_accounting.utils.mapper.ContractorMapper;
 import com.trade_accounting.utils.mapper.DepartmentMapper;
+import com.trade_accounting.utils.mapper.EmployeeMapper;
 import com.trade_accounting.utils.mapper.LegalDetailMapper;
 import com.trade_accounting.utils.mapper.TypeOfPriceMapper;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,7 @@ public class ContractorServiceImpl implements ContractorService {
     private final LegalDetailMapper legalDetailMapper;
     private final TypeOfPriceMapper typeOfPriceMapper;
     private final DepartmentMapper departmentMapper;
+    private final EmployeeMapper employeeMapper;
 
 
     @Override
@@ -115,7 +117,7 @@ public class ContractorServiceImpl implements ContractorService {
 
         contractor.setAccessParameters(
                 accessParametersRepository.save(accessParametersMapper.toModel
-                        (contractorDto.getAccessParametersDto(),dtoMapper,employeeRepository,departmentRepository,departmentMapper))
+                        (contractorDto.getAccessParametersDto(),dtoMapper,employeeRepository,departmentRepository,departmentMapper, employeeMapper))
         );
 
         contractor.setTypeOfPrice(

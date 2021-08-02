@@ -213,23 +213,23 @@ public abstract class DtoMapper {
 //
 //    public abstract Department departmentDtoToDepartment(DepartmentDto department);
 
-    // Employee
-    @Mappings({
-            @Mapping(source = "department", target = "departmentDto"),
-            @Mapping(source = "position", target = "positionDto"),
-            @Mapping(source = "roles", target = "roleDto"),
-            @Mapping(source = "image", target = "imageDto")
-    })
-    public abstract EmployeeDto employeeToEmployeeDto(Employee emp);
-
-    @Mappings({
-            @Mapping(source = "departmentDto", target = "department"),
-            @Mapping(source = "positionDto", target = "position"),
-            @Mapping(source = "roleDto", target = "roles"),
-//            @Mapping(source = "imageDto", target = "image"),
-            @Mapping(target = "authorities", ignore = true)
-    })
-    public abstract Employee employeeDtoToEmployee(EmployeeDto emp);
+//    // Employee
+//    @Mappings({
+//            @Mapping(source = "department", target = "departmentDto"),
+//            @Mapping(source = "position", target = "positionDto"),
+//            @Mapping(source = "roles", target = "roleDto"),
+//            @Mapping(source = "image", target = "imageDto")
+//    })
+//    public abstract EmployeeDto employeeToEmployeeDto(Employee emp);
+//
+//    @Mappings({
+//            @Mapping(source = "departmentDto", target = "department"),
+//            @Mapping(source = "positionDto", target = "position"),
+//            @Mapping(source = "roleDto", target = "roles"),
+////            @Mapping(source = "imageDto", target = "image"),
+//            @Mapping(target = "authorities", ignore = true)
+//    })
+//    public abstract Employee employeeDtoToEmployee(EmployeeDto emp);
 
 //    //Image
 //    public ImageDto imageToImageDto(Image image) {

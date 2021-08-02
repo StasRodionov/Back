@@ -28,12 +28,13 @@ public interface AccessParametersMapper {
                                      DtoMapper dtoMapper,
                                      EmployeeRepository employeeRepository,
                                      DepartmentRepository departmentRepository,
-                                     DepartmentMapper departmentMapper) {
+                                     DepartmentMapper departmentMapper,
+                                     EmployeeMapper employeeMapper) {
         if (accessParametersDto == null) {
             return null;
         }
         return AccessParameters.builder().id(accessParametersDto.getId()).generalAccess(accessParametersDto.getGeneralAccess())
-                .employee(dtoMapper.employeeDtoToEmployee(employeeRepository.getById(accessParametersDto.getEmployeeId())))
+                .employee(employeeMapper.toModel(employeeRepository.getById(accessParametersDto.getEmployeeId())))
                 .department(departmentMapper.toModel(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
     }
 }

@@ -6,9 +6,9 @@ import com.trade_accounting.repositories.AccessParametersRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.services.interfaces.AccessParametersService;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.AccessParametersMapper;
 import com.trade_accounting.utils.mapper.DepartmentMapper;
+import com.trade_accounting.utils.mapper.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,7 @@ public class AccessParametersServiceImpl implements AccessParametersService {
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
 
-    private final DtoMapper dtoMapper;
+    private final EmployeeMapper employeeMapper;
     private final DepartmentMapper departmentMapper;
     private final AccessParametersMapper accessParametersMapper;
 
@@ -45,7 +45,7 @@ public class AccessParametersServiceImpl implements AccessParametersService {
     public AccessParametersDto create(AccessParametersDto dto) {
         return accessParametersMapper.toDto(accessParametersRepository
                 .save(AccessParameters.builder().id(dto.getId()).generalAccess(dto.getGeneralAccess())
-                        .employee(dtoMapper.employeeDtoToEmployee(employeeRepository.getById(dto.getEmployeeId())))
+                        .employee(employeeMapper.toModel(employeeRepository.getById(dto.getEmployeeId())))
                         .department(departmentMapper.toModel(departmentRepository.getById(dto.getDepartmentId()))).build()));
     }
 
