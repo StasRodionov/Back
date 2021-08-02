@@ -81,11 +81,11 @@ public class DtoStubs {
 //        );
 //    }
 
-    public static AttributeOfCalculationObjectDto getAttributeOfCalculationObjectDto(Long id) {
-        return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
-                ModelStubs.getAttributeOfCalculationObject(id)
-        );
-    }
+//    public static AttributeOfCalculationObjectDto getAttributeOfCalculationObjectDto(Long id) {
+//        return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
+//                ModelStubs.getAttributeOfCalculationObject(id)
+//        );
+//    }
 
     public static EmployeeDto getEmployeeDto(Long id) {
         return dtoMapper.employeeToEmployeeDto(

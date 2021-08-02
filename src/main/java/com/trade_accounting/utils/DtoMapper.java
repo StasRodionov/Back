@@ -103,16 +103,16 @@ public abstract class DtoMapper {
         this.departmentRepository = departmentRepository;
     }
 
-    //AttributeOfCalculationObjectDto
-    public abstract AttributeOfCalculationObjectDto
-    attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
-            AttributeOfCalculationObject attributeOfCalculationObject
-    );
-
-    public abstract AttributeOfCalculationObject
-    attributeOfCalculationObjectDtoToAttributeOfCalculationObject(
-            AttributeOfCalculationObjectDto attributeOfCalculationObjectDto
-    );
+//    //AttributeOfCalculationObjectDto
+//    public abstract AttributeOfCalculationObjectDto
+//    attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
+//            AttributeOfCalculationObject attributeOfCalculationObject
+//    );
+//
+//    public abstract AttributeOfCalculationObject
+//    attributeOfCalculationObjectDtoToAttributeOfCalculationObject(
+//            AttributeOfCalculationObjectDto attributeOfCalculationObjectDto
+//    );
 
 //    //Production
 //    public abstract ProductionDto productionToProductionDto(Production production);
