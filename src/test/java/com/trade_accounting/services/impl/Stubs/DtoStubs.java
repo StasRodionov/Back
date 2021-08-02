@@ -139,11 +139,11 @@ public class DtoStubs {
 //        );
 //    }
 
-    public static CurrencyDto getCurrencyDto(Long id) {
-        return dtoMapper.currencyToCurrencyDto(
-                ModelStubs.getCurrency(id)
-        );
-    }
+//    public static CurrencyDto getCurrencyDto(Long id) {
+//        return dtoMapper.currencyToCurrencyDto(
+//                ModelStubs.getCurrency(id)
+//        );
+//    }
 
 //    public static CityDto getCityDto(Long id) {
 //        return dtoMapper.toCityDto(ModelStubs.getCity(id));

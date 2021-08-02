@@ -103,7 +103,7 @@ public class ContractorServiceImpl implements ContractorService {
 
         contractor.setContractorGroup(
                 contractorGroupRepository
-                        .save(contractorGroupMapper.contractorGroupDtoToContractorGroup(
+                        .save(contractorGroupMapper.toModel(
                                 contractorDto.getContractorGroupDto()
                         ))
         );

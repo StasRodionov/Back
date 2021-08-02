@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 public class ContractorGroupDtoStubs {
     private static final ContractorGroupMapper mapper = Mappers.getMapper(ContractorGroupMapper.class);
     public static ContractorGroupDto getContractorGroupDto(Long id) {
-        return mapper.contractorGroupToContractorGroupDto(
+        return mapper.toDto(
                 ModelStubs.getContractorGroup(id)
         );
     }
