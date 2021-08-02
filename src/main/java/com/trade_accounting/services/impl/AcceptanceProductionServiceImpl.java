@@ -5,7 +5,6 @@ import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.repositories.AcceptanceProductionRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.AcceptanceProductionService;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.AcceptanceProductionMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,22 +33,22 @@ public class AcceptanceProductionServiceImpl implements AcceptanceProductionServ
     @Override
     public List<AcceptanceProductionDto> getAll() {
         return acceptanceProductionRepository.findAll().stream()
-                .map(acceptanceProductionMapper::toAcceptanceProductionDto)
+                .map(acceptanceProductionMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public AcceptanceProductionDto getById(Long id) {
-        return acceptanceProductionMapper.toAcceptanceProductionDto(
+        return acceptanceProductionMapper.toDto(
                 acceptanceProductionRepository.getOne(id)
         );
     }
 
     @Override
     public AcceptanceProductionDto create(AcceptanceProductionDto dto) {
-        AcceptanceProduction acceptanceProduction = acceptanceProductionMapper.acceptanceProductionDtoToAcceptanceProduction(dto);
+        AcceptanceProduction acceptanceProduction = acceptanceProductionMapper.toModel(dto);
         acceptanceProduction.setProduct(productRepository.getOne(dto.getProductId()));
-        return acceptanceProductionMapper.toAcceptanceProductionDto(acceptanceProductionRepository
+        return acceptanceProductionMapper.toDto(acceptanceProductionRepository
                 .save(acceptanceProduction));
     }
 

@@ -47,13 +47,13 @@ public class MovementServiceImpl implements MovementService {
     @Override
     public List<MovementDto> getAll() {
         return movementRepository.getAll().stream()
-                .map(movementMapper::toMovementDto)
+                .map(movementMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public MovementDto getById(Long id) {
-        return movementMapper.toMovementDto(movementRepository.getMovementById(id));
+        return movementMapper.toDto(movementRepository.getMovementById(id));
     }
 
     @Override
@@ -72,7 +72,7 @@ public class MovementServiceImpl implements MovementService {
     }
 
     private MovementDto saveOrUpdate(MovementDto dto) {
-        Movement movement = movementMapper.toMovement(dto);
+        Movement movement = movementMapper.toModel(dto);
         Warehouse warehouseFrom = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseFromId()));
         Warehouse warehouseTo = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseToId()));
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
@@ -87,6 +87,6 @@ public class MovementServiceImpl implements MovementService {
         movement.setDate(date);
         movement.setMovementProducts(movementProducts);
 
-        return movementMapper.toMovementDto(movementRepository.save(movement));
+        return movementMapper.toDto(movementRepository.save(movement));
     }
 }

@@ -165,30 +165,30 @@ public class DtoStubs {
         return dtoMapper.toFiasAddressModelDto(ModelStubs.getFiasAddressModel(id));
     }
 
-    public static CorrectionProductDto getCorrectionProductDto(Long id) {
-        return dtoMapper.toCorrectionProductDto(ModelStubs.getCorrectionProduct(id));
-    }
+//    public static CorrectionProductDto getCorrectionProductDto(Long id) {
+//        return dtoMapper.toCorrectionProductDto(ModelStubs.getCorrectionProduct(id));
+//    }
 
-    public static CorrectionDto getCorrectionDto(Long id) {
-        return dtoMapper.toCorrectionDto(ModelStubs.getCorrection(id));
-    }
+//    public static CorrectionDto getCorrectionDto(Long id) {
+//        return dtoMapper.toCorrectionDto(ModelStubs.getCorrection(id));
+//    }
 
 
     public static ProductionDto getProductionDto(Long id) {
         return dtoMapper.productionToProductionDto(ModelStubs.getProduction(id));
     }
 
-    public static ReturnToSupplierDto getReturnToSupplierDto(Long id) {
-        return dtoMapper.returnToSupplierToReturnToSupplierDto(ModelStubs.getReturnToSupplier(id));
-    }
+//    public static ReturnToSupplierDto getReturnToSupplierDto(Long id) {
+//        return dtoMapper.returnToSupplierToReturnToSupplierDto(ModelStubs.getReturnToSupplier(id));
+//    }
 
-    public static InventarizationDto getInventarizationDto(Long id) {
-        return dtoMapper.toInventarizationDto(ModelStubs.getInventarization(id));
-    }
+//    public static InventarizationDto getInventarizationDto(Long id) {
+//        return dtoMapper.toInventarizationDto(ModelStubs.getInventarization(id));
+//    }
 
-    public static InventarizationProductDto getInventarizationProductDto(Long id) {
-        return dtoMapper.toInventarizationProductDto(ModelStubs.getInventarizationProduct(id));
-    }
+//    public static InventarizationProductDto getInventarizationProductDto(Long id) {
+//        return dtoMapper.toInventarizationProductDto(ModelStubs.getInventarizationProduct(id));
+//    }
 
 //    public static AcceptanceProductionDto getAcceptanceProductionDto(Long id) {
 //        return dtoMapper.toAcceptanceProductionDto(ModelStubs.getAcceptanceProduction(id));
@@ -210,7 +210,7 @@ public class DtoStubs {
         return dtoMapper.supplierAccountToSupplierAccountDto(ModelStubs.getSupplierAccount(id));
     }
 
-    public static BalanceAdjustmentDto getBalanceAdjustmentDto(Long id) {
-        return dtoMapper.balanceAdjustmentToBalanceAdjustmentDto(ModelStubs.getBalanceAdjustment(id));
-    }
+//    public static BalanceAdjustmentDto getBalanceAdjustmentDto(Long id) {
+//        return dtoMapper.balanceAdjustmentToBalanceAdjustmentDto(ModelStubs.getBalanceAdjustment(id));
+//    }
 }
