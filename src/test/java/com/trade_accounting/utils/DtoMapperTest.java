@@ -6,6 +6,11 @@ import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
+import com.trade_accounting.utils.mapper.PriceListMapperImpl;
+import com.trade_accounting.utils.mapper.ProductGroupMapper;
+import com.trade_accounting.utils.mapper.ProductGroupMapperImpl;
+import com.trade_accounting.utils.mapper.TaskCommentMapperImpl;
+import com.trade_accounting.utils.mapper.TaskMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
@@ -19,12 +24,21 @@ class DtoMapperTest {
     @Spy
     private DtoMapperImpl dtoMapper;
 
+    @Spy
+    private ProductGroupMapperImpl productGroupMapper;
+
+    @Spy
+    private TaskMapperImpl taskMapper;
+
+    @Spy
+    private TaskCommentMapperImpl taskCommentMapper;
+
     @Test
     void productGroupToProductGroupDto() {
         ProductGroupDto productGroupDto = new ProductGroupDto();
         productGroupDto.setParentId(1L);
 
-        ProductGroup productGroup = dtoMapper.productGroupDtoToProductGroup(productGroupDto);
+        ProductGroup productGroup = productGroupMapper.toModel(productGroupDto);
         assertEquals(productGroupDto.getParentId(), productGroup.getProductGroup().getId());
     }
 
@@ -34,10 +48,10 @@ class DtoMapperTest {
         taskDto.setEmployeeId(1L);
         taskDto.setTaskAuthorId(1L);
 
-        Task taskEmployee = dtoMapper.taskDtoToTask(taskDto);
+        Task taskEmployee = taskMapper.taskDtoToTask(taskDto);
         assertEquals(taskDto.getEmployeeId(), taskEmployee.getTaskEmployee().getId());
 
-        Task taskAuthor = dtoMapper.taskDtoToTask(taskDto);
+        Task taskAuthor = taskMapper.taskDtoToTask(taskDto);
         assertEquals(taskDto.getTaskAuthorId(), taskAuthor.getTaskAuthor().getId());
     }
 
@@ -47,10 +61,10 @@ class DtoMapperTest {
         taskCommentDto.setPublisherId(1L);
         taskCommentDto.setTaskId(1L);
 
-        TaskComment taskCommentPublisher = dtoMapper.taskCommentDtoToTaskComment(taskCommentDto);
+        TaskComment taskCommentPublisher = taskCommentMapper.toModel(taskCommentDto);
         assertEquals(taskCommentDto.getPublisherId(), taskCommentPublisher.getPublisher().getId());
 
-        TaskComment taskCommentTask = dtoMapper.taskCommentDtoToTaskComment(taskCommentDto);
+        TaskComment taskCommentTask = taskCommentMapper.toModel(taskCommentDto);
         assertEquals(taskCommentDto.getTaskId(), taskCommentTask.getTask().getId());
 
     }

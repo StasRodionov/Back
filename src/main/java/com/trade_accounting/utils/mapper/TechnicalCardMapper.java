@@ -8,7 +8,7 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface TechnicalCardMapper {
-
+    //TechnicalCard
     @Mappings({
             @Mapping(source = "technicalCardGroup", target = "technicalCardGroupDto"),
             @Mapping(source = "finalProduction", target = "finalProductionDto"),

@@ -10,8 +10,8 @@ import com.trade_accounting.repositories.CorrectionProductRepository;
 import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CorrectionService;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.CorrectionMapper;
+import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +30,7 @@ public class CorrectionServiceImpl implements CorrectionService {
     private final WarehouseRepository warehouseRepository;
     private final CompanyRepository companyRepository;
     private final CorrectionProductRepository correctionProductRepository;
-    private final DtoMapper dtoMapper;
+    private final WarehouseMapper warehouseMapper;
     private final CorrectionMapper correctionMapper;
 
     @Override
@@ -62,7 +62,7 @@ public class CorrectionServiceImpl implements CorrectionService {
 
     private CorrectionDto saveOrUpdate(CorrectionDto dto) {
         Correction correction = correctionMapper.toModel(dto);
-        Warehouse warehouse = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId()));
+        Warehouse warehouse = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseId()));
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 

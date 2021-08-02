@@ -9,6 +9,8 @@ import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.InvoiceMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class InvoiceServiceImpl implements InvoiceService {
 
     private final InvoiceRepository invoiceRepository;
@@ -26,22 +29,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final ContractorRepository contractorRepository;
     private final WarehouseRepository warehouseRepository;
     private final DtoMapper dtoMapper;
-
-    public InvoiceServiceImpl(InvoiceRepository invoiceRepository,
-                              CompanyRepository companyRepository,
-                              ContractorRepository contractorRepository,
-                              WarehouseRepository warehouseRepository,
-                              DtoMapper dtoMapper) {
-        this.invoiceRepository = invoiceRepository;
-        this.companyRepository = companyRepository;
-        this.contractorRepository = contractorRepository;
-        this.warehouseRepository = warehouseRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final InvoiceMapper invoiceMapper;
 
     @Override
     public List<InvoiceDto> search(Specification<Invoice> specification) {
-        return executeSearch(invoiceRepository, dtoMapper::invoiceToInvoiceDto, specification);
+        return executeSearch(invoiceRepository, invoiceMapper::toDto, specification);
     }
 
     @Override
@@ -59,28 +51,28 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public List<InvoiceDto> getAll() {
         return invoiceRepository.findAll().stream()
-                .map(dtoMapper::invoiceToInvoiceDto)
+                .map(invoiceMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public InvoiceDto getById(Long id) {
         Optional<Invoice> invoice = invoiceRepository.findById(id);
-        return dtoMapper.invoiceToInvoiceDto(invoice.orElse(new Invoice()));
+        return invoiceMapper.toDto(invoice.orElse(new Invoice()));
     }
 
     @Override
     public InvoiceDto create(InvoiceDto invoiceDto) {
-        Invoice invoiceSaved = invoiceRepository.save(dtoMapper.invoiceDtoToInvoice(invoiceDto));
+        Invoice invoiceSaved = invoiceRepository.save(invoiceMapper.toModel(invoiceDto));
         invoiceDto.setId(invoiceSaved.getId());
-        return dtoMapper.invoiceToInvoiceDto(invoiceSaved);
+        return invoiceMapper.toDto(invoiceSaved);
     }
 
 
     @Override
     public InvoiceDto update(InvoiceDto invoiceDto) {
-        Invoice invoice = invoiceRepository.save(dtoMapper.invoiceDtoToInvoice(invoiceDto));
-        return dtoMapper.invoiceToInvoiceDto(invoice);
+        Invoice invoice = invoiceRepository.save(invoiceMapper.toModel(invoiceDto));
+        return invoiceMapper.toDto(invoice);
     }
 
     @Override

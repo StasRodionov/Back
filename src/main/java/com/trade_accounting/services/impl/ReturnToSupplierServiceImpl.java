@@ -8,8 +8,9 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.ReturnToSupplierRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.ReturnToSupplierService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.ContractMapper;
 import com.trade_accounting.utils.mapper.ReturnToSupplierMapper;
+import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,8 @@ import java.util.Optional;
 public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
 
     private final ReturnToSupplierRepository returnsToSuppliersRepository;
-    private final DtoMapper dtoMapper;
+    private final ContractMapper contractMapper;
+    private final WarehouseMapper warehouseMapper;
     private final CompanyRepository companyRepository;
     private final ContractorRepository contractorRepository;
     private final ContractRepository contractRepository;
@@ -47,8 +49,8 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
         ReturnToSupplier returnsToSuppliers = ReturnToSupplier.builder().id(dto.getId())
                 .date(dto.getDate())
                 .contractor(contractorRepository.getOne(dto.getContractorId()))
-                .contract(dtoMapper.contractDtoToContract(contractRepository.getById(dto.getContractId())))
-                .warehouse(dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId())))
+                .contract(contractMapper.toModel(contractRepository.getById(dto.getContractId())))
+                .warehouse(warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseId())))
                 .company(companyRepository.getCompaniesById(dto.getCompanyId()))
                 .comment(dto.getComment())
                 .isPrint(dto.getIsPrint())

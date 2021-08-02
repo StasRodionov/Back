@@ -5,7 +5,9 @@ import com.trade_accounting.models.fias.City;
 import com.trade_accounting.repositories.fias.CityRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.CityDtoStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.CityMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,6 +35,9 @@ public class CityServiceImplTest {
 
     @Spy
     DtoMapperImpl dtoMapper;
+
+    @Spy
+    CityMapper cityMapper;
 
     @InjectMocks
     CityServiceImpl cityService;
@@ -75,16 +80,16 @@ public class CityServiceImplTest {
     @Test
     public void updateTest() {
         when(cityRepository.save(any())).thenReturn(ModelStubs.getCity(1L));
-        CityDto result = cityService.update(DtoStubs.getCityDto(1L));
+        CityDto result = cityService.update(CityDtoStubs.getCityDto(1L));
         verify(cityRepository).save(any(City.class));
         assertNotNull(result, "failure - expected that a districtDto not null");
-        assertEquals(result, DtoStubs.getCityDto(1L));
+        assertEquals(result, CityDtoStubs.getCityDto(1L));
     }
 
     @Test
     public void createTest() {
         when(cityRepository.save(any())).thenReturn(ModelStubs.getCity(1L));
-        CityDto result = cityService.create(DtoStubs.getCityDto(1L));
+        CityDto result = cityService.create(CityDtoStubs.getCityDto(1L));
         verify(cityRepository).save(any(City.class));
         assertNotNull(result, "failure - expected that a districtDto not null");
     }

@@ -17,6 +17,12 @@ import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.AddressMapper;
+import com.trade_accounting.utils.mapper.BankAccountMapper;
+import com.trade_accounting.utils.mapper.ContactMapper;
+import com.trade_accounting.utils.mapper.LegalDetailMapper;
+import com.trade_accounting.utils.mapper.TypeOfPriceMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +32,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ContractorServiceImpl implements ContractorService {
 
     private final ContractorRepository contractorRepository;
@@ -39,31 +46,11 @@ public class ContractorServiceImpl implements ContractorService {
     private final DepartmentRepository departmentRepository;
     private final BankAccountRepository bankAccountRepository;
     private final DtoMapper dtoMapper;
-
-    public ContractorServiceImpl(ContractorRepository contractorRepository,
-                                 ContractorGroupRepository contractorGroupRepository,
-                                 TypeOfPriceRepository typeOfPriceRepository,
-                                 LegalDetailRepository legalDetailRepository,
-                                 AddressRepository addressRepository,
-                                 ContactRepository contactRepository,
-                                 AccessParametersRepository accessParametersRepository,
-                                 EmployeeRepository employeeRepository,
-                                 DepartmentRepository departmentRepository,
-                                 BankAccountRepository bankAccountRepository,
-                                 DtoMapper dtoMapper) {
-        this.contractorRepository = contractorRepository;
-        this.contractorGroupRepository = contractorGroupRepository;
-        this.typeOfPriceRepository = typeOfPriceRepository;
-        this.legalDetailRepository = legalDetailRepository;
-        this.addressRepository = addressRepository;
-        this.contactRepository = contactRepository;
-        this.accessParametersRepository = accessParametersRepository;
-        this.employeeRepository = employeeRepository;
-        this.departmentRepository = departmentRepository;
-        this.bankAccountRepository = bankAccountRepository;
-        this.dtoMapper = dtoMapper;
-
-    }
+    private final ContactMapper contactMapper;
+    private final BankAccountMapper bankAccountMapper;
+    private final AddressMapper addressMapper;
+    private final LegalDetailMapper legalDetailMapper;
+    private final TypeOfPriceMapper typeOfPriceMapper;
 
     @Override
     public List<ContractorDto> search(Specification<Contractor> specification) {
@@ -101,13 +88,13 @@ public class ContractorServiceImpl implements ContractorService {
     public ContractorDto create(ContractorDto contractorDto) {
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
 
-        Address address = dtoMapper.addressDtoToAddress(contractorDto.getAddressDto());
+        Address address = addressMapper.toModel(contractorDto.getAddressDto());
         contractor.setAddress(addressRepository.save(address));
 
-        List<Contact> contactList = dtoMapper.contactDtoListToContactList(contractorDto.getContactDto());
+        List<Contact> contactList = contactMapper.toListModel(contractorDto.getContactDto());
         contractor.setContact(contactRepository.saveAll(contactList));
 
-        List<BankAccount> bankAccountList = dtoMapper.bankAccountDtoListToBankAccountList(contractorDto.getBankAccountDto());
+        List<BankAccount> bankAccountList = bankAccountMapper.bankAccountDtoListToBankAccountList(contractorDto.getBankAccountDto());
         contractor.setBankAccounts(bankAccountRepository.saveAll(bankAccountList));
 
         contractor.setContractorGroup(
@@ -123,14 +110,14 @@ public class ContractorServiceImpl implements ContractorService {
         );
 
         contractor.setTypeOfPrice(
-                typeOfPriceRepository.save(dtoMapper.typeOfPriceDtoToTypeOfPrice(
+                typeOfPriceRepository.save(typeOfPriceMapper.toModel(
                         contractorDto.getTypeOfPriceDto())
                 )
         );
 
         contractor.setLegalDetail(
                 legalDetailRepository.save(
-                        dtoMapper.legalDetailDtoToLegalDetail(
+                        legalDetailMapper.toModel(
                                 contractorDto.getLegalDetailDto()
                         )
                 )
@@ -144,11 +131,11 @@ public class ContractorServiceImpl implements ContractorService {
     public ContractorDto update(ContractorDto contractorDto) {
         Contractor contractor = dtoMapper.contractorDtoToContractor(contractorDto);
 
-        Address address = dtoMapper.addressDtoToAddress(contractorDto.getAddressDto());
+        Address address = addressMapper.toModel(contractorDto.getAddressDto());
         addressRepository.save(address);
         contractor.setAddress(address);
 
-        List<Contact> contactList = dtoMapper.contactDtoListToContactList(contractorDto.getContactDto());
+        List<Contact> contactList = contactMapper.toListModel(contractorDto.getContactDto());
         contactList.forEach(contactRepository::save);
         contractor.setContact(contactList);
 

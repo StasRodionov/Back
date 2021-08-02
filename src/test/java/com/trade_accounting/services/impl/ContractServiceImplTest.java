@@ -8,7 +8,9 @@ import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
+import com.trade_accounting.services.impl.Stubs.dto.ContractDtoStubs;
 import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.ContractMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,6 +40,9 @@ public class ContractServiceImplTest {
 
     @Spy
     DtoMapperImpl dtoMapper;
+
+    @Spy
+    ContractMapper contractMapper;
 
     @InjectMocks
     ContractServiceImpl contractService;
@@ -99,7 +104,7 @@ public class ContractServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         contractService.update(
-                DtoStubs.getContractDto(1L)
+                ContractDtoStubs.getContractDto(1L)
         );
 
         verify(contractRepository).save(any(Contract.class));
@@ -108,7 +113,7 @@ public class ContractServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulCreate() {
         contractService.update(
-                DtoStubs.getContractDto(1L)
+                ContractDtoStubs.getContractDto(1L)
         );
 
         verify(contractRepository).save(any(Contract.class));
