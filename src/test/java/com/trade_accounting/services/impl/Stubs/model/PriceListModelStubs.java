@@ -14,7 +14,7 @@ public class PriceListModelStubs {
                 .company(ModelStubs.getCompany(id))
                 .sent(100L)
                 .printed(101L)
-                .commentary("comment")
+                .commentary("comment" + id)
                 .build();
     }
 }

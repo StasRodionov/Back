@@ -63,24 +63,30 @@ public class PriceListServiceImplTest {
     }
 
     @Test
-    void getById_shouldReturnFilledPriceListDto() {
+    void getById_shouldReturnOneFilledPriceListDto() {
         when(priceListRepository.getOne(anyLong()))
                 .thenReturn(PriceListModelStubs.getPriceList(1L));
 
         PriceListDto priceListDto = priceListService.getById(1L);
         assertEquals(1, priceListDto.getId());
+//        verify(priceListRepository).getOne(1L);
     }
 
     @Test
     void createCheckPriceList() {
-        priceListService.create(PriceListDtoStubs.getDto(1L));
-        verify(priceListRepository).save(any(PriceList.class));
+        when(priceListRepository.save(any(PriceList.class)))
+                .thenReturn(PriceListModelStubs.getPriceList(1L));
+
+        PriceListDto priceListDto = priceListService.create(PriceListDtoStubs.getDto(1L));
+
+        assertEquals(1, priceListDto.getId());
+        verify(priceListRepository).save(any());
     }
 
     @Test
     void updateCheckPriceList() {
         priceListService.update(PriceListDtoStubs.getDto(1L));
-        verify(priceListRepository).save(any(PriceList.class));
+        verify(priceListRepository).save(any());
     }
 
     @Test
