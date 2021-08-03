@@ -24,7 +24,7 @@ public class ContractorDto {
 
     private String email;
 
-    private AddressDto addressDto;
+    private Long addressId;
 
     private String commentToAddress;
 
@@ -34,7 +34,7 @@ public class ContractorDto {
 
     private List<ContactDto> contactDto;
 
-    private ContractorGroupDto contractorGroupDto;
+    private Long contractorGroupId;
 
     private TypeOfPriceDto typeOfPriceDto;
 
