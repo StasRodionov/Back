@@ -114,11 +114,7 @@ public class ContractorServiceImpl implements ContractorService {
         );
 
         contractor.setLegalDetail(
-                legalDetailRepository.save(
-                        legalDetailMapper.toModel(
-                                contractorDto.getLegalDetailDto()
-                        )
-                )
+                legalDetailRepository.save(legalDetailRepository.getLegalDetailById(contractorDto.getLegalDetailId()))
         );
 
         return contractorMapper.contractorToContractorDto(contractorRepository.save(contractor));
@@ -134,7 +130,7 @@ public class ContractorServiceImpl implements ContractorService {
         contractor.setAddress(address);
 
         List<Contact> contactList = contactMapper.toListModel(contractorDto.getContactDto());
-        contactList.forEach(contactRepository::save);
+        contactRepository.saveAll(contactList);
         contractor.setContact(contactList);
 
         contractor.setContractorGroup(
@@ -144,7 +140,7 @@ public class ContractorServiceImpl implements ContractorService {
                 typeOfPriceRepository.findById(contractorDto.getTypeOfPriceId()).orElse(null));
 
         contractor.setLegalDetail(
-                legalDetailRepository.findById(contractorDto.getLegalDetailDto().getId()).orElse(null));
+                legalDetailRepository.findById(contractorDto.getLegalDetailId()).orElse(null));
 
         contractorRepository.save(contractor);
 
