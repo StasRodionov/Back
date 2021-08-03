@@ -21,12 +21,12 @@ public class PriceListServiceImpl implements PriceListService {
     private final PriceListRepository priceListRepository;
     private final PriceListMapper priceListMapper;
 
+
     @Override
     public List<PriceListDto> getAll() {
-        final List<PriceListDto> collect = priceListRepository.findAll().stream()
+        return priceListRepository.findAll().stream()
                 .map(priceListMapper::toDto)
                 .collect(Collectors.toList());
-        return collect;
     }
 
     @Override
