@@ -40,7 +40,7 @@ public class ContractorDto {
 
     private List<BankAccountDto> bankAccountDto;
 
-    private LegalDetailDto legalDetailDto;
+    private Long legalDetailId;
 
     private ContractorStatusDto contractorStatusDto;
 
