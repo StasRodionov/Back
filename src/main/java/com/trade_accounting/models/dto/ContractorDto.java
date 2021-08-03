@@ -32,7 +32,7 @@ public class ContractorDto {
 
     private String discountCardNumber;
 
-    private List<ContactDto> contactDto;
+    private List<Long> contactIds;
 
     private Long contractorGroupId;
 

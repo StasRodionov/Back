@@ -94,8 +94,16 @@ public class ContractorServiceImpl implements ContractorService {
         Address address = addressRepository.getAddressById(contractorDto.getAddressId());
         contractor.setAddress(addressRepository.save(address));
 
-        List<Contact> contactList = contactMapper.toListModel(contractorDto.getContactDto());
-        contractor.setContact(contactRepository.saveAll(contactList));
+//        List<Contact> contactList = contactMapper.toListModel(contractorDto.getContactDto());
+//        contractor.setContact(contactRepository.saveAll(contactList));
+
+        contractor.setContact(
+                contractorDto.getContactIds().stream()
+                        .map(
+                                contactRepository::getOne
+                        )
+                        .collect(Collectors.toList())
+        );
 
         List<BankAccount> bankAccountList = bankAccountMapper.bankAccountDtoListToBankAccountList(contractorDto.getBankAccountDto());
         contractor.setBankAccounts(bankAccountRepository.saveAll(bankAccountList));
@@ -131,9 +139,17 @@ public class ContractorServiceImpl implements ContractorService {
         addressRepository.save(address);
         contractor.setAddress(address);
 
-        List<Contact> contactList = contactMapper.toListModel(contractorDto.getContactDto());
-        contactRepository.saveAll(contactList);
-        contractor.setContact(contactList);
+//        List<Contact> contactList = contactMapper.toListModel(contractorDto.getContactDto());
+//        contactRepository.saveAll(contactList);
+//        contractor.setContact(contactList);
+
+        contractor.setContact(
+                contractorDto.getContactIds().stream()
+                        .map(
+                                contactRepository::getOne
+                        )
+                        .collect(Collectors.toList())
+        );
 
         contractor.setContractorGroup(
                 contractorGroupRepository.findById(contractorDto.getContractorGroupId()).orElse(null));

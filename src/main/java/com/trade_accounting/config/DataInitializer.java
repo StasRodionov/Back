@@ -1,8 +1,6 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.TypeOfInvoice;
-import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
@@ -26,7 +24,6 @@ import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
-import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
@@ -1089,7 +1086,7 @@ public class DataInitializer {
                 "1 comment to address",
                 "comment",
                 "1234-5678-9012-3456",
-                contactService.getAll().subList(1, 3),
+                List.of(1L, 2L, 3L),
                 contractorGroupService.getById(1L).getId(),
                 typeOfPriceService.getById(1L).getId(),
                 bankAccountService.getAll().subList(0, 2),
