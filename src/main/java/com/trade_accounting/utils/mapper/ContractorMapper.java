@@ -11,7 +11,7 @@ public interface ContractorMapper {
     //Contractor
     @Mappings({
             @Mapping(source = "contractorGroup.id", target = "contractorGroupId"),
-            @Mapping(source = "typeOfPrice", target = "typeOfPriceDto"),
+            @Mapping(source = "typeOfPrice.id", target = "typeOfPriceId"),
             @Mapping(source = "legalDetail", target = "legalDetailDto"),
             @Mapping(source = "bankAccounts", target = "bankAccountDto"),
             @Mapping(source = "address.id", target = "addressId"),
@@ -23,7 +23,7 @@ public interface ContractorMapper {
 
     @Mappings({
             @Mapping(source = "contractorGroupId", target = "contractorGroup.id"),
-            @Mapping(source = "typeOfPriceDto", target = "typeOfPrice"),
+            @Mapping(source = "typeOfPriceId", target = "typeOfPrice.id"),
             @Mapping(source = "bankAccountDto", target = "bankAccounts"),
             @Mapping(source = "legalDetailDto", target = "legalDetail"),
             @Mapping(source = "addressId", target = "address.id"),
