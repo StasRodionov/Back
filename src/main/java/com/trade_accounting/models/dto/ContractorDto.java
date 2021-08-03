@@ -42,7 +42,7 @@ public class ContractorDto {
 
     private Long legalDetailId;
 
-    private ContractorStatusDto contractorStatusDto;
+    private Long contractorStatusId;
 
-    private AccessParametersDto accessParametersDto;
+    private Long accessParametersId;
 }

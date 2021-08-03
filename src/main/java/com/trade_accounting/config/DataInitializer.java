@@ -1094,8 +1094,8 @@ public class DataInitializer {
                 typeOfPriceService.getById(1L).getId(),
                 bankAccountService.getAll().subList(0, 2),
                 legalDetailService.getById(1L).getId(),
-                contractorStatusService.getById(1L),
-                accessParametersService.getById(1L))
+                contractorStatusService.getById(1L).getId(),
+                accessParametersService.getById(1L).getId())
         );
 
         contractorService.create(new ContractorDto(
@@ -1114,8 +1114,8 @@ public class DataInitializer {
                 typeOfPriceService.getById(2L).getId(),
                 bankAccountService.getAll().subList(2, 4),
                 legalDetailService.getById(1L).getId(),
-                contractorStatusService.getById(2L),
-                accessParametersService.getById(2L))
+                contractorStatusService.getById(2L).getId(),
+                accessParametersService.getById(2L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1133,8 +1133,8 @@ public class DataInitializer {
                 typeOfPriceService.getById(1L).getId(),
                 bankAccountService.getAll().subList(4, 6),
                 legalDetailService.getById(1L).getId(),
-                contractorStatusService.getById(3L),
-                accessParametersService.getById(3L))
+                contractorStatusService.getById(3L).getId(),
+                accessParametersService.getById(3L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1152,8 +1152,8 @@ public class DataInitializer {
                 typeOfPriceService.getById(2L).getId(),
                 bankAccountService.getAll().subList(6, 8),
                 legalDetailService.getById(1L).getId(),
-                contractorStatusService.getById(4L),
-                accessParametersService.getById(4L))
+                contractorStatusService.getById(4L).getId(),
+                accessParametersService.getById(4L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1171,8 +1171,8 @@ public class DataInitializer {
                 typeOfPriceService.getById(1L).getId(),
                 bankAccountService.getAll().subList(8, 10),
                 legalDetailService.getById(1L).getId(),
-                contractorStatusService.getById(5L),
-                accessParametersService.getById(5L))
+                contractorStatusService.getById(5L).getId(),
+                accessParametersService.getById(5L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1190,8 +1190,8 @@ public class DataInitializer {
                 typeOfPriceService.getById(2L).getId(),
                 bankAccountService.getAll().subList(10, 12),
                 legalDetailService.getById(1L).getId(),
-                contractorStatusService.getById(1L),
-                accessParametersService.getById(6L))
+                contractorStatusService.getById(1L).getId(),
+                accessParametersService.getById(6L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1209,8 +1209,8 @@ public class DataInitializer {
                 typeOfPriceService.getById(1L).getId(),
                 bankAccountService.getAll().subList(12, 14),
                 legalDetailService.getById(1L).getId(),
-                contractorStatusService.getById(2L),
-                accessParametersService.getById(7L))
+                contractorStatusService.getById(2L).getId(),
+                accessParametersService.getById(7L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1228,8 +1228,8 @@ public class DataInitializer {
                 typeOfPriceService.getById(2L).getId(),
                 bankAccountService.getAll().subList(14, 16),
                 legalDetailService.getById(1L).getId(),
-                contractorStatusService.getById(3L),
-                accessParametersService.getById(8L))
+                contractorStatusService.getById(3L).getId(),
+                accessParametersService.getById(8L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1247,8 +1247,8 @@ public class DataInitializer {
                 typeOfPriceService.getById(1L).getId(),
                 bankAccountService.getAll().subList(16, 18),
                 legalDetailService.getById(1L).getId(),
-                contractorStatusService.getById(4L),
-                accessParametersService.getById(9L))
+                contractorStatusService.getById(4L).getId(),
+                accessParametersService.getById(9L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1266,8 +1266,8 @@ public class DataInitializer {
                 typeOfPriceService.getById(2L).getId(),
                 bankAccountService.getAll().subList(18, 20),
                 legalDetailService.getById(1L).getId(),
-                contractorStatusService.getById(5L),
-                accessParametersService.getById(10L))
+                contractorStatusService.getById(5L).getId(),
+                accessParametersService.getById(10L).getId())
         );
     }
 
