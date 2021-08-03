@@ -17,10 +17,8 @@ import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.mapper.AccessParametersMapper;
-import com.trade_accounting.utils.mapper.AddressMapper;
 import com.trade_accounting.utils.mapper.BankAccountMapper;
 import com.trade_accounting.utils.mapper.ContactMapper;
-import com.trade_accounting.utils.mapper.ContractorGroupMapper;
 import com.trade_accounting.utils.mapper.ContractorMapper;
 import com.trade_accounting.utils.mapper.DepartmentMapper;
 import com.trade_accounting.utils.mapper.EmployeeMapper;
@@ -50,11 +48,9 @@ public class ContractorServiceImpl implements ContractorService {
     private final DepartmentRepository departmentRepository;
     private final BankAccountRepository bankAccountRepository;
     private final AccessParametersMapper accessParametersMapper;
-    private final ContractorGroupMapper contractorGroupMapper;
     private final ContractorMapper contractorMapper;
     private final ContactMapper contactMapper;
     private final BankAccountMapper bankAccountMapper;
-    private final AddressMapper addressMapper;
     private final LegalDetailMapper legalDetailMapper;
     private final TypeOfPriceMapper typeOfPriceMapper;
     private final DepartmentMapper departmentMapper;
@@ -97,7 +93,7 @@ public class ContractorServiceImpl implements ContractorService {
     public ContractorDto create(ContractorDto contractorDto) {
         Contractor contractor = contractorMapper.contractorDtoToContractor(contractorDto);
 
-        Address address = addressMapper.toModel(contractorDto.getAddressDto());
+        Address address = addressRepository.getAddressById(contractorDto.getAddressId());
         contractor.setAddress(addressRepository.save(address));
 
         List<Contact> contactList = contactMapper.toListModel(contractorDto.getContactDto());
@@ -107,10 +103,7 @@ public class ContractorServiceImpl implements ContractorService {
         contractor.setBankAccounts(bankAccountRepository.saveAll(bankAccountList));
 
         contractor.setContractorGroup(
-                contractorGroupRepository
-                        .save(contractorGroupMapper.toModel(
-                                contractorDto.getContractorGroupDto()
-                        ))
+                contractorGroupRepository.save(contractorGroupRepository.getContractorGroupById(contractorDto.getContractorGroupId()))
         );
 
         contractor.setAccessParameters(
@@ -140,7 +133,7 @@ public class ContractorServiceImpl implements ContractorService {
     public ContractorDto update(ContractorDto contractorDto) {
         Contractor contractor = contractorMapper.contractorDtoToContractor(contractorDto);
 
-        Address address = addressMapper.toModel(contractorDto.getAddressDto());
+        Address address = addressRepository.getAddressById(contractorDto.getAddressId());
         addressRepository.save(address);
         contractor.setAddress(address);
 
@@ -149,7 +142,7 @@ public class ContractorServiceImpl implements ContractorService {
         contractor.setContact(contactList);
 
         contractor.setContractorGroup(
-                contractorGroupRepository.findById(contractorDto.getContractorGroupDto().getId()).orElse(null));
+                contractorGroupRepository.findById(contractorDto.getContractorGroupId()).orElse(null));
 
         contractor.setTypeOfPrice(
                 typeOfPriceRepository.findById(contractorDto.getTypeOfPriceDto().getId()).orElse(null));
