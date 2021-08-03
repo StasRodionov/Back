@@ -803,7 +803,12 @@ public class DataInitializer {
                     "810-41-1234567890",
                     "organization" + 1 * (i + 1) + "@mail.com",
                     true,
-                    addressService.create(new AddressDto("123456", "г.Москва", "ул. Подвойского", "д.14, стр.7")).getId(),
+                    addressService.create(AddressDto.builder()
+                            .index("123456")
+                            .city("г.Москва")
+                            .street("ул. Подвойского")
+                            .house("д.14, стр.7")
+                            .build()).getId(),
                     "something comment",
                     "Петров Сергей Петрович",
                     "Manager",
@@ -851,7 +856,12 @@ public class DataInitializer {
                     "920-12-2365723233",
                     "organization" + 2 * (i + 1) + "@mail.com",
                     true,
-                    addressService.create(new AddressDto("123498", "г. Москва", "ул. Тверская", "д. 20")).getId(),
+                    addressService.create(AddressDto.builder()
+                            .index("123498")
+                            .city("г. Москва")
+                            .street("ул. Тверская")
+                            .house("д. 20")
+                            .build()).getId(),
                     "something comment",
                     "Иванова Мария Сергеевна",
                     "Executive director",
@@ -902,7 +912,12 @@ public class DataInitializer {
                     "543-23-1234543221",
                     "organization" + 3 * (i + 1) + "@mail.com",
                     true,
-                    addressService.create(new AddressDto("432156", "г. Самара", "ул. Гагарина", "д. 18")).getId(),
+                    addressService.create(AddressDto.builder()
+                                    .index("432156")
+                                    .city("г. Самара")
+                                    .street("ул. Гагарина")
+                                    .house("д. 18")
+                                    .build()).getId(),
                     "something comment",
                     "Сергеева Ксения Андреевна",
                     "Project manager",
