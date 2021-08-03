@@ -194,17 +194,7 @@ public class ModelStubs {
         return new Position(id, "name", "00001");
     }
 
-    public static PriceList getPriceList(Long id) {
-        return PriceList.builder()
-                .id(id)
-                .number("NumberOne")
-                .time(LocalDateTime.parse(LocalDateTime.now().toString()))
-                .company(ModelStubs.getCompany(id))
-                .sent(100L)
-                .printed(101L)
-                .commentary("comment")
-                .build();
-    }
+
 
     public static Employee getEmployee(Long id) {
         return new Employee(

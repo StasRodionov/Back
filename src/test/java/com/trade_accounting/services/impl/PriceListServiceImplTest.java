@@ -3,12 +3,14 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.repositories.PriceListRepository;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.PriceListDtoStubs;
+import com.trade_accounting.services.impl.Stubs.model.PriceListModelStubs;
+import com.trade_accounting.utils.mapper.PriceListMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -26,6 +28,9 @@ public class PriceListServiceImplTest {
     @Mock
     private PriceListRepository priceListRepository;
 
+    @Spy
+    private PriceListMapper priceListMapper;
+
     @InjectMocks
     private PriceListServiceImpl priceListService;
 
@@ -33,9 +38,9 @@ public class PriceListServiceImplTest {
     void getAll_shouldReturnListFilledPriceListDto() {
         when(priceListRepository.findAll())
                 .thenReturn(
-                        Stream.of(ModelStubs.getPriceList(1L)
-                                , ModelStubs.getPriceList(2L)
-                                , ModelStubs.getPriceList(3L)
+                        Stream.of(PriceListModelStubs.getPriceList(1L)
+                                , PriceListModelStubs.getPriceList(2L)
+                                , PriceListModelStubs.getPriceList(3L)
                         ).collect(Collectors.toList()));
 
         List<PriceListDto> checkList = priceListService.getAll();
@@ -60,7 +65,7 @@ public class PriceListServiceImplTest {
     @Test
     void getById_shouldReturnFilledPriceListDto() {
         when(priceListRepository.getOne(anyLong()))
-                .thenReturn(ModelStubs.getPriceList(1L));
+                .thenReturn(PriceListModelStubs.getPriceList(1L));
 
         PriceListDto priceListDto = priceListService.getById(1L);
         assertEquals(1, priceListDto.getId());
@@ -69,21 +74,18 @@ public class PriceListServiceImplTest {
     @Test
     void createCheckPriceList() {
         priceListService.create(PriceListDtoStubs.getDto(1L));
-
         verify(priceListRepository).save(any(PriceList.class));
     }
 
     @Test
     void updateCheckPriceList() {
         priceListService.update(PriceListDtoStubs.getDto(1L));
-
         verify(priceListRepository).save(any(PriceList.class));
     }
 
     @Test
     void deleteByIdCheckPriceList() {
         priceListService.deleteById(1L);
-
         verify(priceListRepository).deleteById(any());
     }
 }
