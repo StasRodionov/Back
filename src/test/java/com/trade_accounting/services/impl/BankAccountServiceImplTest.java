@@ -3,11 +3,8 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.dto.BankAccountDto;
 import com.trade_accounting.repositories.BankAccountRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.BankAccountDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
-import com.trade_accounting.utils.mapper.BankAccountMapper;
 import com.trade_accounting.utils.mapper.BankAccountMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,9 +30,6 @@ class BankAccountServiceImplTest {
 
     @Mock
     private BankAccountRepository bankAccountRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private BankAccountMapperImpl bankAccountMapper;

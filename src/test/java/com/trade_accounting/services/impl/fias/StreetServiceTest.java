@@ -1,15 +1,10 @@
 package com.trade_accounting.services.impl.fias;
 
-import com.trade_accounting.models.dto.fias.RegionDto;
 import com.trade_accounting.models.dto.fias.StreetDto;
-import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.models.fias.Street;
 import com.trade_accounting.repositories.fias.StreetRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.StreetDtoStubs;
-import com.trade_accounting.utils.DtoMapper;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.StreetMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,9 +31,6 @@ public class StreetServiceTest {
 
     @Mock
     StreetRepository repository;
-
-    @Spy
-    DtoMapperImpl dtoMapper;
 
     @Spy
     StreetMapper streetMapper;

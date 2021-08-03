@@ -9,9 +9,9 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.services.impl.Stubs.dto.ContractorDtoStubs;
+import com.trade_accounting.utils.mapper.ContractorMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -45,8 +45,9 @@ public class ContractorServiceTest {
     private LegalDetailRepository legalDetailRepository;
     @Spy
     private AddressRepository addressRepository;
+
     @Spy
-    private DtoMapperImpl dtoMapper;
+    private ContractorMapperImpl contractorMapper;
     @Spy
     private ContactRepository contactRepository;
     @InjectMocks
@@ -101,7 +102,7 @@ public class ContractorServiceTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulContractorCreate() {
-        contractorService.create(DtoStubs.getContractorDto(1L));
+        contractorService.create(ContractorDtoStubs.getContractorDto(1L));
 
         verify(contractorRepository).save(any(Contractor.class));
     }
@@ -109,7 +110,7 @@ public class ContractorServiceTest {
     @Test
     void update_shouldPassInstructionsSuccessfulContractorUpdate() {
         contractorService.update(
-                DtoStubs.getContractorDto(1L)
+                ContractorDtoStubs.getContractorDto(1L)
         );
 
         verify(contractorRepository).save(any(Contractor.class));

@@ -5,11 +5,8 @@ import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.LegalDetailDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
-import com.trade_accounting.utils.mapper.LegalDetailMapper;
 import com.trade_accounting.utils.mapper.LegalDetailMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,9 +38,6 @@ class LegalDetailServiceImplTest {
 
     @Mock
     private TypeOfContractorRepository typeOfContractorRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private LegalDetailMapperImpl legalDetailMapper;

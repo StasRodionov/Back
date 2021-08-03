@@ -6,10 +6,8 @@ import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.InventarizationProductRepository;
 import com.trade_accounting.repositories.InventarizationRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.InventarizationDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -42,9 +40,6 @@ public class InventarizationServiceImplTest {
 
     @InjectMocks
     InventarizationServiceImpl inventarizationService;
-
-    @Spy
-    DtoMapperImpl dtoMapper;
 
     @Spy
     InventarizationDtoStubs inventarizationDtoStubs;
