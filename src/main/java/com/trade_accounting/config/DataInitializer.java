@@ -1268,8 +1268,6 @@ public class DataInitializer {
 
         List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtoList = new ArrayList<>(attributeOfCalculationObjectService.getAll());
 
-        List<TypeOfPriceDto> typeOfPriceDtoList = new ArrayList<>(typeOfPriceService.getAll());
-
         for (int i = 0; i < 350; i++) {
 
             productService.create(new ProductDto(
@@ -1282,8 +1280,8 @@ public class DataInitializer {
                     unitDtoList.get(0),
                     false,
                     contractorDtoList.get(0),
-                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(50, 70))),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(71, 100)))),
+                    List.of(new ProductPriceDto(null, 0L, BigDecimal.valueOf(randomInt(50, 70))),
+                            new ProductPriceDto(null, 1L, BigDecimal.valueOf(randomInt(71, 100)))),
                     taxSystemDtoList.get(0),
                     null,
                     productGroupDtoList.get(0),
@@ -1299,8 +1297,8 @@ public class DataInitializer {
                     unitDtoList.get(1),
                     false,
                     contractorDtoList.get(1),
-                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(70, 90))),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(91, 115)))),
+                    List.of(new ProductPriceDto(null, 0L, BigDecimal.valueOf(randomInt(70, 90))),
+                            new ProductPriceDto(null, 1L, BigDecimal.valueOf(randomInt(91, 115)))),
                     taxSystemDtoList.get(1),
                     null,
                     productGroupDtoList.get(1),
@@ -1317,8 +1315,8 @@ public class DataInitializer {
                     false,
                     contractorDtoList.get(1),
                     List.of(
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(80, 100))),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(101, 121)))),
+                            new ProductPriceDto(null, 0L, BigDecimal.valueOf(randomInt(80, 100))),
+                            new ProductPriceDto(null, 1L, BigDecimal.valueOf(randomInt(101, 121)))),
                     taxSystemDtoList.get(2),
                     null,
                     productGroupDtoList.get(2),
