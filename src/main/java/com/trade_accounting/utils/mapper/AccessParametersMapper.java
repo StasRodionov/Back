@@ -31,8 +31,11 @@ public interface AccessParametersMapper {
         if (accessParametersDto == null) {
             return null;
         }
-        return AccessParameters.builder().id(accessParametersDto.getId()).generalAccess(accessParametersDto.getGeneralAccess())
+        return AccessParameters.builder()
+                .id(accessParametersDto.getId())
+                .generalAccess(accessParametersDto.getGeneralAccess())
                 .employee(employeeMapper.toModel(employeeRepository.getById(accessParametersDto.getEmployeeId())))
-                .department(departmentMapper.toModel(departmentRepository.getById(accessParametersDto.getDepartmentId()))).build();
+                .department(departmentMapper.toModel(departmentRepository.getById(accessParametersDto.getDepartmentId())))
+                .build();
     }
 }

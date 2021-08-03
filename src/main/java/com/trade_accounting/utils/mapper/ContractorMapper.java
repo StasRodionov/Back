@@ -16,8 +16,8 @@ public interface ContractorMapper {
             @Mapping(source = "bankAccounts", target = "bankAccountDto"),
             @Mapping(source = "address.id", target = "addressId"),
             @Mapping(source = "contact", target = "contactDto"),
-            @Mapping(source = "contractorStatus", target = "contractorStatusDto"),
-            @Mapping(source = "accessParameters", target = "accessParametersDto"),
+            @Mapping(source = "contractorStatus.id", target = "contractorStatusId"),
+            @Mapping(source = "accessParameters.id", target = "accessParametersId"),
     })
     ContractorDto contractorToContractorDto(Contractor contractor);
 
@@ -28,8 +28,8 @@ public interface ContractorMapper {
             @Mapping(source = "legalDetailId", target = "legalDetail.id"),
             @Mapping(source = "addressId", target = "address.id"),
             @Mapping(source = "contactDto", target = "contact"),
-            @Mapping(source = "contractorStatusDto", target = "contractorStatus"),
-            @Mapping(source = "accessParametersDto", target = "accessParameters"),
+            @Mapping(source = "contractorStatusId", target = "contractorStatus.id"),
+            @Mapping(source = "accessParametersId", target = "accessParameters.id"),
     })
     Contractor contractorDtoToContractor(ContractorDto contractorDto);
 }

@@ -1,9 +1,11 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.BankAccount;
 import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.repositories.AccessParametersRepository;
 import com.trade_accounting.repositories.AddressRepository;
@@ -22,7 +24,6 @@ import com.trade_accounting.utils.mapper.ContactMapper;
 import com.trade_accounting.utils.mapper.ContractorMapper;
 import com.trade_accounting.utils.mapper.DepartmentMapper;
 import com.trade_accounting.utils.mapper.EmployeeMapper;
-import com.trade_accounting.utils.mapper.LegalDetailMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,6 @@ public class ContractorServiceImpl implements ContractorService {
     private final ContractorMapper contractorMapper;
     private final ContactMapper contactMapper;
     private final BankAccountMapper bankAccountMapper;
-    private final LegalDetailMapper legalDetailMapper;
     private final DepartmentMapper departmentMapper;
     private final EmployeeMapper employeeMapper;
 
@@ -104,9 +104,11 @@ public class ContractorServiceImpl implements ContractorService {
                 contractorGroupRepository.save(contractorGroupRepository.getContractorGroupById(contractorDto.getContractorGroupId()))
         );
 
+        AccessParameters accessParameters =  accessParametersRepository.getAccessParametersById(contractorDto.getAccessParametersId());
+        AccessParametersDto accessParametersDto = accessParametersMapper.toDto(accessParameters);
         contractor.setAccessParameters(
                 accessParametersRepository.save(accessParametersMapper.toModel
-                        (contractorDto.getAccessParametersDto(),employeeRepository,departmentRepository,departmentMapper, employeeMapper))
+                        (accessParametersDto,employeeRepository,departmentRepository,departmentMapper, employeeMapper))
         );
 
         contractor.setTypeOfPrice(
