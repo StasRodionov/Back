@@ -36,7 +36,7 @@ public class ContractorDto {
 
     private Long contractorGroupId;
 
-    private TypeOfPriceDto typeOfPriceDto;
+    private Long typeOfPriceId;
 
     private List<BankAccountDto> bankAccountDto;
 

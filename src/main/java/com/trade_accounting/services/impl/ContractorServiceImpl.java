@@ -23,7 +23,6 @@ import com.trade_accounting.utils.mapper.ContractorMapper;
 import com.trade_accounting.utils.mapper.DepartmentMapper;
 import com.trade_accounting.utils.mapper.EmployeeMapper;
 import com.trade_accounting.utils.mapper.LegalDetailMapper;
-import com.trade_accounting.utils.mapper.TypeOfPriceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -52,7 +51,6 @@ public class ContractorServiceImpl implements ContractorService {
     private final ContactMapper contactMapper;
     private final BankAccountMapper bankAccountMapper;
     private final LegalDetailMapper legalDetailMapper;
-    private final TypeOfPriceMapper typeOfPriceMapper;
     private final DepartmentMapper departmentMapper;
     private final EmployeeMapper employeeMapper;
 
@@ -112,9 +110,7 @@ public class ContractorServiceImpl implements ContractorService {
         );
 
         contractor.setTypeOfPrice(
-                typeOfPriceRepository.save(typeOfPriceMapper.toModel(
-                        contractorDto.getTypeOfPriceDto())
-                )
+                typeOfPriceRepository.save(typeOfPriceRepository.getTypeOfPriceById(contractorDto.getTypeOfPriceId()))
         );
 
         contractor.setLegalDetail(
@@ -145,7 +141,7 @@ public class ContractorServiceImpl implements ContractorService {
                 contractorGroupRepository.findById(contractorDto.getContractorGroupId()).orElse(null));
 
         contractor.setTypeOfPrice(
-                typeOfPriceRepository.findById(contractorDto.getTypeOfPriceDto().getId()).orElse(null));
+                typeOfPriceRepository.findById(contractorDto.getTypeOfPriceId()).orElse(null));
 
         contractor.setLegalDetail(
                 legalDetailRepository.findById(contractorDto.getLegalDetailDto().getId()).orElse(null));
