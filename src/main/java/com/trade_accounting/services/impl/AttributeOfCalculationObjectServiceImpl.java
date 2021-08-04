@@ -4,7 +4,8 @@ import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.AttributeOfCalculationObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,27 +14,23 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AttributeOfCalculationObjectServiceImpl implements AttributeOfCalculationObjectService {
 
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
 
-    private final DtoMapper dtoMapper;
-
-    public AttributeOfCalculationObjectServiceImpl(AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository, DtoMapper dtoMapper) {
-        this.attributeOfCalculationObjectRepository = attributeOfCalculationObjectRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final AttributeOfCalculationObjectMapper attributeOfCalculationObjectMapper;
 
     @Override
     public List<AttributeOfCalculationObjectDto> getAll() {
         return attributeOfCalculationObjectRepository.findAll().stream()
-                .map(dtoMapper::attributeOfCalculationObjectToAttributeOfCalculationObjectDto)
+                .map(attributeOfCalculationObjectMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public AttributeOfCalculationObjectDto getById(Long id) {
-        return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
+        return attributeOfCalculationObjectMapper.toDto(
                 attributeOfCalculationObjectRepository.findById(id).orElse(new AttributeOfCalculationObject())
         );
     }
@@ -41,10 +38,10 @@ public class AttributeOfCalculationObjectServiceImpl implements AttributeOfCalcu
     @Override
     public AttributeOfCalculationObjectDto create(AttributeOfCalculationObjectDto attribute) {
         AttributeOfCalculationObject savedAttribute = attributeOfCalculationObjectRepository.save(
-                dtoMapper.attributeOfCalculationObjectDtoToAttributeOfCalculationObject(attribute)
+                attributeOfCalculationObjectMapper.toModel(attribute)
         );
 
-        return dtoMapper.attributeOfCalculationObjectToAttributeOfCalculationObjectDto(
+        return attributeOfCalculationObjectMapper.toDto(
                 savedAttribute
         );
     }

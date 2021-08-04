@@ -4,15 +4,12 @@ import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.InvoiceRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.InvoiceDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -22,7 +19,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,9 +29,6 @@ class InvoiceServiceImplTest {
 
     @Mock
     private InvoiceRepository invoiceRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @InjectMocks
     private InvoiceServiceImpl invoiceService;

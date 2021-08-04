@@ -10,12 +10,12 @@ import org.mapstruct.Mappings;
 public interface ProductPriceMapper {
     //ProductPrice
     @Mappings({
-            @Mapping(source = "typeOfPrice", target = "typeOfPriceDto")
+            @Mapping(source = "typeOfPrice.id", target = "typeOfPriceId")
     })
     ProductPriceDto toDto(ProductPrice productPrice);
 
     @Mappings({
-            @Mapping(source = "typeOfPriceDto", target = "typeOfPrice")
+            @Mapping(source = "typeOfPriceId", target = "typeOfPrice.id")
     })
     ProductPrice toModel(ProductPriceDto productPriceDto);
 }

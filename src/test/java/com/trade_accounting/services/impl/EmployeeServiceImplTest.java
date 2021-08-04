@@ -7,10 +7,10 @@ import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.services.impl.Stubs.dto.EmployeeDtoStubs;
+import com.trade_accounting.utils.mapper.EmployeeMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -49,7 +49,7 @@ class EmployeeServiceImplTest {
     private ImageRepository imageRepository;
 
     @Spy
-    private DtoMapperImpl dtoMapper;
+    private EmployeeMapper employeeMapper;
 
     @InjectMocks
     private EmployeeServiceImpl employeeService;
@@ -139,7 +139,7 @@ class EmployeeServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         employeeService.create(
-                DtoStubs.getEmployeeDto(1L)
+                EmployeeDtoStubs.getEmployeeDto(1L)
         );
         verify(roleRepository, times(3)).findById(anyLong());
         verify(employeeRepository).save(any(Employee.class));
@@ -149,7 +149,7 @@ class EmployeeServiceImplTest {
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        employeeService.create(DtoStubs.getEmployeeDto(1L));
+        employeeService.create(EmployeeDtoStubs.getEmployeeDto(1L));
 
         verify(roleRepository, times(3)).findById(anyLong());
         verify(employeeRepository).save(any(Employee.class));

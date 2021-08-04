@@ -3,9 +3,8 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.repositories.ProjectRepository;
-import com.trade_accounting.services.impl.Stubs.*;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.ProjectDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.ProjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,9 +30,6 @@ class ProjectServiceImplTest {
 
     @Mock
     private ProjectRepository projectRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private ProjectMapper projectMapper;

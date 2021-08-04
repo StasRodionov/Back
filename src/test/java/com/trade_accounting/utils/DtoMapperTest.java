@@ -6,8 +6,6 @@ import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.models.dto.TaskDto;
-import com.trade_accounting.utils.mapper.PriceListMapperImpl;
-import com.trade_accounting.utils.mapper.ProductGroupMapper;
 import com.trade_accounting.utils.mapper.ProductGroupMapperImpl;
 import com.trade_accounting.utils.mapper.TaskCommentMapperImpl;
 import com.trade_accounting.utils.mapper.TaskMapperImpl;
@@ -16,13 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class DtoMapperTest {
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private ProductGroupMapperImpl productGroupMapper;

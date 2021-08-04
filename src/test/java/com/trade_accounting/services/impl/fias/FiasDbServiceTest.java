@@ -4,10 +4,8 @@ package com.trade_accounting.services.impl.fias;
 import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
 import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.repositories.fias.AddressDbRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.FiasAddressModelDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.FiasAddressModelMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,9 +31,6 @@ public class FiasDbServiceTest {
 
     @Mock
     AddressDbRepository repository;
-
-    @Spy
-    DtoMapperImpl dtoMapper;
 
     @Spy
     FiasAddressModelMapper fiasAddressModelMapper;

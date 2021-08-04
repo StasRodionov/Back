@@ -4,12 +4,9 @@ import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.dto.ContractDto;
 import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.PaymentRepository;
-
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
 import com.trade_accounting.services.impl.Stubs.dto.ContractDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.ContractMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +25,8 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ContractServiceImplTest {
@@ -37,9 +35,6 @@ public class ContractServiceImplTest {
 
     @Mock
     PaymentRepository paymentRepository;
-
-    @Spy
-    DtoMapperImpl dtoMapper;
 
     @Spy
     ContractMapper contractMapper;

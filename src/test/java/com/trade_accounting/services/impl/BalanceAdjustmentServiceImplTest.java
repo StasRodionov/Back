@@ -5,15 +5,12 @@ import com.trade_accounting.models.dto.BalanceAdjustmentDto;
 import com.trade_accounting.repositories.BalanceAdjustmentRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.BalanceAdjustmentDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -37,9 +34,6 @@ class BalanceAdjustmentServiceImplTest {
 
     @Mock
     ContractorRepository contractorRepository;
-
-    @Spy
-    DtoMapperImpl dtoMapper;
 
     @InjectMocks
     BalanceAdjustmentServiceImpl balanceAdjustmentService;

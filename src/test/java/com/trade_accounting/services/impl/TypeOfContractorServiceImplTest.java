@@ -3,10 +3,8 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.TypeOfContractor;
 import com.trade_accounting.models.dto.TypeOfContractorDto;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.TypeOfContractorDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.TypeOfContractorMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,9 +26,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TypeOfContractorServiceImplTest {
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private TypeOfContractorMapper typeOfContractorMapper;

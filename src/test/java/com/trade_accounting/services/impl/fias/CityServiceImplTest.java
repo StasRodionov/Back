@@ -3,10 +3,8 @@ package com.trade_accounting.services.impl.fias;
 import com.trade_accounting.models.dto.fias.CityDto;
 import com.trade_accounting.models.fias.City;
 import com.trade_accounting.repositories.fias.CityRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.CityDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.CityMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,19 +20,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CityServiceImplTest {
 
     @Mock
     CityRepository cityRepository;
-
-    @Spy
-    DtoMapperImpl dtoMapper;
 
     @Spy
     CityMapper cityMapper;

@@ -7,11 +7,8 @@ import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.ProjectRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.PaymentDtoStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
-import com.trade_accounting.utils.mapper.PaymentMapper;
 import com.trade_accounting.utils.mapper.PaymentMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,9 +46,6 @@ class PaymentServiceImplTest {
 
     @Mock
     private ProjectRepository projectRepository;
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Spy
     private PaymentMapperImpl paymentMapper;

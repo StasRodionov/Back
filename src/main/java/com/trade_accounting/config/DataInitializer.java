@@ -1,8 +1,7 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.PaymentMethods;
+import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.TypeOfInvoice;
-import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
@@ -26,7 +25,6 @@ import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
-import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
@@ -1070,17 +1068,17 @@ public class DataInitializer {
                 "8 (495) 232-59-24",
                 "8 (495) 232-59-24",
                 "alena.pechnikova@x5.ru",
-                addressService.getById(1L),
+                addressService.getById(1L).getId(),
                 "1 comment to address",
                 "comment",
                 "1234-5678-9012-3456",
-                contactService.getAll().subList(1, 3),
-                contractorGroupService.getById(1L),
-                typeOfPriceService.getById(1L),
-                bankAccountService.getAll().subList(0, 2),
-                legalDetailService.getById(1L),
-                contractorStatusService.getById(1L),
-                accessParametersService.getById(1L))
+                List.of(1L, 2L),
+                contractorGroupService.getById(1L).getId(),
+                typeOfPriceService.getById(1L).getId(),
+                List.of(1L, 2L),
+                legalDetailService.getById(1L).getId(),
+                contractorStatusService.getById(1L).getId(),
+                accessParametersService.getById(1L).getId())
         );
 
         contractorService.create(new ContractorDto(
@@ -1090,17 +1088,17 @@ public class DataInitializer {
                 "8 (800) 555-55-05",
                 "8 (800) 555-55-05",
                 "inbox@5ka.ru",
-                addressService.getById(2L),
+                addressService.getById(2L).getId(),
                 "2comment to address",
                 "2comment",
                 "7890-1234-5678-9012",
                 new ArrayList<>(),
-                contractorGroupService.getById(1L),
-                typeOfPriceService.getById(2L),
-                bankAccountService.getAll().subList(2, 4),
-                legalDetailService.getById(1L),
-                contractorStatusService.getById(2L),
-                accessParametersService.getById(2L))
+                contractorGroupService.getById(1L).getId(),
+                typeOfPriceService.getById(2L).getId(),
+                List.of(3L, 4L),
+                legalDetailService.getById(1L).getId(),
+                contractorStatusService.getById(2L).getId(),
+                accessParametersService.getById(2L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1109,17 +1107,17 @@ public class DataInitializer {
                 "8 (495) 981-13-45",
                 "8 (495) 981-13-45",
                 "info@izbenka.msk.ru",
-                addressService.getById(3L),
+                addressService.getById(3L).getId(),
                 "3comment to address",
                 "3comment",
                 "3456-7890-1234-5678",
                 new ArrayList<>(),
-                contractorGroupService.getById(1L),
-                typeOfPriceService.getById(1L),
-                bankAccountService.getAll().subList(4, 6),
-                legalDetailService.getById(1L),
-                contractorStatusService.getById(3L),
-                accessParametersService.getById(3L))
+                contractorGroupService.getById(1L).getId(),
+                typeOfPriceService.getById(1L).getId(),
+                List.of(5L, 6L),
+                legalDetailService.getById(1L).getId(),
+                contractorStatusService.getById(3L).getId(),
+                accessParametersService.getById(3L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1128,17 +1126,17 @@ public class DataInitializer {
                 "8 (495) 981-31-85",
                 "8 (495) 981-31-85",
                 "zholudeva.ksyusha@mail.ru",
-                addressService.getById(1L),
+                addressService.getById(1L).getId(),
                 "4comment to address",
                 "4comment",
                 "9012-3456-7890-1234",
                 new ArrayList<>(),
-                contractorGroupService.getById(1L),
-                typeOfPriceService.getById(2L),
-                bankAccountService.getAll().subList(6, 8),
-                legalDetailService.getById(1L),
-                contractorStatusService.getById(4L),
-                accessParametersService.getById(4L))
+                contractorGroupService.getById(1L).getId(),
+                typeOfPriceService.getById(2L).getId(),
+                List.of(7L, 8L),
+                legalDetailService.getById(1L).getId(),
+                contractorStatusService.getById(4L).getId(),
+                accessParametersService.getById(4L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1147,17 +1145,17 @@ public class DataInitializer {
                 "8 (495) 326-30-00",
                 "8 (495) 326-30-00",
                 "nina.chehovich@msk.nfretail.ru",
-                addressService.getById(2L),
+                addressService.getById(2L).getId(),
                 "5comment to address",
                 "5comment",
                 "5678-9012-3456-7890",
                 new ArrayList<>(),
-                contractorGroupService.getById(1L),
-                typeOfPriceService.getById(1L),
-                bankAccountService.getAll().subList(8, 10),
-                legalDetailService.getById(1L),
-                contractorStatusService.getById(5L),
-                accessParametersService.getById(5L))
+                contractorGroupService.getById(1L).getId(),
+                typeOfPriceService.getById(1L).getId(),
+                List.of(9L, 10L),
+                legalDetailService.getById(1L).getId(),
+                contractorStatusService.getById(5L).getId(),
+                accessParametersService.getById(5L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1166,17 +1164,17 @@ public class DataInitializer {
                 "8 (495) 651-92-52",
                 "8 (495) 651-92-52",
                 "d.gorobtsova@etpgpb.ru",
-                addressService.getById(3L),
+                addressService.getById(3L).getId(),
                 "6comment to address",
                 "6comment",
                 "1234-5678-9012-3456",
                 new ArrayList<>(),
-                contractorGroupService.getById(1L),
-                typeOfPriceService.getById(2L),
-                bankAccountService.getAll().subList(10, 12),
-                legalDetailService.getById(1L),
-                contractorStatusService.getById(1L),
-                accessParametersService.getById(6L))
+                contractorGroupService.getById(1L).getId(),
+                typeOfPriceService.getById(2L).getId(),
+                List.of(11L, 12L),
+                legalDetailService.getById(1L).getId(),
+                contractorStatusService.getById(1L).getId(),
+                accessParametersService.getById(6L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1185,17 +1183,17 @@ public class DataInitializer {
                 "8 (495) 741-45-56",
                 "8 (495) 741-45-56",
                 "tatiana.onishchenko@selgros.ru",
-                addressService.getById(1L),
+                addressService.getById(1L).getId(),
                 "7comment to address",
                 "7comment",
                 "7890-1234-5678-9012",
                 new ArrayList<>(),
-                contractorGroupService.getById(1L),
-                typeOfPriceService.getById(1L),
-                bankAccountService.getAll().subList(12, 14),
-                legalDetailService.getById(1L),
-                contractorStatusService.getById(2L),
-                accessParametersService.getById(7L))
+                contractorGroupService.getById(1L).getId(),
+                typeOfPriceService.getById(1L).getId(),
+                List.of(13L, 14L),
+                legalDetailService.getById(1L).getId(),
+                contractorStatusService.getById(2L).getId(),
+                accessParametersService.getById(7L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1204,17 +1202,17 @@ public class DataInitializer {
                 "8 (495) 155-51-56",
                 "8 (495) 155-51-56",
                 "info@krasnoeibeloe.ru",
-                addressService.getById(2L),
+                addressService.getById(2L).getId(),
                 "8comment to address",
                 "8comment",
                 "3456-7890-1234-5678",
                 new ArrayList<>(),
-                contractorGroupService.getById(1L),
-                typeOfPriceService.getById(2L),
-                bankAccountService.getAll().subList(14, 16),
-                legalDetailService.getById(1L),
-                contractorStatusService.getById(3L),
-                accessParametersService.getById(8L))
+                contractorGroupService.getById(1L).getId(),
+                typeOfPriceService.getById(2L).getId(),
+                List.of(15L, 16L),
+                legalDetailService.getById(1L).getId(),
+                contractorStatusService.getById(3L).getId(),
+                accessParametersService.getById(8L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1223,17 +1221,17 @@ public class DataInitializer {
                 "8 (495) 755-11-16",
                 "8 (495) 755-11-16",
                 "harlanov.aleksandr@escort-servis.ru",
-                addressService.getById(3L),
+                addressService.getById(3L).getId(),
                 "9comment to address",
                 "9comment",
                 "9012-3456-7890-1234",
                 new ArrayList<>(),
-                contractorGroupService.getById(1L),
-                typeOfPriceService.getById(1L),
-                bankAccountService.getAll().subList(16, 18),
-                legalDetailService.getById(1L),
-                contractorStatusService.getById(4L),
-                accessParametersService.getById(9L))
+                contractorGroupService.getById(1L).getId(),
+                typeOfPriceService.getById(1L).getId(),
+                List.of(17L, 18L),
+                legalDetailService.getById(1L).getId(),
+                contractorStatusService.getById(4L).getId(),
+                accessParametersService.getById(9L).getId())
         );
         contractorService.create(new ContractorDto(
                 null,
@@ -1242,17 +1240,17 @@ public class DataInitializer {
                 "8 (495) 777-51-95",
                 "8 (495) 777-51-95",
                 "sales11_am@aroma.ru",
-                addressService.getById(1L),
+                addressService.getById(1L).getId(),
                 "10comment to address",
                 "10comment",
                 "5678-9012-3456-7890",
                 new ArrayList<>(),
-                contractorGroupService.getById(1L),
-                typeOfPriceService.getById(2L),
-                bankAccountService.getAll().subList(18, 20),
-                legalDetailService.getById(1L),
-                contractorStatusService.getById(5L),
-                accessParametersService.getById(10L))
+                contractorGroupService.getById(1L).getId(),
+                typeOfPriceService.getById(2L).getId(),
+                List.of(19L, 20L),
+                legalDetailService.getById(1L).getId(),
+                contractorStatusService.getById(5L).getId(),
+                accessParametersService.getById(10L).getId())
         );
     }
 
@@ -1268,8 +1266,6 @@ public class DataInitializer {
 
         List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtoList = new ArrayList<>(attributeOfCalculationObjectService.getAll());
 
-        List<TypeOfPriceDto> typeOfPriceDtoList = new ArrayList<>(typeOfPriceService.getAll());
-
         for (int i = 0; i < 350; i++) {
 
             productService.create(new ProductDto(
@@ -1282,8 +1278,8 @@ public class DataInitializer {
                     unitDtoList.get(0),
                     false,
                     contractorDtoList.get(0),
-                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(50, 70))),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(71, 100)))),
+                    List.of(new ProductPriceDto(null, 0L, BigDecimal.valueOf(randomInt(50, 70))),
+                            new ProductPriceDto(null, 1L, BigDecimal.valueOf(randomInt(71, 100)))),
                     taxSystemDtoList.get(0),
                     null,
                     productGroupDtoList.get(0),
@@ -1299,8 +1295,8 @@ public class DataInitializer {
                     unitDtoList.get(1),
                     false,
                     contractorDtoList.get(1),
-                    List.of(new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(70, 90))),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(91, 115)))),
+                    List.of(new ProductPriceDto(null, 0L, BigDecimal.valueOf(randomInt(70, 90))),
+                            new ProductPriceDto(null, 1L, BigDecimal.valueOf(randomInt(91, 115)))),
                     taxSystemDtoList.get(1),
                     null,
                     productGroupDtoList.get(1),
@@ -1317,8 +1313,8 @@ public class DataInitializer {
                     false,
                     contractorDtoList.get(1),
                     List.of(
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(0), BigDecimal.valueOf(randomInt(80, 100))),
-                            new ProductPriceDto(null, typeOfPriceDtoList.get(1), BigDecimal.valueOf(randomInt(101, 121)))),
+                            new ProductPriceDto(null, 0L, BigDecimal.valueOf(randomInt(80, 100))),
+                            new ProductPriceDto(null, 1L, BigDecimal.valueOf(randomInt(101, 121)))),
                     taxSystemDtoList.get(2),
                     null,
                     productGroupDtoList.get(2),
