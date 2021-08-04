@@ -1,10 +1,8 @@
 package com.trade_accounting.utils.mapper;
 
 import com.trade_accounting.models.BankAccount;
-import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.ContactRepository;
@@ -25,9 +23,7 @@ public interface ContractorMapper {
             @Mapping(source = "contractorGroup.id", target = "contractorGroupId"),
             @Mapping(source = "typeOfPrice.id", target = "typeOfPriceId"),
             @Mapping(source = "legalDetail.id", target = "legalDetailId"),
-            @Mapping(source = "bankAccounts", target = "bankAccountDto"),
             @Mapping(source = "address.id", target = "addressId"),
-//            @Mapping(source = "contact.id", target = "contactIds"),
             @Mapping(source = "contractorStatus.id", target = "contractorStatusId"),
             @Mapping(source = "accessParameters.id", target = "accessParametersId"),
     })
@@ -45,13 +41,22 @@ public interface ContractorMapper {
         }
     }
 
+    @AfterMapping
+    default void listBankAccountsIdToListBankAccountIds(Contractor contractor, @MappingTarget ContractorDto contractorDto) {
+        if (contractor.getBankAccounts() == null) {
+            contractorDto.setBankAccountIds(null);
+        } else {
+            List<Long> bankAccountIds = contractor.getBankAccounts().stream()
+                    .map(BankAccount::getId).collect(Collectors.toList());
+            contractorDto.setBankAccountIds(bankAccountIds);
+        }
+    }
+
     @Mappings({
             @Mapping(source = "contractorGroupId", target = "contractorGroup.id"),
             @Mapping(source = "typeOfPriceId", target = "typeOfPrice.id"),
-            @Mapping(source = "bankAccountDto", target = "bankAccounts"),
             @Mapping(source = "legalDetailId", target = "legalDetail.id"),
             @Mapping(source = "addressId", target = "address.id"),
-//            @Mapping(source = "contactIds", target = "contact.id"),
             @Mapping(source = "contractorStatusId", target = "contractorStatus.id"),
             @Mapping(source = "accessParametersId", target = "accessParameters.id"),
     })
@@ -68,6 +73,19 @@ public interface ContractorMapper {
                     .map(contactRepository::getOne)
                     .collect(Collectors.toList());
             contractor.setContact(contact);
+        }
+    }
+
+    @AfterMapping
+    default void listBankAccountIdsToListBankAccounts(ContractorDto contractorDto, @MappingTarget Contractor contractor, @Context BankAccountRepository bankAccountRepository) {
+        if (contractorDto.getBankAccountIds() == null) {
+            contractor.setBankAccounts(null);
+        } else {
+            List<BankAccount> bankAccounts = contractorDto.getBankAccountIds()
+                    .stream()
+                    .map(bankAccountRepository::getOne)
+                    .collect(Collectors.toList());
+            contractor.setBankAccounts(bankAccounts);
         }
     }
 }

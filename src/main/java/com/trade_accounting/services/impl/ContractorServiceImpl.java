@@ -2,8 +2,6 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
-import com.trade_accounting.models.BankAccount;
-import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.ContractorDto;
@@ -94,9 +92,6 @@ public class ContractorServiceImpl implements ContractorService {
         Address address = addressRepository.getAddressById(contractorDto.getAddressId());
         contractor.setAddress(addressRepository.save(address));
 
-//        List<Contact> contactList = contactMapper.toListModel(contractorDto.getContactDto());
-//        contractor.setContact(contactRepository.saveAll(contactList));
-
         contractor.setContact(
                 contractorDto.getContactIds().stream()
                         .map(
@@ -105,8 +100,13 @@ public class ContractorServiceImpl implements ContractorService {
                         .collect(Collectors.toList())
         );
 
-        List<BankAccount> bankAccountList = bankAccountMapper.bankAccountDtoListToBankAccountList(contractorDto.getBankAccountDto());
-        contractor.setBankAccounts(bankAccountRepository.saveAll(bankAccountList));
+        contractor.setBankAccounts(
+                contractorDto.getBankAccountIds().stream()
+                        .map(
+                                bankAccountRepository::getOne
+                        )
+                        .collect(Collectors.toList())
+        );
 
         contractor.setContractorGroup(
                 contractorGroupRepository.save(contractorGroupRepository.getContractorGroupById(contractorDto.getContractorGroupId()))
@@ -138,10 +138,6 @@ public class ContractorServiceImpl implements ContractorService {
         Address address = addressRepository.getAddressById(contractorDto.getAddressId());
         addressRepository.save(address);
         contractor.setAddress(address);
-
-//        List<Contact> contactList = contactMapper.toListModel(contractorDto.getContactDto());
-//        contactRepository.saveAll(contactList);
-//        contractor.setContact(contactList);
 
         contractor.setContact(
                 contractorDto.getContactIds().stream()
