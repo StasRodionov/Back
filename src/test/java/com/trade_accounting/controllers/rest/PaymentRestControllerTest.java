@@ -87,7 +87,8 @@ class PaymentRestControllerTest {
                 .companyId(1L)
                 .contractId(1L)
                 .contractorId(2L)
-                .projectId(2L));
+                .projectId(2L)
+                .build());
 
         mockMvc.perform(post("/api/payment")
                         .contentType(MediaType.APPLICATION_JSON).content(paymentOrderDtoJson))
@@ -114,7 +115,8 @@ class PaymentRestControllerTest {
                 .companyId(1L)
                 .contractId(1L)
                 .contractorId(2L)
-                .projectId(2L));
+                .projectId(2L)
+                .build());
 
         mockMvc.perform(put("/api/payment")
                         .contentType(MediaType.APPLICATION_JSON).content(paymentOrderDtoJson))
