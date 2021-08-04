@@ -3,10 +3,7 @@ package com.trade_accounting.models;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,38 +13,43 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Класс-модель управление закупками
+ *
+ * @param id              - номер закупки
+ * @param productName     - наименование товара
+ * @param productCode     - код товара
+ * @param articleNumber   - артикул
+ * @param productMeasure  - еденицы измерения
+ * @param productQuantity - число товаров
+ * @param historyOfSales  -  история продаж
+ * @param currentBalance  - текущий остаток
+ * @param forecast        - число товаров
+ */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Getter
-@Setter
-@ToString
 @Table(name = "purchase_control")
 public class PurchaseControl {
     @Id
     @NotNull
-    @Column(name = "id")
     private Long id;
 
     @NotNull
-    @Column(name = "name")
     private String productName;
 
     @NotNull
-    @Column(name = "code")
     private Long productCode;
 
     @NotNull
-    @Column(name = "article")
     private Long articleNumber;
 
     @NotNull
-    @Column(name = "measure")
-    private String productMeasure;//они же еденицы измерения
+    private String productMeasure;
 
-    @Column(name = "quantity")
     private Long productQuantity;
 
     @NotNull

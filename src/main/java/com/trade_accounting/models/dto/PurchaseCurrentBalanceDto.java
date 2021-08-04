@@ -20,7 +20,7 @@ public class PurchaseCurrentBalanceDto {
 
     private Long productsReserve;
 
-    private Long productsAwaitingOrder;
+    private Long productsAwaiting;
 
     private Long productsAvailableForOrder;
 
