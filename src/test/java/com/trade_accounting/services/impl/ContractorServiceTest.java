@@ -1,17 +1,27 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Address;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
+import com.trade_accounting.repositories.AccessParametersRepository;
 import com.trade_accounting.repositories.AddressRepository;
+import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.ContactRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
+import com.trade_accounting.repositories.ContractorStatusRepository;
+import com.trade_accounting.repositories.DepartmentRepository;
+import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.ContractorDtoStubs;
+import com.trade_accounting.utils.mapper.AccessParametersMapper;
 import com.trade_accounting.utils.mapper.ContractorMapper;
+import com.trade_accounting.utils.mapper.ContractorStatusMapper;
+import com.trade_accounting.utils.mapper.DepartmentMapper;
+import com.trade_accounting.utils.mapper.EmployeeMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,9 +53,18 @@ public class ContractorServiceTest {
     private TypeOfPriceRepository typeOfPriceRepository;
     @Mock
     private LegalDetailRepository legalDetailRepository;
-    @Spy
+    @Mock
     private AddressRepository addressRepository;
-
+    @Mock
+    private  AccessParametersRepository accessParametersRepository;
+    @Mock
+    private  EmployeeRepository employeeRepository;
+    @Mock
+    private  DepartmentRepository departmentRepository;
+    @Mock
+    private  BankAccountRepository bankAccountRepository;
+    @Mock
+    private  ContractorStatusRepository contractorStatusRepository;
     @Spy
     private ContractorMapper contractorMapper;
     @Spy
