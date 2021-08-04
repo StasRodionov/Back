@@ -10,10 +10,10 @@ import org.mapstruct.Mappings;
 public interface PaymentMapper {
 
     @Mappings({
-            @Mapping(source = "companyId", target = "company.id"),
-            @Mapping(source = "contractorId", target = "contractor.id"),
-            @Mapping(source = "contractId", target = "contract.id"),
-            @Mapping(source = "projectId", target = "project.id"),
+            @Mapping(target = "company", ignore = true),
+            @Mapping(target = "contractor", ignore = true),
+            @Mapping(target = "contract", ignore = true),
+            @Mapping(target = "project", ignore = true),
             @Mapping(target = "time", ignore = true)
     })
     Payment toModel(PaymentDto paymentDto);
