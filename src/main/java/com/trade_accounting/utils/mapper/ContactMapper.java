@@ -8,12 +8,46 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ContactMapper {
-    //Contact
-     ContactDto toDto(Contact contact);
 
-     Contact toModel(ContactDto contactDto);
+    /**
+     * @return Contact
+     */
 
-     List<Contact> toListModel(List<ContactDto> contactDtoList);
+    default Contact toModel(ContactDto contactDto) {
+        if (contactDto == null) {
+            return null;
+        }
 
-     List<ContactDto> toListDto(List<Contact> contactList);
+        return Contact.builder()
+                .id(contactDto.getId())
+                .fullName(contactDto.getFullName())
+                .position(contactDto.getPosition())
+                .phone(contactDto.getPhone())
+                .email(contactDto.getEmail())
+                .comment(contactDto.getComment())
+                .build();
+    }
+
+    /**
+     * @return ContactDto
+     */
+
+    default ContactDto toDto(Contact contact) {
+        ContactDto contactDto = new ContactDto();
+        if (contact == null) {
+            return null;
+        } else {
+            contactDto.setId(contact.getId());
+            contactDto.setFullName(contact.getFullName());
+            contactDto.setPosition(contact.getPosition());
+            contactDto.setEmail(contact.getEmail());
+            contactDto.setPhone(contact.getPhone());
+            contactDto.setComment(contact.getComment());
+            return contactDto;
+        }
+    }
+
+    List<Contact> toListModel(List<ContactDto> contactDtoList);
+
+    List<ContactDto> toListDto(List<Contact> contactList);
 }
