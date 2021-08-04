@@ -23,7 +23,7 @@ public class PriceListDto {
     private LocalDateTime time;
 
     @NotNull
-    private Long company_id;
+    private Long companyId;
 
     private Long sent;
 
