@@ -1,5 +1,6 @@
 package com.trade_accounting.models.dto;
 
+import com.trade_accounting.models.Company;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class PriceListDto {
     private LocalDateTime time;
 
     @NotNull
-    private CompanyDto companyDto;
+    private Long company_id;
 
     private Long sent;
 
