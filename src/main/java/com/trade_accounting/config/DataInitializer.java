@@ -1086,10 +1086,10 @@ public class DataInitializer {
                 "1 comment to address",
                 "comment",
                 "1234-5678-9012-3456",
-                List.of(1L, 2L, 3L),
+                List.of(1L, 2L),
                 contractorGroupService.getById(1L).getId(),
                 typeOfPriceService.getById(1L).getId(),
-                bankAccountService.getAll().subList(0, 2),
+                List.of(1L, 2L),
                 legalDetailService.getById(1L).getId(),
                 contractorStatusService.getById(1L).getId(),
                 accessParametersService.getById(1L).getId())
@@ -1109,7 +1109,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L).getId(),
                 typeOfPriceService.getById(2L).getId(),
-                bankAccountService.getAll().subList(2, 4),
+                List.of(3L, 4L),
                 legalDetailService.getById(1L).getId(),
                 contractorStatusService.getById(2L).getId(),
                 accessParametersService.getById(2L).getId())
@@ -1128,7 +1128,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L).getId(),
                 typeOfPriceService.getById(1L).getId(),
-                bankAccountService.getAll().subList(4, 6),
+                List.of(5L, 6L),
                 legalDetailService.getById(1L).getId(),
                 contractorStatusService.getById(3L).getId(),
                 accessParametersService.getById(3L).getId())
@@ -1147,7 +1147,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L).getId(),
                 typeOfPriceService.getById(2L).getId(),
-                bankAccountService.getAll().subList(6, 8),
+                List.of(7L, 8L),
                 legalDetailService.getById(1L).getId(),
                 contractorStatusService.getById(4L).getId(),
                 accessParametersService.getById(4L).getId())
@@ -1166,7 +1166,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L).getId(),
                 typeOfPriceService.getById(1L).getId(),
-                bankAccountService.getAll().subList(8, 10),
+                List.of(9L, 10L),
                 legalDetailService.getById(1L).getId(),
                 contractorStatusService.getById(5L).getId(),
                 accessParametersService.getById(5L).getId())
@@ -1185,7 +1185,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L).getId(),
                 typeOfPriceService.getById(2L).getId(),
-                bankAccountService.getAll().subList(10, 12),
+                List.of(11L, 12L),
                 legalDetailService.getById(1L).getId(),
                 contractorStatusService.getById(1L).getId(),
                 accessParametersService.getById(6L).getId())
@@ -1204,7 +1204,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L).getId(),
                 typeOfPriceService.getById(1L).getId(),
-                bankAccountService.getAll().subList(12, 14),
+                List.of(13L, 14L),
                 legalDetailService.getById(1L).getId(),
                 contractorStatusService.getById(2L).getId(),
                 accessParametersService.getById(7L).getId())
@@ -1223,7 +1223,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L).getId(),
                 typeOfPriceService.getById(2L).getId(),
-                bankAccountService.getAll().subList(14, 16),
+                List.of(15L, 16L),
                 legalDetailService.getById(1L).getId(),
                 contractorStatusService.getById(3L).getId(),
                 accessParametersService.getById(8L).getId())
@@ -1242,7 +1242,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L).getId(),
                 typeOfPriceService.getById(1L).getId(),
-                bankAccountService.getAll().subList(16, 18),
+                List.of(17L, 18L),
                 legalDetailService.getById(1L).getId(),
                 contractorStatusService.getById(4L).getId(),
                 accessParametersService.getById(9L).getId())
@@ -1261,7 +1261,7 @@ public class DataInitializer {
                 new ArrayList<>(),
                 contractorGroupService.getById(1L).getId(),
                 typeOfPriceService.getById(2L).getId(),
-                bankAccountService.getAll().subList(18, 20),
+                List.of(19L, 20L),
                 legalDetailService.getById(1L).getId(),
                 contractorStatusService.getById(5L).getId(),
                 accessParametersService.getById(10L).getId())
