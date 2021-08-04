@@ -22,6 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Andrey Melnikov
+ */
+
 @ExtendWith(MockitoExtension.class)
 public class PriceListServiceImplTest {
 
@@ -59,7 +63,6 @@ public class PriceListServiceImplTest {
 
         assertNotNull(checkList, "Ошибка - список прайсов (PriceList) не должен быть null");
         assertEquals(0, checkList.size(), "Ошибка - размер списка прайсов (PriceList) должен быть = 0");
-        verify(priceListRepository).findAll(); // сделать проверку на кол-во раз вызыва метода priceListRepository.findAll()
     }
 
     @Test
@@ -69,7 +72,6 @@ public class PriceListServiceImplTest {
 
         PriceListDto priceListDto = priceListService.getById(1L);
         assertEquals(1, priceListDto.getId());
-//        verify(priceListRepository).getOne(1L);
     }
 
     @Test
@@ -77,7 +79,7 @@ public class PriceListServiceImplTest {
         when(priceListRepository.save(any(PriceList.class)))
                 .thenReturn(PriceListModelStubs.getPriceList(1L));
 
-        PriceListDto priceListDto = priceListService.create(PriceListDtoStubs.getDto(1L));
+        PriceListDto priceListDto = priceListService.create(PriceListDtoStubs.getDto(anyLong()));
 
         assertEquals(1, priceListDto.getId());
         verify(priceListRepository).save(any());
@@ -85,7 +87,12 @@ public class PriceListServiceImplTest {
 
     @Test
     void updateCheckPriceList() {
-        priceListService.update(PriceListDtoStubs.getDto(1L));
+        when(priceListRepository.save(any(PriceList.class)))
+                .thenReturn(PriceListModelStubs.getPriceList(1L));
+
+        PriceListDto priceListDto = priceListService.create(PriceListDtoStubs.getDto(anyLong()));
+
+        assertEquals(1, priceListDto.getId());
         verify(priceListRepository).save(any());
     }
 
