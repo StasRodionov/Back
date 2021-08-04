@@ -27,7 +27,7 @@ public class PriceListInit extends InitData {
                     .number("0001" + i)
                     .commentary("Тестовый комментарий" + " " + i)
                     .time(LocalDateTime.now())
-                    .company_id(i)
+                    .companyId(i)
                     .sent(i)
                     .printed(i)
                     .build()
