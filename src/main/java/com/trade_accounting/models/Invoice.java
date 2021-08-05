@@ -51,7 +51,7 @@ public class Invoice {
 
     @Column(name = "is_Spend")
     @ColumnDefault("false")
-    private boolean isSpend;
+    private Boolean isSpend;
 
     @Column(name = "comment")
     private String comment;
