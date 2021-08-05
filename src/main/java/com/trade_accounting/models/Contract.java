@@ -60,23 +60,4 @@ public class Contract {
 
     @OneToOne(fetch = FetchType.LAZY)
     private LegalDetail legalDetail;
-
-//    public Contract(String number, LocalDate contractDate,
-//                    @NotNull Company company,
-//                    BankAccount bankAccount,
-//                    @NotNull Contractor contractor,
-//                    BigDecimal amount,
-//                    Boolean archive,
-//                    String comment,
-//                    LegalDetail legalDetail) {
-//        this.number = number;
-//        this.contractDate = contractDate;
-//        this.company = company;
-//        this.bankAccount = bankAccount;
-//        this.contractor = contractor;
-//        this.amount = amount;
-//        this.archive = archive;
-//        this.comment = comment;
-//        this.legalDetail = legalDetail;
-//    }
 }
