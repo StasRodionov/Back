@@ -49,16 +49,16 @@ public interface ContractMapper {
             return contractDto;
         }
     }
-    List<ContractDto> toListDto(List<Contract> contracts);
-}
+
+    //}
 //    @Mappings({
 //            @Mapping(source = "company.id", target = "companyId"),
 //            @Mapping(source = "bankAccount.id", target = "bankAccountId"),
 //            @Mapping(source = "contractor.id", target = "contractorId"),
 //            @Mapping(source = "legalDetail.id", target = "legalDetailId")
 //    })
-//     ContractDto toDto(Contract contract);
-
+//    ContractDto toDto(Contract contract);
+//
 //    @Mappings({
 //            @Mapping(source = "companyId", target = "company.id"),
 //            @Mapping(source = "bankAccountId", target = "bankAccount.id"),
@@ -66,7 +66,8 @@ public interface ContractMapper {
 //            @Mapping(source = "legalDetailId", target = "legalDetail.id"),
 //            @Mapping(target = "contractDate", ignore = true)
 //    })
-//     Contract toModel(ContractDto contractDto);
+//    Contract toModel(ContractDto contractDto);
 
-//    }
+    List<ContractDto> toListDto(List<Contract> contracts);
+}
 

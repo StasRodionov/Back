@@ -71,7 +71,7 @@ public class ContractServiceImpl implements ContractService {
 
         LocalDate date = LocalDate.parse(contractDto.getContractDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         contract.setContractDate(date);
-        contract.setCompany(companyRepository.getCompaniesById(contractDto.getCompanyId()));
+        contract.setCompany(companyRepository.findById(contractDto.getCompanyId()).orElse(null));
         contract.setBankAccount(bankAccountRepository.findById(contractDto.getBankAccountId()).orElse(null));
         contract.setContractor(contractorRepository.findById(contractDto.getContractorId()).orElse(null));
         contract.setLegalDetail(legalDetailRepository.findById(contractDto.getLegalDetailId()).orElse(null));
