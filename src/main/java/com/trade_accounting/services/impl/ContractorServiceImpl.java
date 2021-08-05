@@ -12,7 +12,16 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
+import com.trade_accounting.utils.mapper.AccessParametersMapper;
+import com.trade_accounting.utils.mapper.AddressMapper;
+import com.trade_accounting.utils.mapper.BankAccountMapper;
+import com.trade_accounting.utils.mapper.ContactMapper;
+import com.trade_accounting.utils.mapper.ContractorGroupMapper;
 import com.trade_accounting.utils.mapper.ContractorMapper;
+import com.trade_accounting.utils.mapper.DepartmentMapper;
+import com.trade_accounting.utils.mapper.EmployeeMapper;
+import com.trade_accounting.utils.mapper.LegalDetailMapper;
+import com.trade_accounting.utils.mapper.TypeOfPriceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -35,6 +44,15 @@ public class ContractorServiceImpl implements ContractorService {
     private final AccessParametersRepository accessParametersRepository;
     private final BankAccountRepository bankAccountRepository;
     private final ContractorMapper contractorMapper;
+    private final AccessParametersMapper accessParametersMapper;
+    private final ContractorGroupMapper contractorGroupMapper;
+    private final ContactMapper contactMapper;
+    private final BankAccountMapper bankAccountMapper;
+    private final AddressMapper addressMapper;
+    private final LegalDetailMapper legalDetailMapper;
+    private final TypeOfPriceMapper typeOfPriceMapper;
+    private final DepartmentMapper departmentMapper;
+    private final EmployeeMapper employeeMapper;
 
 
     @Override
