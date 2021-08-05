@@ -2,6 +2,7 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.dto.PriceListDto;
+import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.PriceListRepository;
 import com.trade_accounting.services.interfaces.PriceListService;
 import com.trade_accounting.utils.mapper.PriceListMapper;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class PriceListServiceImpl implements PriceListService {
 
     private final PriceListRepository priceListRepository;
+    private final CompanyRepository companyRepository;
     private final PriceListMapper priceListMapper;
 
     @Override
@@ -38,9 +40,9 @@ public class PriceListServiceImpl implements PriceListService {
      */
     @Override
     public PriceListDto create(PriceListDto dto) {
-        PriceList priceList = priceListRepository.save(priceListMapper.toModel(dto));
-        dto.setId(priceList.getId());
-        return priceListMapper.toDto(priceList);
+        PriceList priceList = priceListMapper.toModel(dto);
+        priceList.setCompany(companyRepository.getOne(dto.getCompanyId()));
+        return priceListMapper.toDto(priceListRepository.save(priceList));
     }
 
     @Override

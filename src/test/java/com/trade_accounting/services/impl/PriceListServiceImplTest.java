@@ -34,6 +34,9 @@ public class PriceListServiceImplTest {
     @Mock
     private PriceListRepository priceListRepository;
 
+    @Mock
+    private CompanyRepository companyRepository;
+
     @Spy
     private PriceListMapper priceListMapper;
 
