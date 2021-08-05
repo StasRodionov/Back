@@ -177,7 +177,7 @@ public class DataInitializer {
         initContractors();
         initProducts();
         initContracts();
-        initInvoices();
+//        initInvoices();
         initInvoiceProducts();
         initProject();
 //        initPayment();
@@ -328,29 +328,29 @@ public class DataInitializer {
 //        }
 //    }
 
-    public void initInvoices() {
-        List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
-        List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
-        List<WarehouseDto> warehouseDtos = warehouseService.getAll().stream().limit(3).collect(Collectors.toList());
-        List<String> typeOfInvoices = List.of(TypeOfInvoice.EXPENSE.name(), TypeOfInvoice.RECEIPT.name());
-
-        int i = 0;
-        for (CompanyDto companyDto : companyDtos) {
-            for (ContractorDto contractorDto : contractorDtos) {
-                for (WarehouseDto warehouseDto : warehouseDtos) {
-                    invoiceService.create(new InvoiceDto(
-                            null,
-                            "Комментарий " + i++,
-                            LocalDateTime.now().toString(),
-                            typeOfInvoices.get(randomInt(0, 1)),
-                            companyDto,
-                            contractorDto,
-                            warehouseDto,
-                            false));
-                }
-            }
-        }
-    }
+//    public void initInvoices() {
+//        List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
+//        List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
+//        List<WarehouseDto> warehouseDtos = warehouseService.getAll().stream().limit(3).collect(Collectors.toList());
+//        List<String> typeOfInvoices = List.of(TypeOfInvoice.EXPENSE.name(), TypeOfInvoice.RECEIPT.name());
+//
+//        int i = 0;
+//        for (CompanyDto companyDto : companyDtos) {
+//            for (ContractorDto contractorDto : contractorDtos) {
+//                for (WarehouseDto warehouseDto : warehouseDtos) {
+//                    invoiceService.create(new InvoiceDto(
+//                            null,
+//                            "Комментарий " + i++,
+//                            LocalDateTime.now().toString(),
+//                            typeOfInvoices.get(randomInt(0, 1)).toString(),
+//                            companyDto.getId(),
+//                            contractorDto.getId(),
+//                            warehouseDto.getId(),
+//                            false));
+//                }
+//            }
+//        }
+//    }
 
     private void initInvoiceProducts() {
         List<InvoiceDto> invoices = invoiceService.getAll();

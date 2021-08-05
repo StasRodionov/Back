@@ -2,7 +2,6 @@ package com.trade_accounting.models.dto;
 
 import com.trade_accounting.models.TypeOfInvoice;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +11,6 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class InvoiceDto {
 
     private Long id;
@@ -28,7 +26,7 @@ public class InvoiceDto {
     @NotNull
     private WarehouseDto warehouseDto;
 
-    private Boolean isSpend;
+    private boolean isSpend;
 
     public InvoiceDto(Long id,
                       LocalDateTime date,
