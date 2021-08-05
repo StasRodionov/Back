@@ -17,10 +17,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PriceListServiceImpl implements PriceListService {
 
-
     private final PriceListRepository priceListRepository;
     private final PriceListMapper priceListMapper;
-
 
     @Override
     public List<PriceListDto> getAll() {
@@ -31,9 +29,13 @@ public class PriceListServiceImpl implements PriceListService {
 
     @Override
     public PriceListDto getById(Long id) {
-        return priceListMapper.toDto(priceListRepository.getOne(id));
+        PriceList priceList = priceListRepository.getOne(id);
+        return priceListMapper.toDto(priceList);
     }
 
+    /**
+     * @changed by Pavel Andrusov
+     */
     @Override
     public PriceListDto create(PriceListDto dto) {
         PriceList priceList = priceListRepository.save(priceListMapper.toModel(dto));

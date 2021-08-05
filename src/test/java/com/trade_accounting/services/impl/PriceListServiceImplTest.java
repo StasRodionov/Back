@@ -2,6 +2,7 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.dto.PriceListDto;
+import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.PriceListRepository;
 import com.trade_accounting.services.impl.Stubs.dto.PriceListDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.PriceListModelStubs;
@@ -23,7 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 /**
- * @author Andrey Melnikov
+ * @author Andrey Melnikov and Pavel Andrusov
+ * @since 05.08.2021
  */
 
 @ExtendWith(MockitoExtension.class)
@@ -79,7 +81,7 @@ public class PriceListServiceImplTest {
         when(priceListRepository.save(any(PriceList.class)))
                 .thenReturn(PriceListModelStubs.getPriceList(1L));
 
-        PriceListDto priceListDto = priceListService.create(PriceListDtoStubs.getDto(anyLong()));
+        PriceListDto priceListDto = priceListService.create(PriceListDtoStubs.getDto(1L));
 
         assertEquals(1, priceListDto.getId());
         verify(priceListRepository).save(any());

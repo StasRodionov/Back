@@ -5,6 +5,10 @@ import com.trade_accounting.services.impl.Stubs.ModelStubs;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Andrey Melnikov and Pavel Andrusov
+ * @since 05.08.2021
+ */
 public class PriceListModelStubs {
     public static PriceList getPriceList(Long id) {
         return PriceList.builder()

@@ -5,45 +5,43 @@ import com.trade_accounting.models.dto.PriceListDto;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 /**
- * @author Andrey Melnikov
+ * @author Andrey Melnikov and Pavel Andrusov
+ * @since 05.08.2021
  */
 @Mapper(componentModel = "spring")
 public interface PriceListMapper {
 
-    @Mapping(source = "company.id", target = "companyId")
     default PriceListDto toDto(PriceList priceList) {
         if (priceList == null) {
             return null;
         }
-        PriceListDto priceListDto = new PriceListDto();
 
-        priceListDto.setId(priceList.getId());
-        priceListDto.setNumber(priceList.getNumber());
-        priceListDto.setTime(priceList.getTime());
-        priceListDto.setSent(priceList.getSent());
-        priceListDto.setPrinted(priceList.getPrinted());
-        priceListDto.setCommentary(priceList.getCommentary());
-
-        return priceListDto;
+        return PriceListDto.builder()
+                .companyId(priceList.getCompany().getId())
+                .id(priceList.getId())
+                .number(priceList.getNumber())
+                .time(priceList.getTime())
+                .sent(priceList.getSent())
+                .printed(priceList.getPrinted())
+                .commentary(priceList.getCommentary())
+                .build();
     }
 
-    @InheritInverseConfiguration
     default PriceList toModel(PriceListDto priceListDto) {
         if (priceListDto == null) {
             return null;
         }
 
-        PriceList priceList = new PriceList();
-
-        priceList.setId(priceListDto.getId());
-        priceList.setNumber(priceListDto.getNumber());
-        priceList.setTime(priceListDto.getTime());
-        priceList.setSent(priceListDto.getSent());
-        priceList.setPrinted(priceListDto.getPrinted());
-        priceList.setCommentary(priceListDto.getCommentary());
-
-        return priceList;
+        return PriceList.builder()
+                .id(priceListDto.getId())
+                .number(priceListDto.getNumber())
+                .time(priceListDto.getTime())
+                .sent(priceListDto.getSent())
+                .printed(priceListDto.getPrinted())
+                .commentary(priceListDto.getCommentary())
+                .build();
     }
 }
