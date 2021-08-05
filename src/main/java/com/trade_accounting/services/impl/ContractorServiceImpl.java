@@ -2,7 +2,6 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.repositories.AccessParametersRepository;
 import com.trade_accounting.repositories.AddressRepository;
@@ -10,17 +9,10 @@ import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.ContactRepository;
 import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.repositories.ContractorRepository;
-import com.trade_accounting.repositories.ContractorStatusRepository;
-import com.trade_accounting.repositories.DepartmentRepository;
-import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
-import com.trade_accounting.utils.mapper.AccessParametersMapper;
 import com.trade_accounting.utils.mapper.ContractorMapper;
-import com.trade_accounting.utils.mapper.ContractorStatusMapper;
-import com.trade_accounting.utils.mapper.DepartmentMapper;
-import com.trade_accounting.utils.mapper.EmployeeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -41,15 +33,8 @@ public class ContractorServiceImpl implements ContractorService {
     private final AddressRepository addressRepository;
     private final ContactRepository contactRepository;
     private final AccessParametersRepository accessParametersRepository;
-    private final EmployeeRepository employeeRepository;
-    private final DepartmentRepository departmentRepository;
     private final BankAccountRepository bankAccountRepository;
-    private final AccessParametersMapper accessParametersMapper;
     private final ContractorMapper contractorMapper;
-    private final DepartmentMapper departmentMapper;
-    private final EmployeeMapper employeeMapper;
-    private final ContractorStatusMapper contractorStatusMapper;
-    private final ContractorStatusRepository contractorStatusRepository;
 
 
     @Override
@@ -88,7 +73,11 @@ public class ContractorServiceImpl implements ContractorService {
     public ContractorDto create(ContractorDto contractorDto) {
         Contractor contractor = contractorMapper.contractorDtoToContractor(contractorDto);
 
-        contractor.setAddress(addressRepository.getOne(contractorDto.getAddressId()));
+        contractor.setAddress(
+                addressRepository.findById(
+                        contractorDto.getAddressId()
+                ).orElse(null)
+        );
 
         contractor.setContact(
                 contractorDto.getContactIds().stream()
@@ -96,14 +85,6 @@ public class ContractorServiceImpl implements ContractorService {
                                 contactRepository::getOne
                         )
                         .collect(Collectors.toList())
-        );
-
-        contractor.setContractorGroup(
-                contractorGroupRepository.getOne(contractorDto.getContractorGroupId())
-        );
-
-        contractor.setTypeOfPrice(
-                typeOfPriceRepository.getOne(contractorDto.getTypeOfPriceId())
         );
 
         contractor.setBankAccounts(
@@ -114,34 +95,37 @@ public class ContractorServiceImpl implements ContractorService {
                         .collect(Collectors.toList())
         );
 
+        contractor.setContractorGroup(
+                contractorGroupRepository.findById(
+                        contractorDto.getContractorGroupId()
+                ).orElse(null)
+        );
+
+        contractor.setAccessParameters(
+                accessParametersRepository.findById(
+                        contractorDto.getAccessParametersId()
+                ).orElse(null)
+        );
+
+        contractor.setTypeOfPrice(
+                typeOfPriceRepository.findById(
+                        contractorDto.getTypeOfPriceId()
+                ).orElse(null)
+        );
+
         contractor.setLegalDetail(
-                legalDetailRepository.getOne(contractorDto.getLegalDetailId())
+                legalDetailRepository.findById(
+                        contractorDto.getLegalDetailId()
+                ).orElse(null)
         );
 
-        AccessParametersDto accessParametersDto = accessParametersMapper.toDto(
-                accessParametersRepository.getOne(contractorDto.getAccessParametersId())
-        );
-        contractor.setAccessParameters( accessParametersMapper.toModel
-                (accessParametersDto, employeeRepository, departmentRepository, departmentMapper, employeeMapper)
-        );
-
-        contractor.setContractorStatus(contractorStatusMapper.toModel(
-                contractorStatusRepository.getById(contractorDto.getContractorStatusId())
-        ));
-
-        Contractor contractorSaved = contractorRepository.save(contractor);
-        if (contractorDto.getId() == null) {
-            contractorDto.setId(contractorSaved.getId());
-        }
-        return contractorDto;
+        return contractorMapper.contractorToContractorDto(contractorRepository.save(contractor));
     }
-
 
     @Override
     public ContractorDto update(ContractorDto contractorDto) {
         Contractor contractor = contractorMapper.contractorDtoToContractor(contractorDto);
 
-        //Address address = addressRepository.getAddressById(contractorDto.getAddressId());
         Address address = addressRepository.getOne(contractorDto.getAddressId());
         addressRepository.save(address);
         contractor.setAddress(address);
