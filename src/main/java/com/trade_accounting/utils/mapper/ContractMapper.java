@@ -1,17 +1,11 @@
 package com.trade_accounting.utils.mapper;
 
 import com.trade_accounting.models.Contract;
-import com.trade_accounting.models.InternalOrder;
-import com.trade_accounting.models.InternalOrderProduct;
 import com.trade_accounting.models.dto.ContractDto;
-import com.trade_accounting.models.dto.InternalOrderDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface ContractMapper {
@@ -49,24 +43,6 @@ public interface ContractMapper {
             return contractDto;
         }
     }
-
-    //}
-//    @Mappings({
-//            @Mapping(source = "company.id", target = "companyId"),
-//            @Mapping(source = "bankAccount.id", target = "bankAccountId"),
-//            @Mapping(source = "contractor.id", target = "contractorId"),
-//            @Mapping(source = "legalDetail.id", target = "legalDetailId")
-//    })
-//    ContractDto toDto(Contract contract);
-//
-//    @Mappings({
-//            @Mapping(source = "companyId", target = "company.id"),
-//            @Mapping(source = "bankAccountId", target = "bankAccount.id"),
-//            @Mapping(source = "contractorId", target = "contractor.id"),
-//            @Mapping(source = "legalDetailId", target = "legalDetail.id"),
-//            @Mapping(target = "contractDate", ignore = true)
-//    })
-//    Contract toModel(ContractDto contractDto);
 
     List<ContractDto> toListDto(List<Contract> contracts);
 }
