@@ -54,25 +54,25 @@ public class PaymentServiceImpl implements PaymentService {
 
         payment.setCompany(
                 companyRepository.findById(
-                        paymentDto.getCompanyDto().getId()
+                        paymentDto.getCompanyId()
                 ).orElse(null)
         );
 
         payment.setContractor(
                 contractorRepository.findById(
-                        paymentDto.getContractorDto().getId()
+                        paymentDto.getContractorId()
                 ).orElse(null)
         );
 
         payment.setContract(
                 contractRepository.findById(
-                        paymentDto.getContractDto().getId()
+                        paymentDto.getContractId()
                 ).orElse(null)
         );
 
         payment.setProject(
                 projectRepository.findById(
-                        paymentDto.getProjectDto().getId()
+                        paymentDto.getProjectId()
                 ).orElse(null)
         );
 
