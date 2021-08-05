@@ -2,7 +2,11 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.dto.ContractDto;
+import com.trade_accounting.repositories.BankAccountRepository;
+import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
+import com.trade_accounting.repositories.ContractorRepository;
+import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.services.interfaces.ContractService;
 import com.trade_accounting.utils.mapper.ContractMapper;
@@ -11,6 +15,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +28,10 @@ public class ContractServiceImpl implements ContractService {
     private final ContractRepository contractRepository;
     private final PaymentRepository paymentRepository;
     private final ContractMapper contractMapper;
+    private final CompanyRepository companyRepository;
+    private final BankAccountRepository bankAccountRepository;
+    private final ContractorRepository contractorRepository;
+    private final LegalDetailRepository legalDetailRepository;
 
     @Override
     public List<ContractDto> getAll() {
@@ -49,11 +59,24 @@ public class ContractServiceImpl implements ContractService {
         return contractMapper.toDto(contractRepository.getOne(id));
     }
 
+//    @Override
+//    public ContractDto create(ContractDto contractDto) {
+//        Contract contractSaved = contractRepository.save(contractMapper.toModel(contractDto));
+//        contractDto.setId(contractSaved.getId());
+//        return contractDto;
+//    }
     @Override
     public ContractDto create(ContractDto contractDto) {
-        Contract contractSaved = contractRepository.save(contractMapper.toModel(contractDto));
-        contractDto.setId(contractSaved.getId());
-        return contractDto;
+        Contract contract = contractMapper.toModel(contractDto);
+
+        LocalDate date = LocalDate.parse(contractDto.getContractDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        contract.setContractDate(date);
+        contract.setCompany(companyRepository.getCompaniesById(contractDto.getCompanyId()));
+        contract.setBankAccount(bankAccountRepository.findById(contractDto.getBankAccountId()).orElse(null));
+        contract.setContractor(contractorRepository.findById(contractDto.getContractorId()).orElse(null));
+        contract.setLegalDetail(legalDetailRepository.findById(contractDto.getLegalDetailId()).orElse(null));
+
+        return contractMapper.toDto(contractRepository.save(contract));
     }
 
     @Override

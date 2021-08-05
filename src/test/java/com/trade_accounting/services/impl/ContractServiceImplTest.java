@@ -7,6 +7,7 @@ import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
 import com.trade_accounting.services.impl.Stubs.dto.ContractDtoStubs;
+import com.trade_accounting.services.impl.Stubs.dto.ContractorDtoStubs;
 import com.trade_accounting.utils.mapper.ContractMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -98,7 +99,7 @@ public class ContractServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        contractService.update(
+        contractService.create(
                 ContractDtoStubs.getContractDto(1L)
         );
 
@@ -122,7 +123,7 @@ public class ContractServiceImplTest {
 
     void contractDtoIsCorrectlyInitiated(ContractDto contractDto) {
         assertNotNull(contractDto.getId(), "Id should not be null");
-        assertNotNull(contractDto.getContractorDto(), "Contractor should not be null");
-        assertNotNull(contractDto.getCompanyDto(), "Company should not be null");
+        assertNotNull(contractDto.getContractorId(), "Contractor should not be null");
+        assertNotNull(contractDto.getCompanyId(), "Company should not be null");
     }
 }

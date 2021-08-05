@@ -21,15 +21,15 @@ public class ContractDto {
 
     //private String contractDate; //добавил поле во фронте есть
 
-    private LocalDate contractDate;
+    private String contractDate;
 
     @NotNull
-    private CompanyDto companyDto;
+    private Long companyId;
 
-    private BankAccountDto bankAccountDto;
+    private Long bankAccountId;
 
     @NotNull
-    private ContractorDto contractorDto;
+    private Long contractorId;
 
     private BigDecimal amount;
 
@@ -37,32 +37,32 @@ public class ContractDto {
 
     private String comment;
 
-    private LegalDetailDto legalDetailDto;
+    private Long legalDetailId;
 
-    public ContractDto(Long id,
-                       String number,
-                       LocalDate contractDate,
-                       Long companyId,
-                       Long bankAccountId,
-                       Long contractorId,
-                       BigDecimal amount,
-                       Boolean archive,
-                       String comment,
-                       Long legalDetailId) {
-        this.id = id;
-        this.number = number;
-        // this.contractDate = contractDate; //добавил
-        this.contractDate = contractDate;
-        this.companyDto = new CompanyDto();
-        this.companyDto.setId(companyId);
-        this.bankAccountDto = new BankAccountDto();
-        this.bankAccountDto.setId(bankAccountId);
-        this.contractorDto = new ContractorDto();
-        this.contractorDto.setId(contractorId);
-        this.amount = amount;
-        this.archive = archive;
-        this.comment = comment;
-        this.legalDetailDto = new LegalDetailDto();
-        this.legalDetailDto.setId(legalDetailId);
-    }
+//    public ContractDto(Long id,
+//                       String number,
+//                       LocalDate contractDate,
+//                       Long companyId,
+//                       Long bankAccountId,
+//                       Long contractorId,
+//                       BigDecimal amount,
+//                       Boolean archive,
+//                       String comment,
+//                       Long legalDetailId) {
+//        this.id = id;
+//        this.number = number;
+//        // this.contractDate = contractDate; //добавил
+//        this.contractDate = contractDate;
+//        this.companyDto = new CompanyDto();
+//        this.companyDto.setId(companyId);
+//        this.bankAccountDto = new BankAccountDto();
+//        this.bankAccountDto.setId(bankAccountId);
+//        this.contractorDto = new ContractorDto();
+//        this.contractorDto.setId(contractorId);
+//        this.amount = amount;
+//        this.archive = archive;
+//        this.comment = comment;
+//        this.legalDetailDto = new LegalDetailDto();
+//        this.legalDetailDto.setId(legalDetailId);
+//    }
 }
