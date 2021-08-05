@@ -4,6 +4,7 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.LossProduct;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.LossProductDto;
+import com.trade_accounting.repositories.LossProductRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.LossProductService;
 import lombok.RequiredArgsConstructor;
