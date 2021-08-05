@@ -39,7 +39,7 @@ public class PriceListServiceImplTest {
     private PriceListServiceImpl priceListService;
 
     @Test
-    void getAll_shouldReturnListFilledPriceListDto() {
+    void getAllReturnFilledList() {
         when(priceListRepository.findAll())
                 .thenReturn(
                         Stream.of(PriceListModelStubs.getPriceList(1L)
@@ -55,7 +55,7 @@ public class PriceListServiceImplTest {
     }
 
     @Test
-    void getAll_shouldReturnEmptyListPriceListDto() {
+    void getAllReturnEmptyList() {
         when(priceListRepository.findAll())
                 .thenReturn(new ArrayList<>());
 
@@ -66,7 +66,7 @@ public class PriceListServiceImplTest {
     }
 
     @Test
-    void getById_shouldReturnOneFilledPriceListDto() {
+    void getById() {
         when(priceListRepository.getOne(anyLong()))
                 .thenReturn(PriceListModelStubs.getPriceList(1L));
 
@@ -75,7 +75,7 @@ public class PriceListServiceImplTest {
     }
 
     @Test
-    void createCheckPriceList() {
+    void create() {
         when(priceListRepository.save(any(PriceList.class)))
                 .thenReturn(PriceListModelStubs.getPriceList(1L));
 
@@ -86,7 +86,7 @@ public class PriceListServiceImplTest {
     }
 
     @Test
-    void updateCheckPriceList() {
+    void update() {
         when(priceListRepository.save(any(PriceList.class)))
                 .thenReturn(PriceListModelStubs.getPriceList(1L));
 
@@ -97,7 +97,7 @@ public class PriceListServiceImplTest {
     }
 
     @Test
-    void deleteByIdCheckPriceList() {
+    void delete() {
         priceListService.deleteById(1L);
         verify(priceListRepository).deleteById(any());
     }
