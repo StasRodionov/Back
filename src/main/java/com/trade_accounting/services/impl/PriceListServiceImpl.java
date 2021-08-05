@@ -31,7 +31,7 @@ public class PriceListServiceImpl implements PriceListService {
 
     @Override
     public PriceListDto getById(Long id) {
-        return priceListMapper.toDto(priceListRepository.findById(id).orElse(new PriceList()));
+        return priceListMapper.toDto(priceListRepository.getOne(id));
     }
 
     @Override
