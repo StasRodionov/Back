@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+<<<<<<< HEAD
 import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.dto.PriceListDto;
 import com.trade_accounting.repositories.PriceListRepository;
@@ -102,3 +103,31 @@ public class PriceListServiceImplTest {
         verify(priceListRepository).deleteById(any());
     }
 }
+=======
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class PriceListServiceImplTest {
+
+    @Test
+    void getAll() {
+    }
+
+    @Test
+    void getById() {
+    }
+
+    @Test
+    void create() {
+    }
+
+    @Test
+    void update() {
+    }
+
+    @Test
+    void deleteById() {
+    }
+}
+>>>>>>> dev

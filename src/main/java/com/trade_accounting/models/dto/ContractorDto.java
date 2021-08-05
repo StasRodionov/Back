@@ -13,21 +13,36 @@ import java.util.List;
 @AllArgsConstructor
 public class ContractorDto {
     private Long id;
-    private String name;
-    private String sortNumber;
-    private String phone;
-    private String fax;
-    private String email;
-    private AddressDto addressDto;
-    private String commentToAddress;
-    private String comment;
-    private String discountCardNumber;
-    private List<ContactDto> contactDto;
-    private ContractorGroupDto contractorGroupDto;
-    private TypeOfPriceDto typeOfPriceDto;
-    private List<BankAccountDto> bankAccountDto;
-    private LegalDetailDto legalDetailDto;
-    private ContractorStatusDto contractorStatusDto;
-    private AccessParametersDto accessParametersDto;
 
+    private String name;
+
+    private String sortNumber;
+
+    private String phone;
+
+    private String fax;
+
+    private String email;
+
+    private Long addressId;
+
+    private String commentToAddress;
+
+    private String comment;
+
+    private String discountCardNumber;
+
+    private List<Long> contactIds;
+
+    private Long contractorGroupId;
+
+    private Long typeOfPriceId;
+
+    private List<Long> bankAccountIds;
+
+    private Long legalDetailId;
+
+    private Long contractorStatusId;
+
+    private Long accessParametersId;
 }
