@@ -1,9 +1,9 @@
-TRUNCATE internal_order CASCADE;
+TRUNCATE contracts CASCADE;
 
-INSERT INTO internal_order (id, comment, date, is_print, is_sent, company_id, warehouse_id)
-VALUES (1, 'Комментарий 1', '1234-12-12 12:34', false, false, 1, 1),
-       (2, 'Комментарий 2', '1234-12-12 12:34', true, false, 2, 1),
-       (3, 'Комментарий 3', '1234-12-12 12:34', false, true, 3, 1);
+INSERT INTO contracts (id, amount, archive, comment, contract_date, number, bank_account_id, company_id, contractor_id, legal_detail_id)
+VALUES (1, 200, false, 'no comments', '2021-08-06', '1', 3, 1, 1, 1),
+       (2, 200, false, 'no comments', '2021-08-06', '2', 3, 1, 1, 1),
+       (3, 200, false, 'no comments', '2021-08-06', '3', 3, 1, 1, 1);
 
-SELECT setval('internal_order_id_seq', max(id))
-FROM internal_order;
+SELECT setval('contracts_id_seq', max(id))
+FROM contracts;
