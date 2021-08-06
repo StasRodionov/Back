@@ -28,6 +28,7 @@ import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.Position;
+import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
@@ -192,6 +193,8 @@ public class ModelStubs {
     public static Position getPosition(Long id) {
         return new Position(id, "name", "00001");
     }
+
+
 
     public static Employee getEmployee(Long id) {
         return new Employee(
