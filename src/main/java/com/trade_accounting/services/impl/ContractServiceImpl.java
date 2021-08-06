@@ -2,6 +2,7 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.dto.ContractDto;
+import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
@@ -35,7 +36,9 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<ContractDto> getAll() {
-        return contractMapper.toListDto(contractRepository.findAll());
+        return contractRepository.getAll().stream()
+                .map(contractMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override

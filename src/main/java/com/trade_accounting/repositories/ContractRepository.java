@@ -1,7 +1,6 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.Contract;
-import com.trade_accounting.models.dto.ContractDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +11,7 @@ import java.util.List;
 public interface ContractRepository extends JpaRepository<Contract, Long>, JpaSpecificationExecutor<Contract> {
 
     @Query("SELECT c FROM Contract c")
-    List<ContractDto> getAll();
+    List<Contract> getAll();
 
     @Query("SELECT c FROM Contract c WHERE c.id = :id")
     Contract getById(@Param("id") Long id);
