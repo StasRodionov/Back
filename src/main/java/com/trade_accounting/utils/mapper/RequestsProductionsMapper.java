@@ -3,30 +3,37 @@ package com.trade_accounting.utils.mapper;
 import com.trade_accounting.models.RequestsProductions;
 import com.trade_accounting.models.dto.RequestsProductionsDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+
+import java.time.format.DateTimeFormatter;
 
 @Mapper(componentModel = "spring")
 public interface RequestsProductionsMapper {
 
-    /**
-     * @return RequestsProductionsMapper
-     */
-    @Mappings({
-            @Mapping(target = "technicalCard.id", ignore = true),
-            @Mapping(target = "warehouseId.id", ignore = true),
-            @Mapping(target = "dateOfTheCertificate", ignore = true)
-    })
+    default RequestsProductionsDto toDto(RequestsProductions requestsProductions) {
+        RequestsProductionsDto requestsProductionsDto = new RequestsProductionsDto();
+        if (requestsProductions == null || requestsProductions.getWarehouse().getId() == null
+                || requestsProductions.getTechnicalCard().getId() == null) {
+            return null;
+        } else {
+            requestsProductionsDto.setId(requestsProductions.getId());
+            requestsProductionsDto.setDateOfTheCertificate(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(requestsProductions.getDateOfTheCertificate()));
+            requestsProductionsDto.setNumberOfTheCertificate(requestsProductions.getNumberOfTheCertificate());
+            requestsProductionsDto.setVolume(requestsProductions.getVolume());
+            requestsProductionsDto.setWarehouseId(requestsProductions.getWarehouse().getId());
+            requestsProductionsDto.setTechnicalCardId(requestsProductions.getTechnicalCard().getId());
+            return requestsProductionsDto;
+        }
+    }
 
-    RequestsProductions toModel(RequestsProductionsDto requestsProductionsDto);
+    default RequestsProductions toModel(RequestsProductionsDto requestsProductionsDto) {
+        if (requestsProductionsDto == null) {
+            return null;
+        }
 
-    /**
-     * @return RequestsProductionsMapperDto
-     */
-    @Mappings({
-            @Mapping(source = "technicalCard.id", target = "technicalCardId"),
-            @Mapping(source = "warehouse.id", target = "warehouseId"),
-            @Mapping(source = "dateOfTheCertificate", target = "dateOfTheCertificate", dateFormat = "yyyy-MM-dd")
-    })
-    RequestsProductionsDto toDto(RequestsProductions requestsProductions);
+        return RequestsProductions.builder()
+                .id(requestsProductionsDto.getId())
+                .numberOfTheCertificate(requestsProductionsDto.getNumberOfTheCertificate())
+                .volume(requestsProductionsDto.getVolume())
+                .build();
+    }
 }
