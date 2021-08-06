@@ -27,10 +27,7 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
 
     private final TechnicalCardRepository technicalCardRepository;
     private final TechnicalCardProductionRepository technicalCardProductionRepository;
-    private final ProductRepository productRepository;
     private final TechnicalCardMapper technicalCardMapper;
-    private final TechnicalCardGroupMapper technicalCardGroupMapper;
-    private final TechnicalCardProductionMapper technicalCardProductionMapper;
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
 
     @Override
