@@ -50,16 +50,16 @@ public class PriceListRestControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(3)));
     }
 
-    void getById(){
-        PriceListDto priceListDto = PriceListDto.builder()
-                .id(1L)
-                .number("number1")
-                .time(LocalDateTime.now()) // да твоюж мать ... о5 ДТО не доделан ...(((
-                .companyId(1L)
-                .sent(0L)
-                .printed(1L)
-                .commentary("comment1")
-                .build();
-    }
+//    void getById(){
+//        PriceListDto priceListDto = PriceListDto.builder()
+//                .id(1L)
+//                .number("number1")
+//                .time(LocalDateTime.now()) // да твоюж мать ... о5 ДТО не доделан ...(((
+//                .companyId(1L)
+//                .sent(0L)
+//                .printed(1L)
+//                .commentary("comment1")
+//                .build();
+//    }
 
 }
