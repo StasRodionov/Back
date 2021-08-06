@@ -18,6 +18,7 @@ public class PriceListDto {
     @NotNull
     private String number;
 
+    @NotNull
     private String time;
 
     @NotNull
