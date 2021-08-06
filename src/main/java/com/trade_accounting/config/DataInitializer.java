@@ -1354,53 +1354,61 @@ public class DataInitializer {
     }
 
     private void initContracts() {
-        contractService.create(new ContractDto(
-                null,
-                "1",
-                LocalDate.now(),
-                1L,
-                3L,
-                1L,
-                BigDecimal.valueOf(200),
-                false,
-                "no comments",
-                1L));
+        contractService.create(ContractDto.builder()
+                .id(null)
+                .number("1")
+                .contractDate(LocalDate.now().toString())
+                .companyId(CompanyDto.builder().id(1L).build().getId())
+                .bankAccountId(BankAccountDto.builder().id(3L).build().getId())
+                .contractorId(ContractDto.builder().id(1L).build().getId())
+                .amount(BigDecimal.valueOf(200))
+                .archive(false)
+                .comment("no comments")
+                .legalDetailId(LegalDetailDto.builder().id(1L).build().getId())
+                .build()
+        );
 
-        contractService.create(new ContractDto(
-                null,
-                "2",
-                LocalDate.now(),
-                1L,
-                3L,
-                1L,
-                BigDecimal.valueOf(200),
-                false,
-                "no comments",
-                1L));
+        contractService.create(ContractDto.builder()
+                .id(null)
+                .number("2")
+                .contractDate(LocalDate.now().toString())
+                .companyId(CompanyDto.builder().id(1L).build().getId())
+                .bankAccountId(BankAccountDto.builder().id(3L).build().getId())
+                .contractorId(ContractDto.builder().id(1L).build().getId())
+                .amount(BigDecimal.valueOf(200))
+                .archive(false)
+                .comment("no comments")
+                .legalDetailId(LegalDetailDto.builder().id(1L).build().getId())
+                .build()
+        );
 
-        contractService.create(new ContractDto(
-                null,
-                "3",
-                LocalDate.now(),
-                1L,
-                3L,
-                1L,
-                BigDecimal.valueOf(200),
-                false,
-                "no comments",
-                1L));
+        contractService.create(ContractDto.builder()
+                .id(null)
+                .number("3")
+                .contractDate(LocalDate.now().toString())
+                .companyId(CompanyDto.builder().id(1L).build().getId())
+                .bankAccountId(BankAccountDto.builder().id(3L).build().getId())
+                .contractorId(ContractDto.builder().id(1L).build().getId())
+                .amount(BigDecimal.valueOf(200))
+                .archive(false)
+                .comment("no comments")
+                .legalDetailId(LegalDetailDto.builder().id(1L).build().getId())
+                .build()
+        );
 
-        contractService.create(new ContractDto(
-                null,
-                "4",
-                LocalDate.now(),
-                1L,
-                3L,
-                1L,
-                BigDecimal.valueOf(200),
-                false,
-                "no comments",
-                1L));
+        contractService.create(ContractDto.builder()
+                .id(null)
+                .number("4")
+                .contractDate(LocalDate.now().toString())
+                .companyId(CompanyDto.builder().id(1L).build().getId())
+                .bankAccountId(BankAccountDto.builder().id(3L).build().getId())
+                .contractorId(ContractDto.builder().id(1L).build().getId())
+                .amount(BigDecimal.valueOf(200))
+                .archive(false)
+                .comment("no comments")
+                .legalDetailId(LegalDetailDto.builder().id(1L).build().getId())
+                .build()
+        );
 
     }
 

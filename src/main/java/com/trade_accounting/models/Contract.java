@@ -1,6 +1,7 @@
 package com.trade_accounting.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -19,6 +20,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -58,23 +60,4 @@ public class Contract {
 
     @OneToOne(fetch = FetchType.LAZY)
     private LegalDetail legalDetail;
-
-    public Contract(String number, LocalDate contractDate,
-                    @NotNull Company company,
-                    BankAccount bankAccount,
-                    @NotNull Contractor contractor,
-                    BigDecimal amount,
-                    Boolean archive,
-                    String comment,
-                    LegalDetail legalDetail) {
-        this.number = number;
-        this.contractDate = contractDate;
-        this.company = company;
-        this.bankAccount = bankAccount;
-        this.contractor = contractor;
-        this.amount = amount;
-        this.archive = archive;
-        this.comment = comment;
-        this.legalDetail = legalDetail;
-    }
 }

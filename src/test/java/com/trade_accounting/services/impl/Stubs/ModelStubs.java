@@ -1,7 +1,5 @@
 package com.trade_accounting.services.impl.Stubs;
 
-import com.trade_accounting.models.Acceptance;
-import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AgentReports;
@@ -141,13 +139,18 @@ public class ModelStubs {
     }
 
     public static Contract getContract(Long id) {
-        return new Contract(
-                id, "00001",
-                LocalDate.now(), getCompany(id),
-                getBankAccount(id), getContractor(id),
-                BigDecimal.ONE, false, "comment",
-                getLegalDetail(id)
-        );
+            return Contract.builder()
+                    .id(id)
+                    .number("00000" + id)
+                    .contractDate(LocalDate.now())
+                    .company(getCompany(1L))
+                    .bankAccount(getBankAccount(3L))
+                    .contractor(getContractor(1L))
+                    .amount(BigDecimal.ONE)
+                    .archive(false)
+                    .comment("Comment " + id)
+                    .legalDetail(getLegalDetail(1L))
+                    .build();
     }
 
     public static Project getProject(Long id) {

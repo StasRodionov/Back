@@ -3,29 +3,47 @@ package com.trade_accounting.utils.mapper;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.dto.ContractDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ContractMapper {
     //Contract
-    @Mappings({
-            @Mapping(source = "company", target = "companyDto"),
-            @Mapping(source = "bankAccount", target = "bankAccountDto"),
-            @Mapping(source = "contractor", target = "contractorDto"),
-            @Mapping(source = "legalDetail", target = "legalDetailDto")
-    })
-     ContractDto toDto(Contract contract);
+    default Contract toModel(ContractDto contractDto) {
+        if (contractDto == null) {
+            return null;
+        }
 
-    @Mappings({
-            @Mapping(source = "companyDto", target = "company"),
-            @Mapping(source = "bankAccountDto", target = "bankAccount"),
-            @Mapping(source = "contractorDto", target = "contractor"),
-            @Mapping(source = "legalDetailDto", target = "legalDetail")
-    })
-     Contract toModel(ContractDto contractDto);
+        return Contract.builder()
+                .id(contractDto.getId())
+                .number(contractDto.getNumber())
+                .amount(contractDto.getAmount())
+                .archive(contractDto.getArchive())
+                .comment(contractDto.getComment())
+                .build();
+    }
 
-     List<ContractDto> toListDto(List<Contract> contracts);
+    default ContractDto toDto(Contract contract) {
+        ContractDto contractDto = new ContractDto();
+        if (contract == null || contract.getBankAccount().getId() == null || contract.getCompany().getId() == null
+                || contract.getContractor().getId() == null || contract.getLegalDetail().getId() == null) {
+            return null;
+        } else {
+            contractDto.setId(contract.getId());
+            contractDto.setNumber(contract.getNumber());
+            contractDto.setContractDate(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(contract.getContractDate()));
+            contractDto.setCompanyId(contract.getCompany().getId());
+            contractDto.setBankAccountId(contract.getBankAccount().getId());
+            contractDto.setContractorId(contract.getContractor().getId());
+            contractDto.setAmount(contract.getAmount());
+            contractDto.setArchive(contract.getArchive());
+            contractDto.setComment(contract.getComment());
+            contractDto.setLegalDetailId(contract.getLegalDetail().getId());
+            return contractDto;
+        }
+    }
+
+    List<ContractDto> toListDto(List<Contract> contracts);
 }
+
