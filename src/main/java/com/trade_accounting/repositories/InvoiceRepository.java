@@ -57,7 +57,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.typeOfInvoice, " +
             "e.company.id," +
             "e.contractor.id," +
-            "e.warehouse.id, " +
+            "e.warehouse.id," +
             "e.isSpend," +
             "e.comment) from Invoice e " +
             "where lower(concat(e.id, e.comment)) like lower(concat('%', :query,'%')) and e.typeOfInvoice = :typeOfInvoice")

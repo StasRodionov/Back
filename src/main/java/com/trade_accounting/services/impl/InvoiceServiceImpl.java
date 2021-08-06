@@ -1,7 +1,11 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contract;
+import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.TypeOfInvoice;
+import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
@@ -42,10 +46,14 @@ public class InvoiceServiceImpl implements InvoiceService {
     public List<InvoiceDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice) {
         List<InvoiceDto> invoiceDtoList = invoiceRepository.findBySearchAndTypeOfInvoice(search, typeOfInvoice);
         for (InvoiceDto invoice : invoiceDtoList) {
-            invoice.setCompanyDto(companyMapper.toDto(companyRepository.getCompaniesById(invoice.getCompanyDto().getId())));
-            invoice.setContractorDto(contractorMapper.contractorToContractorDto(
-                    contractorRepository.getOne(invoice.getContractorDto().getId())));
-            invoice.setWarehouseDto(warehouseRepository.getById(invoice.getWarehouseDto().getId()));
+            Invoice invoice1 = invoiceMapper.toModel(invoice);
+            Company company = companyRepository.getCompaniesById(invoice.getCompanyId());
+            Contractor contractor = contractorRepository.getContractorById(invoice.getContractorId());
+            Warehouse warehouse = warehouseRepository.getOne(invoice.getWarehouseId());
+            invoice.setCompanyId(companyMapper.toDto(company).getId());
+            invoice.setContractorId(contractorMapper.contractorToContractorDto(contractor).getId());
+            invoice.setWarehouseId(warehouse.getId());
+
         }
         return invoiceDtoList;
     }
@@ -67,6 +75,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public InvoiceDto create(InvoiceDto invoiceDto) {
         Invoice invoiceSaved = invoiceRepository.save(invoiceMapper.toModel(invoiceDto));
         invoiceDto.setId(invoiceSaved.getId());
+
         return invoiceMapper.toDto(invoiceSaved);
     }
 
