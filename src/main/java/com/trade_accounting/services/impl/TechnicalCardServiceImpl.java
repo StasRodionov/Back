@@ -1,9 +1,11 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.TechnicalCard;
+import com.trade_accounting.models.TechnicalCardGroup;
 import com.trade_accounting.models.TechnicalCardProduction;
 import com.trade_accounting.models.dto.TechnicalCardDto;
 import com.trade_accounting.repositories.ProductRepository;
+import com.trade_accounting.repositories.TechnicalCardGroupRepository;
 import com.trade_accounting.repositories.TechnicalCardProductionRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
@@ -29,6 +31,7 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
     private final TechnicalCardMapper technicalCardMapper;
     private final TechnicalCardGroupMapper technicalCardGroupMapper;
     private final TechnicalCardProductionMapper technicalCardProductionMapper;
+    private final TechnicalCardGroupRepository technicalCardGroupRepository;
 
     @Override
     public List<TechnicalCardDto> getAll() {
@@ -44,34 +47,54 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
     }
 
     @Override
-    public TechnicalCardDto create(TechnicalCardDto dto) {
-        TechnicalCard technicalCard = TechnicalCard.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .comment(dto.getComment())
-                .productionCost(dto.getProductionCost())
-                .technicalCardGroup(technicalCardGroupMapper.toModel(dto.getTechnicalCardGroupDto()))
-                .build();
+    public TechnicalCardDto create(TechnicalCardDto technicalCardDto) {
+        TechnicalCard technicalCard = technicalCardMapper.toModel(technicalCardDto);
 
-        List<TechnicalCardProduction> finalProduction = dto.getFinalProductionDto().stream()
-                .map(x -> {
-                    TechnicalCardProduction tcp =
-                            technicalCardProductionMapper.toModel(x);
-                    tcp.setProduct(productRepository.getOne(x.getProductId()));
-                    return tcp;
-                }).collect(Collectors.toList());
-        finalProduction.stream().forEach(technicalCardProductionRepository::save);
-        technicalCard.setFinalProduction(finalProduction);
+        technicalCard.setTechnicalCardGroup(
+                technicalCardGroupRepository.findById(
+                        technicalCardDto.getTechnicalCardGroupId()
+                ).orElse(null)
+        );
 
-        List<TechnicalCardProduction> materials = dto.getMaterialsDto().stream()
-                .map(x -> {
-                    TechnicalCardProduction tcp =
-                            technicalCardProductionMapper.toModel(x);
-                    tcp.setProduct(productRepository.getOne(x.getProductId()));
-                    return tcp;
-                }).collect(Collectors.toList());
-        materials.stream().forEach(technicalCardProductionRepository::save);
-        technicalCard.setMaterials(materials);
+        technicalCard.setFinalProduction(
+                technicalCardProductionRepository.findAllById(
+                        technicalCardDto.getFinalProductionId()
+                )
+        );
+
+        technicalCard.setMaterials(
+                technicalCardProductionRepository.findAllById(
+                        technicalCardDto.getMaterialsId()
+                )
+        );
+
+//        TechnicalCard technicalCard = TechnicalCard.builder()
+//                .id(dto.getId())
+//                .name(dto.getName())
+//                .comment(dto.getComment())
+//                .productionCost(dto.getProductionCost())
+//                .technicalCardGroup(technicalCardGroupMapper.toModel(dto.getTechnicalCardGroupDto()))
+//                .build();
+//
+//        List<TechnicalCardProduction> finalProduction = dto.getFinalProductionDto().stream()
+//                .map(x -> {
+//                    TechnicalCardProduction tcp =
+//                            technicalCardProductionMapper.toModel(x);
+//                    tcp.setProduct(productRepository.getOne(x.getProductId()));
+//                    return tcp;
+//                }).collect(Collectors.toList());
+//        finalProduction.stream().forEach(technicalCardProductionRepository::save);
+//        technicalCard.setFinalProduction(finalProduction);
+//
+//        List<TechnicalCardProduction> materials = dto.getMaterialsDto().stream()
+//                .map(x -> {
+//                    TechnicalCardProduction tcp =
+//                            technicalCardProductionMapper.toModel(x);
+//                    tcp.setProduct(productRepository.getOne(x.getProductId()));
+//                    return tcp;
+//                }).collect(Collectors.toList());
+//        materials.stream().forEach(technicalCardProductionRepository::save);
+//        technicalCard.setMaterials(materials);
 
         return technicalCardMapper.toDto(technicalCardRepository.save(technicalCard));
     }
