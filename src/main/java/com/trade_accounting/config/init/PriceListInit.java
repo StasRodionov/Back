@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author by Stanislav Dusyak and Pavel Andrusov
+ * @refactoring by Andrey Melnikov - 06.08.2021
  */
 
 @Component

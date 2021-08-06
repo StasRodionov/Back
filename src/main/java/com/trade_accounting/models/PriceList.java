@@ -16,6 +16,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * @refactor by Andrey Melnikov - 06.08.2021
+ */
+
 @Data
 @Builder
 @NoArgsConstructor
