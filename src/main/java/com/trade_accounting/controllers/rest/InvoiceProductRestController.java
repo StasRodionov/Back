@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.InvoiceProductDto;
+import com.trade_accounting.repositories.InvoiceProductRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,16 +28,12 @@ import java.util.List;
 @Tag(name = "Invoice Product Rest Controller", description = "CRUD операции с товарами в накладной")
 @Api(tags = "Invoice Product Rest Controller")
 @RequestMapping("/api/invoice/product")
+@RequiredArgsConstructor
 public class InvoiceProductRestController {
 
     private final InvoiceProductService invoiceProductService;
     private final CheckEntityService checkEntityService;
-
-    public InvoiceProductRestController(InvoiceProductService invoiceProductService,
-                                        CheckEntityService checkEntityService) {
-        this.invoiceProductService = invoiceProductService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final InvoiceProductRepository invoiceProductRepository;
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех товаров в накладной")
     @GetMapping
@@ -45,8 +44,7 @@ public class InvoiceProductRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<List<InvoiceProductDto>> getAll() {
-        List<InvoiceProductDto> invoiceProductDtos = invoiceProductService.getAll();
-        return ResponseEntity.ok(invoiceProductDtos);
+        return ResponseEntity.ok(invoiceProductService.getAll());
     }
 
     @ApiOperation(value = "getById", notes = "Возвращает товар в накладной по Id")
@@ -63,7 +61,7 @@ public class InvoiceProductRestController {
             value = "Переданный ID  в URL по которому необходимо найти товар в накладной",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsInvoiceProductById(id);
+        checkEntityService.checkExists((JpaRepository)invoiceProductRepository,id);
         return ResponseEntity.ok(invoiceProductService.getById(id));
     }
 

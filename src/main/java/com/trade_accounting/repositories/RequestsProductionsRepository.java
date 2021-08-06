@@ -2,8 +2,8 @@ package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.RequestsProductions;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-@Repository
-public interface RequestsProductionsRepository extends JpaRepository<RequestsProductions,Long> {
+public interface RequestsProductionsRepository extends JpaRepository<RequestsProductions, Long>,
+        JpaSpecificationExecutor<RequestsProductions> {
 }

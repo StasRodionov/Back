@@ -1,21 +1,17 @@
 package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
-import com.trade_accounting.models.dto.CompanyDto;
-import com.trade_accounting.models.dto.ContractorDto;
-import com.trade_accounting.models.dto.InvoiceDto;
-import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.models.dto.PositionDto;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,29 +20,33 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * @author Stanislav Dusiak
+ * @since 06.08.2021
+ */
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
-@Sql(value = "/Invoice-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@WithUserDetails(value = "karimogon@mail.ru")
+@Sql(value = "/Position-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@WithMockUser
 @RequiredArgsConstructor
-public class InvoiceRestControllerTest {
+class PositionRestControllerTest {
 
     @Autowired
-    private InvoiceRestController invoiceRestController;
+    private PositionRestController positionRestController;
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     void testExistence() {
-        assertNotNull(invoiceRestController, "Invoice Rest Controller is null");
+        assertNotNull(positionRestController, "Position Rest Controller is null");
     }
 
     @Test
     void getAll() throws Exception {
-        mockMvc.perform(get("/api/invoice"))
+        mockMvc.perform(get("/api/position"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
@@ -55,45 +55,36 @@ public class InvoiceRestControllerTest {
 
     @Test
     void getById() throws Exception {
-        String invoiceDtoJson = new Gson().toJson(InvoiceDto.builder()
+        String PositionDtoJson = new Gson().toJson(PositionDto.builder()
                 .id(1L)
-                .comment("comment 1")
-                .date("2222-11-01T00:01:00")
-                .isSpend(false)
-                .typeOfInvoice("EXPENSE")
-                .companyId(1L)
-
-                .contractorId(1L)
-                .warehouseId(1L)
+                .name("Stanislav")
+                .sortNumber("1")
                 .build());
 
-        mockMvc.perform(get("/api/invoice/1"))
+        mockMvc.perform(get("/api/position/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(invoiceDtoJson));
+                .andExpect(content().json(PositionDtoJson));
     }
 
     @Test
     void create() throws Exception {
-        String invoiceDtoJson = new Gson().toJson(InvoiceDto.builder()
-                .id(2L)
-                .comment("comment 2")
-                .date("2222-11-01T00:01:00")
-                .typeOfInvoice("RECEIPT")
-                .companyId(1L)
-                .contractorId(1L)
-                .warehouseId(1L)
-                .isSpend(false)
-                .build());
-        mockMvc.perform(post("/api/invoice")
-                        .contentType(MediaType.APPLICATION_JSON).content(invoiceDtoJson))
+        String PositionDtoJson = new Gson().toJson(PositionDto.builder()
+                .id(1L)
+                .name("Stanislav")
+                .sortNumber("2")
+                .build()
+        );
+
+        mockMvc.perform(post("/api/position")
+                        .contentType(MediaType.APPLICATION_JSON).content(PositionDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(invoiceDtoJson));
+                .andExpect(content().json(PositionDtoJson));
 
-        mockMvc.perform(get("/api/invoice"))
+        mockMvc.perform(get("/api/position"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
@@ -102,38 +93,33 @@ public class InvoiceRestControllerTest {
 
     @Test
     void update() throws Exception {
-        String invoiceDtoJson = new Gson().toJson(InvoiceDto.builder()
-                .id(3L)
-                .isSpend(false)
-                .comment("comment 3")
-                .date("2222-11-01T00:03:00")
-                .typeOfInvoice("RECEIPT")
-                .companyId(1L)
-                .contractorId(1L)
-                .warehouseId(1L)
-                .build());
+        String PositionDtoJson = new Gson().toJson(PositionDto.builder()
+                .id(1L)
+                .name("Stanislav")
+                .sortNumber("2")
+                .build()
+        );
 
-        mockMvc.perform(put("/api/invoice")
-                        .contentType(MediaType.APPLICATION_JSON).content(invoiceDtoJson))
+        mockMvc.perform(put("/api/position")
+                        .contentType(MediaType.APPLICATION_JSON).content(PositionDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(invoiceDtoJson));
-        mockMvc.perform(get("/api/invoice"))
+                .andExpect(content().json(PositionDtoJson));
+        mockMvc.perform(get("/api/position"))
                 .andDo(print());
     }
 
     @Test
     void deleteById() throws Exception {
-        mockMvc.perform(delete("/api/invoice/2"))
+        mockMvc.perform(delete("/api/position/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
-        mockMvc.perform(get("/api/invoice"))
+        mockMvc.perform(get("/api/position"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
-
 }

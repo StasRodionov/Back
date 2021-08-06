@@ -11,6 +11,7 @@ public class InvoiceDtoStubs {
     public static InvoiceDto getInvoiceDto(Long id) {
         return mapper.toDto(
                 ModelStubs.getInvoice(id)
+
         );
     }
 }
