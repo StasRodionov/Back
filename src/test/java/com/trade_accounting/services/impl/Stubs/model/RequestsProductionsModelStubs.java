@@ -8,7 +8,7 @@ import static com.trade_accounting.services.impl.Stubs.ModelStubs.getTechnicalCa
 import static com.trade_accounting.services.impl.Stubs.ModelStubs.getWarehouse;
 
 public class RequestsProductionsModelStubs {
-    public static RequestsProductions getRequestProductions(Long id) {
+    public static RequestsProductions getRequestsProductions(Long id) {
         return RequestsProductions.builder()
                 .id(id)
                 .numberOfTheCertificate("RP-001" + id)

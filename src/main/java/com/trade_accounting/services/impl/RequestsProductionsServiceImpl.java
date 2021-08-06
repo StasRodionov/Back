@@ -31,15 +31,14 @@ public class RequestsProductionsServiceImpl implements RequestsProductionsServic
 
     @Override
     public List<RequestsProductionsDto> getAll() {
-        final List<RequestsProductionsDto> collect = requestsProductionsRepository.findAll().stream()
+        return requestsProductionsRepository.findAll().stream()
                 .map(requestsProductionsMapper::toDto)
                 .collect(Collectors.toList());
-        return collect;
     }
 
     @Override
     public RequestsProductionsDto getById(Long id) {
-        return requestsProductionsMapper.toDto(requestsProductionsRepository.findById(id).orElse(new RequestsProductions()));
+        return requestsProductionsMapper.toDto(requestsProductionsRepository.getOne(id));
     }
 
     @Override
@@ -53,6 +52,10 @@ public class RequestsProductionsServiceImpl implements RequestsProductionsServic
     }
 
     @Override
+    public void deleteById(Long id) {
+        requestsProductionsRepository.deleteById(id);
+    }
+
     public RequestsProductionsDto saveOrUpdate(RequestsProductionsDto dto) {
         RequestsProductions requestsProductions = requestsProductionsMapper.toModel(dto);
         TechnicalCard technicalCard = technicalCardRepository.getOne(dto.getTechnicalCardId());
@@ -62,10 +65,5 @@ public class RequestsProductionsServiceImpl implements RequestsProductionsServic
         requestsProductions.setTechnicalCard(technicalCard);
         requestsProductions.setWarehouse(warehouse);
         return requestsProductionsMapper.toDto(requestsProductionsRepository.save(requestsProductions));
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        requestsProductionsRepository.deleteById(id);
     }
 }

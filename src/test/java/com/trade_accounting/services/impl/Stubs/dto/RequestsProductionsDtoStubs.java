@@ -5,10 +5,10 @@ import com.trade_accounting.services.impl.Stubs.model.RequestsProductionsModelSt
 import com.trade_accounting.utils.mapper.RequestsProductionsMapper;
 import org.mapstruct.factory.Mappers;
 
-public class RequestProductionsDtoStubs {
+public class RequestsProductionsDtoStubs {
     private static final RequestsProductionsMapper mapper = Mappers.getMapper(RequestsProductionsMapper.class);
 
     public static RequestsProductionsDto getDto(Long id) {
-        return mapper.toDto(RequestsProductionsModelStubs.getRequestProductions(id));
+        return mapper.toDto(RequestsProductionsModelStubs.getRequestsProductions(id));
     }
 }
