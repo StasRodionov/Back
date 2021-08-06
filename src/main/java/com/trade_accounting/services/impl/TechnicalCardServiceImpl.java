@@ -68,34 +68,6 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
                 )
         );
 
-//        TechnicalCard technicalCard = TechnicalCard.builder()
-//                .id(dto.getId())
-//                .name(dto.getName())
-//                .comment(dto.getComment())
-//                .productionCost(dto.getProductionCost())
-//                .technicalCardGroup(technicalCardGroupMapper.toModel(dto.getTechnicalCardGroupDto()))
-//                .build();
-//
-//        List<TechnicalCardProduction> finalProduction = dto.getFinalProductionDto().stream()
-//                .map(x -> {
-//                    TechnicalCardProduction tcp =
-//                            technicalCardProductionMapper.toModel(x);
-//                    tcp.setProduct(productRepository.getOne(x.getProductId()));
-//                    return tcp;
-//                }).collect(Collectors.toList());
-//        finalProduction.stream().forEach(technicalCardProductionRepository::save);
-//        technicalCard.setFinalProduction(finalProduction);
-//
-//        List<TechnicalCardProduction> materials = dto.getMaterialsDto().stream()
-//                .map(x -> {
-//                    TechnicalCardProduction tcp =
-//                            technicalCardProductionMapper.toModel(x);
-//                    tcp.setProduct(productRepository.getOne(x.getProductId()));
-//                    return tcp;
-//                }).collect(Collectors.toList());
-//        materials.stream().forEach(technicalCardProductionRepository::save);
-//        technicalCard.setMaterials(materials);
-
         return technicalCardMapper.toDto(technicalCardRepository.save(technicalCard));
     }
 
