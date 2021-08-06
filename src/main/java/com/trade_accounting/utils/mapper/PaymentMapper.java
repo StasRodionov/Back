@@ -10,19 +10,19 @@ import org.mapstruct.Mappings;
 public interface PaymentMapper {
 
     @Mappings({
-            @Mapping(source = "companyDto", target = "company"),
-            @Mapping(source = "contractorDto", target = "contractor"),
-            @Mapping(source = "contractDto", target = "contract"),
-            @Mapping(source = "projectDto", target = "project"),
+            @Mapping(target = "company", ignore = true),
+            @Mapping(target = "contractor", ignore = true),
+            @Mapping(target = "contract", ignore = true),
+            @Mapping(target = "project", ignore = true),
             @Mapping(target = "time", ignore = true)
     })
     Payment toModel(PaymentDto paymentDto);
 
     @Mappings({
-            @Mapping(source = "company", target = "companyDto"),
-            @Mapping(source = "contractor", target = "contractorDto"),
-            @Mapping(source = "contract", target = "contractDto"),
-            @Mapping(source = "project", target = "projectDto"),
+            @Mapping(source = "company.id", target = "companyId"),
+            @Mapping(source = "contractor.id", target = "contractorId"),
+            @Mapping(source = "contract.id", target = "contractId"),
+            @Mapping(source = "project.id", target = "projectId"),
             @Mapping(source = "time", target = "time", dateFormat = "yyyy-MM-dd HH:mm:ss")
     })
     PaymentDto toDto(Payment payment);

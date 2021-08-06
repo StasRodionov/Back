@@ -136,7 +136,7 @@ class PaymentServiceImplTest {
         assertNotNull(payment, "Fail in passed payment");
         assertNotNull(payment.getId(), "Fail in field 'id' of payment");
         assertNotNull(payment.getNumber(), "Fail in field 'number' of payment");
-        assertNotNull(payment.getCompanyDto(), "Fail in field 'companyDto' of payment");
-        assertNotNull(payment.getContractorDto(), "Fail in field 'contractorDto' of payment");
+        assertNotNull(payment.getCompanyId(), "Fail in field 'companyDto' of payment");
+        assertNotNull(payment.getContractorId(), "Fail in field 'contractorDto' of payment");
     }
 }
