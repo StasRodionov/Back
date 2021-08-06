@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.google.gson.Gson;
 import com.trade_accounting.models.dto.PriceListDto;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.Matchers;
@@ -8,15 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.time.LocalDateTime;
 
 /**
  * @author Andrey Melnikov
@@ -50,16 +51,87 @@ public class PriceListRestControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(3)));
     }
 
-//    void getById(){
-//        PriceListDto priceListDto = PriceListDto.builder()
-//                .id(1L)
-//                .number("number1")
-//                .time(LocalDateTime.now()) // да твоюж мать ... о5 ДТО не доделан ...(((
-//                .companyId(1L)
-//                .sent(0L)
-//                .printed(1L)
-//                .commentary("comment1")
-//                .build();
-//    }
+    @Test
+    void getById() throws Exception {
+        PriceListDto priceListDto = PriceListDto.builder()
+                .id(1L)
+                .number("number1")
+                .time("1234-12-12 12:34") // да твоюж мать ... о5 ДТО не доделан ...(((
+                .companyId(1L)
+                .sent(false)
+                .printed(false)
+                .commentary("comment1")
+                .build();
+
+        String dtoJson = new Gson().toJson(priceListDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(SecurityMockMvcResultMatchers.authenticated())
+                .andExpect(MockMvcResultMatchers.content().json(dtoJson));
+    }
+
+    @Test
+    void create() throws Exception {
+        PriceListDto priceListDto = PriceListDto.builder()
+                .id(1L)
+                .number("number1")
+                .time("1234-12-12 12:34") // да твоюж мать ... о5 ДТО не доделан ...(((
+                .companyId(1L)
+                .sent(false)
+                .printed(false)
+                .commentary("comment1")
+                .build();
+
+        String dtoJson = new Gson().toJson(priceListDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/priceList")
+                        .contentType(MediaType.APPLICATION_JSON).content(dtoJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(SecurityMockMvcResultMatchers.authenticated())
+                .andExpect(MockMvcResultMatchers.content().json(dtoJson));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(SecurityMockMvcResultMatchers.authenticated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(4)));
+    }
+
+    @Test
+    void update() throws Exception {
+        PriceListDto priceListDto = PriceListDto.builder()
+                .id(2L)
+                .number("UPDATED")
+                .time("1234-12-12 12:34")
+                .companyId(2L)
+                .sent(false)
+                .printed(false)
+                .commentary("UPDATED")
+                .build();
+
+        String dtoJson = new Gson().toJson(priceListDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/priceList")
+                        .contentType(MediaType.APPLICATION_JSON).content(dtoJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(SecurityMockMvcResultMatchers.authenticated())
+                .andExpect(MockMvcResultMatchers.content().json(dtoJson));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("api/priceList"))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    void deleteById() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.delete("api/priceList/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(SecurityMockMvcResultMatchers.authenticated());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("api/priceList"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(SecurityMockMvcResultMatchers.authenticated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)));
+    }
 
 }
