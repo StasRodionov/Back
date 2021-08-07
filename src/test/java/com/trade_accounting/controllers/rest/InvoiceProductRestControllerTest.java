@@ -1,9 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
-import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
-import com.trade_accounting.models.dto.ProductDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,7 +18,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 

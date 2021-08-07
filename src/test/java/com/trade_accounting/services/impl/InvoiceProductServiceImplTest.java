@@ -4,7 +4,6 @@ import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.repositories.InvoiceProductRepository;
 import com.trade_accounting.repositories.ProductRepository;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.InvoiceProductDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.InvoiceProductModelStubs;
 import com.trade_accounting.utils.mapper.InvoiceProductMapperImpl;
