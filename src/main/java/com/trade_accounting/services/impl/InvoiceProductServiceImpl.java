@@ -1,8 +1,10 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.InvoiceProduct;
+import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.repositories.InvoiceProductRepository;
+import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.utils.mapper.InvoiceProductMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
 
     private final InvoiceProductRepository invoiceProductRepository;
     private final InvoiceProductMapper invoiceProductMapper;
+    private final ProductRepository productRepository;
 
     @Override
     public List<InvoiceProductDto> getAll() {
@@ -43,19 +46,27 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
 
     @Override
     public InvoiceProductDto create(@NotNull InvoiceProductDto invoiceProductDto) {
-        InvoiceProduct invoiceProductSaved = invoiceProductRepository.save(invoiceProductMapper.toModel(invoiceProductDto));
-        invoiceProductDto.setId(invoiceProductSaved.getId());
-        return invoiceProductDto;
+        return saveOrUpdate(invoiceProductDto);
     }
 
     @Override
     public InvoiceProductDto update(@NotNull InvoiceProductDto invoiceProductDto) {
-        invoiceProductRepository.save(invoiceProductMapper.toModel(invoiceProductDto));
-        return invoiceProductDto;
+        return saveOrUpdate(invoiceProductDto);
     }
 
     @Override
     public void deleteById(Long id) {
         invoiceProductRepository.deleteById(id);
     }
+
+    private InvoiceProductDto saveOrUpdate(InvoiceProductDto dto) {
+        Optional<Product> product = productRepository.findById(dto.getProductId());
+
+        InvoiceProduct invoiceProduct = invoiceProductMapper.toModel(dto);
+
+        invoiceProduct.setProduct(product.orElse(null));
+
+        return invoiceProductMapper.toDto(invoiceProductRepository.save(invoiceProduct));
+    }
+
 }

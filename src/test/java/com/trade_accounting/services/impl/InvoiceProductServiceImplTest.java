@@ -3,8 +3,10 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.repositories.InvoiceProductRepository;
+import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.InvoiceProductDtoStubs;
+import com.trade_accounting.services.impl.Stubs.model.InvoiceProductModelStubs;
 import com.trade_accounting.utils.mapper.InvoiceProductMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,11 +29,15 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class InvoiceProductServiceImplTest {
-    @Mock
-    private InvoiceProductRepository invoiceProductRepository;
 
     @InjectMocks
     private InvoiceProductServiceImpl invoiceProductService;
+
+    @Mock
+    private InvoiceProductRepository invoiceProductRepository;
+
+    @Mock
+    private ProductRepository productRepository;
 
     @Spy
     private InvoiceProductMapperImpl invoiceProductMapper;
@@ -41,9 +47,9 @@ class InvoiceProductServiceImplTest {
         when(invoiceProductRepository.findAll())
                 .thenReturn(
                         Stream.of(
-                                ModelStubs.getInvoiceProduct(1L),
-                                ModelStubs.getInvoiceProduct(2L),
-                                ModelStubs.getInvoiceProduct(3L)
+                                InvoiceProductModelStubs.getInvoiceProduct(1L),
+                                InvoiceProductModelStubs.getInvoiceProduct(2L),
+                                InvoiceProductModelStubs.getInvoiceProduct(3L)
                         ).collect(Collectors.toList())
                 );
         List<InvoiceProductDto> invoiceProductDtoList = invoiceProductService.getAll();
@@ -81,7 +87,7 @@ class InvoiceProductServiceImplTest {
     void getById_shouldReturnFilledInvoiceProductDto() {
         Optional<InvoiceProduct> invoiceProductDtoFromRepo =
                 Optional.of(
-                        ModelStubs.getInvoiceProduct(1L)
+                        InvoiceProductModelStubs.getInvoiceProduct(1L)
                 );
 
         when(invoiceProductRepository.findById(anyLong()))

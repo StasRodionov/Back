@@ -55,13 +55,8 @@ public class InvoiceProductRestControllerTest {
     void getById() throws Exception {
         String invoiceProductDtoJson = new Gson().toJson(InvoiceProductDto.builder()
                 .id(95L)
-                .invoiceDto(InvoiceDto.builder()
-                        .id(1L)
-                        .isSpend(false)
-                        .build())
-                .productDto(ProductDto.builder()
-                        .id(2L)
-                        .build())
+                .invoiceId(1L)
+                .productId(2L)
                 .amount(BigDecimal.valueOf(2L))
                 .price(BigDecimal.valueOf(2.0))
                 .build());
@@ -79,13 +74,8 @@ public class InvoiceProductRestControllerTest {
                 .id(99L)
                 .amount(BigDecimal.valueOf(8L))
                 .price(BigDecimal.valueOf(9L))
-                .productDto(ProductDto.builder()
-                        .id(1L)
-                        .build())
-                .invoiceDto(InvoiceDto.builder()
-                        .id(1L)
-                        .isSpend(false)
-                        .build())
+                .productId(1L)
+                .invoiceId(1L)
                 .build());
 
         mockMvc.perform(post("/api/invoice/product")
@@ -108,13 +98,8 @@ public class InvoiceProductRestControllerTest {
                 .id(99L)
                 .amount(BigDecimal.valueOf(7L))
                 .price(BigDecimal.valueOf(9L))
-                .productDto(ProductDto.builder()
-                        .id(1L)
-                        .build())
-                .invoiceDto(InvoiceDto.builder()
-                        .id(1L)
-                        .isSpend(false)
-                        .build())
+                .productId(1L)
+                .invoiceId(1L)
                 .build());
 
         mockMvc.perform(put("/api/invoice/product")
