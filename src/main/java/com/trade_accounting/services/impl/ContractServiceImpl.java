@@ -2,7 +2,6 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.dto.ContractDto;
-import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
@@ -64,22 +63,25 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public ContractDto create(ContractDto contractDto) {
+        return saveOrUpdate(contractDto);
+    }
+
+    @Override
+    public ContractDto update(ContractDto contractDto) {
+        return saveOrUpdate(contractDto);
+    }
+
+    private ContractDto saveOrUpdate(ContractDto contractDto) {
         Contract contract = contractMapper.toModel(contractDto);
 
+        contract.setCompany(companyRepository.findById(contractDto.getCompanyId()).orElse(null));
         LocalDate date = LocalDate.parse(contractDto.getContractDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         contract.setContractDate(date);
-        contract.setCompany(companyRepository.findById(contractDto.getCompanyId()).orElse(null));
         contract.setBankAccount(bankAccountRepository.findById(contractDto.getBankAccountId()).orElse(null));
         contract.setContractor(contractorRepository.findById(contractDto.getContractorId()).orElse(null));
         contract.setLegalDetail(legalDetailRepository.findById(contractDto.getLegalDetailId()).orElse(null));
 
         return contractMapper.toDto(contractRepository.save(contract));
-    }
-
-    @Override
-    public ContractDto update(ContractDto contractDto) {
-        contractRepository.save(contractMapper.toModel(contractDto));
-        return contractDto;
     }
 
     @Override
