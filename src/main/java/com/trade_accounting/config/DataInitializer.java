@@ -1,7 +1,5 @@
 package com.trade_accounting.config;
 
-import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
@@ -20,8 +18,6 @@ import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.InventarizationProductDto;
-import com.trade_accounting.models.dto.InvoiceDto;
-import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
@@ -63,7 +59,6 @@ import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.services.interfaces.InventarizationProductService;
 import com.trade_accounting.services.interfaces.InventarizationService;
-import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.MovementProductService;
@@ -128,7 +123,6 @@ public class DataInitializer {
     private final ProductService productService;
     private final CurrencyService currencyService;
     private final InvoiceService invoiceService;
-    private final InvoiceProductService invoiceProductService;
     private final ProjectService projectService;
     private final PaymentService paymentService;
     private final TaskService taskService;
@@ -178,7 +172,6 @@ public class DataInitializer {
         initProducts();
         initContracts();
 //        initInvoices();
-        initInvoiceProducts();
         initProject();
 //        initPayment();
         initTasks();
@@ -351,22 +344,6 @@ public class DataInitializer {
 //            }
 //        }
 //    }
-
-    private void initInvoiceProducts() {
-        List<InvoiceDto> invoices = invoiceService.getAll();
-
-        for (InvoiceDto invoice : invoices) {
-            for (int i = 0; i < randomInt(1, 10); i++) {
-                invoiceProductService.create(new InvoiceProductDto(
-                        null,
-                        invoice.getId(),
-                        Long.valueOf(randomInt(1, 1000)),
-                        BigDecimal.valueOf(randomInt(20, 100)),
-                        BigDecimal.valueOf(randomInt(30, 150))
-                ));
-            }
-        }
-    }
 
     public int randomInt(int min, int max) {
         return (int) (Math.random() * ((max - min) + 1)) + min;
