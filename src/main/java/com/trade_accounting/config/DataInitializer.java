@@ -1,6 +1,7 @@
 package com.trade_accounting.config;
 
 import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.TechnicalCardProduction;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
@@ -185,7 +186,7 @@ public class DataInitializer {
         initTaskComments();
         initRetailStores();
         initTechnicalCardGroups();
-//        initTechnicalCards();
+        initTechnicalCards();
         initCorrectionProduct();
         initCorrection();
         initReturnToSuppliers();
@@ -1474,6 +1475,50 @@ public class DataInitializer {
     public void initTechnicalCardGroups() {
         technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №1", "Комментарий1", "1"));
         technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №2", "Комментарий2", "2"));
+    }
+
+    public void initTechnicalCards() {
+        List<TechnicalCardGroupDto> technicalCardGroups = technicalCardGroupService.getAll()
+                .stream().limit(3).collect(Collectors.toList());
+//        List<TechnicalCardProduction> finalProducts = technicalCardProductionRepository.findAll()
+//                .stream().limit(3).collect(Collectors.toList());
+//        List<Long> listFinalProducts = new ArrayList<>();
+//        for (TechnicalCardProduction finalProduct : finalProducts) {
+//            listFinalProducts.add(finalProduct.getId());
+//        }
+//        List<TechnicalCardProduction> materials = technicalCardProductionRepository.findAll()
+//                .stream().limit(3).collect(Collectors.toList());
+//        List<Long> list = List.of(
+//                new TechnicalCardProductionDto(1L, 2L, 1L).getId(),
+//                new TechnicalCardProductionDto(2L, 2L, 2L).getId(),
+//                new TechnicalCardProductionDto(3L, 2L, 3L).getId()
+//        );
+//        for (TechnicalCardProduction material : materials) {
+//            listMaterials.add(material.getId());
+//        }
+        int count = 1;
+        int count2 = 100;
+        for (TechnicalCardGroupDto technicalCardGroupDto : technicalCardGroups) {
+            technicalCardService.create(
+                    TechnicalCardDto.builder()
+                            .id(null)
+                            .name("Техническая карта №" + count)
+                            .comment("Комментарий" + count)
+                            .productionCost("1000" + count2)
+                            .technicalCardGroupId(technicalCardGroupDto.getId())
+                            .finalProductionId(List.of(
+                                    new TechnicalCardProductionDto(1L, 2L, 1L).getId(),
+                                    new TechnicalCardProductionDto(2L, 2L, 2L).getId(),
+                                    new TechnicalCardProductionDto(3L, 2L, 3L).getId()))
+                            .materialsId(List.of(
+                                    new TechnicalCardProductionDto(4L, 2L, 4L).getId(),
+                                    new TechnicalCardProductionDto(5L, 2L, 5L).getId(),
+                                    new TechnicalCardProductionDto(6L, 2L, 6L).getId()))
+                            .build()
+            );
+            count++;
+            count2 = count2 + 100;
+        }
     }
 
 //    public void initTechnicalCards() {
