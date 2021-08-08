@@ -15,13 +15,14 @@ import org.springframework.security.test.web.servlet.response.SecurityMockMvcRes
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultHandler;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 /**
  * @author Andrey Melnikov
- * @since 05.08.2021
+ * @since 08.08.2021
  */
 
 @SpringBootTest
@@ -74,9 +75,8 @@ public class PriceListRestControllerTest {
     @Test
     void create() throws Exception {
         PriceListDto priceListDto = PriceListDto.builder()
-                .id(1L)
                 .number("number1")
-                .time("1234-12-12 12:34") // да твоюж мать ... о5 ДТО не доделан ...(((
+                .time("1234-12-12 12:34")
                 .companyId(1L)
                 .sent(false)
                 .printed(false)
@@ -104,8 +104,8 @@ public class PriceListRestControllerTest {
                 .number("UPDATED")
                 .time("1234-12-12 12:34")
                 .companyId(2L)
-                .sent(false)
-                .printed(false)
+                .sent(true)
+                .printed(true)
                 .commentary("UPDATED")
                 .build();
 
@@ -113,22 +113,23 @@ public class PriceListRestControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/priceList")
                         .contentType(MediaType.APPLICATION_JSON).content(dtoJson))
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
                 .andExpect(MockMvcResultMatchers.content().json(dtoJson));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/priceList"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList"))
                 .andDo(MockMvcResultHandlers.print());
 
     }
 
     @Test
     void deleteById() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.delete("api/priceList/1"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/priceList/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("api/priceList"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)));
