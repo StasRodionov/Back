@@ -15,16 +15,17 @@ import java.util.List;
 public interface TechnicalCardMapper {
 
     default TechnicalCardDto toDto(TechnicalCard technicalCard) {
+        if (technicalCard == null) {
+            return null;
+        }
+
         TechnicalCardDto technicalCardDto = new TechnicalCardDto();
         List<Long> listFinalProduction = new ArrayList<>();
         List<Long> listMaterials = new ArrayList<>();
 
         for (TechnicalCardProduction technicalCardProduction : technicalCard.getFinalProduction()) {
             listFinalProduction.add(technicalCardProduction.getId());
-        }
-
-        for (TechnicalCardProduction technicalCardProduction : technicalCard.getFinalProduction()) {
-            listFinalProduction.add(technicalCardProduction.getId());
+            listMaterials.add(technicalCardProduction.getId());
         }
 
         technicalCardDto.setId(technicalCard.getId());
