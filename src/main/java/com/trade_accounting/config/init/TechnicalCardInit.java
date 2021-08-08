@@ -31,18 +31,6 @@
 //    public void initTechnicalCards() {
 //        List<TechnicalCardGroupDto> technicalCardGroups = technicalCardGroupService.getAll()
 //                .stream().limit(3).collect(Collectors.toList());
-//        List<TechnicalCardProduction> finalProducts = technicalCardProductionRepository.findAll()
-//                .stream().limit(3).collect(Collectors.toList());
-//        List<Long> listFinalProducts = new ArrayList<>();
-//        for (TechnicalCardProduction finalProduct : finalProducts) {
-//            listFinalProducts.add(finalProduct.getId());
-//        }
-//        List<TechnicalCardProduction> materials = technicalCardProductionRepository.findAll()
-//                .stream().limit(3).collect(Collectors.toList());
-//        List<Long> listMaterials = new ArrayList<>();
-//        for (TechnicalCardProduction material : materials) {
-//            listMaterials.add(material.getId());
-//        }
 //        int count = 1;
 //        int count2 = 100;
 //        for (TechnicalCardGroupDto technicalCardGroupDto : technicalCardGroups) {
@@ -53,12 +41,18 @@
 //                            .comment("Комментарий" + count)
 //                            .productionCost("1000" + count2)
 //                            .technicalCardGroupId(technicalCardGroupDto.getId())
-//                            .finalProductionId(listFinalProducts)
-//                            .materialsId(listMaterials)
+//                            .finalProductionId(List.of(
+//                                    new TechnicalCardProductionDto(1L, 2L, 1L).getId(),
+//                                    new TechnicalCardProductionDto(2L, 2L, 2L).getId(),
+//                                    new TechnicalCardProductionDto(3L, 2L, 3L).getId()))
+//                            .materialsId(List.of(
+//                                    new TechnicalCardProductionDto(4L, 2L, 4L).getId(),
+//                                    new TechnicalCardProductionDto(5L, 2L, 5L).getId(),
+//                                    new TechnicalCardProductionDto(6L, 2L, 6L).getId()))
 //                            .build()
 //            );
 //            count++;
-//            count2++;
+//            count2 = count2 + 100;
 //        }
 //    }
 //}

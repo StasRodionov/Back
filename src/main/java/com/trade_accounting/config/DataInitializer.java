@@ -1480,22 +1480,6 @@ public class DataInitializer {
     public void initTechnicalCards() {
         List<TechnicalCardGroupDto> technicalCardGroups = technicalCardGroupService.getAll()
                 .stream().limit(3).collect(Collectors.toList());
-//        List<TechnicalCardProduction> finalProducts = technicalCardProductionRepository.findAll()
-//                .stream().limit(3).collect(Collectors.toList());
-//        List<Long> listFinalProducts = new ArrayList<>();
-//        for (TechnicalCardProduction finalProduct : finalProducts) {
-//            listFinalProducts.add(finalProduct.getId());
-//        }
-//        List<TechnicalCardProduction> materials = technicalCardProductionRepository.findAll()
-//                .stream().limit(3).collect(Collectors.toList());
-//        List<Long> list = List.of(
-//                new TechnicalCardProductionDto(1L, 2L, 1L).getId(),
-//                new TechnicalCardProductionDto(2L, 2L, 2L).getId(),
-//                new TechnicalCardProductionDto(3L, 2L, 3L).getId()
-//        );
-//        for (TechnicalCardProduction material : materials) {
-//            listMaterials.add(material.getId());
-//        }
         int count = 1;
         int count2 = 100;
         for (TechnicalCardGroupDto technicalCardGroupDto : technicalCardGroups) {
