@@ -1,9 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
-import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
-import com.trade_accounting.models.dto.ProductDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,7 +18,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -55,13 +52,8 @@ public class InvoiceProductRestControllerTest {
     void getById() throws Exception {
         String invoiceProductDtoJson = new Gson().toJson(InvoiceProductDto.builder()
                 .id(95L)
-                .invoiceDto(InvoiceDto.builder()
-                        .id(1L)
-                        .isSpend(false)
-                        .build())
-                .productDto(ProductDto.builder()
-                        .id(2L)
-                        .build())
+                .invoiceId(1L)
+                .productId(2L)
                 .amount(BigDecimal.valueOf(2L))
                 .price(BigDecimal.valueOf(2.0))
                 .build());
@@ -79,13 +71,8 @@ public class InvoiceProductRestControllerTest {
                 .id(99L)
                 .amount(BigDecimal.valueOf(8L))
                 .price(BigDecimal.valueOf(9L))
-                .productDto(ProductDto.builder()
-                        .id(1L)
-                        .build())
-                .invoiceDto(InvoiceDto.builder()
-                        .id(1L)
-                        .isSpend(false)
-                        .build())
+                .productId(1L)
+                .invoiceId(1L)
                 .build());
 
         mockMvc.perform(post("/api/invoice/product")
@@ -108,13 +95,8 @@ public class InvoiceProductRestControllerTest {
                 .id(99L)
                 .amount(BigDecimal.valueOf(7L))
                 .price(BigDecimal.valueOf(9L))
-                .productDto(ProductDto.builder()
-                        .id(1L)
-                        .build())
-                .invoiceDto(InvoiceDto.builder()
-                        .id(1L)
-                        .isSpend(false)
-                        .build())
+                .productId(1L)
+                .invoiceId(1L)
                 .build());
 
         mockMvc.perform(put("/api/invoice/product")
