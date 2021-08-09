@@ -20,7 +20,7 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
@@ -28,3 +28,5 @@ spring:
         format_sql: false
         jdbc:
           timezone: UTC
+  flyway:
+    enabled: true
