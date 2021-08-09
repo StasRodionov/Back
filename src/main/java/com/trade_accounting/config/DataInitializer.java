@@ -1477,6 +1477,10 @@ public class DataInitializer {
         technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №2", "Комментарий2", "2"));
     }
 
+    public void initTechnicalCardProduction() {
+
+    }
+
     public void initTechnicalCards() {
         List<TechnicalCardGroupDto> technicalCardGroups = technicalCardGroupService.getAll()
                 .stream().limit(3).collect(Collectors.toList());
