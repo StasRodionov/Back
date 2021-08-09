@@ -27,6 +27,7 @@ import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.MoneySubProfitLoss;
 import com.trade_accounting.models.Movement;
 import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.Payment;
@@ -80,6 +81,7 @@ import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.models.dto.MoneySubProfitLossDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
@@ -892,6 +894,10 @@ public abstract class DtoMapper {
     })
     public abstract Payout payoutDtoToPayout(PayoutDto payoutsDto);
 
+
+    //MoneySubProfitLoss
+
+    public abstract MoneySubProfitLossDto moneySubProfitLossToDTO(MoneySubProfitLoss moneySubProfitLoss);
 }
 
 

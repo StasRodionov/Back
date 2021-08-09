@@ -24,6 +24,7 @@ import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.models.dto.MoneySubProfitLossDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PaymentDto;
@@ -68,6 +69,7 @@ import com.trade_accounting.services.interfaces.InventarizationService;
 import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
+import com.trade_accounting.services.interfaces.MoneySubProfitLossService;
 import com.trade_accounting.services.interfaces.MovementProductService;
 import com.trade_accounting.services.interfaces.MovementService;
 import com.trade_accounting.services.interfaces.PaymentService;
@@ -145,6 +147,7 @@ public class DataInitializer {
     private final CorrectionProductService correctionProductService;
     private final CorrectionService correctionService;
     private final ReturnToSupplierService returnToSupplierService;
+    private final MoneySubProfitLossService moneySubProfitLossService;
     private final InventarizationService inventarizationService;
     private final InventarizationProductService inventarizationProductService;
     private final BalanceAdjustmentService balanceAdjustmentService;
@@ -198,6 +201,7 @@ public class DataInitializer {
         initMovementProduct();
         initMovement();
         initRemain();
+        initMoneySubProfitLoss();
     }
 
     private void initMovementProduct() {
@@ -1798,5 +1802,52 @@ public class DataInitializer {
                 .salesCost(randomInt(20000, 100000))
                 .salesSum(randomInt(20000, 100000))
                 .build());
+    }
+
+    public void initMoneySubProfitLoss(){
+            moneySubProfitLossService.create(MoneySubProfitLossDto.builder()
+                    .id(1L)
+                    .itemsList("Выручка")
+                    .profitLoss(BigDecimal.valueOf(0.00)).build());
+            moneySubProfitLossService.create(MoneySubProfitLossDto.builder()
+                    .id(2L)
+                    .itemsList("Себестоимость")
+                    .profitLoss(BigDecimal.valueOf(0.00)).build());
+            moneySubProfitLossService.create(MoneySubProfitLossDto.builder()
+                    .id(3L)
+                    .itemsList("Валовая Прибыль")
+                    .profitLoss(BigDecimal.valueOf(0.00)).build());
+            moneySubProfitLossService.create(MoneySubProfitLossDto.builder()
+                    .id(4L)
+                    .itemsList("Операционные Расходы")
+                    .profitLoss(BigDecimal.valueOf(0.00)).build());
+            moneySubProfitLossService.create(MoneySubProfitLossDto.builder()
+                    .id(5L)
+                    .itemsList("Списания")
+                    .profitLoss(BigDecimal.valueOf(0.00)).build());
+            moneySubProfitLossService.create(MoneySubProfitLossDto.builder()
+                    .id(6L)
+                    .itemsList("Аренда")
+                    .profitLoss(BigDecimal.valueOf(0.00)).build());
+            moneySubProfitLossService.create(MoneySubProfitLossDto.builder()
+                    .id(7L)
+                    .itemsList("Зарплата")
+                    .profitLoss(BigDecimal.valueOf(0.00)).build());
+            moneySubProfitLossService.create(MoneySubProfitLossDto.builder()
+                    .id(8L)
+                    .itemsList("Маркетинг")
+                    .profitLoss(BigDecimal.valueOf(0.00)).build());
+            moneySubProfitLossService.create(MoneySubProfitLossDto.builder()
+                    .id(9L)
+                    .itemsList("Операционная Прибыль")
+                    .profitLoss(BigDecimal.valueOf(0.00)).build());
+            moneySubProfitLossService.create(MoneySubProfitLossDto.builder()
+                    .id(10L)
+                    .itemsList("Налоги и Сборы")
+                    .profitLoss(BigDecimal.valueOf(0.00)).build());
+            moneySubProfitLossService.create(MoneySubProfitLossDto.builder()
+                    .id(11L)
+                    .itemsList("Чистая Прибыль")
+                    .profitLoss(BigDecimal.valueOf(0.00)).build());
     }
 }
