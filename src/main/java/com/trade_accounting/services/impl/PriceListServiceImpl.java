@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,8 +42,12 @@ public class PriceListServiceImpl implements PriceListService {
      */
     @Override
     public PriceListDto create(PriceListDto dto) {
+        LocalDateTime time = LocalDateTime.parse(dto.getTime().replace("T"," ")
+                , DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
         PriceList priceList = priceListMapper.toModel(dto);
         priceList.setCompany(companyRepository.getOne(dto.getCompanyId()));
+        priceList.setTime(time);
         return priceListMapper.toDto(priceListRepository.save(priceList));
     }
 

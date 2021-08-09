@@ -83,7 +83,6 @@ import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
 import com.trade_accounting.services.interfaces.TechnicalCardGroupService;
-import com.trade_accounting.services.interfaces.TechnicalCardProductionService;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
@@ -132,7 +131,7 @@ public class DataInitializer {
     private final InvoiceService invoiceService;
     private final InvoiceProductService invoiceProductService;
     private final ProjectService projectService;
-//    private final PaymentService paymentService;
+    private final PaymentService paymentService;
     private final TaskService taskService;
     private final TaskCommentService commentService;
     private final AddressServiceImpl addressService;
@@ -140,7 +139,6 @@ public class DataInitializer {
     private final RetailStoreService retailStoreService;
     private final ContractorStatusService contractorStatusService;
     private final AccessParametersService accessParametersService;
-    private final TechnicalCardProductionService technicalCardProductionService;
     private final TechnicalCardGroupService technicalCardGroupService;
     private final TechnicalCardService technicalCardService;
     private final CorrectionProductService correctionProductService;
@@ -187,7 +185,6 @@ public class DataInitializer {
         initTasks();
         initTaskComments();
         initRetailStores();
-        initTechnicalCardProduction();
         initTechnicalCardGroups();
         initTechnicalCards();
         initCorrectionProduct();
@@ -1478,15 +1475,6 @@ public class DataInitializer {
     public void initTechnicalCardGroups() {
         technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №1", "Комментарий1", "1"));
         technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №2", "Комментарий2", "2"));
-    }
-
-    public void initTechnicalCardProduction() {
-        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 1L));
-        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 2L));
-        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 3L));
-        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 4L));
-        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 5L));
-        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 6L));
     }
 
     public void initTechnicalCards() {

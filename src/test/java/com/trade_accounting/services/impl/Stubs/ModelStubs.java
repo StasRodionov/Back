@@ -21,12 +21,10 @@ import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
-import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.Position;
-import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
@@ -264,16 +262,6 @@ public class ModelStubs {
                 new Warehouse(),
                 Boolean.TRUE,
                 "Комментарий"
-        );
-    }
-
-    public static InvoiceProduct getInvoiceProduct(Long id) {
-        return new InvoiceProduct(
-                id,
-                getInvoice(id),
-                new Product(),
-                BigDecimal.valueOf(id),
-                BigDecimal.valueOf(id)
         );
     }
 

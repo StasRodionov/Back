@@ -16,6 +16,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * @refactor by Andrey Melnikov - 06.08.2021
+ */
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -37,9 +41,9 @@ public class PriceList {
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
-    private Long sent;
+    private Boolean sent;
 
-    private Long printed;
+    private Boolean printed;
 
     private String commentary;
 }
