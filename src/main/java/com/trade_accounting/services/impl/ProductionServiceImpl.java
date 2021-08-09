@@ -1,8 +1,11 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Production;
+import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.repositories.ProductionRepository;
+import com.trade_accounting.repositories.RequestsProductionsRepository;
+import com.trade_accounting.repositories.TechnicalCardRepository;
 import com.trade_accounting.services.interfaces.ProductionService;
 import com.trade_accounting.utils.mapper.ProductionMapper;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,8 @@ import java.util.stream.Collectors;
 public class ProductionServiceImpl implements ProductionService {
 
     private final ProductionRepository productionRepository;
+    private final TechnicalCardRepository technicalCardRepository;
+    private final RequestsProductionsRepository requestsProductionsRepository;
 
     private final ProductionMapper productionMapper;
 
@@ -29,22 +34,19 @@ public class ProductionServiceImpl implements ProductionService {
         return collect;
     }
 
-
     @Override
     public ProductionDto getById(Long id) {
-        return productionMapper.toDto(productionRepository.findById(id).orElse(new Production()));
+        return productionMapper.toDto(productionRepository.getOne(id));
     }
 
     @Override
     public ProductionDto create(ProductionDto dto) {
-        Production production = productionRepository.save(productionMapper.toModel(dto));
-        dto.setId(production.getId());
-        return productionMapper.toDto(production);
+        return saveOrUpdate(dto);
     }
 
     @Override
     public ProductionDto update(ProductionDto dto) {
-        return create(dto);
+        return saveOrUpdate(dto);
     }
 
     @Override
@@ -52,4 +54,10 @@ public class ProductionServiceImpl implements ProductionService {
         productionRepository.deleteById(id);
     }
 
+    private ProductionDto saveOrUpdate(ProductionDto dto) {
+        Production production = productionMapper.toModel(dto);
+        production.setTechnicalCard(technicalCardRepository.getOne(dto.getTechnicalCardId()));
+        production.setRequestsProductions(requestsProductionsRepository.getOne(dto.getRequestsProductionsId()));
+        return productionMapper.toDto(productionRepository.save(production));
+    }
 }
