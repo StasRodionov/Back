@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.time.format.DateTimeFormatter;
+
 /**
  * @author Andrey Melnikov and Pavel Andrusov
  * @since 05.08.2021
@@ -23,7 +25,7 @@ public interface PriceListMapper {
                 .companyId(priceList.getCompany().getId())
                 .id(priceList.getId())
                 .number(priceList.getNumber())
-                .time(priceList.getTime())
+                .time(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(priceList.getTime()))
                 .sent(priceList.getSent())
                 .printed(priceList.getPrinted())
                 .commentary(priceList.getCommentary())
@@ -38,7 +40,6 @@ public interface PriceListMapper {
         return PriceList.builder()
                 .id(priceListDto.getId())
                 .number(priceListDto.getNumber())
-                .time(priceListDto.getTime())
                 .sent(priceListDto.getSent())
                 .printed(priceListDto.getPrinted())
                 .commentary(priceListDto.getCommentary())

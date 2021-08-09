@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author by Stanislav Dusyak and Pavel Andrusov
+ * @refactoring by Andrey Melnikov - 06.08.2021
  */
 
 @Component
@@ -23,14 +25,14 @@ public class PriceListInit extends InitData {
     }
 
     private void initPriceList() {
-        for (long i = 1L; i < 5; i++) {
+        for (long i = 1L; i < 6; i++) {
             priceListService.create(PriceListDto.builder()
                     .number("0001" + i)
                     .commentary("Тестовый комментарий" + " " + i)
-                    .time(LocalDateTime.now())
+                    .time(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                     .companyId(i)
-                    .sent(0L)
-                    .printed(1L)
+                    .sent(false)
+                    .printed(false)
                     .build()
             );
         }
