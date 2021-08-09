@@ -4,6 +4,7 @@ import com.trade_accounting.models.TechnicalCard;
 import com.trade_accounting.models.TechnicalCardProduction;
 import com.trade_accounting.models.dto.TechnicalCardDto;
 import org.mapstruct.InheritInverseConfiguration;
+import com.trade_accounting.models.TechnicalCard.TechnicalCardBuilder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -39,11 +40,24 @@ public interface TechnicalCardMapper {
         return technicalCardDto;
     }
 
-    @Mappings({
-            @Mapping(target = "technicalCardGroup", ignore = true),
-            @Mapping(target = "finalProduction", ignore = true),
-            @Mapping(target = "materials", ignore = true),
-    })
-    TechnicalCard toModel(TechnicalCardDto technicalCardDto);
+//    @Mappings({
+//            @Mapping(target = "technicalCardGroup", ignore = true),
+//            @Mapping(target = "finalProduction", ignore = true),
+//            @Mapping(target = "materials", ignore = true),
+//    })
+    default TechnicalCard toModel(TechnicalCardDto technicalCardDto) {
+        if (technicalCardDto == null) {
+            return null;
+        }
+
+        TechnicalCardBuilder technicalCard = TechnicalCard.builder();
+
+        technicalCard.id( technicalCardDto.getId() );
+        technicalCard.name( technicalCardDto.getName() );
+        technicalCard.comment( technicalCardDto.getComment() );
+        technicalCard.productionCost( technicalCardDto.getProductionCost() );
+
+        return technicalCard.build();
+    }
 
 }

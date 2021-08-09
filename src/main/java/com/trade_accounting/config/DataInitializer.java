@@ -1484,22 +1484,40 @@ public class DataInitializer {
         int count2 = 100;
         for (TechnicalCardGroupDto technicalCardGroupDto : technicalCardGroups) {
             technicalCardService.create(
-                    TechnicalCardDto.builder()
-                            .id(null)
-                            .name("Техническая карта №" + count)
-                            .comment("Комментарий" + count)
-                            .productionCost("1000" + count2)
-                            .technicalCardGroupId(technicalCardGroupDto.getId())
-                            .finalProductionId(List.of(
+                    new TechnicalCardDto(
+                            null,
+                            "Техническая карта №" + count,
+                            "Комментарий" + count,
+                            "1000" + count2,
+                            technicalCardGroupDto.getId(),
+                            List.of(
                                     new TechnicalCardProductionDto(1L, 2L, 1L).getId(),
                                     new TechnicalCardProductionDto(2L, 2L, 2L).getId(),
-                                    new TechnicalCardProductionDto(3L, 2L, 3L).getId()))
-                            .materialsId(List.of(
+                                    new TechnicalCardProductionDto(3L, 2L, 3L).getId()),
+                            List.of(
                                     new TechnicalCardProductionDto(4L, 2L, 4L).getId(),
                                     new TechnicalCardProductionDto(5L, 2L, 5L).getId(),
-                                    new TechnicalCardProductionDto(6L, 2L, 6L).getId()))
-                            .build()
+                                    new TechnicalCardProductionDto(6L, 2L, 6L).getId())
+                    )
             );
+
+//            technicalCardService.create(
+//                    TechnicalCardDto.builder()
+//                            .id(null)
+//                            .name("Техническая карта №" + count)
+//                            .comment("Комментарий" + count)
+//                            .productionCost("1000" + count2)
+//                            .technicalCardGroupId(technicalCardGroupDto.getId())
+//                            .finalProductionId(List.of(
+//                                    new TechnicalCardProductionDto(1L, 2L, 1L).getId(),
+//                                    new TechnicalCardProductionDto(2L, 2L, 2L).getId(),
+//                                    new TechnicalCardProductionDto(3L, 2L, 3L).getId()))
+//                            .materialsId(List.of(
+//                                    new TechnicalCardProductionDto(4L, 2L, 4L).getId(),
+//                                    new TechnicalCardProductionDto(5L, 2L, 5L).getId(),
+//                                    new TechnicalCardProductionDto(6L, 2L, 6L).getId()))
+//                            .build()
+//            );
             count++;
             count2 = count2 + 100;
         }
