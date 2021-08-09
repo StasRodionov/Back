@@ -1,17 +1,12 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.TechnicalCard;
-import com.trade_accounting.models.TechnicalCardGroup;
-import com.trade_accounting.models.TechnicalCardProduction;
 import com.trade_accounting.models.dto.TechnicalCardDto;
-import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.repositories.TechnicalCardGroupRepository;
-import com.trade_accounting.repositories.TechnicalCardProductionRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
+import com.trade_accounting.services.interfaces.TechnicalCardProductionService;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
-import com.trade_accounting.utils.mapper.TechnicalCardGroupMapper;
 import com.trade_accounting.utils.mapper.TechnicalCardMapper;
-import com.trade_accounting.utils.mapper.TechnicalCardProductionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -26,7 +21,7 @@ import java.util.stream.Collectors;
 public class TechnicalCardServiceImpl implements TechnicalCardService {
 
     private final TechnicalCardRepository technicalCardRepository;
-    private final TechnicalCardProductionRepository technicalCardProductionRepository;
+    private final TechnicalCardProductionService cardProductionService;
     private final TechnicalCardMapper technicalCardMapper;
     private final TechnicalCardGroupRepository technicalCardGroupRepository;
 
@@ -44,25 +39,21 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
     }
 
     @Override
-    public TechnicalCardDto create(TechnicalCardDto technicalCardDto) {
-        TechnicalCard technicalCard = technicalCardMapper.toModel(technicalCardDto);
+    public TechnicalCardDto create(TechnicalCardDto dto) {
+        TechnicalCard technicalCard = technicalCardMapper.toModel(dto);
 
         technicalCard.setTechnicalCardGroup(
                 technicalCardGroupRepository.findById(
-                        technicalCardDto.getTechnicalCardGroupId()
+                        dto.getTechnicalCardGroupId()
                 ).orElse(null)
         );
 
         technicalCard.setFinalProduction(
-                technicalCardProductionRepository.findAllById(
-                        technicalCardDto.getFinalProductionId()
-                )
+                cardProductionService.finaAllById(dto.getFinalProductionId())
         );
 
         technicalCard.setMaterials(
-                technicalCardProductionRepository.findAllById(
-                        technicalCardDto.getMaterialsId()
-                )
+                cardProductionService.finaAllById(dto.getFinalProductionId())
         );
 
         return technicalCardMapper.toDto(technicalCardRepository.save(technicalCard));

@@ -83,6 +83,7 @@ import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
 import com.trade_accounting.services.interfaces.TechnicalCardGroupService;
+import com.trade_accounting.services.interfaces.TechnicalCardProductionService;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
@@ -131,7 +132,7 @@ public class DataInitializer {
     private final InvoiceService invoiceService;
     private final InvoiceProductService invoiceProductService;
     private final ProjectService projectService;
-    private final PaymentService paymentService;
+//    private final PaymentService paymentService;
     private final TaskService taskService;
     private final TaskCommentService commentService;
     private final AddressServiceImpl addressService;
@@ -139,6 +140,7 @@ public class DataInitializer {
     private final RetailStoreService retailStoreService;
     private final ContractorStatusService contractorStatusService;
     private final AccessParametersService accessParametersService;
+    private final TechnicalCardProductionService technicalCardProductionService;
     private final TechnicalCardGroupService technicalCardGroupService;
     private final TechnicalCardService technicalCardService;
     private final CorrectionProductService correctionProductService;
@@ -185,6 +187,7 @@ public class DataInitializer {
         initTasks();
         initTaskComments();
         initRetailStores();
+        initTechnicalCardProduction();
         initTechnicalCardGroups();
         initTechnicalCards();
         initCorrectionProduct();
@@ -1478,97 +1481,38 @@ public class DataInitializer {
     }
 
     public void initTechnicalCardProduction() {
-
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 1L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 2L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 3L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 4L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 5L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 6L));
     }
 
     public void initTechnicalCards() {
         List<TechnicalCardGroupDto> technicalCardGroups = technicalCardGroupService.getAll()
                 .stream().limit(3).collect(Collectors.toList());
+
         int count = 1;
         int count2 = 100;
+        long a = 0L;
         for (TechnicalCardGroupDto technicalCardGroupDto : technicalCardGroups) {
             technicalCardService.create(
-                    new TechnicalCardDto(
-                            null,
-                            "Техническая карта №" + count,
-                            "Комментарий" + count,
-                            "1000" + count2,
-                            technicalCardGroupDto.getId(),
-                            List.of(
-                                    new TechnicalCardProductionDto(1L, 2L, 1L).getId(),
-                                    new TechnicalCardProductionDto(2L, 2L, 2L).getId(),
-                                    new TechnicalCardProductionDto(3L, 2L, 3L).getId()),
-                            List.of(
-                                    new TechnicalCardProductionDto(4L, 2L, 4L).getId(),
-                                    new TechnicalCardProductionDto(5L, 2L, 5L).getId(),
-                                    new TechnicalCardProductionDto(6L, 2L, 6L).getId())
-                    )
+                    TechnicalCardDto.builder()
+                            .id(null)
+                            .name("Техническая карта №" + count)
+                            .comment("Комментарий" + count)
+                            .productionCost("1000" + count2)
+                            .technicalCardGroupId(technicalCardGroupDto.getId())
+                            .finalProductionId(List.of(a + 1L, a + 2L, a + 3L))
+                            .materialsId(List.of(a + 1L, a + 2L, a + 3L))
+                            .build()
             );
-
-//            technicalCardService.create(
-//                    TechnicalCardDto.builder()
-//                            .id(null)
-//                            .name("Техническая карта №" + count)
-//                            .comment("Комментарий" + count)
-//                            .productionCost("1000" + count2)
-//                            .technicalCardGroupId(technicalCardGroupDto.getId())
-//                            .finalProductionId(List.of(
-//                                    new TechnicalCardProductionDto(1L, 2L, 1L).getId(),
-//                                    new TechnicalCardProductionDto(2L, 2L, 2L).getId(),
-//                                    new TechnicalCardProductionDto(3L, 2L, 3L).getId()))
-//                            .materialsId(List.of(
-//                                    new TechnicalCardProductionDto(4L, 2L, 4L).getId(),
-//                                    new TechnicalCardProductionDto(5L, 2L, 5L).getId(),
-//                                    new TechnicalCardProductionDto(6L, 2L, 6L).getId()))
-//                            .build()
-//            );
+            a = a +3;
             count++;
             count2 = count2 + 100;
         }
     }
-
-//    public void initTechnicalCards() {
-//        technicalCardService.create(new TechnicalCardDto(
-//                null,
-//                "Техническая карта №1",
-//                "Комментарий1",
-//                "1000",
-//                technicalCardGroupService.getById(1L),
-//                List.of(new TechnicalCardProductionDto(null, 2L, 1L),
-//                        new TechnicalCardProductionDto(null, 2L, 2L)),
-//                List.of(new TechnicalCardProductionDto(null, 2L, 3L),
-//                        new TechnicalCardProductionDto(null, 2L, 4L))));
-//        technicalCardService.create(new TechnicalCardDto(
-//                null,
-//                "Техническая карта №2",
-//                "Комментарий2",
-//                "1100",
-//                technicalCardGroupService.getById(1L),
-//                List.of(new TechnicalCardProductionDto(null, 2L, 5L),
-//                        new TechnicalCardProductionDto(null, 2L, 6L)),
-//                List.of(new TechnicalCardProductionDto(null, 2L, 7L),
-//                        new TechnicalCardProductionDto(null, 2L, 8L))));
-//        technicalCardService.create(new TechnicalCardDto(
-//                null,
-//                "Техническая карта №3",
-//                "Комментарий3",
-//                "1200",
-//                technicalCardGroupService.getById(2L),
-//                List.of(new TechnicalCardProductionDto(null, 2L, 9L),
-//                        new TechnicalCardProductionDto(null, 2L, 10L)),
-//                List.of(new TechnicalCardProductionDto(null, 2L, 11L),
-//                        new TechnicalCardProductionDto(null, 2L, 12L))));
-//        technicalCardService.create(new TechnicalCardDto(
-//                null,
-//                "Техническая карта №4",
-//                "Комментарий4",
-//                "1300",
-//                technicalCardGroupService.getById(2L),
-//                List.of(new TechnicalCardProductionDto(null, 2L, 13L),
-//                        new TechnicalCardProductionDto(null, 2L, 14L)),
-//                List.of(new TechnicalCardProductionDto(null, 2L, 15L),
-//                        new TechnicalCardProductionDto(null, 2L, 16L))));
-//    }
 
     public void initCorrectionProduct() {
         for (Long i = 1L; i <= 12; i++) {

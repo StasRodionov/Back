@@ -3,7 +3,8 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.TechnicalCardProduction;
 import com.trade_accounting.models.dto.TechnicalCardProductionDto;
 import com.trade_accounting.repositories.TechnicalCardProductionRepository;
-import com.trade_accounting.services.interfaces.TechnicalCardProductService;
+import com.trade_accounting.services.interfaces.ProductService;
+import com.trade_accounting.services.interfaces.TechnicalCardProductionService;
 import com.trade_accounting.utils.mapper.ProductMapper;
 import com.trade_accounting.utils.mapper.TechnicalCardProductionMapper;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +17,10 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class TechnicalCardProductServiceImpl implements TechnicalCardProductService {
+public class TechnicalCardProductionServiceImpl implements TechnicalCardProductionService {
     private final TechnicalCardProductionRepository cardProductionRepository;
     private final TechnicalCardProductionMapper cardProductionMapper;
-    private final ProductServiceImpl productService;
+    private final ProductService productService;
     private final ProductMapper productMapper;
 
     @Override
@@ -52,6 +53,7 @@ public class TechnicalCardProductServiceImpl implements TechnicalCardProductServ
     public void deleteById(Long id) {
         cardProductionRepository.deleteById(id);
     }
+
 
     @Override
     public List<TechnicalCardProduction> finaAllById(List<Long> id) {
