@@ -13,11 +13,7 @@ public class ProductionDto {
 
     private Long id;
 
-    private String tech_cards;
+    private Long technicalCardId;
 
-    private String requests_production;
-
-    private String tech_operations;
-
-
+    private Long requestsProductionsId;
 }

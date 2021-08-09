@@ -25,8 +25,10 @@ import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
+import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RemainDto;
+import com.trade_accounting.models.dto.RequestsProductionsDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
@@ -67,8 +69,10 @@ import com.trade_accounting.services.interfaces.PaymentService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
+import com.trade_accounting.services.interfaces.ProductionService;
 import com.trade_accounting.services.interfaces.ProjectService;
 import com.trade_accounting.services.interfaces.RemainService;
+import com.trade_accounting.services.interfaces.RequestsProductionsService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import com.trade_accounting.services.interfaces.RoleService;
@@ -144,6 +148,8 @@ public class DataInitializer {
     private final MovementService movementService;
     private final MovementProductService movementProductService;
     private final RemainService remainService;
+    private final ProductionService productionService;
+    private final RequestsProductionsService requestsProductionsService;
 
     @PostConstruct
     public void init() {
@@ -189,6 +195,8 @@ public class DataInitializer {
         initMovementProduct();
         initMovement();
         initRemain();
+        initRequestsProductions();
+        initProduction();
     }
 
     private void initMovementProduct() {
@@ -1786,6 +1794,55 @@ public class DataInitializer {
                 .sumOfCostPrice(randomInt(20000, 100000))
                 .salesCost(randomInt(20000, 100000))
                 .salesSum(randomInt(20000, 100000))
+                .build());
+    }
+
+    private void initRequestsProductions() {
+        requestsProductionsService.create(RequestsProductionsDto.builder()
+                .id(null)
+                .numberOfTheCertificate("RP-001")
+                .dateOfTheCertificate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .technicalCardId(1L)
+                .volume(500)
+                .warehouseId(1L)
+                .build());
+
+        requestsProductionsService.create(RequestsProductionsDto.builder()
+                .id(null)
+                .numberOfTheCertificate("RP-002")
+                .dateOfTheCertificate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .technicalCardId(2L)
+                .volume(1000)
+                .warehouseId(2L)
+                .build());
+
+        requestsProductionsService.create(RequestsProductionsDto.builder()
+                .id(null)
+                .numberOfTheCertificate("RP-003")
+                .dateOfTheCertificate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .technicalCardId(2L)
+                .volume(720)
+                .warehouseId(1L)
+                .build());
+    }
+
+    private void initProduction() {
+        productionService.create(ProductionDto.builder()
+                .id(null)
+                .technicalCardId(1L)
+                .requestsProductionsId(1L)
+                .build());
+
+        productionService.create(ProductionDto.builder()
+                .id(null)
+                .technicalCardId(2L)
+                .requestsProductionsId(2L)
+                .build());
+
+        productionService.create(ProductionDto.builder()
+                .id(null)
+                .technicalCardId(3L)
+                .requestsProductionsId(3L)
                 .build());
     }
 }
