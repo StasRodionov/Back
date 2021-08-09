@@ -8,3 +8,5 @@ VALUES (1, true, 'Услуга', '1'),
        (7, false, 'Подакцизный товар', '7'),
        (8, false, 'Составной предмет расчета', '8'),
        (9, false, 'Иной предмет расчета', '9');
+SELECT setval('attribute_of_calculation_objects_id_seq', max(id))
+FROM attribute_of_calculation_objects

@@ -14,3 +14,5 @@ VALUES (1, 'Товарная группа №1', false, '1'),
        (13, 'Товарная группа №13', false, '13'),
        (14, 'Товарная группа №14', false, '14'),
        (15, 'Товарная группа №15', false, '15');
+SELECT setval('product_groups_id_seq', max(id))
+FROM product_groups

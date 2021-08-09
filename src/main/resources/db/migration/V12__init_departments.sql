@@ -8,3 +8,5 @@ VALUES (1, 'Руководство', '1'),
        (7, 'Финансовый отдел', '7'),
        (8, 'Отдел маркетинга', '8'),
        (9, 'HR отдел', '9');
+SELECT setval('departments_id_seq', max(id))
+FROM departments
