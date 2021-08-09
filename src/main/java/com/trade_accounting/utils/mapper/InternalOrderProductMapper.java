@@ -11,11 +11,30 @@ public interface InternalOrderProductMapper {
      * @return InternalOrderProducts
      */
     @Mapping(source = "productId", target = "product.id")
-    InternalOrderProduct toModel(InternalOrderProductsDto internalOrderProductsDto);
+    default InternalOrderProduct toModel(InternalOrderProductsDto internalOrderProductsDto) {
+        if (internalOrderProductsDto == null) {
+            return null;
+        }
+        return InternalOrderProduct.builder()
+                .id(internalOrderProductsDto.getId())
+                .amount(internalOrderProductsDto.getAmount())
+                .price(internalOrderProductsDto.getPrice())
+                .build();
+    }
 
     /**
      * @return InternalOrderProductsDto
      */
-    @Mapping(source = "product.id", target = "productId")
-    InternalOrderProductsDto toDto(InternalOrderProduct internalOrderProduct);
+    default InternalOrderProductsDto toDto(InternalOrderProduct internalOrderProduct) {
+        InternalOrderProductsDto internalOrderProductsDto = new InternalOrderProductsDto();
+        if (internalOrderProduct == null) {
+            return null;
+        } else {
+            internalOrderProductsDto.setId(internalOrderProduct.getId());
+            internalOrderProductsDto.setProductId(internalOrderProduct.getProduct().getId());
+            internalOrderProductsDto.setPrice(internalOrderProduct.getPrice());
+            internalOrderProductsDto.setAmount(internalOrderProduct.getAmount());
+            return internalOrderProductsDto;
+        }
+    }
 }
