@@ -1,9 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.dto.AcceptanceDto;
 import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.services.interfaces.AcceptanceProductionService;
-import com.trade_accounting.services.interfaces.AcceptanceService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
