@@ -33,11 +33,6 @@ public class AcceptanceProductionRestController {
     private final AcceptanceProductionService acceptanceProductionService;
     private final CheckEntityService checkEntityService;
 
-//    public AcceptanceProductionRestController(AcceptanceProductionService acceptanceProductionService, CheckEntityService checkEntityService) {
-//        this.acceptanceProductionService = acceptanceProductionService;
-//        this.checkEntityService = checkEntityService;
-//    }
-
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех приемок товара")
     @ApiResponses(value = {
