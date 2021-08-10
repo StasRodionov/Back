@@ -14,3 +14,5 @@ values  (1, 66.00, 39.00, 1),
         (13, 23.00, 65.00, 13),
         (14, 66.00, 31.00, 14),
         (15, 15.00, 51.00, 15);
+SELECT setval('internal_order_products_id_seq', max(id))
+FROM internal_order_products

@@ -4,3 +4,4 @@ values  (1, 1, 'Comment 1', '.odt', '1', 1, 1, 1, 1, 'Status 1', 1, '2021-08-10 
         (3, 1, 'Comment 1', '.odt', '1', 1, 1, 1, 1, 'Status 3', 1, '2021-08-10 12:15:00.000000', 1, 1),
         (4, 1, 'Comment 1', '.odt', '1', 1, 1, 1, 1, 'Status 4', 1, '2021-08-10 12:15:00.000000', 1, 1),
         (5, 1, 'Comment 1', '.odt', '1', 1, 1, 1, 1, 'Status 5', 1, '2021-08-10 12:15:00.000000', 1, 1);
+SELECT setval('agent_reports_id_seq', max(id)) FROM agent_reports
