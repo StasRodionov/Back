@@ -2,6 +2,11 @@ package com.trade_accounting.services.impl.Stubs.model;
 
 import com.trade_accounting.models.Address;
 
+/**
+ * @author Andrey Melnikov
+ * @since 10.08.2021
+ */
+
 public class AddressModelStubs {
 
     public static Address getAddress(Long id){

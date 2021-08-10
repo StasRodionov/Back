@@ -2,6 +2,11 @@ package com.trade_accounting.services.impl.Stubs.dto;
 
 import com.trade_accounting.models.dto.AddressDto;
 
+/**
+ * @author Andrey Melnikov
+ * @since 10.08.2021
+ */
+
 public class AddressDtoStubs {
     public static AddressDto getAddressDto(Long id){
         return AddressDto.builder()

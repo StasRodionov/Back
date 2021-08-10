@@ -4,6 +4,10 @@ import com.trade_accounting.models.Address;
 import com.trade_accounting.models.dto.AddressDto;
 import org.mapstruct.Mapper;
 
+/**
+ * @author Andrey Melnikov
+ * @since 10.08.2021
+ */
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
 
