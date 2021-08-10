@@ -366,43 +366,27 @@ create table inventarizations_inventarization_products
 
 create table invoice
 (
-    id              bigserial
-        constraint invoice_pkey
-        primary key,
+    id              bigserial not null,
     comment         varchar(255),
     data            timestamp not null,
     is_spend        boolean default false,
-    type_of_invoice integer   not null,
-    company_id      bigint    not null
-        constraint fk1giaw4wbtqmlyctyvbudh1bsv
-        references companies,
-    contractor_id   bigint    not null
-        constraint fk74i9gvm3p2cu1pecfqlkk94om
-        references contractors,
-    warehouse_id    bigint    not null
-        constraint fkqh4oobn1va28ndllia7til340
-        references warehouses
+    type_of_invoice int4      not null,
+    company_id      int8      not null,
+    contractor_id   int8      not null,
+    warehouse_id    int8      not null,
+    primary key (id)
 );
-
-alter table invoice
-    owner to root;
 
 create table invoice_product
 (
-    id         bigserial
-        constraint invoice_product_pkey
-        primary key,
+    id         bigserial                not null,
     amount     numeric(19, 2) default 0 not null,
     price      numeric(19, 2) default 0 not null,
-    invoice_id bigint                   not null
-        constraint fkhrqne4uostar9vds76ynsosov
-        references invoice
-        on delete cascade,
-    product_id bigint                   not null
-        constraint fknx1g8d7ui4e8tnxd3ipak378e
-        references products
+    invoice_id int8                     not null,
+    product_id int8                     not null,
+    primary key (id)
 );
-alter table invoice_product owner to root;
+
 
 create table legal_details
 (

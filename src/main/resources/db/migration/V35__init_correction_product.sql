@@ -1,4 +1,3 @@
-(4, 'Комментарий4', 'Техническая карта №4', '1300', 2);
 insert into public.correction_products (id, amount, price, product_id)
 values  (1, 64.00, 73.00, 1),
         (2, 68.00, 55.00, 2),
