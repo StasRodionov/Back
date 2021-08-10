@@ -91,6 +91,7 @@ public class PurchaseControlRestController {
                                                              @PathVariable("id") Long id) {
         checkEntityService.checkExists((JpaRepository) purchaseControlRepository, id);
         purchaseControlService.deleteById(id);
+
         return ResponseEntity.ok().build();
     }
 }
