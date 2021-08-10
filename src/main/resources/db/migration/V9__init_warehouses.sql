@@ -1,7 +1,5 @@
-INSERT INTO warehouses(id, name, sort_number, address, comment_to_address, comment)
-VALUES (1, 'Основной склад', '1', '', '', ''),
-       (2, 'Основной склад1', '2', '', '', ''),
-       (3, 'Основной склад2', '3', '', '', ''),
-       (4, 'Основной склад3', '4', '', '', '');
-SELECT setval('warehouses_id_seq', max(id))
-FROM warehouses
+insert into public.warehouses (id, address, comment, comment_to_address, name, sort_number)
+values  (1, null, null, null, 'Основной склад', '00001'),
+        (2, null, null, null, 'Основной склад1', '00001'),
+        (3, null, null, null, 'Основной склад2', '00001'),
+        (4, null, null, null, 'Основной склад3', '00001');
