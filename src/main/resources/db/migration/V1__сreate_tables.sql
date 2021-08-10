@@ -682,7 +682,7 @@ create table retail_stores_cashiers
 
 create table return_suppliers
 (
-    id            bigserial    not null,
+    id            int8    not null,
     comment       varchar(255) not null,
     date          varchar(255) not null,
     is_print      boolean default false,
@@ -712,7 +712,7 @@ create table streets
 
 create table supplier_accounts
 (
-    id            bigserial    not null,
+    id            int8    not null,
     comment       varchar(255),
     date          varchar(255) not null,
     is_spend      boolean default false,
