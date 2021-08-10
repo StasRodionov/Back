@@ -25,9 +25,9 @@ public class PriceListDto {
     @NotNull
     private Long companyId;
 
-    private Long sent;
+    private Boolean sent;
 
-    private Long printed;
+    private Boolean printed;
 
     private String commentary;
 }

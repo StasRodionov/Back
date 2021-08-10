@@ -37,9 +37,9 @@ public class PriceList {
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
-    private Long sent;
+    private Boolean sent;
 
-    private Long printed;
+    private Boolean printed;
 
     private String commentary;
 }

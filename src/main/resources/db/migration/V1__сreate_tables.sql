@@ -502,8 +502,8 @@ create table price_lists
     id         bigserial                  not null,
     commentary varchar(255),
     number     varchar(255) default 00001 not null,
-    printed    int8,
-    sent       int8,
+    printed    boolean default false,
+    sent       boolean default false,
     time       timestamp,
     company_id int8                       not null,
     primary key (id)

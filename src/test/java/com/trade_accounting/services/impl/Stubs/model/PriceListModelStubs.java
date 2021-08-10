@@ -16,8 +16,8 @@ public class PriceListModelStubs {
                 .number("NumberOne")
                 .time(LocalDateTime.parse(LocalDateTime.now().toString()))
                 .company(ModelStubs.getCompany(id))
-                .sent(1L)
-                .printed(0L)
+                .sent(false)
+                .printed(false)
                 .commentary("comment" + id)
                 .build();
     }
