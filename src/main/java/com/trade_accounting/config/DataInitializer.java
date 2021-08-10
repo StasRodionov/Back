@@ -1251,61 +1251,66 @@ public class DataInitializer {
 
         List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtoList = new ArrayList<>(attributeOfCalculationObjectService.getAll());
 
-        for (int i = 0; i < 350; i++) {
+        for (long i = 1L; i < 350; i++) {
 
-            productService.create(new ProductDto(
-                    null,
-                    "Яблоки" + i,
-                    new BigDecimal("1.0"),
-                    new BigDecimal("1.0"),
-                    new BigDecimal("11.111"),
-                    "Красные яблоки голден" + i,
-                    unitDtoList.get(0),
-                    false,
-                    contractorDtoList.get(0),
-                    List.of(new ProductPriceDto(null, 0L, BigDecimal.valueOf(randomInt(50, 70))),
-                            new ProductPriceDto(null, 1L, BigDecimal.valueOf(randomInt(71, 100)))),
-                    taxSystemDtoList.get(0),
-                    null,
-                    productGroupDtoList.get(0),
-                    attributeOfCalculationObjectDtoList.get(0)
-            ));
-            productService.create(new ProductDto(
-                    null,
-                    "Бананы" + i,
-                    new BigDecimal("1.0"),
-                    new BigDecimal("1.0"),
-                    new BigDecimal("22.222"),
-                    "Красные Бананы голден" + i,
-                    unitDtoList.get(1),
-                    false,
-                    contractorDtoList.get(1),
-                    List.of(new ProductPriceDto(null, 0L, BigDecimal.valueOf(randomInt(70, 90))),
-                            new ProductPriceDto(null, 1L, BigDecimal.valueOf(randomInt(91, 115)))),
-                    taxSystemDtoList.get(1),
-                    null,
-                    productGroupDtoList.get(1),
-                    attributeOfCalculationObjectDtoList.get(1)
-            ));
-            productService.create(new ProductDto(
-                    null,
-                    "Мандарины" + i,
-                    new BigDecimal("1.0"),
-                    new BigDecimal("1.0"),
-                    new BigDecimal("33.333"),
-                    "Красные Мандарины голден" + i,
-                    unitDtoList.get(2),
-                    false,
-                    contractorDtoList.get(1),
-                    List.of(
-                            new ProductPriceDto(null, 0L, BigDecimal.valueOf(randomInt(80, 100))),
-                            new ProductPriceDto(null, 1L, BigDecimal.valueOf(randomInt(101, 121)))),
-                    taxSystemDtoList.get(2),
-                    null,
-                    productGroupDtoList.get(2),
-                    attributeOfCalculationObjectDtoList.get(2)
-            ));
+            productService.create(ProductDto.builder()
+                    .name("Яблоки" + i)
+                    .volume(new BigDecimal("1.0"))
+                    .weight(new BigDecimal("1.0"))
+                    .purchasePrice(new BigDecimal("11.111"))
+                    .description("Красные яблоки голден" + i)
+                    .countryOrigin("Russia")
+                    .saleTax("20 %")
+                    .unitId(0L)
+                    .archive(false)
+                    .contractorId(0L)
+                    .productPriceIds(List.of(1L, 2L, 3L))
+                    .taxSystemId(0L)
+                    .imageDtos(null)
+                    .productGroupId(0L)
+                    .attributeOfCalculationObjectId(0L)
+                    .build()
+            );
+
+            productService.create(ProductDto.builder()
+                    .name("Бананы" + i)
+                    .volume(new BigDecimal("1.0"))
+                    .weight(new BigDecimal("1.0"))
+                    .purchasePrice(new BigDecimal("22.222"))
+                    .description("Кормовые бананы желтые" + i)
+                    .countryOrigin("Ecuador")
+                    .saleTax("18 %")
+                    .unitId(1L)
+                    .archive(false)
+                    .contractorId(1L)
+                    .productPriceIds(List.of(1L, 2L, 3L))
+                    .taxSystemId(1L)
+                    .imageDtos(null)
+                    .productGroupId(1L)
+                    .attributeOfCalculationObjectId(1L)
+                    .build()
+            );
+
+            productService.create(ProductDto.builder()
+                    .name("Мандарины" + i)
+                    .volume(new BigDecimal("1.0"))
+                    .weight(new BigDecimal("1.0"))
+                    .purchasePrice(new BigDecimal("33.333"))
+                    .description("Мандарин без косточек" + i)
+                    .countryOrigin("Turkey")
+                    .saleTax("5 %")
+                    .unitId(2L)
+                    .archive(false)
+                    .contractorId(2L)
+                    .productPriceIds(List.of(1L, 2L, 3L))
+                    .taxSystemId(2L)
+                    .imageDtos(null)
+                    .productGroupId(2L)
+                    .attributeOfCalculationObjectId(2L)
+                    .build()
+            );
         }
+
     }
 
     private void initContacts() {
