@@ -13,22 +13,22 @@ import java.util.List;
 public interface ProductMapper {
     //Product
     @Mappings({
-            @Mapping(source = "unit", target = "unitDto"),
-            @Mapping(source = "contractor", target = "contractorDto"),
-            @Mapping(source = "productPrices", target = "productPriceDtos"),
-            @Mapping(source = "taxSystem", target = "taxSystemDto"),
-            @Mapping(source = "productGroup", target = "productGroupDto"),
-            @Mapping(source = "attributeOfCalculationObject", target = "attributeOfCalculationObjectDto")
+            @Mapping(source = "unit", target = "unitId"),
+            @Mapping(source = "contractor", target = "contractorId"),
+            @Mapping(source = "productPrices", target = "productPriceIds"),
+            @Mapping(source = "taxSystem", target = "taxSystemId"),
+            @Mapping(source = "productGroup", target = "productGroupId"),
+            @Mapping(source = "attributeOfCalculationObject", target = "attributeOfCalculationObjectId")
     })
     ProductDto toDto(Product product);
 
     @Mappings({
-            @Mapping(source = "unitDto", target = "unit"),
-            @Mapping(source = "contractorDto", target = "contractor"),
-            @Mapping(source = "productPriceDtos", target = "productPrices"),
-            @Mapping(source = "taxSystemDto", target = "taxSystem"),
-            @Mapping(source = "productGroupDto", target = "productGroup"),
-            @Mapping(source = "attributeOfCalculationObjectDto", target = "attributeOfCalculationObject")
+            @Mapping(source = "unitId", target = "unit"),
+            @Mapping(source = "contractorId", target = "contractor"),
+            @Mapping(source = "productPriceIds", target = "productPrices"),
+            @Mapping(source = "taxSystemId", target = "taxSystem"),
+            @Mapping(source = "productGroupId", target = "productGroup"),
+            @Mapping(source = "attributeOfCalculationObjectId", target = "attributeOfCalculationObject")
     })
     Product toModel(ProductDto productDto);
 
