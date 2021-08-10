@@ -9,6 +9,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -38,7 +40,7 @@ import javax.validation.constraints.NotNull;
 public class ReturnToSupplier {
 
     @Id
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -24,7 +26,6 @@ import javax.validation.constraints.NotNull;
  * @param comment     - комментарий
  * @param dateChanged - когда изменен
  * @param whoChanged  - кто изменил
-
  */
 
 @Data
@@ -36,14 +37,17 @@ import javax.validation.constraints.NotNull;
 public class BalanceAdjustment {
 
     @Id
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String date;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 

@@ -78,7 +78,7 @@ create table attribute_of_calculation_objects
 
 create table balance_adjustments
 (
-    id            int8 not null,
+    id            bigserial not null,
     account       varchar(255),
     cash_office   varchar(255),
     comment       varchar(255),
@@ -682,7 +682,7 @@ create table retail_stores_cashiers
 
 create table return_suppliers
 (
-    id            int8         not null,
+    id            bigserial    not null,
     comment       varchar(255) not null,
     date          varchar(255) not null,
     is_print      boolean default false,
@@ -712,7 +712,7 @@ create table streets
 
 create table supplier_accounts
 (
-    id            int8         not null,
+    id            bigserial    not null,
     comment       varchar(255),
     date          varchar(255) not null,
     is_spend      boolean default false,
