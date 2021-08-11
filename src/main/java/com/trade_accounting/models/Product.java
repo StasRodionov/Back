@@ -17,7 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -72,7 +71,6 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductGroup productGroup;
 
-//    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private AttributeOfCalculationObject attributeOfCalculationObject;
 

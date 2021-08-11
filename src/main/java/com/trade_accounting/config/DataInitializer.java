@@ -651,7 +651,7 @@ public class DataInitializer {
     }
 
     private void initAttributeOfCalculationObjects() {
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Услуга", "1", true));
             attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Работа", "2", true));
             attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Предоставление РИД", "3", true));
