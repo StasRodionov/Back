@@ -3,34 +3,49 @@ package com.trade_accounting.utils.mapper;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.ProductDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 import java.util.Collection;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
-    //Product
-    @Mappings({
-            @Mapping(source = "unit", target = "unitDto"),
-            @Mapping(source = "contractor", target = "contractorDto"),
-            @Mapping(source = "productPrices", target = "productPriceDtos"),
-            @Mapping(source = "taxSystem", target = "taxSystemDto"),
-            @Mapping(source = "productGroup", target = "productGroupDto"),
-            @Mapping(source = "attributeOfCalculationObject", target = "attributeOfCalculationObjectDto")
-    })
-    ProductDto toDto(Product product);
+    default Product toModel(ProductDto productDto) {
+        if (productDto == null) {
+            return null;
+        }
 
-    @Mappings({
-            @Mapping(source = "unitDto", target = "unit"),
-            @Mapping(source = "contractorDto", target = "contractor"),
-            @Mapping(source = "productPriceDtos", target = "productPrices"),
-            @Mapping(source = "taxSystemDto", target = "taxSystem"),
-            @Mapping(source = "productGroupDto", target = "productGroup"),
-            @Mapping(source = "attributeOfCalculationObjectDto", target = "attributeOfCalculationObject")
-    })
-    Product toModel(ProductDto productDto);
+        return Product.builder()
+                .id(productDto.getId())
+                .name(productDto.getName())
+                .volume(productDto.getVolume())
+                .weight(productDto.getWeight())
+                .saleTax(productDto.getSaleTax())
+                .countryOrigin(productDto.getCountryOrigin())
+                .description(productDto.getDescription())
+                .archive(productDto.getArchive())
+                .service(productDto.getService())
+                .purchasePrice(productDto.getPurchasePrice())
+                .build();
+    }
+
+    default ProductDto toDto(Product product) {
+        ProductDto productDto = new ProductDto();
+        if (product == null) {
+            return null;
+        } else {
+            productDto.setId(product.getId());
+            productDto.setName(product.getName());
+            productDto.setVolume(product.getVolume());
+            productDto.setWeight(product.getWeight());
+            productDto.setSaleTax(product.getSaleTax());
+            productDto.setCountryOrigin(product.getCountryOrigin());
+            productDto.setDescription(product.getDescription());
+            productDto.setArchive(product.getArchive());
+            productDto.setService(product.getService());
+            productDto.setPurchasePrice(product.getPurchasePrice());
+            return productDto;
+        }
+    }
 
     List<ProductDto> toListDto(Collection<Product> products);
 

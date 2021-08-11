@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -28,23 +27,23 @@ public class ProductDto {
 
     private String description;
 
-    private UnitDto unitDto;
+    private Long unitId;
 
     private Boolean archive = false;
 
     private Boolean service = false;
 
-    private ContractorDto contractorDto;
+    private Long contractorId;
 
-    private List<ProductPriceDto> productPriceDtos;
+    private List<Long> productPriceIds;
 
-    private TaxSystemDto taxSystemDto;
+    private Long taxSystemId;
 
     private List<ImageDto> imageDtos;
 
-    private ProductGroupDto productGroupDto;
+    private Long productGroupId;
 
-    private AttributeOfCalculationObjectDto attributeOfCalculationObjectDto;
+    private Long attributeOfCalculationObjectId;
 
     private String countryOrigin;
 
@@ -96,20 +95,22 @@ public class ProductDto {
         this.service = service;
     }
 
-    public ProductDto(Long id, String name, BigDecimal weight, BigDecimal volume, BigDecimal purchasePrice, String description, UnitDto unitDto, Boolean archive, ContractorDto contractorDto, List<ProductPriceDto> productPriceDtos, TaxSystemDto taxSystemDto, List<ImageDto> imageDtos, ProductGroupDto productGroupDto, AttributeOfCalculationObjectDto attributeOfCalculationObjectDto) {
+    public ProductDto(Long id, String name, BigDecimal weight, BigDecimal volume, BigDecimal purchasePrice, String description,
+                      Long unitId, Boolean archive, Long contractorId, List<Long> productPriceIds, Long taxSystemId, List<ImageDto> imageDtos,
+                      Long productGroupId, Long attributeOfCalculationObjectId) {
         this.id = id;
         this.name = name;
         this.weight = weight;
         this.volume = volume;
         this.purchasePrice = purchasePrice;
         this.description = description;
-        this.unitDto = unitDto;
+        this.unitId = unitId;
         this.archive = archive;
-        this.contractorDto = contractorDto;
-        this.productPriceDtos = productPriceDtos;
-        this.taxSystemDto = taxSystemDto;
+        this.contractorId = contractorId;
+        this.productPriceIds = productPriceIds;
+        this.taxSystemId = taxSystemId;
         this.imageDtos = imageDtos;
-        this.productGroupDto = productGroupDto;
-        this.attributeOfCalculationObjectDto = attributeOfCalculationObjectDto;
+        this.productGroupId = productGroupId;
+        this.attributeOfCalculationObjectId = attributeOfCalculationObjectId;
     }
 }
