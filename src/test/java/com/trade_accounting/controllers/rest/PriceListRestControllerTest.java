@@ -57,7 +57,7 @@ public class PriceListRestControllerTest {
         PriceListDto priceListDto = PriceListDto.builder()
                 .id(1L)
                 .number("number1")
-                .time("1234-12-12 12:34") // да твоюж мать ... о5 ДТО не доделан ...(((
+                .time("1234-12-12 12:34")
                 .companyId(1L)
                 .sent(false)
                 .printed(false)
