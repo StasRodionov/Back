@@ -7,7 +7,7 @@ import com.trade_accounting.models.TypeOfInvoice;
 import java.time.LocalDateTime;
 
 import static com.trade_accounting.services.impl.Stubs.ModelStubs.*;
-import static jdk.nashorn.internal.runtime.Debug.id;
+//import static jdk.nashorn.internal.runtime.Debug.id;
 
 public class InvoiceModelStubs {
     public static Invoice getInvoice(Long id) {
