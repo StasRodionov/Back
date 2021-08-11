@@ -1251,7 +1251,7 @@ public class DataInitializer {
 
         List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtoList = new ArrayList<>(attributeOfCalculationObjectService.getAll());
 
-        for (long i = 1L; i < 350; i++) {
+        for (long i = 1L; i < 7; i++) {
 
             productService.create(ProductDto.builder()
                     .name("Яблоки" + i)
@@ -1261,6 +1261,7 @@ public class DataInitializer {
                     .description("Красные яблоки голден" + i)
                     .countryOrigin("Russia")
                     .saleTax("20 %")
+                    .service(false)
                     .unitId(0L)
                     .archive(false)
                     .contractorId(0L)
@@ -1280,6 +1281,7 @@ public class DataInitializer {
                     .description("Кормовые бананы желтые" + i)
                     .countryOrigin("Ecuador")
                     .saleTax("18 %")
+                    .service(false)
                     .unitId(1L)
                     .archive(false)
                     .contractorId(1L)
@@ -1299,6 +1301,7 @@ public class DataInitializer {
                     .description("Мандарин без косточек" + i)
                     .countryOrigin("Turkey")
                     .saleTax("5 %")
+                    .service(false)
                     .unitId(2L)
                     .archive(false)
                     .contractorId(2L)
