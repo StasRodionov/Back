@@ -1,6 +1,6 @@
 package com.trade_accounting.services.impl;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.PageDto;
