@@ -651,15 +651,17 @@ public class DataInitializer {
     }
 
     private void initAttributeOfCalculationObjects() {
-        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Услуга", "1", true));
-        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Работа", "2", true));
-        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Предоставление РИД", "3", true));
-        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Составной предмет расчета", "4", true));
-        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Иной предмет расчета", "5", true));
-        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Товар", "6", false));
-        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Подакцизный товар", "7", false));
-        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Составной предмет расчета", "8", false));
-        attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Иной предмет расчета", "9", false));
+        for(int i = 0; i < 3; i++) {
+            attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Услуга", "1", true));
+            attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Работа", "2", true));
+            attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Предоставление РИД", "3", true));
+            attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Составной предмет расчета", "4", true));
+            attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Иной предмет расчета", "5", true));
+            attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Товар", "6", false));
+            attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Подакцизный товар", "7", false));
+            attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Составной предмет расчета", "8", false));
+            attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Иной предмет расчета", "9", false));
+        }
     }
 
     private void initDepartments() {

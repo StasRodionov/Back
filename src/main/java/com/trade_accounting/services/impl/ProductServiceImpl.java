@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto create(@NotNull ProductDto dto) {
+    public ProductDto create(ProductDto dto) {
         List<Image> preparedImages = imageMapper.toListModel(dto.getImageDtos(), "product");
         List<Image> savedImages = imageRepository.saveAll(preparedImages);
         Product product = productMapper.toModel(dto);

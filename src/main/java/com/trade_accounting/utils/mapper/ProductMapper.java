@@ -50,7 +50,7 @@ public interface ProductMapper {
             productDto.setArchive(product.getArchive());
             productDto.setService(product.getService());
             productDto.setPurchasePrice(product.getPurchasePrice());
-            productDto.setAttributeOfCalculationObjectId(1L);
+//            productDto.setAttributeOfCalculationObjectId(product.getAttributeOfCalculationObject().getId());
 //            productDto.setContractorId(product.getContractor().getId());
 //            productDto.setProductGroupId(product.getProductGroup().getId());
 //            productDto.setTaxSystemId(product.getTaxSystem().getId());
