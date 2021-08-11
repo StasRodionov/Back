@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import com.sun.istack.NotNull;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.PageDto;
@@ -46,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto create(ProductDto dto) {
+    public ProductDto create(@NotNull ProductDto dto) {
         List<Image> preparedImages = imageMapper.toListModel(dto.getImageDtos(), "product");
         List<Image> savedImages = imageRepository.saveAll(preparedImages);
         Product product = productMapper.toModel(dto);
