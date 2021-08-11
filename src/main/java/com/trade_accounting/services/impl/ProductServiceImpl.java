@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl;
 
+import javax.validation.constraints.NotNull;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.PageDto;
@@ -16,7 +17,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
