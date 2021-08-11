@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers;
 import org.springframework.test.context.TestPropertySource;
@@ -20,6 +21,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author Andrey Melnikov
  * @since 11.08.2021
@@ -28,7 +31,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
-@WithUserDetails(value = "karimogon@mail.ru")
+@WithMockUser(value = "karimogon@mail.ru")
 @Sql(value = "/Image-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @RequiredArgsConstructor
 public class ImageRestControllerTest {
@@ -60,7 +63,6 @@ public class ImageRestControllerTest {
         ImageDto imageDto = ImageDto.builder()
                 .id(1L)
                 .fileExtension("image_url1")
-                .content(new byte[0])
                 .sortNumber("sort_number1")
                 .build();
 
@@ -78,7 +80,6 @@ public class ImageRestControllerTest {
     void create() {
         ImageDto imageDto = ImageDto.builder()
                 .fileExtension("image_url1")
-                .content(new byte[0])
                 .sortNumber("sort_number1")
                 .build();
 
@@ -99,8 +100,8 @@ public class ImageRestControllerTest {
     @SneakyThrows
     void update() {
         ImageDto imageDto = ImageDto.builder()
+                .id(1L)
                 .fileExtension("UPDATED1")
-                .content(new byte[0])
                 .sortNumber("UPDATED1")
                 .build();
 
@@ -125,5 +126,4 @@ public class ImageRestControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/image"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)));
     }
-
 }
