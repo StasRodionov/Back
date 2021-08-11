@@ -63,6 +63,7 @@ public class ImageRestControllerTest {
         ImageDto imageDto = ImageDto.builder()
                 .id(1L)
                 .fileExtension("image_url1")
+                .content("image_url1".getBytes())
                 .sortNumber("sort_number1")
                 .build();
 
