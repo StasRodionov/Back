@@ -1,5 +1,9 @@
+/*
 package com.trade_accounting.config;
 
+import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.TechnicalCardProduction;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.AccessParametersDto;
 import com.trade_accounting.models.dto.AddressDto;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
@@ -18,6 +22,8 @@ import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.InventarizationProductDto;
+import com.trade_accounting.models.dto.InvoiceDto;
+import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.models.dto.LegalDetailDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.MovementProductDto;
@@ -25,10 +31,8 @@ import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
-import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RemainDto;
-import com.trade_accounting.models.dto.RequestsProductionsDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.RoleDto;
@@ -61,6 +65,7 @@ import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.services.interfaces.InventarizationProductService;
 import com.trade_accounting.services.interfaces.InventarizationService;
+import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.MovementProductService;
@@ -69,10 +74,8 @@ import com.trade_accounting.services.interfaces.PaymentService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
-import com.trade_accounting.services.interfaces.ProductionService;
 import com.trade_accounting.services.interfaces.ProjectService;
 import com.trade_accounting.services.interfaces.RemainService;
-import com.trade_accounting.services.interfaces.RequestsProductionsService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import com.trade_accounting.services.interfaces.RoleService;
@@ -81,6 +84,7 @@ import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
 import com.trade_accounting.services.interfaces.TechnicalCardGroupService;
+import com.trade_accounting.services.interfaces.TechnicalCardProductionService;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
@@ -127,6 +131,7 @@ public class DataInitializer {
     private final ProductService productService;
     private final CurrencyService currencyService;
     private final InvoiceService invoiceService;
+    private final InvoiceProductService invoiceProductService;
     private final ProjectService projectService;
     private final PaymentService paymentService;
     private final TaskService taskService;
@@ -137,6 +142,7 @@ public class DataInitializer {
     private final ContractorStatusService contractorStatusService;
     private final AccessParametersService accessParametersService;
     private final TechnicalCardGroupService technicalCardGroupService;
+    private final TechnicalCardProductionService technicalCardProductionService;
     private final TechnicalCardService technicalCardService;
     private final CorrectionProductService correctionProductService;
     private final CorrectionService correctionService;
@@ -148,8 +154,6 @@ public class DataInitializer {
     private final MovementService movementService;
     private final MovementProductService movementProductService;
     private final RemainService remainService;
-    private final ProductionService productionService;
-    private final RequestsProductionsService requestsProductionsService;
 
     @PostConstruct
     public void init() {
@@ -178,12 +182,14 @@ public class DataInitializer {
         initProducts();
         initContracts();
 //        initInvoices();
+        initInvoiceProducts();
         initProject();
 //        initPayment();
         initTasks();
         initTaskComments();
         initRetailStores();
         initTechnicalCardGroups();
+        initTechnicalCardProduction();
         initTechnicalCards();
         initCorrectionProduct();
         initCorrection();
@@ -195,8 +201,6 @@ public class DataInitializer {
         initMovementProduct();
         initMovement();
         initRemain();
-        initRequestsProductions();
-        initProduction();
     }
 
     private void initMovementProduct() {
@@ -352,6 +356,22 @@ public class DataInitializer {
 //            }
 //        }
 //    }
+
+    private void initInvoiceProducts() {
+        List<InvoiceDto> invoices = invoiceService.getAll();
+
+        for (InvoiceDto invoice : invoices) {
+            for (int i = 0; i < randomInt(1, 10); i++) {
+                invoiceProductService.create(new InvoiceProductDto(
+                        null,
+                        invoice.getId(),
+                        Long.valueOf(randomInt(1, 1000)),
+                        BigDecimal.valueOf(randomInt(20, 100)),
+                        BigDecimal.valueOf(randomInt(30, 150))
+                ));
+            }
+        }
+    }
 
     public int randomInt(int min, int max) {
         return (int) (Math.random() * ((max - min) + 1)) + min;
@@ -1461,47 +1481,39 @@ public class DataInitializer {
         technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №2", "Комментарий2", "2"));
     }
 
+    public void initTechnicalCardProduction() {
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 1L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 2L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 3L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 4L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 5L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 6L));
+
+    }
+
     public void initTechnicalCards() {
-        technicalCardService.create(new TechnicalCardDto(
-                null,
-                "Техническая карта №1",
-                "Комментарий1",
-                "1000",
-                technicalCardGroupService.getById(1L),
-                List.of(new TechnicalCardProductionDto(null, 2L, 1L),
-                        new TechnicalCardProductionDto(null, 2L, 2L)),
-                List.of(new TechnicalCardProductionDto(null, 2L, 3L),
-                        new TechnicalCardProductionDto(null, 2L, 4L))));
-        technicalCardService.create(new TechnicalCardDto(
-                null,
-                "Техническая карта №2",
-                "Комментарий2",
-                "1100",
-                technicalCardGroupService.getById(1L),
-                List.of(new TechnicalCardProductionDto(null, 2L, 5L),
-                        new TechnicalCardProductionDto(null, 2L, 6L)),
-                List.of(new TechnicalCardProductionDto(null, 2L, 7L),
-                        new TechnicalCardProductionDto(null, 2L, 8L))));
-        technicalCardService.create(new TechnicalCardDto(
-                null,
-                "Техническая карта №3",
-                "Комментарий3",
-                "1200",
-                technicalCardGroupService.getById(2L),
-                List.of(new TechnicalCardProductionDto(null, 2L, 9L),
-                        new TechnicalCardProductionDto(null, 2L, 10L)),
-                List.of(new TechnicalCardProductionDto(null, 2L, 11L),
-                        new TechnicalCardProductionDto(null, 2L, 12L))));
-        technicalCardService.create(new TechnicalCardDto(
-                null,
-                "Техническая карта №4",
-                "Комментарий4",
-                "1300",
-                technicalCardGroupService.getById(2L),
-                List.of(new TechnicalCardProductionDto(null, 2L, 13L),
-                        new TechnicalCardProductionDto(null, 2L, 14L)),
-                List.of(new TechnicalCardProductionDto(null, 2L, 15L),
-                        new TechnicalCardProductionDto(null, 2L, 16L))));
+        List<TechnicalCardGroupDto> technicalCardGroups = technicalCardGroupService.getAll()
+                .stream().limit(3).collect(Collectors.toList());
+
+        int count = 1;
+        int count2 = 100;
+        long a = 0L;
+        for (TechnicalCardGroupDto technicalCardGroupDto : technicalCardGroups) {
+            technicalCardService.create(
+                    TechnicalCardDto.builder()
+                            .id(null)
+                            .name("Техническая карта №" + count)
+                            .comment("Комментарий" + count)
+                            .productionCost("1000" + count2)
+                            .technicalCardGroupId(technicalCardGroupDto.getId())
+                            .finalProductionId(List.of(a + 1L, a + 2L, a + 3L))
+                            .materialsId(List.of(a + 1L, a + 2L, a + 3L))
+                            .build()
+            );
+            a = a +3;
+            count++;
+            count2 = count2 + 100;
+        }
     }
 
     public void initCorrectionProduct() {
@@ -1796,53 +1808,5 @@ public class DataInitializer {
                 .salesSum(randomInt(20000, 100000))
                 .build());
     }
-
-    private void initRequestsProductions() {
-        requestsProductionsService.create(RequestsProductionsDto.builder()
-                .id(null)
-                .numberOfTheCertificate("RP-001")
-                .dateOfTheCertificate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                .technicalCardId(1L)
-                .volume(500)
-                .warehouseId(1L)
-                .build());
-
-        requestsProductionsService.create(RequestsProductionsDto.builder()
-                .id(null)
-                .numberOfTheCertificate("RP-002")
-                .dateOfTheCertificate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                .technicalCardId(2L)
-                .volume(1000)
-                .warehouseId(2L)
-                .build());
-
-        requestsProductionsService.create(RequestsProductionsDto.builder()
-                .id(null)
-                .numberOfTheCertificate("RP-003")
-                .dateOfTheCertificate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                .technicalCardId(2L)
-                .volume(720)
-                .warehouseId(1L)
-                .build());
-    }
-
-    private void initProduction() {
-        productionService.create(ProductionDto.builder()
-                .id(null)
-                .technicalCardId(1L)
-                .requestsProductionsId(1L)
-                .build());
-
-        productionService.create(ProductionDto.builder()
-                .id(null)
-                .technicalCardId(2L)
-                .requestsProductionsId(2L)
-                .build());
-
-        productionService.create(ProductionDto.builder()
-                .id(null)
-                .technicalCardId(3L)
-                .requestsProductionsId(3L)
-                .build());
-    }
 }
+*/

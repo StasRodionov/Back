@@ -1,3 +1,4 @@
+/*
 package com.trade_accounting.config.init;
 
 import com.trade_accounting.models.dto.InvoiceDto;
@@ -44,3 +45,4 @@ public class InvoiceProductInit extends InitData {
     }
 }
 
+*/
