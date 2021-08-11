@@ -62,8 +62,8 @@ public class ImageRestControllerTest {
     void getById() {
         ImageDto imageDto = ImageDto.builder()
                 .id(1L)
-                .fileExtension("image_url1")
-                .content("image_url1".getBytes())
+//                .fileExtension("image_url1") // тут чёрт ногу сломит)))
+//                .content(new byte[]{}) // тут вторую
                 .sortNumber("sort_number1")
                 .build();
 
