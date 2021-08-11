@@ -83,6 +83,7 @@ import com.trade_accounting.services.interfaces.TaskCommentService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.services.interfaces.TaxSystemService;
 import com.trade_accounting.services.interfaces.TechnicalCardGroupService;
+import com.trade_accounting.services.interfaces.TechnicalCardProductionService;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
@@ -140,6 +141,7 @@ public class DataInitializer {
     private final ContractorStatusService contractorStatusService;
     private final AccessParametersService accessParametersService;
     private final TechnicalCardGroupService technicalCardGroupService;
+    private final TechnicalCardProductionService technicalCardProductionService;
     private final TechnicalCardService technicalCardService;
     private final CorrectionProductService correctionProductService;
     private final CorrectionService correctionService;
@@ -186,6 +188,7 @@ public class DataInitializer {
         initTaskComments();
         initRetailStores();
         initTechnicalCardGroups();
+        initTechnicalCardProduction();
         initTechnicalCards();
         initCorrectionProduct();
         initCorrection();
@@ -1475,6 +1478,16 @@ public class DataInitializer {
     public void initTechnicalCardGroups() {
         technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №1", "Комментарий1", "1"));
         technicalCardGroupService.create(new TechnicalCardGroupDto(null, "Группа технических карт №2", "Комментарий2", "2"));
+    }
+
+    public void initTechnicalCardProduction() {
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 1L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 2L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 3L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 4L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 5L));
+        technicalCardProductionService.create(new TechnicalCardProductionDto(null, 2L, 6L));
+
     }
 
     public void initTechnicalCards() {
