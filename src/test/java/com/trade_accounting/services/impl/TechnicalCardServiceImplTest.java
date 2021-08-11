@@ -7,7 +7,7 @@ import com.trade_accounting.repositories.TechnicalCardProductionRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
 import com.trade_accounting.services.impl.Stubs.dto.TechnicalCardDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.TechnicalCardModelStubs;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
