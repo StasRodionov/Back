@@ -1,3 +1,4 @@
+/*
 package com.trade_accounting.config.init;
 
 import com.trade_accounting.models.dto.RetailStoreDto;
@@ -46,3 +47,4 @@ public class RetailStoreInit extends InitData{
         );
     }
 }
+*/

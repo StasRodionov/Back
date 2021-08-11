@@ -1,3 +1,4 @@
+/*
 package com.trade_accounting.config.init;
 
 import com.trade_accounting.models.TypeOfInvoice;
@@ -73,3 +74,4 @@ public class InvoiceInit extends InitData {
 
 
 //}
+*/

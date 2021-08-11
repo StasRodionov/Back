@@ -1,3 +1,4 @@
+/*
 package com.trade_accounting.config.init;
 
 import com.trade_accounting.models.dto.PayoutDto;
@@ -55,3 +56,4 @@ public class PayoutInit extends InitData{
     }
 
 }
+*/
