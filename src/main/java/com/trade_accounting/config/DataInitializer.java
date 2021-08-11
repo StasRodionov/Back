@@ -1,3 +1,4 @@
+/*
 package com.trade_accounting.config;
 
 import com.trade_accounting.models.dto.AccessParametersDto;
@@ -1846,3 +1847,4 @@ public class DataInitializer {
                 .build());
     }
 }
+*/

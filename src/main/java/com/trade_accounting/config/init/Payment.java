@@ -1,3 +1,4 @@
+/*
 package com.trade_accounting.config.init;
 
 import com.trade_accounting.models.PaymentMethods;
@@ -82,3 +83,4 @@ public class Payment extends InitData {
     }
 
 }
+*/

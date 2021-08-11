@@ -1,3 +1,4 @@
+/*
 package com.trade_accounting.config.init;
 
 import com.trade_accounting.models.dto.AcceptanceDto;
@@ -38,3 +39,4 @@ public class AcceptanceInit extends InitData {
         }
     }
 }
+*/
