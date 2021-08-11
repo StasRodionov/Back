@@ -14,6 +14,9 @@ public interface TechnicalCardProductionMapper {
     })
     TechnicalCardProductionDto toDto(TechnicalCardProduction technicalCardProduction);
 
+    @Mappings({
+            @Mapping(target = "product", ignore = true)
+    })
     TechnicalCardProduction toModel(TechnicalCardProductionDto technicalCardProductionDto);
 
 }

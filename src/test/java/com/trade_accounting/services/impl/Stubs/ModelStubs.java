@@ -57,6 +57,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.trade_accounting.services.impl.Stubs.model.InvoiceModelStubs.getInvoice;
+
 public class ModelStubs {
     //TODO Вынести заглушки моделей из классов сервисов сюда
 
@@ -252,18 +254,18 @@ public class ModelStubs {
         return new Role(id, "name", "00001");
     }
 
-    public static Invoice getInvoice(Long id) {
-        return new Invoice(
-                id,
-                LocalDateTime.now(),
-                TypeOfInvoice.RECEIPT,
-                getCompany(id),
-                getContractor(id),
-                new Warehouse(),
-                Boolean.TRUE,
-                "Комментарий"
-        );
-    }
+//    public static Invoice getInvoice(Long id) {
+//        return new Invoice(
+//                id,
+//                LocalDateTime.now(),
+//                TypeOfInvoice.RECEIPT,
+//                getCompany(id),
+//                getContractor(id),
+//                getWarehouse(id),
+//                Boolean.TRUE,
+//                "Комментарий"
+//        );
+//    }
 
     public static Currency getCurrency(Long id) {
         return new Currency(id, "rubles", "Russian Rubles", "25", "rub", "1");

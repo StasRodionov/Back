@@ -46,13 +46,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     public List<InvoiceDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice) {
         List<InvoiceDto> invoiceDtoList = invoiceRepository.findBySearchAndTypeOfInvoice(search, typeOfInvoice);
         for (InvoiceDto invoice : invoiceDtoList) {
-            Invoice invoice1 = invoiceMapper.toModel(invoice);
-            Company company = companyRepository.getCompaniesById(invoice.getCompanyId());
-            Contractor contractor = contractorRepository.getContractorById(invoice.getContractorId());
-            Warehouse warehouse = warehouseRepository.getOne(invoice.getWarehouseId());
-            invoice.setCompanyId(companyMapper.toDto(company).getId());
-            invoice.setContractorId(contractorMapper.contractorToContractorDto(contractor).getId());
-            invoice.setWarehouseId(warehouse.getId());
+            invoice.setCompanyId(companyMapper.toDto(companyRepository.getCompaniesById(invoice.getCompanyId())).getId());
+            invoice.setContractorId(contractorMapper.contractorToContractorDto(
+                    contractorRepository.getOne(invoice.getContractorId())).getId());
+            invoice.setWarehouseId(warehouseRepository.getById(invoice.getWarehouseId()).getId());
 
         }
         return invoiceDtoList;
@@ -73,10 +70,15 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public InvoiceDto create(InvoiceDto invoiceDto) {
-        Invoice invoiceSaved = invoiceRepository.save(invoiceMapper.toModel(invoiceDto));
-        invoiceDto.setId(invoiceSaved.getId());
+        Invoice invoiceSaved = invoiceMapper.toModel(invoiceDto);
+        Company company = companyRepository.getCompaniesById(invoiceDto.getCompanyId());
+        Contractor contractor = contractorRepository.getContractorById(invoiceDto.getContractorId());
+        Warehouse warehouse = warehouseRepository.getOne(invoiceDto.getWarehouseId());
+        invoiceSaved.setCompany(company);
+        invoiceSaved.setContractor(contractor);
+        invoiceSaved.setWarehouse(warehouse);
 
-        return invoiceMapper.toDto(invoiceSaved);
+        return invoiceMapper.toDto(invoiceRepository.save(invoiceSaved));
     }
 
 
