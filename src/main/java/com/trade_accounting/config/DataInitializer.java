@@ -24,7 +24,6 @@ import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
-import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.models.dto.ProductionDto;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.models.dto.RemainDto;
@@ -61,11 +60,9 @@ import com.trade_accounting.services.interfaces.DepartmentService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import com.trade_accounting.services.interfaces.InventarizationProductService;
 import com.trade_accounting.services.interfaces.InventarizationService;
-import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import com.trade_accounting.services.interfaces.MovementProductService;
 import com.trade_accounting.services.interfaces.MovementService;
-import com.trade_accounting.services.interfaces.PaymentService;
 import com.trade_accounting.services.interfaces.PositionService;
 import com.trade_accounting.services.interfaces.ProductGroupService;
 import com.trade_accounting.services.interfaces.ProductService;
@@ -126,9 +123,7 @@ public class DataInitializer {
     private final EmployeeService employeeService;
     private final ProductService productService;
     private final CurrencyService currencyService;
-    private final InvoiceService invoiceService;
     private final ProjectService projectService;
-    private final PaymentService paymentService;
     private final TaskService taskService;
     private final TaskCommentService commentService;
     private final AddressServiceImpl addressService;
@@ -177,9 +172,7 @@ public class DataInitializer {
         initContractors();
         initProducts();
         initContracts();
-//        initInvoices();
         initProject();
-//        initPayment();
         initTasks();
         initTaskComments();
         initRetailStores();
@@ -285,73 +278,6 @@ public class DataInitializer {
         projectService.create(new ProjectDto(null, "name3", "0000", "description"));
         projectService.create(new ProjectDto(null, "name4", "0000", "description"));
     }
-
-//    public void initPayment() {
-//        LocalDateTime localDateTime = LocalDateTime.now();
-//        List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
-//        List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
-//        List<ProjectDto> projectDtos = projectService.getAll().stream().limit(3).collect(Collectors.toList());
-//        List<ContractDto> contractDtos = contractService.getAll().stream().limit(3).collect(Collectors.toList());
-//        int count = 1;
-//        for (CompanyDto companyDto : companyDtos) {
-//            for (ContractorDto contractorDto : contractorDtos) {
-//                for (ContractDto contractDto : contractDtos) {
-//                    for (ProjectDto projectDto : projectDtos) {
-//                        paymentService.create(new PaymentDto(
-//                                null,
-//                                TypeOfPayment.INCOMING,
-//                                PaymentMethods.CASH,
-//                                "0000" + count,
-//                                localDateTime,
-//                                companyDto.getId(),
-//                                contractorDto.getId(),
-//                                contractDto.getId(),
-//                                projectDto.getId(),
-//                                new BigDecimal("100.00")
-//                        ));
-//                        count++;
-//                        paymentService.create(new PaymentDto(
-//                                null,
-//                                TypeOfPayment.OUTGOING,
-//                                PaymentMethods.BANK,
-//                                "0000" + count,
-//                                localDateTime,
-//                                companyDto.getId(),
-//                                contractorDto.getId(),
-//                                contractDto.getId(),
-//                                projectDto.getId(),
-//                                new BigDecimal("50.00")
-//                        ));
-//                        count++;
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-//    public void initInvoices() {
-//        List<CompanyDto> companyDtos = companyService.getAll().stream().limit(3).collect(Collectors.toList());
-//        List<ContractorDto> contractorDtos = contractorService.getAll().stream().limit(3).collect(Collectors.toList());
-//        List<WarehouseDto> warehouseDtos = warehouseService.getAll().stream().limit(3).collect(Collectors.toList());
-//        List<String> typeOfInvoices = List.of(TypeOfInvoice.EXPENSE.name(), TypeOfInvoice.RECEIPT.name());
-//
-//        int i = 0;
-//        for (CompanyDto companyDto : companyDtos) {
-//            for (ContractorDto contractorDto : contractorDtos) {
-//                for (WarehouseDto warehouseDto : warehouseDtos) {
-//                    invoiceService.create(new InvoiceDto(
-//                            null,
-//                            "Комментарий " + i++,
-//                            LocalDateTime.now().toString(),
-//                            typeOfInvoices.get(randomInt(0, 1)).toString(),
-//                            companyDto.getId(),
-//                            contractorDto.getId(),
-//                            warehouseDto.getId(),
-//                            false));
-//                }
-//            }
-//        }
-//    }
 
     public int randomInt(int min, int max) {
         return (int) (Math.random() * ((max - min) + 1)) + min;
@@ -651,7 +577,7 @@ public class DataInitializer {
     }
 
     private void initAttributeOfCalculationObjects() {
-        for (int i = 0; i < 3; i++) {
+        for(int i = 0; i < 3; i++) {
             attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Услуга", "1", true));
             attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Работа", "2", true));
             attributeOfCalculationObjectService.create(new AttributeOfCalculationObjectDto("Предоставление РИД", "3", true));
@@ -1242,17 +1168,6 @@ public class DataInitializer {
     }
 
     private void initProducts() {
-
-        List<UnitDto> unitDtoList = new ArrayList<>(unitService.getAll());
-
-        List<TaxSystemDto> taxSystemDtoList = new ArrayList<>(taxSystemService.getAll());
-
-        List<ContractorDto> contractorDtoList = new ArrayList<>(contractorService.getAll());
-
-        List<ProductGroupDto> productGroupDtoList = new ArrayList<>(productGroupService.getAll());
-
-        List<AttributeOfCalculationObjectDto> attributeOfCalculationObjectDtoList = new ArrayList<>(attributeOfCalculationObjectService.getAll());
-
         for (long i = 1L; i < 7; i++) {
 
             productService.create(ProductDto.builder()
@@ -1315,7 +1230,6 @@ public class DataInitializer {
                     .build()
             );
         }
-
     }
 
     private void initContacts() {
