@@ -3,6 +3,7 @@ package com.trade_accounting.controllers.rest;
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.ImageDto;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,14 +22,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 /**
  * @author Andrey Melnikov
- * @since 10.08.2021
+ * @since 11.08.2021
  */
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @WithUserDetails(value = "karimogon@mail.ru")
 @Sql(value = "/Image-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @RequiredArgsConstructor
 public class ImageRestControllerTest {
 
@@ -44,7 +45,8 @@ public class ImageRestControllerTest {
     }
 
     @Test
-    void getAll() throws Exception {
+    @SneakyThrows
+    void getAll() {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/image"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -53,10 +55,12 @@ public class ImageRestControllerTest {
     }
 
     @Test
-    void getById() throws Exception {
+    @SneakyThrows
+    void getById() {
         ImageDto imageDto = ImageDto.builder()
                 .id(1L)
                 .fileExtension("image_url1")
+                .content(new byte[0])
                 .sortNumber("sort_number1")
                 .build();
 
@@ -70,9 +74,11 @@ public class ImageRestControllerTest {
     }
 
     @Test
-    void create() throws Exception {
+    @SneakyThrows
+    void create() {
         ImageDto imageDto = ImageDto.builder()
                 .fileExtension("image_url1")
+                .content(new byte[0])
                 .sortNumber("sort_number1")
                 .build();
 
@@ -90,9 +96,11 @@ public class ImageRestControllerTest {
     }
 
     @Test
-    void update() throws Exception {
+    @SneakyThrows
+    void update() {
         ImageDto imageDto = ImageDto.builder()
                 .fileExtension("UPDATED1")
+                .content(new byte[0])
                 .sortNumber("UPDATED1")
                 .build();
 
@@ -108,7 +116,8 @@ public class ImageRestControllerTest {
     }
 
     @Test
-    void deleteById() throws Exception {
+    @SneakyThrows
+    void deleteById() {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/image/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated());
