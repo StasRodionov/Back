@@ -23,7 +23,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TechnicalCardServiceImplTest {
-
     @Mock
     private TechnicalCardRepository technicalCardRepository;
 
