@@ -3,9 +3,9 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.dto.TaxSystemDto;
 import com.trade_accounting.repositories.TaxSystemRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.TaxSystemDtoStubs;
-import com.trade_accounting.utils.mapper.TaxSystemMapper;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,7 +32,7 @@ class TaxSystemServiceImplTest {
     private TaxSystemRepository taxSystemRepository;
 
     @Spy
-    private TaxSystemMapper taxSystemMapper;
+    private DtoMapperImpl dtoMapper;
 
     @InjectMocks
     private TaxSystemServiceImpl taxSystemService;
@@ -87,14 +87,14 @@ class TaxSystemServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        taxSystemService.create(TaxSystemDtoStubs.getTaxSystemDto(1L));
+        taxSystemService.create(DtoStubs.getTaxSystemDto(1L));
 
         verify(taxSystemRepository).save(any(TaxSystem.class));
     }
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        taxSystemService.update(TaxSystemDtoStubs.getTaxSystemDto(1L));
+        taxSystemService.update(DtoStubs.getTaxSystemDto(1L));
 
         verify(taxSystemRepository).save(any(TaxSystem.class));
     }

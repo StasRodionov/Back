@@ -8,9 +8,7 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.SupplierAccountService;
-import com.trade_accounting.utils.mapper.SupplierAccountMapper;
-import com.trade_accounting.utils.mapper.WarehouseMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,16 +18,24 @@ import java.util.Optional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class SupplierAccountServiceImpl implements SupplierAccountService {
 
     private final SupplierAccountRepository supplierAccountRepository;
-    private final SupplierAccountMapper supplierAccountMapper;
-    private final WarehouseMapper warehouseMapper;
+    private final DtoMapper dtoMapper;
     private final CompanyRepository companyRepository;
     private final ContractorRepository contractorRepository;
     private final ContractRepository contractRepository;
     private final WarehouseRepository warehouseRepository;
+
+    public SupplierAccountServiceImpl(SupplierAccountRepository supplierAccountRepository,
+                                      DtoMapper dtoMapper, CompanyRepository companyRepository, ContractorRepository contractorRepository, ContractRepository contractRepository, WarehouseRepository warehouseRepository) {
+        this.supplierAccountRepository = supplierAccountRepository;
+        this.dtoMapper = dtoMapper;
+        this.companyRepository = companyRepository;
+        this.contractorRepository = contractorRepository;
+        this.contractRepository = contractRepository;
+        this.warehouseRepository = warehouseRepository;
+    }
 
     @Override
     public List<SupplierAccountDto> getAll() {
@@ -39,7 +45,7 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
     @Override
     public SupplierAccountDto getById(Long id) {
         Optional<SupplierAccount> invoicesToCustomers = supplierAccountRepository.findById(id);
-        return supplierAccountMapper.toDto(invoicesToCustomers.orElse(new SupplierAccount()));
+        return dtoMapper.supplierAccountToSupplierAccountDto(invoicesToCustomers.orElse(new SupplierAccount()));
     }
 
     @Override
@@ -47,11 +53,11 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
         SupplierAccount saveInvoices = SupplierAccount.builder().id(createSupplier.getId()).date(createSupplier.getDate())
                 .comment(createSupplier.getComment()).isSpend(createSupplier.getIsSpend())
                 .company(companyRepository.getCompaniesById(createSupplier.getCompanyId()))
-                .warehouse(warehouseMapper.toModel(warehouseRepository.getById(createSupplier.getWarehouseId())))
-                .contract(contractRepository.getById(createSupplier.getContractId()))
+                .warehouse(dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(createSupplier.getWarehouseId())))
+                .contract(dtoMapper.contractDtoToContract(contractRepository.getById(createSupplier.getContractId())))
                 .contractor((contractorRepository.getOne(createSupplier.getContractorId())))
                 .build();
-        return supplierAccountMapper.toDto(supplierAccountRepository.save(saveInvoices));
+        return dtoMapper.supplierAccountToSupplierAccountDto(supplierAccountRepository.save(saveInvoices));
     }
 
     @Override
@@ -81,6 +87,6 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
 
     @Override
     public List<SupplierAccountDto> search(Specification<SupplierAccount> spec) {
-        return executeSearch(supplierAccountRepository, supplierAccountMapper::toDto, spec);
+        return executeSearch(supplierAccountRepository, dtoMapper::supplierAccountToSupplierAccountDto, spec);
     }
 }

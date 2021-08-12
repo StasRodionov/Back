@@ -4,9 +4,9 @@ import com.trade_accounting.models.CorrectionProduct;
 import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.repositories.CorrectionProductRepository;
 import com.trade_accounting.repositories.ProductRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.CorrectionProductDtoStubs;
-import com.trade_accounting.utils.mapper.CorrectionProductMapper;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,7 +33,7 @@ class CorrectionProductServiceImplTest {
     ProductRepository productRepository;
 
     @Spy
-    CorrectionProductMapper correctionProductMapper;
+    DtoMapperImpl dtoMapper;
 
     @InjectMocks
     CorrectionProductServiceImpl correctionProductService;
@@ -77,7 +77,7 @@ class CorrectionProductServiceImplTest {
 
     private void saveOrUpdate() {
         when(correctionProductRepository.save(any())).thenReturn(ModelStubs.getCorrectionProduct(1L));
-        CorrectionProductDto correctionProductDto = correctionProductService.create(CorrectionProductDtoStubs.getCorrectionProductDto(1L));
+        CorrectionProductDto correctionProductDto = correctionProductService.create(DtoStubs.getCorrectionProductDto(1L));
         assertEquals(1, correctionProductDto.getId());
         verify(correctionProductRepository).save(any(CorrectionProduct.class));
     }

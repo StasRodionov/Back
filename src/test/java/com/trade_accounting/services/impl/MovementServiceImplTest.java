@@ -1,13 +1,20 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Correction;
 import com.trade_accounting.models.Movement;
+import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.repositories.CompanyRepository;
+import com.trade_accounting.repositories.CorrectionProductRepository;
+import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.MovementProductRepository;
 import com.trade_accounting.repositories.MovementRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.MovementDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.MovementModelStubs;
+import com.trade_accounting.utils.DtoMapperImpl;
 import com.trade_accounting.utils.mapper.MovementMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,6 +45,9 @@ public class MovementServiceImplTest {
 
     @Mock
     CompanyRepository companyRepository;
+
+    @Spy
+    DtoMapperImpl dtoMapper;
 
     @Spy
     MovementMapperImpl movementMapper;

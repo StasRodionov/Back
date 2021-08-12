@@ -1,11 +1,14 @@
 package com.trade_accounting.services.impl.fias;
 
+import com.trade_accounting.models.dto.fias.DistrictDto;
 import com.trade_accounting.models.dto.fias.RegionDto;
+import com.trade_accounting.models.fias.District;
 import com.trade_accounting.models.fias.Region;
 import com.trade_accounting.repositories.fias.RegionRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.RegionDtoStubs;
-import com.trade_accounting.utils.mapper.RegionMapper;
+import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,7 +36,7 @@ public class RegionServiceTest {
     RegionRepository repository;
 
     @Spy
-    RegionMapper regionMapper;
+    DtoMapperImpl dtoMapper;
 
     @InjectMocks
     RegionServiceImpl service;
@@ -69,20 +72,20 @@ public class RegionServiceTest {
     @Test
     public void createTest() {
         when(repository.save(any())).thenReturn(ModelStubs.getRegion(1L));
-        RegionDto result = service.create(RegionDtoStubs.getRegionDto(1L));
+        RegionDto result = service.create(DtoStubs.getRegionDto(1L));
         verify(repository).save(any(Region.class));
         assertNotNull(result, "failure - expected that a StreetDto not null");
-        assertEquals(result, RegionDtoStubs.getRegionDto(1L));
+        assertEquals(result, DtoStubs.getRegionDto(1L));
         regionDtoIsCorrectlyInited(result);
     }
 
     @Test
     public void updateTest() {
         when(repository.save(any())).thenReturn(ModelStubs.getRegion(1L));
-        RegionDto result = service.update(RegionDtoStubs.getRegionDto(1L));
+        RegionDto result = service.update(DtoStubs.getRegionDto(1L));
         verify(repository).save(any(Region.class));
         assertNotNull(result, "failure - expected that a districtDto not null");
-        assertEquals(result, RegionDtoStubs.getRegionDto(1L));
+        assertEquals(result, DtoStubs.getRegionDto(1L));
         regionDtoIsCorrectlyInited(result);
     }
 

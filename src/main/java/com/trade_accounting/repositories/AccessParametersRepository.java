@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccessParametersRepository extends JpaRepository<AccessParameters, Long> {
-    AccessParameters getAccessParametersById(Long id);
+
 }

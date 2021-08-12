@@ -1,32 +1,52 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Department;
+import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Image;
+import com.trade_accounting.models.Position;
 import com.trade_accounting.models.ProductGroup;
+import com.trade_accounting.models.Role;
+import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.ProductGroupDto;
+import com.trade_accounting.models.dto.RoleDto;
+import com.trade_accounting.repositories.DepartmentRepository;
+import com.trade_accounting.repositories.EmployeeRepository;
+import com.trade_accounting.repositories.ImageRepository;
+import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.ProductGroupRepository;
+import com.trade_accounting.repositories.RoleRepository;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProductGroupServiceImplTest {
 
     @Mock
     private ProductGroupRepository productGroupRepository;
+
+    @Spy
+    private DtoMapperImpl dtoMapper;
 
     @InjectMocks
     private ProductGroupServiceImpl productGroupService;

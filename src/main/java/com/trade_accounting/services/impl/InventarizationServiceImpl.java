@@ -10,9 +10,7 @@ import com.trade_accounting.repositories.InventarizationProductRepository;
 import com.trade_accounting.repositories.InventarizationRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.InventarizationService;
-import com.trade_accounting.utils.mapper.InventarizationMapper;
-import com.trade_accounting.utils.mapper.WarehouseMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,21 +22,31 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class InventarizationServiceImpl implements InventarizationService {
 
     private final InventarizationRepository inventarizationRepository;
     private final InventarizationProductRepository inventarizationProductRepository;
     private final WarehouseRepository warehouseRepository;
     private final CompanyRepository companyRepository;
-    private final WarehouseMapper warehouseMapper;
-    private final InventarizationMapper inventarizationMapper;
+    private final DtoMapper dtoMapper;
+
+    public InventarizationServiceImpl(InventarizationRepository inventarizationRepository,
+                                      InventarizationProductRepository inventarizationProductRepository,
+                                      WarehouseRepository warehouseRepository,
+                                      CompanyRepository companyRepository,
+                                      DtoMapper dtoMapper) {
+        this.inventarizationRepository = inventarizationRepository;
+        this.inventarizationProductRepository = inventarizationProductRepository;
+        this.warehouseRepository = warehouseRepository;
+        this.companyRepository = companyRepository;
+        this.dtoMapper = dtoMapper;
+    }
 
     @Override
     public List<InventarizationDto> getAll() {
         List<InventarizationDto> listInventarizationDto = inventarizationRepository.findAll()
                 .stream()
-                .map(inventarizationMapper::toDto)
+                .map(dtoMapper::toInventarizationDto)
                 .collect(Collectors.toList());
         return listInventarizationDto;
     }
@@ -46,7 +54,7 @@ public class InventarizationServiceImpl implements InventarizationService {
     @Override
     public InventarizationDto getById(Long id) {
         Optional<Inventarization> inventarization = inventarizationRepository.findById(id);
-        return inventarizationMapper.toDto(inventarization.orElse(new Inventarization()));
+        return dtoMapper.toInventarizationDto(inventarization.orElse(new Inventarization()));
     }
 
     @Override
@@ -65,8 +73,8 @@ public class InventarizationServiceImpl implements InventarizationService {
     }
 
     private InventarizationDto saveOrUpdate(InventarizationDto dto) {
-        Inventarization inventarization = inventarizationMapper.toModel(dto);
-        Warehouse warehouse = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseId()));
+        Inventarization inventarization = dtoMapper.toInventarization(dto);
+        Warehouse warehouse = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId()));
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
@@ -80,6 +88,6 @@ public class InventarizationServiceImpl implements InventarizationService {
         inventarization.setDate(date);
         inventarization.setInventarizationProducts(inventarizationProducts);
 
-        return inventarizationMapper.toDto(inventarizationRepository.save(inventarization));
+        return dtoMapper.toInventarizationDto(inventarizationRepository.save(inventarization));
     }
 }

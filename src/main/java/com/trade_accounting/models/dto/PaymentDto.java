@@ -1,39 +1,72 @@
 package com.trade_accounting.models.dto;
 
+import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contract;
+import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.PaymentMethods;
+import com.trade_accounting.models.Project;
+import com.trade_accounting.models.TypeOfPayment;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentDto {
 
     private Long id;
 
-    private String typeOfPayment;
+    private TypeOfPayment typeOfPayment;
 
-    private String paymentMethods;
+    private PaymentMethods paymentMethods;
 
     @NotNull
     private String number;
 
-    private String time;
+    private LocalDateTime time;
 
     @NotNull
-    private Long companyId;
+    private CompanyDto companyDto;
 
     @NotNull
-    private Long contractorId;
+    private ContractorDto contractorDto;
 
-    private Long contractId;
+    private ContractDto contractDto;
 
-    private Long projectId;
+    private ProjectDto projectDto;
 
     private BigDecimal sum;
+
+    public PaymentDto(Long id,
+                      TypeOfPayment typeOfPayment,
+                      PaymentMethods paymentMethods,
+                      String number,
+                      LocalDateTime time,
+                      Long companyId,
+                      Long contractorId,
+                      Long contractId,
+                      Long projectId,
+                      BigDecimal sum) {
+        this.id = id;
+        this.typeOfPayment = typeOfPayment;
+        this.paymentMethods = paymentMethods;
+        this.number = number;
+        this.time = time;
+        this.companyDto = new CompanyDto();
+        this.companyDto.setId(companyId);
+        this.contractorDto = new ContractorDto();
+        this.contractorDto.setId(contractorId);
+        this.contractDto = new ContractDto();
+        this.contractDto.setId(contractId);
+        this.projectDto = new ProjectDto();
+        this.projectDto.setId(projectId);
+        this.sum = sum;
+    }
 }

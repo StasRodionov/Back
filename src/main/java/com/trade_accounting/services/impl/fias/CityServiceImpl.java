@@ -5,43 +5,47 @@ import com.trade_accounting.models.fias.City;
 import com.trade_accounting.repositories.fias.CityRepository;
 import com.trade_accounting.repositories.fias.DistrictRepository;
 import com.trade_accounting.services.interfaces.fias.CityService;
-import com.trade_accounting.utils.mapper.CityMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class CityServiceImpl implements CityService {
-    private final CityMapper cityMapper;
+    private final DtoMapper dtoMapper;
     private final CityRepository repository;
     private final DistrictRepository districtRepository;
+
+    public CityServiceImpl(DtoMapper dtoMapper, CityRepository repository, DistrictRepository districtRepository) {
+        this.dtoMapper = dtoMapper;
+        this.repository = repository;
+        this.districtRepository = districtRepository;
+    }
 
     @Override
     public List<CityDto> getAll() {
         List<City> cityList = repository.findAll();
-        return cityList.stream().map(cityMapper::toDto).collect(Collectors.toList());
+        return cityList.stream().map(dtoMapper::toCityDto).collect(Collectors.toList());
     }
 
     @Override
     public CityDto getById(Long id) {
         City city = repository.findById(id).orElse(new City());
-        return cityMapper.toDto(city);
+        return dtoMapper.toCityDto(city);
     }
 
     @Override
     public CityDto create(CityDto cityDto) {
-        City city1 = cityMapper.toModel(cityDto);
+        City city1 = dtoMapper.toCity(cityDto);
         City city = repository.save(city1);
-        return cityMapper.toDto(city);
+        return dtoMapper.toCityDto(city);
     }
 
     @Override
     public CityDto update(CityDto cityDto) {
-        City city = repository.save(cityMapper.toModel(cityDto));
-        return cityMapper.toDto(city);
+        City city = repository.save(dtoMapper.toCity(cityDto));
+        return dtoMapper.toCityDto(city);
     }
 
     @Override

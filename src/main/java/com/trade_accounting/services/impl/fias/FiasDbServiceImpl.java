@@ -4,48 +4,51 @@ import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
 import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.repositories.fias.AddressDbRepository;
 import com.trade_accounting.services.interfaces.fias.FiasDbService;
-import com.trade_accounting.utils.mapper.FiasAddressModelMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class FiasDbServiceImpl implements FiasDbService {
     private final AddressDbRepository repository;
 
-    private final FiasAddressModelMapper fiasAddressModelMapper;
+    private final DtoMapper dtoMapper;
+
+    public FiasDbServiceImpl(AddressDbRepository repository, DtoMapper dtoMapper) {
+        this.dtoMapper = dtoMapper;
+        this.repository = repository;
+    }
 
     @Override
     public List<FiasAddressModelDto> getAll() {
         List<FiasAddressModel> all = repository.findAll();
-        return all.stream().map(fiasAddressModelMapper::toDto).collect(Collectors.toList());
+        return all.stream().map(dtoMapper::toFiasAddressModelDto).collect(Collectors.toList());
     }
 
     @Override
     public FiasAddressModelDto getById(Long id) {
         FiasAddressModel model = repository.findById(id).orElse(null);
-        return fiasAddressModelMapper.toDto(model);
+        return dtoMapper.toFiasAddressModelDto(model);
     }
 
     @Override
     public FiasAddressModelDto create(FiasAddressModelDto dto) {
-        FiasAddressModel model = repository.save(fiasAddressModelMapper.toModel(dto));
-        return fiasAddressModelMapper.toDto(model);
+        FiasAddressModel model = repository.save(dtoMapper.toFiasAddressModel(dto));
+        return dtoMapper.toFiasAddressModelDto(model);
     }
 
     @Override
     public void createAll(List<FiasAddressModelDto> dtoList) {
         List<FiasAddressModel> collect = dtoList.stream()
-                .map(fiasAddressModelMapper::toModel).collect(Collectors.toList());
+                .map(dtoMapper::toFiasAddressModel).collect(Collectors.toList());
         repository.saveAll(collect);
     }
 
     @Override
     public FiasAddressModelDto update(FiasAddressModelDto dto) {
-        return fiasAddressModelMapper.toDto(repository.save(fiasAddressModelMapper.toModel(dto)));
+        return dtoMapper.toFiasAddressModelDto(repository.save(dtoMapper.toFiasAddressModel(dto)));
     }
 
     @Override
@@ -56,12 +59,12 @@ public class FiasDbServiceImpl implements FiasDbService {
     @Override
     public List<FiasAddressModelDto> findAllByLevel(String level) {
         List<FiasAddressModel> allByLevel = repository.findAllByLevel(level);
-        return allByLevel.stream().map(fiasAddressModelMapper::toDto).collect(Collectors.toList());
+        return allByLevel.stream().map(dtoMapper::toFiasAddressModelDto).collect(Collectors.toList());
     }
 
     @Override
     public List<FiasAddressModelDto> findAllByAoguid(String aoguid) {
         List<FiasAddressModel> byAoguid = repository.findAdressesByAoguid(aoguid);
-        return byAoguid.stream().map(fiasAddressModelMapper::toDto).collect(Collectors.toList());
+        return byAoguid.stream().map(dtoMapper::toFiasAddressModelDto).collect(Collectors.toList());
     }
 }

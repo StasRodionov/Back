@@ -4,9 +4,11 @@ import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.repositories.AcceptanceProductionRepository;
 import com.trade_accounting.repositories.ProductRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.AcceptanceProductionDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.AcceptanceProductionModelStubs;
+import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.AcceptanceProductionMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +32,9 @@ class AcceptanceProductionServiceImplTest {
 
     @Mock
     ProductRepository productRepository;
+
+    @Spy
+    DtoMapper dtoMapper;
 
     @Spy
     AcceptanceProductionMapper acceptanceProductionMapper;

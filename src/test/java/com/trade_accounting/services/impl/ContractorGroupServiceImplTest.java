@@ -3,8 +3,9 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.ContractorGroup;
 import com.trade_accounting.models.dto.ContractorGroupDto;
 import com.trade_accounting.repositories.ContractorGroupRepository;
-import com.trade_accounting.services.impl.Stubs.dto.ContractorGroupDtoStubs;
-import com.trade_accounting.utils.mapper.ContractorGroupMapperImpl;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,7 +29,7 @@ class ContractorGroupServiceImplTest {
     ContractorGroupRepository contractorGroupRepository;
 
     @Spy
-    ContractorGroupMapperImpl contractorGroupMapper;
+    DtoMapperImpl dtoMapper;
 
     @InjectMocks
     ContractorGroupServiceImpl contractorGroupService;
@@ -51,7 +52,7 @@ class ContractorGroupServiceImplTest {
 
     @Test
     void getByIdShouldReturnCorrectDto() {
-        var dto = ContractorGroupDtoStubs.getContractorGroupDto(1L);
+        var dto = DtoStubs.getContractorGroupDto(1L);
         when(contractorGroupRepository.getById(anyLong())).thenReturn(dto);
         var dtoFromRepository = contractorGroupService.getById(1L);
         assertNotNull(dtoFromRepository, "ContractorGroupDto should not be null!");
@@ -61,13 +62,13 @@ class ContractorGroupServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        contractorGroupService.create(ContractorGroupDtoStubs.getContractorGroupDto(1L));
+        contractorGroupService.create(DtoStubs.getContractorGroupDto(1L));
         verify(contractorGroupRepository).save(any(ContractorGroup.class));
     }
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        contractorGroupService.update(ContractorGroupDtoStubs.getContractorGroupDto(1L));
+        contractorGroupService.update(DtoStubs.getContractorGroupDto(1L));
         verify(contractorGroupRepository).save(any(ContractorGroup.class));
     }
 
@@ -78,7 +79,7 @@ class ContractorGroupServiceImplTest {
     }
 
     private List<ContractorGroupDto> contractorGroupDtos() {
-        return LongStream.rangeClosed(1, 3).mapToObj(ContractorGroupDtoStubs::getContractorGroupDto)
+        return LongStream.rangeClosed(1, 3).mapToObj(DtoStubs::getContractorGroupDto)
                 .collect(Collectors.toList());
     }
 }

@@ -6,6 +6,7 @@ import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.repositories.MovementProductRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.MovementProductService;
+import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.MovementProductMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,14 +32,14 @@ public class MovementProductServiceImpl implements MovementProductService {
     @Override
     public List<MovementProductDto> getAll() {
         return movementProductRepository.findAll().stream()
-                .map(movementProductMapper::toDto)
+                .map(movementProductMapper::toMovementProductDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public MovementProductDto getById(Long id) {
         Optional<MovementProduct> movementProduct = movementProductRepository.findById(id);
-        return movementProductMapper.toDto(movementProduct.orElse(new MovementProduct()));
+        return movementProductMapper.toMovementProductDto(movementProduct.orElse(new MovementProduct()));
     }
 
     @Override
@@ -58,9 +59,9 @@ public class MovementProductServiceImpl implements MovementProductService {
 
     private MovementProductDto saveOrUpdate(MovementProductDto dto) {
         Optional<Product> product = productRepository.findById(dto.getProductId());
-        MovementProduct movementProduct = movementProductMapper.toModel(dto);
+        MovementProduct movementProduct = movementProductMapper.toMovementProduct(dto);
         movementProduct.setProduct(product.orElse(null));
 
-        return movementProductMapper.toDto(movementProductRepository.save(movementProduct));
+        return movementProductMapper.toMovementProductDto(movementProductRepository.save(movementProduct));
     }
 }

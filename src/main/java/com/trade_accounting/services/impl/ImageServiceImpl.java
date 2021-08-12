@@ -4,8 +4,7 @@ import com.trade_accounting.models.Image;
 import com.trade_accounting.models.dto.ImageDto;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.services.interfaces.ImageService;
-import com.trade_accounting.utils.mapper.ImageMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,29 +17,33 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
 
-    private final ImageMapper imageMapper;
+    private final DtoMapper dtoMapper;
+
+    public ImageServiceImpl(ImageRepository imageRepository, DtoMapper dtoMapper) {
+        this.imageRepository = imageRepository;
+        this.dtoMapper = dtoMapper;
+    }
 
     @Override
     public List<ImageDto> getAll() {
         return imageRepository.getAll()
                 .stream()
-                .map(imageMapper::toDto)
+                .map(dtoMapper::imageToImageDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public ImageDto getById(Long id) {
-        return imageMapper.toDto(imageRepository.getOne(id));
+        return dtoMapper.imageToImageDto(imageRepository.getOne(id));
     }
 
     @Override
     public ImageDto create(ImageDto dto) {
-        Image image = imageMapper.toModel(dto, "picture");
+        Image image = dtoMapper.imageDtoToImage(dto, "picture");
         imageRepository.save(image);
         dto.setId(image.getId());
         return dto;
@@ -49,7 +52,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public ImageDto update(ImageDto dto) {
-        Image image = imageMapper.toModel(dto, "picture");
+        Image image = dtoMapper.imageDtoToImage(dto, "picture");
         imageRepository.save(image);
         return dto;
     }

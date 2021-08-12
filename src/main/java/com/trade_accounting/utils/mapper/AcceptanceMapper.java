@@ -14,7 +14,7 @@ public interface AcceptanceMapper {
             @Mapping(source = "warehouse.id", target = "warehouseId"),
             @Mapping(source = "contract.id", target = "contractId"),
     })
-    AcceptanceDto toDto(Acceptance acceptance);
+    AcceptanceDto acceptanceToAcceptanceDto(Acceptance acceptance);
 
-    Acceptance toModel(AcceptanceDto acceptance);
+    Acceptance acceptanceDtoToAcceptance(AcceptanceDto acceptance);
 }

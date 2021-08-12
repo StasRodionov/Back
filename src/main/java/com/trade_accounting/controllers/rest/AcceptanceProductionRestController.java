@@ -1,7 +1,9 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.dto.AcceptanceDto;
 import com.trade_accounting.models.dto.AcceptanceProductionDto;
 import com.trade_accounting.services.interfaces.AcceptanceProductionService;
+import com.trade_accounting.services.interfaces.AcceptanceService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,7 +11,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +27,14 @@ import java.util.List;
 @Tag(name = "Acceptance Production Rest Controller", description = "CRUD  операции с приемкой товара")
 @Api(tags = "Acceptance Production Rest Controller")
 @RequestMapping("/api/acceptance/product")
-@RequiredArgsConstructor
 public class AcceptanceProductionRestController {
     private final AcceptanceProductionService acceptanceProductionService;
     private final CheckEntityService checkEntityService;
+
+    public AcceptanceProductionRestController(AcceptanceProductionService acceptanceProductionService, CheckEntityService checkEntityService) {
+        this.acceptanceProductionService = acceptanceProductionService;
+        this.checkEntityService = checkEntityService;
+    }
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех приемок товара")

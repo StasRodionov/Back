@@ -1,11 +1,11 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Remain;
 import com.trade_accounting.models.dto.RemainDto;
 import com.trade_accounting.repositories.RemainRepository;
 import com.trade_accounting.services.interfaces.RemainService;
-import com.trade_accounting.utils.mapper.RemainMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -13,32 +13,36 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class RemainServiceImpl implements RemainService {
 
     private final RemainRepository remainRepository;
 
-    private final RemainMapper remainMapper;
+    private final DtoMapper dtoMapper;
+
+    public RemainServiceImpl (RemainRepository remainRepository, DtoMapper dtoMapper){
+        this.remainRepository = remainRepository;
+        this.dtoMapper = dtoMapper;
+    }
 
     @Override
     public List<RemainDto> getAll() {
 
       final List<RemainDto> collect = remainRepository.findAll().stream()
-              .map(remainMapper::toDto)
+              .map(dtoMapper::remainToRemainDto)
               .collect(Collectors.toList());
       return collect;
     }
 
     @Override
     public RemainDto getById(Long id) {
-        return remainMapper.toDto(remainRepository.getOne(id));
+        return dtoMapper.remainToRemainDto(remainRepository.getOne(id));
     }
 
     @Override
     public RemainDto create(RemainDto dto) {
-        Remain remain = remainRepository.save(remainMapper.toModel(dto));
+        Remain remain = remainRepository.save(dtoMapper.remainDtoToRemain(dto));
         dto.setId(remain.getId());
-        return remainMapper.toDto(remain);
+        return dtoMapper.remainToRemainDto(remain);
 
     }
 

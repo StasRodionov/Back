@@ -21,9 +21,9 @@ public class TechnicalCardDto {
 
     private String productionCost;
 
-    private Long technicalCardGroupId;
+    private TechnicalCardGroupDto technicalCardGroupDto;
 
-    private List<Long> finalProductionId;
+    private List<TechnicalCardProductionDto> finalProductionDto;
 
-    private List<Long> materialsId;
+    private List<TechnicalCardProductionDto> materialsDto;
 }

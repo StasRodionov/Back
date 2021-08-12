@@ -3,9 +3,8 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.repositories.ProjectRepository;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.ProjectDtoStubs;
-import com.trade_accounting.utils.mapper.ProjectMapper;
+import com.trade_accounting.services.impl.Stubs.*;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,7 +31,7 @@ class ProjectServiceImplTest {
     private ProjectRepository projectRepository;
 
     @Spy
-    private ProjectMapper projectMapper;
+    private DtoMapperImpl dtoMapper;
 
     @InjectMocks
     private ProjectServiceImpl projectService;
@@ -86,7 +85,7 @@ class ProjectServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         projectService.create(
-                ProjectDtoStubs.getProjectDto(1L)
+                DtoStubs.getProjectDto(1L)
         );
 
         verify(projectRepository).save(any(Project.class));
@@ -95,7 +94,7 @@ class ProjectServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         projectService.update(
-                ProjectDtoStubs.getProjectDto(1L)
+                DtoStubs.getProjectDto(1L)
         );
 
         verify(projectRepository).save(any(Project.class));

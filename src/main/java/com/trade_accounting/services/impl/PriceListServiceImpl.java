@@ -2,53 +2,47 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.PriceList;
 import com.trade_accounting.models.dto.PriceListDto;
-import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.PriceListRepository;
 import com.trade_accounting.services.interfaces.PriceListService;
-import com.trade_accounting.utils.mapper.PriceListMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class PriceListServiceImpl implements PriceListService {
 
+
     private final PriceListRepository priceListRepository;
-    private final CompanyRepository companyRepository;
-    private final PriceListMapper priceListMapper;
+    private final DtoMapper dtoMapper;
+
+    public PriceListServiceImpl(PriceListRepository priceListRepository, DtoMapper dtoMapper) {
+        this.priceListRepository = priceListRepository;
+        this.dtoMapper = dtoMapper;
+    }
+
 
     @Override
     public List<PriceListDto> getAll() {
-        return priceListRepository.findAll().stream()
-                .map(priceListMapper::toDto)
+        final List<PriceListDto> collect = priceListRepository.findAll().stream()
+                .map(dtoMapper::priceListToPriceListDto)
                 .collect(Collectors.toList());
+        return collect;
     }
 
     @Override
     public PriceListDto getById(Long id) {
-        PriceList priceList = priceListRepository.getOne(id);
-        return priceListMapper.toDto(priceList);
+        return dtoMapper.priceListToPriceListDto(priceListRepository.findById(id).orElse(new PriceList()));
     }
 
-    /**
-     * @changed by Pavel Andrusov
-     */
     @Override
     public PriceListDto create(PriceListDto dto) {
-        LocalDateTime time = LocalDateTime.parse(dto.getTime().replace("T"," ")
-                , DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-
-        PriceList priceList = priceListMapper.toModel(dto);
-        priceList.setCompany(companyRepository.getOne(dto.getCompanyId()));
-        priceList.setTime(time);
-        return priceListMapper.toDto(priceListRepository.save(priceList));
+        PriceList priceList = priceListRepository.save(dtoMapper.priceListDtoToPriceList(dto));
+        dto.setId(priceList.getId());
+        return dtoMapper.priceListToPriceListDto(priceList);
     }
 
     @Override

@@ -44,8 +44,6 @@ public interface ContractorGroupRepository extends JpaRepository<ContractorGroup
             "where cg.id = :id")
     ContractorGroupDto getContractorGroupByContractorId(@Param("id") Long id);
 
-    ContractorGroup getContractorGroupById(Long id);
-
 
 //    default Optional<ContractorGroup> getEntityName(String name) {
 //        return null;

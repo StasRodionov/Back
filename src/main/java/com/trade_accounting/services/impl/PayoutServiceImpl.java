@@ -4,7 +4,7 @@ import com.trade_accounting.models.Payout;
 import com.trade_accounting.models.dto.PayoutDto;
 import com.trade_accounting.repositories.PayoutRepository;
 import com.trade_accounting.services.interfaces.PayoutService;
-import com.trade_accounting.utils.mapper.PayoutMapper;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,32 +17,32 @@ public class PayoutServiceImpl implements PayoutService {
 
     private final PayoutRepository payoutRepository;
 
-    private final PayoutMapper payoutMapper;
+    private final DtoMapper dtoMapper;
 
-    public PayoutServiceImpl(PayoutRepository payoutRepository, PayoutMapper payoutMapper) {
+    public PayoutServiceImpl(PayoutRepository payoutRepository, DtoMapper dtoMapper) {
         this.payoutRepository = payoutRepository;
-        this.payoutMapper = payoutMapper;
+        this.dtoMapper = dtoMapper;
     }
 
     @Override
     public List<PayoutDto> getAll() {
         return payoutRepository.findAll().stream()
-                .map(payoutMapper::toDto)
+                .map(dtoMapper::payoutToPayoutDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public PayoutDto getById(Long id) {
-        return payoutMapper.toDto(payoutRepository.getOne(id));
+        return dtoMapper.payoutToPayoutDto(payoutRepository.getOne(id));
     }
 
     @Override
     public PayoutDto create(PayoutDto payoutDto) {
-        Payout payout = payoutRepository.save(payoutMapper.toModel(payoutDto));
+        Payout payout = payoutRepository.save(dtoMapper.payoutDtoToPayout(payoutDto));
         if (payoutDto.getId() == null) {
             payoutDto.setId(payout.getId());
         }
-        return payoutMapper.toDto(payout);
+        return dtoMapper.payoutToPayoutDto(payout);
     }
 
     @Override
@@ -59,10 +59,10 @@ public class PayoutServiceImpl implements PayoutService {
     public List<PayoutDto> getAllByParametrs(String searchTerm) {
         if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
             List<Payout> all = payoutRepository.findAll();
-            return all.stream().map(payoutMapper::toDto).collect(Collectors.toList());
+            return all.stream().map(dtoMapper::payoutToPayoutDto).collect(Collectors.toList());
         } else {
             List<Payout> list = payoutRepository.search(searchTerm);
-            return list.stream().map(payoutMapper::toDto).collect(Collectors.toList());
+            return list.stream().map(dtoMapper::payoutToPayoutDto).collect(Collectors.toList());
         }
     }
 }

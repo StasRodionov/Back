@@ -4,8 +4,7 @@ import com.trade_accounting.models.Role;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.interfaces.RoleService;
-import com.trade_accounting.utils.mapper.RoleMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,30 +13,34 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
 
-    private final RoleMapper roleMapper;
+    private final DtoMapper dtoMapper;
+
+    public RoleServiceImpl(RoleRepository roleRepository, DtoMapper dtoMapper) {
+        this.roleRepository = roleRepository;
+        this.dtoMapper = dtoMapper;
+    }
 
     @Override
     public List<RoleDto> getAll() {
         return roleRepository.findAll().stream()
-                .map(roleMapper::toDto)
+                .map(dtoMapper::roleToRoleDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public RoleDto getById(Long id) {
-        return roleMapper.toDto(
+        return dtoMapper.roleToRoleDto(
                 roleRepository.findById(id).orElse(new Role())
         );
     }
 
     @Override
     public RoleDto getByName(String name) {
-        return roleMapper.toDto(
+        return dtoMapper.roleToRoleDto(
                 roleRepository.findByName(name).orElse(new Role())
         );
     }
@@ -45,10 +48,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto create(RoleDto roleDto) {
         Role role = roleRepository.save(
-                roleMapper.toModel(roleDto)
+                dtoMapper.roleDtoToRole(roleDto)
         );
         roleDto.setId(role.getId());
-        return roleMapper.toDto(role);
+        return dtoMapper.roleToRoleDto(role);
     }
 
     @Override

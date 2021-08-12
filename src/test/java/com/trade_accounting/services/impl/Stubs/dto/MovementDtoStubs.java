@@ -9,7 +9,7 @@ public class MovementDtoStubs {
     private static final MovementMapper mapper = Mappers.getMapper(MovementMapper.class);
 
     public static MovementDto getMovementDto(Long id) {
-        return mapper.toDto(MovementModelStubs.getMovement(id));
+        return mapper.toMovementDto(MovementModelStubs.getMovement(id));
     }
 }
 

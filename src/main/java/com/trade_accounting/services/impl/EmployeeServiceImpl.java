@@ -9,8 +9,7 @@ import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.interfaces.EmployeeService;
-import com.trade_accounting.utils.mapper.EmployeeMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +25,6 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
@@ -35,25 +33,38 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final RoleRepository roleRepository;
     private final ImageRepository imageRepository;
 
-    private final EmployeeMapper employeeMapper;
+    private final DtoMapper dtoMapper;
+
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository,
+                               PositionRepository positionRepository,
+                               DepartmentRepository departmentRepository,
+                               RoleRepository roleRepository,
+                               ImageRepository imageRepository, DtoMapper dtoMapper) {
+        this.employeeRepository = employeeRepository;
+        this.positionRepository = positionRepository;
+        this.departmentRepository = departmentRepository;
+        this.roleRepository = roleRepository;
+        this.imageRepository = imageRepository;
+        this.dtoMapper = dtoMapper;
+    }
 
     @Override
     public List<EmployeeDto> getAll() {
         return employeeRepository.findAll().stream()
-                .map(employeeMapper::toDto)
+                .map(dtoMapper::employeeToEmployeeDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<EmployeeDto> search(Specification<Employee> specification) {
-        return executeSearch(employeeRepository, employeeMapper::toDto, specification);
+        return executeSearch(employeeRepository, dtoMapper::employeeToEmployeeDto, specification);
     }
 
     @Override
     public PageDto<EmployeeDto> search(Specification<Employee> specification, Pageable pageParams) {
         Page<Employee> page = employeeRepository.findAll(specification, pageParams);
         return new PageDto<>(
-                page.getContent().stream().map(employeeMapper::toDto).collect(Collectors.toList()),
+                page.getContent().stream().map(dtoMapper::employeeToEmployeeDto).collect(Collectors.toList()),
                 page.getTotalElements(),
                 page.getTotalPages(),
                 page.getNumberOfElements()
@@ -63,19 +74,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto getById(Long id) {
         Optional<Employee> emp = employeeRepository.findById(id);
-        return employeeMapper.toDto(emp.orElse(new Employee()));
+        return dtoMapper.employeeToEmployeeDto(emp.orElse(new Employee()));
     }
 
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {
-        Employee employeeSaved = employeeRepository.save(employeeMapper.toModel(employeeDto));
+        Employee employeeSaved = employeeRepository.save(dtoMapper.employeeDtoToEmployee(employeeDto));
         employeeDto.setId(employeeSaved.getId());
         return employeeDto;
     }
 
     @Override
     public EmployeeDto update(EmployeeDto employeeDto) {
-        employeeRepository.save(employeeMapper.toModel(employeeDto));
+        employeeRepository.save(dtoMapper.employeeDtoToEmployee(employeeDto));
         return employeeDto;
     }
 
@@ -96,6 +107,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employee.isEmpty()) {
             return new EmployeeDto();
         }
-        return employeeMapper.toDto(employee.get());
+        return dtoMapper.employeeToEmployeeDto(employee.get());
     }
 }

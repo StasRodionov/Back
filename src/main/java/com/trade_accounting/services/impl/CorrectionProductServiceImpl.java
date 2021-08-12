@@ -6,8 +6,7 @@ import com.trade_accounting.models.dto.CorrectionProductDto;
 import com.trade_accounting.repositories.CorrectionProductRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.CorrectionProductService;
-import com.trade_accounting.utils.mapper.CorrectionProductMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,24 +16,31 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class CorrectionProductServiceImpl implements CorrectionProductService {
 
     private final CorrectionProductRepository correctionProductRepository;
     private final ProductRepository productRepository;
-    private final CorrectionProductMapper correctionProductMapper;
+    private final DtoMapper dtoMapper;
+
+    public CorrectionProductServiceImpl(CorrectionProductRepository correctionProductRepository,
+                                        ProductRepository productRepository,
+                                        DtoMapper dtoMapper) {
+        this.correctionProductRepository = correctionProductRepository;
+        this.productRepository = productRepository;
+        this.dtoMapper = dtoMapper;
+    }
 
     @Override
     public List<CorrectionProductDto> getAll() {
         return correctionProductRepository.findAll().stream()
-                .map(correctionProductMapper::toDto)
+                .map(dtoMapper::toCorrectionProductDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public CorrectionProductDto getById(Long id) {
         Optional<CorrectionProduct> correctionProduct = correctionProductRepository.findById(id);
-        return correctionProductMapper.toDto(correctionProduct.orElse(new CorrectionProduct()));
+        return dtoMapper.toCorrectionProductDto(correctionProduct.orElse(new CorrectionProduct()));
     }
 
     @Override
@@ -54,9 +60,9 @@ public class CorrectionProductServiceImpl implements CorrectionProductService {
 
     private CorrectionProductDto saveOrUpdate(CorrectionProductDto dto) {
         Optional<Product> product = productRepository.findById(dto.getProductId());
-        CorrectionProduct correctionProduct = correctionProductMapper.toModel(dto);
+        CorrectionProduct correctionProduct = dtoMapper.toCorrectionProduct(dto);
         correctionProduct.setProduct(product.orElse(null));
 
-        return correctionProductMapper.toDto(correctionProductRepository.save(correctionProduct));
+        return dtoMapper.toCorrectionProductDto(correctionProductRepository.save(correctionProduct));
     }
 }

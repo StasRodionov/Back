@@ -6,10 +6,11 @@ import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
-import com.trade_accounting.services.impl.Stubs.dto.CompanyDtoStubs;
-import com.trade_accounting.utils.mapper.CompanyMapperImpl;
+import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -44,7 +45,7 @@ class CompanyServiceImplTest {
     private AddressRepository addressRepository;
 
     @Spy
-    private CompanyMapperImpl companyMapper;
+    private DtoMapperImpl dtoMapper;
 
     @InjectMocks
     private CompanyServiceImpl companyService;
@@ -119,7 +120,7 @@ class CompanyServiceImplTest {
     @Test
     void getById_shouldReturnFilledCompanyDto() {
         when(companyService.getById(anyLong()))
-                .thenReturn(CompanyDtoStubs.getCompanyDto(anyLong()));
+                .thenReturn(DtoStubs.getCompanyDto(anyLong()));
 
         CompanyDto companyDto = companyService.getById(1L);
 
@@ -130,7 +131,7 @@ class CompanyServiceImplTest {
     @Test
     void getByEmail_shouldReturnFilledCompanyDto() {
         when(companyService.getByEmail(anyString()))
-                .thenReturn(CompanyDtoStubs.getCompanyDto(1L));
+                .thenReturn(DtoStubs.getCompanyDto(1L));
 
         CompanyDto companyDto = companyService.getByEmail("email");
 
@@ -140,7 +141,7 @@ class CompanyServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        companyService.create(CompanyDtoStubs.getCompanyDto(1L));
+        companyService.create(DtoStubs.getCompanyDto(1L));
 
         verify(companyRepository).save(any(Company.class));
         verify(addressRepository).getOne(anyLong());
@@ -150,7 +151,7 @@ class CompanyServiceImplTest {
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        companyService.update(CompanyDtoStubs.getCompanyDto(1L));
+        companyService.update(DtoStubs.getCompanyDto(1L));
 
         verify(companyRepository).save(any(Company.class));
         verify(addressRepository).getOne(anyLong());

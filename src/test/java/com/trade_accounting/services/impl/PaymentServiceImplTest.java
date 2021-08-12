@@ -7,9 +7,9 @@ import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.repositories.ProjectRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.PaymentDtoStubs;
-import com.trade_accounting.utils.mapper.PaymentMapperImpl;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -48,7 +48,7 @@ class PaymentServiceImplTest {
     private ProjectRepository projectRepository;
 
     @Spy
-    private PaymentMapperImpl paymentMapper;
+    private DtoMapperImpl dtoMapper;
 
     @InjectMocks
     private PaymentServiceImpl paymentService;
@@ -103,7 +103,7 @@ class PaymentServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         paymentService.create(
-                PaymentDtoStubs.getPaymentDto(1L)
+                DtoStubs.getPaymentDto(1L)
         );
 
         verify(paymentRepository).save(any(Payment.class));
@@ -116,7 +116,7 @@ class PaymentServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         paymentService.update(
-                PaymentDtoStubs.getPaymentDto(1L)
+                DtoStubs.getPaymentDto(1L)
         );
 
         verify(paymentRepository).save(any(Payment.class));
@@ -136,7 +136,7 @@ class PaymentServiceImplTest {
         assertNotNull(payment, "Fail in passed payment");
         assertNotNull(payment.getId(), "Fail in field 'id' of payment");
         assertNotNull(payment.getNumber(), "Fail in field 'number' of payment");
-        assertNotNull(payment.getCompanyId(), "Fail in field 'companyDto' of payment");
-        assertNotNull(payment.getContractorId(), "Fail in field 'contractorDto' of payment");
+        assertNotNull(payment.getCompanyDto(), "Fail in field 'companyDto' of payment");
+        assertNotNull(payment.getContractorDto(), "Fail in field 'contractorDto' of payment");
     }
 }

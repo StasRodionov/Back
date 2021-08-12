@@ -6,8 +6,7 @@ import com.trade_accounting.models.dto.InventarizationProductDto;
 import com.trade_accounting.repositories.InventarizationProductRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.InventarizationProductService;
-import com.trade_accounting.utils.mapper.InventarizationProductMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,19 +16,26 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class InventarizationProductServiceImpl implements InventarizationProductService {
 
     private final InventarizationProductRepository inventarizationProductRepository;
-    private final InventarizationProductMapper inventarizationProductMapper;
+    private final DtoMapper dtoMapper;
     private final ProductRepository productRepository;
+
+    public InventarizationProductServiceImpl(InventarizationProductRepository inventarizationProductRepository,
+                                             DtoMapper dtoMapper,
+                                             ProductRepository productRepository) {
+        this.inventarizationProductRepository = inventarizationProductRepository;
+        this.dtoMapper = dtoMapper;
+        this.productRepository = productRepository;
+    }
 
     @Override
     public List<InventarizationProductDto> getAll() {
 
         List<InventarizationProductDto> inventarizationProductDtos = inventarizationProductRepository.findAll()
                 .stream()
-                .map(inventarizationProductMapper::toDto)
+                .map(dtoMapper::toInventarizationProductDto)
                 .collect(Collectors.toList());
 
         return inventarizationProductDtos;
@@ -38,7 +44,7 @@ public class InventarizationProductServiceImpl implements InventarizationProduct
     @Override
     public InventarizationProductDto getById(Long id) {
         Optional<InventarizationProduct> inventarizationProduct = inventarizationProductRepository.findById(id);
-        return inventarizationProductMapper.toDto(inventarizationProduct.orElse(new InventarizationProduct()));
+        return dtoMapper.toInventarizationProductDto(inventarizationProduct.orElse(new InventarizationProduct()));
     }
 
     @Override
@@ -57,10 +63,10 @@ public class InventarizationProductServiceImpl implements InventarizationProduct
     }
 
     public InventarizationProductDto saveOrUpdate(InventarizationProductDto dto) {
-        InventarizationProduct inventarizationProduct = inventarizationProductMapper.toModel(dto);
+        InventarizationProduct inventarizationProduct = dtoMapper.toInventarizationProduct(dto);
         Optional<Product> product = productRepository.findById(dto.getProductId());
         inventarizationProduct.setProduct(product.orElse(null));
 
-        return inventarizationProductMapper.toDto(inventarizationProductRepository.save(inventarizationProduct));
+        return dtoMapper.toInventarizationProductDto(inventarizationProductRepository.save(inventarizationProduct));
     }
 }

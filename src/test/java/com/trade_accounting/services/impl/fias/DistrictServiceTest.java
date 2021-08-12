@@ -3,9 +3,9 @@ package com.trade_accounting.services.impl.fias;
 import com.trade_accounting.models.dto.fias.DistrictDto;
 import com.trade_accounting.models.fias.District;
 import com.trade_accounting.repositories.fias.DistrictRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.DistrictDtoStubs;
-import com.trade_accounting.utils.mapper.DistrictMapper;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,7 +33,7 @@ public class DistrictServiceTest {
     DistrictRepository repository;
 
     @Spy
-    DistrictMapper districtMapper;
+    DtoMapperImpl dtoMapper;
 
     @InjectMocks
     DistrictServiceImpl service;
@@ -69,19 +69,19 @@ public class DistrictServiceTest {
     @Test
     public void createTest() {
         when(repository.save(any())).thenReturn(ModelStubs.getDistrict(1L));
-        DistrictDto result = service.create(DistrictDtoStubs.getDistrictDto(1L));
+        DistrictDto result = service.create(DtoStubs.getDistrictDto(1L));
         verify(repository).save(any(District.class));
         assertNotNull(result, "failure - expected that a districtDto not null");
-        assertEquals(result, DistrictDtoStubs.getDistrictDto(1L));
+        assertEquals(result, DtoStubs.getDistrictDto(1L));
     }
 
     @Test
     public void updateTest() {
         when(repository.save(any())).thenReturn(ModelStubs.getDistrict(1L));
-        DistrictDto result = service.create(DistrictDtoStubs.getDistrictDto(1L));
+        DistrictDto result = service.create(DtoStubs.getDistrictDto(1L));
         verify(repository).save(any(District.class));
         assertNotNull(result, "failure - expected that a districtDto not null");
-        assertEquals(result, DistrictDtoStubs.getDistrictDto(1L));
+        assertEquals(result, DtoStubs.getDistrictDto(1L));
     }
 
     @Test

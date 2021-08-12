@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface AcceptanceProductionMapper {
     // AcceptanceProductionService
-    default AcceptanceProductionDto toDto(AcceptanceProduction acceptanceProduction) {
+    default AcceptanceProductionDto toAcceptanceProductionDto(AcceptanceProduction acceptanceProduction) {
         AcceptanceProductionDto acceptanceProductionDto = new AcceptanceProductionDto();
         if (acceptanceProduction == null) {
             return null;
@@ -26,7 +26,7 @@ public interface AcceptanceProductionMapper {
         }
     }
 
-    default AcceptanceProduction toModel(AcceptanceProductionDto acceptanceProductionDto) {
+    default AcceptanceProduction acceptanceProductionDtoToAcceptanceProduction(AcceptanceProductionDto acceptanceProductionDto) {
         AcceptanceProduction acceptanceProduction = new AcceptanceProduction();
         if (acceptanceProductionDto == null) {
             return null;

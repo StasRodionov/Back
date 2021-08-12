@@ -4,8 +4,12 @@ import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.dto.MovementProductDto;
 import com.trade_accounting.repositories.MovementProductRepository;
 import com.trade_accounting.repositories.ProductRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.MovementProductDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.MovementProductModelStubs;
+import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.MovementProductMapper;
 import com.trade_accounting.utils.mapper.MovementProductMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +35,9 @@ public class MovementProductServiceImplTest {
 
     @Mock
     ProductRepository productRepository;
+
+    @Spy
+    DtoMapperImpl dtoMapper;
 
     @Spy
     MovementProductMapperImpl movementProductMapper;

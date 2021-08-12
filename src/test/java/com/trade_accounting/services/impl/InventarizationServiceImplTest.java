@@ -6,8 +6,9 @@ import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.InventarizationProductRepository;
 import com.trade_accounting.repositories.InventarizationRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.InventarizationDtoStubs;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -42,7 +43,7 @@ public class InventarizationServiceImplTest {
     InventarizationServiceImpl inventarizationService;
 
     @Spy
-    InventarizationDtoStubs inventarizationDtoStubs;
+    DtoMapperImpl dtoMapper;
 
     @Test
     void getAll_shouldReturnFilledListInventarization() {
@@ -80,7 +81,7 @@ public class InventarizationServiceImplTest {
 
     private void saveOrUpdate() {
         when(inventarizationRepository.save(any(Inventarization.class))).thenReturn(ModelStubs.getInventarization(1L));
-        InventarizationDto inventarizationDto = inventarizationService.create(InventarizationDtoStubs.getInventarizationDto(1L));
+        InventarizationDto inventarizationDto = inventarizationService.create(DtoStubs.getInventarizationDto(1L));
         assertEquals(1,inventarizationDto.getId());
         verify(inventarizationRepository).save(any(Inventarization.class));
     }

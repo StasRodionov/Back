@@ -7,8 +7,11 @@ import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.AcceptanceDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.AcceptanceModelStubs;
+import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.utils.mapper.AcceptanceMapper;
 import com.trade_accounting.utils.mapper.AcceptanceMapperImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,6 +47,9 @@ public class AcceptanceServiceImplTest {
 
     @Mock
     WarehouseRepository warehouseRepository;
+
+    @Spy
+    DtoMapperImpl dtoMapper;
 
     @Spy
     AcceptanceMapperImpl acceptanceMapper;

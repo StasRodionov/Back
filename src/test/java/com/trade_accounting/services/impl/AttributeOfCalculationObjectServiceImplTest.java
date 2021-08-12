@@ -3,9 +3,9 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.AttributeOfCalculationObjectDtoStubs;
-import com.trade_accounting.utils.mapper.AttributeOfCalculationObjectMapper;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,7 +32,7 @@ class AttributeOfCalculationObjectServiceImplTest {
     private AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
 
     @Spy
-    private AttributeOfCalculationObjectMapper attributeOfCalculationObjectMapper;
+    private DtoMapperImpl dtoMapper;
 
     @InjectMocks
     private AttributeOfCalculationObjectServiceImpl attributeOfCalculationObjectService;
@@ -106,7 +106,7 @@ class AttributeOfCalculationObjectServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         attributeOfCalculationObjectService.create(
-                AttributeOfCalculationObjectDtoStubs.getAttributeOfCalculationObjectDto(1L)
+                DtoStubs.getAttributeOfCalculationObjectDto(1L)
         );
 
         verify(attributeOfCalculationObjectRepository).save(any(AttributeOfCalculationObject.class));
@@ -115,7 +115,7 @@ class AttributeOfCalculationObjectServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         attributeOfCalculationObjectService.update(
-                AttributeOfCalculationObjectDtoStubs.getAttributeOfCalculationObjectDto(1L)
+                DtoStubs.getAttributeOfCalculationObjectDto(1L)
         );
 
         verify(attributeOfCalculationObjectRepository).save(any(AttributeOfCalculationObject.class));

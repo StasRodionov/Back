@@ -3,9 +3,9 @@ package com.trade_accounting.services.impl.fias;
 import com.trade_accounting.models.dto.fias.CityDto;
 import com.trade_accounting.models.fias.City;
 import com.trade_accounting.repositories.fias.CityRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.CityDtoStubs;
-import com.trade_accounting.utils.mapper.CityMapper;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,12 +20,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CityServiceImplTest {
@@ -34,7 +32,7 @@ public class CityServiceImplTest {
     CityRepository cityRepository;
 
     @Spy
-    CityMapper cityMapper;
+    DtoMapperImpl dtoMapper;
 
     @InjectMocks
     CityServiceImpl cityService;
@@ -77,16 +75,16 @@ public class CityServiceImplTest {
     @Test
     public void updateTest() {
         when(cityRepository.save(any())).thenReturn(ModelStubs.getCity(1L));
-        CityDto result = cityService.update(CityDtoStubs.getCityDto(1L));
+        CityDto result = cityService.update(DtoStubs.getCityDto(1L));
         verify(cityRepository).save(any(City.class));
         assertNotNull(result, "failure - expected that a districtDto not null");
-        assertEquals(result, CityDtoStubs.getCityDto(1L));
+        assertEquals(result, DtoStubs.getCityDto(1L));
     }
 
     @Test
     public void createTest() {
         when(cityRepository.save(any())).thenReturn(ModelStubs.getCity(1L));
-        CityDto result = cityService.create(CityDtoStubs.getCityDto(1L));
+        CityDto result = cityService.create(DtoStubs.getCityDto(1L));
         verify(cityRepository).save(any(City.class));
         assertNotNull(result, "failure - expected that a districtDto not null");
     }

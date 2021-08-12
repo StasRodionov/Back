@@ -4,8 +4,7 @@ import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.dto.ContactDto;
 import com.trade_accounting.repositories.ContactRepository;
 import com.trade_accounting.services.interfaces.ContactService;
-import com.trade_accounting.utils.mapper.ContactMapper;
-import lombok.RequiredArgsConstructor;
+import com.trade_accounting.utils.DtoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,27 +15,31 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class ContactServiceImpl implements ContactService {
-    private final ContactMapper contactMapper;
+    private final DtoMapper dtoMapper;
     private final ContactRepository contactRepository;
+
+    public ContactServiceImpl(DtoMapper dtoMapper, ContactRepository contactRepository) {
+        this.dtoMapper = dtoMapper;
+        this.contactRepository = contactRepository;
+    }
 
     @Override
     public List<ContactDto> getAll() {
         List<Contact> all = contactRepository.findAll();
-        return all.stream().map(contactMapper::toDto).collect(Collectors.toList());
+        return all.stream().map(dtoMapper::contactToContactDto).collect(Collectors.toList());
     }
 
     @Override
     public ContactDto getById(Long id) {
         Contact contact = contactRepository.getOne(id);
-        return contactMapper.toDto(contact);
+        return dtoMapper.contactToContactDto(contact);
     }
 
     @Override
     public ContactDto create(ContactDto ContactDto) {
 
-        Contact contact = contactMapper.toModel(ContactDto);
+        Contact contact = dtoMapper.contactDtoToContact(ContactDto);
         Contact contactSaved = contactRepository.save(contact);
         ContactDto.setId(contactSaved.getId());
         return ContactDto;
@@ -44,9 +47,9 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public ContactDto update(ContactDto ContactDto) {
-        Contact contact = contactMapper.toModel(ContactDto);
+        Contact contact = dtoMapper.contactDtoToContact(ContactDto);
         Contact save = contactRepository.save(contact);
-        return contactMapper.toDto(save);
+        return dtoMapper.contactToContactDto(save);
     }
 
     @Override

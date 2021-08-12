@@ -3,7 +3,6 @@ package com.trade_accounting.controllers.rest;
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.TechnicalCardDto;
 import com.trade_accounting.models.dto.TechnicalCardProductionDto;
-import com.trade_accounting.services.impl.TechnicalCardServiceImpl;
 import com.trade_accounting.services.interfaces.TechnicalCardGroupService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class TechnicalCardRestControllerTest {
     private TechnicalCardRestController technicalCardRestController;
 
     @Autowired
-    private TechnicalCardServiceImpl technicalCardService;
+    private TechnicalCardGroupService technicalCardGroupService;
 
     @Autowired
     protected MockMvc mockMvc;
@@ -57,7 +56,15 @@ public class TechnicalCardRestControllerTest {
 
     @Test
     void testGetById() throws Exception {
-        String technicalCardDtoJson = new Gson().toJson(technicalCardService.getById(1L));
+        TechnicalCardDto technicalCardDto = TechnicalCardDto.builder()
+                .id(1L)
+                .comment("Комментарий 1")
+                .name("Техническая карта №1")
+                .productionCost("1000")
+                .technicalCardGroupDto(technicalCardGroupService.getById(1L))
+                .build();
+
+        String technicalCardDtoJson = new Gson().toJson(technicalCardDto);
 
         mockMvc.perform(get("/api/technical_card/1"))
                 .andDo(print())
@@ -68,10 +75,19 @@ public class TechnicalCardRestControllerTest {
 
     @Test
     void testCreate() throws Exception {
-        String technicalCardDtoJson = new Gson().toJson(technicalCardService.getById(2L));
+        TechnicalCardDto technicalCardDto = TechnicalCardDto.builder()
+                .id(4L)
+                .comment("Комментарий 4")
+                .name("Техническая карта №4")
+                .productionCost("4000")
+                .technicalCardGroupDto(technicalCardGroupService.getById(2L))
+                .finalProductionDto(List.of(new TechnicalCardProductionDto(1L, 1L, 1L)))
+                .materialsDto(List.of(new TechnicalCardProductionDto(1L, 1L, 1L)))
+                .build();
 
-        mockMvc.perform(post("/api/technical_card").contentType(MediaType.APPLICATION_JSON)
-                .content(technicalCardDtoJson))
+        String technicalCardDtoJson = new Gson().toJson(technicalCardDto);
+
+        mockMvc.perform(post("/api/technical_card").contentType(MediaType.APPLICATION_JSON).content(technicalCardDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
@@ -86,7 +102,17 @@ public class TechnicalCardRestControllerTest {
 
     @Test
     void testUpdate() throws Exception {
-        String technicalCardDtoJson = new Gson().toJson(technicalCardService.getById(3L));
+        TechnicalCardDto technicalCardDto = TechnicalCardDto.builder()
+                .id(3L)
+                .comment("Комментарий 1")
+                .name("Техническая карта №1")
+                .productionCost("1000")
+                .technicalCardGroupDto(technicalCardGroupService.getById(1L))
+                .finalProductionDto(List.of(new TechnicalCardProductionDto(1L, 1L, 1L)))
+                .materialsDto(List.of(new TechnicalCardProductionDto(1L, 1L, 1L)))
+                .build();
+
+        String technicalCardDtoJson = new Gson().toJson(technicalCardDto);
 
         mockMvc.perform(put("/api/technical_card").contentType(MediaType.APPLICATION_JSON).content(technicalCardDtoJson))
                 .andDo(print())

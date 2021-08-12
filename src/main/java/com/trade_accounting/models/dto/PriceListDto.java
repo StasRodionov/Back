@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -18,15 +19,14 @@ public class PriceListDto {
     @NotNull
     private String number;
 
-    @NotNull
-    private String time;
+    private LocalDateTime time;
 
     @NotNull
-    private Long companyId;
+    private CompanyDto companyDto;
 
-    private Boolean sent;
+    private Long sent;
 
-    private Boolean printed;
+    private Long printed;
 
     private String commentary;
 }

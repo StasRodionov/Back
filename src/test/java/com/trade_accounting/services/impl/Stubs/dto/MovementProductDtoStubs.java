@@ -10,6 +10,6 @@ public class MovementProductDtoStubs {
     private static final MovementProductMapper mapper = Mappers.getMapper(MovementProductMapper.class);
 
     public static MovementProductDto getMovementProductDto(Long id) {
-        return mapper.toDto(MovementProductModelStubs.getMovementProduct(id));
+        return mapper.toMovementProductDto(MovementProductModelStubs.getMovementProduct(id));
     }
 }

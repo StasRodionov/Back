@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.RoleDto;
-import com.trade_accounting.repositories.RoleRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.RoleService;
 import io.swagger.annotations.Api;
@@ -10,8 +9,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,12 +25,16 @@ import java.util.List;
 @Tag(name = "Role Rest Controller", description = "CRUD операции с ролями")
 @Api(tags = "Role Rest Controller")
 @RequestMapping("/api/role")
-@RequiredArgsConstructor
 public class RoleRestController {
 
     private final RoleService roleService;
     private final CheckEntityService checkEntityService;
-    private final RoleRepository roleRepository;
+
+    public RoleRestController(RoleService roleService,
+                              CheckEntityService checkEntityService) {
+        this.roleService = roleService;
+        this.checkEntityService = checkEntityService;
+    }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех ролей")
     @GetMapping
@@ -104,14 +105,12 @@ public class RoleRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")}
     )
-    public ResponseEntity<RoleDto> deleteById(@ApiParam(
+    public ResponseEntity<?> delete(@ApiParam(
             name = "id",
             type = "Long",
             value = "Переданный ID  в URL по которому необходимо удалить роль",
             example = "1",
-            required = true
-    ) @PathVariable("id") Long id) {
-        checkEntityService.checkExists((JpaRepository) roleRepository, id);
+            required = true) @PathVariable("id") Long id) {
         roleService.deleteById(id);
         return ResponseEntity.ok().build();
     }

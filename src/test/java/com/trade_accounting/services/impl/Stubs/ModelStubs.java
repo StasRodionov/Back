@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.Acceptance;
+import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AgentReports;
@@ -21,6 +23,7 @@ import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.PaymentMethods;
@@ -56,8 +59,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static com.trade_accounting.services.impl.Stubs.model.InvoiceModelStubs.getInvoice;
 
 public class ModelStubs {
     //TODO Вынести заглушки моделей из классов сервисов сюда
@@ -139,18 +140,13 @@ public class ModelStubs {
     }
 
     public static Contract getContract(Long id) {
-            return Contract.builder()
-                    .id(id)
-                    .number("00000" + id)
-                    .contractDate(LocalDate.now())
-                    .company(getCompany(1L))
-                    .bankAccount(getBankAccount(3L))
-                    .contractor(getContractor(1L))
-                    .amount(BigDecimal.ONE)
-                    .archive(false)
-                    .comment("Comment " + id)
-                    .legalDetail(getLegalDetail(1L))
-                    .build();
+        return new Contract(
+                id, "00001",
+                LocalDate.now(), getCompany(id),
+                getBankAccount(id), getContractor(id),
+                BigDecimal.ONE, false, "comment",
+                getLegalDetail(id)
+        );
     }
 
     public static Project getProject(Long id) {
@@ -196,8 +192,6 @@ public class ModelStubs {
     public static Position getPosition(Long id) {
         return new Position(id, "name", "00001");
     }
-
-
 
     public static Employee getEmployee(Long id) {
         return new Employee(
@@ -254,18 +248,28 @@ public class ModelStubs {
         return new Role(id, "name", "00001");
     }
 
-//    public static Invoice getInvoice(Long id) {
-//        return new Invoice(
-//                id,
-//                LocalDateTime.now(),
-//                TypeOfInvoice.RECEIPT,
-//                getCompany(id),
-//                getContractor(id),
-//                getWarehouse(id),
-//                Boolean.TRUE,
-//                "Комментарий"
-//        );
-//    }
+    public static Invoice getInvoice(Long id) {
+        return new Invoice(
+                id,
+                LocalDateTime.now(),
+                TypeOfInvoice.RECEIPT,
+                getCompany(id),
+                getContractor(id),
+                new Warehouse(),
+                Boolean.TRUE,
+                "Комментарий"
+        );
+    }
+
+    public static InvoiceProduct getInvoiceProduct(Long id) {
+        return new InvoiceProduct(
+                id,
+                getInvoice(id),
+                new Product(),
+                BigDecimal.valueOf(id),
+                BigDecimal.valueOf(id)
+        );
+    }
 
     public static Currency getCurrency(Long id) {
         return new Currency(id, "rubles", "Russian Rubles", "25", "rub", "1");

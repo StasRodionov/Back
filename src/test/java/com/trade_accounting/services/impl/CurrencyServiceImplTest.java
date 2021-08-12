@@ -3,10 +3,10 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.repositories.CurrencyRepository;
+import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
-import com.trade_accounting.services.impl.Stubs.dto.CurrencyDtoStubs;
-import com.trade_accounting.utils.mapper.CurrencyMapperImpl;
+import com.trade_accounting.utils.DtoMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,7 +32,8 @@ class CurrencyServiceImplTest {
     private CurrencyRepository currencyRepository;
 
     @Spy
-    private CurrencyMapperImpl currencyMapper;
+    private DtoMapperImpl dtoMapper;
+
     @InjectMocks
     private CurrencyServiceImpl currencyService;
 
@@ -41,9 +42,9 @@ class CurrencyServiceImplTest {
         when(currencyRepository.getAll())
                 .thenReturn(
                         List.of(
-                                CurrencyDtoStubs.getCurrencyDto(1L),
-                                CurrencyDtoStubs.getCurrencyDto(2L),
-                                CurrencyDtoStubs.getCurrencyDto(3L)
+                                DtoStubs.getCurrencyDto(1L),
+                                DtoStubs.getCurrencyDto(2L),
+                                DtoStubs.getCurrencyDto(3L)
                         )
                 );
         List<CurrencyDto> currencyDtoList = currencyService.getAll();
@@ -96,7 +97,7 @@ class CurrencyServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         currencyService.create(
-                CurrencyDtoStubs.getCurrencyDto(1L)
+                DtoStubs.getCurrencyDto(1L)
         );
 
         verify(currencyRepository).save(any(Currency.class));
@@ -105,7 +106,7 @@ class CurrencyServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         currencyService.update(
-                CurrencyDtoStubs.getCurrencyDto(1L)
+                DtoStubs.getCurrencyDto(1L)
         );
 
         verify(currencyRepository).save(any(Currency.class));
@@ -114,7 +115,7 @@ class CurrencyServiceImplTest {
     @Test
     void getById_shouldReturnFilledCurrencyDto() {
         CurrencyDto currencyFromRepo =
-                CurrencyDtoStubs.getCurrencyDto(1L);
+                DtoStubs.getCurrencyDto(1L);
 
         when(currencyRepository.getById(anyLong()))
                 .thenReturn(currencyFromRepo);
