@@ -27,7 +27,6 @@ public class TaskCommentServiceImpl implements TaskCommentService {
     private final TaskCommentRepository taskCommentRepository;
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
-    private final CheckEntityServiceImpl checkEntityService;
     private final TaskCommentMapper taskCommentMapper;
 
     @Override
@@ -45,26 +44,11 @@ public class TaskCommentServiceImpl implements TaskCommentService {
 
     @Override
     public TaskCommentDto getById(Long id) {
-//        return taskCommentRepository.findById(id)
-//                .map(taskCommentMapper::toDto).orElse(new TaskCommentDto());
         return taskCommentMapper.toDto(taskCommentRepository.getOne(id));
     }
 
     @Override
     public TaskCommentDto create(TaskCommentDto dto) {
-//        checkEntityService.checkExistsTaskById(dto.getTaskId());
-//        var task = taskRepository.findById(dto.getTaskId()).get();
-//
-//        var commentEntity = taskCommentMapper.toModel(dto);
-//
-//        commentEntity.setPublisher(employeeRepository.getOne(dto.getPublisherId()));
-//        commentEntity.setTask(taskRepository.getOne(dto.getTaskId()));
-//
-//        var saved = commentRepository.save(commentEntity);
-//        dto.setId(saved.getId());
-//        task.getTaskComments().add(commentEntity);
-//
-//        return taskCommentMapper.toDto(saved);
         TaskComment taskComment = taskCommentMapper.toModel(dto);
         Employee employee = employeeRepository.getOne(dto.getPublisherId());
         Task task = taskRepository.getOne(dto.getTaskId());
@@ -102,14 +86,6 @@ public class TaskCommentServiceImpl implements TaskCommentService {
 
     @Override
     public void deleteById(Long id) {
-//        checkEntityService.checkExistsTaskCommentById(id);
-//        taskCommentRepository.findById(id).ifPresent(taskComment -> {
-//            var task = taskComment.getTask();
-//            if (task != null) {
-//                task.getTaskComments().remove(taskComment);
-//            }
-//            taskCommentRepository.deleteById(id);
-//        });
         taskCommentRepository.deleteById(id);
     }
 }
