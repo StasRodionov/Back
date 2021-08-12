@@ -845,6 +845,18 @@ create table warehouses
     primary key (id)
 );
 
+create table mutual_settlements
+(
+    id                  bigserial not null,
+    contractor_id       int4 not null,
+    employee_id         int4 not null,
+    initial_balance     int4,
+    final_balance       int4,
+    income              int4,
+    expenses            int4,
+    primary key (id)
+);
+
 alter table if exists acceptances_acceptance_production
     add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);
 
