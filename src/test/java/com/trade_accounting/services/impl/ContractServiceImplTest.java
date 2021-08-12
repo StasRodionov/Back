@@ -2,13 +2,16 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.dto.ContractDto;
+import com.trade_accounting.repositories.BankAccountRepository;
+import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
+import com.trade_accounting.repositories.ContractorRepository;
+import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PaymentRepository;
-
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.services.impl.Stubs.dto.ContractDtoStubs;
+import com.trade_accounting.utils.mapper.ContractMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,10 +29,24 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ContractServiceImplTest {
+
+    @Mock
+    CompanyRepository companyRepository;
+
+    @Mock
+    BankAccountRepository bankAccountRepository;
+
+    @Mock
+    ContractorRepository contractorRepository;
+
+    @Mock
+    LegalDetailRepository legalDetailRepository;
+
     @Mock
     ContractRepository contractRepository;
 
@@ -37,14 +54,14 @@ public class ContractServiceImplTest {
     PaymentRepository paymentRepository;
 
     @Spy
-    DtoMapperImpl dtoMapper;
+    ContractMapper contractMapper;
 
     @InjectMocks
     ContractServiceImpl contractService;
 
     @Test
     void getAllShouldReturnListOfContracts() {
-        when(contractRepository.findAll())
+        when(contractRepository.getAll())
                 .thenReturn(
                         Stream.of(ModelStubs.getContract(1L),
                                 ModelStubs.getContract(2L),
@@ -62,7 +79,7 @@ public class ContractServiceImplTest {
 
     @Test
     void getAllShouldReturnEmptyListContractDto() {
-        when(contractRepository.findAll()).thenReturn(new ArrayList<>());
+        when(contractRepository.getAll()).thenReturn(new ArrayList<>());
 
         List<ContractDto> contractDtoList = contractService.getAll();
 
@@ -98,18 +115,14 @@ public class ContractServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        contractService.update(
-                DtoStubs.getContractDto(1L)
-        );
+        contractService.create(ContractDtoStubs.getContractDto(1L));
 
         verify(contractRepository).save(any(Contract.class));
     }
 
     @Test
     void update_shouldPassInstructionsSuccessfulCreate() {
-        contractService.update(
-                DtoStubs.getContractDto(1L)
-        );
+        contractService.update(ContractDtoStubs.getContractDto(1L));
 
         verify(contractRepository).save(any(Contract.class));
     }
@@ -122,7 +135,7 @@ public class ContractServiceImplTest {
 
     void contractDtoIsCorrectlyInitiated(ContractDto contractDto) {
         assertNotNull(contractDto.getId(), "Id should not be null");
-        assertNotNull(contractDto.getContractorDto(), "Contractor should not be null");
-        assertNotNull(contractDto.getCompanyDto(), "Company should not be null");
+        assertNotNull(contractDto.getContractorId(), "Contractor should not be null");
+        assertNotNull(contractDto.getCompanyId(), "Company should not be null");
     }
 }

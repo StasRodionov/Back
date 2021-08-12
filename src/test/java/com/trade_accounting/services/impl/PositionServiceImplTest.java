@@ -3,9 +3,9 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.repositories.PositionRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.services.impl.Stubs.dto.PositionDtoStubs;
+import com.trade_accounting.utils.mapper.PositionMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,7 +31,7 @@ class PositionServiceImplTest {
     private PositionRepository positionRepository;
 
     @Spy
-    private DtoMapperImpl dtoMapper;
+    private PositionMapperImpl positionMapper;
 
     @InjectMocks
     private PositionServiceImpl positionService;
@@ -107,14 +107,14 @@ class PositionServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        positionService.create(DtoStubs.getPositionDto(1L));
+        positionService.create(PositionDtoStubs.getPositionDto(1L));
 
         verify(positionRepository).save(any(Position.class));
     }
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        positionService.update(DtoStubs.getPositionDto(1L));
+        positionService.update(PositionDtoStubs.getPositionDto(1L));
 
         verify(positionRepository).save(any(Position.class));
     }

@@ -3,9 +3,9 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.dto.DepartmentDto;
 import com.trade_accounting.repositories.DepartmentRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.services.impl.Stubs.dto.DepartmentDtoStubs;
+import com.trade_accounting.utils.mapper.DepartmentMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,7 +31,7 @@ class DepartmentServiceImplTest {
     private DepartmentRepository departmentRepository;
 
     @Spy
-    private DtoMapperImpl dtoMapper;
+    private DepartmentMapperImpl departmentMapper;
 
     @InjectMocks
     private DepartmentServiceImpl departmentService;
@@ -107,14 +107,14 @@ class DepartmentServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
-        departmentService.create(DtoStubs.getDepartmentDto(1L));
+        departmentService.create(DepartmentDtoStubs.getDepartmentDto(1L));
 
         verify(departmentRepository).save(any(Department.class));
     }
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-        departmentService.update(DtoStubs.getDepartmentDto(1L));
+        departmentService.update(DepartmentDtoStubs.getDepartmentDto(1L));
 
         verify(departmentRepository).save(any(Department.class));
     }

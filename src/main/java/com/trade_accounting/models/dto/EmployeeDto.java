@@ -1,6 +1,7 @@
 package com.trade_accounting.models.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class EmployeeDto {
 
     private Long id;
@@ -63,4 +65,6 @@ public class EmployeeDto {
         this.email = email;
         this.password = password;
     }
+
+
 }

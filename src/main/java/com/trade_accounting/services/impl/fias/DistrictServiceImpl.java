@@ -5,46 +5,42 @@ import com.trade_accounting.models.fias.District;
 import com.trade_accounting.repositories.fias.DistrictRepository;
 import com.trade_accounting.repositories.fias.RegionRepository;
 import com.trade_accounting.services.interfaces.fias.DistrictService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.DistrictMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class DistrictServiceImpl implements DistrictService {
-    private final DtoMapper dtoMapper;
+    private final DistrictMapper districtMapper;
     private final DistrictRepository repository;
     private final RegionRepository regionRepository;
-
-    public DistrictServiceImpl(DtoMapper dtoMapper, DistrictRepository repository, RegionRepository regionRepository) {
-        this.dtoMapper = dtoMapper;
-        this.repository = repository;
-        this.regionRepository = regionRepository;
-    }
 
     @Override
     public List<DistrictDto> getAll() {
         List<District> districts = repository.findAll();
-        return districts.stream().map(dtoMapper::toDistrictDto).collect(Collectors.toList());
+        return districts.stream().map(districtMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
     public DistrictDto getById(Long id) {
         District district = repository.findById(id).orElse(new District());
-        return dtoMapper.toDistrictDto(district);
+        return districtMapper.toDto(district);
     }
 
     @Override
     public DistrictDto create(DistrictDto districtDto) {
-        District district1 = dtoMapper.toDistrict(districtDto);
+        District district1 = districtMapper.toModel(districtDto);
         District district = repository.save(district1);
-        return dtoMapper.toDistrictDto(district);
+        return districtMapper.toDto(district);
     }
 
     @Override
     public DistrictDto update(DistrictDto districtDto) {
-        return dtoMapper.toDistrictDto(repository.save(dtoMapper.toDistrict(districtDto)));
+        return districtMapper.toDto(repository.save(districtMapper.toModel(districtDto)));
     }
 
     @Override

@@ -4,7 +4,8 @@ import com.trade_accounting.models.Project;
 import com.trade_accounting.models.dto.ProjectDto;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.services.interfaces.ProjectService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.ProjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,27 +14,23 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    private final DtoMapper dtoMapper;
-
-    public ProjectServiceImpl(ProjectRepository projectRepository, DtoMapper dtoMapper) {
-        this.projectRepository = projectRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final ProjectMapper projectMapper;
 
     @Override
     public List<ProjectDto> getAll() {
         return projectRepository.findAll().stream()
-                .map(dtoMapper::projectToProjectDto)
+                .map(projectMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public ProjectDto getById(Long id) {
-        return dtoMapper.projectToProjectDto(
+        return projectMapper.toDto(
                 projectRepository.findById(id).orElse(new Project())
         );
     }
@@ -41,10 +38,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectDto create(ProjectDto projectDto) {
         Project project = projectRepository.save(
-                dtoMapper.projectDtoToProject(projectDto)
+                projectMapper.toModel(projectDto)
         );
         projectDto.setId(project.getId());
-        return dtoMapper.projectToProjectDto(project);
+        return projectMapper.toDto(project);
     }
 
     @Override

@@ -5,15 +5,12 @@ import com.trade_accounting.models.dto.TechnicalCardDto;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.repositories.TechnicalCardProductionRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.TechnicalCardDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.TechnicalCardModelStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -26,9 +23,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TechnicalCardServiceImplTest {
-
-    @Spy
-    private DtoMapperImpl dtoMapper;
 
     @Mock
     private TechnicalCardRepository technicalCardRepository;

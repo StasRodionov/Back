@@ -7,7 +7,8 @@ import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.services.interfaces.CompanyService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.CompanyMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
@@ -25,49 +27,37 @@ public class CompanyServiceImpl implements CompanyService {
     private final BankAccountRepository bankAccountRepository;
     private final AddressRepository addressRepository;
 
-    private final DtoMapper dtoMapper;
-
-    public CompanyServiceImpl(CompanyRepository companyRepository,
-                              LegalDetailRepository legalDetailRepository,
-                              BankAccountRepository bankAccountRepository,
-                              AddressRepository addressRepository,
-                              DtoMapper dtoMapper) {
-        this.companyRepository = companyRepository;
-        this.legalDetailRepository = legalDetailRepository;
-        this.bankAccountRepository = bankAccountRepository;
-        this.addressRepository = addressRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final CompanyMapper companyMapper;
 
     @Override
     public List<CompanyDto> getAll() {
         List<Company> companys = companyRepository.findAll();
         List<CompanyDto> companyDtos = new ArrayList<>();
         for (Company company : companys) {
-            companyDtos.add(dtoMapper.companyToCompanyDto(company));
+            companyDtos.add(companyMapper.toDto(company));
         }
         return companyDtos;
     }
 
     @Override
     public List<CompanyDto> search(Specification<Company> spec) {
-        return executeSearch(companyRepository, dtoMapper::companyToCompanyDto, spec);
+        return executeSearch(companyRepository, companyMapper::toDto, spec);
     }
 
     @Override
     public CompanyDto getById(Long id) {
         Company company = companyRepository.findById(id).orElse(new Company());
-        return dtoMapper.companyToCompanyDto(company);
+        return companyMapper.toDto(company);
     }
 
     @Override
     public CompanyDto getByEmail(String email) {
         Company company = companyRepository.findCompanyByEmail(email);
-        return dtoMapper.companyToCompanyDto(company);
+        return companyMapper.toDto(company);
     }
 
     public CompanyDto create(CompanyDto companyDto) {
-        Company company = dtoMapper.companyDtoToCompany(companyDto);
+        Company company = companyMapper.toModel(companyDto);
         company.setAddress(addressRepository.getOne(companyDto.getAddressId()));
 
         company.setLegalDetail(
@@ -91,7 +81,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyDto update(CompanyDto companyDto) {
-        Company company = dtoMapper.companyDtoToCompany(companyDto);
+        Company company = companyMapper.toModel(companyDto);
         company.setAddress(addressRepository.getOne(companyDto.getAddressId()));
         company.setLegalDetail(
                 legalDetailRepository.getOne(companyDto.getLegalDetailDtoId())

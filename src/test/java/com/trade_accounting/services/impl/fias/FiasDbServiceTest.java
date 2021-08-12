@@ -4,9 +4,9 @@ package com.trade_accounting.services.impl.fias;
 import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
 import com.trade_accounting.models.fias.FiasAddressModel;
 import com.trade_accounting.repositories.fias.AddressDbRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.services.impl.Stubs.dto.FiasAddressModelDtoStubs;
+import com.trade_accounting.utils.mapper.FiasAddressModelMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,7 +33,7 @@ public class FiasDbServiceTest {
     AddressDbRepository repository;
 
     @Spy
-    DtoMapperImpl dtoMapper;
+    FiasAddressModelMapper fiasAddressModelMapper;
 
     @InjectMocks
     FiasDbServiceImpl service;
@@ -69,20 +69,20 @@ public class FiasDbServiceTest {
     @Test
     public void createTest() {
         when(repository.save(any())).thenReturn(ModelStubs.getFiasAddressModel(1L));
-        FiasAddressModelDto result = service.create(DtoStubs.getFiasAddressModelDto(1L));
+        FiasAddressModelDto result = service.create(FiasAddressModelDtoStubs.getFiasAddressModelDto(1L));
         verify(repository).save(any(FiasAddressModel.class));
         assertNotNull(result, "failure - expected that a StreetDto not null");
-        assertEquals(result, DtoStubs.getFiasAddressModelDto(1L));
+        assertEquals(result, FiasAddressModelDtoStubs.getFiasAddressModelDto(1L));
         addressModelDtoIsCorrectlyInited(result);
     }
 
     @Test
     public void updateTest() {
         when(repository.save(any())).thenReturn(ModelStubs.getFiasAddressModel(1L));
-        FiasAddressModelDto result = service.update(DtoStubs.getFiasAddressModelDto(1L));
+        FiasAddressModelDto result = service.update(FiasAddressModelDtoStubs.getFiasAddressModelDto(1L));
         verify(repository).save(any(FiasAddressModel.class));
         assertNotNull(result, "failure - expected that a StreetDto not null");
-        assertEquals(result, DtoStubs.getFiasAddressModelDto(1L));
+        assertEquals(result, FiasAddressModelDtoStubs.getFiasAddressModelDto(1L));
         addressModelDtoIsCorrectlyInited(result);
     }
 

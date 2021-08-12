@@ -6,9 +6,9 @@ import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.CorrectionProductRepository;
 import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.services.impl.Stubs.dto.CorrectionDtoStubs;
+import com.trade_accounting.utils.mapper.CorrectionMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -40,7 +40,7 @@ class CorrectionServiceImplTest {
     CompanyRepository companyRepository;
 
     @Spy
-    DtoMapperImpl dtoMapper;
+    CorrectionMapper correctionMapper;
 
     @InjectMocks
     CorrectionServiceImpl correctionService;
@@ -85,7 +85,7 @@ class CorrectionServiceImplTest {
 
     private void saveOrUpdate() {
         when(correctionRepository.save(any(Correction.class))).thenReturn(ModelStubs.getCorrection(1L));
-        CorrectionDto correctionDto = correctionService.create(DtoStubs.getCorrectionDto(1L));
+        CorrectionDto correctionDto = correctionService.create(CorrectionDtoStubs.getCorrectionDto(1L));
         assertEquals(1, correctionDto.getId());
         verify(correctionRepository).save(any(Correction.class));
     }

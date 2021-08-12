@@ -1,7 +1,6 @@
 package com.trade_accounting.services.impl.Stubs.dto;
 
 
-import com.trade_accounting.models.ContractorStatus;
 import com.trade_accounting.models.dto.ContractorStatusDto;
 import com.trade_accounting.services.impl.Stubs.model.ContractorStatusModelStubs;
 import com.trade_accounting.utils.mapper.ContractorStatusMapper;

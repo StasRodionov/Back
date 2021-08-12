@@ -12,13 +12,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProductPriceDto {
     private Long id;
-    private TypeOfPriceDto typeOfPriceDto;
-    private BigDecimal value;
 
-    public ProductPriceDto(Long id, Long typeOfPriceId, BigDecimal value) {
-        this.id = id;
-        this.value = value;
-        this.typeOfPriceDto = new TypeOfPriceDto();
-        typeOfPriceDto.setId(typeOfPriceId);
-    }
+    private Long typeOfPriceId;
+
+    private BigDecimal value;
 }

@@ -5,14 +5,12 @@ import com.trade_accounting.models.dto.BalanceAdjustmentDto;
 import com.trade_accounting.repositories.BalanceAdjustmentRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.services.impl.Stubs.dto.BalanceAdjustmentDtoStubs;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -37,9 +35,6 @@ class BalanceAdjustmentServiceImplTest {
     @Mock
     ContractorRepository contractorRepository;
 
-    @Spy
-    DtoMapperImpl dtoMapper;
-
     @InjectMocks
     BalanceAdjustmentServiceImpl balanceAdjustmentService;
 
@@ -52,9 +47,9 @@ class BalanceAdjustmentServiceImplTest {
     void getAll_shouldReturnFilledListBalanceAdjustments() {
         when(balanceAdjustmentRepository.getAll())
                 .thenReturn(
-                        List.of(DtoStubs.getBalanceAdjustmentDto(1L),
-                                DtoStubs.getBalanceAdjustmentDto(2L),
-                                DtoStubs.getBalanceAdjustmentDto(3L)));
+                        List.of(BalanceAdjustmentDtoStubs.getBalanceAdjustmentDto(1L),
+                                BalanceAdjustmentDtoStubs.getBalanceAdjustmentDto(2L),
+                                BalanceAdjustmentDtoStubs.getBalanceAdjustmentDto(3L)));
         List<BalanceAdjustmentDto> list = balanceAdjustmentService.getAll();
         assertEquals(3, list.size());
     }
@@ -85,7 +80,7 @@ class BalanceAdjustmentServiceImplTest {
 
     private void saveOrUpdate() {
         when(balanceAdjustmentRepository.save(any())).thenReturn(ModelStubs.getBalanceAdjustment(1L));
-        BalanceAdjustmentDto dto = balanceAdjustmentService.create(DtoStubs.getBalanceAdjustmentDto(1L));
+        BalanceAdjustmentDto dto = balanceAdjustmentService.create(BalanceAdjustmentDtoStubs.getBalanceAdjustmentDto(1L));
         assertEquals(1, dto.getId());
         verify(balanceAdjustmentRepository).save(any(BalanceAdjustment.class));
     }

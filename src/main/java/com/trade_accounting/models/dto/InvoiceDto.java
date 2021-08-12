@@ -2,6 +2,7 @@ package com.trade_accounting.models.dto;
 
 import com.trade_accounting.models.TypeOfInvoice;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class InvoiceDto {
 
     private Long id;
@@ -20,13 +22,25 @@ public class InvoiceDto {
     @NotNull
     private String typeOfInvoice;
     @NotNull
-    private CompanyDto companyDto;
+    private Long companyId;
     @NotNull
-    private ContractorDto contractorDto;
+    private Long contractorId;
     @NotNull
-    private WarehouseDto warehouseDto;
+    private Long warehouseId;
 
-    private boolean isSpend;
+    private Boolean isSpend;
+    public InvoiceDto(Long id, String date,
+                      String typeOfInvoice, Long companyId,
+                      Long contractorId, Long warehouseId, boolean isSpend, String comment) {
+        this.id = id;
+        this.date = date;
+        this.typeOfInvoice = typeOfInvoice;
+        this.companyId = companyId;
+        this.contractorId = contractorId;
+        this.warehouseId = warehouseId;
+        this.isSpend = isSpend;
+        this.comment = comment;
+    }
 
     public InvoiceDto(Long id,
                       LocalDateTime date,
@@ -34,17 +48,14 @@ public class InvoiceDto {
                       Long companyId,
                       Long contractorId,
                       Long warehouseId,
-                      boolean isSpend,
+                      Boolean isSpend,
                       String comment) {
         this.id = id;
         this.date = date.toString();
         this.typeOfInvoice = typeOfInvoice.toString();
-        this.companyDto = new CompanyDto();
-        this.companyDto.setId(companyId);
-        this.contractorDto = new ContractorDto();
-        this.contractorDto.setId(contractorId);
-        this.warehouseDto = new WarehouseDto();
-        this.warehouseDto.setId(warehouseId);
+        this.companyId = companyId;
+        this.contractorId = contractorId;
+        this.warehouseId = warehouseId;
         this.isSpend = isSpend;
         this.comment = comment;
     }

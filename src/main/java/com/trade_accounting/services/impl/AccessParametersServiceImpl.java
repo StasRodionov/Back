@@ -6,7 +6,10 @@ import com.trade_accounting.repositories.AccessParametersRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.services.interfaces.AccessParametersService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.AccessParametersMapper;
+import com.trade_accounting.utils.mapper.DepartmentMapper;
+import com.trade_accounting.utils.mapper.EmployeeMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,40 +18,35 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AccessParametersServiceImpl implements AccessParametersService {
 
     private final AccessParametersRepository accessParametersRepository;
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
 
-    private final DtoMapper dtoMapper;
-
-    public AccessParametersServiceImpl(AccessParametersRepository accessParametersRepository, EmployeeRepository employeeRepository, DepartmentRepository departmentRepository, DtoMapper dtoMapper) {
-        this.accessParametersRepository = accessParametersRepository;
-        this.employeeRepository = employeeRepository;
-        this.departmentRepository = departmentRepository;
-        this.dtoMapper = dtoMapper;
-    }
-
+    private final EmployeeMapper employeeMapper;
+    private final DepartmentMapper departmentMapper;
+    private final AccessParametersMapper accessParametersMapper;
 
     @Override
     public List<AccessParametersDto> getAll() {
         return accessParametersRepository.findAll().stream()
-                .map(dtoMapper::accessParametersToAccessParametersDto)
+                .map(accessParametersMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public AccessParametersDto getById(Long id) {
-        return dtoMapper.accessParametersToAccessParametersDto(accessParametersRepository.getOne(id));
+        return accessParametersMapper.toDto(accessParametersRepository.getOne(id));
     }
 
     @Override
     public AccessParametersDto create(AccessParametersDto dto) {
-        return dtoMapper.accessParametersToAccessParametersDto(accessParametersRepository
+        return accessParametersMapper.toDto(accessParametersRepository
                 .save(AccessParameters.builder().id(dto.getId()).generalAccess(dto.getGeneralAccess())
-                        .employee(dtoMapper.employeeDtoToEmployee(employeeRepository.getById(dto.getEmployeeId())))
-                        .department(dtoMapper.departmentDtoToDepartment(departmentRepository.getById(dto.getDepartmentId()))).build()));
+                        .employee(employeeMapper.toModel(employeeRepository.getById(dto.getEmployeeId())))
+                        .department(departmentMapper.toModel(departmentRepository.getById(dto.getDepartmentId()))).build()));
     }
 
     @Override

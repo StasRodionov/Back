@@ -4,27 +4,23 @@ import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.dto.CurrencyDto;
 import com.trade_accounting.repositories.CurrencyRepository;
 import com.trade_accounting.services.interfaces.CurrencyService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.CurrencyMapper;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CurrencyServiceImpl implements CurrencyService {
 
     private final CurrencyRepository currencyRepository;
     private final ModelMapper modelMapper = new ModelMapper();
-    private final DtoMapper dtoMapper;
-
-    public CurrencyServiceImpl(CurrencyRepository currencyRepository, DtoMapper dtoMapper) {
-        this.currencyRepository = currencyRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final CurrencyMapper currencyMapper;
 
     @Override
     public List<CurrencyDto> getAll() {
@@ -33,7 +29,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public List<CurrencyDto> search(Specification<Currency> spec) {
-        return executeSearch(currencyRepository, dtoMapper::currencyToCurrencyDto, spec);
+        return executeSearch(currencyRepository, currencyMapper::toDto, spec);
     }
 
     @Override
@@ -44,10 +40,10 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public CurrencyDto create(CurrencyDto currencyDto) {
         Currency currency = currencyRepository.save(
-                dtoMapper.currencyDtoToCurrency(currencyDto)
+                currencyMapper.toModel(currencyDto)
         );
         currencyDto.setId(currency.getId());
-        return dtoMapper.currencyToCurrencyDto(currency);
+        return currencyMapper.toDto(currency);
     }
 
     @Override

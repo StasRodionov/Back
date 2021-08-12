@@ -5,7 +5,8 @@ import com.trade_accounting.models.Position;
 import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.services.interfaces.PositionService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.PositionMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,43 +16,39 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class PositionServiceImpl implements PositionService {
 
     private final PositionRepository positionRepository;
 
-    private final DtoMapper dtoMapper;
-
-    public PositionServiceImpl(PositionRepository positionRepository, DtoMapper dtoMapper) {
-        this.positionRepository = positionRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final PositionMapper positionMapper;
 
     @Override
     public List<PositionDto> getAll() {
         return positionRepository.findAll().stream()
-                .map(dtoMapper::positionToPositionDto)
+                .map(positionMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public PositionDto getById(Long id) {
-        return dtoMapper.positionToPositionDto(
+        return positionMapper.toDto(
                 positionRepository.findById(id).orElse(new Position())
         );
     }
 
     @Override
     public PositionDto getByName(String name) {
-        return dtoMapper.positionToPositionDto(
+        return positionMapper.toDto(
                 positionRepository.findByName(name).orElse(new Position())
         );
     }
 
     @Override
     public PositionDto create(PositionDto positionDto) {
-        Position position = dtoMapper.positionDtoToPosition(positionDto);
+        Position position = positionMapper.toModel(positionDto);
         positionDto.setId(position.getId());
-        return dtoMapper.positionToPositionDto(
+        return positionMapper.toDto(
                 positionRepository.save(position)
         );
     }

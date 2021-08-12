@@ -6,9 +6,9 @@ import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
-import com.trade_accounting.services.impl.Stubs.DtoStubs;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.utils.DtoMapperImpl;
+import com.trade_accounting.services.impl.Stubs.dto.SupplierAccountDtoStubs;
+import com.trade_accounting.utils.mapper.SupplierAccountMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 class SupplierAccountServiceImplTest {
 
     @Spy
-    private DtoMapperImpl mapper;
+    private SupplierAccountMapperImpl supplierAccountMapper;
 
     @Mock
     private SupplierAccountRepository repository;
@@ -59,9 +59,9 @@ class SupplierAccountServiceImplTest {
     void getAll_shouldReturnListFilledSupplierAccountDto() {
         when(repository.getAll())
                 .thenReturn(
-                        List.of(DtoStubs.getSupplierAccountDto(1L),
-                                DtoStubs.getSupplierAccountDto(2L),
-                                DtoStubs.getSupplierAccountDto(3L)));
+                        List.of(SupplierAccountDtoStubs.getSupplierAccountDto(1L),
+                                SupplierAccountDtoStubs.getSupplierAccountDto(2L),
+                                SupplierAccountDtoStubs.getSupplierAccountDto(3L)));
         List<SupplierAccountDto> list = service.getAll();
         assertNotNull(list, "list is not filled");
         assertEquals(3, list.size());
@@ -93,7 +93,7 @@ class SupplierAccountServiceImplTest {
 
     private void saveOrUpdate() {
         when(repository.save(any())).thenReturn(ModelStubs.getSupplierAccount(1L));
-        SupplierAccountDto dto = service.create(DtoStubs.getSupplierAccountDto(1L));
+        SupplierAccountDto dto = service.create(SupplierAccountDtoStubs.getSupplierAccountDto(1L));
         assertNotNull(dto);
         assertEquals(1, dto.getId());
         verify(repository).save(any());

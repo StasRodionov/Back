@@ -6,7 +6,7 @@ import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
 import com.trade_accounting.services.interfaces.TaskCommentService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.TaskCommentMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -16,33 +16,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 @Transactional
+@AllArgsConstructor
 public class TaskCommentServiceImpl implements TaskCommentService {
 
     private final TaskCommentRepository commentRepository;
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
     private final CheckEntityServiceImpl checkEntityService;
-    private final DtoMapper dtoMapper;
+    private final TaskCommentMapper taskCommentMapper;
 
     @Override
     public List<TaskCommentDto> search(Specification<TaskComment> specification) {
-        return executeSearch(commentRepository, dtoMapper::taskCommentToTaskCommentDto, specification);
+        return executeSearch(commentRepository, taskCommentMapper::toDto, specification);
     }
 
     @Override
     public List<TaskCommentDto> getAll() {
         return commentRepository.findAll()
                 .stream()
-                .map(dtoMapper::taskCommentToTaskCommentDto)
+                .map(taskCommentMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public TaskCommentDto getById(Long id) {
         return commentRepository.findById(id)
-                .map(dtoMapper::taskCommentToTaskCommentDto).orElse(new TaskCommentDto());
+                .map(taskCommentMapper::toDto).orElse(new TaskCommentDto());
     }
 
     @Override
@@ -50,7 +50,7 @@ public class TaskCommentServiceImpl implements TaskCommentService {
         checkEntityService.checkExistsTaskById(dto.getTaskId());
         var task = taskRepository.findById(dto.getTaskId()).get();
 
-        var commentEntity = dtoMapper.taskCommentDtoToTaskComment(dto);
+        var commentEntity = taskCommentMapper.toModel(dto);
 
         commentEntity.setPublisher(employeeRepository.getOne(dto.getPublisherId()));
         commentEntity.setTask(taskRepository.getOne(dto.getTaskId()));
@@ -59,12 +59,12 @@ public class TaskCommentServiceImpl implements TaskCommentService {
         dto.setId(saved.getId());
         task.getTaskComments().add(commentEntity);
 
-        return dtoMapper.taskCommentToTaskCommentDto(saved);
+        return taskCommentMapper.toDto(saved);
     }
 
     public void createAll(List<TaskCommentDto> dtos) {
         dtos.forEach(dto -> {
-            var entity = dtoMapper.taskCommentDtoToTaskComment(dto);
+            var entity = taskCommentMapper.toModel(dto);
             entity.setTask(taskRepository.getOne(dto.getTaskId()));
             entity.setPublisher(employeeRepository.getOne(dto.getPublisherId()));
 
@@ -95,3 +95,4 @@ public class TaskCommentServiceImpl implements TaskCommentService {
         });
     }
 }
+

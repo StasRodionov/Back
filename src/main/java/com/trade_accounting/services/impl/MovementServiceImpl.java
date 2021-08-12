@@ -10,8 +10,9 @@ import com.trade_accounting.repositories.MovementProductRepository;
 import com.trade_accounting.repositories.MovementRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.MovementService;
-import com.trade_accounting.utils.DtoMapper;
 import com.trade_accounting.utils.mapper.MovementMapper;
+import com.trade_accounting.utils.mapper.WarehouseMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,38 +23,26 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class MovementServiceImpl implements MovementService {
 
     private final MovementRepository movementRepository;
     private final WarehouseRepository warehouseRepository;
     private final CompanyRepository companyRepository;
     private final MovementProductRepository movementProductRepository;
-    private final DtoMapper dtoMapper;
+    private final WarehouseMapper warehouseMapper;
     private final MovementMapper movementMapper;
-
-    public MovementServiceImpl(MovementRepository movementRepository,
-                               WarehouseRepository warehouseRepository,
-                               CompanyRepository companyRepository,
-                               MovementProductRepository movementProductRepository,
-                               DtoMapper dtoMapper, MovementMapper movementMapper) {
-        this.movementRepository = movementRepository;
-        this.warehouseRepository = warehouseRepository;
-        this.companyRepository = companyRepository;
-        this.movementProductRepository = movementProductRepository;
-        this.dtoMapper = dtoMapper;
-        this.movementMapper = movementMapper;
-    }
 
     @Override
     public List<MovementDto> getAll() {
         return movementRepository.getAll().stream()
-                .map(movementMapper::toMovementDto)
+                .map(movementMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public MovementDto getById(Long id) {
-        return movementMapper.toMovementDto(movementRepository.getMovementById(id));
+        return movementMapper.toDto(movementRepository.getMovementById(id));
     }
 
     @Override
@@ -72,9 +61,9 @@ public class MovementServiceImpl implements MovementService {
     }
 
     private MovementDto saveOrUpdate(MovementDto dto) {
-        Movement movement = movementMapper.toMovement(dto);
-        Warehouse warehouseFrom = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseFromId()));
-        Warehouse warehouseTo = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseToId()));
+        Movement movement = movementMapper.toModel(dto);
+        Warehouse warehouseFrom = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseFromId()));
+        Warehouse warehouseTo = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseToId()));
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
@@ -87,6 +76,6 @@ public class MovementServiceImpl implements MovementService {
         movement.setDate(date);
         movement.setMovementProducts(movementProducts);
 
-        return movementMapper.toMovementDto(movementRepository.save(movement));
+        return movementMapper.toDto(movementRepository.save(movement));
     }
 }

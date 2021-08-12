@@ -10,7 +10,9 @@ import com.trade_accounting.repositories.CorrectionProductRepository;
 import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CorrectionService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.CorrectionMapper;
+import com.trade_accounting.utils.mapper.WarehouseMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,36 +23,26 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CorrectionServiceImpl implements CorrectionService {
 
     private final CorrectionRepository correctionRepository;
     private final WarehouseRepository warehouseRepository;
     private final CompanyRepository companyRepository;
     private final CorrectionProductRepository correctionProductRepository;
-    private final DtoMapper dtoMapper;
-
-    public CorrectionServiceImpl(CorrectionRepository correctionRepository,
-                                 WarehouseRepository warehouseRepository,
-                                 CompanyRepository companyRepository,
-                                 CorrectionProductRepository correctionProductRepository,
-                                 DtoMapper dtoMapper) {
-        this.correctionRepository = correctionRepository;
-        this.warehouseRepository = warehouseRepository;
-        this.companyRepository = companyRepository;
-        this.correctionProductRepository = correctionProductRepository;
-        this.dtoMapper = dtoMapper;
-    }
+    private final WarehouseMapper warehouseMapper;
+    private final CorrectionMapper correctionMapper;
 
     @Override
     public List<CorrectionDto> getAll() {
         return correctionRepository.getAll().stream()
-                .map(dtoMapper::toCorrectionDto)
+                .map(correctionMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public CorrectionDto getById(Long id) {
-        return dtoMapper.toCorrectionDto(correctionRepository.getCorrectionById(id));
+        return correctionMapper.toDto(correctionRepository.getCorrectionById(id));
     }
 
     @Override
@@ -69,8 +61,8 @@ public class CorrectionServiceImpl implements CorrectionService {
     }
 
     private CorrectionDto saveOrUpdate(CorrectionDto dto) {
-        Correction correction = dtoMapper.toCorrection(dto);
-        Warehouse warehouse = dtoMapper.warehouseDtoToWarehouse(warehouseRepository.getById(dto.getWarehouseId()));
+        Correction correction = correctionMapper.toModel(dto);
+        Warehouse warehouse = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseId()));
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
@@ -82,7 +74,7 @@ public class CorrectionServiceImpl implements CorrectionService {
         correction.setDate(date);
         correction.setCorrectionProducts(correctionProducts);
 
-        return dtoMapper.toCorrectionDto(correctionRepository.save(correction));
+        return correctionMapper.toDto(correctionRepository.save(correction));
     }
 }
 

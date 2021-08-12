@@ -23,5 +23,5 @@ public interface LegalDetailRepository extends JpaRepository<LegalDetail, Long> 
     @Query("SELECT c FROM LegalDetail c WHERE c.id = :id")
     LegalDetail getById(@Param("id") Long id);
 
-
+    LegalDetail getLegalDetailById(Long id);
 }
