@@ -3,6 +3,8 @@ package com.trade_accounting.utils.mapper;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import java.time.format.DateTimeFormatter;
 
@@ -27,7 +29,7 @@ public interface TaskCommentMapper {
         } else {
             taskCommentDto.setId(taskComment.getId());
             taskCommentDto.setCommentContent(taskComment.getCommentContent());
-            taskCommentDto.setPublishedDateTime(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(taskComment.getPublishedDateTime()));
+            taskCommentDto.setPublishedDateTime(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(taskComment.getPublishedDateTime()));
 
             if (taskComment.getPublisher() == null) {
                 return null;
@@ -43,16 +45,18 @@ public interface TaskCommentMapper {
             }
         }
     }
-//    //TaskComment *Test
+    //TaskComment *Test
 //    @Mappings({
 //            @Mapping(source = "publisher.id", target = "publisherId"),
 //            @Mapping(source = "task.id", target = "taskId"),
+//            @Mapping(source = "publishedDateTime", target = "publishedDateTime", dateFormat = "yyyy-MM-dd HH:mm:ss")
 //    })
 //    TaskCommentDto toDto(TaskComment taskComment);
 //
 //    @Mappings({
 //            @Mapping(source = "publisherId", target = "publisher.id"),
-//            @Mapping(source = "taskId", target = "task.id")
+//            @Mapping(source = "taskId", target = "task.id"),
+//            @Mapping(target = "publishedDateTime", ignore = true)
 //    })
 //    TaskComment toModel(TaskCommentDto taskCommentDto);
 }

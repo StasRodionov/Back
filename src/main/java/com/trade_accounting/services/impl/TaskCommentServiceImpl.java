@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import com.trade_accounting.repositories.EmployeeRepository;
@@ -12,6 +14,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +24,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class TaskCommentServiceImpl implements TaskCommentService {
 
-    private final TaskCommentRepository commentRepository;
+    private final TaskCommentRepository taskCommentRepository;
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
     private final CheckEntityServiceImpl checkEntityService;
@@ -28,12 +32,12 @@ public class TaskCommentServiceImpl implements TaskCommentService {
 
     @Override
     public List<TaskCommentDto> search(Specification<TaskComment> specification) {
-        return executeSearch(commentRepository, taskCommentMapper::toDto, specification);
+        return executeSearch(taskCommentRepository, taskCommentMapper::toDto, specification);
     }
 
     @Override
     public List<TaskCommentDto> getAll() {
-        return commentRepository.findAll()
+        return taskCommentRepository.findAll()
                 .stream()
                 .map(taskCommentMapper::toDto)
                 .collect(Collectors.toList());
@@ -41,25 +45,38 @@ public class TaskCommentServiceImpl implements TaskCommentService {
 
     @Override
     public TaskCommentDto getById(Long id) {
-        return commentRepository.findById(id)
-                .map(taskCommentMapper::toDto).orElse(new TaskCommentDto());
+//        return taskCommentRepository.findById(id)
+//                .map(taskCommentMapper::toDto).orElse(new TaskCommentDto());
+        return taskCommentMapper.toDto(taskCommentRepository.getOne(id));
     }
 
     @Override
     public TaskCommentDto create(TaskCommentDto dto) {
-        checkEntityService.checkExistsTaskById(dto.getTaskId());
-        var task = taskRepository.findById(dto.getTaskId()).get();
+//        checkEntityService.checkExistsTaskById(dto.getTaskId());
+//        var task = taskRepository.findById(dto.getTaskId()).get();
+//
+//        var commentEntity = taskCommentMapper.toModel(dto);
+//
+//        commentEntity.setPublisher(employeeRepository.getOne(dto.getPublisherId()));
+//        commentEntity.setTask(taskRepository.getOne(dto.getTaskId()));
+//
+//        var saved = commentRepository.save(commentEntity);
+//        dto.setId(saved.getId());
+//        task.getTaskComments().add(commentEntity);
+//
+//        return taskCommentMapper.toDto(saved);
+        TaskComment taskComment = taskCommentMapper.toModel(dto);
+        Employee employee = employeeRepository.getOne(dto.getPublisherId());
+        Task task = taskRepository.getOne(dto.getTaskId());
 
-        var commentEntity = taskCommentMapper.toModel(dto);
+        LocalDateTime time = LocalDateTime.parse(dto.getPublishedDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        commentEntity.setPublisher(employeeRepository.getOne(dto.getPublisherId()));
-        commentEntity.setTask(taskRepository.getOne(dto.getTaskId()));
+        taskComment.setPublisher(employee);
+        taskComment.setTask(task);
+        taskComment.setPublishedDateTime(time);
 
-        var saved = commentRepository.save(commentEntity);
-        dto.setId(saved.getId());
-        task.getTaskComments().add(commentEntity);
+        return taskCommentMapper.toDto(taskCommentRepository.save(taskComment));
 
-        return taskCommentMapper.toDto(saved);
     }
 
     public void createAll(List<TaskCommentDto> dtos) {
@@ -71,7 +88,7 @@ public class TaskCommentServiceImpl implements TaskCommentService {
             var taskOption = taskRepository.findById(dto.getTaskId());
 
             if (taskOption.isPresent()) {
-                commentRepository.save(entity);
+                taskCommentRepository.save(entity);
                 taskOption.get().getTaskComments().add(entity);
             }
         });
@@ -85,14 +102,15 @@ public class TaskCommentServiceImpl implements TaskCommentService {
 
     @Override
     public void deleteById(Long id) {
-        checkEntityService.checkExistsTaskCommentById(id);
-        commentRepository.findById(id).ifPresent(taskComment -> {
-            var task = taskComment.getTask();
-            if (task != null) {
-                task.getTaskComments().remove(taskComment);
-            }
-            commentRepository.deleteById(id);
-        });
+//        checkEntityService.checkExistsTaskCommentById(id);
+//        taskCommentRepository.findById(id).ifPresent(taskComment -> {
+//            var task = taskComment.getTask();
+//            if (task != null) {
+//                task.getTaskComments().remove(taskComment);
+//            }
+//            taskCommentRepository.deleteById(id);
+//        });
+        taskCommentRepository.deleteById(id);
     }
 }
 
