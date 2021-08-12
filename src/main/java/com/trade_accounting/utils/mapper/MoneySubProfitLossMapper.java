@@ -2,9 +2,10 @@ package com.trade_accounting.utils.mapper;
 
 import com.trade_accounting.models.MoneySubProfitLoss;
 import com.trade_accounting.models.dto.MoneySubProfitLossDto;
+import org.mapstruct.Mapper;
 
-public class MoneySubProfitLossMapper {
+@Mapper(componentModel = "spring")
+public interface MoneySubProfitLossMapper {
 
-    public abstract MoneySubProfitLossDto moneySubProfitLossToDTO(MoneySubProfitLoss moneySubProfitLoss);
-
+    MoneySubProfitLossDto moneySubProfitLossToDTO(MoneySubProfitLoss moneySubProfitLoss);
 }

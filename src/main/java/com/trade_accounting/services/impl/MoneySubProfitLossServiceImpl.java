@@ -4,7 +4,8 @@ import com.trade_accounting.models.MoneySubProfitLoss;
 import com.trade_accounting.models.dto.MoneySubProfitLossDto;
 import com.trade_accounting.repositories.MoneySubProfitLossRepository;
 import com.trade_accounting.services.interfaces.MoneySubProfitLossService;
-import com.trade_accounting.utils.DtoMapper;
+import com.trade_accounting.utils.mapper.MoneySubProfitLossMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -16,15 +17,11 @@ import java.util.Optional;
 @Slf4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService {
 
     private final MoneySubProfitLossRepository moneySubProfitLossRepository;
     private final MoneySubProfitLossMapper dtoMapper;
-
-    public MoneySubProfitLossServiceImpl(MoneySubProfitLossRepository moneySubProfitLossRepository, DtoMapper dtoMapper) {
-        this.moneySubProfitLossRepository = moneySubProfitLossRepository;
-        this.dtoMapper = dtoMapper;
-    }
 
     @Override
     public MoneySubProfitLossDto getById(Long id) {
