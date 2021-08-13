@@ -845,6 +845,18 @@ create table warehouses
     primary key (id)
 );
 
+create table mutual_settlements
+(
+    id                  bigserial not null,
+    contractor_id       int8 not null,
+    employee_id         int8 not null,
+    initial_balance     int4,
+    final_balance       int4,
+    income              int4,
+    expenses            int4,
+    primary key (id)
+);
+
 alter table if exists acceptances_acceptance_production
     add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);
 
@@ -1261,3 +1273,9 @@ alter table if exists technical_operations
 
 alter table if exists technical_operations
     add constraint FKfp96s0jdxgedvuicqrhsbslmr foreign key (warehouse_id) references warehouses;
+
+alter table  if exists mutual_settlements
+    add constraint fk7h156vxaoa80s9ruy6llp36pt foreign key (contractor_id) references contractors;
+
+alter table  if exists mutual_settlements
+    add constraint fk95bd6lohwuoqtbe5xbtdpp1x8 foreign key (employee_id) references employees;
