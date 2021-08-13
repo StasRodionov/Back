@@ -2,10 +2,11 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.TechnicalCard;
 import com.trade_accounting.models.dto.TechnicalCardDto;
-import com.trade_accounting.repositories.TechnicalCardGroupRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
+import com.trade_accounting.services.interfaces.TechnicalCardGroupService;
 import com.trade_accounting.services.interfaces.TechnicalCardProductionService;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
+import com.trade_accounting.utils.mapper.TechnicalCardGroupMapper;
 import com.trade_accounting.utils.mapper.TechnicalCardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,7 +24,8 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
     private final TechnicalCardRepository technicalCardRepository;
     private final TechnicalCardProductionService cardProductionService;
     private final TechnicalCardMapper technicalCardMapper;
-    private final TechnicalCardGroupRepository technicalCardGroupRepository;
+    private final TechnicalCardGroupMapper technicalCardGroupMapper;
+    private final TechnicalCardGroupService technicalCardGroupService;
 
     @Override
     public List<TechnicalCardDto> getAll() {
@@ -43,9 +45,9 @@ public class TechnicalCardServiceImpl implements TechnicalCardService {
         TechnicalCard technicalCard = technicalCardMapper.toModel(dto);
 
         technicalCard.setTechnicalCardGroup(
-                technicalCardGroupRepository.findById(
-                        dto.getTechnicalCardGroupId()
-                ).orElse(null)
+                technicalCardGroupMapper.toModel(technicalCardGroupService
+                        .getById(dto.getTechnicalCardGroupId())
+                )
         );
 
         technicalCard.setFinalProduction(

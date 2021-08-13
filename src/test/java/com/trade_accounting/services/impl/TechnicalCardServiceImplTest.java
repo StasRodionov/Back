@@ -7,10 +7,15 @@ import com.trade_accounting.repositories.TechnicalCardProductionRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
 import com.trade_accounting.services.impl.Stubs.dto.TechnicalCardDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.TechnicalCardModelStubs;
-import org.junit.Test;
+import com.trade_accounting.services.interfaces.TechnicalCardGroupService;
+import com.trade_accounting.services.interfaces.TechnicalCardProductionService;
+import com.trade_accounting.utils.mapper.TechnicalCardGroupMapper;
+import com.trade_accounting.utils.mapper.TechnicalCardMapper;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -23,23 +28,27 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TechnicalCardServiceImplTest {
+
     @Mock
     private TechnicalCardRepository technicalCardRepository;
 
     @Mock
-    private TechnicalCardProductionRepository technicalCardProductionRepository;
+    private TechnicalCardProductionService technicalCardProductionService;
+
+    @Spy
+    private TechnicalCardMapper technicalCardMapper;
+
+    @Spy
+    private TechnicalCardGroupMapper technicalCardGroupMapper;
+
+    @Mock
+    private TechnicalCardGroupService technicalCardGroupService;
 
     @InjectMocks
     private TechnicalCardServiceImpl technicalCardService;
 
-    @InjectMocks
-    private ProductServiceImpl productService;
-
-    @Mock
-    private ProductRepository productRepository;
-
     @Test
-    void getAll(){
+    public void getAll(){
             when(technicalCardRepository.findAll())
                 .thenReturn(List.of(
                         TechnicalCardModelStubs.getTechnicalCard(1L),
@@ -52,17 +61,17 @@ public class TechnicalCardServiceImplTest {
     }
 
     @Test
-    void create() {
+    public void create() {
         saveOrUpdate();
     }
 
     @Test
-    void update() {
+    public void update() {
         saveOrUpdate();
     }
 
     @Test
-    void getById() {
+    public void getById() {
         when(technicalCardRepository.getOne(anyLong()))
                 .thenReturn(TechnicalCardModelStubs.getTechnicalCard(1L));
 
@@ -72,7 +81,7 @@ public class TechnicalCardServiceImplTest {
     }
 
     @Test
-    void deleteById() {
+    public void deleteById() {
         technicalCardService.deleteById(anyLong());
         verify(technicalCardRepository).deleteById(anyLong());
     }
