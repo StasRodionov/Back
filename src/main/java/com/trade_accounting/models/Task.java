@@ -1,6 +1,7 @@
 package com.trade_accounting.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

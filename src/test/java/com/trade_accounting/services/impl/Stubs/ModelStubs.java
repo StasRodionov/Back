@@ -32,6 +32,8 @@ import com.trade_accounting.models.RequestsProductions;
 import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.SupplierAccount;
+import com.trade_accounting.models.Task;
+import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.TechnicalCard;
 import com.trade_accounting.models.TechnicalCardGroup;
@@ -548,6 +550,30 @@ public class ModelStubs {
                 .comment("Comment 1")
                 .dateChanged(LocalDateTime.now().toString())
                 .whoChanged("Who changed 1")
+                .build();
+    }
+
+    public static Task getTask(Long id) {
+        return Task.builder()
+                .id(id)
+                .description("description")
+                .taskEmployee(getEmployee(1L))
+                .taskAuthor(getEmployee(1L))
+                .creationDateTime(LocalDateTime.now())
+                .deadlineDateTime(LocalDateTime.now())
+                .completed(false)
+                .taskComments(List.of(getTaskComment(1L),
+                                    getTaskComment(2L),
+                                    getTaskComment(3L)))
+                .build();
+    }
+    public static TaskComment getTaskComment(Long id) {
+        return TaskComment.builder()
+                .id(id)
+                .commentContent("Comment content")
+                .publisher(getEmployee(1L))
+                .publishedDateTime(LocalDateTime.now())
+                .task(null)
                 .build();
     }
 }

@@ -1,6 +1,7 @@
 package com.trade_accounting.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+@Builder
 @Data
 @Entity
 @NoArgsConstructor

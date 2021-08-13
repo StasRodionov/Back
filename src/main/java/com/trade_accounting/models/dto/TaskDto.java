@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -31,7 +32,7 @@ public class TaskDto {
 
     private boolean completed;
 
-    private int commentCount;
+    private List<Long> taskCommentsIds;
 
     public TaskDto(Long id,
                    String description,
@@ -40,7 +41,7 @@ public class TaskDto {
                    LocalDateTime creationDateTime,
                    LocalDateTime deadlineDateTime,
                    boolean completed,
-                   int commentCount) {
+                   List<Long> taskCommentsIds) {
         this.id = id;
         this.description = description;
         this.employeeId = employeeId;
@@ -48,6 +49,6 @@ public class TaskDto {
         this.creationDateTime = creationDateTime.toString();
         this.deadlineDateTime = deadlineDateTime.toString();
         this.completed = completed;
-        this.commentCount = commentCount;
+        this.taskCommentsIds = taskCommentsIds;
     }
 }

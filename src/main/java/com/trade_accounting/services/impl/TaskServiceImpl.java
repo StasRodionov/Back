@@ -1,6 +1,8 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Task;
+import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.TaskDto;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
@@ -28,14 +30,13 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
     private final TaskCommentRepository commentRepository;
-    private final CheckEntityService checkEntityService;
     private final TaskMapper taskMapper;
 
     @Override
     public List<TaskDto> search(Specification<Task> specification) {
         return taskRepository.findAll(specification).stream()
                 .map(taskMapper::taskToTaskDto)
-                .peek(dto -> dto.setCommentCount(commentRepository.countTaskCommentByTaskId(dto.getId())))
+//                .peek(dto -> dto.setTaskCommentsIds(commentRepository.countTaskCommentByTaskId(dto.getId())))
                 .collect(Collectors.toList());
     }
 
@@ -44,40 +45,32 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findAll()
                 .stream()
                 .map(taskMapper::taskToTaskDto)
-                .peek(dto -> dto.setCommentCount(commentRepository.countTaskCommentByTaskId(dto.getId())))
                 .collect(Collectors.toList());
     }
 
     @Override
     public TaskDto getById(Long id) {
-        var taskEntity = taskRepository.findById(id);
-
-        return taskEntity
-                .map(entity -> {
-                    var dto = taskMapper.taskToTaskDto(entity);
-                    dto.setCommentCount(commentRepository.countTaskCommentByTaskId(id));
-                    return dto;
-                }).orElse(new TaskDto());
+        return taskMapper.taskToTaskDto(taskRepository.getOne(id));
     }
 
     @Override
     public TaskDto create(TaskDto dto) {
-        var taskEntity = taskMapper.taskDtoToTask(dto);
 
-        checkEntityService.checkExistsEmployeeById(dto.getEmployeeId());
-        checkEntityService.checkExistsEmployeeById(dto.getTaskAuthorId());
-
-        taskEntity.setTaskEmployee(employeeRepository.getOne(dto.getEmployeeId()));
-        taskEntity.setTaskAuthor(employeeRepository.getOne(dto.getTaskAuthorId()));
+        Task task = taskMapper.taskDtoToTask(dto);
+        Employee taskEmployee = employeeRepository.getOne(dto.getEmployeeId());
+        Employee taskAuthor = employeeRepository.getOne(dto.getTaskAuthorId());
         LocalDateTime creationDateTime = LocalDateTime.parse(dto.getCreationDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         LocalDateTime deadlineDateTime = LocalDateTime.parse(dto.getDeadlineDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        taskEntity.setCreationDateTime(creationDateTime);
-        taskEntity.setDeadlineDateTime(deadlineDateTime);
+        List<TaskComment> taskComments = dto.getTaskCommentsIds().stream()
+                .map(id -> commentRepository.findById(id).orElse(null)).collect(Collectors.toList());
 
-        var saved = taskRepository.save(taskEntity);
-        dto.setId(saved.getId());
+        task.setTaskEmployee(taskEmployee);
+        task.setTaskAuthor(taskAuthor);
+        task.setCreationDateTime(creationDateTime);
+        task.setDeadlineDateTime(deadlineDateTime);
+        task.setTaskComments(taskComments);
 
-        return taskMapper.taskToTaskDto(saved);
+        return taskMapper.taskToTaskDto(taskRepository.save(task));
     }
 
 
@@ -111,8 +104,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteById(Long id) {
-        checkEntityService.checkExistsTaskById(id);
         taskRepository.deleteById(id);
     }
-
 }
