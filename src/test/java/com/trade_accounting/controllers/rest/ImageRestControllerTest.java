@@ -1,8 +1,9 @@
 package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
-import com.trade_accounting.models.dto.PriceListDto;
+import com.trade_accounting.models.dto.ImageDto;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,118 +21,110 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author Andrey Melnikov
- * @since 08.08.2021
+ * @since 11.08.2021
  */
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
-@WithUserDetails(value = "karimogon@mail.ru")
-@Sql(value = "/PriceList-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@WithMockUser(value = "karimogon@mail.ru")
+@Sql(value = "/Image-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @RequiredArgsConstructor
-public class PriceListRestControllerTest {
+public class ImageRestControllerTest {
 
     @Autowired
-    private PriceListRestController controller;
+    private ImageRestController controller;
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     void testExisting() {
-        Assertions.assertNotNull(controller, "Failure - controller is null");
+        Assertions.assertNotNull(controller, "Error - ImageRestController is null");
     }
 
     @Test
-    void getAll() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList"))
+    @SneakyThrows
+    void getAll() {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/image"))
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(3)));
     }
 
     @Test
-    void getById() throws Exception {
-        PriceListDto priceListDto = PriceListDto.builder()
+    @SneakyThrows
+    void getById() {
+        ImageDto imageDto = ImageDto.builder()
                 .id(1L)
-                .number("number1")
-                .time("1234-12-12 12:34")
-                .companyId(1L)
-                .sent(false)
-                .printed(false)
-                .commentary("comment1")
+//                .fileExtension("image_url1") // тут чёрт ногу сломит)))
+//                .content(new byte[]{}) // тут вторую
+                .sortNumber("sort_number1")
                 .build();
 
-        String dtoJson = new Gson().toJson(priceListDto);
+        String dtoJson = new Gson().toJson(imageDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/image/1"))
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
                 .andExpect(MockMvcResultMatchers.content().json(dtoJson));
     }
 
     @Test
-    void create() throws Exception {
-        PriceListDto priceListDto = PriceListDto.builder()
-                .number("number1")
-                .time("1234-12-12 12:34")
-                .companyId(1L)
-                .sent(false)
-                .printed(false)
-                .commentary("comment1")
+    @SneakyThrows
+    void create() {
+        ImageDto imageDto = ImageDto.builder()
+                .fileExtension("image_url1")
+                .sortNumber("sort_number1")
                 .build();
 
-        String dtoJson = new Gson().toJson(priceListDto);
+        String dtoJson = new Gson().toJson(imageDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/priceList")
-                        .contentType(MediaType.APPLICATION_JSON).content(dtoJson))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(SecurityMockMvcResultMatchers.authenticated())
-                .andExpect(MockMvcResultMatchers.content().json(dtoJson));
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(SecurityMockMvcResultMatchers.authenticated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(4)));
-    }
-
-    @Test
-    void update() throws Exception {
-        PriceListDto priceListDto = PriceListDto.builder()
-                .id(2L)
-                .number("UPDATED")
-                .time("1234-12-12 12:34")
-                .companyId(2L)
-                .sent(true)
-                .printed(true)
-                .commentary("UPDATED")
-                .build();
-
-        String dtoJson = new Gson().toJson(priceListDto);
-
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/priceList")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/image")
                         .contentType(MediaType.APPLICATION_JSON).content(dtoJson))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
                 .andExpect(MockMvcResultMatchers.content().json(dtoJson));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList"))
-                .andDo(MockMvcResultHandlers.print());
-
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/image"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(4)));
     }
 
     @Test
-    void deleteById() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/priceList/1"))
+    @SneakyThrows
+    void update() {
+        ImageDto imageDto = ImageDto.builder()
+                .id(1L)
+                .fileExtension("UPDATED1")
+                .sortNumber("UPDATED1")
+                .build();
+
+        String dtoJson = new Gson().toJson(imageDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/image")
+                        .contentType(MediaType.APPLICATION_JSON).content(dtoJson))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.content().json(dtoJson));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/image"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @SneakyThrows
+    void deleteById() {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/image/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(SecurityMockMvcResultMatchers.authenticated())
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/image"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)));
     }
 }
