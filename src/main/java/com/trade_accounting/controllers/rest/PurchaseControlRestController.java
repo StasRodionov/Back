@@ -63,6 +63,21 @@ public class PurchaseControlRestController {
     }
 
     @PostMapping
+    @ApiOperation(value = "create", notes = "Добавление новой закупки")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Закупка создана"),
+            @ApiResponse(code = 201, message = "Запрос принят и закупка добавлена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<PurchaseControlDto> create(@ApiParam(name = "purchaseControlDto",
+                                                     value = "DTO закупки, которую необходимо создать")
+                                                         @RequestBody PurchaseControlDto purchaseControlDto) {
+        return ResponseEntity.ok(purchaseControlService.create(purchaseControlDto));
+    }
+
+    @PostMapping
     @ApiOperation(value = "update", notes = "Изменение информации о закупке")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Информация о закупке обновлена"),
