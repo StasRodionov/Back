@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.PositionDto;
+import com.trade_accounting.repositories.PositionRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.PositionService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,16 +28,12 @@ import java.util.List;
 @Tag(name = "Position Rest Controller", description = "CRUD операции с должностями")
 @Api(tags = "Position Rest Controller")
 @RequestMapping("/api/position")
+@RequiredArgsConstructor
 public class PositionRestController {
 
     private final PositionService positionService;
     private final CheckEntityService checkEntityService;
-
-    public PositionRestController(PositionService positionService,
-                                  CheckEntityService checkEntityService) {
-        this.positionService = positionService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final PositionRepository positionRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех должностей")
@@ -61,7 +59,7 @@ public class PositionRestController {
     public ResponseEntity<PositionDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти должность")
                                                @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) positionService, id);
+        checkEntityService.checkExists((JpaRepository) positionRepository, id);
         return ResponseEntity.ok(positionService.getById(id));
     }
 

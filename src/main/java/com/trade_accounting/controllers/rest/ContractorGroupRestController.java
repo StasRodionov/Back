@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 
 import com.trade_accounting.models.dto.ContractorGroupDto;
+import com.trade_accounting.repositories.ContractorGroupRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ContractorGroupService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,15 +29,11 @@ import java.util.List;
 @Tag(name = "Contractor Group Rest Controller", description = "CRUD  операции с группой контрагентов")
 @Api(tags = "Contractor Group Rest Controller")
 @RequestMapping("/api/contractor/group")
+@RequiredArgsConstructor
 public class ContractorGroupRestController {
     private final ContractorGroupService contractorGroupService;
     private final CheckEntityService checkEntityService;
-
-    public ContractorGroupRestController(ContractorGroupService contractorGroupService,
-                                         CheckEntityService checkEntityService) {
-        this.contractorGroupService = contractorGroupService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final ContractorGroupRepository contractorGroupRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех групп")
@@ -61,7 +59,7 @@ public class ContractorGroupRestController {
     public ResponseEntity<ContractorGroupDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти группу")
                                                       @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) contractorGroupService, id);
+        checkEntityService.checkExists((JpaRepository) contractorGroupRepository, id);
         return ResponseEntity.ok(contractorGroupService.getById(id));
 
     }

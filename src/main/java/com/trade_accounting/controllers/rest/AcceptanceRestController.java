@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 
 import com.trade_accounting.models.dto.AcceptanceDto;
+import com.trade_accounting.repositories.AcceptanceRepository;
 import com.trade_accounting.services.interfaces.AcceptanceService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,14 +29,12 @@ import java.util.List;
 @Tag(name = "Acceptance Rest Controller", description = "CRUD  операции с приемкой")
 @Api(tags = "Acceptance Rest Controller")
 @RequestMapping("/api/acceptance")
+@RequiredArgsConstructor
 public class AcceptanceRestController {
     private final AcceptanceService acceptanceService;
     private final CheckEntityService checkEntityService;
+    private final AcceptanceRepository acceptanceRepository;
 
-    public AcceptanceRestController(AcceptanceService acceptanceService, CheckEntityService checkEntityService) {
-        this.acceptanceService = acceptanceService;
-        this.checkEntityService = checkEntityService;
-    }
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех приемок товара")
@@ -59,7 +59,7 @@ public class AcceptanceRestController {
     public ResponseEntity<AcceptanceDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти приемку")
                                                  @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) acceptanceService, id);
+        checkEntityService.checkExists((JpaRepository) acceptanceRepository, id);
 
         return ResponseEntity.ok(acceptanceService.getById(id));
     }
@@ -106,7 +106,7 @@ public class AcceptanceRestController {
     public ResponseEntity<AcceptanceDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить приемку")
                                                     @PathVariable("id") Long id) {
-        checkEntityService.checkExists((JpaRepository) acceptanceService, id);
+        checkEntityService.checkExists((JpaRepository) acceptanceRepository, id);
         acceptanceService.deleteById(id);
 
         return ResponseEntity.ok().build();

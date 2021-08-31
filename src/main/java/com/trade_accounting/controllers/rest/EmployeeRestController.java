@@ -3,6 +3,7 @@ package com.trade_accounting.controllers.rest;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.PageDto;
+import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.EmployeeService;
 import io.swagger.annotations.Api;
@@ -11,6 +12,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Conjunction;
@@ -39,16 +41,12 @@ import java.util.List;
 @RequestMapping("/api/employee")
 @Tag(name = "Employee Rest Controller", description = "CRUD операции с работниками")
 @Api(tags = "Employee Rest Controller")
+@RequiredArgsConstructor
 public class EmployeeRestController {
 
     private final EmployeeService employeeService;
     private final CheckEntityService checkEntityService;
-
-    public EmployeeRestController(EmployeeService employeeService,
-                                  CheckEntityService checkEntityService) {
-        this.employeeService = employeeService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final EmployeeRepository employeeRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех работников")
@@ -130,7 +128,7 @@ public class EmployeeRestController {
     public ResponseEntity<EmployeeDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти работника")
                                                @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) employeeService, id);
+        checkEntityService.checkExists((JpaRepository) employeeRepository, id);
         return ResponseEntity.ok(employeeService.getById(id));
     }
 
@@ -162,7 +160,7 @@ public class EmployeeRestController {
     public ResponseEntity<?> update(@ApiParam(name = "employeeDto",
             value = "DTO работника, c обновленными данными")
                                     @RequestBody EmployeeDto employeeDto) {
-        checkEntityService.checkExists((JpaRepository) employeeService, employeeDto.getId());
+        checkEntityService.checkExists((JpaRepository) employeeRepository, employeeDto.getId());
         checkEntityService.checkForBadEmployee(employeeDto);
         return ResponseEntity.ok().body(employeeService.update(employeeDto));
     }

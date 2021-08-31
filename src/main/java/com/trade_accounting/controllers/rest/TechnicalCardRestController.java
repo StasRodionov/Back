@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.TechnicalCard;
 import com.trade_accounting.models.dto.TechnicalCardDto;
+import com.trade_accounting.repositories.TechnicalCardRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TechnicalCardService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -32,16 +34,12 @@ import java.util.List;
 @Tag(name = "Technical card Rest Controller", description = "CRUD операции с техническими картами")
 @Api(tags = "Technical card Rest Controller")
 @RequestMapping("/api/technical_card")
+@RequiredArgsConstructor
 public class TechnicalCardRestController {
 
     private final TechnicalCardService technicalCardService;
     private final CheckEntityService checkEntityService;
-
-    public TechnicalCardRestController(TechnicalCardService technicalCardService,
-                                 CheckEntityService checkEntityService) {
-        this.technicalCardService = technicalCardService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final TechnicalCardRepository technicalCardRepository;
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех технических карт")
     @GetMapping()
@@ -78,7 +76,7 @@ public class TechnicalCardRestController {
     })
     public ResponseEntity<TechnicalCardDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти техническую карту") @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) technicalCardService, id);
+        checkEntityService.checkExists((JpaRepository) technicalCardRepository, id);
         return ResponseEntity.ok(technicalCardService.getById(id));
     }
 

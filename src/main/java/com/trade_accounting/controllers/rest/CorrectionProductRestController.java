@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.CorrectionProductDto;
+import com.trade_accounting.repositories.CorrectionProductRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.CorrectionProductService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,15 +28,12 @@ import java.util.List;
 @Tag(name = "Correction Product Rest Controller", description = "CRUD  операции с товарами, которые ставим на приход или списываем")
 @Api(tags = "Correction Product Rest Controller")
 @RequestMapping("/api/correction/product")
+@RequiredArgsConstructor
 public class CorrectionProductRestController {
 
     private final CorrectionProductService correctionProductService;
     private final CheckEntityService checkEntityService;
-
-    public CorrectionProductRestController(CorrectionProductService correctionProductService, CheckEntityService checkEntityService) {
-        this.correctionProductService = correctionProductService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final CorrectionProductRepository correctionProductRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех оприходованных товаров")
@@ -59,7 +58,7 @@ public class CorrectionProductRestController {
     public ResponseEntity<CorrectionProductDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти оприходованный товар")
                                                  @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) correctionProductService, id);
+        checkEntityService.checkExists((JpaRepository) correctionProductRepository, id);
         return ResponseEntity.ok(correctionProductService.getById(id));
     }
 
@@ -105,7 +104,7 @@ public class CorrectionProductRestController {
     public ResponseEntity<CorrectionProductDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить оприходованный товар")
                                                     @PathVariable("id") Long id) {
-        checkEntityService.checkExists((JpaRepository) correctionProductService, id);
+        checkEntityService.checkExists((JpaRepository) correctionProductRepository, id);
         correctionProductService.deleteById(id);
         return ResponseEntity.ok().build();
     }

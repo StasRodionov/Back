@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.BankAccountDto;
+import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.services.interfaces.BankAccountService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,16 +29,12 @@ import java.util.List;
 @Tag(name = "Bank Account Rest Controller", description = "CRUD операции с банковскими аккаунтами")
 @Api(tags = "Bank Account Rest Controller")
 @RequestMapping("/api/bank/account")
+@RequiredArgsConstructor
 public class BankAccountRestController {
 
     private final BankAccountService bankAccountService;
     private final CheckEntityService checkEntityService;
-
-    public BankAccountRestController(BankAccountService bankAccountService,
-                                     CheckEntityService checkEntityService) {
-        this.bankAccountService = bankAccountService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final BankAccountRepository bankAccountRepository;
 
     @ApiOperation(value = "getBankByBic", notes = "Возвращает определенный банк по bic")
     @GetMapping("/bic/{uniqBic}")
@@ -88,7 +86,7 @@ public class BankAccountRestController {
     )
     public ResponseEntity<BankAccountDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти банковский аккаунт")
                                                   @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) bankAccountService, id);
+        checkEntityService.checkExists((JpaRepository) bankAccountRepository, id);
         return ResponseEntity.ok(bankAccountService.getById(id));
     }
 

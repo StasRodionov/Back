@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.RemainDto;
+import com.trade_accounting.repositories.RemainRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.RemainService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,14 +28,12 @@ import java.util.List;
 @Tag(name = "Remain Rest Controller", description = "CRUD операции с остатками")
 @Api(tags = "Remain Rest Controller")
 @RequestMapping("/api/remain")
+@RequiredArgsConstructor
 public class RemainRestController {
     private final RemainService remainService;
     private final CheckEntityService checkEntityService;
+    private final RemainRepository remainRepository;
 
-    public RemainRestController(RemainService remainService, CheckEntityService checkEntityService) {
-        this.remainService = remainService;
-        this.checkEntityService = checkEntityService;
-    }
     @ApiOperation(value = "getAll", notes = "Возвращает список всех остатков")
     @GetMapping()
     @ApiResponses(value = {
@@ -58,7 +58,7 @@ public class RemainRestController {
     public ResponseEntity<RemainDto> getById(@ApiParam(name = "id",
             value = "переданный в URL ID, по которому необходимо найти остаток")
                                                  @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) remainService, id);
+        checkEntityService.checkExists((JpaRepository) remainRepository, id);
         return ResponseEntity.ok(remainService.getById(id));
     }
 

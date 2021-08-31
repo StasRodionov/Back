@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.dto.TaskDto;
+import com.trade_accounting.repositories.TaskRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TaskService;
 import io.swagger.annotations.ApiOperation;
@@ -38,6 +39,7 @@ public class TaskRestController {
 
     private final TaskService taskService;
     private final CheckEntityService checkEntityService;
+    private final TaskRepository taskRepository;
 
     @ApiOperation(value = "getAll", notes = "Получение списка всех задач")
     @ApiResponses(value = {
@@ -78,7 +80,7 @@ public class TaskRestController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<TaskDto> getById(@PathVariable("id") long id) {
-        checkEntityService.checkExists((JpaRepository) taskService, id);
+        checkEntityService.checkExists((JpaRepository) taskRepository, id);
         return ResponseEntity.ok(taskService.getById(id));
     }
 

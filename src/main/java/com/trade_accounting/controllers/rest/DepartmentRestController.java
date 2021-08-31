@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.DepartmentDto;
+import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.DepartmentService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,16 +28,12 @@ import java.util.List;
 @RequestMapping("/api/department")
 @Tag(name = "Department Rest Controller", description = "Контроллер с CRUD операциями для работы с подразделениями")
 @Api(tags = "Department Rest Controller")
+@RequiredArgsConstructor
 public class DepartmentRestController {
 
     private final DepartmentService departmentService;
     private final CheckEntityService checkEntityService;
-
-    public DepartmentRestController(DepartmentService departmentService,
-                                    CheckEntityService checkEntityService) {
-        this.departmentService = departmentService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final DepartmentRepository departmentRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получить список всех подразделений")
@@ -64,7 +62,7 @@ public class DepartmentRestController {
             value = "Переданный ID  в URL по которому необходимо найти подразделение",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) departmentService, id);
+        checkEntityService.checkExists((JpaRepository) departmentRepository, id);
         return ResponseEntity.ok(departmentService.getById(id));
     }
 

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +25,10 @@ import java.util.List;
 @Tag(name = "PriceList Rest Controller", description = "CRUD операции с прайс-листами")
 @Api(tags = "PriceList Rest Controller")
 @RequestMapping("/api/priceList")
+@RequiredArgsConstructor
 public class PriceListRestController {
 
     private final PriceListService priceListService;
-
-    public PriceListRestController(PriceListService priceListService) {
-        this.priceListService = priceListService;
-    }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех прайс-листов")
     @GetMapping

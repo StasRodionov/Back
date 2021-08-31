@@ -3,6 +3,7 @@ package com.trade_accounting.controllers.rest;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.models.dto.ProductDto;
+import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ProductService;
 import io.swagger.annotations.Api;
@@ -11,6 +12,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -45,17 +47,12 @@ import java.util.List;
 @Tag(name = "Product Rest Controller", description = "CRUD операции с товаром")
 @Api(tags = "Product Rest Controller")
 @RequestMapping("/api/product")
+@RequiredArgsConstructor
 public class ProductRestController {
 
     private final ProductService productService;
     private final CheckEntityService checkEntityService;
-
-    public ProductRestController(ProductService productService,
-                                 CheckEntityService checkEntityService) {
-        this.productService = productService;
-        this.checkEntityService = checkEntityService;
-    }
-
+    private final ProductRepository productRepository;
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех товаров (лёгкое дто)")
     @GetMapping()
@@ -106,7 +103,7 @@ public class ProductRestController {
     })
     public ResponseEntity<ProductDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) productService, id);
+        checkEntityService.checkExists((JpaRepository) productRepository, id);
         return ResponseEntity.ok(productService.getById(id));
     }
 

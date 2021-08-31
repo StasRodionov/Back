@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.UnitDto;
+import com.trade_accounting.repositories.UnitRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.UnitService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,16 +28,12 @@ import java.util.List;
 @Tag(name = "Unit Rest Controller", description = "CRUD операции с единицами измерения")
 @Api(tags = "Unit Rest Controller")
 @RequestMapping("/api/unit")
+@RequiredArgsConstructor
 public class UnitRestController {
 
     private final UnitService unitService;
     private final CheckEntityService checkEntityService;
-
-    public UnitRestController(UnitService unitService,
-                              CheckEntityService checkEntityService) {
-        this.unitService = unitService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final UnitRepository unitRepository;
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех единиц измерения")
     @ApiResponses(value = {
@@ -62,7 +60,7 @@ public class UnitRestController {
             name = "id",
             type = "Long",
             value = "ID переданный в URL по которому необходимо найти единицу измерения") @PathVariable Long id) {
-        checkEntityService.checkExists((JpaRepository) unitService, id);
+        checkEntityService.checkExists((JpaRepository) unitRepository, id);
         return ResponseEntity.ok(unitService.getById(id));
     }
 
@@ -93,7 +91,7 @@ public class UnitRestController {
     public ResponseEntity<?> update(@ApiParam(
             name = "unitDto",
             value = "DTO единицы измерения, которую необходимо обновить") @RequestBody UnitDto unitDto) {
-        checkEntityService.checkExists((JpaRepository) unitService, unitDto.getId());
+        checkEntityService.checkExists((JpaRepository) unitRepository, unitDto.getId());
         return ResponseEntity.ok().body(unitService.update(unitDto));
     }
 

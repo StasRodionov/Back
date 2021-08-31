@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.dto.CompanyDto;
+import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.CompanyService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -32,16 +34,12 @@ import java.util.List;
 @Tag(name = "Company Rest Controller", description = "CRUD  операции с компаниями")
 @Api(tags = "Company Rest Controller")
 @RequestMapping("/api/company")
+@RequiredArgsConstructor
 public class CompanyRestController {
 
     private final CompanyService companyService;
     private final CheckEntityService checkEntityService;
-
-    public CompanyRestController(CompanyService companyService,
-                                 CheckEntityService checkEntityService) {
-        this.companyService = companyService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final CompanyRepository companyRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех компаний")
@@ -91,7 +89,7 @@ public class CompanyRestController {
     public ResponseEntity<CompanyDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти компанию")
                                               @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) companyService, id);
+        checkEntityService.checkExists((JpaRepository) companyRepository, id);
         return ResponseEntity.ok(companyService.getById(id));
     }
 
@@ -136,7 +134,7 @@ public class CompanyRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "companyDto", value = "DTO компании, которую необходимо обновить")
                                     @RequestBody CompanyDto companyDto) {
-        checkEntityService.checkExists((JpaRepository) companyService, companyDto.getId());
+        checkEntityService.checkExists((JpaRepository) companyRepository, companyDto.getId());
         checkEntityService.checkForBadCompany(companyDto);
         return ResponseEntity.ok().body(companyService.update(companyDto));
     }

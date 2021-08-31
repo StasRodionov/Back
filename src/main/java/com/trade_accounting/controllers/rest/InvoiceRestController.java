@@ -3,6 +3,7 @@ package com.trade_accounting.controllers.rest;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.InvoiceDto;
+import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import io.swagger.annotations.Api;
@@ -11,6 +12,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
@@ -36,15 +38,11 @@ import java.util.List;
 @Tag(name = "Invoice Rest Controller", description = "CRUD  операции с накладными")
 @Api(tags = "Invoice Rest Controller")
 @RequestMapping("/api/invoice")
+@RequiredArgsConstructor
 public class InvoiceRestController {
     private final InvoiceService invoiceService;
     private final CheckEntityService checkEntityService;
-
-    public InvoiceRestController(InvoiceService invoiceService,
-                                 CheckEntityService checkEntityService) {
-        this.invoiceService = invoiceService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final InvoiceRepository invoiceRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех накладных")
@@ -104,7 +102,7 @@ public class InvoiceRestController {
     public ResponseEntity<InvoiceDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти накладную")
                                               @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) invoiceService, id);
+        checkEntityService.checkExists((JpaRepository) invoiceRepository, id);
         return ResponseEntity.ok(invoiceService.getById(id));
     }
 

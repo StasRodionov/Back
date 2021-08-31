@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.AddressDto;
+import com.trade_accounting.repositories.AddressRepository;
 import com.trade_accounting.services.interfaces.AddressService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,16 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Address Rest Controller", description = "CRUD  операции с адресами")
 @Api(tags = "Address Rest Controller")
 @RequestMapping("/api/address")
+@RequiredArgsConstructor
 public class AddressRestController {
 
     private final AddressService addressService;
     private final CheckEntityService checkEntityService;
-
-
-    public AddressRestController(AddressService addressService, CheckEntityService checkEntityService) {
-        this.addressService = addressService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final AddressRepository addressRepository;
 
     @GetMapping("/{id:[0-9]+}")
     @ApiOperation(value = "getById", notes = "Получение адреса по id")
@@ -46,7 +44,7 @@ public class AddressRestController {
     public ResponseEntity<AddressDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти адрес")
                                               @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) addressService, id);
+        checkEntityService.checkExists((JpaRepository) addressRepository, id);
         return ResponseEntity.ok(addressService.getById(id));
     }
 
@@ -75,7 +73,7 @@ public class AddressRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "addressDto", value = "DTO адреса, который необходимо обновить")
                                     @RequestBody AddressDto addressDto) {
-        checkEntityService.checkExists((JpaRepository) addressService, addressDto.getId());
+        checkEntityService.checkExists((JpaRepository) addressRepository, addressDto.getId());
         return ResponseEntity.ok().body(addressService.update(addressDto));
     }
 

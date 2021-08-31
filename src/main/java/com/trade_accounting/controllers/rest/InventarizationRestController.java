@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.InventarizationDto;
+import com.trade_accounting.repositories.InventarizationRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.InventarizationService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,16 +28,12 @@ import java.util.List;
 @Tag(name = "Inventarization Rest Controller", description = "CRUD операции с инвентаризацией")
 @Api(tags = "Inventarization Rest Controller")
 @RequestMapping("/api/inventarization")
+@RequiredArgsConstructor
 public class InventarizationRestController {
 
     private final InventarizationService inventarizationService;
     private final CheckEntityService checkEntityService;
-
-    public InventarizationRestController(InventarizationService inventarizationService,
-                                         CheckEntityService checkEntityService) {
-        this.inventarizationService = inventarizationService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final InventarizationRepository inventarizationRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех инвентаризаций")
@@ -60,7 +58,7 @@ public class InventarizationRestController {
     public ResponseEntity<InventarizationDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти инвентаризацию")
                                                           @PathVariable(name = "id") Long id)  {
-        checkEntityService.checkExists((JpaRepository) inventarizationService, id);
+        checkEntityService.checkExists((JpaRepository) inventarizationRepository, id);
 
         return ResponseEntity.ok(inventarizationService.getById(id));
     }
@@ -109,7 +107,7 @@ public class InventarizationRestController {
     public ResponseEntity<InventarizationDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить инвентаризацию")
                                                              @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) inventarizationService, id);
+        checkEntityService.checkExists((JpaRepository) inventarizationRepository, id);
         inventarizationService.deleteById(id);
 
         return ResponseEntity.ok().build();

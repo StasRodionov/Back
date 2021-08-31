@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.dto.ContractDto;
+import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ContractService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
@@ -34,16 +36,12 @@ import java.util.List;
 @Tag(name = "Contract Rest Controller", description = "CRUD  операции с договорами")
 @Api(tags = "Contract Rest Controller")
 @RequestMapping("/api/contract")
+@RequiredArgsConstructor
 public class ContractRestController {
 
     private final ContractService contractService;
     private final CheckEntityService checkEntityService;
-
-    public ContractRestController(ContractService contractService,
-                                  CheckEntityService checkEntityService) {
-        this.contractService = contractService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final ContractRepository contractRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех договоров")
@@ -111,7 +109,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти договор")
                                                @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) contractService, id);
+        checkEntityService.checkExists((JpaRepository) contractRepository, id);
         return ResponseEntity.ok(contractService.getById(id));
     }
 

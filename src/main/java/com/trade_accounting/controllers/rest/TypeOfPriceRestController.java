@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.TypeOfPriceDto;
+import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TypeOfPriceService;
 import io.swagger.annotations.Api;
@@ -8,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,16 +27,12 @@ import java.util.List;
 @Tag(name = "Type of price Controller", description = "CRUD операции с видами цен")
 @Api(tags = "Type of price Rest Controller")
 @RequestMapping("/api/typeofprice")
+@RequiredArgsConstructor
 public class TypeOfPriceRestController {
 
     private final TypeOfPriceService typeOfPriceService;
     private final CheckEntityService checkEntityService;
-
-    public TypeOfPriceRestController(TypeOfPriceService typeOfPriceService,
-                                     CheckEntityService checkEntityService) {
-        this.typeOfPriceService = typeOfPriceService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final TypeOfPriceRepository typeOfPriceRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Возвращает список всех видов цен")
@@ -58,7 +56,7 @@ public class TypeOfPriceRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<TypeOfPriceDto> getById(@PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) typeOfPriceService, id);
+        checkEntityService.checkExists((JpaRepository) typeOfPriceRepository, id);
         return ResponseEntity.ok(typeOfPriceService.getById(id));
     }
 

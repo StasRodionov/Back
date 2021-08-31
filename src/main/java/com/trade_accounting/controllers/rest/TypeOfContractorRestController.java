@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 
 import com.trade_accounting.models.dto.TypeOfContractorDto;
+import com.trade_accounting.repositories.TypeOfContractorRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TypeOfContractorService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,16 +29,12 @@ import java.util.List;
 @Tag(name = "Type Of Contractor Rest Controller", description = "CRUD операции со типами контрагентов")
 @Api(tags = "Type Of Contractor Rest Controller")
 @RequestMapping("/api/typeofcontractor")
-public class TypeOfContractorRestController<СheckEntityService> {
+@RequiredArgsConstructor
+public class TypeOfContractorRestController {
 
     private final TypeOfContractorService typeOfContractorService;
     private final CheckEntityService checkEntityService;
-
-    public TypeOfContractorRestController(TypeOfContractorService typeOfContractorService,
-                                          CheckEntityService checkEntityService) {
-        this.typeOfContractorService = typeOfContractorService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final TypeOfContractorRepository typeOfContractorRepository;
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех типов контрагентов")
     @GetMapping
@@ -65,7 +63,7 @@ public class TypeOfContractorRestController<СheckEntityService> {
             value = "Переданный ID  в URL по которому необходимо найти тип контрагента",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExists((JpaRepository) typeOfContractorService, id);
+        checkEntityService.checkExists((JpaRepository) typeOfContractorRepository, id);
         return ResponseEntity.ok(typeOfContractorService.getById(id));
     }
 
