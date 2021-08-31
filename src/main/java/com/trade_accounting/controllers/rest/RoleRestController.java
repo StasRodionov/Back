@@ -62,7 +62,7 @@ public class RoleRestController {
             value = "Переданный ID  в URL по которому необходимо найти роль",
             example = "1",
             required = true) @PathVariable("id") Long id) {
-        checkEntityService.checkExistsRoleById(id);
+        checkEntityService.checkExists((JpaRepository) roleService, id);
         return ResponseEntity.ok(roleService.getById(id));
     }
 

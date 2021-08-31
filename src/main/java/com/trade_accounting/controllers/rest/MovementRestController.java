@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +59,7 @@ public class MovementRestController {
     public ResponseEntity<MovementDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти перемещение")
                                                  @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsMovementById(id);
+        checkEntityService.checkExists((JpaRepository) movementService, id);
 
         return ResponseEntity.ok(movementService.getById(id));
     }
@@ -105,7 +106,7 @@ public class MovementRestController {
     public ResponseEntity<MovementDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить перемещение")
                                                     @PathVariable("id") Long id) {
-        checkEntityService.checkExistsMovementById(id);
+        checkEntityService.checkExists((JpaRepository) movementService, id);
         movementService.deleteById(id);
 
         return ResponseEntity.ok().build();

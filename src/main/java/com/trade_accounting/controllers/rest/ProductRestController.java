@@ -1,8 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Product;
-import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.services.interfaces.CheckEntityService;
@@ -23,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,7 +106,7 @@ public class ProductRestController {
     })
     public ResponseEntity<ProductDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти товар") @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsProductById(id);
+        checkEntityService.checkExists((JpaRepository) productService, id);
         return ResponseEntity.ok(productService.getById(id));
     }
 

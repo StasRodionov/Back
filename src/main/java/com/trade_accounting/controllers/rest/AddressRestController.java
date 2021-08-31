@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.AddressDto;
-import com.trade_accounting.models.dto.CompanyDto;
 import com.trade_accounting.services.interfaces.AddressService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
@@ -10,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +46,7 @@ public class AddressRestController {
     public ResponseEntity<AddressDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти адрес")
                                               @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsAddressById(id);
+        checkEntityService.checkExists((JpaRepository) addressService, id);
         return ResponseEntity.ok(addressService.getById(id));
     }
 
@@ -75,7 +75,7 @@ public class AddressRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "addressDto", value = "DTO адреса, который необходимо обновить")
                                     @RequestBody AddressDto addressDto) {
-        checkEntityService.checkExistsAddressById(addressDto.getId());
+        checkEntityService.checkExists((JpaRepository) addressService, addressDto.getId());
         return ResponseEntity.ok().body(addressService.update(addressDto));
     }
 

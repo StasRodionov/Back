@@ -1,6 +1,5 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.MoneySubCashFlowDto;
 import com.trade_accounting.services.interfaces.MoneySubCashFlowService;
 import io.swagger.annotations.Api;

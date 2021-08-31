@@ -15,6 +15,7 @@ import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -90,7 +91,7 @@ public class CompanyRestController {
     public ResponseEntity<CompanyDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти компанию")
                                               @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistCompanyById(id);
+        checkEntityService.checkExists((JpaRepository) companyService, id);
         return ResponseEntity.ok(companyService.getById(id));
     }
 
@@ -135,7 +136,7 @@ public class CompanyRestController {
     )
     public ResponseEntity<?> update(@ApiParam(name = "companyDto", value = "DTO компании, которую необходимо обновить")
                                     @RequestBody CompanyDto companyDto) {
-        checkEntityService.checkExistCompanyById(companyDto.getId());
+        checkEntityService.checkExists((JpaRepository) companyService, companyDto.getId());
         checkEntityService.checkForBadCompany(companyDto);
         return ResponseEntity.ok().body(companyService.update(companyDto));
     }

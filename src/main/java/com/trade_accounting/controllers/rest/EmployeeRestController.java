@@ -20,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -129,7 +130,7 @@ public class EmployeeRestController {
     public ResponseEntity<EmployeeDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти работника")
                                                @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsEmployeeById(id);
+        checkEntityService.checkExists((JpaRepository) employeeService, id);
         return ResponseEntity.ok(employeeService.getById(id));
     }
 
@@ -161,7 +162,7 @@ public class EmployeeRestController {
     public ResponseEntity<?> update(@ApiParam(name = "employeeDto",
             value = "DTO работника, c обновленными данными")
                                     @RequestBody EmployeeDto employeeDto) {
-        checkEntityService.checkExistsEmployeeById(employeeDto.getId());
+        checkEntityService.checkExists((JpaRepository) employeeService, employeeDto.getId());
         checkEntityService.checkForBadEmployee(employeeDto);
         return ResponseEntity.ok().body(employeeService.update(employeeDto));
     }

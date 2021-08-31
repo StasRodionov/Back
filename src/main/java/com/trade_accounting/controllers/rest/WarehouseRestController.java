@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,7 +58,7 @@ public class WarehouseRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<WarehouseDto> getById(@PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsWarehouseById(id);
+        checkEntityService.checkExists((JpaRepository) warehouseService, id);
         return ResponseEntity.ok(warehouseService.getById(id));
     }
 
@@ -84,7 +85,7 @@ public class WarehouseRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto) {
-        checkEntityService.checkExistsWarehouseById(warehouseDto.getId());
+        checkEntityService.checkExists((JpaRepository) warehouseService, warehouseDto.getId());
         return ResponseEntity.ok().body(warehouseService.update(warehouseDto));
     }
 

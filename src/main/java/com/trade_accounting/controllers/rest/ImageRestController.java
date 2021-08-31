@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
@@ -65,7 +65,7 @@ public class ImageRestController {
             value = "Переданный ID  в URL по которому необходимо найти фото",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsImageById(id);
+        checkEntityService.checkExists((JpaRepository) imageService, id);
         return ResponseEntity.ok(imageService.getById(id));
     }
 
@@ -92,7 +92,7 @@ public class ImageRestController {
     })
     public ResponseEntity<ImageDto> update (@ApiParam (name = "ImageDto", value = "Dto изображения, которое необходимо обновить")
                                            @RequestBody ImageDto dto){
-        checkEntityService.checkExistsImageById(dto.getId());
+        checkEntityService.checkExists((JpaRepository) imageService, dto.getId());
         return ResponseEntity.ok(imageService.update(dto));
     }
 

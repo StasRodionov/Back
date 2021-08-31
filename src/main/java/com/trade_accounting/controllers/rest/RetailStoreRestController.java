@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +58,7 @@ public class RetailStoreRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<RetailStoreDto> getById(@PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsRetailStoreById(id);
+        checkEntityService.checkExists((JpaRepository) retailStoreService, id);
         return ResponseEntity.ok(retailStoreService.getById(id));
     }
 
@@ -85,7 +85,7 @@ public class RetailStoreRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<RetailStoreDto> update(@RequestBody RetailStoreDto retailStoreDto) {
-        checkEntityService.checkExistsRetailStoreById(retailStoreDto.getId());
+        checkEntityService.checkExists((JpaRepository) retailStoreService, retailStoreDto.getId());
         return ResponseEntity.ok().body(retailStoreService.update(retailStoreDto));
     }
 

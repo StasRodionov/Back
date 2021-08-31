@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -87,7 +88,7 @@ public class BankAccountRestController {
     )
     public ResponseEntity<BankAccountDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти банковский аккаунт")
                                                   @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsBankAccountById(id);
+        checkEntityService.checkExists((JpaRepository) bankAccountService, id);
         return ResponseEntity.ok(bankAccountService.getById(id));
     }
 

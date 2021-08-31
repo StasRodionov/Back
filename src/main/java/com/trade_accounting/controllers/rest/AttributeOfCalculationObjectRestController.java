@@ -2,7 +2,6 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
-
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +9,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,7 +62,7 @@ public class AttributeOfCalculationObjectRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<AttributeOfCalculationObjectDto> getById(@PathVariable("id") Long id) {
-        checkEntityService.checkExistsAttributeOfCalculationObjectByID(id);
+        checkEntityService.checkExists((JpaRepository) attributeOfCalculationObjectService, id);
         return ResponseEntity.ok(attributeOfCalculationObjectService.getById(id));
     }
 

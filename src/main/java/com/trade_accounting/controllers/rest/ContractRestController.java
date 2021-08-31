@@ -17,6 +17,7 @@ import net.kaczmarzyk.spring.data.jpa.web.annotation.Conjunction;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Or;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -110,7 +111,7 @@ public class ContractRestController {
     public ResponseEntity<ContractDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти договор")
                                                @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsContractById(id);
+        checkEntityService.checkExists((JpaRepository) contractService, id);
         return ResponseEntity.ok(contractService.getById(id));
     }
 

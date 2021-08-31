@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,7 +60,7 @@ public class InventarizationRestController {
     public ResponseEntity<InventarizationDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти инвентаризацию")
                                                           @PathVariable(name = "id") Long id)  {
-        checkEntityService.checkExistsInventarizationById(id);
+        checkEntityService.checkExists((JpaRepository) inventarizationService, id);
 
         return ResponseEntity.ok(inventarizationService.getById(id));
     }
@@ -108,7 +109,7 @@ public class InventarizationRestController {
     public ResponseEntity<InventarizationDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить инвентаризацию")
                                                              @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsInventarizationById(id);
+        checkEntityService.checkExists((JpaRepository) inventarizationService, id);
         inventarizationService.deleteById(id);
 
         return ResponseEntity.ok().build();

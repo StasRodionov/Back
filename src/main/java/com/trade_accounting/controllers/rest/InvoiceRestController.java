@@ -18,6 +18,7 @@ import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -103,7 +104,7 @@ public class InvoiceRestController {
     public ResponseEntity<InvoiceDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти накладную")
                                               @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsInvoiceById(id);
+        checkEntityService.checkExists((JpaRepository) invoiceService, id);
         return ResponseEntity.ok(invoiceService.getById(id));
     }
 

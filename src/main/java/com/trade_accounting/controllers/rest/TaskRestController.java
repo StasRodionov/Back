@@ -14,6 +14,7 @@ import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -77,7 +78,7 @@ public class TaskRestController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<TaskDto> getById(@PathVariable("id") long id) {
-        checkEntityService.checkExistsTaskById(id);
+        checkEntityService.checkExists((JpaRepository) taskService, id);
         return ResponseEntity.ok(taskService.getById(id));
     }
 

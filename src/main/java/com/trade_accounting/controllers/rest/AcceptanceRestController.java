@@ -1,18 +1,16 @@
 package com.trade_accounting.controllers.rest;
 
 
-import com.trade_accounting.models.Acceptance;
 import com.trade_accounting.models.dto.AcceptanceDto;
-import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.services.interfaces.AcceptanceService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
-import com.trade_accounting.services.interfaces.CorrectionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +59,7 @@ public class AcceptanceRestController {
     public ResponseEntity<AcceptanceDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти приемку")
                                                  @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsAcceptanceById(id);
+        checkEntityService.checkExists((JpaRepository) acceptanceService, id);
 
         return ResponseEntity.ok(acceptanceService.getById(id));
     }
@@ -108,7 +106,7 @@ public class AcceptanceRestController {
     public ResponseEntity<AcceptanceDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить приемку")
                                                     @PathVariable("id") Long id) {
-        checkEntityService.checkExistsAcceptanceById(id);
+        checkEntityService.checkExists((JpaRepository) acceptanceService, id);
         acceptanceService.deleteById(id);
 
         return ResponseEntity.ok().build();

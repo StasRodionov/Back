@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,7 +58,7 @@ public class RemainRestController {
     public ResponseEntity<RemainDto> getById(@ApiParam(name = "id",
             value = "переданный в URL ID, по которому необходимо найти остаток")
                                                  @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsRemainById(id);
+        checkEntityService.checkExists((JpaRepository) remainService, id);
         return ResponseEntity.ok(remainService.getById(id));
     }
 

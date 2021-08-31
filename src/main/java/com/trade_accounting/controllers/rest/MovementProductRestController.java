@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +59,7 @@ public class MovementProductRestController {
     public ResponseEntity<MovementProductDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти перемещенный товар")
                                                       @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsMovementProductById(id);
+        checkEntityService.checkExists((JpaRepository) movementProductService, id);
         return ResponseEntity.ok(movementProductService.getById(id));
     }
 
@@ -104,7 +105,7 @@ public class MovementProductRestController {
     public ResponseEntity<MovementProductDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить перемещенный товар")
                                                          @PathVariable("id") Long id) {
-        checkEntityService.checkExistsMovementProductById(id);
+        checkEntityService.checkExists((JpaRepository) movementProductService, id);
         movementProductService.deleteById(id);
         return ResponseEntity.ok().build();
     }

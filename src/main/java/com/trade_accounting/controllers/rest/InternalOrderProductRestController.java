@@ -1,6 +1,5 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.models.dto.InternalOrderProductsDto;
 import com.trade_accounting.repositories.InternalOrderProductRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;

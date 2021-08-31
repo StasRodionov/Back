@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +62,7 @@ public class UnitRestController {
             name = "id",
             type = "Long",
             value = "ID переданный в URL по которому необходимо найти единицу измерения") @PathVariable Long id) {
-        checkEntityService.checkExistsUnitById(id);
+        checkEntityService.checkExists((JpaRepository) unitService, id);
         return ResponseEntity.ok(unitService.getById(id));
     }
 
@@ -92,7 +93,7 @@ public class UnitRestController {
     public ResponseEntity<?> update(@ApiParam(
             name = "unitDto",
             value = "DTO единицы измерения, которую необходимо обновить") @RequestBody UnitDto unitDto) {
-        checkEntityService.checkExistsUnitById(unitDto.getId());
+        checkEntityService.checkExists((JpaRepository) unitService, unitDto.getId());
         return ResponseEntity.ok().body(unitService.update(unitDto));
     }
 

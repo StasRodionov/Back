@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +61,7 @@ public class TaxSystemRestController {
     public ResponseEntity<TaxSystemDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти налоговую систему")
                                                 @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsTaxSystemById(id);
+        checkEntityService.checkExists((JpaRepository) taxSystemService, id);
         return ResponseEntity.ok(taxSystemService.getById(id));
     }
 

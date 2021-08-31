@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +61,7 @@ public class PositionRestController {
     public ResponseEntity<PositionDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо найти должность")
                                                @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsPositionById(id);
+        checkEntityService.checkExists((JpaRepository) positionService, id);
         return ResponseEntity.ok(positionService.getById(id));
     }
 
