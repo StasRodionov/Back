@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.dto.SupplierAccountDto;
+import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.SupplierAccountService;
 import io.swagger.annotations.Api;
@@ -10,12 +11,13 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
-import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,16 +34,12 @@ import java.util.List;
 @Tag(name="SupplierAccount Rest Controller", description = "CRUD операции со счетами поставщиков")
 @Api(tags = "SupplierAccount Rest Controller")
 @RequestMapping("api/supplierAccount")
+@RequiredArgsConstructor
 public class SupplierAccountRestController {
 
     private final SupplierAccountService invoices;
     private final CheckEntityService checkEntityService;
-
-    public SupplierAccountRestController(SupplierAccountService invoices,
-                                         CheckEntityService checkEntityService) {
-        this.invoices = invoices;
-        this.checkEntityService = checkEntityService;
-    }
+    private final SupplierAccountRepository supplierAccountRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех счетов поставщиков")
@@ -83,7 +81,7 @@ public class SupplierAccountRestController {
     public ResponseEntity<SupplierAccountDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти счет поставщика")
                                                           @PathVariable(name = "id") Long id) {
-            checkEntityService.checkExistsSupplierAccountById(id);
+            checkEntityService.checkExists((JpaRepository) supplierAccountRepository, id);
             return ResponseEntity.ok(invoices.getById(id));
     }
 

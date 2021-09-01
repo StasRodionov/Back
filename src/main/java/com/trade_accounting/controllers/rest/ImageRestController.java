@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ImageService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,23 +22,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
 @Tag(name = "Image Rest Controller", description = "CRUD операции с фото")
 @Api(tags = "Image Rest Controller")
 @RequestMapping("/api/image")
+@RequiredArgsConstructor
 public class ImageRestController {
 
     private final ImageService imageService;
     private final CheckEntityService checkEntityService;
-
-    public ImageRestController(ImageService imageService,
-                               CheckEntityService checkEntityService) {
-        this.imageService = imageService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final ImageRepository imageRepository;
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех фото")
     @GetMapping
@@ -65,7 +63,7 @@ public class ImageRestController {
             value = "Переданный ID  в URL по которому необходимо найти фото",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsImageById(id);
+        checkEntityService.checkExists((JpaRepository) imageRepository, id);
         return ResponseEntity.ok(imageService.getById(id));
     }
 
@@ -92,7 +90,7 @@ public class ImageRestController {
     })
     public ResponseEntity<ImageDto> update (@ApiParam (name = "ImageDto", value = "Dto изображения, которое необходимо обновить")
                                            @RequestBody ImageDto dto){
-        checkEntityService.checkExistsImageById(dto.getId());
+        checkEntityService.checkExists((JpaRepository) imageRepository, dto.getId());
         return ResponseEntity.ok(imageService.update(dto));
     }
 

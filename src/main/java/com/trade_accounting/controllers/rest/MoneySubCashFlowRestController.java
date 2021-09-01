@@ -1,6 +1,5 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.MoneySubCashFlowDto;
 import com.trade_accounting.services.interfaces.MoneySubCashFlowService;
 import io.swagger.annotations.Api;
@@ -8,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +19,10 @@ import java.util.List;
 @Tag(name = "MoneySubCashFlow Rest Controller", description = "Получение данных о всех транзакция")
 @Api(tags = "MoneySubCashFlow Rest Controller")
 @RequestMapping("/api/money")
+@RequiredArgsConstructor
 public class MoneySubCashFlowRestController {
 
     private final MoneySubCashFlowService moneySubCashFlowService;
-
-    public MoneySubCashFlowRestController(MoneySubCashFlowService moneySubCashFlowService) {
-        this.moneySubCashFlowService = moneySubCashFlowService;
-    }
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех транзакций")

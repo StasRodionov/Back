@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.LegalDetailDto;
+import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.LegalDetailService;
 import io.swagger.annotations.Api;
@@ -9,7 +10,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,16 +28,12 @@ import java.util.List;
 @Tag(name = "Legal Detail Rest Controller", description = "CRUD  операции с юридическими реквизитами")
 @Api(tags = "Legal Detail Rest Controller")
 @RequestMapping("/api/legaldetail")
+@RequiredArgsConstructor
 public class LegalDetailRestController {
 
     private final LegalDetailService legalDetailService;
     private final CheckEntityService checkEntityService;
-
-    public LegalDetailRestController(LegalDetailService legalDetailService,
-                                     CheckEntityService checkEntityService) {
-        this.legalDetailService = legalDetailService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final LegalDetailRepository legalDetailRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всей юридических реквизитов")
@@ -61,7 +59,7 @@ public class LegalDetailRestController {
 
     public ResponseEntity<LegalDetailDto> getById(@ApiParam(name = "id", value = "ID переданный в URL по которому необходимо найти юридические реквизиты")
                                                   @PathVariable("id") Long id) {
-        checkEntityService.checkExistsLegalDetailById(id);
+        checkEntityService.checkExists((JpaRepository) legalDetailRepository, id);
         return ResponseEntity.ok(legalDetailService.getById(id));
     }
 

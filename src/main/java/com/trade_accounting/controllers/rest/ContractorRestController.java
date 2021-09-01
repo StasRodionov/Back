@@ -3,6 +3,7 @@ package com.trade_accounting.controllers.rest;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
+import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.services.interfaces.AddressService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ContractorService;
@@ -13,11 +14,13 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,22 +37,14 @@ import java.util.List;
 @Tag(name = "Contractor Rest Controller", description = "CRUD  операции с контрагентами")
 @Api(tags = "Contractor Rest Controller")
 @RequestMapping("/api/contractor")
+@RequiredArgsConstructor
 public class ContractorRestController {
 
     private final ContractorService contractorService;
     private final FiasDbService fiasDbService;
     private final AddressService addressService;
     private final CheckEntityService checkEntityService;
-
-    public ContractorRestController(ContractorService contractorService,
-                                    FiasDbService fiasDbService,
-                                    AddressService addressService,
-                                    CheckEntityService checkEntityService) {
-        this.contractorService = contractorService;
-        this.fiasDbService = fiasDbService;
-        this.addressService = addressService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final ContractorRepository contractorRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех контрагентов")
@@ -153,7 +148,7 @@ public class ContractorRestController {
     public ResponseEntity<ContractorDto> getById(@ApiParam(name = "id",
             value = "Переданный в URL id по которому необходимо найти контрагента")
                                                  @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsContractorById(id);
+        checkEntityService.checkExists((JpaRepository) contractorRepository, id);
         return ResponseEntity.ok(contractorService.getById(id));
     }
 

@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.WarehouseDto;
+import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import io.swagger.annotations.Api;
@@ -8,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,16 +27,12 @@ import java.util.List;
 @Tag(name = "Warehouse Rest Controller", description = "CRUD операции со складами")
 @Api(tags = "Warehouse Account Rest Controller")
 @RequestMapping("/api/warehouse")
+@RequiredArgsConstructor
 public class WarehouseRestController {
 
     private final WarehouseService warehouseService;
     private final CheckEntityService checkEntityService;
-
-    public WarehouseRestController(WarehouseService warehouseService,
-                                   CheckEntityService checkEntityService) {
-        this.warehouseService = warehouseService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final WarehouseRepository warehouseRepository;
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех складов")
     @GetMapping
@@ -57,7 +56,7 @@ public class WarehouseRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<WarehouseDto> getById(@PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsWarehouseById(id);
+        checkEntityService.checkExists((JpaRepository) warehouseRepository, id);
         return ResponseEntity.ok(warehouseService.getById(id));
     }
 
@@ -84,7 +83,7 @@ public class WarehouseRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto) {
-        checkEntityService.checkExistsWarehouseById(warehouseDto.getId());
+        checkEntityService.checkExists((JpaRepository) warehouseService, warehouseDto.getId());
         return ResponseEntity.ok().body(warehouseService.update(warehouseDto));
     }
 

@@ -3,6 +3,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.dto.CurrencyDto;
+import com.trade_accounting.repositories.CurrencyRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.CurrencyService;
 import io.swagger.annotations.Api;
@@ -11,12 +12,14 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,16 +36,12 @@ import java.util.List;
 @Tag(name = "Currency Rest Controller", description = "CRUD операции с валютами")
 @Api(tags = "Currency Rest Controller")
 @RequestMapping("/api/currency")
+@RequiredArgsConstructor
 public class CurrencyRestController {
 
     private final CurrencyService currencyService;
     private final CheckEntityService checkEntityService;
-
-    CurrencyRestController(CurrencyService currencyService,
-                           CheckEntityService checkEntityService) {
-        this.currencyService = currencyService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final CurrencyRepository currencyRepository;
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех валют")
     @GetMapping
@@ -70,7 +69,7 @@ public class CurrencyRestController {
             value = "ID переданный в URL по которому необходимо найти валюту",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsCurrencyById(id);
+        checkEntityService.checkExists((JpaRepository) currencyRepository, id);
         return ResponseEntity.ok(currencyService.getById(id));
     }
 
@@ -99,7 +98,7 @@ public class CurrencyRestController {
     )
     public ResponseEntity<CurrencyDto> update(@ApiParam(name = "currencyDto",
             value = "DTO валюты, которую необходимо обновить") @RequestBody CurrencyDto currencyDto) {
-        checkEntityService.checkExistsCurrencyById(currencyDto.getId());
+        checkEntityService.checkExists((JpaRepository) currencyRepository, currencyDto.getId());
         return ResponseEntity.ok().body(currencyService.update(currencyDto));
     }
 

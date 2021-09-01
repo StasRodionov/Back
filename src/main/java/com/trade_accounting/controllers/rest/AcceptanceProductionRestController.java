@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.AcceptanceProductionDto;
+import com.trade_accounting.repositories.AcceptanceProductionRepository;
 import com.trade_accounting.services.interfaces.AcceptanceProductionService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,7 @@ import java.util.List;
 public class AcceptanceProductionRestController {
     private final AcceptanceProductionService acceptanceProductionService;
     private final CheckEntityService checkEntityService;
+    private final AcceptanceProductionRepository acceptanceProductionRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех приемок товара")
@@ -54,7 +57,7 @@ public class AcceptanceProductionRestController {
     public ResponseEntity<AcceptanceProductionDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти приемку")
                                                  @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsAcceptanceProductionById(id);
+        checkEntityService.checkExists((JpaRepository) acceptanceProductionRepository, id);
 
         return ResponseEntity.ok(acceptanceProductionService.getById(id));
     }
@@ -101,7 +104,7 @@ public class AcceptanceProductionRestController {
     public ResponseEntity<AcceptanceProductionDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить приемку")
                                                     @PathVariable("id") Long id) {
-        checkEntityService.checkExistsAcceptanceProductionById(id);
+        checkEntityService.checkExists((JpaRepository) acceptanceProductionRepository, id);
         acceptanceProductionService.deleteById(id);
 
         return ResponseEntity.ok().build();

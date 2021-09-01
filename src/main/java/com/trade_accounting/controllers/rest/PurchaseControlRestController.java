@@ -1,6 +1,5 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.PurchaseControl;
 import com.trade_accounting.models.dto.PurchaseControlDto;
 import com.trade_accounting.repositories.PurchaseControlRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;

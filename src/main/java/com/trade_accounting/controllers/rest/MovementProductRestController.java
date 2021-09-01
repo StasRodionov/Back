@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.MovementProductDto;
+import com.trade_accounting.repositories.MovementProductRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.MovementProductService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,15 +28,12 @@ import java.util.List;
 @Tag(name = "Movement Product Rest Controller", description = "CRUD  операции с товарами, которые перемещаем между складами")
 @Api(tags = "Movement Product Rest Controller")
 @RequestMapping("/api/movement/product")
+@RequiredArgsConstructor
 public class MovementProductRestController {
 
     private final MovementProductService movementProductService;
     private final CheckEntityService checkEntityService;
-
-    public MovementProductRestController(MovementProductService movementProductService, CheckEntityService checkEntityService) {
-        this.movementProductService = movementProductService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final MovementProductRepository movementProductRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех перемещенных товаров")
@@ -58,7 +58,7 @@ public class MovementProductRestController {
     public ResponseEntity<MovementProductDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти перемещенный товар")
                                                       @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsMovementProductById(id);
+        checkEntityService.checkExists((JpaRepository) movementProductRepository, id);
         return ResponseEntity.ok(movementProductService.getById(id));
     }
 
@@ -104,7 +104,7 @@ public class MovementProductRestController {
     public ResponseEntity<MovementProductDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить перемещенный товар")
                                                          @PathVariable("id") Long id) {
-        checkEntityService.checkExistsMovementProductById(id);
+        checkEntityService.checkExists((JpaRepository) movementProductRepository, id);
         movementProductService.deleteById(id);
         return ResponseEntity.ok().build();
     }

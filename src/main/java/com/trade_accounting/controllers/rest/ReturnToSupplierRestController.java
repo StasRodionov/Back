@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.dto.ReturnToSupplierDto;
+import com.trade_accounting.repositories.ReturnToSupplierRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.ReturnToSupplierService;
 import io.swagger.annotations.Api;
@@ -10,12 +11,14 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,16 +35,12 @@ import java.util.List;
 @Tag(name = "ReturnToSupplier Rest Controller", description = "CRUD операции с возратами поставщикам")
 @Api(tags = "ReturnToSupplier Rest Controller")
 @RequestMapping("api/returnToSupplier")
+@RequiredArgsConstructor
 public class ReturnToSupplierRestController {
 
     private final ReturnToSupplierService returnToSupplierService;
     private final CheckEntityService checkEntityService;
-
-
-    public ReturnToSupplierRestController(ReturnToSupplierService returnToSupplierService, CheckEntityService checkEntityService) {
-        this.returnToSupplierService = returnToSupplierService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final ReturnToSupplierRepository returnToSupplierRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех возвратов поставщикам")
@@ -79,7 +78,7 @@ public class ReturnToSupplierRestController {
     public ResponseEntity<ReturnToSupplierDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти возврат поставщику")
                                                        @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsReturnToSupplierById(id);
+        checkEntityService.checkExists((JpaRepository) returnToSupplierRepository, id);
         return ResponseEntity.ok(returnToSupplierService.getById(id));
     }
 

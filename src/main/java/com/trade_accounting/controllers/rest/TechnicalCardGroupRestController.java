@@ -1,7 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
-import com.trade_accounting.models.dto.TechnicalCardDto;
 import com.trade_accounting.models.dto.TechnicalCardGroupDto;
+import com.trade_accounting.repositories.TechnicalCardGroupRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TechnicalCardGroupService;
 import io.swagger.annotations.Api;
@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,16 +28,13 @@ import java.util.List;
 @Tag(name = "Technical card group Rest Controller", description = "CRUD операции с группами технических карт")
 @Api(tags = "Technical card group Rest Controller")
 @RequestMapping("/api/technical_card_group")
+@RequiredArgsConstructor
 public class TechnicalCardGroupRestController {
 
     private final TechnicalCardGroupService technicalCardGroupService;
     private final CheckEntityService checkEntityService;
+    private final TechnicalCardGroupRepository technicalCardGroupRepository;
 
-    public TechnicalCardGroupRestController(TechnicalCardGroupService technicalCardGroupService,
-                                       CheckEntityService checkEntityService) {
-        this.technicalCardGroupService = technicalCardGroupService;
-        this.checkEntityService = checkEntityService;
-    }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех групп технических карт")
     @GetMapping()
@@ -60,7 +59,7 @@ public class TechnicalCardGroupRestController {
     })
     public ResponseEntity<TechnicalCardGroupDto> getById(@ApiParam(name = "id",
             value = "ID переданный в URL по которому необходимо найти группу технических карт") @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsTechnicalCardGroupById(id);
+        checkEntityService.checkExists((JpaRepository) technicalCardGroupRepository, id);
         return ResponseEntity.ok(technicalCardGroupService.getById(id));
     }
 

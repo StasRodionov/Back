@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.BalanceAdjustment;
 import com.trade_accounting.models.dto.BalanceAdjustmentDto;
+import com.trade_accounting.repositories.BalanceAdjustmentRepository;
 import com.trade_accounting.services.interfaces.BalanceAdjustmentService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
@@ -10,11 +11,13 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,16 +34,12 @@ import java.util.List;
 @Tag(name = "BalanceAdjustment Rest Controller", description = "CRUD операции с корректировками баланса")
 @Api(tags = "BalanceAdjustment Rest Controller")
 @RequestMapping("api/balanceAdjustment")
+@RequiredArgsConstructor
 public class BalanceAdjustmentRestController {
 
     private final BalanceAdjustmentService balanceAdjustmentService;
     private final CheckEntityService checkEntityService;
-
-    public BalanceAdjustmentRestController(BalanceAdjustmentService balanceAdjustmentService,
-                                           CheckEntityService checkEntityService) {
-        this.balanceAdjustmentService = balanceAdjustmentService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final BalanceAdjustmentRepository balanceAdjustmentRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех корректировок баланса")
@@ -78,7 +77,7 @@ public class BalanceAdjustmentRestController {
     public ResponseEntity<BalanceAdjustmentDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти корректировку баланса")
                                                        @PathVariable(name = "id") Long id) {
-        checkEntityService.checkExistsBalanceAdjustmentById(id);
+        checkEntityService.checkExists((JpaRepository) balanceAdjustmentRepository, id);
         return ResponseEntity.ok(balanceAdjustmentService.getById(id));
     }
 

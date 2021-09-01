@@ -1,15 +1,16 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.AttributeOfCalculationObjectDto;
+import com.trade_accounting.repositories.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.services.interfaces.AttributeOfCalculationObjectService;
-
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,18 +28,12 @@ import java.util.List;
 @Tag(name = "Attribute Of Calculation Object Rest Controller", description = "CRUD операции с объектами")
 @Api(tags = "Attribute Of Calculation Object Rest Controller")
 @RequestMapping("/api/attribute/calculation/object")
+@RequiredArgsConstructor
 public class AttributeOfCalculationObjectRestController {
 
     private final AttributeOfCalculationObjectService attributeOfCalculationObjectService;
     private final CheckEntityService checkEntityService;
-
-
-    @Autowired
-    public AttributeOfCalculationObjectRestController(AttributeOfCalculationObjectService attributeOfCalculationObjectService,
-                                                      CheckEntityService checkEntityService) {
-        this.attributeOfCalculationObjectService = attributeOfCalculationObjectService;
-        this.checkEntityService = checkEntityService;
-    }
+    private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех Attribute Of Calculation")
@@ -62,7 +57,7 @@ public class AttributeOfCalculationObjectRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<AttributeOfCalculationObjectDto> getById(@PathVariable("id") Long id) {
-        checkEntityService.checkExistsAttributeOfCalculationObjectByID(id);
+        checkEntityService.checkExists((JpaRepository) attributeOfCalculationObjectRepository, id);
         return ResponseEntity.ok(attributeOfCalculationObjectService.getById(id));
     }
 

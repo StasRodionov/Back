@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.TaskCommentDto;
+import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TaskCommentService;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +15,7 @@ import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,7 @@ public class TaskCommentRestController {
 
     private final TaskCommentService commentService;
     private final CheckEntityService checkEntityService;
+    private final TaskCommentRepository commentRepository;
 
     @ApiOperation(value = "getAll", notes = "Получение списка всех комментариев")
     @ApiResponses(value = {
@@ -78,7 +81,7 @@ public class TaskCommentRestController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<TaskCommentDto> getById(@PathVariable("id") long id) {
-        checkEntityService.checkExistsTaskCommentById(id);
+        checkEntityService.checkExists((JpaRepository) commentRepository, id);
         return ResponseEntity.ok(commentService.getById(id));
     }
 

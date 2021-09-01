@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,20 +29,12 @@ import java.util.List;
 @Tag(name = "Payout Rest Controller", description = "CRUD операции с выплатами")
 @Api(tags = "Payout Rest Controller")
 @RequestMapping("/api/payout")
+@RequiredArgsConstructor
 public class PayoutRestController {
 
     private final PayoutService payoutService;
-
     private final CheckEntityService checkEntityService;
-
     private final PayoutRepository payoutRepository;
-
-    public PayoutRestController(PayoutService payoutService, CheckEntityService checkEntityService,
-                                PayoutRepository payoutRepository, PayoutRepository payoutRepository1) {
-        this.payoutService = payoutService;
-        this.checkEntityService = checkEntityService;
-        this.payoutRepository = payoutRepository1;
-    }
 
     @GetMapping
     @ApiOperation(value = "getAll", notes = "Получение списка всех выплат")
