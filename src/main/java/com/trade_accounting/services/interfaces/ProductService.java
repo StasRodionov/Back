@@ -1,8 +1,6 @@
 package com.trade_accounting.services.interfaces;
 
-import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Product;
-import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.models.dto.ProductDto;
 import org.springframework.data.domain.Pageable;
