@@ -857,6 +857,24 @@ create table mutual_settlements
     primary key (id)
 );
 
+create table retail_sales
+(
+    id                      bigserial    not null,
+    time                    varchar(255),
+    retail_store_id         int8         not null,
+    contractor_id           int8         not null,
+    company_id              int8         not null,
+    sum_cash                numeric(19, 2),
+    sum_non_cash            numeric(19, 2),
+    prepayment              numeric(19, 2),
+    sum_discount            numeric(19, 2),
+    sum                     numeric(19, 2),
+    sent                    boolean default false,
+    printed                 boolean default false,
+    comment                 varchar(255),
+    primary key (id)
+);
+
 alter table if exists acceptances_acceptance_production
     add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);
 
@@ -1279,3 +1297,14 @@ alter table  if exists mutual_settlements
 
 alter table  if exists mutual_settlements
     add constraint fk95bd6lohwuoqtbe5xbtdpp1x8 foreign key (employee_id) references employees;
+
+alter table if exists retail_sales
+    add constraint FKkdt6slh5gfd4f9eykc5684yj2 foreign key (retail_store_id) references retail_stores;
+
+alter table if exists retail_sales
+    add constraint FKsdt6slh5gfddsgsd4c5684yj2 foreign key (contractor_id) references contractors;
+
+alter table if exists retail_sales
+    add constraint FKkdt6slh5gdsaf9eykc5684ya2 foreign key (company_id) references companies;
+
+
