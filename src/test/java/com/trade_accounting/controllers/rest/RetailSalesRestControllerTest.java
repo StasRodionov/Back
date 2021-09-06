@@ -11,6 +11,7 @@ import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.services.interfaces.RetailStoreService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -27,6 +28,7 @@ import java.util.List;
 import static com.trade_accounting.services.impl.Stubs.ModelStubs.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -38,6 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/RetailSales-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
+@AutoConfigureRestDocs(outputDir = "target/snippets")
 public class RetailSalesRestControllerTest {
 
     @Autowired
@@ -66,7 +69,8 @@ public class RetailSalesRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(5)));
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andDo(document("home"));
     }
 
     @Test
