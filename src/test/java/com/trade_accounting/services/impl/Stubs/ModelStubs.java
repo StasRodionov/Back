@@ -29,6 +29,7 @@ import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.RequestsProductions;
+import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.SupplierAccount;
@@ -574,6 +575,21 @@ public class ModelStubs {
                 .publisher(getEmployee(1L))
                 .publishedDateTime(LocalDateTime.now())
                 .task(null)
+                .build();
+    }
+
+    public static RetailStore getRetailStore(Long id) {
+        return RetailStore.builder()
+                .id(1L)
+                .activityStatus("Был в сети вчера")
+                .defaultTaxationSystem("ОСН")
+                .isActive(true)
+                .name("Ozon111")
+                .orderTaxationSystem("УСН. Доход")
+                .revenue(BigDecimal.valueOf(12000))
+                .salesInvoicePrefix("SI")
+                .company(getCompany(1L))
+                .cashiers(List.of(getEmployee(id)))
                 .build();
     }
 }
