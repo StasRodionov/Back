@@ -4,9 +4,9 @@ include::rest_conv.adoc[]
 === Mutual settlements
 ==== Get mutual settlements by ID
 ===== Curl example
-include::{snippets}/mutual-settlements-rest-controller-test/get-all/curl-request.adoc[]
+include::../../../target/snippets/mutual-settlements-rest-controller-test/get-all/curl-request.adoc[]
 ===== HTTP Request
-include::mutual-settlements-rest-controller-test/get-all/http-request.adoc[]
+include::../../../target/snippets/mutual-settlements-rest-controller-test/get-all/http-request.adoc[]
 ===== HTTP Response
 ====== Success HTTP responses
-include::mutual-settlements-rest-controller-test/get-all/http-response.adoc[]
+include::../../../target/snippets/mutual-settlements-rest-controller-test/get-all/http-response.adoc[]

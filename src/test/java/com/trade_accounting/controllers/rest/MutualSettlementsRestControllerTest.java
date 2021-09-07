@@ -27,8 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/MutualSettlementsR-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "veraogon@mail.ru")
-//@AutoConfigureRestDocs(outputDir = "target/build/asciidoc")
-@AutoConfigureRestDocs(outputDir = "src/docs/asciidoc")
+@AutoConfigureRestDocs(outputDir = "target/snippets")
+//@AutoConfigureRestDocs(outputDir = "src/docs/asciidoc")
 public class MutualSettlementsRestControllerTest {
 
     @Autowired
