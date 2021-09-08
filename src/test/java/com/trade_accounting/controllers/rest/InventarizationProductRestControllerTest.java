@@ -21,6 +21,7 @@ import java.awt.*;
 import java.math.BigDecimal;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -39,6 +40,11 @@ public class InventarizationProductRestControllerTest {
 
     @Autowired
     InventarizationProductRestController inventarizationProductRestController;
+
+    @Test
+    void testExistence() {
+        assertNotNull(inventarizationProductRestController, "inventarizationProductRestController is null");
+    }
 
     @Test
     @DisplayName("Получаем все InventarizationProduct")
@@ -133,6 +139,7 @@ public class InventarizationProductRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(2)));
+
     }
 
 }

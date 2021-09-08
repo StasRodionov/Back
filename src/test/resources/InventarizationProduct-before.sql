@@ -2,6 +2,8 @@ ALTER TABLE inventarizations_inventarization_products DROP IF EXISTS inventariza
 
 DELETE FROM inventarization_products;
 
+ALTER TABLE inventarizations_inventarization_products ADD inventarization_products_id bigint;
+
 INSERT INTO inventarization_products (id, actual_amount, price, product_id)
 VALUES (1, 11, 111, 1),
        (2, 22, 222, 2),
