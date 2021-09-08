@@ -28,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = "/MutualSettlementsR-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "veraogon@mail.ru")
 @AutoConfigureRestDocs(outputDir = "target/snippets")
-//@AutoConfigureRestDocs(outputDir = "src/docs/asciidoc")
 public class MutualSettlementsRestControllerTest {
 
     @Autowired
@@ -44,17 +43,13 @@ public class MutualSettlementsRestControllerTest {
 
     @Test
     void getAll() throws Exception {
-        ResultActions resultActions = mockMvc.perform(get("/api/mutualSettlements"))
+        mockMvc.perform(get("/api/mutualSettlements"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)));
+                .andExpect(jsonPath("$", hasSize(3)))
 
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
-
-//        resultActions.andExpect(status().isOk())
-//                .andExpect(jsonPath("name", is("Roman")))
-//                .andExpect(jsonPath("company", is("Lohika")));
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -72,7 +67,8 @@ public class MutualSettlementsRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(mutualSettlementsDtoJson));
+                .andExpect(content().json(mutualSettlementsDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -91,7 +87,8 @@ public class MutualSettlementsRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(mutualSettlementsDtoJson));
+                .andExpect(content().json(mutualSettlementsDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/mutualSettlements"))
                 .andDo(print())
@@ -118,7 +115,8 @@ public class MutualSettlementsRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(mutualSettlementsDtoJson));
+                .andExpect(content().json(mutualSettlementsDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -126,7 +124,8 @@ public class MutualSettlementsRestControllerTest {
         mockMvc.perform(delete("/api/mutualSettlements/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/mutualSettlements"))
                 .andDo(print())
                 .andExpect(status().isOk())

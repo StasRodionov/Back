@@ -80,7 +80,7 @@ class InternalOrderRestControllerTest {
                 .date("1234-12-12 12:34")
                 .isSent(true)
                 .isPrint(true)
-                .companyId(4L)
+                .companyId(2L)
                 .warehouseId(1L)
                 .comment("Комментарий 1")
                 .internalOrderProductsIds(List.of(1L, 2L, 3L))
