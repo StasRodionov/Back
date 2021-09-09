@@ -1,10 +1,9 @@
 ALTER TABLE movement_movement_products DROP IF EXISTS movement_products_id;
 
-DELETE
-FROM movement_products;
+DELETE FROM movement_products;
 
-DELETE FROM products;
-DELETE FROM contractors;
+TRUNCATE products CASCADE;
+TRUNCATE contractors CASCADE;
 
 INSERT INTO contractors (id, comment, comment_to_address, dicsount_card_number, email, fax, name, phone,
                          sort_number, access_parameters_id, address_id, contractor_group_id,

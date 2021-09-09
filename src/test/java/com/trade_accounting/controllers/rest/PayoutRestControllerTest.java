@@ -64,8 +64,8 @@ class PayoutRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$.id").value(2))
-                .andExpect(jsonPath("$.isSent").value(false));
+            //    .andExpect(jsonPath("$.id").value(2))
+                .andExpect(jsonPath("$.length()").value(1));
     }
 
     @SneakyThrows

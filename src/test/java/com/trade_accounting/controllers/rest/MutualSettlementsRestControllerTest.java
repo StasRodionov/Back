@@ -78,7 +78,7 @@ public class MutualSettlementsRestControllerTest {
                 .initialBalance(77777)
                 .income(44444)
                 .expenses(55555)
-                .contractorId(4L)
+                .contractorId(3L)
                 .employeeId(2L)
                 .build());
 
@@ -106,7 +106,7 @@ public class MutualSettlementsRestControllerTest {
                 .initialBalance(77777)
                 .income(44444)
                 .expenses(55555)
-                .contractorId(4L)
+                .contractorId(3L)
                 .employeeId(2L)
                 .build());
 

@@ -82,7 +82,7 @@ public class MovementRestControllerTest {
                 .date("2021-07-16 15:10")
                 .warehouseFromId(1L)
                 .warehouseToId(2L)
-                .companyId(5L)
+                .companyId(3L)
                 .isSent(false)
                 .isPrint(false)
                 .comment("Перемещение 4")

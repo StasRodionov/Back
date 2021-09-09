@@ -84,7 +84,7 @@ public class InventarizationProductRestControllerTest {
                 .id(4L)
                 .actualAmount(BigDecimal.valueOf(44))
                 .price(BigDecimal.valueOf(444))
-                .productId(4L)
+                .productId(3L)
                 .build();
 
         String inventarizationProductDtoJson = new Gson().toJson(inventarizationProductDto);

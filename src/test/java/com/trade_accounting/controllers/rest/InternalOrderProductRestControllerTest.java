@@ -75,7 +75,7 @@ class InternalOrderProductRestControllerTest {
         String internalOrderProductDtoJson = new Gson().toJson(InternalOrderProductsDto.builder()
                 .amount(BigDecimal.valueOf(8L))
                 .price(BigDecimal.valueOf(9L))
-                .productId(10L)
+                .productId(9L)
                 .build());
 
         mockMvc.perform(post("/api/internalorder/product")
@@ -100,7 +100,7 @@ class InternalOrderProductRestControllerTest {
                 .id(5L)
                 .amount(BigDecimal.valueOf(555L))
                 .price(BigDecimal.valueOf(555L))
-                .productId(55L)
+                .productId(6L)
                 .build());
 
         mockMvc.perform(put("/api/internalorder/product")
