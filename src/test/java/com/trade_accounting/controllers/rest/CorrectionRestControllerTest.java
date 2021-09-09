@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.trade_accounting.models.dto.CorrectionDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -31,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/Correction-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 class CorrectionRestControllerTest {
 
     @Autowired
@@ -50,7 +53,8 @@ class CorrectionRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)));
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -70,7 +74,8 @@ class CorrectionRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(correctionDtoJson));
+                .andExpect(content().json(correctionDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -92,7 +97,8 @@ class CorrectionRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(correctionDtoJson));
+                .andExpect(content().json(correctionDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/correction"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -107,9 +113,9 @@ class CorrectionRestControllerTest {
                 .date("2021-06-23 15:10")
                 .warehouseId(1L)
                 .companyId(7L)
-                .isSent(false)
-                .isPrint(false)
-                .writeOffProduct(false)
+                .isSent(true)
+                .isPrint(true)
+                .writeOffProduct(true)
                 .comment("Оприходование 3 UPDATE")
                 .correctionProductIds(List.of(7L, 8L, 9L))
                 .build();
@@ -119,7 +125,8 @@ class CorrectionRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(correctionDtoJson));
+                .andExpect(content().json(correctionDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/correction"))
                 .andDo(print());
     }
@@ -129,7 +136,8 @@ class CorrectionRestControllerTest {
         mockMvc.perform(delete("/api/correction/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/correction"))
                 .andDo(print())
                 .andExpect(status().isOk())

@@ -2,17 +2,18 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.AddressDto;
-import com.trade_accounting.services.interfaces.AddressService;
-import com.trade_accounting.services.interfaces.CheckEntityService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -25,12 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/Address-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
-
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 class AddressRestControllerTest {
-    @Autowired
-    private AddressService addressService;
-    @Autowired
-    private CheckEntityService checkEntityService;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -48,11 +46,13 @@ class AddressRestControllerTest {
                 .build()
         );
 
-        mockMvc.perform(get("/api/address/1"))
+        ResultActions resultActions = mockMvc.perform(get("/api/address/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(addressDtoJson));
+
+        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -69,12 +69,14 @@ class AddressRestControllerTest {
                 .build()
         );
 
-        mockMvc.perform(post("/api/address")
+        ResultActions resultActions = mockMvc.perform(post("/api/address")
                 .contentType(MediaType.APPLICATION_JSON).content(addressDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(addressDtoJson));
+
+        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/address/6"))
                 .andDo(print())
@@ -97,12 +99,14 @@ class AddressRestControllerTest {
                 .build()
         );
 
-        mockMvc.perform(put("/api/address")
+        ResultActions resultActions = mockMvc.perform(put("/api/address")
                 .contentType(MediaType.APPLICATION_JSON).content(addressDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(addressDtoJson));
+
+        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/address/2"))
                 .andDo(print())
@@ -118,10 +122,12 @@ class AddressRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
 
-        mockMvc.perform(delete("/api/address/5"))
+        ResultActions resultActions = mockMvc.perform(delete("/api/address/5"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
+
+        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/address/5"))
                 .andDo(print())

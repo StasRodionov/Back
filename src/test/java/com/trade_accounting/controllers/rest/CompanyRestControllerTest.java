@@ -6,14 +6,17 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
@@ -31,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/company-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "veraogon@mail.ru")
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 class CompanyRestControllerTest {
 
     @Autowired
@@ -47,11 +51,13 @@ class CompanyRestControllerTest {
     @SneakyThrows
     @Test
      void getAllTest() {
-        mockMvc.perform(get("/api/company"))
+        ResultActions resultActions = mockMvc.perform(get("/api/company"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$.length()").value(2));
+
+        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows
@@ -61,7 +67,10 @@ class CompanyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[*].leader", containsInAnyOrder("testLeader", "Leader")));
+                .andExpect(jsonPath("$[*].leader", containsInAnyOrder("testLeader", "Leader")))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+
+
     }
 
     @SneakyThrows
@@ -72,7 +81,8 @@ class CompanyRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.fax").value("810-41-1234567824"))
                 .andExpect(jsonPath("$.inn").value("4321"))
-                .andExpect(jsonPath("$.email").value("karimogon@mail.ru"));
+                .andExpect(jsonPath("$.email").value("karimogon@mail.ru"))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows
@@ -82,7 +92,8 @@ class CompanyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("1"))
-                .andExpect(jsonPath("$.stamp").value("stampTest"));
+                .andExpect(jsonPath("$.stamp").value("stampTest"))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows
@@ -115,7 +126,8 @@ class CompanyRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(companyDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(companyDtoJson));
+                .andExpect(content().json(companyDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/company"))
                 .andDo(print())
@@ -153,7 +165,8 @@ class CompanyRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(companyDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(companyDtoJson));
+                .andExpect(content().json(companyDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
 
         mockMvc.perform(get("/api/company"))
@@ -170,7 +183,8 @@ class CompanyRestControllerTest {
         mockMvc.perform(delete("/api/company/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/company"))
                 .andDo(print())
                 .andExpect(status().isOk())
