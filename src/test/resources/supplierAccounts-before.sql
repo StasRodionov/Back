@@ -1,8 +1,4 @@
 TRUNCATE supplier_accounts CASCADE;
-/*ALTER TABLE supplier_accounts DROP CONSTRAINT IF EXISTS FKfcamsdfqwxwmeq7ppvbvk7ns7;
-ALTER TABLE supplier_accounts DROP CONSTRAINT IF EXISTS FKp2negnkcddsrblsxhenecvat9;
-ALTER TABLE supplier_accounts DROP CONSTRAINT IF EXISTS FK1i3ffi5cu6ryoth28qvs3md8s;
-ALTER TABLE supplier_accounts DROP CONSTRAINT IF EXISTS FKs4wfnn57lxnnj08ago4rq8xct;*/
 
 TRUNCATE companies CASCADE;
 TRUNCATE contracts CASCADE;

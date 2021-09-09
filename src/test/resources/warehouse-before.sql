@@ -1,18 +1,3 @@
-/*alter table invoice drop if exists warehouse_id;
-alter table corrections drop if exists warehouse_id;
-delete from warehouses;*/
-
-/*alter table acceptances drop if exists warehouse_id;
-alter table corrections drop if exists warehouse_id;
-alter table internal_order drop if exists warehouse_id;
-alter table inventarizations drop if exists warehouse_id;
-alter table loss drop if exists warehouse_id;
-alter table movement drop if exists warehouse_from_id;
-alter table movement drop if exists warehouse_to_id;
-alter table requsts_productions drop if exists warehouse_id;
-alter table return_suppliers drop if exists warehouse_id;
-alter table supplier_accounts drop if exists warehouse_id;
-alter table technical_operations cle if exists warehouse_id;*/
 TRUNCATE warehouses CASCADE;
 
 insert into warehouses(id, name, sort_number, address, comment_to_address, comment) values
