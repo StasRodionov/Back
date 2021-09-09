@@ -29,8 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/PurchaseControl-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
-@RequiredArgsConstructor
-class PurchaseControlRestControllerTest {
+public class PurchaseControlRestControllerTest {
 
     @Autowired
     private PurchaseControlRestController purchaseControlRestController;
@@ -55,13 +54,16 @@ class PurchaseControlRestControllerTest {
     @Test
     void getById() throws Exception {
         String purchaseControlDtoJson = new Gson().toJson(PurchaseControlDto.builder()
-                .id(1L)
-                .productName("test1")
-                .productCode(1111111L)
-                .articleNumber(111L)
-                .productMeasure("test1")
-                .productQuantity(1111L)
-                .build());
+                        .id(1L)
+                        .articleNumber(1L)
+                        .productCode(1L)
+                        .productMeasure("quantity")
+                        .productName("skirt")
+                        .productQuantity(10000L)
+                        .currentBalanceId(1L)
+                        .forecastId(1L)
+                        .historyOfSalesId(1L)
+                        .build());
 
         mockMvc.perform(get("/api/purchasecontrol/1"))
                 .andDo(print())
@@ -73,11 +75,15 @@ class PurchaseControlRestControllerTest {
     @Test
     void create() throws Exception {
         String purchaseControlDtoJson = new Gson().toJson(PurchaseControlDto.builder()
-                .productName("test1")
-                .productCode(1111111L)
-                .articleNumber(111L)
-                .productMeasure("test1")
-                .productQuantity(1111L)
+                .id(4L)
+                .articleNumber(1L)
+                .productCode(1L)
+                .productMeasure("quantity")
+                .productName("skirt")
+                .productQuantity(10000L)
+                .currentBalanceId(1L)
+                .forecastId(1L)
+                .historyOfSalesId(1L)
                 .build()
         );
 
@@ -99,11 +105,14 @@ class PurchaseControlRestControllerTest {
     void update() throws Exception {
         String purchaseControlDtoJson = new Gson().toJson(PurchaseControlDto.builder()
                 .id(1L)
-                .productName("test1")
-                .productCode(1232351L)
-                .articleNumber(121L)
-                .productMeasure("test1")
-                .productQuantity(1561L)
+                .articleNumber(2L)
+                .productCode(2L)
+                .productMeasure("quantity")
+                .productName("skirt")
+                .productQuantity(10000L)
+                .currentBalanceId(2L)
+                .forecastId(2L)
+                .historyOfSalesId(2L)
                 .build()
         );
 
@@ -119,14 +128,9 @@ class PurchaseControlRestControllerTest {
 
     @Test
     void deleteById() throws Exception {
-        mockMvc.perform(delete("/api/purchasecontrol/2"))
+        mockMvc.perform(delete("/api/purchasecontrol/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
-        mockMvc.perform(get("/api/purchasecontrol"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(2)));
     }
 }

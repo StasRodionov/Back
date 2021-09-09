@@ -1,8 +1,9 @@
-TRUNCATE task cascade;
-insert into task(id, description, creation_Date_Time, deadline_Date_Time, completed, task_Author_id, task_employee_id) values
+TRUNCATE task CASCADE;
 
-(1, 'desc1', '2012-04-10 03:09:02', '2012-04-11 03:09:02', true, 1, 1),
-(2, 'desc2', '2013-04-10 03:09:02', '2013-04-11 03:09:02', true, 2, 2),
-(3, 'desc3', '2014-04-10 03:09:02', '2014-04-11 03:09:02', true, 3, 3);
-
-SELECT setval('task_id_seq', max(id)) FROM task;
+INSERT INTO task (id, completed, creation_date_time, deadline_date_time, description, task_author_id,
+                  task_employee_id)
+VALUES (1, true, '2021-07-31 09:03:48', '2021-09-24 09:03:48', 'Описание задачи номер 0.', 5, 4),
+       (2, true, '2021-06-14 09:03:48.000000', '2021-10-24 09:03:48.000000', 'Описание задачи номер 1.', 2, 4),
+       (3, true, '2021-05-23 09:03:48.000000', '2021-09-29 09:03:48.000000', 'Описание задачи номер 2.', 1, 1);
+SELECT setval('task_id_seq', max(id))
+FROM task

@@ -1,9 +1,10 @@
 TRUNCATE purchase_control CASCADE;
+ALTER TABLE purchase_control DROP CONSTRAINT IF EXISTS FKha6o8n91dt5o7jrdlbwayaeup;
+ALTER TABLE purchase_control DROP CONSTRAINT IF EXISTS FKhbhy03itaynvfdi0oarhm1fe7;
+ALTER TABLE purchase_control DROP CONSTRAINT IF EXISTS FKha6o8n91dt5o7jrdlbwayaeup;
 
-INSERT INTO purchase_control (id, product_name, product_code, article_number, product_measure, product_quantity)
-VALUES (1, 'test1', 1111111, 111, 'test1', 1111),
-       (2, 'test2', 2222222, 222, 'test2', 2222),
-       (3, 'test3', 3333333, 333, 'test3', 3333);
-
-SELECT setval('purchase_control_id_seq', max(id))
-FROM purchase_control;
+INSERT INTO purchase_control (id, article_number, product_code, product_measure, product_name, product_quantity,
+                              current_balance_id, forecast_id, history_of_sales_id)
+VALUES (1, 1, 1, 'quantity', 'skirt', 10000, 1, 1, 1),
+       (2, 2, 2, 'quantity', 'skirt', 10000, 1, 1, 1),
+       (3, 3, 3, 'quantity', 'skirt', 10000, 1, 1, 1);

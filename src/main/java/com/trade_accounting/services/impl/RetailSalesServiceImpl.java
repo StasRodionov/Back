@@ -60,7 +60,6 @@ public class RetailSalesServiceImpl implements RetailSalesService {
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         Optional<RetailStore> retailStore = retailStoreRepository.findById(dto.getRetailStoreId());
         Contractor contactor = contractorRepository.getContractorById(dto.getContractorId());
-        System.out.println(retailStore);
 
         retailSales.setCompany(company);
         retailSales.setRetailStore(retailStore.orElse(null));

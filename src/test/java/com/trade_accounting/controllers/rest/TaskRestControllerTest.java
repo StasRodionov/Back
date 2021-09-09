@@ -1,8 +1,9 @@
 package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
+import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.TaskDto;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,6 +16,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
@@ -23,14 +26,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/task-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@WithUserDetails(value = "veraogon@mail.ru")
-@WithMockUser
-
+@WithUserDetails(value = "karimogon@mail.ru")
 public class TaskRestControllerTest {
 
     @Autowired
@@ -55,11 +55,16 @@ public class TaskRestControllerTest {
 
     @Test
     public void testGetById() throws Exception {
-        String taskJson = new Gson().toJson(TaskDto.builder().id(3L).description("desc3")
+        String taskJson = new Gson().toJson(TaskDto.builder()
+                .id(1L)
                 .completed(true)
-                .taskAuthorId(3L)
+                .creationDateTime("2021-07-31 09:03:48")
+                .deadlineDateTime("2021-09-24 09:03:48")
+                .description("Описание задачи номер 0.")
+                .taskAuthorId(5L)
+                .employeeId(4L)
                 .build());
-        mockMvc.perform(get("/api/tasks/3"))
+        mockMvc.perform(get("/api/tasks/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
@@ -68,19 +73,24 @@ public class TaskRestControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        TaskDto createdTask = TaskDto.builder().id(4L).description("desc4")
-                .creationDateTime("2015-04-10 03:09:02")
-                .deadlineDateTime("2015-04-11 03:09:02")
+        String createdTaskJson = new Gson().toJson(TaskDto.builder()
+                .id(4L)
                 .completed(true)
-                .employeeId(1L)
+                .creationDateTime("2021-07-31 09:03:48")
+                .deadlineDateTime("2021-09-24 09:03:48")
+                .description("Описание задачи номер 4.")
                 .taskAuthorId(1L)
-                .build();
-        String createdTaskJson = new Gson().toJson(createdTask);
+                .employeeId(1L)
+                .taskCommentsIds(List.of())
+                .build()
+        );
+
         mockMvc.perform(post("/api/tasks").contentType(MediaType.APPLICATION_JSON)
                 .content(createdTaskJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
+
         mockMvc.perform(get("/api/tasks"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -90,14 +100,18 @@ public class TaskRestControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        TaskDto updatedTask = TaskDto.builder().id(4L).description("desc4")
-                .creationDateTime("2016-04-10 03:09:02")
-                .deadlineDateTime("2016-04-11 03:09:02")
-                .completed(true)
-                .employeeId(4L)
-                .taskAuthorId(4L)
-                .build();
-        String updatedTaskJson = new Gson().toJson(updatedTask);
+        String updatedTaskJson = new Gson().toJson(TaskDto.builder()
+                .id(3L)
+                .completed(false)
+                .creationDateTime("2021-07-31 09:03:48")
+                .deadlineDateTime("2021-09-24 09:03:48")
+                .description("Описание задачи номер 4.")
+                .taskAuthorId(2L)
+                .employeeId(2L)
+                .taskCommentsIds(List.of())
+                .build()
+        );
+
         mockMvc.perform(put("/api/tasks").contentType(MediaType.APPLICATION_JSON)
                 .content(updatedTaskJson))
                 .andDo(print())
