@@ -88,7 +88,7 @@ class InternalOrderRestControllerTest {
                 .companyId(2L)
                 .warehouseId(1L)
                 .comment("Комментарий 1")
-                .internalOrderProductsIds(List.of(1L, 2L, 3L))
+                .internalOrderProductsIds(List.of(1L))
                 .build()
         );
 
@@ -117,7 +117,7 @@ class InternalOrderRestControllerTest {
                 .comment("Комментарий 3 _UPDATED_")
                 .companyId(3L)
                 .warehouseId(1L)
-                .internalOrderProductsIds(List.of(1L, 2L, 3L))
+                .internalOrderProductsIds(List.of(1L))
                 .build()
         );
 

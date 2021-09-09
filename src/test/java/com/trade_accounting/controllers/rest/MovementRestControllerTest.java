@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.trade_accounting.models.dto.MovementDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -27,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/Movement-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 4444)
 public class MovementRestControllerTest {
 
     @Autowired
@@ -46,7 +49,8 @@ public class MovementRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)));
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -67,7 +71,8 @@ public class MovementRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(movementDtoJson));
+                .andExpect(content().json(movementDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -89,7 +94,8 @@ public class MovementRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(movementDtoJson));
+                .andExpect(content().json(movementDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/movement"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -104,7 +110,7 @@ public class MovementRestControllerTest {
                 .date("2021-07-16 15:10")
                 .warehouseFromId(2L)
                 .warehouseToId(1L)
-                .companyId(7L)
+                .companyId(3L)
                 .isSent(false)
                 .isPrint(false)
                 .comment("Перемещение 3 UPDATE")
@@ -116,7 +122,8 @@ public class MovementRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(movementDtoJson));
+                .andExpect(content().json(movementDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/movement"))
                 .andDo(print());
     }
@@ -126,7 +133,8 @@ public class MovementRestControllerTest {
         mockMvc.perform(delete("/api/movement/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/movement"))
                 .andDo(print())
                 .andExpect(status().isOk())

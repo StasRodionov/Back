@@ -1,4 +1,5 @@
 TRUNCATE legal_details CASCADE;
+DELETE FROM legal_details;
 
 insert into legal_details(id, comment_to_address, date_of_the_certificate, first_name, inn, kpp, last_name,
                           middle_name, number_of_the_certificate, ogrn, okpo, address_id, type_of_contractor_id)

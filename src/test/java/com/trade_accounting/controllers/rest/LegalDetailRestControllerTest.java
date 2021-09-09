@@ -23,6 +23,7 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -77,6 +78,7 @@ public class LegalDetailRestControllerTest {
                 .ogrn("1051566516515")
                 .okpo("70651656")
                 .addressDtoId(1L)
+                .dateOfTheCertificate("2018-06-06")
                 .typeOfContractorDtoId(3L)
                 .build());
         mockMvc.perform(get("/api/legaldetail/3"))
