@@ -1,5 +1,5 @@
-alter table access_parameters drop if exists department_id;
-alter table employees drop if exists department_id;
+TRUNCATE departments CASCADE;
+
 delete from departments;
 
 insert into departments(id, name, sort_number)values

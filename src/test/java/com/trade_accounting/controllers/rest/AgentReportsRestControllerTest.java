@@ -3,7 +3,6 @@ package com.trade_accounting.controllers.rest;
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.AgentReportsDto;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,9 +12,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.hasToString;
@@ -26,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @WithUserDetails(value = "karimogon@mail.ru")
 @AutoConfigureMockMvc
@@ -48,24 +44,22 @@ class AgentReportsRestControllerTest {
 
     @Test
     void getAllTest() throws Exception {
-        ResultActions resultActions = mockMvc.perform(get("/api/agentReports"))
+        mockMvc.perform(get("/api/agentReports"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
     void getByIdTest() throws Exception {
-        ResultActions resultActions = mockMvc.perform(get("/api/agentReports/1"))
+        mockMvc.perform(get("/api/agentReports/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$.id", hasToString("1")));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$.id", hasToString("1")))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -86,14 +80,13 @@ class AgentReportsRestControllerTest {
                 .sum(1L)
                 .build());
 
-        ResultActions resultActions = mockMvc.perform(post("/api/agentReports")
+        mockMvc.perform(post("/api/agentReports")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonDto))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/agentReports"))
                 .andDo(print())
@@ -106,7 +99,7 @@ class AgentReportsRestControllerTest {
     void updateTest() throws Exception {
         String jsonDto = new Gson().toJson(AgentReportsDto.builder()
                 .id(1L)
-                .companyId(1L)
+                .companyId(3L)
                 .contractorId(1L)
                 .comitentSum(1L)
                 .commentary("Комментарий 1")
@@ -121,14 +114,13 @@ class AgentReportsRestControllerTest {
                 .sum(1L)
                 .build());
 
-        ResultActions resultActions = mockMvc.perform(put("/api/agentReports").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/api/agentReports").contentType(MediaType.APPLICATION_JSON)
                 .content(jsonDto))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$.status", hasToString("error")));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$.status", hasToString("error")))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/agentReports"))
                 .andDo(print())
@@ -139,12 +131,11 @@ class AgentReportsRestControllerTest {
 
     @Test
     void deleteByIdTest() throws Exception {
-        ResultActions resultActions = mockMvc.perform(delete("/api/agentReports/1"))
+        mockMvc.perform(delete("/api/agentReports/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/agentReports"))
                 .andDo(print())

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.trade_accounting.models.dto.CompanyDto;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,9 +13,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
@@ -28,12 +25,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/company-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@WithUserDetails(value = "veraogon@mail.ru")
+@WithUserDetails(value = "karimogon@mail.ru")
 @AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 class CompanyRestControllerTest {
 
@@ -51,13 +47,12 @@ class CompanyRestControllerTest {
     @SneakyThrows
     @Test
      void getAllTest() {
-        ResultActions resultActions = mockMvc.perform(get("/api/company"))
+        mockMvc.perform(get("/api/company"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$.length()").value(2));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$.length()").value(2))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows

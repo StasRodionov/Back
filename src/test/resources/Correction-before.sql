@@ -1,5 +1,7 @@
-DELETE FROM corrections_correction_products;
-DELETE FROM corrections;
+TRUNCATE corrections CASCADE;
+
+ALTER TABLE corrections DROP CONSTRAINT IF EXISTS fk6ywb8bc8s80xemuaqxbrfb8o7;
+ALTER TABLE corrections DROP CONSTRAINT IF EXISTS fkaeuhfctrdv2do40pknq8jrewx;
 
 INSERT INTO corrections (id, comment, date, is_print, is_sent, write_off_product, company_id, warehouse_id)
 VALUES (1, 'Оприходование 1', '2021-06-23 15:10', false, false, false, 1, 1),

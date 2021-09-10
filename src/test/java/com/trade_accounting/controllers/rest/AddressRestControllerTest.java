@@ -13,7 +13,6 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -46,13 +45,12 @@ class AddressRestControllerTest {
                 .build()
         );
 
-        ResultActions resultActions = mockMvc.perform(get("/api/address/1"))
+        mockMvc.perform(get("/api/address/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(addressDtoJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(addressDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -69,14 +67,13 @@ class AddressRestControllerTest {
                 .build()
         );
 
-        ResultActions resultActions = mockMvc.perform(post("/api/address")
+        mockMvc.perform(post("/api/address")
                 .contentType(MediaType.APPLICATION_JSON).content(addressDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(addressDtoJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(addressDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/address/6"))
                 .andDo(print())
@@ -99,14 +96,13 @@ class AddressRestControllerTest {
                 .build()
         );
 
-        ResultActions resultActions = mockMvc.perform(put("/api/address")
+        mockMvc.perform(put("/api/address")
                 .contentType(MediaType.APPLICATION_JSON).content(addressDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(addressDtoJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(addressDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/address/2"))
                 .andDo(print())
@@ -122,12 +118,11 @@ class AddressRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
 
-        ResultActions resultActions = mockMvc.perform(delete("/api/address/5"))
+        mockMvc.perform(delete("/api/address/5"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/address/5"))
                 .andDo(print())

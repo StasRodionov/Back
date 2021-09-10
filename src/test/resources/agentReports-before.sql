@@ -1,4 +1,7 @@
 TRUNCATE agent_reports CASCADE;
+ALTER TABLE agent_reports DROP CONSTRAINT IF EXISTS fkogqngsc7r5gprd176vueh4ugj;
+ALTER TABLE agent_reports DROP CONSTRAINT IF EXISTS fkm7q0fhb6lyqq5otu8u2mogb8a;
+
 
 INSERT INTO agent_reports (id, comitent_sum, commentary, document_type, number, paid, printed, remuniration_sum, sent,
                           status, sum, time, company_id, contractor_id)

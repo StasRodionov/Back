@@ -13,7 +13,6 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -43,13 +42,12 @@ public class AcceptanceProductionRestControllerTest {
 
     @Test
     void getAll() throws Exception {
-        ResultActions resultActions = mockMvc.perform(get("/api/acceptance/product"))
+        mockMvc.perform(get("/api/acceptance/product"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(5)));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$", hasSize(5)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -60,13 +58,12 @@ public class AcceptanceProductionRestControllerTest {
                 .productId(4L)
                 .build());
 
-        ResultActions resultActions = mockMvc.perform(get("/api/acceptance/product/1"))
+        mockMvc.perform(get("/api/acceptance/product/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(acceptanceProductionDtoJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(acceptanceProductionDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -76,14 +73,13 @@ public class AcceptanceProductionRestControllerTest {
                 .productId(10L)
                 .build());
 
-        ResultActions resultActions = mockMvc.perform(post("/api/acceptance/product")
+        mockMvc.perform(post("/api/acceptance/product")
                         .contentType(MediaType.APPLICATION_JSON).content(acceptanceProductionDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(acceptanceProductionDtoJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(acceptanceProductionDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/acceptance/product"))
                 .andDo(print())
@@ -100,14 +96,13 @@ public class AcceptanceProductionRestControllerTest {
                 .productId(55L)
                 .build());
 
-        ResultActions resultActions = mockMvc.perform(put("/api/acceptance/product")
+        mockMvc.perform(put("/api/acceptance/product")
                         .contentType(MediaType.APPLICATION_JSON).content(acceptanceProductionDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(acceptanceProductionDtoJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(acceptanceProductionDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/acceptance/product/5"))
                 .andDo(print())
@@ -124,12 +119,11 @@ public class AcceptanceProductionRestControllerTest {
 
     @Test
     void deleteById() throws Exception {
-        ResultActions resultActions = mockMvc.perform(delete("/api/acceptance/product/2"))
+        mockMvc.perform(delete("/api/acceptance/product/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/acceptance/product"))
                 .andDo(print())

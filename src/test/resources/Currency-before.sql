@@ -1,4 +1,4 @@
-DELETE FROM currency;
+TRUNCATE currency CASCADE;
 
 INSERT INTO currency (id, digital_code, full_name, letter_code, short_name, sort_number)
 VALUES (1, '25', 'Russian Rubles', 'rub', 'rubles', '1'),

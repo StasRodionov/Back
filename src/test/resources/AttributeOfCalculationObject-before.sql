@@ -1,4 +1,4 @@
-alter table products drop if exists attribute_of_calculation_object_id;
+truncate attribute_of_calculation_objects CASCADE;
 
 delete from attribute_of_calculation_objects;
 

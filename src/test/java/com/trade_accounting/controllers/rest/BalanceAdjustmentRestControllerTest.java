@@ -15,7 +15,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -46,13 +45,12 @@ public class BalanceAdjustmentRestControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        ResultActions resultActions = mockMvc.perform(get("/api/balanceAdjustment"))
+        mockMvc.perform(get("/api/balanceAdjustment"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(4)));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$", hasSize(4)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -70,13 +68,12 @@ public class BalanceAdjustmentRestControllerTest {
                 .whoChanged("1")
                 .build());
 
-        ResultActions resultActions = mockMvc.perform(get("/api/balanceAdjustment/1"))
+        mockMvc.perform(get("/api/balanceAdjustment/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(balanceAdjustmentJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(balanceAdjustmentJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -94,15 +91,14 @@ public class BalanceAdjustmentRestControllerTest {
                 .whoChanged("2")
                 .build());
 
-        ResultActions resultActions = mockMvc.perform(post("/api/balanceAdjustment")
+        mockMvc.perform(post("/api/balanceAdjustment")
                         .contentType(MediaType.APPLICATION_JSON)
                 .content(balanceAdjustmentJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(balanceAdjustmentJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(balanceAdjustmentJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/balanceAdjustment"))
                 .andDo(print())
@@ -126,15 +122,14 @@ public class BalanceAdjustmentRestControllerTest {
                 .whoChanged("3")
                 .build());
 
-        ResultActions resultActions = mockMvc.perform(put("/api/balanceAdjustment")
+        mockMvc.perform(put("/api/balanceAdjustment")
                         .contentType(MediaType.APPLICATION_JSON)
                 .content(balanceAdjustmentJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(balanceAdjustmentJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(balanceAdjustmentJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/balanceAdjustment"))
                 .andDo(print())
@@ -145,12 +140,11 @@ public class BalanceAdjustmentRestControllerTest {
 
     @Test
     public void testDeleteById() throws Exception {
-        ResultActions resultActions = mockMvc.perform(delete("/api/balanceAdjustment/4"))
+        mockMvc.perform(delete("/api/balanceAdjustment/4"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/balanceAdjustment"))
                 .andDo(print())

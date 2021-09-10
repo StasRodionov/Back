@@ -15,7 +15,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -46,26 +45,24 @@ public class AttributeOfCalculationObjectRestControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        ResultActions resultActions = mockMvc.perform(get("/api/attribute/calculation/object"))
+        mockMvc.perform(get("/api/attribute/calculation/object"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
     @Test
     public void testGetById() throws Exception {
         String attributeOfCalculationObjectJson = new Gson().toJson(AttributeOfCalculationObjectDto.builder().id(3L).name("name3")
                 .isService(true)
                 .sortNumber("sort num 3"));
-        ResultActions resultActions = mockMvc.perform(get("/api/attribute/calculation/object/3"))
+        mockMvc.perform(get("/api/attribute/calculation/object/3"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(attributeOfCalculationObjectJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(attributeOfCalculationObjectJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
     @Test
     public void testCreate() throws Exception {
@@ -74,14 +71,13 @@ public class AttributeOfCalculationObjectRestControllerTest {
                 .sortNumber("created").build();
         String createdDepartmentJson = new Gson().toJson(createdAttributeOfCalculationObject);
 
-        ResultActions resultActions = mockMvc.perform(post("/api/attribute/calculation/object").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/api/attribute/calculation/object").contentType(MediaType.APPLICATION_JSON)
                 .content(createdDepartmentJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(createdDepartmentJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(createdDepartmentJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/attribute/calculation/object"))
                 .andDo(print())
@@ -96,24 +92,22 @@ public class AttributeOfCalculationObjectRestControllerTest {
                 .sortNumber("updated").build();
         String updatedAttributeOfCalculationObjectJson = new Gson().toJson(updatedAttributeOfCalculationObject);
 
-        ResultActions resultActions = mockMvc.perform(put("/api/attribute/calculation/object").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/api/attribute/calculation/object").contentType(MediaType.APPLICATION_JSON)
                 .content(updatedAttributeOfCalculationObjectJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(updatedAttributeOfCalculationObjectJson));
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(updatedAttributeOfCalculationObjectJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
     public void testDeleteById() throws Exception {
-        ResultActions resultActions = mockMvc.perform(delete("/api/attribute/calculation/object/3"))
+        mockMvc.perform(delete("/api/attribute/calculation/object/3"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
-
-        resultActions.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/attribute/calculation/object"))
                 .andDo(print())

@@ -53,7 +53,7 @@ class CorrectionProductRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(4)))
+                .andExpect(jsonPath("$", hasSize(9)))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
@@ -123,6 +123,6 @@ class CorrectionProductRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)));
+                .andExpect(jsonPath("$", hasSize(8)));
     }
 }

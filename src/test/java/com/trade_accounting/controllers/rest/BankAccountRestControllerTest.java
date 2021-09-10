@@ -6,9 +6,11 @@ import com.trade_accounting.models.dto.BankAccountDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -28,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @WithUserDetails(value = "karimogon@mail.ru")
 @Sql(value = "/BankAccount-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 public class BankAccountRestControllerTest {
 
     @Autowired
@@ -47,7 +50,8 @@ public class BankAccountRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(4)));
+                .andExpect(jsonPath("$", hasSize(4)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -66,7 +70,8 @@ public class BankAccountRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(bankAccountJson));
+                .andExpect(content().json(bankAccountJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -75,7 +80,8 @@ public class BankAccountRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)));
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
     @Test
     public void testCreate() throws Exception{
@@ -93,7 +99,8 @@ public class BankAccountRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(bankAccountDto));
+                .andExpect(content().json(bankAccountDto))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/bank/account"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -117,7 +124,8 @@ public class BankAccountRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(bankAccountDto));
+                .andExpect(content().json(bankAccountDto))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/bank/account"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -129,7 +137,8 @@ public class BankAccountRestControllerTest {
         mockMvc.perform(delete("/api/bank/account/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/bank/account"))
                 .andDo(print())
                 .andExpect(status().isOk())

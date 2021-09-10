@@ -1,5 +1,8 @@
-DELETE
-FROM balance_adjustments;
+TRUNCATE balance_adjustments CASCADE;
+DELETE FROM balance_adjustments;
+
+ALTER TABLE balance_adjustments DROP CONSTRAINT IF EXISTS fkqbjlnf5g1uwpdoa8lwygua3ha;
+ALTER TABLE balance_adjustments DROP CONSTRAINT IF EXISTS fkrf8xhcxaq8ix0rs04ic2b47tm;
 
 INSERT INTO balance_adjustments (id, date, company_id, contractor_id, account, cash_office, comment, date_changed,
                               who_changed)
