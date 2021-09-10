@@ -76,7 +76,7 @@ public class RequestsProductionRestControllerTest {
     @Test
     void create() throws Exception {
         String requestsProductionDtoJson = new Gson().toJson(RequestsProductionsDto.builder()
-                .id(null)
+                .id(4L)
                 .dateOfTheCertificate("2021-08-11")
                 .numberOfTheCertificate("RP-004")
                 .volume(1500)
@@ -105,8 +105,8 @@ public class RequestsProductionRestControllerTest {
                 .dateOfTheCertificate("2021-08-11")
                 .numberOfTheCertificate("RP-004")
                 .volume(2000)
-                .technicalCardId(1L)
-                .warehouseId(1L)
+                .technicalCardId(2L)
+                .warehouseId(2L)
                 .build()
         );
 

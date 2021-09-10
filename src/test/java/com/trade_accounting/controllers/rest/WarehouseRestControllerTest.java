@@ -2,7 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.WarehouseDto;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
@@ -54,9 +53,15 @@ public class WarehouseRestControllerTest {
 
     @Test
     public void testGetById() throws Exception {
-        String warehouseJson = new Gson().toJson(WarehouseDto.builder().id(3L).name("name3")
-                .sortNumber("sort num 3").address("address3").commentToAddress("comment to addr 3")
-                .comment("comment3").build());
+        String warehouseJson = new Gson().toJson(WarehouseDto.builder()
+                .id(3L)
+                .name("name3")
+                .sortNumber("sort num 3")
+                .address("address3")
+                .commentToAddress("comment to addr 3")
+                .comment("comment3")
+                .build()
+        );
         mockMvc.perform(get("/api/warehouse/3"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -66,16 +71,23 @@ public class WarehouseRestControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        WarehouseDto createdWarehouse = WarehouseDto.builder().id(4L).name("created")
-                .sortNumber("created").address("created").commentToAddress("created")
-                .comment("created").build();
-        String createdWarehouseJson = new Gson().toJson(createdWarehouse);
+        String createdWarehouseJson = new Gson().toJson(WarehouseDto.builder()
+                .id(4L)
+                .name("created")
+                .sortNumber("created")
+                .address("created")
+                .commentToAddress("created")
+                .comment("created")
+                .build()
+        );
+
         mockMvc.perform(post("/api/warehouse").contentType(MediaType.APPLICATION_JSON)
                 .content(createdWarehouseJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(createdWarehouseJson));
+
         mockMvc.perform(get("/api/warehouse"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -85,10 +97,16 @@ public class WarehouseRestControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        WarehouseDto updatedWarehouse = WarehouseDto.builder().id(3L).name("updated")
-                .sortNumber("updated").address("updated").commentToAddress("updated")
-                .comment("updated").build();
+        WarehouseDto updatedWarehouse = WarehouseDto.builder()
+                .id(3L)
+                .name("updated")
+                .sortNumber("updated")
+                .address("updated")
+                .commentToAddress("updated")
+                .comment("updated")
+                .build();
         String updatedWarehouseJson = new Gson().toJson(updatedWarehouse);
+
         mockMvc.perform(put("/api/warehouse").contentType(MediaType.APPLICATION_JSON)
                 .content(updatedWarehouseJson))
                 .andDo(print())
@@ -99,6 +117,7 @@ public class WarehouseRestControllerTest {
 
     @Test
     public void testDelete() throws Exception {
+
         mockMvc.perform(delete("/api/warehouse/3"))
                 .andDo(print())
                 .andExpect(status().isOk())

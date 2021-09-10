@@ -2,7 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.RemainDto;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,13 +21,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/remain-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@WithUserDetails(value = "veraogon@mail.ru")
-
+@WithUserDetails(value = "karimogon@mail.ru")
 public class RemainRestControllerTest {
     @Autowired
     private RemainRestController remainRestController;
@@ -51,11 +49,24 @@ public class RemainRestControllerTest {
 
     @Test
     public void testGetById() throws Exception {
-        String remainJson = new Gson().toJson(RemainDto.builder().id(3L).name("name3")
-                .reserve(3865).salesCost(8534).salesSum(4634)
-                .sumOfCostPrice(75625).vendorCode("code3")
-                .build());
-        mockMvc.perform(get("/api/remain/3"))
+        String remainJson = new Gson().toJson(RemainDto.builder()
+                .id(1L)
+                .available(46973)
+                .balance(23134)
+                .costPrice(45773)
+                .daysOnWarehouse(11)
+                .expectation(28034)
+                .irreducibleBalance(39535)
+                .name("Remain one")
+                .reserve(93078)
+                .salesCost(56196)
+                .salesSum(64145)
+                .sumOfCostPrice(66039)
+                .vendorCode("234789")
+                .unitId(38L)
+                .build()
+        );
+        mockMvc.perform(get("/api/remain/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
@@ -64,11 +75,23 @@ public class RemainRestControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        RemainDto createdRemain = RemainDto.builder().id(4L).name("created")
-                .reserve(1).salesCost(1).salesSum(1)
-                .sumOfCostPrice(1).vendorCode("created")
-                .build();
-        String createdRemainJson = new Gson().toJson(createdRemain);
+        String createdRemainJson = new Gson().toJson(RemainDto.builder()
+                .id(4L)
+                .available(1)
+                .balance(1)
+                .costPrice(1)
+                .daysOnWarehouse(1)
+                .expectation(1)
+                .irreducibleBalance(1)
+                .name("created")
+                .reserve(1)
+                .salesCost(1)
+                .salesSum(1)
+                .sumOfCostPrice(1)
+                .vendorCode("created")
+                .unitId(1L)
+                .build()
+        );
         mockMvc.perform(post("/api/remain").contentType(MediaType.APPLICATION_JSON)
                 .content(createdRemainJson))
                 .andDo(print())
@@ -84,11 +107,23 @@ public class RemainRestControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        RemainDto updatedRemain = RemainDto.builder().id(3L).name("updated")
-                .reserve(2).salesCost(2).salesSum(2)
-                .sumOfCostPrice(2).vendorCode("updated")
-                .build();
-        String updatedRemainJson = new Gson().toJson(updatedRemain);
+        String updatedRemainJson = new Gson().toJson(RemainDto.builder()
+                .id(3L)
+                .available(1)
+                .balance(1)
+                .costPrice(1)
+                .daysOnWarehouse(1)
+                .expectation(1)
+                .irreducibleBalance(1)
+                .name("created")
+                .reserve(1)
+                .salesCost(1)
+                .salesSum(1)
+                .sumOfCostPrice(1)
+                .vendorCode("created")
+                .unitId(1L)
+                .build()
+        );
         mockMvc.perform(put("/api/remain").contentType(MediaType.APPLICATION_JSON)
                 .content(updatedRemainJson))
                 .andDo(print())
