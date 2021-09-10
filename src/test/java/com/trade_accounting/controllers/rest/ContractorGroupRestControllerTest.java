@@ -2,13 +2,13 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.ContractorGroupDto;
-import com.trade_accounting.services.interfaces.CheckEntityService;
-import com.trade_accounting.services.interfaces.ContractorGroupService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -25,13 +25,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/ContractorGroup-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 class ContractorGroupRestControllerTest {
-    @Autowired
-    private CheckEntityService checkEntityService;
+
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private ContractorGroupService contractorGroupService;
 
     @Test
     void getAll() throws Exception {
@@ -39,7 +37,8 @@ class ContractorGroupRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(9)));
+                .andExpect(jsonPath("$", hasSize(9)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -55,7 +54,8 @@ class ContractorGroupRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(contractorGroupDtoJson));
+                .andExpect(content().json(contractorGroupDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -77,7 +77,8 @@ class ContractorGroupRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(contractorGroupDtoJson));
+                .andExpect(content().json(contractorGroupDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/contractor/group/10"))
                 .andDo(print())
@@ -106,7 +107,8 @@ class ContractorGroupRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(contractorGroupDtoJson));
+                .andExpect(content().json(contractorGroupDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/contractor/group/5"))
                 .andDo(print())
@@ -125,7 +127,8 @@ class ContractorGroupRestControllerTest {
         mockMvc.perform(delete("/api/contractor/group/9"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/contractor/group/9"))
                 .andDo(print())

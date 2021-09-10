@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @WithUserDetails(value = "karimogon@mail.ru")
-@Sql(value = "/BankAccount-before.sql")
+@Sql(value = "/BankAccount-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class BankAccountRestControllerTest {
 
     @Autowired
@@ -53,7 +53,7 @@ public class BankAccountRestControllerTest {
     @Test
     public void testGetByBic() throws Exception{
         String bankAccountJson = new Gson().toJson(BankAccountDto.builder()
-                .id(2l)
+                .id(2L)
         .rcbic("rbic2")
         .bank("bank2")
         .address("address2")
@@ -103,7 +103,7 @@ public class BankAccountRestControllerTest {
     @Test
     public void testUpdate() throws Exception{
         String bankAccountDto = new Gson().toJson(com.trade_accounting.models.dto.BankAccountDto.builder()
-                .id(2l)
+                .id(2L)
                 .rcbic("rbic7")
                 .bank("bank2")
                 .address("address22")
@@ -126,7 +126,7 @@ public class BankAccountRestControllerTest {
     }
     @Test
     public void testDelete()throws Exception{
-        mockMvc.perform(delete("/api/bank/account/2"))
+        mockMvc.perform(delete("/api/bank/account/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
