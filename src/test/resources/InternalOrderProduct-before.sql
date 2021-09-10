@@ -1,6 +1,12 @@
 TRUNCATE internal_order_products CASCADE;
 TRUNCATE products CASCADE;
 TRUNCATE contractors CASCADE;
+TRUNCATE access_parameters CASCADE;
+
+INSERT INTO access_parameters (id, general_access, department_id, employee_id)
+VALUES (1, false, 1, 1),
+       (2, false, 2, 2),
+       (3, false, 3, 3);
 
 INSERT INTO contractors (id, comment, comment_to_address, dicsount_card_number, email, fax, name, phone,
                          sort_number, access_parameters_id, address_id, contractor_group_id,

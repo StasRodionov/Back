@@ -2,6 +2,8 @@ ALTER TABLE invoice_product DROP IF EXISTS invoice_product_id;
 
 DELETE FROM invoice_product;
 
+ALTER TABLE invoice_product ADD invoice_product_id bigint;
+
 TRUNCATE products CASCADE;
 TRUNCATE invoice CASCADE;
 
