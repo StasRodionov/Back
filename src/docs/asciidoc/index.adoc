@@ -1,0 +1,12 @@
+== Rest convention
+include::rest_conv.adoc[]
+== Endpoints
+=== Mutual settlements
+==== Get mutual settlements by ID
+===== Curl example
+include::../../../target/snippets/mutual-settlements-rest-controller-test/get-all/curl-request.adoc[]
+===== HTTP Request
+include::../../../target/snippets/mutual-settlements-rest-controller-test/get-all/http-request.adoc[]
+===== HTTP Response
+====== Success HTTP responses
+include::../../../target/snippets/mutual-settlements-rest-controller-test/get-all/http-response.adoc[]
