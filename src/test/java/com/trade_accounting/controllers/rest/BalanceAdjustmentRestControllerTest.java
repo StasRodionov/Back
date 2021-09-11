@@ -110,10 +110,10 @@ public class BalanceAdjustmentRestControllerTest {
     @Test
     public void testUpdate() throws Exception {
         String balanceAdjustmentJson = new Gson().toJson(BalanceAdjustmentDto.builder()
-                .id(3L)
+                .id(2L)
                 .date("2021-06-23 15:10")
                 .comment("Комментарий 3")
-                .companyId(3L)
+                .companyId(2L)
                 .contractorId(3L)
                 .account("Счет 3")
                 .cashOffice("Касса 3")

@@ -134,7 +134,7 @@ public class BankAccountRestControllerTest {
     }
     @Test
     public void testDelete()throws Exception{
-        mockMvc.perform(delete("/api/bank/account/1"))
+        mockMvc.perform(delete("/api/bank/account/3"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())

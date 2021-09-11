@@ -84,7 +84,7 @@ class CorrectionRestControllerTest {
                 .id(4L)
                 .date("2021-06-23 15:10")
                 .warehouseId(1L)
-                .companyId(5L)
+                .companyId(2L)
                 .isSent(false)
                 .isPrint(false)
                 .writeOffProduct(false)
