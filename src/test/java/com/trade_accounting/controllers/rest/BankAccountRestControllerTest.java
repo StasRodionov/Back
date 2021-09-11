@@ -3,7 +3,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.BankAccountDto;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -24,7 +24,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
@@ -134,7 +133,7 @@ public class BankAccountRestControllerTest {
     }
     @Test
     public void testDelete()throws Exception{
-        mockMvc.perform(delete("/api/bank/account/1"))
+        mockMvc.perform(delete("/api/bank/account/3"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())

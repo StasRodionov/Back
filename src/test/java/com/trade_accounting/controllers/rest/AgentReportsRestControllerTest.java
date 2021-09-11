@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Sql(value = "/agentReports-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
-@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
+//@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 class AgentReportsRestControllerTest {
 
     @Autowired
@@ -48,8 +48,8 @@ class AgentReportsRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)))
-                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$", hasSize(3)));
+                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -58,8 +58,8 @@ class AgentReportsRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$.id", hasToString("1")))
-                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$.id", hasToString("1")));
+                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -85,8 +85,8 @@ class AgentReportsRestControllerTest {
                 .content(jsonDto))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated())
-                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(authenticated());
+                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/agentReports"))
                 .andDo(print())
@@ -99,10 +99,10 @@ class AgentReportsRestControllerTest {
     void updateTest() throws Exception {
         String jsonDto = new Gson().toJson(AgentReportsDto.builder()
                 .id(1L)
-                .companyId(3L)
+                .companyId(1L)
                 .contractorId(1L)
                 .comitentSum(1L)
-                .commentary("Комментарий 1")
+                .commentary("Комментарий 1111")
                 .documentType(".doc")
                 .number("1")
                 .paid(1L)
@@ -119,8 +119,8 @@ class AgentReportsRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$.status", hasToString("error")))
-                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$.status", hasToString("error")));
+                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/agentReports"))
                 .andDo(print())
@@ -134,8 +134,8 @@ class AgentReportsRestControllerTest {
         mockMvc.perform(delete("/api/agentReports/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated())
-                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(authenticated());
+                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/agentReports"))
                 .andDo(print())

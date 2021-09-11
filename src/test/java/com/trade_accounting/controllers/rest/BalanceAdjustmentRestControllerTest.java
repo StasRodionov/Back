@@ -2,7 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.BalanceAdjustmentDto;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -23,7 +23,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
@@ -82,8 +81,8 @@ public class BalanceAdjustmentRestControllerTest {
                 .id(2L)
                 .date("2021-06-23 15:10")
                 .comment("Комментарий 2")
-                .companyId(2L)
-                .contractorId(2L)
+                .companyId(1l)
+                .contractorId(1L)
                 .account("Счет 2")
                 .cashOffice("Касса 2")
                 .comment("Комм 2")
@@ -113,8 +112,8 @@ public class BalanceAdjustmentRestControllerTest {
                 .id(3L)
                 .date("2021-06-23 15:10")
                 .comment("Комментарий 3")
-                .companyId(3L)
-                .contractorId(3L)
+                .companyId(1l)
+                .contractorId(1L)
                 .account("Счет 3")
                 .cashOffice("Касса 3")
                 .comment("Комм 3")

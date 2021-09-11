@@ -32,7 +32,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @WithMockUser(value = "karimogon@mail.ru")
 @Sql(value = "/Image-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@RequiredArgsConstructor
 @AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 public class ImageRestControllerTest {
 

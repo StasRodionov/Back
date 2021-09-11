@@ -61,7 +61,7 @@ class CorrectionProductRestControllerTest {
     void testGetById() throws Exception {
         String correctionProductJson = new Gson().toJson(CorrectionProductDto.builder()
                 .id(2L)
-                .productId(2L)
+                .productId(5L)
                 .amount(new BigDecimal("13.00"))
                 .price(new BigDecimal("14.00"))
                 .build());
@@ -76,7 +76,7 @@ class CorrectionProductRestControllerTest {
     @Test
     void testCreate() throws Exception {
         CorrectionProductDto correctionProductDto = CorrectionProductDto.builder()
-                .id(5L)
+                .id(10L)
                 .productId(5L)
                 .amount(new BigDecimal("100.00"))
                 .price(new BigDecimal("200.00")).build();
@@ -92,14 +92,17 @@ class CorrectionProductRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(5)));
+                .andExpect(jsonPath("$", hasSize(10)));
     }
 
     @Test
     void testUpdate() throws Exception {
         CorrectionProductDto correctionProductDtoUpdate = CorrectionProductDto.builder()
-                .id(2L).productId(8L).price(new BigDecimal("888.00"))
-                .amount(new BigDecimal("999.00")).build();
+                .id(2L)
+                .productId(5L)
+                .price(new BigDecimal("888.00"))
+                .amount(new BigDecimal("999.00"))
+                .build();
         String correctionProductDtoJsonUpdate = new Gson().toJson(correctionProductDtoUpdate);
         mockMvc.perform(put("/api/correction/product").contentType(MediaType.APPLICATION_JSON)
                 .content(correctionProductDtoJsonUpdate))

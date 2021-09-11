@@ -3,7 +3,7 @@ package com.trade_accounting.controllers.rest;
 import com.google.gson.Gson;
 
 import com.trade_accounting.models.dto.EmployeeDto;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -24,12 +24,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/employee-before.sql")
-@WithMockUser
+@WithMockUser(value = "karimogon@mail.ru")
 @AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 public class EmployeeRestControllerTest {
     @Autowired
@@ -48,21 +47,24 @@ public class EmployeeRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$", hasSize(5)))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));;
     }
     @Test
     public void testGetById() throws Exception {
-        String employeeJson = new Gson().toJson(EmployeeDto.builder().id(3L).lastName("last_name3")
-                .firstName("first_name3")
-                .middleName("middle_name3")
-                .sortNumber("sort_number3")
-                .phone("phone3")
-                .inn("012345678903")
-                .description("description3")
-                .email("email3")
-                .password("password3"));
-        mockMvc.perform(get("/api/employee/3"))
+        String employeeJson = new Gson().toJson(EmployeeDto.builder()
+                .id(1L)
+                .description("Some special text about Vasya")
+                .email("vasyaogon@mail.ru")
+                .firstName("Vasya")
+                .inn("526317984689")
+                .lastName("Vasiliev")
+                .middleName("Vasilievich")
+                .password("12345")
+                .phone("+7(999)111-22-33")
+                .sortNumber("1")
+        );
+        mockMvc.perform(get("/api/employee/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
@@ -71,7 +73,8 @@ public class EmployeeRestControllerTest {
     }
     @Test
     public void testCreate() throws Exception {
-        EmployeeDto createdEmployee = EmployeeDto.builder().id(4L).lastName("created")
+        EmployeeDto createdEmployee = EmployeeDto.builder()
+                .lastName("created")
                 .firstName("created")
                 .middleName("created")
                 .sortNumber("created")
@@ -79,7 +82,8 @@ public class EmployeeRestControllerTest {
                 .inn("012341234234")
                 .description("created")
                 .email("created")
-                .password("created").build();
+                .password("created")
+                .build();
         String createdEmployeeJson = new Gson().toJson(createdEmployee);
         mockMvc.perform(post("/api/employee").contentType(MediaType.APPLICATION_JSON)
                         .content(createdEmployeeJson))
@@ -92,11 +96,13 @@ public class EmployeeRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(4)));
+                .andExpect(jsonPath("$", hasSize(6)));
     }
     @Test
     public void testUpdate() throws Exception {
-        EmployeeDto updatedEmployee = EmployeeDto.builder().id(3L).lastName("updated")
+        EmployeeDto updatedEmployee = EmployeeDto.builder()
+                .id(3L)
+                .lastName("updated")
                 .firstName("updated")
                 .middleName("updated")
                 .sortNumber("updated")
@@ -104,7 +110,8 @@ public class EmployeeRestControllerTest {
                 .inn("012345678903")
                 .description("updated")
                 .email("updated")
-                .password("updated").build();
+                .password("updated")
+                .build();
         String updatedEmployeeJson = new Gson().toJson(updatedEmployee);
         mockMvc.perform(put("/api/employee").contentType(MediaType.APPLICATION_JSON)
                         .content(updatedEmployeeJson))
@@ -126,6 +133,6 @@ public class EmployeeRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(2)));
+                .andExpect(jsonPath("$", hasSize(4)));
     }
 }

@@ -66,7 +66,8 @@ class CorrectionRestControllerTest {
                 .warehouseId(1L)
                 .isSent(false).isPrint(false).writeOffProduct(false)
                 .comment("Оприходование 1")
-                .correctionProductIds(List.of(1L, 2L, 3L)).build();
+                .correctionProductIds(List.of(1L, 2L))
+                .build();
 
         String correctionDtoJson = new Gson().toJson(correctionDto);
 
@@ -81,10 +82,10 @@ class CorrectionRestControllerTest {
     @Test
     void testCreate() throws Exception {
         CorrectionDto correctionDto = CorrectionDto.builder()
-                .id(4L)
+                //.id(4L)
                 .date("2021-06-23 15:10")
                 .warehouseId(1L)
-                .companyId(5L)
+                .companyId(1L)
                 .isSent(false)
                 .isPrint(false)
                 .writeOffProduct(false)
@@ -93,7 +94,8 @@ class CorrectionRestControllerTest {
                 .build();
         String correctionDtoJson = new Gson().toJson(correctionDto);
         mockMvc.perform(post("/api/correction")
-                .contentType(MediaType.APPLICATION_JSON).content(correctionDtoJson))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(correctionDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
@@ -112,7 +114,7 @@ class CorrectionRestControllerTest {
                 .id(3L)
                 .date("2021-06-23 15:10")
                 .warehouseId(1L)
-                .companyId(7L)
+                .companyId(1L)
                 .isSent(true)
                 .isPrint(true)
                 .writeOffProduct(true)

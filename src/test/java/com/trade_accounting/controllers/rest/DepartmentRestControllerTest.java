@@ -2,7 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.DepartmentDto;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -28,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-    @RunWith(SpringRunner.class)
     @SpringBootTest
     @AutoConfigureMockMvc
     @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
