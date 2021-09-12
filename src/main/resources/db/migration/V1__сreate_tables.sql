@@ -694,6 +694,27 @@ create table return_suppliers
     primary key (id)
 );
 
+create table if not exists return_from_buyers
+(
+    id              bigserial       not null,
+    date            timestamp       not null,
+    warehouse_id    bigserial       not null,
+    contractor_id   bigserial       not null,
+    company_id      bigserial       not null,
+    total_price     numeric(19,2),
+    contract_id     bigserial       not null,
+    comment         varchar(255),
+    is_conducted    boolean         default false,
+    primary key (id)
+);
+
+create table if not exists return_from_buyers_products
+(
+    return_from_buyers_id   bigserial       not null,
+    products_id             bigserial       not null,
+    primary key (return_from_buyers_id, products_id)
+);
+
 create table roles
 (
     id          bigserial not null,
@@ -1234,6 +1255,24 @@ alter table if exists return_suppliers
 
 alter table if exists return_suppliers
     add constraint FKp4awxnhbica1gnlpsgccqawul foreign key (warehouse_id) references warehouses;
+
+alter table if exists return_from_buyers
+    add constraint fklke07x6j8mgfoytbpditw2mva foreign key (warehouse_id) references warehouses;
+
+alter table if exists return_from_buyers
+    add constraint fk3e4uwafac63o1h9rqx6w9widp foreign key (contractor_id) references contractors;
+
+alter table if exists return_from_buyers
+    add constraint fkevrr17pxb6ajig34fqjc83cfo foreign key (company_id) references companies;
+
+alter table if exists return_from_buyers
+    add constraint fkfjqkgiuub8w5xor4bu67gl1ku foreign key (contract_id) references contracts;
+
+alter table if exists return_from_buyers_products
+    add constraint fkk9bircjlb3f08tr2idibv8dgm foreign key (return_from_buyers_id) references return_from_buyers;
+
+alter table if exists return_from_buyers_products
+    add constraint fk1dsr5px8vv9iio7nvnouj5fvs foreign key (products_id) references products;
 
 alter table if exists streets
     add constraint FKefsv8gxpfki4pn4x1nfp7cv4h foreign key (city_id) references cities;
