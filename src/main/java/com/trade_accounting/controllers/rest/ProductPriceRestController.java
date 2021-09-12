@@ -48,32 +48,6 @@ public class ProductPriceRestController {
         return ResponseEntity.ok(productPrices);
     }
 
-//    @ApiOperation(value = "search", notes = "Получение списка товаров по заданным параметрам")
-//    @GetMapping("/search")
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Успешное получение списка всех товаров (лёгкое дто)"),
-//            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
-//            @ApiResponse(code = 403, message = "Операция запрещена"),
-//            @ApiResponse(code = 404, message = "Данный контроллер не найден")
-//    })
-//    public ResponseEntity<List<ProductPriceDto>> getAll(@RequestParam("query") String value) {
-//        return ResponseEntity.ok(productPriceService.search(value));
-//    }
-
-//    @GetMapping("/searchByFilter")
-//    @ApiOperation(value = "search", notes = "Получение списка товаров по фильтру")
-//    public ResponseEntity<List<ProductDto>> getAllByFilter(
-//            @And({
-//                    @Spec(path = "id", params = "id", spec = Equal.class),
-//                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "weight", params = "weight", spec = Equal.class),
-//                    @Spec(path = "volume", params = "volume", spec = Equal.class),
-//                    @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "purchasePrice", params = "purchasePrice", spec = Equal.class),
-//            }) Specification<Product> spec) {
-//        return ResponseEntity.ok(productService.search(spec));
-//    }
-
     @ApiOperation(value = "getById", notes = "Возвращает определенную цену на товар по Id")
     @GetMapping("/{id}")
     @ApiResponses(value = {
@@ -132,44 +106,4 @@ public class ProductPriceRestController {
         productPriceService.deleteById(id);
         return ResponseEntity.ok().build();
     }
-
-//    @GetMapping("/pages")
-//    @ApiOperation(value = "searchWithPages", notes = "Получение списка товаров по заданным параметрам постранично")
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Успешное получение страницы товаров"),
-//            @ApiResponse(code = 404, message = "Данный контролер не найден"),
-//            @ApiResponse(code = 403, message = "Операция запрещена"),
-//            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
-//    )
-//    public ResponseEntity<PageDto<ProductDto>> searchWithPages(
-//            @Conjunction(value = {
-//                    @Or({
-//                            @Spec(path = "weight", params = "search", spec = LikeIgnoreCase.class),
-//                            @Spec(path = "volume", params = "search", spec = LikeIgnoreCase.class),
-//                            @Spec(path = "purchase_price", params = "search", spec = LikeIgnoreCase.class),
-//                            @Spec(path = "description", params = "search", spec = LikeIgnoreCase.class),
-//                            @Spec(path = "name", params = "search", spec = LikeIgnoreCase.class)
-//
-//                    })
-//            }, and = {
-//                    @Spec(path = "weight", params = "weight", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "volume", params = "volume", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "purchase_price", params = "purchase_price", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "archive", params = "archive", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "countryOrigin", params = "countryOrigin", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "minimumBalance", params = "minimumBalance", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "saleTax", params = "saleTax", spec = LikeIgnoreCase.class)
-//            }) Specification<Product> specification,
-//            @RequestParam("column") String sortColumn,
-//            @RequestParam("direction") String sortDirection,
-//            @RequestParam("pageNumber") Integer pageNumber,
-//            @RequestParam("rowsLimit") Integer rowsLimit) {
-//        Pageable pageParams = PageRequest.of(pageNumber - 1, rowsLimit,
-//                Sort.by(sortDirection.equals("ASCENDING") ?
-//                                Sort.Direction.ASC : Sort.Direction.DESC,
-//                        sortColumn));
-//        return ResponseEntity.ok(productService.search(specification, pageParams));
-//    }
 }
