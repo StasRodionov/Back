@@ -34,7 +34,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/tasks")
+@RequestMapping("/api/tasks")
 public class TaskRestController {
 
     private final TaskService taskService;
@@ -91,17 +91,17 @@ public class TaskRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    @PostMapping(consumes = MediaType.ALL_VALUE)
+    @PostMapping
     public ResponseEntity<TaskDto> create(@RequestBody TaskDto dto) {
-        var created = taskService.create(dto);
+        //var created = taskService.create(dto);
 
-        URI taskURI = ServletUriComponentsBuilder
+        /*URI taskURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(created.getId())
                 .normalize()
-                .toUri();
-        return ResponseEntity.ok().body(created);
+                .toUri();*/
+        return ResponseEntity.ok().body(taskService.create(dto));
     }
 
     @ApiOperation(value = "update", notes = "Обновление задачи")

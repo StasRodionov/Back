@@ -83,7 +83,7 @@ public class WarehouseRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<?> update(@RequestBody WarehouseDto warehouseDto) {
-        checkEntityService.checkExists((JpaRepository) warehouseService, warehouseDto.getId());
+        checkEntityService.checkExists((JpaRepository) warehouseRepository, warehouseDto.getId());
         return ResponseEntity.ok().body(warehouseService.update(warehouseDto));
     }
 

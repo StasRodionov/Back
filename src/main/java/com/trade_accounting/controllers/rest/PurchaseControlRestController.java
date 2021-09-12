@@ -92,7 +92,7 @@ public class PurchaseControlRestController {
         return ResponseEntity.ok(purchaseControlService.update(purchaseControlDto));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ApiOperation(value = "deleteById", notes = "Удаление закупки по id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Закупка удален"),

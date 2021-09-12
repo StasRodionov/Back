@@ -43,15 +43,6 @@ public class RetailSalesRestControllerTest {
     @Autowired
     RetailSalesRestController retailSalesRestController;
 
-//    @Autowired
-//    RetailStoreService retailStoreService;
-//
-//    @Autowired
-//    ContractorService contractorService;
-//
-//    @Autowired
-//    CompanyService companyService;
-//
     @Autowired
     protected MockMvc mockMvc;
 
