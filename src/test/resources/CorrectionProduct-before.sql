@@ -1,8 +1,6 @@
 TRUNCATE correction_products CASCADE;
 TRUNCATE products CASCADE;
 
-/*ALTER TABLE correction_products DROP CONSTRAINT IF EXISTS fkce5t6mbl3wyno68nskoi1knxy;*/
-
 INSERT INTO products (id, archive, country, description, item_nubmber, minimum_balance, name, purchase_price,
                       sale_tax, service, volume, weight, attribute_of_calculation_object_id, contractor_id,
                       product_group_id, tax_system_id, unit_id)

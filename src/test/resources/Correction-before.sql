@@ -3,10 +3,6 @@ TRUNCATE companies CASCADE;
 TRUNCATE corrections_correction_products CASCADE;
 TRUNCATE correction_products CASCADE;
 
-/*ALTER TABLE corrections DROP CONSTRAINT IF EXISTS fk6ywb8bc8s80xemuaqxbrfb8o7;
-ALTER TABLE corrections DROP CONSTRAINT IF EXISTS fkaeuhfctrdv2do40pknq8jrewx;
-ALTER TABLE corrections_correction_products DROP CONSTRAINT IF EXISTS fkaeuhfctrdv2do40pknq8jrewx;*/
-
 INSERT INTO companies(id, name, inn, sort_number, phone, fax, email, payer_vat, comment_to_address, leader,
                       leader_manager_position, leader_signature, chief_accountant, chief_accountant_signature,
                       stamp)

@@ -1,9 +1,6 @@
 TRUNCATE departments CASCADE;
 TRUNCATE employees CASCADE;
 
-/*delete from departments;
-*/
-
 INSERT INTO departments(id, name, sort_number)values
        (1, 'name1', 'sort num 1'),
        (2, 'name2', 'sort num 2'),

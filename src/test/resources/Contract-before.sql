@@ -3,10 +3,6 @@ TRUNCATE companies CASCADE;
 TRUNCATE legal_details CASCADE;
 TRUNCATE contractors CASCADE;
 
-/*ALTER TABLE contracts DROP CONSTRAINT IF EXISTS fkn5pkn19y02t2psn9puo74jign;
-ALTER TABLE contracts DROP CONSTRAINT IF EXISTS fk8j3mjrj3nchirim7n6nnqorqp;
-ALTER TABLE contracts DROP CONSTRAINT IF EXISTS fkqtw4aaypsdp68m8sao605s5br;*/
-
 INSERT INTO companies(id, name, inn, sort_number, phone, fax, email, payer_vat, comment_to_address, leader,
                       leader_manager_position, leader_signature, chief_accountant, chief_accountant_signature,
                       stamp)
