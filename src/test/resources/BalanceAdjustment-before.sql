@@ -2,10 +2,6 @@ TRUNCATE balance_adjustments CASCADE;
 TRUNCATE companies CASCADE;
 TRUNCATE contractors CASCADE;
 
-
-/*ALTER TABLE agent_reports DROP CONSTRAINT IF EXISTS fkogqngsc7r5gprd176vueh4ugj;
-ALTER TABLE agent_reports DROP CONSTRAINT IF EXISTS fkm7q0fhb6lyqq5otu8u2mogb8a;*/
-
 INSERT INTO public.companies (id, chief_accountant, chief_accountant_signature, comment_to_address, email, fax, inn,
                               leader, leader_manager_position, leader_signature, name, payer_vat, phone, sort_number,
                               stamp, address_id, legal_detail_id)
