@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/company-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
-//@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 class CompanyRestControllerTest {
 
     @Autowired
@@ -51,8 +51,8 @@ class CompanyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$.length()").value(2));
-                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$.length()").value(2))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows
@@ -62,8 +62,8 @@ class CompanyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[*].leader", containsInAnyOrder("testLeader", "Leader")));
-                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$[*].leader", containsInAnyOrder("testLeader", "Leader")))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
 
     }
@@ -76,8 +76,8 @@ class CompanyRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.fax").value("810-41-1234567824"))
                 .andExpect(jsonPath("$.inn").value("4321"))
-                .andExpect(jsonPath("$.email").value("karimogon@mail.ru"));
-                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$.email").value("karimogon@mail.ru"))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows
@@ -87,8 +87,8 @@ class CompanyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("1"))
-                .andExpect(jsonPath("$.stamp").value("stampTest"));
-                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$.stamp").value("stampTest"))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows
@@ -121,8 +121,8 @@ class CompanyRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(companyDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(companyDtoJson));
-                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(companyDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/company"))
                 .andDo(print())
@@ -160,8 +160,8 @@ class CompanyRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(companyDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(companyDtoJson));
-                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(companyDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
 
         mockMvc.perform(get("/api/company"))
@@ -178,8 +178,8 @@ class CompanyRestControllerTest {
         mockMvc.perform(delete("/api/company/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
-                //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/company"))
                 .andDo(print())
                 .andExpect(status().isOk())

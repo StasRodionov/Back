@@ -1,10 +1,8 @@
 package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
-
 import com.trade_accounting.models.dto.EmployeeDto;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,7 +12,6 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -48,7 +45,7 @@ public class EmployeeRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(5)))
-                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));;
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
     @Test
     public void testGetById() throws Exception {
@@ -69,7 +66,7 @@ public class EmployeeRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(employeeJson))
-                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));;
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
     @Test
     public void testCreate() throws Exception {
@@ -91,7 +88,7 @@ public class EmployeeRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(createdEmployeeJson))
-                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));;
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/employee"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -119,7 +116,7 @@ public class EmployeeRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(updatedEmployeeJson))
-                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));;
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -128,7 +125,7 @@ public class EmployeeRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));;
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/employee"))
                 .andDo(print())
                 .andExpect(status().isOk())
