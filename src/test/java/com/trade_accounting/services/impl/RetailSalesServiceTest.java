@@ -57,8 +57,6 @@ class RetailSalesServiceTest {
         );
 
         List<RetailSalesDto> list = retailSalesService.getAll();
-        System.out.println(retailSalesRepository.findAll());
-        System.out.println(list);
         assertNotNull(list, "failure - expected that a list of bankAccountDto not null");
         assertEquals(1, list.size(), "failure - expected that a list of bankAccountDto grater than 0");
     }
@@ -90,9 +88,7 @@ class RetailSalesServiceTest {
 
     private void saveOrUpdate() {
         when(retailSalesRepository.save(any(RetailSales.class))).thenReturn(RetailSalesModelStubs.getRetailSales(1L));
-        System.out.println(RetailSalesModelStubs.getRetailSales(1L));
         RetailSalesDto retailSalesDto = retailSalesService.create(RetailSalesDtoStubs.getDto(1L));
-        System.out.println(retailSalesDto);
         assertEquals(1,retailSalesDto.getId());
         verify(retailSalesRepository).save(any(RetailSales.class));
     }

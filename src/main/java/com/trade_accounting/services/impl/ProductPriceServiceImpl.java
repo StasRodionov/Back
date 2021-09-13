@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,23 +29,23 @@ public class ProductPriceServiceImpl implements ProductPriceService {
 
     @Override
     public ProductPriceDto getById(Long id) {
-        if (!productPriceRepository.findById(id).isPresent()) {
+        Optional<ProductPrice> productPrice = productPriceRepository.findById(id);
+        if (!productPrice.isPresent()) {
            throw  new NullPointerException("productPrice was not found");
         }
-        ProductPrice productPrice = productPriceRepository.findById(id).get();
-        return productPriceMapper.toDto(productPrice);
+        return productPriceMapper.toDto(productPrice.orElse(new ProductPrice()));
     }
 
     @Override
     public ProductPriceDto create(@NotNull ProductPriceDto dto) {
         ProductPrice productPrice = productPriceMapper.toModel(dto);
-        productPriceRepository.saveAndFlush(productPrice);
+        productPriceRepository.save(productPrice);
         return dto;    }
 
     @Override
     public ProductPriceDto update(ProductPriceDto dto) {
         ProductPrice productPrice = productPriceMapper.toModel(dto);
-        productPriceRepository.saveAndFlush(productPrice);
+        productPriceRepository.save(productPrice);
         return dto;
     }
 
