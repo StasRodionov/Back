@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.trade_accounting.models.dto.InventarizationDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -27,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/Inventarization-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 4444)
 class InventarizationRestControllerTest {
 
     @Autowired
@@ -46,7 +49,8 @@ class InventarizationRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)));
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -58,7 +62,7 @@ class InventarizationRestControllerTest {
                 .companyId(1L)
                 .status(false)
                 .comment("Инвентаризация 1")
-                .inventarizationProductIds(List.of(1L, 2L, 3L))
+                .inventarizationProductIds(List.of(1L))
                 .build();
 
         String inventarizationDtoJson = new Gson().toJson(inventarizationDto);
@@ -67,7 +71,8 @@ class InventarizationRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(inventarizationDtoJson));
+                .andExpect(content().json(inventarizationDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -79,7 +84,7 @@ class InventarizationRestControllerTest {
                 .companyId(1L)
                 .status(false)
                 .comment("123213121")
-                .inventarizationProductIds(List.of(10L, 11L, 12L))
+                .inventarizationProductIds(List.of(1L))
                 .build();
 
         String inventarizationDtoJson = new Gson().toJson(inventarizationDto);
@@ -88,7 +93,8 @@ class InventarizationRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(inventarizationDtoJson));
+                .andExpect(content().json(inventarizationDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/inventarization"))
                 .andDo(print())
@@ -106,7 +112,7 @@ class InventarizationRestControllerTest {
                 .companyId(1L)
                 .status(false)
                 .comment("123213121")
-                .inventarizationProductIds(List.of(10L, 11L, 12L))
+                .inventarizationProductIds(List.of(1L))
                 .build();
 
         String inventarizationDtoJson = new Gson().toJson(inventarizationDto);
@@ -115,7 +121,8 @@ class InventarizationRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(inventarizationDtoJson));
+                .andExpect(content().json(inventarizationDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/inventarization"))
                 .andDo(print());
@@ -126,7 +133,8 @@ class InventarizationRestControllerTest {
         mockMvc.perform(delete("/api/inventarization/3"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/inventarization"))
                 .andDo(print())

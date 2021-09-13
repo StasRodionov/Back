@@ -7,10 +7,34 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface InventarizationProductMapper {
-    @Mapping(source = "product.id", target = "productId")
-    InventarizationProductDto toDto(InventarizationProduct inventarizationProduct);
+    /**
+     * @return InventarizationProduct
+     */
+    @Mapping(source = "productId", target = "product.id")
+    default InventarizationProduct toModel(InventarizationProductDto inventarizationProductDto) {
+        if (inventarizationProductDto == null) {
+            return null;
+        }
+        return InventarizationProduct.builder()
+                .id(inventarizationProductDto.getId())
+                .actualAmount(inventarizationProductDto.getActualAmount())
+                .price(inventarizationProductDto.getPrice())
+                .build();
+    }
 
-    InventarizationProduct toModel(InventarizationProductDto inventarizationProductDto);
-
-
+    /**
+     * @return InventarizationProductDto
+     */
+    default InventarizationProductDto toDto(InventarizationProduct inventarizationProduct) {
+        InventarizationProductDto internalOrderProductsDto = new InventarizationProductDto();
+        if (inventarizationProduct == null) {
+            return null;
+        } else {
+            internalOrderProductsDto.setId(inventarizationProduct.getId());
+            internalOrderProductsDto.setProductId(inventarizationProduct.getProduct().getId());
+            internalOrderProductsDto.setPrice(inventarizationProduct.getPrice());
+            internalOrderProductsDto.setActualAmount(inventarizationProduct.getActualAmount());
+            return internalOrderProductsDto;
+        }
+    }
 }

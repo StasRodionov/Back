@@ -7,9 +7,11 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers;
@@ -31,6 +33,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @WithUserDetails(value = "karimogon@mail.ru")
 @Sql(value = "/PriceList-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @RequiredArgsConstructor
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 4444)
 public class PriceListRestControllerTest {
 
     @Autowired
@@ -49,7 +52,8 @@ public class PriceListRestControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(3)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(3)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -69,7 +73,8 @@ public class PriceListRestControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
-                .andExpect(MockMvcResultMatchers.content().json(dtoJson));
+                .andExpect(MockMvcResultMatchers.content().json(dtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -89,7 +94,8 @@ public class PriceListRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON).content(dtoJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
-                .andExpect(MockMvcResultMatchers.content().json(dtoJson));
+                .andExpect(MockMvcResultMatchers.content().json(dtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -116,7 +122,8 @@ public class PriceListRestControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
-                .andExpect(MockMvcResultMatchers.content().json(dtoJson));
+                .andExpect(MockMvcResultMatchers.content().json(dtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList"))
                 .andDo(MockMvcResultHandlers.print());
@@ -127,7 +134,8 @@ public class PriceListRestControllerTest {
     void deleteById() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/priceList/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(SecurityMockMvcResultMatchers.authenticated());
+                .andExpect(SecurityMockMvcResultMatchers.authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/priceList"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

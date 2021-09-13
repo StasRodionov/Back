@@ -1,5 +1,4 @@
-ALTER TABLE payments DROP IF EXISTS project_id;
-DELETE FROM projects;
+TRUNCATE projects CASCADE;
 
 INSERT INTO projects (id, code, description, name)
 VALUES (1, '0001', 'description1', 'name1'),
