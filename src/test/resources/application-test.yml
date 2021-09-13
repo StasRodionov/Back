@@ -8,6 +8,8 @@ spring:
     username: root
     password: root
     initialization-mode: always
+    hikari:
+      maximum-pool-size: 2
 
   mail:
     protocol: smtps

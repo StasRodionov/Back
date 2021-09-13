@@ -2,16 +2,16 @@ package com.trade_accounting.controllers.rest;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.BalanceAdjustmentDto;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -21,12 +21,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @WithUserDetails(value = "karimogon@mail.ru")
 @Sql(value = "/BalanceAdjustment-before.sql")
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 public class BalanceAdjustmentRestControllerTest {
 
     @Autowired
@@ -46,7 +46,8 @@ public class BalanceAdjustmentRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(4)));
+                .andExpect(jsonPath("$", hasSize(4)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -63,11 +64,13 @@ public class BalanceAdjustmentRestControllerTest {
                 .dateChanged("2021-06-23 15:10")
                 .whoChanged("1")
                 .build());
+
         mockMvc.perform(get("/api/balanceAdjustment/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(balanceAdjustmentJson));
+                .andExpect(content().json(balanceAdjustmentJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -76,20 +79,24 @@ public class BalanceAdjustmentRestControllerTest {
                 .id(2L)
                 .date("2021-06-23 15:10")
                 .comment("Комментарий 2")
-                .companyId(2L)
-                .contractorId(2L)
+                .companyId(1L)
+                .contractorId(1L)
                 .account("Счет 2")
                 .cashOffice("Касса 2")
                 .comment("Комм 2")
                 .dateChanged("2021-06-23 15:10")
                 .whoChanged("2")
                 .build());
-        mockMvc.perform(post("/api/balanceAdjustment").contentType(MediaType.APPLICATION_JSON)
+
+        mockMvc.perform(post("/api/balanceAdjustment")
+                        .contentType(MediaType.APPLICATION_JSON)
                 .content(balanceAdjustmentJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(balanceAdjustmentJson));
+                .andExpect(content().json(balanceAdjustmentJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+
         mockMvc.perform(get("/api/balanceAdjustment"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -103,20 +110,24 @@ public class BalanceAdjustmentRestControllerTest {
                 .id(3L)
                 .date("2021-06-23 15:10")
                 .comment("Комментарий 3")
-                .companyId(3L)
-                .contractorId(3L)
+                .companyId(1L)
+                .contractorId(1L)
                 .account("Счет 3")
                 .cashOffice("Касса 3")
                 .comment("Комм 3")
                 .dateChanged("2021-06-23 15:10")
                 .whoChanged("3")
                 .build());
-        mockMvc.perform(put("/api/balanceAdjustment").contentType(MediaType.APPLICATION_JSON)
+
+        mockMvc.perform(put("/api/balanceAdjustment")
+                        .contentType(MediaType.APPLICATION_JSON)
                 .content(balanceAdjustmentJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(balanceAdjustmentJson));
+                .andExpect(content().json(balanceAdjustmentJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+
         mockMvc.perform(get("/api/balanceAdjustment"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -129,7 +140,9 @@ public class BalanceAdjustmentRestControllerTest {
         mockMvc.perform(delete("/api/balanceAdjustment/4"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+
         mockMvc.perform(get("/api/balanceAdjustment"))
                 .andDo(print())
                 .andExpect(status().isOk())
