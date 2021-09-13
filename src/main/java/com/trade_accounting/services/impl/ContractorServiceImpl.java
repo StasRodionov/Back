@@ -155,6 +155,8 @@ public class ContractorServiceImpl implements ContractorService {
         contractor.setLegalDetail(
                 legalDetailRepository.findById(contractorDto.getLegalDetailId()).orElse(null));
 
+        contractor.setContractorStatus(contractorStatusRepository.findById(contractorDto.getContractorStatusId()).orElse(null));
+        contractor.setAccessParameters(accessParametersRepository.findById(contractorDto.getAccessParametersId()).orElse(null));
         contractorRepository.save(contractor);
 
         return contractorDto;
