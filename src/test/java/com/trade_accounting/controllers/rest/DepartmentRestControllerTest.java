@@ -21,13 +21,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-    @SpringBootTest
-    @AutoConfigureMockMvc
-    @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
-    @Sql(value = "/department-before.sql")
-    @WithMockUser
-    @AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
-    public class DepartmentRestControllerTest {
+@SpringBootTest
+@AutoConfigureMockMvc
+@TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
+@Sql(value = "/department-before.sql")
+@WithMockUser
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
+public class DepartmentRestControllerTest {
 
     @Autowired
     private DepartmentRestController departmentRestController;

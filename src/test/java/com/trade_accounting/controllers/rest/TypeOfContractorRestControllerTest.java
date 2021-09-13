@@ -6,9 +6,11 @@ import lombok.SneakyThrows;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -29,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/TypeOfContractor-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "veraogon@mail.ru")
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 4444)
 public class TypeOfContractorRestControllerTest {
 
     @Autowired
@@ -50,7 +53,8 @@ public class TypeOfContractorRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[*].name", containsInAnyOrder("TestType", "TypeTest")));
+                .andExpect(jsonPath("$[*].name", containsInAnyOrder("TestType", "TypeTest")))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows
@@ -60,7 +64,8 @@ public class TypeOfContractorRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("1"))
-                .andExpect(jsonPath("$.name").value("TestType"));
+                .andExpect(jsonPath("$.name").value("TestType"))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows
@@ -78,7 +83,8 @@ public class TypeOfContractorRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(typeOfContractorDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(typeOfContractorDtoJson));
+                .andExpect(content().json(typeOfContractorDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/typeofcontractor"))
                 .andDo(print())
@@ -101,7 +107,8 @@ public class TypeOfContractorRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(typeOfContractorDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(typeOfContractorDtoJson));
+                .andExpect(content().json(typeOfContractorDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
 
         mockMvc.perform(get("/api/typeofcontractor"))
@@ -119,7 +126,8 @@ public class TypeOfContractorRestControllerTest {
         mockMvc.perform(delete("/api/typeofcontractor/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/typeofcontractor"))
                 .andDo(print())

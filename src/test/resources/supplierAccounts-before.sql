@@ -1,9 +1,14 @@
 TRUNCATE supplier_accounts CASCADE;
-
 TRUNCATE companies CASCADE;
 TRUNCATE contracts CASCADE;
 TRUNCATE legal_details CASCADE;
 TRUNCATE contractors CASCADE;
+TRUNCATE access_parameters CASCADE;
+
+INSERT INTO access_parameters (id, general_access, department_id, employee_id)
+VALUES (1, false, 1, 1),
+       (2, false, 2, 2),
+       (3, false, 3, 3);
 
 INSERT INTO legal_details (id, comment_to_address, date_of_the_certificate, first_name, inn,
                            kpp, last_name, middle_name, number_of_the_certificate, ogrn, okpo,
