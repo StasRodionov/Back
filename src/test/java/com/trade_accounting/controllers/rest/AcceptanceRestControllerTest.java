@@ -3,7 +3,6 @@ package com.trade_accounting.controllers.rest;
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.AcceptanceDto;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,7 +12,6 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -28,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/acceptance-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
-//@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
 public class AcceptanceRestControllerTest {
     @Autowired
     private AcceptanceRestController acceptanceRestController;
@@ -46,8 +44,8 @@ public class AcceptanceRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)));
-        //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(jsonPath("$", hasSize(3)))
+        .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -65,8 +63,8 @@ public class AcceptanceRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(acceptanceJson));
-        //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(acceptanceJson))
+        .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -87,8 +85,8 @@ public class AcceptanceRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(createdAcceptanceJson));
-        //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(createdAcceptanceJson))
+        .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/acceptance"))
                 .andDo(print())
@@ -114,8 +112,8 @@ public class AcceptanceRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(updatedAcceptanceJson));
-        //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(content().json(updatedAcceptanceJson))
+        .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -123,8 +121,8 @@ public class AcceptanceRestControllerTest {
         mockMvc.perform(delete("/api/acceptance/3"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
-        //.andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andExpect(authenticated())
+        .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/acceptance"))
                 .andDo(print())
