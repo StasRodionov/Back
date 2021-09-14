@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/InternalOrderProduct-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
-@AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 4444)
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
 class InternalOrderProductRestControllerTest {
     @Autowired
     private InternalOrderProductRestController internalOrderProductRestController;
@@ -48,7 +48,6 @@ class InternalOrderProductRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(5)))
-
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
@@ -66,7 +65,6 @@ class InternalOrderProductRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(internalOrderProductDtoJson))
-
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
@@ -84,7 +82,6 @@ class InternalOrderProductRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(internalOrderProductDtoJson))
-
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/internalorder/product"))
@@ -109,7 +106,6 @@ class InternalOrderProductRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(internalOrderProductDtoJson))
-
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/internalorder/product/5"))
@@ -131,7 +127,6 @@ class InternalOrderProductRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/internalorder/product"))
