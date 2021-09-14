@@ -67,8 +67,8 @@ class MutualSettlementsServiceImplTest {
 
         List<MutualSettlementsDto> mutualSettlements = mutualSettlementsService.getAll();
 
-        assertNotNull(mutualSettlements, "Failure - expected that list of payments not null");
-        assertTrue(mutualSettlements.size() > 0, "Failure - expected that size of list of payments greater than 0");
+        assertNotNull(mutualSettlements, "Failure - expected that list of mutualSettlements not null");
+        assertTrue(mutualSettlements.size() > 0, "Failure - expected that size of list of mutualSettlements greater than 0");
 
         for (MutualSettlementsDto mutualSettlement : mutualSettlements) {
             mutualSettlementsDtoIsCorrectlyInited(mutualSettlement);
@@ -96,7 +96,7 @@ class MutualSettlementsServiceImplTest {
 
         MutualSettlementsDto mutualSettlements = mutualSettlementsService.getById(1L);
 
-        assertNotNull(mutualSettlements, "failure - expected that payment not null.");
+        assertNotNull(mutualSettlements, "failure - expected that mutualSettlements not null.");
         mutualSettlementsDtoIsCorrectlyInited(mutualSettlements);
     }
 
