@@ -1,9 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.MutualSettlements;
-import com.trade_accounting.models.RetailSales;
 import com.trade_accounting.models.dto.MutualSettlementsDto;
-import com.trade_accounting.models.dto.RetailSalesDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
@@ -11,9 +9,7 @@ import com.trade_accounting.repositories.MutualSettlementsRepository;
 import com.trade_accounting.repositories.ProjectRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
 import com.trade_accounting.services.impl.Stubs.dto.MutualSettlementsDtoStubs;
-import com.trade_accounting.services.impl.Stubs.dto.RetailSalesDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.MutualSettlementsModelStubs;
-import com.trade_accounting.services.impl.Stubs.model.RetailSalesModelStubs;
 import com.trade_accounting.utils.mapper.MutualSettlementsMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +26,6 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -108,24 +103,11 @@ class MutualSettlementsServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate() {
         saveOrUpdate();
-
-
-//        verify(mutualSettlementsRepository).save(any(MutualSettlements.class));
-//        verify(companyRepository).findById(anyLong());
-//        verify(contractorRepository).findById(anyLong());
-//        verify(contractRepository).findById(anyLong());
-//        verify(projectRepository).findById(anyLong());
     }
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
-
-
-//        verify(mutualSettlementsRepository).save(any(MutualSettlements.class));
-//        verify(companyRepository).findById(anyLong());
-//        verify(contractorRepository).findById(anyLong());
-//        verify(contractRepository).findById(anyLong());
-//        verify(projectRepository).findById(anyLong());
+        saveOrUpdate();
     }
 
     @Test
@@ -138,7 +120,6 @@ class MutualSettlementsServiceImplTest {
         assertNotNull(mutualSettlements, "Fail in passed mutualSettlements");
         assertNotNull(mutualSettlements.getId(), "Fail in field 'id' of mutualSettlements");
         assertNotNull(mutualSettlements.getEmployeeId(), "Fail in field 'number' of mutualSettlements");
-      //  assertNotNull(mutualSettlements.getCompanyId(), "Fail in field 'companyDto' of mutualSettlements");
         assertNotNull(mutualSettlements.getContractorId(), "Fail in field 'contractorDto' of mutualSettlements");
     }
 
