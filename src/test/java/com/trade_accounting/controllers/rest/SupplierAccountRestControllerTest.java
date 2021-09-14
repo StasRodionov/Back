@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = "/supplierAccounts-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
-@AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 4444)
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
 public class SupplierAccountRestControllerTest {
 
     @Autowired
@@ -140,5 +140,4 @@ public class SupplierAccountRestControllerTest {
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
-
 }

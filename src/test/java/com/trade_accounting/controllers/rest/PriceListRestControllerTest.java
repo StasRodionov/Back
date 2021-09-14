@@ -32,7 +32,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @WithUserDetails(value = "karimogon@mail.ru")
 @Sql(value = "/PriceList-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @RequiredArgsConstructor
-@AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 4444)
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
 public class PriceListRestControllerTest {
 
     @Autowired

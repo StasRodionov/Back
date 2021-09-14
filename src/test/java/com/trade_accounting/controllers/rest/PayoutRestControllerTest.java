@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/Payout-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "veraogon@mail.ru")
-@AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 4444)
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
 class PayoutRestControllerTest {
 
     @Autowired
@@ -65,7 +65,8 @@ class PayoutRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
             //    .andExpect(jsonPath("$.id").value(2))
-                .andExpect(jsonPath("$.length()").value(1));
+                .andExpect(jsonPath("$.length()").value(1))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows

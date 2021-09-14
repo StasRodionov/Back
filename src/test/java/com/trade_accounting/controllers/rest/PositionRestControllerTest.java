@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = "/Position-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithMockUser
 @RequiredArgsConstructor
-@AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 4444)
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
 class PositionRestControllerTest {
 
     @Autowired

@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @WithUserDetails(value = "karimogon@mail.ru")
 @Sql(value = "/ReturnSuppliers-before.sql")
-@AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 4444)
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
 public class ReturnToSupplierRestControllerTest {
 
     @Autowired
@@ -142,5 +142,4 @@ public class ReturnToSupplierRestControllerTest {
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(3)));
     }
-
 }
