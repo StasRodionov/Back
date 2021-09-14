@@ -71,7 +71,7 @@ class MutualSettlementsServiceImplTest {
         assertTrue(mutualSettlements.size() > 0, "Failure - expected that size of list of payments greater than 0");
 
         for (MutualSettlementsDto mutualSettlement : mutualSettlements) {
-            paymentDtoIsCorrectlyInited(mutualSettlement);
+            mutualSettlementsDtoIsCorrectlyInited(mutualSettlement);
         }
     }
 
@@ -97,7 +97,7 @@ class MutualSettlementsServiceImplTest {
         MutualSettlementsDto mutualSettlements = mutualSettlementsService.getById(1L);
 
         assertNotNull(mutualSettlements, "failure - expected that payment not null.");
-        paymentDtoIsCorrectlyInited(mutualSettlements);
+        mutualSettlementsDtoIsCorrectlyInited(mutualSettlements);
     }
 
     @Test
@@ -132,7 +132,7 @@ class MutualSettlementsServiceImplTest {
         verify(mutualSettlementsRepository).deleteById(1L);
     }
 
-    void paymentDtoIsCorrectlyInited(MutualSettlementsDto mutualSettlements) {
+    void mutualSettlementsDtoIsCorrectlyInited(MutualSettlementsDto mutualSettlements) {
         assertNotNull(mutualSettlements, "Fail in passed mutualSettlements");
         assertNotNull(mutualSettlements.getId(), "Fail in field 'id' of mutualSettlements");
         assertNotNull(mutualSettlements.getEmployeeId(), "Fail in field 'number' of mutualSettlements");
