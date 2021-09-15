@@ -6,9 +6,11 @@ import lombok.SneakyThrows;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -29,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/Unit-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "veraogon@mail.ru")
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
 public class UnitRestControllerTest {
 
     @Autowired
@@ -50,7 +53,8 @@ public class UnitRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[*].shortName", containsInAnyOrder("Yard", "mm")));
+                .andExpect(jsonPath("$[*].shortName", containsInAnyOrder("Yard", "mm")))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows
@@ -60,7 +64,8 @@ public class UnitRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.fullName").value("Millimetre"))
-                .andExpect(jsonPath("$.sortNumber").value("2"));
+                .andExpect(jsonPath("$.sortNumber").value("2"))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows
@@ -79,7 +84,8 @@ public class UnitRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(unitDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(unitDtoJson));
+                .andExpect(content().json(unitDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/unit"))
                 .andDo(print())
@@ -103,7 +109,8 @@ public class UnitRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).content(unitDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(unitDtoJson));
+                .andExpect(content().json(unitDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
 
         mockMvc.perform(get("/api/unit"))
@@ -120,7 +127,8 @@ public class UnitRestControllerTest {
         mockMvc.perform(delete("/api/unit/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated());
+                .andExpect(authenticated())
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/unit"))
                 .andDo(print())

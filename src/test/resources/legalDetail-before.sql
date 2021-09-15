@@ -33,11 +33,11 @@ VALUES (1, 'Some special text about Vasya', 'vasyaogon@mail.ru', 'Vasya', '52631
        (2, 'Some special text about Sima', 'simaogon@mail.ru', 'Sima', '526317984678', 'Simonova', 'Semenovna', '54321',
         '+7(999)222-11-33', '2', 2, null, 2),
        (3, 'Some special text about Vera', 'veraogon@mail.ru', 'Vera', '526317555678', 'Belive', 'Henrichovna', '76543',
-        '+7(999)777-11-33', '3', 5, null, 5),
+        '+7(999)777-11-33', '3', 2, null, 5),
        (4, 'Some special text about Karim', 'karimogon@mail.ru', 'Karim', '526316666678', 'Islentiev', 'Dmitrievich',
-        'qwerty', '+7(999)222-77-00', '4', 4, null, 4),
+        'qwerty', '+7(999)222-77-00', '4', 2, null, 4),
        (5, 'Some special text about Sasha', 'sashaogon@mail.ru', 'Sasha', '526317984600', 'Petko', '', 'asdfg',
-        '+7(999)222-00-33', '5', 4, null, 19);
+        '+7(999)222-00-33', '5', 2, null, 19);
 
 INSERT INTO addresses (id, apartment, city, country, house, index, region, street)
 VALUES (1, '15', 'Москва', 'Россия', '11', '123456', 'Московская', 'ул. Ленина'),

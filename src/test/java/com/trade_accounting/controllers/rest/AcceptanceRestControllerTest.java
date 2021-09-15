@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/acceptance-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
-@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriHost = "localhost", uriPort = 4444)
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
 public class AcceptanceRestControllerTest {
     @Autowired
     private AcceptanceRestController acceptanceRestController;
@@ -45,7 +45,7 @@ public class AcceptanceRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(3)))
-        .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class AcceptanceRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(acceptanceJson))
-        .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class AcceptanceRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(createdAcceptanceJson))
-        .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/acceptance"))
                 .andDo(print())
@@ -113,7 +113,7 @@ public class AcceptanceRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().json(updatedAcceptanceJson))
-        .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @Test
@@ -122,7 +122,7 @@ public class AcceptanceRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-        .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
         mockMvc.perform(get("/api/acceptance"))
                 .andDo(print())
