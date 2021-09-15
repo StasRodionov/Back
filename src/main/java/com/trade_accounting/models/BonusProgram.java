@@ -87,4 +87,5 @@ public class BonusProgram{
     // после первой покупки
     @Column(name = "first_purchase")
     Boolean firstPurchase;
+
 }
