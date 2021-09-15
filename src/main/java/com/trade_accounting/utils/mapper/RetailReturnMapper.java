@@ -1,14 +1,8 @@
 package com.trade_accounting.utils.mapper;
 
-import com.trade_accounting.models.Company;
-import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.RetailReturn;
 import com.trade_accounting.models.RetailStore;
-import com.trade_accounting.models.Shipment;
-import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.RetailReturnDto;
-import com.trade_accounting.models.dto.RetailStoreDto;
-import com.trade_accounting.models.dto.ShipmentDto;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;

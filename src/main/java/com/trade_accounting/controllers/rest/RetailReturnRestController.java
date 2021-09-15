@@ -1,9 +1,8 @@
 package com.trade_accounting.controllers.rest;
 
+
 import com.trade_accounting.models.RetailReturn;
-import com.trade_accounting.models.Shipment;
 import com.trade_accounting.models.dto.RetailReturnDto;
-import com.trade_accounting.models.dto.ShipmentDto;
 import com.trade_accounting.repositories.RetailReturnRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.RetailReturnService;
@@ -17,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
-import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
