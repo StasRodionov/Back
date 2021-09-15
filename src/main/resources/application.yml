@@ -4,8 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/test
-    username: root
+    url: jdbc:postgresql://localhost:5432/trade_accounting
     password: root
     initialization-mode: always
 
