@@ -898,6 +898,22 @@ create table retail_sales
     primary key (id)
 );
 
+create table shipments
+(
+    id                      bigserial    not null,
+    date                    timestamp    not null,
+    warehouse_id            int8         not null,
+    contractor_id           int8         not null,
+    company_id              int8         not null,
+    sum                     numeric(19, 2),
+    paid                    numeric(19, 2),
+    is_print                boolean      default false,
+    is_send                 boolean      default false,
+    is_spend                boolean      default false,
+    comment                 varchar(255),
+    primary key (id)
+);
+
 alter table if exists acceptances_acceptance_production
     add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);
 
@@ -1257,6 +1273,15 @@ alter table if exists return_suppliers
 
 alter table if exists return_suppliers
     add constraint FKp4awxnhbica1gnlpsgccqawul foreign key (warehouse_id) references warehouses;
+
+alter table if exists shipments
+    add constraint FKyukj31nmv76yzxvypjj712nxq foreign key (contractor_id) references contractors;
+
+alter table if exists shipments
+    add constraint FKyukj31nmv77yzxvypjj712nxq foreign key (company_id) references companies;
+
+alter table if exists shipments
+    add constraint FKyukj31nmv78yzxvypjj712nxq foreign key (warehouse_id) references warehouses;
 
 alter table if exists streets
     add constraint FKefsv8gxpfki4pn4x1nfp7cv4h foreign key (city_id) references cities;
