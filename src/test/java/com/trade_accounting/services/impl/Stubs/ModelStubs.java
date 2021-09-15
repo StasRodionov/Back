@@ -22,6 +22,7 @@ import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.LegalDetail;
+import com.trade_accounting.models.MutualSettlements;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.Position;
@@ -590,6 +591,18 @@ public class ModelStubs {
                 .salesInvoicePrefix("SI")
                 .company(getCompany(1L))
                 .cashiers(List.of(getEmployee(id)))
+                .build();
+    }
+
+    public static MutualSettlements getMutualSettlements(Long id) {
+        return MutualSettlements.builder()
+                .id(id)
+                .contractor(getContractor(1L))
+                .employee(getEmployee(1L))
+                .initialBalance(111)
+                .income(111)
+                .expenses(111)
+                .finalBalance(111)
                 .build();
     }
 }
