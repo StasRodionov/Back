@@ -891,6 +891,20 @@ create table shipments
     primary key (id)
 );
 
+create table retail_returns
+(
+    id                      bigserial    not null,
+    date                    timestamp    not null,
+    retail_store_id         int8         not null,
+    cash_amount             numeric(19, 2),
+    cashless_amount         numeric(19, 2),
+    is_print                boolean      default false,
+    is_send                 boolean      default false,
+    is_spend                boolean      default false,
+    comment                 varchar(255),
+    primary key (id)
+);
+
 alter table if exists acceptances_acceptance_production
     add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);
 
@@ -1223,6 +1237,9 @@ alter table if exists purchase_history_of_sales
 
 alter table if exists remains
     add constraint FK2166y98xx8vyo8i676cl3hl3r foreign key (unit_id) references units;
+
+alter table if exists retail_returns
+    add constraint FKyukj31nmv79popvypjj712nxq foreign key (retail_store_id) references retail_stores;
 
 alter table if exists requsts_productions
     add constraint FK1pxvfl8rgagtov03yhao6lvh2 foreign key (technical_card_id) references technical_cards;
