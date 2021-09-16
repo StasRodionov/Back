@@ -103,6 +103,29 @@ create table bank_accounts
     primary key (id)
 );
 
+create table bonus_program
+(
+    id                              bigserial not null,
+    name                            varchar(255) not null,
+    active_status                   boolean,
+    all_contractors                 boolean,
+    accrual_rule                    numeric(19,1),
+    write_off_rules                 numeric(19,1),
+    max_payment_percentage          int2,
+    number_of_days                  int2,
+    welcome_points                  boolean,
+    number_of_points                int8,
+    registration_in_bonus_program   boolean,
+    first_purchase                  boolean,
+    primary key (id)
+);
+
+create table bonus_program_contractor_groups
+(
+    bonus_program_id          int8 not null,
+    contractor_groups_id      int8 not null
+);
+
 create table cities
 (
     id          bigserial not null,
@@ -1331,4 +1354,11 @@ alter table if exists retail_sales
 
 alter table if exists retail_sales
     add constraint FKkdt6slh5gdsaf9eykc5684ya2 foreign key (company_id) references companies;
+
+alter table if exists bonus_program_contractor_groups
+    add constraint FK543t34tgre4335grerg4342tg foreign key (bonus_program_id) references bonus_program;
+
+alter table if exists bonus_program_contractor_groups
+    add constraint FKb8ferg34t3gerg43gw3gt45h3 foreign key (contractor_groups_id) references contractor_groups;
+
 

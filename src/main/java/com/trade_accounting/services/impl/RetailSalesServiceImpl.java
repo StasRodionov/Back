@@ -12,6 +12,7 @@ import com.trade_accounting.repositories.RetailSalesRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.services.interfaces.RetailSalesService;
 import com.trade_accounting.utils.mapper.RetailSalesMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class RetailSalesServiceImpl implements RetailSalesService {
 
     private final RetailSalesRepository retailSalesRepository;
@@ -28,17 +30,6 @@ public class RetailSalesServiceImpl implements RetailSalesService {
     private final ContractorRepository contractorRepository;
     private final CompanyRepository companyRepository;
     private final RetailSalesMapper retailSalesMapper;
-
-    public RetailSalesServiceImpl(RetailSalesRepository retailSalesRepository,
-                                  RetailStoreRepository retailStoreRepository,
-                                  ContractorRepository contractorRepository,
-                                  CompanyRepository companyRepository, RetailSalesMapper retailSalesMapper) {
-        this.retailSalesRepository = retailSalesRepository;
-        this.retailStoreRepository = retailStoreRepository;
-        this.contractorRepository = contractorRepository;
-        this.companyRepository = companyRepository;
-        this.retailSalesMapper = retailSalesMapper;
-    }
 
     @Override
     public List<RetailSalesDto> getAll() {
@@ -70,8 +61,7 @@ public class RetailSalesServiceImpl implements RetailSalesService {
 
     @Override
     public RetailSalesDto update(RetailSalesDto dto) {
-        create(dto);
-        return dto;
+        return create(dto);
     }
 
     @Override
