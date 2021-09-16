@@ -1,6 +1,6 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.FileInfo;
+import com.trade_accounting.models.File;
 import com.trade_accounting.repositories.FileRepository;
 import com.trade_accounting.services.interfaces.FileService;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -32,20 +29,15 @@ public class FileServiceImpl implements FileService {
     private final FileRepository fileRepository;
 
     @Override
-    public List<FileInfo> getAll() {
-        return fileRepository.findAll();
-    }
-
-    @Override
-    public FileInfo getById(Long fileId) {
+    public File getById(Long fileId) {
         return fileRepository.findById(fileId).get();
     }
 
     @Override
-    public FileInfo create(MultipartFile resource) throws IOException {
+    public File create(MultipartFile resource) throws IOException {
         String key = UUID.randomUUID().toString();
 
-        FileInfo createdFile = FileInfo.builder()
+        File createdFile = File.builder()
                 .name(resource.getOriginalFilename())
                 .key(key)
                 .size(resource.getSize())
@@ -57,10 +49,9 @@ public class FileServiceImpl implements FileService {
         return createdFile;
     }
 
-    //@Transactional(rollbackFor = {IOException.class})
     @Override
     public void delete(Long fileId) throws IOException {
-        FileInfo file = fileRepository.findById(fileId).get();
+        File file = fileRepository.findById(fileId).get();
         fileRepository.deleteById(fileId);
 
         Path path = Paths.get("src/main/resources/file/" + file.getKey());
@@ -90,9 +81,4 @@ public class FileServiceImpl implements FileService {
             stream.close();
         }
     }
-
-    /*public void deleteFile(String key) throws IOException {
-        Path path = Paths.get("src/main/resources/" + key);
-        Files.delete(path);
-    }*/
 }

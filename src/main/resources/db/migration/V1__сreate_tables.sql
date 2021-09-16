@@ -972,6 +972,9 @@ alter table if exists technical_cards_final_production
 alter table if exists technical_cards_materials
     add constraint UK_g2gfp85pii8p0cxl1dwfejbih unique (materials_id);
 
+alter table if exists file
+    add constraint UK_fwefewfcjladsgsg24trgg2hx unique (key);
+
 alter table if exists acceptance_productions
     add constraint FKg7kb2cae2ujgi6ykgs0rwp9dj foreign key (product_id) references products;
 

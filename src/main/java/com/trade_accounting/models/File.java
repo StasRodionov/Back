@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @Table(name = "file")
 @AllArgsConstructor
 @NoArgsConstructor
-public class FileInfo {
+public class File {
 
 
     @Id
@@ -34,7 +34,7 @@ public class FileInfo {
     @Column
     private Long size;
 
-    @Column
+    @Column(unique = true)
     private String key;
 
     @Column(name = "upload_date")
