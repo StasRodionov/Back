@@ -22,6 +22,8 @@ public interface ReturnFromBuyersRepository extends JpaRepository<ReturnFromBuye
             "e.company.id," +
             "e.totalPrice," +
             "e.contract.id," +
+            "e.isSend," +
+            "e.isPrint," +
             "e.comment," +
             "e.isConducted) from ReturnFromBuyers e")
     List<ReturnFromBuyersDto> getAll();
@@ -35,6 +37,8 @@ public interface ReturnFromBuyersRepository extends JpaRepository<ReturnFromBuye
             "e.company.id," +
             "e.totalPrice," +
             "e.contract.id," +
+            "e.isSend," +
+            "e.isPrint," +
             "e.comment," +
             "e.isConducted) from ReturnFromBuyers e where e.id = :id")
     ReturnFromBuyersDto getById(@Param("id") Long id);

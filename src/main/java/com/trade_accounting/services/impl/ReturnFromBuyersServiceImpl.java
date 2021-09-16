@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,8 +19,6 @@ public class ReturnFromBuyersServiceImpl implements ReturnFromBuyersService {
 
     private final ReturnFromBuyersRepository returnFromBuyersRepository;
     private final ReturnFromBuyersMapperImpl returnFromBuyersMapper;
-
-
 
     @Override
     public List<ReturnFromBuyersDto> getAll() {
@@ -35,7 +32,13 @@ public class ReturnFromBuyersServiceImpl implements ReturnFromBuyersService {
 
     @Override
     public ReturnFromBuyersDto create(ReturnFromBuyersDto dto) {
-        return null;
+        ReturnFromBuyers r = returnFromBuyersMapper.toModel(dto);
+        System.out.println(r);
+        ReturnFromBuyers returnFromBuyers = returnFromBuyersRepository.save(r);
+        System.out.println(returnFromBuyers);
+        dto.setId(returnFromBuyers.getId());
+
+        return dto;
     }
 
     @Override
@@ -50,6 +53,6 @@ public class ReturnFromBuyersServiceImpl implements ReturnFromBuyersService {
 
     @Override
     public List<ReturnFromBuyersDto> search(Specification<ReturnFromBuyers> spec) {
-        return null;
+        return executeSearch(returnFromBuyersRepository, returnFromBuyersMapper::toDto, spec);
     }
 }
