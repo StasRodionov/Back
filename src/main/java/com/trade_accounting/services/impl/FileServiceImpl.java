@@ -67,7 +67,6 @@ public class FileServiceImpl implements FileService {
 
     public void upload(byte[] resource, String keyName) throws IOException {
 
-        //C:\Users\DELL\Desktop\JavaMentor\JavaComandProject\trade_back\src\main\resources
         Path path = Paths.get("src/main/resources", keyName);
         Path file = Files.createFile(path);
         FileOutputStream stream = null;
@@ -84,7 +83,7 @@ public class FileServiceImpl implements FileService {
     }
 
     public Resource downloadFile(String key) throws IOException {
-        Path path = Paths.get("src/main/resources" + key);
+        Path path = Paths.get("src/main/resources/" + key);
         Resource resource = new UrlResource(path.toUri());
         if (resource.exists() || resource.isReadable()) {
             return resource;
@@ -94,7 +93,7 @@ public class FileServiceImpl implements FileService {
     }
 
     public void deleteFile(String key) throws IOException {
-        Path path = Paths.get("C:\\Users\\DELL\\Desktop\\JavaMentor\\JavaComandProject\\trade_back\\src\\main\\resources\\" + key);
+        Path path = Paths.get("src/main/resources/" + key);
         Files.delete(path);
     }
 }
