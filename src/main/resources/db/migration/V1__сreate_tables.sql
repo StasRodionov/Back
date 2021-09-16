@@ -326,6 +326,16 @@ create table fias_db
     primary key (id)
 );
 
+create table file
+(
+    id          bigserial not null,
+    name        varchar(255),
+    size        int8,
+    key         varchar(255),
+    upload_date date,
+    primary key (id)
+);
+
 create table images
 (
     id          bigserial not null,
