@@ -914,6 +914,17 @@ create table shipments
     primary key (id)
 );
 
+create table issued_invoices
+(
+    id              bigserial not null,
+    comment         varchar(255),
+    data            timestamp not null,
+    is_spend        boolean default false,
+    company_id      int8      not null,
+    contractor_id   int8      not null,
+    primary key (id)
+);
+
 alter table if exists acceptances_acceptance_production
     add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);
 
