@@ -12,6 +12,7 @@ import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.LossService;
 import com.trade_accounting.utils.mapper.LossMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +49,6 @@ public class LossServiceImpl implements LossService {
     }
 
 
-
     @Override
     public LossDto update(LossDto dto) {
         return saveOrUpdate(dto);
@@ -76,5 +76,10 @@ public class LossServiceImpl implements LossService {
         loss.setLossProducts(lossProducts);
 
         return lossMapper.toDto(lossRepository.save(loss));
+    }
+
+    @Override
+    public List<LossDto> search(Specification<Loss> spec) {
+        return executeSearch(lossRepository, lossMapper::toDto, spec);
     }
 }
