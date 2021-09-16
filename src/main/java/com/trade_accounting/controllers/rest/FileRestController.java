@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/file")
@@ -26,25 +28,25 @@ public class FileRestController {
 
     private final FileService fileService;
 
-    @PostMapping
-    public ResponseEntity<FileInfo> create(@RequestParam MultipartFile attachment) {
-        try {
-            return new ResponseEntity<>(fileService.create(attachment), HttpStatus.CREATED);
-        } catch (IOException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<Resource> getById(@PathVariable("id") Long id) {
         try {
-            FileInfo foundFile = fileService.findById(id);
+            FileInfo foundFile = fileService.getById(id);
             Resource resource = fileService.download(foundFile.getKey());
             return ResponseEntity.ok()
                     .header("Content-Disposition", "attachment; filename=" + foundFile.getName())
                     .body(resource);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<FileInfo> create(@RequestParam MultipartFile attachment) {
+        try {
+            return new ResponseEntity<>(fileService.create(attachment), HttpStatus.CREATED);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
