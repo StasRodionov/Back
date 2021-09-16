@@ -39,6 +39,8 @@ include::controllers/bank-account-rest-controller-test.adoc[]
 == Company Rest Controller
 include::controllers/company-rest-controller-test.adoc[]
 
+== Contact Rest Controller
+include::controllers/contact-rest-controller-test.adoc[]
 
 == Contract Rest Controller
 include::controllers/contract-rest-controller-test.adoc[]
@@ -80,17 +82,11 @@ include::controllers/inventarization-rest-controller-test.adoc[]
 == Invoice Product Rest Controller
 include::controllers/invoice-product-rest-controller-test.adoc[]
 
-
-
-
-
 == Invoice Rest Controller
 include::controllers/invoice-rest-controller-test.adoc[]
 
-
 == Legal Detail Rest Controller
 include::controllers/legal-detail-rest-controller-test.adoc[]
-
 
 == Movement Product Rest Controller
 include::controllers/movement-product-rest-controller-test.adoc[]
@@ -119,10 +115,17 @@ include::controllers/position-rest-controller-test.adoc[]
 == Price List Rest Controller
 include::controllers/price-list-rest-controller-test.adoc[]
 
+== Product Group Rest Controller
+include::controllers/product-group-rest-controller-test.adoc[]
 
 == Production Rest Controller
 include::controllers/production-rest-controller-test.adoc[]
 
+== Product Price Rest Controller
+include::controllers/product-price-rest-controller-test.adoc[]
+
+== Product Rest Controller
+include::controllers/product-rest-controller-test.adoc[]
 
 == Project Rest Controller
 include::controllers/project-rest-controller-test.adoc[]
