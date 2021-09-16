@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Slf4j
@@ -37,6 +38,7 @@ public class FileServiceImpl implements FileService {
                 .name(resource.getOriginalFilename())
                 .key(key)
                 .size(resource.getSize())
+                .uploadDate(LocalDate.now())
                 .build();
         createdFile = fileDAO.save(createdFile);
         upload(resource.getBytes(), key);
@@ -64,7 +66,9 @@ public class FileServiceImpl implements FileService {
     }
 
     public void upload(byte[] resource, String keyName) throws IOException {
-        Path path = Paths.get("C:\\Users\\DELL\\Desktop\\JavaMentor\\JavaComandProject\\trade_back\\src\\main\\resources", keyName);
+
+        //C:\Users\DELL\Desktop\JavaMentor\JavaComandProject\trade_back\src\main\resources
+        Path path = Paths.get("src/main/resources", keyName);
         Path file = Files.createFile(path);
         FileOutputStream stream = null;
         try {
@@ -80,7 +84,7 @@ public class FileServiceImpl implements FileService {
     }
 
     public Resource downloadFile(String key) throws IOException {
-        Path path = Paths.get("C:\\Users\\DELL\\Desktop\\JavaMentor\\JavaComandProject\\trade_back\\src\\main\\resources\\" + key);
+        Path path = Paths.get("src/main/resources" + key);
         Resource resource = new UrlResource(path.toUri());
         if (resource.exists() || resource.isReadable()) {
             return resource;

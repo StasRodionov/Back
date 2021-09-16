@@ -332,7 +332,7 @@ create table file
     name        varchar(255),
     size        int8,
     key         varchar(255),
-    upload_date date,
+    upload_date date default current_date,
     primary key (id)
 );
 

@@ -1,2 +1,2 @@
-INSERT INTO file(name, size, key, upload_date)
-VALUES ('document', 10, 'dffdgdfg32', '2019-12-18');
+INSERT INTO file(name, size, key)
+VALUES ('test.docx', 11431, '2175d55e974b95f88d3894247ab55cf1');
