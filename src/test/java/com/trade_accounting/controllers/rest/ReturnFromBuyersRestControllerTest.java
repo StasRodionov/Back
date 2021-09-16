@@ -140,6 +140,7 @@ public class ReturnFromBuyersRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
+
         mockMvc.perform(get("/api/returnFromBuyers"))
                 .andDo(print())
                 .andExpect(status().isOk())

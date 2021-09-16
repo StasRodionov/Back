@@ -32,12 +32,8 @@ public class ReturnFromBuyersServiceImpl implements ReturnFromBuyersService {
 
     @Override
     public ReturnFromBuyersDto create(ReturnFromBuyersDto dto) {
-        ReturnFromBuyers r = returnFromBuyersMapper.toModel(dto);
-        System.out.println(r);
-        ReturnFromBuyers returnFromBuyers = returnFromBuyersRepository.save(r);
-        System.out.println(returnFromBuyers);
+        ReturnFromBuyers returnFromBuyers = returnFromBuyersRepository.save(returnFromBuyersMapper.toModel(dto));
         dto.setId(returnFromBuyers.getId());
-
         return dto;
     }
 
