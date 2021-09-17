@@ -198,6 +198,9 @@ include::controllers/unit-rest-controller-test.adoc[]
 == Warehouse Rest Controller
 include::controllers/warehouse-rest-controller-test.adoc[]
 
+== Issued invoice Rest Controller
+include::controllers/issued-invoice-rest-controller-test.adoc[]
+
 
 
 
