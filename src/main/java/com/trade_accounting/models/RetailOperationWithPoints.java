@@ -40,7 +40,7 @@ public class RetailOperationWithPoints {
 
     //Текущее время
     @NotNull
-    @Column(name = "date")
+    @Column(name = "date", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime currentTime;
 
     //Тип операции(начисление, списание)
