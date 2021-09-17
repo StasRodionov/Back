@@ -1,24 +1,27 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.TypeOfPayment;
 import com.trade_accounting.models.dto.MoneySubProfitLossDto;
+import com.trade_accounting.models.dto.PaymentDto;
+import com.trade_accounting.services.interfaces.LossProductService;
 import com.trade_accounting.services.interfaces.MoneySubProfitLossService;
 import com.trade_accounting.services.interfaces.PaymentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService {
 
     private final PaymentService paymentService;
+    private final LossProductService lossProductService;
 
-    public MoneySubProfitLossServiceImpl(PaymentService paymentService) {
+    public MoneySubProfitLossServiceImpl(PaymentService paymentService, LossProductService lossProductService) {
         this.paymentService = paymentService;
+        this.lossProductService = lossProductService;
     }
 
     @Override
@@ -28,10 +31,10 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
         BigDecimal costPrice = BigDecimal.ZERO;
         BigDecimal grossProfit = BigDecimal.ZERO;
         BigDecimal operatingExpenses = BigDecimal.ZERO;
-        BigDecimal writeOffs = BigDecimal.ZERO;
-        BigDecimal rental = BigDecimal.ZERO;
-        BigDecimal salary = BigDecimal.ZERO;
-        BigDecimal marketing = BigDecimal.ZERO;
+        BigDecimal writeOffs;
+        BigDecimal rental;
+        BigDecimal salary;
+        BigDecimal marketing;
         BigDecimal operatingProfit = BigDecimal.ZERO;
         BigDecimal taxesAndFees = BigDecimal.ZERO;
         BigDecimal netProfit = BigDecimal.ZERO;
@@ -39,25 +42,27 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
         //Revenue
 
         //Cost price
-        List<BigDecimal> decimalList = new ArrayList<>();
-        paymentService.getAll().stream()
-                .filter(x -> x.getTypeOfPayment().toString().equals("OUTGOING"))
-                .forEach(q -> decimalList.add(q.getSum()));
-
-        for (BigDecimal decimal : decimalList) {
-            costPrice = costPrice.add(decimal);
-        }
-        moneySubProfitLossDto.setCostPrice(costPrice);
 
         //Gross profit
 
         //Write-offs
+        writeOffs = lossProductService.getAll().stream()
+                .map(l -> l.getPrice().multiply(l.getAmount()))
+                .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+
+        moneySubProfitLossDto.setWriteOffs(writeOffs);
 
         //Rental
+        rental = getPaymentSumByParam("RENTAL");
+        moneySubProfitLossDto.setRental(rental);
 
         //Salary
+        salary = getPaymentSumByParam("SALARY");
+        moneySubProfitLossDto.setSalary(salary);
 
         //Marketing
+        marketing = getPaymentSumByParam("MARKETING");
+        moneySubProfitLossDto.setMarketing(marketing);
 
         //Operating expenses
         operatingExpenses = operatingExpenses.add(writeOffs).add(rental).add(salary).add(marketing);
@@ -70,5 +75,14 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
         //Net profit
 
         return moneySubProfitLossDto;
+    }
+
+    private BigDecimal getPaymentSumByParam(String param) {
+
+        return paymentService.getAll().stream()
+                .filter(x -> x.getTypeOfPayment().equals("OUTGOING"))
+                .filter(q -> q.getExpenseItem().equals(param))
+                .map(PaymentDto::getSum)
+                .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
     }
 }
