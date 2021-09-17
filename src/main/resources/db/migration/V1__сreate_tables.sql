@@ -502,6 +502,7 @@ create table payments
     sum             numeric(19, 2),
     time            timestamp,
     type_of_payment varchar(255),
+    expense_item    varchar(255),
     company_id      int8                       not null,
     contract_id     int8,
     contractor_id   int8                       not null,
