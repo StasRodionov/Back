@@ -1,10 +1,14 @@
 package com.trade_accounting.models.dto;
 
+import com.trade_accounting.models.ExpenseItem;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -19,6 +23,8 @@ public class PaymentDto {
     private String typeOfPayment;
 
     private String paymentMethods;
+
+    private String expenseItem;
 
     @NotNull
     private String number;

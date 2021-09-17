@@ -2,9 +2,11 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.File;
 import com.trade_accounting.services.interfaces.FileService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
+@Tag(name = "File Rest Controller", description = "CRUD операции с файлами")
+@Api(tags = "File Rest Controller")
 @RequestMapping("/api/file")
 @RequiredArgsConstructor
 public class FileRestController {
