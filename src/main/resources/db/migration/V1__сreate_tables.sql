@@ -949,6 +949,26 @@ create table issued_invoices
     primary key (id)
 );
 
+create table retail_operation_with_points
+(
+    id                  bigserial not null,
+    number              int8      not null,
+    date                timestamp default current_timestamp not null,
+    type_operation      varchar(255),
+    number_of_points    int8,
+    accrual_date        timestamp,
+    bonus_program_id    int8 not null,
+    contractor_id       int8 not null,
+    task_id             int8,
+    primary key (id)
+);
+
+create table retail_operation_with_points_files
+(
+    retail_operation_with_points_id int8,
+    files_id                        int8
+);
+
 alter table if exists acceptances_acceptance_production
     add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);
 
@@ -1401,5 +1421,20 @@ alter table if exists bonus_program_contractor_groups
 
 alter table if exists bonus_program_contractor_groups
     add constraint FKb8ferg34t3gerg43gw3gt45h3 foreign key (contractor_groups_id) references contractor_groups;
+
+alter table if exists retail_operation_with_points
+    add constraint FKkdtfdgdfh43g34ggt54g684y4 foreign key (bonus_program_id) references bonus_program;
+
+alter table if exists retail_operation_with_points
+    add constraint FKkdhftjrj54y4g35gt54g6hdfh foreign key (contractor_id) references contractors;
+
+alter table if exists retail_operation_with_points
+    add constraint FKkdtfgdhrh543hfdhfdh5h5h4y foreign key (task_id) references task;
+
+alter table if exists retail_operation_with_points_files
+    add constraint FKkdergregreg43ggtehethfdh5 foreign key (retail_operation_with_points_id) references retail_operation_with_points;
+
+alter table if exists retail_operation_with_points_files
+    add constraint FKkdtffdgdfgdr43g34ggh5h4y foreign key (files_id) references file;
 
 

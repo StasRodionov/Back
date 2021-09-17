@@ -27,12 +27,15 @@ public class RetailOperationWithPointsDto {
 
     private Long id;
 
+    @NotNull
     private Long number;
 
+    @NotNull
     private LocalDateTime currentTime;
 
     private String typeOperation;
 
+    @NotNull
     private Long numberOfPoints;
 
     private LocalDateTime accrualDate;

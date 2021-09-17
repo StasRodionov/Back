@@ -34,11 +34,13 @@ public class RetailOperationWithPoints {
     private Long id;
 
     //Номер
+    @NotNull
     @Column(name = "number")
     private Long number;
 
     //Текущее время
-    @Column(name = "current_time")
+    @NotNull
+    @Column(name = "date")
     private LocalDateTime currentTime;
 
     //Тип операции(начисление, списание)
@@ -46,6 +48,7 @@ public class RetailOperationWithPoints {
     private String typeOperation;
 
     //Колличество баллов
+    @NotNull
     @Column(name = "number_of_points")
     private Long numberOfPoints;
 
