@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "MoneySubProfitLoss Rest Controller", description = "Получение данных о прибыли и убытках")
 @Api(tags = "MoneySubProfitLoss Rest Controller")
-@RequestMapping("/api/money")
+@RequestMapping("/api/profitloss")
 @RequiredArgsConstructor
 public class MoneySubProfitLossRestController {
 
@@ -32,7 +32,7 @@ public class MoneySubProfitLossRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<MoneySubProfitLossDto> getAll() {
+    public ResponseEntity<MoneySubProfitLossDto> getMoneySubProfitLossDto() {
         return ResponseEntity.ok(moneySubProfitLossService.getMoneySubProfitLossDto());
     }
 }
