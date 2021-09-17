@@ -46,6 +46,10 @@ public class Payment {
     @ColumnDefault(value = "00001")
     private String number;
 
+    @Column(name = "expense_item")
+    @Enumerated(EnumType.STRING)
+    private ExpenseItem expenseItem;
+
     @Column(name = "time")
     private LocalDateTime time;
 
