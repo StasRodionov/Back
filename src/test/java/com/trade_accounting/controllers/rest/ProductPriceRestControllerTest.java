@@ -1,8 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
-
 import com.google.gson.Gson;
-import com.trade_accounting.models.dto.ProductDto;
+import com.trade_accounting.models.dto.ProductPriceDto;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +27,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
-@Sql(value = "/Product-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = "/ProductPrice-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "karimogon@mail.ru")
 @AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
-public class ProductRestControllerTest {
+public class ProductPriceRestControllerTest {
 
     @Autowired
-    private ProductRestController productRestController;
+    private ProductPriceRestController productPriceRestController;
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,13 +41,13 @@ public class ProductRestControllerTest {
     @SneakyThrows
     @Test
     void testExistence() {
-        assertNotNull(productRestController, "ProductRestController is null");
+        assertNotNull(productPriceRestController, "ProductPriceRestController is null");
     }
 
     @SneakyThrows
     @Test
     void testGetAll() {
-        mockMvc.perform(get("/api/product"))
+        mockMvc.perform(get("/api/productprice"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
@@ -59,70 +58,42 @@ public class ProductRestControllerTest {
     @SneakyThrows
     @Test
     void testGetById() {
-        ProductDto productDto = ProductDto.builder()
+        ProductPriceDto productPriceDto = ProductPriceDto.builder()
                 .id(1L)
-                .name("Яблоки0")
-                .weight(BigDecimal.valueOf(1.00))
-                .volume(BigDecimal.valueOf(1.00))
-                .productGroupId(1L)
-                .description("Красные яблоки голден0")
-                .unitId(null)
-                .archive(false)
-                .service(false)
-                .contractorId(null)
-                .taxSystemId(null)
-                .productGroupId(null)
-                .attributeOfCalculationObjectId(null)
-                .countryOrigin(null)
-                .itemNumber(0)
-                .saleTax(null)
-                .minimumBalance(0)
+                .typeOfPriceId(null)
+                .value(BigDecimal.valueOf(64.00))
                 .build();
 
-        String productDtoJson = new Gson().toJson(productDto);
+        String productPriceDtoJson = new Gson().toJson(productPriceDto);
 
-        mockMvc.perform(get("/api/product/1"))
+        mockMvc.perform(get("/api/productprice/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(productDtoJson))
+                .andExpect(content().json(productPriceDtoJson))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 
     @SneakyThrows
     @Test
     void testCreate() {
-        ProductDto productDto = ProductDto.builder()
+        ProductPriceDto productPriceDto = ProductPriceDto.builder()
                 .id(4L)
-                .name("Яблоки4")
-                .weight(BigDecimal.valueOf(4.00))
-                .volume(BigDecimal.valueOf(4.00))
-                .productGroupId(1L)
-                .description("Красные яблоки голден")
-                .unitId(1L)
-                .archive(false)
-                .service(false)
-                .contractorId(1L)
-                .taxSystemId(1L)
-                .productGroupId(1L)
-                .attributeOfCalculationObjectId(1L)
-                .countryOrigin(null)
-                .itemNumber(0)
-                .saleTax(null)
-                .minimumBalance(0)
+                .typeOfPriceId(null)
+                .value(BigDecimal.valueOf(64.00))
                 .build();
 
-        String productDtoJson = new Gson().toJson(productDto);
+        String productPriceDtoJson = new Gson().toJson(productPriceDto);
 
-        mockMvc.perform(post("/api/product").contentType(MediaType.APPLICATION_JSON)
-                        .content(productDtoJson))
+        mockMvc.perform(post("/api/productprice").contentType(MediaType.APPLICATION_JSON)
+                        .content(productPriceDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(productDtoJson))
+                .andExpect(content().json(productPriceDtoJson))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
-        mockMvc.perform(get("/api/product"))
+        mockMvc.perform(get("/api/productprice"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
@@ -132,50 +103,36 @@ public class ProductRestControllerTest {
     @SneakyThrows
     @Test
     void testUpdate() {
-        ProductDto productDto = ProductDto.builder()
+        ProductPriceDto productPriceDto = ProductPriceDto.builder()
                 .id(1L)
-                .name("Яблоки4")
-                .weight(BigDecimal.valueOf(4.00))
-                .volume(BigDecimal.valueOf(4.00))
-                .productGroupId(1L)
-                .description("Красные яблоки голден")
-                .unitId(1L)
-                .archive(false)
-                .service(false)
-                .contractorId(1L)
-                .taxSystemId(1L)
-                .productGroupId(1L)
-                .attributeOfCalculationObjectId(1L)
-                .countryOrigin(null)
-                .itemNumber(0)
-                .saleTax(null)
-                .minimumBalance(0)
+                .typeOfPriceId(null)
+                .value(BigDecimal.valueOf(128.00))
                 .build();
 
-        String productDtoJson = new Gson().toJson(productDto);
+        String productPriceDtoJson = new Gson().toJson(productPriceDto);
 
-        mockMvc.perform(put("/api/product").contentType(MediaType.APPLICATION_JSON)
-                        .content(productDtoJson))
+        mockMvc.perform(put("/api/productprice").contentType(MediaType.APPLICATION_JSON)
+                        .content(productPriceDtoJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(productDtoJson))
+                .andExpect(content().json(productPriceDtoJson))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
-        mockMvc.perform(get("/api/product"))
+        mockMvc.perform(get("/api/productprice"))
                 .andDo(print());
     }
 
     @SneakyThrows
     @Test
     void testDelete() {
-        mockMvc.perform(delete("/api/product/1"))
+        mockMvc.perform(delete("/api/productprice/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
 
-        mockMvc.perform(get("/api/product"))
+        mockMvc.perform(get("/api/productprice"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
