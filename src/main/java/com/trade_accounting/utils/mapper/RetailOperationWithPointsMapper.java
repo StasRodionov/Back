@@ -11,6 +11,7 @@ import com.trade_accounting.models.dto.RetailOperationWithPointsDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import org.mapstruct.Mapper;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,10 +30,8 @@ public interface RetailOperationWithPointsMapper {
         return RetailOperationWithPoints.builder()
                 .id(dto.getId())
                 .number(dto.getNumber())
-                .currentTime(dto.getCurrentTime())
                 .typeOperation(dto.getTypeOperation())
                 .numberOfPoints(dto.getNumberOfPoints())
-                .accrualDate(dto.getAccrualDate())
                 .build();
     }
 
@@ -47,10 +46,10 @@ public interface RetailOperationWithPointsMapper {
         } else {
             dto.setId(model.getId());
             dto.setNumber(model.getNumber());
-            dto.setCurrentTime(model.getCurrentTime());
+            dto.setCurrentTime(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(model.getCurrentTime()));
             dto.setTypeOperation(model.getTypeOperation());
             dto.setNumberOfPoints(model.getNumberOfPoints());
-            dto.setAccrualDate(model.getAccrualDate());
+            dto.setAccrualDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(model.getAccrualDate()));
 
             BonusProgram bonusProgram = model.getBonusProgram();
             if (bonusProgram == null) {
