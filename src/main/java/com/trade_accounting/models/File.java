@@ -1,35 +1,42 @@
 package com.trade_accounting.models;
 
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.math.BigDecimal;
+import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder(toBuilder = true)
 @Data
 @Entity
-@Table(name = "product_prises")
-public class ProductPrice {
+@Table(name = "file")
+@AllArgsConstructor
+@NoArgsConstructor
+public class File {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private TypeOfPrice typeOfPrice;
+    @Column
+    private String name;
 
-    @Column(name = "value", scale = 2)
-    private BigDecimal value;
+    @Column
+    private Long size;
+
+    @Column(unique = true)
+    private String key;
+
+    @Column(name = "upload_date")
+    private LocalDate uploadDate;
 }

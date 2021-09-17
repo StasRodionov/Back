@@ -326,6 +326,16 @@ create table fias_db
     primary key (id)
 );
 
+create table file
+(
+    id          bigserial not null,
+    name        varchar(255),
+    size        int8,
+    key         varchar(255),
+    upload_date date default current_date,
+    primary key (id)
+);
+
 create table images
 (
     id          bigserial not null,
@@ -914,6 +924,20 @@ create table shipments
     primary key (id)
 );
 
+create table retail_returns
+(
+    id                      bigserial    not null,
+    date                    timestamp    not null,
+    retail_store_id         int8         not null,
+    cash_amount             numeric(19, 2),
+    cashless_amount         numeric(19, 2),
+    is_print                boolean      default false,
+    is_send                 boolean      default false,
+    is_spend                boolean      default false,
+    comment                 varchar(255),
+    primary key (id)
+);
+
 create table issued_invoices
 (
     id              bigserial not null,
@@ -972,6 +996,9 @@ alter table if exists technical_cards_final_production
 
 alter table if exists technical_cards_materials
     add constraint UK_g2gfp85pii8p0cxl1dwfejbih unique (materials_id);
+
+alter table if exists file
+    add constraint UK_fwefewfcjladsgsg24trgg2hx unique (key);
 
 alter table if exists acceptance_productions
     add constraint FKg7kb2cae2ujgi6ykgs0rwp9dj foreign key (product_id) references products;
@@ -1257,6 +1284,9 @@ alter table if exists purchase_history_of_sales
 
 alter table if exists remains
     add constraint FK2166y98xx8vyo8i676cl3hl3r foreign key (unit_id) references units;
+
+alter table if exists retail_returns
+    add constraint FKyukj31nmv79popvypjj712nxq foreign key (retail_store_id) references retail_stores;
 
 alter table if exists requsts_productions
     add constraint FK1pxvfl8rgagtov03yhao6lvh2 foreign key (technical_card_id) references technical_cards;
