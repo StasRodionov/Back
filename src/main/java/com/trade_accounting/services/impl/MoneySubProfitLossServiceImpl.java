@@ -5,6 +5,7 @@ import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.services.interfaces.LossProductService;
 import com.trade_accounting.services.interfaces.MoneySubProfitLossService;
 import com.trade_accounting.services.interfaces.PaymentService;
+import com.trade_accounting.services.interfaces.ShipmentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +17,12 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
 
     private final PaymentService paymentService;
     private final LossProductService lossProductService;
+    private final ShipmentService shipmentService;
 
-    public MoneySubProfitLossServiceImpl(PaymentService paymentService, LossProductService lossProductService) {
+    public MoneySubProfitLossServiceImpl(PaymentService paymentService, LossProductService lossProductService, ShipmentService shipmentService) {
         this.paymentService = paymentService;
         this.lossProductService = lossProductService;
+        this.shipmentService = shipmentService;
     }
 
     @Override
