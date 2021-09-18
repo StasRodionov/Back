@@ -31,6 +31,7 @@ import java.util.List;
 public class Shipment {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
