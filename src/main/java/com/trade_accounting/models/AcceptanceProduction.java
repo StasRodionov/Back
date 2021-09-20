@@ -27,6 +27,9 @@ public class AcceptanceProduction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "price")
+    private BigDecimal price;
+
     @Column(name = "amount")
     private Long amount;
 

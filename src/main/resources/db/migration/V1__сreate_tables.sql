@@ -1,6 +1,7 @@
 create table acceptance_productions
 (
     id         bigserial not null,
+    price      numeric(19,2),
     amount     int8,
     product_id int8,
     primary key (id)
