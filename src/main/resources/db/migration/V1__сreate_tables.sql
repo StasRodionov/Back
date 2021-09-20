@@ -970,6 +970,20 @@ create table retail_operation_with_points_files
     files_id                        int8
 );
 
+create table buyers_return
+(
+    id                      bigserial    not null,
+    date                    timestamp    not null,
+    warehouse_id            int8         not null,
+    contractor_id           int8         not null,
+    company_id              int8         not null,
+    sum                     numeric(19, 2),
+    is_sent                 boolean      default false,
+    is_print                boolean      default false,
+    comment                 varchar(255),
+    primary key (id)
+);
+
 alter table if exists acceptances_acceptance_production
     add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);
 
@@ -1437,5 +1451,14 @@ alter table if exists retail_operation_with_points_files
 
 alter table if exists retail_operation_with_points_files
     add constraint FKkdtffdgdfgdr43g34ggh5h4y foreign key (files_id) references file;
+
+alter table if exists buyers_return
+    add constraint FKyukj31nmv77yzxfdhds712nxq foreign key (contractor_id) references contractors;
+
+alter table if exists buyers_return
+    add constraint FKyukj31nmv78yzxfdhds712nxq foreign key (company_id) references companies;
+
+alter table if exists buyers_return
+    add constraint FKyukj31nmv79yzxfdhds712nxq foreign key (warehouse_id) references warehouses;
 
 
