@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,6 +26,8 @@ public class ShipmentDto {
     @NotNull
     private Long contractorId;
 
+    private List<Long> shipmentProductsIds;
+
     private BigDecimal sum;
 
     private BigDecimal paid;
@@ -37,7 +40,7 @@ public class ShipmentDto {
 
     private String comment;
 
-    public ShipmentDto(Long id, LocalDateTime date, Long warehouseId, Long companyId, Long contractorId, BigDecimal sum, BigDecimal paid, Boolean isSpend, Boolean isSend, Boolean isPrint, String comment) {
+    public ShipmentDto(Long id, LocalDateTime date, Long warehouseId, Long companyId, Long contractorId, BigDecimal sum, BigDecimal paid, Boolean isSpend, Boolean isSend, Boolean isPrint, String comment, List<Long> shipmentProductsIds) {
         this.id = id;
         this.date = date.toString();
         this.warehouseId = warehouseId;
@@ -49,5 +52,6 @@ public class ShipmentDto {
         this.isSend = isSend;
         this.isPrint = isPrint;
         this.comment = comment;
+        this.shipmentProductsIds = shipmentProductsIds;
     }
 }

@@ -916,13 +916,27 @@ create table shipments
     warehouse_id            int8         not null,
     contractor_id           int8         not null,
     company_id              int8         not null,
-    sum                     numeric(19, 2),
     paid                    numeric(19, 2),
     is_print                boolean      default false,
     is_send                 boolean      default false,
     is_spend                boolean      default false,
     comment                 varchar(255),
     primary key (id)
+);
+
+create table shipment_products
+(
+    id         bigserial      not null,
+    amount     numeric(19, 2) not null,
+    price      numeric(19, 2) not null,
+    product_id int8,
+    primary key (id)
+);
+
+create table shipments_shipment_products
+(
+    shipment_id          int8 not null,
+    shipment_products_id int8 not null
 );
 
 create table retail_returns
@@ -1344,6 +1358,15 @@ alter table if exists shipments
 
 alter table if exists shipments
     add constraint FKyukj31nmv78yzxvypjj712nxq foreign key (warehouse_id) references warehouses;
+
+alter table if exists shipments_shipment_products
+    add constraint FK_eiehxydb400hopvatvaiiwox unique (shipment_products_id);
+
+alter table if exists shipments_shipment_products
+    add constraint FKyukj31nmv78yzxvypuf500nxq foreign key (shipment_products_id) references shipment_products;
+
+alter table if exists shipments_shipment_products
+    add constraint FKyukj31nmv78yzxvypuf626nxq foreign key (shipment_id) references shipments;
 
 alter table if exists streets
     add constraint FKefsv8gxpfki4pn4x1nfp7cv4h foreign key (city_id) references cities;
