@@ -5,7 +5,7 @@ import com.trade_accounting.models.File;
 import java.time.LocalDate;
 import java.util.List;
 
-public class FileStubs {
+public class FileModelStubs {
 
     public static List<File> getFiles() {
         return List.of(File.builder()
@@ -15,5 +15,15 @@ public class FileStubs {
                 .key("d2sfefqf32f4gf23f13t42gq2evg23g2")
                 .uploadDate(LocalDate.now())
                 .build());
+    }
+
+    public static File getFiles(Long id) {
+        return File.builder()
+                .id(id)
+                .name("file.docx")
+                .size(11000L)
+                .key("d2sfefqf32f4gf23f13t42gq2evg23g2")
+                .uploadDate(LocalDate.now())
+                .build();
     }
 }
