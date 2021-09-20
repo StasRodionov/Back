@@ -1,13 +1,14 @@
 package com.trade_accounting.services.impl;
 
-
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.Shipment;
+import com.trade_accounting.models.ShipmentProduct;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.ShipmentDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
+import com.trade_accounting.repositories.ShipmentProductRepository;
 import com.trade_accounting.repositories.ShipmentRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.ShipmentService;
@@ -31,6 +32,7 @@ public class ShipmentServiceImpl implements ShipmentService {
     private final ContractorRepository contractorRepository;
     private final WarehouseRepository warehouseRepository;
     private final ShipmentMapper shipmentMapper;
+    private final ShipmentProductRepository shipmentProductRepository;
 
     @Override
     public List<ShipmentDto> search(Specification<Shipment> spec) {
@@ -53,9 +55,15 @@ public class ShipmentServiceImpl implements ShipmentService {
     @Override
     public ShipmentDto create(ShipmentDto shipmentDto) {
         Shipment shipmentSaved = shipmentMapper.toModel(shipmentDto);
+
         Company company = companyRepository.getCompaniesById(shipmentDto.getCompanyId());
         Contractor contractor = contractorRepository.getContractorById(shipmentDto.getContractorId());
         Warehouse warehouse = warehouseRepository.getOne(shipmentDto.getWarehouseId());
+        List<ShipmentProduct> shipmentProductList = shipmentDto.getShipmentProductsIds().stream()
+                .map(shipmentProductRepository::getOne)
+                .collect(Collectors.toList());
+
+        shipmentSaved.setShipmentProducts(shipmentProductList);
         shipmentSaved.setCompany(company);
         shipmentSaved.setContractor(contractor);
         shipmentSaved.setWarehouse(warehouse);

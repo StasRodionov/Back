@@ -21,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,6 +57,12 @@ public class RetailOperationWithPointsServiceImpl implements RetailOperationWith
     @Override
     public RetailOperationWithPointsDto create(RetailOperationWithPointsDto dto) {
 
+        LocalDateTime currentTime = LocalDateTime.parse(dto.getCurrentTime().replace("T", " "),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+        LocalDateTime accrualDate = LocalDateTime.parse(dto.getAccrualDate().replace("T", " "),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
         RetailOperationWithPoints retailOperationWithPoints = retailOperationWithPointsMapper.toModel(dto);
         BonusProgram bonusProgram = bonusProgramRepository.getOne(dto.getBonusProgramId());
         Contractor contractor = contractorRepository.getOne(dto.getContractorId());
@@ -63,6 +71,8 @@ public class RetailOperationWithPointsServiceImpl implements RetailOperationWith
                 .map(fileRepository::getOne)
                 .collect(Collectors.toList());
 
+        retailOperationWithPoints.setAccrualDate(accrualDate);
+        retailOperationWithPoints.setCurrentTime(currentTime);
         retailOperationWithPoints.setBonusProgram(bonusProgram);
         retailOperationWithPoints.setContractor(contractor);
         retailOperationWithPoints.setTask(task);
