@@ -31,14 +31,14 @@ public class RetailOperationWithPointsDto {
     private Long number;
 
     @NotNull
-    private LocalDateTime currentTime;
+    private String currentTime;
 
     private String typeOperation;
 
     @NotNull
     private Long numberOfPoints;
 
-    private LocalDateTime accrualDate;
+    private String accrualDate;
 
     @NotNull
     private Long bonusProgramId;
