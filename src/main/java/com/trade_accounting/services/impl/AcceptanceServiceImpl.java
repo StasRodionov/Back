@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,6 +72,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         acceptance.setWarehouse(warehouseRepository.getOne(dto.getWarehouseId()));
         acceptance.setCompany(companyRepository.getOne(dto.getCompanyId()));
         acceptance.setProject(projectRepository.getOne(dto.getProjectId()));
+        acceptance.setWhenСhangedDate(LocalDate.now());
 
         //Что работало в Postman, закомментить следующую строчку
         acceptance.setEmployeeChanged((Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
