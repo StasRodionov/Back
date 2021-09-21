@@ -834,10 +834,12 @@ create table technical_cards_materials
 
 create table technical_operations
 (
-    id                bigserial                  not null,
-    date_operation    date,
-    number            varchar(255) default 00001 not null,
+    id                bigserial not null,
+    comment           varchar(255),
+    is_print          boolean default false,
+    is_sent           boolean default false,
     volume            int4,
+    date              timestamp    not null ,
     technical_card_id int8,
     warehouse_id      int8,
     primary key (id)

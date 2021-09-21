@@ -14,8 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -29,18 +28,24 @@ public class TechnicalOperations {
     private Long id;
 
     @Column
-    @NotNull
-    @ColumnDefault(value = "00001")
-    private String number;
+    private String comment;
 
     @Column
-    private LocalDate dateOperation;
+    @ColumnDefault("false")
+    private Boolean isPrint = false;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private TechnicalCard technicalCard;
+    @Column
+    @ColumnDefault("false")
+    private Boolean isSent = false;
 
     @Column
     private Integer volume;
+
+    @Column
+    private LocalDateTime date;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private TechnicalCard technicalCard;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Warehouse warehouse;
