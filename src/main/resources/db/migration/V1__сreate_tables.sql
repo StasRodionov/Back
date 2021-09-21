@@ -16,7 +16,6 @@ create table acceptances
     when_changed_date    date    default current_date,
     is_print             boolean default false,
     is_sent              boolean default false,
-    contract_id          int8      not null,
     is_spend             boolean default false,
     contractor_id        int8      not null,
     warehouse_id         int8      not null,
