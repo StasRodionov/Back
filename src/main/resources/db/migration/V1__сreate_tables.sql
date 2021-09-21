@@ -13,11 +13,18 @@ create table acceptances
     comment              varchar(255),
     incoming_number      varchar(255),
     incoming_number_date date    default current_date,
+    when_changed_date    date    default current_date,
     is_print             boolean default false,
     is_sent              boolean default false,
-    contract_id          int8      not null,
+    is_spend             boolean default false,
     contractor_id        int8      not null,
     warehouse_id         int8      not null,
+    company_id           int8      not null,
+    employee_changed_id  int8,
+    project_id           int8,
+    contract_id          int8,
+
+
     primary key (id)
 );
 
@@ -1054,6 +1061,15 @@ alter table if exists file
 
 alter table if exists acceptance_productions
     add constraint FKg7kb2cae2ujgi6ykgs0rwp9dj foreign key (product_id) references products;
+
+alter table if exists acceptances
+    add constraint FKpao7pn3tq333futurmxa0l0ne foreign key (employee_changed_id) references employees;
+
+alter table if exists acceptances
+    add constraint FKpao7pn3tq334futurmxa0l0ne foreign key (project_id) references projects;
+
+alter table if exists acceptances
+    add constraint FKpao7pn3tq335futurmxa0l0ne foreign key (company_id) references companies;
 
 alter table if exists acceptances
     add constraint FKpao7pn3tqmxa3a9wle050l0ne foreign key (contract_id) references contracts;

@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -48,7 +49,6 @@ public class Acceptance {
     @ManyToOne(fetch = FetchType.LAZY)
     private Warehouse warehouse;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Contract contract;
 
@@ -59,6 +59,23 @@ public class Acceptance {
     @Column(name = "is_print")
     @ColumnDefault("false")
     Boolean isPrint = false;
+
+    @Column(name = "is_spend")
+    @ColumnDefault("false")
+    Boolean isSpend = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Employee employeeChanged;
+
+    @Column(name = "when_changed_date")
+    private LocalDate whenСhangedDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Project project;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Company company;
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<AcceptanceProduction> acceptanceProduction;

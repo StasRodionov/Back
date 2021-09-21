@@ -2,10 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 
 import com.google.gson.Gson;
-import com.trade_accounting.models.RetailOperationWithPoints;
-import com.trade_accounting.models.dto.BonusProgramDto;
 import com.trade_accounting.models.dto.RetailOperationWithPointsDto;
-import com.trade_accounting.models.dto.RetailStoreDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -18,14 +15,10 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
-
-import static com.trade_accounting.services.impl.Stubs.ModelStubs.getContractor;
-import static com.trade_accounting.services.impl.Stubs.model.BonusProgramModelStubs.getBonusProgram;
-import static com.trade_accounting.services.impl.Stubs.model.FileStubs.getFiles;
+import static com.trade_accounting.services.impl.Stubs.model.FileModelStubs.getFiles;
 import static com.trade_accounting.services.impl.Stubs.model.TaskModelStubs.getTask;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;

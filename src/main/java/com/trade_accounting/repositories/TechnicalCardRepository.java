@@ -19,4 +19,6 @@ public interface TechnicalCardRepository extends JpaRepository<TechnicalCard, Lo
 
     @Query("from TechnicalCard t where t.technicalCardGroup.id = :id")
     List<TechnicalCard> getAllByTechnicalCardGroupId(@Param("id") Long id);
+
+    TechnicalCard getTechnicalCardById(Long technicalCard);
 }

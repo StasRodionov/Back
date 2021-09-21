@@ -6,7 +6,9 @@ import java.time.LocalDateTime;
 
 import static com.trade_accounting.services.impl.Stubs.ModelStubs.getContractor;
 import static com.trade_accounting.services.impl.Stubs.model.BonusProgramModelStubs.getBonusProgram;
-import static com.trade_accounting.services.impl.Stubs.model.FileStubs.getFiles;
+
+import static com.trade_accounting.services.impl.Stubs.model.FileModelStubs.getFiles;
+import static com.trade_accounting.services.impl.Stubs.model.TaskModelStubs.getTask;
 import static com.trade_accounting.services.impl.Stubs.model.TaskModelStubs.getTask;
 
 public class RetailOperationWithPointsModelStubs {
