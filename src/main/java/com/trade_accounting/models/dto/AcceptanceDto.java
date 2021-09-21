@@ -22,15 +22,25 @@ public class AcceptanceDto {
 
     private String incomingNumberDate;
 
+    private String whenСhangedDate;
+
     private Long contractorId;
 
     private Long warehouseId;
 
     private Long contractId;
 
+    private Long companyId;
+
+    private Long employeeChangedId;
+
+    private Long projectId;
+
     Boolean isSent;
 
     Boolean isPrint;
+
+    Boolean isSpend;
 
     private List<AcceptanceProductionDto> acceptanceProduction;
 }

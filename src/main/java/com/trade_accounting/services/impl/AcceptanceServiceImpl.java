@@ -1,8 +1,10 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Acceptance;
+import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.dto.AcceptanceDto;
 import com.trade_accounting.repositories.AcceptanceRepository;
+import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.ProjectRepository;
@@ -10,6 +12,7 @@ import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.AcceptanceService;
 import com.trade_accounting.utils.mapper.AcceptanceMapper;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +29,8 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     private final ContractorRepository contractorRepository;
 
+    private final CompanyRepository companyRepository;
+
     private final ProjectRepository projectRepository;
 
     private final WarehouseRepository warehouseRepository;
@@ -35,12 +40,13 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     public AcceptanceServiceImpl(AcceptanceRepository acceptanceRepository,
                                  ContractRepository contractRepository,
                                  ContractorRepository contractorRepository,
-                                 ProjectRepository projectRepository,
+                                 CompanyRepository companyRepository, ProjectRepository projectRepository,
                                  WarehouseRepository warehouseRepository,
                                  AcceptanceMapper acceptanceMapper) {
         this.acceptanceRepository = acceptanceRepository;
         this.contractRepository = contractRepository;
         this.contractorRepository = contractorRepository;
+        this.companyRepository = companyRepository;
         this.projectRepository = projectRepository;
         this.warehouseRepository = warehouseRepository;
         this.acceptanceMapper = acceptanceMapper;
@@ -63,6 +69,11 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         acceptance.setContract(contractRepository.getOne(dto.getContractId()));
         acceptance.setContractor(contractorRepository.getOne(dto.getContractorId()));
         acceptance.setWarehouse(warehouseRepository.getOne(dto.getWarehouseId()));
+        acceptance.setCompany(companyRepository.getOne(dto.getCompanyId()));
+        acceptance.setProject(projectRepository.getOne(dto.getProjectId()));
+
+        //Что работало в Postman, закомментить следующую строчку
+        acceptance.setEmployeeChanged((Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return acceptanceMapper.toDto(acceptanceRepository.save(acceptance));
     }
 
