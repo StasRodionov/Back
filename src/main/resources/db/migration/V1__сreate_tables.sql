@@ -469,14 +469,18 @@ create table loss_products
 
 create table movement
 (
-    id                bigserial not null,
-    comment           varchar(255),
-    date              timestamp not null,
-    is_print          boolean default false,
-    is_sent           boolean default false,
-    company_id        int8      not null,
-    warehouse_from_id int8      not null,
-    warehouse_to_id   int8      not null,
+    id                  bigserial not null,
+    comment             varchar(255),
+    date                timestamp not null,
+    when_changed_date   date    default current_date,
+    is_print            boolean default false,
+    is_sent             boolean default false,
+    is_spend            boolean default false,
+    company_id          int8      not null,
+    project_id          int8      not null,
+    employee_changed_id int8      not null,
+    warehouse_from_id   int8      not null,
+    warehouse_to_id     int8      not null,
     primary key (id)
 );
 
@@ -1252,6 +1256,12 @@ alter table if exists movement
 
 alter table if exists movement
     add constraint FKerexspoex4yny4yh9n9ceut6i foreign key (warehouse_to_id) references warehouses;
+
+alter table if exists movement
+    add constraint FKerexspoex311kiornn9ceut6i foreign key (project_id) references projects;
+
+alter table if exists movement
+    add constraint FKerexspoex001kiornn9ceut6i foreign key (employee_changed_id) references employees;
 
 alter table if exists movement_movement_products
     add constraint FKt4to9dsosl52jjtj93efu2kkn foreign key (movement_products_id) references movement_products;
