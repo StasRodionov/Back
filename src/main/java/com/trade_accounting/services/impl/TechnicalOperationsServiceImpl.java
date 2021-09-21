@@ -78,13 +78,19 @@ public class TechnicalOperationsServiceImpl implements TechnicalOperationsServic
     private TechnicalOperationsDto saveOrUpdate(TechnicalOperationsDto dto) {
         TechnicalOperations technicalOperations = new TechnicalOperations();
 
-        TechnicalCard technicalCard = technicalCardRepository.getOne(dto.getTechnicalCard());
-        Warehouse warehouse = warehouseRepository.getOne(dto.getWarehouse());
+        TechnicalCard technicalCard = technicalCardRepository.getTechnicalCardById(dto.getTechnicalCard());
+        Warehouse warehouse = warehouseRepository.getWarehouseById(dto.getWarehouse());
         LocalDateTime dateOperation = LocalDateTime.parse(dto.getDate().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
         technicalOperations.setTechnicalCard(technicalCard);
         technicalOperations.setWarehouse(warehouse);
         technicalOperations.setDate(dateOperation);
+
+        technicalOperations.setId(dto.getId());
+        technicalOperations.setVolume(dto.getVolume());
+        technicalOperations.setComment(dto.getComment());
+        technicalOperations.setIsPrint(dto.getIsPrint());
+        technicalOperations.setIsSent(dto.getIsSent());
 
         return technicalOperationsMapper.toDto(technicalOperationsRepository.save(technicalOperations));
     }
