@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Builder
@@ -21,8 +22,12 @@ public class MovementDto {
     @NotNull
     private String date;
 
+    private String whenChangedDate;
+
     @NotNull
     private Long warehouseFromId;
+
+    private BigDecimal sum;
 
     @NotNull
     private Long warehouseToId;
@@ -30,9 +35,15 @@ public class MovementDto {
     @NotNull
     private Long companyId;
 
+    private Long employeeChangedId;
+
+    private Long projectId;
+
     private Boolean isSent = false;
 
     private Boolean isPrint = false;
+
+    private Boolean isSpend = false;
 
     private String comment;
 

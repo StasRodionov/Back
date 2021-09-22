@@ -8,6 +8,7 @@ import com.trade_accounting.models.dto.MovementDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +26,12 @@ public interface MovementMapper {
             movementDto.setIsSent(movement.getIsSent());
             movementDto.setIsPrint(movement.getIsPrint());
             movementDto.setComment(movement.getComment());
+            BigDecimal sum = movement.getMovementProducts().stream()
+                    .map(x -> x.getAmount().multiply(x.getPrice()))
+                    .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
 
+            movementDto.setSum(sum);
+            movementDto.setEmployeeChangedId(movement.getEmployeeChanged().getId());
             Warehouse warehouseFrom = movement.getWarehouseFrom();
             Warehouse warehouseTo = movement.getWarehouseTo();
             if (warehouseFrom == null) {

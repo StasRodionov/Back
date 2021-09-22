@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,6 +35,9 @@ public class Movement {
     @Column(name = "date")
     private LocalDateTime date;
 
+    @Column(name = "when_changed_date")
+    private LocalDate whenСhangedDate;
+
 //    Со склада
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -47,6 +51,13 @@ public class Movement {
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Project project;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Employee employeeChanged;
+
     @Column(name = "is_sent")
     @ColumnDefault("false")
     private Boolean isSent = false;
@@ -54,6 +65,10 @@ public class Movement {
     @Column(name = "is_print")
     @ColumnDefault("false")
     private Boolean isPrint = false;
+
+    @Column(name = "is_spend")
+    @ColumnDefault("false")
+    private Boolean isSpend = false;
 
     @Column(name = "comment")
     private String comment;
