@@ -495,6 +495,21 @@ create table movement_products
     primary key (id)
 );
 
+create table orders_of_production
+(
+    id                  bigserial not null,
+    date                timestamp not null,
+    company_id          int8      not null,
+    technical_card_id   int8,
+    volume              int4,
+    produce             int4,
+    planned_production_date timestamp not null,
+    is_sent             boolean default false,
+    is_print            boolean default false,
+    comment             varchar(255),
+    primary key (id)
+);
+
 create table payments
 (
     id              bigserial                  not null,

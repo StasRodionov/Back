@@ -127,8 +127,8 @@ public class TechnicalOperationsRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("searchTechnicalCard")
-    @ApiOperation(value = "searchTechnicalCard", notes = "Получение списка технических карт по заданным параметрам")
+    @GetMapping("searchTechnicalOperations")
+    @ApiOperation(value = "searchTechnicalOperations", notes = "Получение списка технических операции по заданным параметрам")
     public ResponseEntity<List<TechnicalOperationsDto>> getAllFilter(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
