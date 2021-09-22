@@ -86,6 +86,12 @@ public class TechnicalOperationsServiceImpl implements TechnicalOperationsServic
         technicalOperations.setWarehouse(warehouse);
         technicalOperations.setDate(dateOperation);
 
+        technicalOperations.setId(dto.getId());
+        technicalOperations.setVolume(dto.getVolume());
+        technicalOperations.setComment(dto.getComment());
+        technicalOperations.setIsPrint(dto.getIsPrint());
+        technicalOperations.setIsSent(dto.getIsSent());
+
         return technicalOperationsMapper.toDto(technicalOperationsRepository.save(technicalOperations));
     }
 
