@@ -719,20 +719,6 @@ create table requsts_productions
     primary key (id)
 );
 
-create table retail_makings
-(
-    id              bigserial not null,
-    comment         varchar(255),
-    date            timestamp,
-    sum             numeric(19, 2),
-    is_print        boolean default false,
-    is_sent         boolean default false,
-    from_whom       varchar(255),
-    company_id      int8,
-    retail_store_id int8,
-    primary key (id)
-);
-
 create table retail_stores
 (
     id                      bigserial    not null,
@@ -1398,12 +1384,6 @@ alter table if exists requsts_productions
 
 alter table if exists requsts_productions
     add constraint FKa2bd3abtixgb5c9f27bbo8kcg foreign key (warehouse_id) references warehouses;
-
-alter table if exists retail_makings
-    add constraint FKroqm8f0o0pok76yaxvfq6icba foreign key (company_id) references companies;
-
-alter table if exists retail_makings
-    add constraint FKroqm8f0o0pok11yaxvfq6icba foreign key (retail_store_id) references retail_stores;
 
 alter table if exists retail_stores
     add constraint FKkdt6slh5pnd3v9eykc5684yj2 foreign key (company_id) references companies;
