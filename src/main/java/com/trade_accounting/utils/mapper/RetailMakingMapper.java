@@ -10,12 +10,14 @@ import org.mapstruct.Mappings;
 public interface RetailMakingMapper {
     //RetailMaking
     @Mappings({
+            @Mapping(source = "date", target = "date"),
             @Mapping(source = "retailStore.id", target = "retailStoreId"),
             @Mapping(source = "company.id", target = "companyId")
     })
     RetailMakingDto toDto(RetailMaking retailMaking);
 
     @Mappings({
+            @Mapping(source = "date", target = "date"),
             @Mapping(source = "retailStoreId", target = "retailStore.id"),
             @Mapping(source = "companyId", target = "company.id")
     })

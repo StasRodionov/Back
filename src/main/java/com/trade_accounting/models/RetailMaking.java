@@ -31,7 +31,7 @@ public class RetailMaking {
 
     @NotNull
     @Column(name = "date")
-    private LocalDateTime time;
+    private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private RetailStore retailStore;
@@ -46,10 +46,10 @@ public class RetailMaking {
     private BigDecimal sum;
 
     @Column(name = "is_print")
-    private boolean isPrint;
+    private Boolean isPrint;
 
     @Column(name = "is_sent")
-    private boolean isSent;
+    private Boolean isSent;
 
     @Column(name = "comment")
     private String comment;
