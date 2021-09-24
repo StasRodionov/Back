@@ -719,6 +719,25 @@ create table requsts_productions
     primary key (id)
 );
 
+create table retail_shifts
+(
+    id                      bigserial    not null,
+    data_open               timestamp not null,
+    data_close              timestamp,
+    retail_store_id         int8 not null,
+    warehouse_id            int8 not null,
+    company_id              int8 not null,
+    bank                    varchar(255),
+    revenue_per_shift       numeric(19, 2),
+    received                numeric(19, 2),
+    amount_of_discounts     numeric(19, 2),
+    commission_amount       numeric(19, 2),
+    sent                    boolean,
+    printed                 boolean,
+    comment                 varchar(255),
+    primary key (id)
+);
+
 create table retail_stores
 (
     id                      bigserial    not null,
@@ -737,6 +756,20 @@ create table retail_stores_cashiers
 (
     retail_store_id int8 not null,
     cashiers_id     int8 not null
+);
+
+create table retail_makings
+(
+    id              bigserial not null,
+    comment         varchar(255),
+    date            timestamp,
+    sum             numeric(19, 2),
+    is_print        boolean default false,
+    is_sent         boolean default false,
+    from_whom       varchar(255),
+    company_id      int8,
+    retail_store_id int8,
+    primary key (id)
 );
 
 create table return_suppliers
@@ -1379,6 +1412,12 @@ alter table if exists remains
 alter table if exists retail_returns
     add constraint FKyukj31nmv79popvypjj712nxq foreign key (retail_store_id) references retail_stores;
 
+alter table if exists retail_makings
+    add constraint FKo54jncxuyghgh452xcvyyu399 foreign key (company_id) references companies;
+
+alter table if exists retail_makings
+    add constraint FKo54jncxuyghgh452xcvyyubb9 foreign key (retail_store_id) references retail_stores;
+
 alter table if exists requsts_productions
     add constraint FK1pxvfl8rgagtov03yhao6lvh2 foreign key (technical_card_id) references technical_cards;
 
@@ -1526,4 +1565,11 @@ alter table if exists buyers_return
 alter table if exists buyers_return
     add constraint FKyukj31nmv79yzxfdhds712nxq foreign key (warehouse_id) references warehouses;
 
+alter table if exists retail_shifts
+    add constraint FKe28ujSdsfsdfsdfdfewfwf329 foreign key (company_id) references companies;
 
+alter table if exists retail_shifts
+    add constraint FKe28udsgsdgeg4g24gwfwf329 foreign key (retail_store_id) references retail_stores;
+
+alter table if exists retail_shifts
+    add constraint FKe28ujSdsfsd32feefsevsd39 foreign key (warehouse_id) references warehouses;
