@@ -37,6 +37,9 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private TypeOfPayment typeOfPayment;
 
+    @Column(name = "type_of_document")
+    private String typeOfDocument;
+
     @Column(name = "payment_methods")
     @Enumerated(EnumType.STRING)
     private PaymentMethods paymentMethods;
@@ -69,5 +72,8 @@ public class Payment {
 
     @Column(name = "sum")
     private BigDecimal sum;
+
+    @Column(name = "is_conducted")
+    private Boolean isConducted;
 
 }
