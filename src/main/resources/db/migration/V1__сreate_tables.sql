@@ -758,6 +758,20 @@ create table retail_stores_cashiers
     cashiers_id     int8 not null
 );
 
+create table retail_makings
+(
+    id              bigserial not null,
+    comment         varchar(255),
+    date            timestamp,
+    sum             numeric(19, 2),
+    is_print        boolean default false,
+    is_sent         boolean default false,
+    from_whom       varchar(255),
+    company_id      int8,
+    retail_store_id int8,
+    primary key (id)
+);
+
 create table return_suppliers
 (
     id            int8    not null,
@@ -1397,6 +1411,12 @@ alter table if exists remains
 
 alter table if exists retail_returns
     add constraint FKyukj31nmv79popvypjj712nxq foreign key (retail_store_id) references retail_stores;
+
+alter table if exists retail_makings
+    add constraint FKo54jncxuyghgh452xcvyyu399 foreign key (company_id) references companies;
+
+alter table if exists retail_makings
+    add constraint FKo54jncxuyghgh452xcvyyubb9 foreign key (retail_store_id) references retail_stores;
 
 alter table if exists requsts_productions
     add constraint FK1pxvfl8rgagtov03yhao6lvh2 foreign key (technical_card_id) references technical_cards;
