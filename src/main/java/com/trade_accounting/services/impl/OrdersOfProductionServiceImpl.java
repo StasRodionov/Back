@@ -2,7 +2,9 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.OrdersOfProduction;
+import com.trade_accounting.models.TechnicalCard;
 import com.trade_accounting.models.dto.OrdersOfProductionDto;
+import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.OrdersOfProductionRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
@@ -13,6 +15,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,12 +49,12 @@ public class OrdersOfProductionServiceImpl implements OrdersOfProductionService 
 
     @Override
     public OrdersOfProductionDto create(OrdersOfProductionDto dto) {
-        return null;
+        return saveOrUpdate(dto);
     }
 
     @Override
     public OrdersOfProductionDto update(OrdersOfProductionDto dto) {
-        return null;
+        return saveOrUpdate(dto);
     }
 
     @Override
@@ -69,5 +73,30 @@ public class OrdersOfProductionServiceImpl implements OrdersOfProductionService 
                     .map(ordersOfProductionMapper::toDto)
                     .collect(Collectors.toList());
         }
+    }
+
+    private OrdersOfProductionDto saveOrUpdate(OrdersOfProductionDto dto) {
+
+        OrdersOfProduction ordersOfProduction = new OrdersOfProduction();
+
+        TechnicalCard technicalCard = technicalCardRepository.getTechnicalCardById(dto.getTechnicalCardId());
+        Company company = companyRepository.getCompaniesById(dto.getCompanyId());
+        LocalDateTime date = LocalDateTime.parse(dto.getDate().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        LocalDateTime PlannedProductionDate = LocalDateTime.parse(dto.getPlannedProductionDate().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+        ordersOfProduction.setTechnicalCard(technicalCard);
+        ordersOfProduction.setCompany(company);
+        ordersOfProduction.setDate(date);
+        ordersOfProduction.setPlannedProductionDate(PlannedProductionDate);
+
+        ordersOfProduction.setId(dto.getId());
+        ordersOfProduction.setComment(dto.getComment());
+        ordersOfProduction.setIsPrint(dto.getIsPrint());
+        ordersOfProduction.setIsSent(dto.getIsSent());
+        ordersOfProduction.setProduce(dto.getProduce());
+        ordersOfProduction.setVolume(dto.getVolume());
+
+        return ordersOfProductionMapper.toDto(ordersOfProductionRepository.save(ordersOfProduction));
+
     }
 }

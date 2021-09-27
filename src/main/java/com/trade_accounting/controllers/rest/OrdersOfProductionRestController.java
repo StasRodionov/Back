@@ -2,6 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 
 import com.trade_accounting.models.dto.OrdersOfProductionDto;
+import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import com.trade_accounting.repositories.OrdersOfProductionRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.OrdersOfProductionService;
@@ -23,6 +24,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,7 +57,7 @@ public class OrdersOfProductionRestController {
         return ResponseEntity.ok(ordersOfProduction);
     }
 
-    @ApiOperation(value = "getById", notes = "Возвращает определенную заказ на производство по Id")
+    @ApiOperation(value = "getById", notes = "Возвращает определенный заказ на производство по Id")
     @GetMapping("/{id}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "заказ на производство найден"),
@@ -65,6 +69,35 @@ public class OrdersOfProductionRestController {
             value = "ID переданный в URL по которому необходимо найти заказ на производство") @PathVariable(name = "id") Long id) {
         checkEntityService.checkExists((JpaRepository) ordersOfProductionRepository, id);
         return ResponseEntity.ok(ordersOfProductionService.getById(id));
+    }
+
+    @ApiOperation(value = "create", notes = "Создает заказ на производство на основе переданных данных")
+    @PostMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "заказ на производство успешно создан"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<OrdersOfProductionDto> create(@ApiParam(name = "ordersOfProductionDto", value = "DTO заказа на производство, которую необходимо создать")
+                                                         @RequestBody OrdersOfProductionDto ordersOfProductionDto) {
+        return ResponseEntity.ok().body(ordersOfProductionService.create(ordersOfProductionDto));
+    }
+
+    @ApiOperation(value = "update", notes = "Обновляет заказ на производство на основе переданных данных")
+    @PutMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Заказ на производство успешно обновлен"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные обновлены"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<OrdersOfProductionDto> update(@ApiParam(name = "ordersOfProductionDto",
+            value = "DTO заказа на производство, c обновленными данными")
+                                                         @RequestBody OrdersOfProductionDto ordersOfProductionDto) {
+        return ResponseEntity.ok().body(ordersOfProductionService.update(ordersOfProductionDto));
     }
 
     @ApiOperation(value = "deleteById", notes = "Удаляет заказ на производство на основе переданного ID")
@@ -100,7 +133,7 @@ public class OrdersOfProductionRestController {
     @ApiOperation(value = "search", notes = "Получение списка заказов на производство по заданным параметрам")
     @GetMapping("/search")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка технических карт по заданным параметрам"),
+            @ApiResponse(code = 200, message = "Успешное получение заказов на производство по заданным параметрам"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
