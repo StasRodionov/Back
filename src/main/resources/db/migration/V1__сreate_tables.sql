@@ -738,6 +738,20 @@ create table retail_shifts
     primary key (id)
 );
 
+create table retail_cloud_checks
+(
+    id                      bigserial    not null,
+    date                    timestamp not null,
+    initiator_id            int8 not null,
+    fiscalization_point_id  int8 not null,
+    status                  varchar(255),
+    check_status            varchar(255),
+    total                   numeric(19, 2),
+    currency_id             int8 not null,
+    cashier_id              int8 not null,
+    primary key (id)
+);
+
 create table retail_stores
 (
     id                      bigserial    not null,
@@ -1426,6 +1440,18 @@ alter table if exists requsts_productions
 
 alter table if exists retail_stores
     add constraint FKkdt6slh5pnd3v9eykc5684yj2 foreign key (company_id) references companies;
+
+alter table if exists retail_cloud_checks
+    add constraint FKkdt6unbv6ewpzx09wwrzkop33 foreign key (initiator_id) references retail_stores;
+
+alter table if exists retail_cloud_checks
+    add constraint FKkdt6unbv6ewpzx09wwrzkop34 foreign key (fiscalization_point_id) references retail_stores;
+
+alter table if exists retail_cloud_checks
+    add constraint FKkdt6unbv6ewpzx09wwrzkop35 foreign key (currency_id) references currency;
+
+alter table if exists retail_cloud_checks
+    add constraint FKkdt6unbv6ewpzx09wwrzkop36 foreign key (cashier_id) references employees;
 
 alter table if exists retail_stores_cashiers
     add constraint FKgtoaonklkp0gr76tdxv3uwqay foreign key (cashiers_id) references employees;
