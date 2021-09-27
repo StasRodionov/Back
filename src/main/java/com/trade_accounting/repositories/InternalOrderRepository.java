@@ -4,6 +4,6 @@ import com.trade_accounting.models.InternalOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface InternalOrderRepository extends JpaRepository<InternalOrder, Long>,
-        JpaSpecificationExecutor<InternalOrder> {
+public interface InternalOrderRepository extends JpaRepository<InternalOrder, Long>, JpaSpecificationExecutor<InternalOrder> {
+
 }

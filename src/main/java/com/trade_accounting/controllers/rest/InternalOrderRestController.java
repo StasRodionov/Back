@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.InternalOrder;
 import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.repositories.InternalOrderRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
@@ -11,6 +12,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -114,4 +120,19 @@ public class InternalOrderRestController {
 
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/searchByFilter")
+    @ApiOperation(value = "searchByFilter", notes = "Получение списка заказов по фильтру")
+    public ResponseEntity<List<InternalOrderDto>> getAllByFilter(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "date", params = "date", spec = Equal.class),
+                    @Spec(path = "comment", params = "comment", spec = Like.class),
+                    @Spec(path = "company.name", params = "company", spec = Like.class),
+                    @Spec(path = "warehouse.name", params = "warehouse", spec = Like.class),
+                    @Spec(path = "isSent", params = "sent", spec = Equal.class),
+                    @Spec(path = "isPrint", params = "print", spec = Equal.class),
+            })Specification<InternalOrder> spec) {
+                return ResponseEntity.ok(internalOrderService.search(spec));
+            }
 }

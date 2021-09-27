@@ -12,11 +12,13 @@ import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.InternalOrderService;
 import com.trade_accounting.utils.mapper.InternalOrderMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,5 +76,16 @@ public class InternalOrderServiceImpl implements InternalOrderService {
         internalOrder.setInternalOrderProducts(internalOrderProducts);
 
         return internalOrderMapper.toDto(internalOrderRepository.save(internalOrder));
+    }
+
+    @Override
+    public List<InternalOrderDto> search(Specification<InternalOrder> spec) {
+        List<InternalOrder> internalOrderList = internalOrderRepository.findAll(spec);
+
+        List<InternalOrderDto> internalOrderDtoList = new ArrayList<>();
+        for(InternalOrder io : internalOrderList) {
+            internalOrderDtoList.add(internalOrderMapper.toDto(io));
+        }
+        return internalOrderDtoList;
     }
 }
