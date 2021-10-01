@@ -1072,6 +1072,23 @@ create table buyers_return
     primary key (id)
 );
 
+create table prepayout
+(
+    id                      bigserial    not null,
+    date                    timestamp    not null,
+    retail_store_id         int8         not null,
+    contractor_id           int8         not null,
+    company_id              int8         not null,
+    cash                    numeric(19, 2),
+    cashless                numeric(19, 2),
+    discount                numeric(19, 2),
+    sum                     numeric(19, 2),
+    is_sent                 boolean      default false,
+    is_print                boolean      default false,
+    comment                 varchar(255),
+    primary key (id)
+);
+
 alter table if exists acceptances_acceptance_production
     add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);
 
@@ -1599,3 +1616,13 @@ alter table if exists retail_shifts
 
 alter table if exists retail_shifts
     add constraint FKe28ujSdsfsd32feefsevsd39 foreign key (warehouse_id) references warehouses;
+
+alter table if exists prepayout
+    add constraint FKe30udsgsdgeg4g24gwfwf329 foreign key (retail_store_id) references retail_stores;
+
+alter table if exists prepayout
+    add constraint FKe31ujSdsfsd32feefsevsd39 foreign key (contractor_id) references contractors;
+
+alter table if exists prepayout
+    add constraint FKe32ujSdsfsdfsdfdfewfwf329 foreign key (company_id) references companies;
+
