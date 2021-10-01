@@ -556,6 +556,21 @@ create table positions
     primary key (id)
 );
 
+create table prepayment_returns
+(
+    id                      bigserial    not null,
+    time                    varchar(255),
+    retail_store_id         int8         not null,
+    contractor_id           int8         not null,
+    company_id              int8         not null,
+    sum_cash                numeric(19, 2),
+    sum_non_cash            numeric(19, 2),
+    sent                    boolean default false,
+    printed                 boolean default false,
+    comment                 varchar(255),
+    primary key (id)
+);
+
 create table price_lists
 (
     id         bigserial                  not null,
@@ -1625,4 +1640,13 @@ alter table if exists prepayout
 
 alter table if exists prepayout
     add constraint FKe32ujSdsfsdfsdfdfewfwf329 foreign key (company_id) references companies;
+
+alter table if exists prepayment_returns
+    add constraint FKmik5755210kotbogjonkklin7 foreign key (retail_store_id) references retail_stores;
+
+alter table if exists prepayment_returns
+    add constraint FKmik5755210kotokljonkklin7 foreign key (contractor_id) references contractors;
+
+alter table if exists prepayment_returns
+    add constraint FKmik5755210tikbogjonkklin7 foreign key (company_id) references companies;
 
