@@ -123,10 +123,13 @@ public class PaymentRestController {
                     @Spec(path = "typeOfPayment", params = "typeOfPayment", spec = Equal.class),
                     @Spec(path = "company.name", params = "companyDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
-                    @Spec(path = "contract.name", params = "contractDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "contract.number", params = "contractDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "project.name", params = "projectDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "sum", params = "sum", spec = Equal.class),
-                    @Spec(path = "number", params = "number", spec = Like.class)
+                    @Spec(path = "number", params = "number", spec = Like.class),
+                    @Spec(path = "typeOfDocument", params = "typeOfDocument", spec = Equal.class),
+                    @Spec(path = "paymentMethods", params = "paymentMethods", spec = Equal.class),
+                    @Spec(path = "expenseItem", params = "expenseItem", spec = Equal.class)
             }) Specification<Payment> spec) {
         return ResponseEntity.ok(paymentService.filter(spec));
     }
