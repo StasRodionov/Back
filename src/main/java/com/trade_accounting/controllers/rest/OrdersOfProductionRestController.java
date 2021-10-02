@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 
+import com.trade_accounting.models.OrdersOfProduction;
 import com.trade_accounting.models.dto.OrdersOfProductionDto;
 import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import com.trade_accounting.repositories.OrdersOfProductionRepository;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -116,19 +118,24 @@ public class OrdersOfProductionRestController {
         return ResponseEntity.ok().build();
     }
 
-//    @GetMapping("searchOrdersOfProduction")
-//    @ApiOperation(value = "searchOrdersOfProduction", notes = "Получение списка заказ на производство по заданным параметрам")
-//    public ResponseEntity<List<OrdersOfProductionDto>> getAllFilter(
-//            @And({
-//                    @Spec(path = "id", params = "id", spec = Equal.class),
-//                    @Spec(path = "dateOperation", params = "dateOperation", spec = GreaterThanOrEqual.class),
-//                    @Spec(path = "technicalCard.name", params = "technicalCard", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "volume", params = "volume", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "warehouse.name", params = "warehouse", spec = LikeIgnoreCase.class),
-//
-//            }) Specification<OrdersOfProductionDto> spec) {
-//        return ResponseEntity.ok(ordersOfProductionService.search(spec));
-//    }
+    @GetMapping("searchOrdersOfProduction")
+    @ApiOperation(value = "searchOrdersOfProduction", notes = "Получение списков заказов на производство по заданным параметрам")
+    public ResponseEntity<List<OrdersOfProductionDto>> getAllFilter(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "date", params = "date", spec = GreaterThanOrEqual.class),
+                    @Spec(path = "companyId.name", params = "company", spec = Like.class),
+                    @Spec(path = "technicalCardId.name", params = "technicalCard", spec = Like.class),
+                    @Spec(path = "volume", params = "volume", spec = Equal.class),
+                    @Spec(path = "produce", params = "produce", spec = Equal.class),
+                    @Spec(path = "PlannedProductionDate", params = "PlannedProductionDate", spec = GreaterThanOrEqual.class),
+                    @Spec(path = "isSent", params = "sent", spec = Equal.class),
+                    @Spec(path = "isPrint", params = "print", spec = Equal.class),
+                    @Spec(path = "comment", params = "comment", spec = Equal.class)
+
+            }) Specification<OrdersOfProduction> spec) {
+        return ResponseEntity.ok(ordersOfProductionService.search(spec));
+    }
 
     @ApiOperation(value = "search", notes = "Получение списка заказов на производство по заданным параметрам")
     @GetMapping("/search")

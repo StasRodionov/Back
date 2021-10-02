@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -56,17 +57,17 @@ public class TechnicalOperationsRestController {
         return ResponseEntity.ok(technicalOperations);
     }
 
-//    @ApiOperation(value = "search", notes = "Получение списка технических операции по заданным параметрам")
-//    @GetMapping("/search")
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Успешное получение списка технических операции по заданным параметрам"),
-//            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
-//            @ApiResponse(code = 403, message = "Операция запрещена"),
-//            @ApiResponse(code = 404, message = "Данный контроллер не найден")
-//    })
-//    public ResponseEntity<List<TechnicalOperationsDto>> getAll(@RequestParam("query") String value) {
-//        return ResponseEntity.ok(technicalOperationsService.search(value));
-//    }
+    @ApiOperation(value = "search", notes = "Получение списка технических операции по заданным параметрам")
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка технических операции по заданным параметрам"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<TechnicalOperationsDto>> getAll(@RequestParam("query") String value) {
+        return ResponseEntity.ok(technicalOperationsService.search(value));
+    }
 
     @ApiOperation(value = "getById", notes = "Возвращает определенную техническую операцию по Id")
     @GetMapping("/{id}")
@@ -132,10 +133,13 @@ public class TechnicalOperationsRestController {
     public ResponseEntity<List<TechnicalOperationsDto>> getAllFilter(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
-                    @Spec(path = "dateOperation", params = "dateOperation", spec = GreaterThanOrEqual.class),
-                    @Spec(path = "technicalCard.name", params = "technicalCard", spec = LikeIgnoreCase.class),
-                    @Spec(path = "volume", params = "volume", spec = LikeIgnoreCase.class),
-                    @Spec(path = "warehouse.name", params = "warehouse", spec = LikeIgnoreCase.class),
+                    @Spec(path = "comment", params = "comment", spec = Equal.class),
+                    @Spec(path = "isPrint", params = "print", spec = Equal.class),
+                    @Spec(path = "isSent", params = "sent", spec = Equal.class),
+                    @Spec(path = "volume", params = "volume", spec = Equal.class),
+                    @Spec(path = "date", params = "date", spec = Equal.class),
+                    @Spec(path = "technicalCard.name", params = "technicalCard", spec = Like.class),
+                    @Spec(path = "warehouse.name", params = "warehouse", spec = Like.class)
 
             }) Specification<TechnicalOperations> spec) {
         return ResponseEntity.ok(technicalOperationsService.search(spec));

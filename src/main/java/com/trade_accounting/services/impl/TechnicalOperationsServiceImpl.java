@@ -1,8 +1,13 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.InternalOrder;
+import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.TechnicalCard;
 import com.trade_accounting.models.TechnicalOperations;
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.InternalOrderDto;
+import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import com.trade_accounting.repositories.TechnicalCardRepository;
 import com.trade_accounting.repositories.TechnicalOperationsRepository;
@@ -16,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,10 +35,10 @@ public class TechnicalOperationsServiceImpl implements TechnicalOperationsServic
     private final TechnicalCardRepository technicalCardRepository;
     private final WarehouseRepository warehouseRepository;
 
-    @Override
-    public List<TechnicalOperationsDto> search(Specification<TechnicalOperations> spec) {
-        return executeSearch(technicalOperationsRepository, technicalOperationsMapper::toDto,spec);
-    }
+//    @Override
+//    public List<TechnicalOperationsDto> search(Specification<TechnicalOperations> spec) {
+//        return executeSearch(technicalOperationsRepository, technicalOperationsMapper::toDto, spec);
+//    }
 
     @Override
     public List<TechnicalOperationsDto> getAll() {
@@ -62,18 +68,17 @@ public class TechnicalOperationsServiceImpl implements TechnicalOperationsServic
 
     }
 
-//    @Override
-//    public List<TechnicalOperationsDto> search(String searchTerm) {
-//        if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
-//            return technicalOperationsRepository.findAll().stream()
-//                    .map(technicalOperationsMapper::toDto)
-//                    .collect(Collectors.toList());
-//        } else {
-//            return technicalOperationsRepository.search(searchTerm).stream()
-//                    .map(technicalOperationsMapper::toDto)
-//                    .collect(Collectors.toList());
-//        }
-//    }
+    @Override
+    public List<TechnicalOperationsDto> search(String searchTerm) {
+        if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
+            List<TechnicalOperations> all = technicalOperationsRepository.findAll();
+            return all.stream().map(technicalOperationsMapper::toDto).collect(Collectors.toList());
+        } else {
+            List<TechnicalOperations> list = technicalOperationsRepository.search(searchTerm);
+            return list.stream().map(technicalOperationsMapper::toDto).collect(Collectors.toList());
+        }
+    }
+
 
     private TechnicalOperationsDto saveOrUpdate(TechnicalOperationsDto dto) {
         TechnicalOperations technicalOperations = new TechnicalOperations();
@@ -95,4 +100,14 @@ public class TechnicalOperationsServiceImpl implements TechnicalOperationsServic
         return technicalOperationsMapper.toDto(technicalOperationsRepository.save(technicalOperations));
     }
 
+    @Override
+    public List<TechnicalOperationsDto> search(Specification<TechnicalOperations> spec) {
+        List<TechnicalOperations> technicalOperationsList = technicalOperationsRepository.findAll(spec);
+
+        List<TechnicalOperationsDto> technicalOperationsDtoList = new ArrayList<>();
+        for(TechnicalOperations io : technicalOperationsList) {
+            technicalOperationsDtoList.add(technicalOperationsMapper.toDto(io));
+        }
+        return technicalOperationsDtoList;
+    }
 }
