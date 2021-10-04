@@ -14,7 +14,7 @@ import java.util.List;
 public interface OrdersOfProductionRepository extends JpaRepository<OrdersOfProduction, Long>, JpaSpecificationExecutor<OrdersOfProduction> {
 
     @Query("from OrdersOfProduction t" +
-            " where lower(concat(t.company, ' ', t.comment))" +
+            " where lower(concat(t.id, ' ', t.comment))" +
             " like lower(concat('%', :req, '%'))")
     List<OrdersOfProduction> search(@Param("req") String request);
 }

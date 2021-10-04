@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -26,4 +28,5 @@ public class TechnicalOperationsDto {
     private Long technicalCard;
 
     private Long warehouse;
+
 }

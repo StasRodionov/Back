@@ -49,4 +49,6 @@ public class TechnicalOperations {
 
     @OneToOne(fetch = FetchType.LAZY)
     private Warehouse warehouse;
+
+
 }

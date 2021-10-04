@@ -3,6 +3,7 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.OrdersOfProduction;
 import com.trade_accounting.models.TechnicalCard;
+import com.trade_accounting.models.TechnicalOperations;
 import com.trade_accounting.models.dto.OrdersOfProductionDto;
 import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import com.trade_accounting.repositories.CompanyRepository;
@@ -65,13 +66,11 @@ public class OrdersOfProductionServiceImpl implements OrdersOfProductionService 
     @Override
     public List<OrdersOfProductionDto> search(String searchTerm) {
         if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
-            return ordersOfProductionRepository.findAll().stream()
-                    .map(ordersOfProductionMapper::toDto)
-                    .collect(Collectors.toList());
+            List<OrdersOfProduction> all = ordersOfProductionRepository.findAll();
+            return all.stream().map(ordersOfProductionMapper::toDto).collect(Collectors.toList());
         } else {
-            return ordersOfProductionRepository.search(searchTerm).stream()
-                    .map(ordersOfProductionMapper::toDto)
-                    .collect(Collectors.toList());
+            List<OrdersOfProduction> list = ordersOfProductionRepository.search(searchTerm);
+            return list.stream().map(ordersOfProductionMapper::toDto).collect(Collectors.toList());
         }
     }
 
