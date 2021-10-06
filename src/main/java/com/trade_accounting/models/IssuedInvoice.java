@@ -48,10 +48,24 @@ public class IssuedInvoice {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Payment payment;
+
+    @Column(name = "is_send")
+    @ColumnDefault("false")
+    private Boolean isSend;
+
+    @Column(name = "is_print")
+    @ColumnDefault("false")
+    private Boolean isPrint;
+
     @Column(name = "is_Spend")
     @ColumnDefault("false")
     private Boolean isSpend;
 
     @Column(name = "comment")
     private String comment;
+
+
 }

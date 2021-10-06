@@ -1048,8 +1048,11 @@ create table issued_invoices
     comment         varchar(255),
     data            timestamp not null,
     is_spend        boolean default false,
+    is_send         boolean default false,
+    is_print        boolean default false,
     company_id      int8      not null,
     contractor_id   int8      not null,
+    payment_id      int8      not null,
     primary key (id)
 );
 
