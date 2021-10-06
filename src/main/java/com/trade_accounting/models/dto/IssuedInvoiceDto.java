@@ -21,7 +21,11 @@ public class IssuedInvoiceDto {
     private Long companyId;
     @NotNull
     private Long contractorId;
+    @NotNull
+    private Long paymentId;
     private Boolean isSpend;
+    private Boolean isSend;
+    private Boolean isPrint;
 
     public IssuedInvoiceDto(Long id,
                       LocalDateTime date,
