@@ -17,4 +17,6 @@ public interface InvoiceService extends AbstractService<InvoiceDto>, SearchableS
         return search((root, query, builder)
                 -> builder.equal(root.get("typeOfInvoice"), TypeOfInvoice.valueOf(typeOfInvoice)));
     }
+
+    List<InvoiceDto> getByContractorId(Long id);
 }

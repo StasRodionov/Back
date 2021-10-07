@@ -45,6 +45,11 @@ public class BuyersReturnServiceImpl implements BuyersReturnService {
     }
 
     @Override
+    public List<BuyersReturnDto> getByContractorId(Long id) {
+        return buyersReturnRepository.findByContractorId(id);
+    }
+
+    @Override
     public BuyersReturnDto getById(Long id) {
         Optional<BuyersReturn> buyersReturn = buyersReturnRepository.findById(id);
         return buyersReturnMapper.toDto(buyersReturn.orElse(new BuyersReturn()));

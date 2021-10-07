@@ -63,6 +63,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    public List<InvoiceDto> getByContractorId(Long id) {
+        return invoiceRepository.findByContractorId(id);
+    }
+
+    @Override
     public InvoiceDto getById(Long id) {
         Optional<Invoice> invoice = invoiceRepository.findById(id);
         return invoiceMapper.toDto(invoice.orElse(new Invoice()));

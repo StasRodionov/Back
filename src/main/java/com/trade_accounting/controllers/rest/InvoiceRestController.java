@@ -62,6 +62,18 @@ public class InvoiceRestController {
         return ResponseEntity.ok(invoiceDtoList);
     }
 
+    @GetMapping("/getByContractorId{id}")
+    @ApiOperation(value = "getByContractorId", notes = "Получение списка всех накладных по контрагенту")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка накладных"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<InvoiceDto>> getByContractorId(@PathVariable Long id) {
+        return ResponseEntity.ok(invoiceService.getByContractorId(id));
+    }
+
     @GetMapping("/search")
     @ApiOperation(value = "search", notes = "Получение списка счетов по заданным параметрам")
     public ResponseEntity<List<InvoiceDto>> getAll(
