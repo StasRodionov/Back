@@ -426,6 +426,22 @@ create table invoice_product
     primary key (id)
 );
 
+create table invoices_received
+(
+    id              bigserial not null,
+    comment         varchar(255),
+    data            timestamp not null,
+    incom_data      timestamp not null,
+    incom_number    bigserial not null,
+    is_spend        boolean default false,
+    is_send         boolean default false,
+    is_print        boolean default false,
+    company_id      int8      not null,
+    contractor_id   int8      not null,
+    acceptance_id      int8      not null,
+    primary key (id)
+);
+
 
 create table legal_details
 (
