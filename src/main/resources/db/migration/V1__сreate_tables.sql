@@ -1058,6 +1058,22 @@ create table retail_returns
     primary key (id)
 );
 
+create table revenue
+(
+    id                      bigserial    not null,
+    product_id              bigserial    not null,
+    unit_id                 bigserial    not null,
+    description             varchar(255),
+    item_number             int4,
+    amount_acceptance       numeric(19, 2) default 0 not null,
+    incoming_number_date    timestamp    not null,
+    amount_shipment         numeric(19, 2) default 0 not null,
+    acceptance_id           int8,
+    acceptance_production_id int8,
+    invoice_product_id      int8,
+    primary key (id)
+);
+
 create table issued_invoices
 (
     id              bigserial not null,
