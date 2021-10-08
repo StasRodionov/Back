@@ -36,9 +36,9 @@ public class InvoiceReceivedRestController {
     private final InvoiceReceivedRepository invoiceReceivedRepository;
 
     @GetMapping
-    @ApiOperation(value = "getAll", notes = "Получение списка всех накладных")
+    @ApiOperation(value = "getAll", notes = "Получение списка всех полученных счетов-фактур")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка накладных"),
+            @ApiResponse(code = 200, message = "Успешное получение списка полученных счетов-фактур"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
@@ -50,59 +50,59 @@ public class InvoiceReceivedRestController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "getById", notes = "Получение накладной по ее id")
+    @ApiOperation(value = "getById", notes = "Получение полученного счета-фактуры по его id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Накладная найдена"),
+            @ApiResponse(code = 200, message = "Полученный счет-фактура найдена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<InvoiceReceivedDto> getById(@ApiParam(name = "id", type = "Long",
-            value = "Переданный в URL id, по которому необходимо найти накладную")
+            value = "Переданный в URL id, по которому необходимо найти полученный счет-фактуру")
                                                     @PathVariable(name = "id") Long id) {
         checkEntityService.checkExists((JpaRepository) invoiceReceivedRepository, id);
         return ResponseEntity.ok(invoiceReceivedService.getById(id));
     }
 
     @PostMapping
-    @ApiOperation(value = "create", notes = "Добавление новой накладной")
+    @ApiOperation(value = "create", notes = "Добавление нового полученного счета-фактуры")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Накладная создана"),
-            @ApiResponse(code = 201, message = "Запрос принят и накладная добавлена"),
+            @ApiResponse(code = 200, message = "Полученный счет-фактура создан"),
+            @ApiResponse(code = 201, message = "Запрос принят и полученный счет-фактура добавлен"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<InvoiceReceivedDto> create(@ApiParam(name = "invoiceDto", value = "DTO накладной, которую необходимо создать")
+    public ResponseEntity<InvoiceReceivedDto> create(@ApiParam(name = "invoiceDto", value = "DTO полученного счета-фактуры, которую необходимо создать")
                                                    @RequestBody InvoiceReceivedDto invoiceReceivedDto) {
         return ResponseEntity.ok().body(invoiceReceivedService.create(invoiceReceivedDto));
     }
 
     @PutMapping
-    @ApiOperation(value = "update", notes = "Изменение информации о накладной")
+    @ApiOperation(value = "update", notes = "Изменение информации о полученном счете-фактуре")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Информация о накладной обновлена"),
-            @ApiResponse(code = 201, message = "Запрос принят и данные о накладной обновлены"),
+            @ApiResponse(code = 200, message = "Информация о полученном счета-фактуре обновлена"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные о полученном счете-фактуре обновлены"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> update(@ApiParam(name = "issuedInvoiceDto", value = "DTO накладной, которую необходимо обновить")
+    public ResponseEntity<?> update(@ApiParam(name = "issuedInvoiceDto", value = "DTO полученного счета-фактуры, которого необходимо обновить")
                                     @RequestBody InvoiceReceivedDto invoiceReceivedDto) {
         return ResponseEntity.ok().body(invoiceReceivedService.update(invoiceReceivedDto));
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "deleteById", notes = "Удаление накладной по ее id")
+    @ApiOperation(value = "deleteById", notes = "Удаление полученного счета-фактуры по его id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Накладная удален"),
+            @ApiResponse(code = 200, message = "Полученный счет-фактура удален"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<?> deleteById(@ApiParam(name = "id", type = "Long",
-            value = "Переданный в URL id по которому необходимо удалить накладную")
+            value = "Переданный в URL id по которому необходимо удалить полученный счет-фактуру")
                                         @PathVariable(name = "id") Long id) {
         invoiceReceivedService.deleteById(id);
         return ResponseEntity.ok().build();
