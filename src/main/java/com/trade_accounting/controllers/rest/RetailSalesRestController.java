@@ -1,6 +1,9 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.RetailSales;
+import com.trade_accounting.models.TechnicalOperations;
 import com.trade_accounting.models.dto.RetailSalesDto;
+import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import com.trade_accounting.repositories.RetailSalesRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.RetailSalesService;
@@ -10,6 +13,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -98,5 +107,39 @@ public class RetailSalesRestController {
     public ResponseEntity<RetailSalesDto> deleteById(@PathVariable("id") Long id) {
         retailSalesService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "search", notes = "Получение списка розничных продаж по заданным параметрам")
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка розничных продаж по заданным параметрам"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<RetailSalesDto>> getAll(@RequestParam("query") String value) {
+        return ResponseEntity.ok(retailSalesService.search(value));
+    }
+
+    @GetMapping("searchRetailSales")
+    @ApiOperation(value = "searchRetailSales", notes = "Получение списка розничных продаж по заданным параметрам")
+    public ResponseEntity<List<RetailSalesDto>> getAllFilter(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "date", params = "date", spec = Equal.class),
+                    @Spec(path = "retailStoreId.name", params = "retailStoreId", spec = Like.class),
+                    @Spec(path = "contractorId.name", params = "contractorId", spec = Like.class),
+                    @Spec(path = "companyId.name", params = "companyId", spec = Like.class),
+                    @Spec(path = "sumCash", params = "sumCash", spec = Equal.class),
+                    @Spec(path = "sumNonСash", params = "sumNonСash", spec = Equal.class),
+                    @Spec(path = "prepayment", params = "prepayment", spec = Equal.class),
+                    @Spec(path = "sumDiscount", params = "sumDiscount", spec = Equal.class),
+                    @Spec(path = "sum", params = "sum", spec = Equal.class),
+                    @Spec(path = "sent", params = "sent", spec = Equal.class),
+                    @Spec(path = "printed", params = "printed", spec = Equal.class),
+                    @Spec(path = "comment", params = "comment", spec = Equal.class),
+
+            }) Specification<RetailSales> spec) {
+        return ResponseEntity.ok(retailSalesService.search(spec));
     }
 }

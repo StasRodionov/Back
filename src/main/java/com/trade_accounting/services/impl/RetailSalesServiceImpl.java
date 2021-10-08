@@ -5,7 +5,9 @@ import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.RetailSales;
 import com.trade_accounting.models.RetailStore;
+import com.trade_accounting.models.TechnicalOperations;
 import com.trade_accounting.models.dto.RetailSalesDto;
+import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.RetailSalesRepository;
@@ -13,9 +15,11 @@ import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.services.interfaces.RetailSalesService;
 import com.trade_accounting.utils.mapper.RetailSalesMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,4 +72,28 @@ public class RetailSalesServiceImpl implements RetailSalesService {
     public void deleteById(Long id) {
         retailSalesRepository.deleteById(id);
     }
+
+    @Override
+    public List<RetailSalesDto> search(String searchTerm) {
+        if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
+            List<RetailSales> all = retailSalesRepository.findAll();
+            return all.stream().map(retailSalesMapper::toDto).collect(Collectors.toList());
+        } else {
+            List<RetailSales> list = retailSalesRepository.search(searchTerm);
+            return list.stream().map(retailSalesMapper::toDto).collect(Collectors.toList());
+
+        }
+    }
+
+    @Override
+    public List<RetailSalesDto> search(Specification<RetailSales> spec) {
+        List<RetailSales> retailSalesList = retailSalesRepository.findAll(spec);
+
+        List<RetailSalesDto> retailSalesDtoList = new ArrayList<>();
+        for(RetailSales io : retailSalesList) {
+            retailSalesDtoList.add(retailSalesMapper.toDto(io));
+        }
+        return retailSalesDtoList;
+    }
+
 }
