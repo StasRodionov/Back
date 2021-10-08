@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -116,5 +117,17 @@ public class RetailShiftRestController {
         retailShiftService.deleteById(id);
 
         return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "search", notes = "Получение списка смен по заданным параметрам")
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка смен по заданным параметрам"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<RetailShiftDto>> getAll(@RequestParam("query") String value) {
+        return ResponseEntity.ok(retailShiftService.search(value));
     }
 }
