@@ -16,29 +16,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-/**
- * Класс-модель накладной
- *
- * @param date         - дата составления накладной
- * @param typeOfInvoce - тип накладной
- * @param company      - наименование компании
- * @param contractor   - контрагент
- * @author ssplaksa
- */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "issued_invoices")
+@Table(name = "invoices_received")
 @Builder
-public class IssuedInvoice {
+public class InvoiceReceived {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
     @Column(name = "data")
-    private LocalDateTime date;
+    private LocalDateTime data;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,7 +42,15 @@ public class IssuedInvoice {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    private Payment payment;
+    private Acceptance acceptance;
+
+    @NotNull
+    @Column(name = "incom_number")
+    private Long incomNumber;
+
+    @NotNull
+    @Column(name = "incom_data")
+    private LocalDateTime incomData;
 
     @Column(name = "is_send")
     @ColumnDefault("false")
@@ -66,6 +66,5 @@ public class IssuedInvoice {
 
     @Column(name = "comment")
     private String comment;
-
 
 }

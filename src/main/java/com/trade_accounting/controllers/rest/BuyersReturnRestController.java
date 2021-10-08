@@ -1,7 +1,9 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.BuyersReturn;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.BuyersReturnDto;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.BuyersReturnRepository;
 import com.trade_accounting.services.interfaces.BuyersReturnService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -82,6 +85,18 @@ public class BuyersReturnRestController {
                                                @PathVariable(name = "id") Long id) {
         checkEntityService.checkExists((JpaRepository) buyersReturnRepository, id);
         return ResponseEntity.ok(buyersReturnService.getById(id));
+    }
+
+    @GetMapping("/searchByString")
+    @ApiOperation(value = "searchByString", notes = "Search of invoices")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка накладных"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<BuyersReturnDto>> search(@RequestParam("search") String search) {
+        return ResponseEntity.ok(buyersReturnService.findBySearch(search));
     }
 
     @GetMapping("/search")

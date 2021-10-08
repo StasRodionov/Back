@@ -5,9 +5,11 @@ import com.trade_accounting.models.InternalOrder;
 import com.trade_accounting.models.InternalOrderProduct;
 import com.trade_accounting.models.RetailShift;
 import com.trade_accounting.models.RetailStore;
+import com.trade_accounting.models.TechnicalOperations;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.models.dto.RetailShiftDto;
+import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.InternalOrderProductRepository;
 import com.trade_accounting.repositories.InternalOrderRepository;
@@ -18,11 +20,13 @@ import com.trade_accounting.services.interfaces.RetailShiftService;
 import com.trade_accounting.utils.mapper.InternalOrderMapper;
 import com.trade_accounting.utils.mapper.RetailShiftMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -80,4 +84,26 @@ public class RetailShiftServiceImpl implements RetailShiftService {
 
         return retailShiftMapper.toDto(retailShiftRepository.save(retailShift));
     }
+
+    @Override
+    public List<RetailShiftDto> search(String searchTerm){
+        if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
+            List<RetailShift> all = retailShiftRepository.findAll();
+            return all.stream().map(retailShiftMapper::toDto).collect(Collectors.toList());
+        } else {
+            List<RetailShift> list = retailShiftRepository.search(searchTerm);
+            return list.stream().map(retailShiftMapper::toDto).collect(Collectors.toList());
+        }
+    }
+
+//    @Override
+//    public List<RetailShiftDto> search(Specification<RetailShift> spec) {
+//        List<RetailShift> retailShiftList = retailShiftRepository.findAll(spec);
+//
+//        List<RetailShiftDto> retailShiftDtoList = new ArrayList<>();
+//        for(RetailShift io : retailShiftList) {
+//            retailShiftDtoList.add(retailShiftMapper.toDto(io));
+//        }
+//        return retailShiftDtoList;
+//    }
 }

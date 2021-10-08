@@ -426,6 +426,22 @@ create table invoice_product
     primary key (id)
 );
 
+create table invoices_received
+(
+    id              bigserial not null,
+    comment         varchar(255),
+    data            timestamp not null,
+    incom_data      timestamp not null,
+    incom_number    bigserial not null,
+    is_spend        boolean default false,
+    is_send         boolean default false,
+    is_print        boolean default false,
+    company_id      int8      not null,
+    contractor_id   int8      not null,
+    acceptance_id      int8      not null,
+    primary key (id)
+);
+
 
 create table legal_details
 (
@@ -1042,14 +1058,33 @@ create table retail_returns
     primary key (id)
 );
 
+create table revenue
+(
+    id                      bigserial    not null,
+    product_id              bigserial    not null,
+    unit_id                 bigserial    not null,
+    description             varchar(255),
+    item_number             int4,
+    amount_acceptance       numeric(19, 2) default 0 not null,
+    incoming_number_date    timestamp    not null,
+    amount_shipment         numeric(19, 2) default 0 not null,
+    acceptance_id           int8,
+    acceptance_production_id int8,
+    invoice_product_id      int8,
+    primary key (id)
+);
+
 create table issued_invoices
 (
     id              bigserial not null,
     comment         varchar(255),
     data            timestamp not null,
     is_spend        boolean default false,
+    is_send         boolean default false,
+    is_print        boolean default false,
     company_id      int8      not null,
     contractor_id   int8      not null,
+    payment_id      int8      not null,
     primary key (id)
 );
 
