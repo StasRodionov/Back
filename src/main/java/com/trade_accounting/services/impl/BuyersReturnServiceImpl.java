@@ -3,8 +3,10 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.BuyersReturn;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.BuyersReturnDto;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.BuyersReturnRepository;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
@@ -72,5 +74,11 @@ public class BuyersReturnServiceImpl implements BuyersReturnService {
     @Override
     public void deleteById(Long id) {
         buyersReturnRepository.deleteById(id);
+    }
+
+    @Override
+    public List<BuyersReturnDto> findBySearch(String text) {
+        List<BuyersReturnDto> buyersReturnDtoList = buyersReturnRepository.findBySearch(text);
+        return buyersReturnDtoList;
     }
 }
