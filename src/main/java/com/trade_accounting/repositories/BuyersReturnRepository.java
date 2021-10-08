@@ -23,4 +23,19 @@ public interface BuyersReturnRepository extends JpaRepository<BuyersReturn, Long
             "e.isPrint," +
             "e.comment) from BuyersReturn e where e.contractor.id = :id")
     List<BuyersReturnDto> findByContractorId(Long id);
+
+    @Query("select new com.trade_accounting.models.dto.BuyersReturnDto(" +
+            "e.id," +
+            "e.date," +
+            "e.warehouse.id," +
+            "e.contractor.id," +
+            "e.company.id," +
+            "e.sum," +
+            "e.isSent," +
+            "e.isPrint," +
+            "e.comment) from BuyersReturn e where lower(concat(e.id, e.comment, e.warehouse.name, e.company.name, e.contractor.name)) " +
+            "like concat('%', :search, '%')")
+    List<BuyersReturnDto> findBySearch(@Param("search") String search);
+
+
 }
