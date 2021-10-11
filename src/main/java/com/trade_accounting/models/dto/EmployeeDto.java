@@ -35,13 +35,13 @@ public class EmployeeDto {
 
     private String password;
 
-    private DepartmentDto departmentDto;
+    private Long departmentDtoId;
 
-    private PositionDto positionDto;
+    private Long positionDtoId;
 
-    private Set<RoleDto> roleDto;
+    private Set<Long> roleDtoIds;
 
-    private ImageDto imageDto;
+    private Long imageDtoId;
 
     public EmployeeDto(Long id,
                        String lastName,

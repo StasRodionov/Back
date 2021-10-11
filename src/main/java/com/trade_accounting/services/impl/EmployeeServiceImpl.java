@@ -1,7 +1,16 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Image;
+import com.trade_accounting.models.InternalOrder;
+import com.trade_accounting.models.InternalOrderProduct;
+import com.trade_accounting.models.Position;
+import com.trade_accounting.models.Role;
+import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.EmployeeDto;
+import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
@@ -20,8 +29,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,15 +80,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {
-        Employee employeeSaved = employeeRepository.save(employeeMapper.toModel(employeeDto));
-        employeeDto.setId(employeeSaved.getId());
-        return employeeDto;
+        return saveOrUpdate(employeeDto);
     }
 
     @Override
     public EmployeeDto update(EmployeeDto employeeDto) {
-        employeeRepository.save(employeeMapper.toModel(employeeDto));
-        return employeeDto;
+        return saveOrUpdate(employeeDto);
+    }
+
+    private EmployeeDto saveOrUpdate(EmployeeDto employeeDto) {
+        Employee employee = employeeMapper.toModel(employeeDto);
+
+        Department department = departmentRepository.getDepartmentById(employeeDto.getDepartmentDtoId());
+        Position position = positionRepository.getPositionById(employeeDto.getPositionDtoId());
+        Image image = imageRepository.getImageById(employeeDto.getImageDtoId());
+
+        Set<Role> roles = employeeDto.getRoleDtoIds().stream()
+                .map(roleRepository::getRoleById)
+                .collect(Collectors.toSet());
+
+        employee.setDepartment(department);
+        employee.setPosition(position);
+        employee.setImage(image);
+        employee.setRoles(roles);
+
+        return employeeMapper.toDto(employeeRepository.save(employee));
     }
 
 
