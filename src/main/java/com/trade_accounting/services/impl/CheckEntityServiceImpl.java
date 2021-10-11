@@ -10,6 +10,7 @@ import com.trade_accounting.models.dto.PositionDto;
 import com.trade_accounting.models.dto.RoleDto;
 import com.trade_accounting.repositories.BankAccountRepository;
 import com.trade_accounting.repositories.DepartmentRepository;
+import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.LegalDetailRepository;
 import com.trade_accounting.repositories.PositionRepository;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Entity;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -34,12 +36,15 @@ public class CheckEntityServiceImpl implements CheckEntityService {
     private final LegalDetailRepository legalDetailRepository;
     private final BankAccountRepository bankAccountRepository;
 
+
     @Override
     public void checkForBadEmployee(EmployeeDto employee) {
-        DepartmentDto department = employee.getDepartmentDto();
-        PositionDto position = employee.getPositionDto();
-        ImageDto image = employee.getImageDto();
-        Set<RoleDto> roles = employee.getRoleDto();
+        DepartmentDto department = departmentRepository.getById(employee.getDepartmentDtoId());
+        PositionDto position = positionRepository.getById(employee.getPositionDtoId());
+        ImageDto image = imageRepository.getById(employee.getImageDtoId());
+        Set<RoleDto> roles = employee.getRoleDtoIds().stream()
+                                     .map(roleRepository::getById)
+                                     .collect(Collectors.toSet());
 
         boolean isDepartmentFilled = department != null && department.getId() != null;
         boolean isPositionFilled = position != null && position.getId() != null;

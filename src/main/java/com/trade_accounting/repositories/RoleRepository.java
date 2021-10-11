@@ -1,8 +1,10 @@
 package com.trade_accounting.repositories;
 
+import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.dto.RoleDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -12,7 +14,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Image> {
 
     @Query("select new com.trade_accounting.models.dto.RoleDto(" +
             "r.id, " +
@@ -37,4 +39,6 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     Set<Role> getRolesByEmployeeId(@Param("id") Long id);
 
     Optional<Role> findByName(String name);
+
+    Role getRoleById(Long id);
 }
