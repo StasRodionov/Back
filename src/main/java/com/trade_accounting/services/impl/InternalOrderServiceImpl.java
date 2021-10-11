@@ -40,6 +40,17 @@ public class InternalOrderServiceImpl implements InternalOrderService {
     }
 
     @Override
+    public List<InternalOrderDto> getAll(String searchItem) {
+        if ("null".equals(searchItem) || searchItem.isEmpty()) {
+            List<InternalOrder> all = internalOrderRepository.findAll();
+            return all.stream().map(internalOrderMapper::toDto).collect(Collectors.toList());
+        } else {
+            List<InternalOrder> list = internalOrderRepository.search(searchItem);
+            return list.stream().map(internalOrderMapper::toDto).collect(Collectors.toList());
+        }
+    }
+
+    @Override
     public InternalOrderDto getById(Long id) {
         return internalOrderMapper.toDto(internalOrderRepository.getOne(id));
     }

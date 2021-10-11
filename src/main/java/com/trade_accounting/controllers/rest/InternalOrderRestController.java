@@ -135,4 +135,19 @@ public class InternalOrderRestController {
             })Specification<InternalOrder> spec) {
                 return ResponseEntity.ok(internalOrderService.search(spec));
             }
+
+    @GetMapping("/search/{searchItem}")
+    @ApiOperation(value = "searchItem", notes = "Получение списка некоторых внутренних заказов")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение отф. списка заказов"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<InternalOrderDto>> getAll(@ApiParam(name = "searchItem",
+            value = "Переданный в URL searchTerm, по которому необходимо найти заказ")
+                                                      @PathVariable(name = "searchItem") String searchItem) {
+        List<InternalOrderDto> internalOrderDtoList = internalOrderService.getAll(searchItem);
+        return ResponseEntity.ok(internalOrderDtoList);
+    }
 }
