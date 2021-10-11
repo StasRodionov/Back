@@ -60,6 +60,18 @@ public class BuyersReturnRestController {
         return ResponseEntity.ok(buyersReturnDtoList);
     }
 
+    @GetMapping("/getByContractorId{id}")
+    @ApiOperation(value = "getByContractorId", notes = "Получение списка всех возвратов по контрагенту")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка возвратов"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<BuyersReturnDto>> getByContractorId(@PathVariable Long id) {
+        return ResponseEntity.ok(buyersReturnService.getByContractorId(id));
+    }
+
     @GetMapping("/{id}")
     @ApiOperation(value = "getById", notes = "Получение возврата по его id")
     @ApiResponses(value = {
