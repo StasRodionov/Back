@@ -45,7 +45,7 @@ public class AccessParametersServiceImpl implements AccessParametersService {
     public AccessParametersDto create(AccessParametersDto dto) {
         return accessParametersMapper.toDto(accessParametersRepository
                 .save(AccessParameters.builder().id(dto.getId()).generalAccess(dto.getGeneralAccess())
-                        .employee(employeeMapper.toModel(employeeRepository.getById(dto.getEmployeeId())))
+                        .employee(employeeRepository.getOne(dto.getEmployeeId()))
                         .department(departmentMapper.toModel(departmentRepository.getById(dto.getDepartmentId()))).build()));
     }
 

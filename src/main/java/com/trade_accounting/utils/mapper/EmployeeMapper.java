@@ -15,23 +15,6 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface EmployeeMapper {
-    // Employee
-//    @Mappings({
-//            @Mapping(source = "department", target = "departmentDto"),
-//            @Mapping(source = "position", target = "positionDto"),
-//            @Mapping(source = "roles", target = "roleDto"),
-//            @Mapping(source = "image", target = "imageDto")
-//    })
-//    EmployeeDto toDto(Employee emp);
-
-//    @Mappings({
-//            @Mapping(source = "departmentDto", target = "department"),
-//            @Mapping(source = "positionDto", target = "position"),
-//            @Mapping(source = "roleDto", target = "roles"),
-//            @Mapping(source = "imageDto", target = "image"),
-//            @Mapping(target = "authorities", ignore = true)
-//    })
-//    Employee toModel(EmployeeDto emp);
 
     default Employee toModel(EmployeeDto employeeDto) {
         if (employeeDto == null) {
@@ -77,19 +60,19 @@ public interface EmployeeMapper {
         );
 
         if (employee.getDepartment() == null) {
-            return null;
+            employeeDto.setDepartmentDtoId(null); //можно реализовать отдел по умолчанию и присваивать его
         } else {
             employeeDto.setDepartmentDtoId(employee.getDepartment().getId());
         }
 
         if (employee.getPosition() == null) {
-            return null;
+            employeeDto.setPositionDtoId(null); //можно реализовать должность по умолчанию и присваивать её
         } else {
             employeeDto.setPositionDtoId(employee.getPosition().getId());
         }
 
         if (employee.getImage() == null) {
-            return null;
+            employeeDto.setImageDtoId(null); //можно реализовать изображение сотрудника по умолчанию и присваивать его
         } else {
             employeeDto.setImageDtoId(employee.getImage().getId());
         }
