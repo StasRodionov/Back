@@ -1,16 +1,11 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Department;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
-import com.trade_accounting.models.InternalOrder;
-import com.trade_accounting.models.InternalOrderProduct;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Role;
-import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.repositories.DepartmentRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
@@ -29,8 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

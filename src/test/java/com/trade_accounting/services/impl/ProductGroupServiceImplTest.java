@@ -10,8 +10,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -108,7 +111,12 @@ class ProductGroupServiceImplTest {
                 String.valueOf(id).repeat(12),
                 "Description",
                 "email@email.com",
-                "password");
+                "password",
+                1L,
+                1L,
+                Set.of(1L),
+                1L
+                );
     }
 
     ProductGroupDto getProductGroupDto(Long id) {

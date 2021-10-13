@@ -16,47 +16,6 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
 
-    @Query("select new com.trade_accounting.models.dto.EmployeeDto(" +
-            "em.id, " +
-            "em.lastName, " +
-            "em.firstName, " +
-            "em.middleName, " +
-            "em.sortNumber, " +
-            "em.phone, " +
-            "em.inn, " +
-            "em.description, " +
-            "em.email," +
-            "em.password) from Employee em")
-    List<EmployeeDto> getAll();
-
-    @Query("select new com.trade_accounting.models.dto.EmployeeDto(" +
-            "em.id, " +
-            "em.lastName, " +
-            "em.firstName, " +
-            "em.middleName, " +
-            "em.sortNumber, " +
-            "em.phone, " +
-            "em.inn, " +
-            "em.description, " +
-            "em.email," +
-            "em.password) from Employee em " +
-            "where em.id = :id")
-    EmployeeDto getById(@Param("id") Long id);
-
-    @Query("select new com.trade_accounting.models.dto.EmployeeDto(" +
-            "em.id, " +
-            "em.lastName, " +
-            "em.firstName, " +
-            "em.middleName, " +
-            "em.sortNumber, " +
-            "em.phone, " +
-            "em.inn, " +
-            "em.description, " +
-            "em.email," +
-            "em.password) from Employee em " +
-            "where em.email = :email")
-    EmployeeDto getByEmail(@Param("email") String email);
-
     Optional<Employee> findByEmail(String email);
 
     @Query("from Employee e " +
