@@ -105,9 +105,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteById(Long id) {
         Optional<Employee> employee = employeeRepository.findById(id);
-        if (employee.isPresent() && employee.get().getImage() != null) {
+        if (employee.isPresent() && !employee.get().getImage().getImageUrl().equals("src/main/resources/file/employee_image.png")) {
             Files.deleteIfExists(Paths.get(employee.get().getImage().getImageUrl()));
         }
+        employee.get().setImage(null);
         employeeRepository.deleteById(id);
     }
 
