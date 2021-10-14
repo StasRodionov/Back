@@ -194,4 +194,10 @@ public class EmployeeRestController {
         EmployeeDto employeeDto = employeeService.getByEmail(email);
         return ResponseEntity.ok(employeeDto);
     }
+
+    @GetMapping("/searchByString")
+    @ApiOperation(value = "search", notes = "Получение списка работников по заданным параметрам")
+    public ResponseEntity<List<EmployeeDto>> searchByString(@RequestParam("search") String search) {
+        return ResponseEntity.ok(employeeService.searchByString(search));
+    }
 }

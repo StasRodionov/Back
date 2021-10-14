@@ -5,6 +5,7 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.dto.BuyersReturnDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.repositories.DepartmentRepository;
@@ -119,5 +120,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             return new EmployeeDto();
         }
         return employeeMapper.toDto(employee.get());
+    }
+
+    @Override
+    public List<EmployeeDto> searchByString(String text) {
+        return employeeRepository.getBySearch(text).stream()
+                .map(employeeMapper::toDto)
+                .collect(Collectors.toList());
+
     }
 }
