@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -99,5 +101,11 @@ public class WarehouseRestController {
     public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
         warehouseService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/searchByString")
+    @ApiOperation(value = "search", notes = "Получение списка работников по заданным параметрам")
+    public ResponseEntity<List<WarehouseDto>> searchByString(@RequestParam("search") String search) {
+        return ResponseEntity.ok(warehouseService.searchByString(search));
     }
 }

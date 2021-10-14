@@ -1,6 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.WarehouseService;
@@ -61,5 +62,13 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Override
     public void deleteById(Long id) {
         warehouseRepository.deleteById(id);
+    }
+
+    @Override
+    public List<WarehouseDto> searchByString(String text) {
+        return warehouseRepository.getBySearch(text).stream()
+                .map(warehouseMapper::toDto)
+                .collect(Collectors.toList());
+
     }
 }
