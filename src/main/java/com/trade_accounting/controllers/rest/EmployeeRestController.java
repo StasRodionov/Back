@@ -71,7 +71,8 @@ public class EmployeeRestController {
                     @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
                     @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
                     @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
-                    @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "department.name", params = "department", spec = LikeIgnoreCase.class),
+                    @Spec(path = "position.name", params = "position", spec = LikeIgnoreCase.class),
                     @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
             }) Specification<Employee> specification) {
 
