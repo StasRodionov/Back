@@ -114,7 +114,7 @@ public class WarehouseRestController {
     }
 
     @GetMapping("/search")
-    @ApiOperation(value = "search", notes = "Получение списка работников по заданным параметрам")
+    @ApiOperation(value = "search", notes = "Получение списка складов по заданным параметрам")
     public ResponseEntity<List<WarehouseDto>> getAll(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
