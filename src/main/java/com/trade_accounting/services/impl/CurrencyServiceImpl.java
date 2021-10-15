@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -54,5 +55,13 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public void deleteById(Long id) {
         currencyRepository.deleteById(id);
+    }
+
+    @Override
+    public List<CurrencyDto> searchByString(String text) {
+        return currencyRepository.getBySearch(text).stream()
+                .map(currencyMapper::toDto)
+                .collect(Collectors.toList());
+
     }
 }
