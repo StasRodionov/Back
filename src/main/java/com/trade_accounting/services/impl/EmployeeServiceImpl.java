@@ -5,6 +5,7 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.dto.BuyersReturnDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.repositories.DepartmentRepository;
@@ -105,9 +106,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteById(Long id) {
         Optional<Employee> employee = employeeRepository.findById(id);
-        if (employee.isPresent() && employee.get().getImage() != null) {
+        if (employee.isPresent() && !employee.get().getImage().getImageUrl().equals("src/main/resources/file/employee_image.png")) {
             Files.deleteIfExists(Paths.get(employee.get().getImage().getImageUrl()));
         }
+        employee.get().setImage(null);
         employeeRepository.deleteById(id);
     }
 
@@ -118,5 +120,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             return new EmployeeDto();
         }
         return employeeMapper.toDto(employee.get());
+    }
+
+    @Override
+    public List<EmployeeDto> searchByString(String text) {
+        return employeeRepository.getBySearch(text).stream()
+                .map(employeeMapper::toDto)
+                .collect(Collectors.toList());
+
     }
 }
