@@ -1,13 +1,13 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Warehouse;
-import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.WarehouseDto;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.WarehouseService;
 import com.trade_accounting.utils.SortNumberConverter;
 import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,5 +70,10 @@ public class WarehouseServiceImpl implements WarehouseService {
                 .map(warehouseMapper::toDto)
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<WarehouseDto> search(Specification<Warehouse> specification) {
+        return executeSearch(warehouseRepository, warehouseMapper::toDto, specification);
     }
 }
