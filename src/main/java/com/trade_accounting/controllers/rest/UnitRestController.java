@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Unit;
 import com.trade_accounting.models.dto.UnitDto;
 import com.trade_accounting.repositories.UnitRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
@@ -11,6 +12,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -91,7 +97,6 @@ public class UnitRestController {
     public ResponseEntity<?> update(@ApiParam(
             name = "unitDto",
             value = "DTO единицы измерения, которую необходимо обновить") @RequestBody UnitDto unitDto) {
-        checkEntityService.checkExists((JpaRepository) unitRepository, unitDto.getId());
         return ResponseEntity.ok().body(unitService.update(unitDto));
     }
 
@@ -112,4 +117,16 @@ public class UnitRestController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/search")
+    @ApiOperation(value = "search", notes = "Получение списка единиц измерения по заданным параметрам")
+    public ResponseEntity<List<UnitDto>> getAll(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "shortName", params = "shortName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "fullName", params = "fullName", spec = LikeIgnoreCase.class),
+                    @Spec(path = "sortNumber", params = "sortNumber", spec = LikeIgnoreCase.class)
+            }) Specification<Unit> specification) {
+
+        return ResponseEntity.ok(unitService.search(specification));
+    }
 }

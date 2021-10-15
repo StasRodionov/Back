@@ -1,8 +1,10 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.Unit;
+import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.UnitDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UnitRepository extends JpaRepository<Unit, Long> {
+public interface UnitRepository extends JpaRepository<Unit, Long>, JpaSpecificationExecutor<Unit> {
 
     @Query("select new com.trade_accounting.models.dto.UnitDto(e.id, e.shortName, e.fullName, e.sortNumber) from Unit e")
     List<UnitDto> getAll();

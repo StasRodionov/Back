@@ -7,6 +7,7 @@ import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.utils.SortNumberConverter;
 import com.trade_accounting.utils.mapper.UnitMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,5 +58,10 @@ public class UnitServiceImpl implements UnitService {
     @Override
     public void deleteById(Long id) {
         unitRepository.deleteById(id);
+    }
+
+    @Override
+    public List<UnitDto> search(Specification<Unit> spec) {
+        return executeSearch(unitRepository, unitMapper::toDto, spec);
     }
 }
