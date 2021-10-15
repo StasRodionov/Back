@@ -1,7 +1,6 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.Unit;
-import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.UnitDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -22,4 +21,10 @@ public interface UnitRepository extends JpaRepository<Unit, Long>, JpaSpecificat
 
     @Query("select new com.trade_accounting.models.dto.UnitDto(p.unit.id, p.unit.shortName, p.unit.fullName, p.unit.sortNumber) from Product p where p.id = :id")
     UnitDto getUnitByProductId(@Param("id") Long id);
+
+    @Query("from Unit u " +
+            "where lower ( concat(u.id, ' ', u.shortName, ' ', u.fullName, ' ', u.sortNumber)) " +
+            "like lower(concat('%', :symbols, '%'))")
+    List<Unit> getBySearch(@Param("symbols") String search);
 }
+

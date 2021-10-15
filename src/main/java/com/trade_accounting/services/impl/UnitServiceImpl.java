@@ -64,4 +64,12 @@ public class UnitServiceImpl implements UnitService {
     public List<UnitDto> search(Specification<Unit> spec) {
         return executeSearch(unitRepository, unitMapper::toDto, spec);
     }
+
+    @Override
+    public List<UnitDto> searchByString(String text) {
+        return unitRepository.getBySearch(text).stream()
+                .map(unitMapper::toDto)
+                .collect(Collectors.toList());
+
+    }
 }
