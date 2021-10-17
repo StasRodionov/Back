@@ -43,7 +43,33 @@ public interface ProductMapper {
             productDto.setArchive(product.getArchive());
             productDto.setService(product.getService());
             productDto.setPurchasePrice(product.getPurchasePrice());
-            return productDto;
+            if (product.getUnit()==null){
+                return null;
+            } else {
+                productDto.setUnitId(product.getUnit().getId());
+                if (product.getContractor()==null){
+                    return null;
+                } else {
+                    productDto.setContractorId(product.getContractor().getId());
+                    if (product.getProductGroup()==null){
+                        return null;
+                    } else {
+                        productDto.setProductGroupId(product.getProductGroup().getId());
+                        if (product.getAttributeOfCalculationObject()==null) {
+                            return null;
+                        }else {
+                            productDto.setAttributeOfCalculationObjectId(product.getAttributeOfCalculationObject().getId());
+                            if (product.getTaxSystem()==null){
+                                return null;
+                            }else {
+                                productDto.setTaxSystemId(product.getTaxSystem().getId());
+                                return productDto;
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     }
 
