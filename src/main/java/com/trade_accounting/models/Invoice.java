@@ -57,4 +57,8 @@ public class Invoice {
 
     @Column(name = "comment")
     private String comment;
+
+    @OneToOne
+    @ColumnDefault("1")
+    private InvoiceStatus invoiceStatus;
 }
