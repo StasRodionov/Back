@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/trade_accounting
     username: postgres
-    password: F7atx538Ilsur
+    password: 887936
     initialization-mode: always
 
   mail:
