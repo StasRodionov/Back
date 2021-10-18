@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "invoices_status")
-public class InvoiceStatus {
+public class InvoicesStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

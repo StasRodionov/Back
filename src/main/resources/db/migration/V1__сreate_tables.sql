@@ -413,7 +413,7 @@ create table invoice
     company_id      int8      not null,
     contractor_id   int8      not null,
     warehouse_id    int8      not null,
-    invoice_status  int8      default 1,
+    invoices_status_id  int8      default 1,
     primary key (id)
 );
 
@@ -1147,8 +1147,8 @@ create table invoices_status
     PRIMARY KEY (id)
 );
 
-ALTER TABLE invoice
-    ADD CONSTRAINT FK_INVOICE_ON_INVOICESTATUS FOREIGN KEY (invoice_status_id) REFERENCES invoices_status (id);
+ALTER TABLE if exists invoice
+    ADD CONSTRAINT FK_INVOICE_ON_INVOICESTATUS FOREIGN KEY (invoices_status_id) REFERENCES invoices_status;
 
 alter table if exists acceptances_acceptance_production
     add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);

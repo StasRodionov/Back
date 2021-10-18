@@ -1,12 +1,19 @@
 package com.trade_accounting.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -20,8 +27,6 @@ import java.time.LocalDateTime;
  * @author Sanych
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "invoice")
 @Builder
@@ -41,14 +46,17 @@ public class Invoice {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Company company;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Contractor contractor;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Warehouse warehouse;
 
     @Column(name = "is_Spend")
@@ -60,5 +68,20 @@ public class Invoice {
 
     @OneToOne
     @ColumnDefault("1")
-    private InvoiceStatus invoiceStatus;
+    private InvoicesStatus invoicesStatus;
+
+    public Invoice(Long id, @NotNull LocalDateTime date, @NotNull TypeOfInvoice typeOfInvoice, @NotNull Company company, @NotNull Contractor contractor, @NotNull Warehouse warehouse, Boolean isSpend, String comment, InvoicesStatus invoiceStatus) {
+        this.id = id;
+        this.date = date;
+        this.typeOfInvoice = typeOfInvoice;
+        this.company = company;
+        this.contractor = contractor;
+        this.warehouse = warehouse;
+        this.isSpend = isSpend;
+        this.comment = comment;
+        this.invoicesStatus = invoicesStatus;
+    }
+
+    public Invoice() {
+    }
 }

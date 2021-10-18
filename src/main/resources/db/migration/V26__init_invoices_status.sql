@@ -1,4 +1,4 @@
-INSERT INTO invoices_status (id, invoices_status)
+INSERT INTO invoices_status (id, status_name)
 VALUES (1,'Новый'),
        (2,'Подтвержден'),
        (3,'Собран'),
