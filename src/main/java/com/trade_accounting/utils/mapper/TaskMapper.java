@@ -69,7 +69,12 @@ public interface TaskMapper {
                         return null;
                     } else {
                         taskDto.setTaskCommentsIds(task.getTaskComments().stream().map(TaskComment::getId).collect(Collectors.toList()));
-                        return taskDto;
+                        if(task.getTaskContractor() == null) {
+                            return null;
+                        } else {
+                            taskDto.setContractorId(task.getTaskContractor().getId());
+                            return taskDto;
+                        }
                     }
                 }
             }

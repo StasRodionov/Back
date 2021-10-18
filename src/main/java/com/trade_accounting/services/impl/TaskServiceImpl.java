@@ -1,13 +1,14 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.TaskDto;
+import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.TaskCommentRepository;
 import com.trade_accounting.repositories.TaskRepository;
-import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.TaskService;
 import com.trade_accounting.utils.mapper.TaskMapper;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
+    private final ContractorRepository contractorRepository;
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
     private final TaskCommentRepository commentRepository;
@@ -57,6 +59,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto create(TaskDto dto) {
 
         Task task = taskMapper.taskDtoToTask(dto);
+        Contractor taskContractor = contractorRepository.getOne(dto.getContractorId());
         Employee taskEmployee = employeeRepository.getOne(dto.getEmployeeId());
         Employee taskAuthor = employeeRepository.getOne(dto.getTaskAuthorId());
         LocalDateTime creationDateTime = LocalDateTime.parse(dto.getCreationDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -64,6 +67,7 @@ public class TaskServiceImpl implements TaskService {
         List<TaskComment> taskComments = dto.getTaskCommentsIds().stream()
                 .map(id -> commentRepository.findById(id).orElse(null)).collect(Collectors.toList());
 
+        task.setTaskContractor(taskContractor);
         task.setTaskEmployee(taskEmployee);
         task.setTaskAuthor(taskAuthor);
         task.setCreationDateTime(creationDateTime);
