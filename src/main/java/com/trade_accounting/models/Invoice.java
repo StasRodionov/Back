@@ -1,7 +1,9 @@
 package com.trade_accounting.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -27,6 +29,8 @@ import java.time.LocalDateTime;
  * @author Sanych
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "invoice")
 @Builder
@@ -69,19 +73,4 @@ public class Invoice {
     @OneToOne
     @ColumnDefault("1")
     private InvoicesStatus invoicesStatus;
-
-    public Invoice(Long id, @NotNull LocalDateTime date, @NotNull TypeOfInvoice typeOfInvoice, @NotNull Company company, @NotNull Contractor contractor, @NotNull Warehouse warehouse, Boolean isSpend, String comment, InvoicesStatus invoiceStatus) {
-        this.id = id;
-        this.date = date;
-        this.typeOfInvoice = typeOfInvoice;
-        this.company = company;
-        this.contractor = contractor;
-        this.warehouse = warehouse;
-        this.isSpend = isSpend;
-        this.comment = comment;
-        this.invoicesStatus = invoicesStatus;
-    }
-
-    public Invoice() {
-    }
 }
