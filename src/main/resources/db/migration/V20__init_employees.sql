@@ -8,7 +8,10 @@ VALUES (1, 'Some special text about Vasya', 'vasyaogon@mail.ru', 'Vasya', '52631
         '+7(999)777-11-33', '3', 5, 1, 5),
        (4, 'Some special text about Karim', 'karimogon@mail.ru', 'Karim', '526316666678', 'Islentiev', 'Dmitrievich',
         'qwerty', '+7(999)222-77-00', '4', 4, 1, 4),
-       (5, 'Some special text about Sasha', 'sashaogon@mail.ru', 'Sasha', '526317984600', 'Petko', '', 'asdfg',
-        '+7(999)222-00-33', '5', 4, 1, 19);
+       (5, 'Some special text about Sasha', 'sashaogon@mail.ru', 'Sasha', '526317984600', 'Petko', 'Petrovich', 'asdfg',
+        '+7(999)222-00-33', '5', 4, 1, 19),
+       (6, 'Some special text about Oleg', 'olegogon@mail.ru', 'Oleg', '526317974236', 'Petrov', 'Ivanovich', 'terry',
+        '+7(999)555-66-77', '6', 4, 1, 19);
+
 SELECT setval('employees_id_seq', max(id))
 FROM employees
