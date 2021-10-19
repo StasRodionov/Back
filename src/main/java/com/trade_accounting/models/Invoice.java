@@ -22,10 +22,11 @@ import java.time.LocalDateTime;
 /**
  * Класс-модель накладной
  *
- * @param date         - дата составления накладной
- * @param typeOfInvoce - тип накладной
- * @param company      - наименование компании
- * @param contractor   - контрагент
+ * @param date           - дата составления накладной
+ * @param typeOfInvoce   - тип накладной
+ * @param company        - наименование компании
+ * @param contractor     - контрагент
+ * @param invoicesStatus - статус накладной
  * @author Sanych
  */
 @Data

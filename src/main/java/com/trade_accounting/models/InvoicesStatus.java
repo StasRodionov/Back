@@ -26,5 +26,4 @@ public class InvoicesStatus {
 
     @Column(name = "status_name")
     private  String statusName;
-
 }
