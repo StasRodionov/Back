@@ -1,6 +1,7 @@
 package com.trade_accounting.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "tax_systems")
+@Builder
 public class TaxSystem {
 
     @Id
@@ -33,5 +35,4 @@ public class TaxSystem {
         this.sortNumber = sortNumber;
     }
 
-    ;
 }

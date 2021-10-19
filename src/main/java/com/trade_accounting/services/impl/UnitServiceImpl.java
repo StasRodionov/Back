@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,9 +33,11 @@ public class UnitServiceImpl implements UnitService {
 
     @Override
     public UnitDto getById(Long id) {
-        return unitMapper.toDto(
-                unitRepository.findById(id).orElse(new Unit())
-        );
+//        Optional<Unit> unit = unitRepository.findById(id);
+//        return unitMapper.toDto(
+//                unit.orElse(new Unit())
+//        );
+        return unitMapper.toDto(unitRepository.findById(id).orElse(new Unit()));
     }
 
     @Override
