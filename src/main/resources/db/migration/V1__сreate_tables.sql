@@ -869,6 +869,7 @@ create table task
     description        text      not null,
     task_author_id     int8      not null,
     task_employee_id   int8      not null,
+    task_contractor_id int8,
     primary key (id)
 );
 
@@ -1573,6 +1574,9 @@ alter table if exists supplier_accounts
 
 alter table if exists task
     add constraint FKj3qpqsuq54edds4dy022rs512 foreign key (task_author_id) references employees;
+
+alter table if exists task
+    add constraint FKj3qpqsuq54edds4dy022rs514 foreign key (task_contractor_id) references contractors;
 
 alter table if exists task
     add constraint FK363f1j710x76o20oexp5jb8gs foreign key (task_employee_id) references employees;

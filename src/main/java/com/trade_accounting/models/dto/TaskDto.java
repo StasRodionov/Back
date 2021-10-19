@@ -21,6 +21,8 @@ public class TaskDto {
 
     private Long employeeId;
 
+    private Long contractorId;
+
     @NotNull
     private Long taskAuthorId;
 
@@ -36,6 +38,7 @@ public class TaskDto {
 
     public TaskDto(Long id,
                    String description,
+                   Long contractorId,
                    Long employeeId,
                    Long taskAuthorId,
                    LocalDateTime creationDateTime,
@@ -44,6 +47,7 @@ public class TaskDto {
                    List<Long> taskCommentsIds) {
         this.id = id;
         this.description = description;
+        this.contractorId = contractorId;
         this.employeeId = employeeId;
         this.taskAuthorId = taskAuthorId;
         this.creationDateTime = creationDateTime.toString();

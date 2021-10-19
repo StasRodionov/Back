@@ -38,6 +38,10 @@ public class Task {
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY)
+    private Contractor taskContractor;
+
+    @NotNull
+    @OneToOne(fetch = FetchType.LAZY)
     private Employee taskEmployee;
 
     @OneToOne(fetch = FetchType.LAZY)
