@@ -1149,6 +1149,7 @@ CREATE TABLE stages
     CONSTRAINT pk_stages PRIMARY KEY (id)
 );
 
+
 ALTER TABLE stages
     ADD CONSTRAINT FK_STAGES_ON_DEPARTMENT FOREIGN KEY (department_id) REFERENCES departments (id);
 
