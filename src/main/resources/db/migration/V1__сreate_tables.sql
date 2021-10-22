@@ -1741,4 +1741,3 @@ alter table if exists prepayment_returns
 
 alter table if exists prepayment_returns
     add constraint FKmik5755210tikbogjonkklin7 foreign key (company_id) references companies;
-
