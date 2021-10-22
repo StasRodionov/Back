@@ -17,6 +17,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "invoices_status")
 public class InvoicesStatus {
 
