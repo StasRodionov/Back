@@ -30,4 +30,9 @@ public interface CurrencyRepository extends JpaRepository<Currency, Long>, JpaSp
             "currency.sortNumber) from Currency currency " +
             "where currency.id = :id")
     CurrencyDto getById(@Param("id") Long id);
+
+    @Query("from Currency c " +
+            "where lower ( concat(c.id, ' ', c.shortName, ' ', c.fullName, ' ', c.digitalCode, ' ', c.letterCode, ' ', c.sortNumber)) " +
+            "like lower(concat('%', :symbols, '%'))")
+    List<Currency> getBySearch(@Param("symbols") String search);
 }

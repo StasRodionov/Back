@@ -6,11 +6,15 @@ import com.trade_accounting.models.dto.PageDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.List;
+
 
 public interface EmployeeService extends SearchableService<Employee, EmployeeDto>, AbstractService<EmployeeDto> {
 
     PageDto<EmployeeDto> search(Specification<Employee> specification, Pageable page);
 
     EmployeeDto getByEmail(String email);
+
+    List<EmployeeDto> searchByString(String text);
 }
 

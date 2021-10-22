@@ -71,7 +71,8 @@ public class EmployeeRestController {
                     @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
                     @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
                     @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
-                    @Spec(path = "roleDto", params = "roleDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "department.name", params = "department", spec = LikeIgnoreCase.class),
+                    @Spec(path = "position.name", params = "position", spec = LikeIgnoreCase.class),
                     @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class)
             }) Specification<Employee> specification) {
 
@@ -192,5 +193,11 @@ public class EmployeeRestController {
     public ResponseEntity<EmployeeDto> getUserDetails(@AuthenticationPrincipal String email) {
         EmployeeDto employeeDto = employeeService.getByEmail(email);
         return ResponseEntity.ok(employeeDto);
+    }
+
+    @GetMapping("/searchByString")
+    @ApiOperation(value = "search", notes = "Получение списка работников по заданным параметрам")
+    public ResponseEntity<List<EmployeeDto>> searchByString(@RequestParam("search") String search) {
+        return ResponseEntity.ok(employeeService.searchByString(search));
     }
 }

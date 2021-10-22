@@ -7,10 +7,12 @@ import com.trade_accounting.services.interfaces.UnitService;
 import com.trade_accounting.utils.SortNumberConverter;
 import com.trade_accounting.utils.mapper.UnitMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,9 +33,11 @@ public class UnitServiceImpl implements UnitService {
 
     @Override
     public UnitDto getById(Long id) {
-        return unitMapper.toDto(
-                unitRepository.findById(id).orElse(new Unit())
-        );
+//        Optional<Unit> unit = unitRepository.findById(id);
+//        return unitMapper.toDto(
+//                unit.orElse(new Unit())
+//        );
+        return unitMapper.toDto(unitRepository.findById(id).orElse(new Unit()));
     }
 
     @Override
@@ -57,5 +61,18 @@ public class UnitServiceImpl implements UnitService {
     @Override
     public void deleteById(Long id) {
         unitRepository.deleteById(id);
+    }
+
+    @Override
+    public List<UnitDto> search(Specification<Unit> spec) {
+        return executeSearch(unitRepository, unitMapper::toDto, spec);
+    }
+
+    @Override
+    public List<UnitDto> searchByString(String text) {
+        return unitRepository.getBySearch(text).stream()
+                .map(unitMapper::toDto)
+                .collect(Collectors.toList());
+
     }
 }

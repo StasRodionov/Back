@@ -35,7 +35,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public ImageDto getById(Long id) {
-        return imageMapper.toDto(imageRepository.getOne(id));
+        return imageMapper.toDto(imageRepository.getImageById(id));
     }
 
     @Override

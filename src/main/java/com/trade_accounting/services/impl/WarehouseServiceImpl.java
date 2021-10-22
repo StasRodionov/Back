@@ -7,6 +7,7 @@ import com.trade_accounting.services.interfaces.WarehouseService;
 import com.trade_accounting.utils.SortNumberConverter;
 import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,5 +62,18 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Override
     public void deleteById(Long id) {
         warehouseRepository.deleteById(id);
+    }
+
+    @Override
+    public List<WarehouseDto> searchByString(String text) {
+        return warehouseRepository.getBySearch(text).stream()
+                .map(warehouseMapper::toDto)
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<WarehouseDto> search(Specification<Warehouse> specification) {
+        return executeSearch(warehouseRepository, warehouseMapper::toDto, specification);
     }
 }
