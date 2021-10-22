@@ -4,24 +4,34 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
  * Класс-модель накладной
  *
- * @param date         - дата составления накладной
- * @param typeOfInvoce - тип накладной
- * @param company      - наименование компании
- * @param contractor   - контрагент
+ * @param date           - дата составления накладной
+ * @param typeOfInvoce   - тип накладной
+ * @param company        - наименование компании
+ * @param contractor     - контрагент
+ * @param invoicesStatus - статус накладной
  * @author Sanych
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "invoice")
 @Builder
@@ -41,14 +51,17 @@ public class Invoice {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Company company;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Contractor contractor;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Warehouse warehouse;
 
     @Column(name = "is_Spend")
@@ -57,4 +70,8 @@ public class Invoice {
 
     @Column(name = "comment")
     private String comment;
+
+    @OneToOne
+    @ColumnDefault("1")
+    private InvoicesStatus invoicesStatus;
 }
