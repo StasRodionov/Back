@@ -20,9 +20,9 @@ public class StagesProductionDto {
 
     private String description;
 
-    private Department department;
+    private Long departmentId;
 
-    private Employee employee;
+    private Long employeeId;
 
     public void setDepartment(Department department) {
     }
