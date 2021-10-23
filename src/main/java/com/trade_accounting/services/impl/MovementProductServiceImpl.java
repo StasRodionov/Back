@@ -7,6 +7,7 @@ import com.trade_accounting.repositories.MovementProductRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.MovementProductService;
 import com.trade_accounting.utils.mapper.MovementProductMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,17 +17,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class MovementProductServiceImpl implements MovementProductService {
 
     private final MovementProductRepository movementProductRepository;
     private final ProductRepository productRepository;
     private final MovementProductMapper movementProductMapper;
-
-    public MovementProductServiceImpl(MovementProductRepository movementProductRepository, ProductRepository productRepository, MovementProductMapper movementProductMapper) {
-        this.movementProductRepository = movementProductRepository;
-        this.productRepository = productRepository;
-        this.movementProductMapper = movementProductMapper;
-    }
 
     @Override
     public List<MovementProductDto> getAll() {

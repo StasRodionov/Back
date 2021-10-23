@@ -8,6 +8,7 @@ import com.trade_accounting.models.Project;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.repositories.CompanyRepository;
+import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.MovementProductRepository;
 import com.trade_accounting.repositories.MovementRepository;
 import com.trade_accounting.repositories.ProjectRepository;
@@ -17,11 +18,9 @@ import com.trade_accounting.services.interfaces.MovementService;
 import com.trade_accounting.utils.mapper.MovementMapper;
 import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,6 +40,7 @@ public class MovementServiceImpl implements MovementService {
     private final WarehouseMapper warehouseMapper;
     private final ProjectRepository projectRepository;
     private final MovementMapper movementMapper;
+    private final EmployeeRepository employeeRepository;
 
     @Override
     public List<MovementDto> getAll() {
@@ -74,8 +74,11 @@ public class MovementServiceImpl implements MovementService {
         Warehouse warehouseFrom = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseFromId()));
         Warehouse warehouseTo = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseToId()));
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
-        Project project = projectRepository.getOne(dto.getProjectId());
-        LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        // настроить подтягивание employee
+        Employee employeeChanged = employeeRepository.getOne(1L);
+        //хз что такое project
+        Project project = projectRepository.getOne(1L);
+        LocalDateTime date = LocalDateTime.parse(dto.getDate().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
         List<MovementProduct> movementProducts = dto.getMovementProductsIds().stream()
                 .map(id -> movementProductRepository.findById(id).orElse(null)).collect(Collectors.toList());
@@ -87,9 +90,9 @@ public class MovementServiceImpl implements MovementService {
         movement.setMovementProducts(movementProducts);
         movement.setProject(project);
         movement.setWhenСhangedDate(LocalDate.now());
-
+        movement.setEmployeeChanged(employeeChanged);
         //Что работало в Postman, закомментить следующую строчку
-        movement.setEmployeeChanged((Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//        movement.setEmployeeChanged((Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         return movementMapper.toDto(movementRepository.save(movement));
     }
