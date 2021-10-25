@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.TechnicalProcessDto;
-import com.trade_accounting.repositories.TechnicalProcessRepository;
 import com.trade_accounting.services.interfaces.TechnicalProcessService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,8 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TechnicalProcessRestController {
 
-    private TechnicalProcessService technicalProcessService;
-    private TechnicalProcessRepository technicalProcessRepository;
+    private final TechnicalProcessService technicalProcessService;
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех тех.процессов")
     @GetMapping()
@@ -45,6 +43,7 @@ public class TechnicalProcessRestController {
         List<TechnicalProcessDto> technicalProcess = technicalProcessService.getAll();
         return ResponseEntity.ok(technicalProcess);
     }
+
     @ApiOperation(value = "search", notes = "Получение списка тех.процессов по заданным параметрам")
     @GetMapping("/search")
     @ApiResponses(value = {

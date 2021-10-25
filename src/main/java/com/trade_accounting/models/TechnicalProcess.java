@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -55,8 +56,12 @@ public class TechnicalProcess {
 
     /**
      * этапы производства, что относятся к техпроцессу
+     * OneToMany - маппинг происходит через Hibernate, но вся логика создания и связывания таблиц в sql миграциях
      */
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="TECHNICAL_PROCESS_PRODUCTION_STAGES",
+            joinColumns={@JoinColumn(name="TECHNICAL_PROCESS_ID", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="PRODUCTION_STAGE_ID", referencedColumnName="ID")})
     private Set<StagesProduction> stagesProductionSet;
 
     /**
