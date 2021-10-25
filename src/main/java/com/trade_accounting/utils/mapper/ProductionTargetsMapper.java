@@ -3,22 +3,25 @@ package com.trade_accounting.utils.mapper;
 import com.trade_accounting.models.ProductionTargets;
 import com.trade_accounting.models.dto.ProductionTargetsDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import java.time.format.DateTimeFormatter;
 
 @Mapper(componentModel = "spring")
 public interface ProductionTargetsMapper {
 
-    default ProductionTargets toModel(ProductionTargetsDto productionTargetsDto){
-
-        if (productionTargetsDto == null) {
-            return null;
-        }
-
-        return ProductionTargets.builder()
-                .id(productionTargetsDto.getId())
-                .build();
-    }
+    @Mappings(
+            {
+                    @Mapping(source = "companyId", target = "company.id"),
+                    @Mapping(source = "date", target = "date", dateFormat = "yyyy-MM-dd HH:mm"),
+                    @Mapping(source = "productionStart", target = "productionStart", dateFormat = "yyyy-MM-dd HH:mm"),
+                    @Mapping(source = "productionEnd", target = "productionEnd", dateFormat = "yyyy-MM-dd HH:mm"),
+                    @Mapping(source = "updated", target = "updated", dateFormat = "yyyy-MM-dd HH:mm"),
+                    @Mapping(source = "updatedByName", target = "updatedByName")
+            }
+    )
+    ProductionTargets toModel(ProductionTargetsDto productionTargetsDto);
 
     default ProductionTargetsDto toDto(ProductionTargets productionTargets) {
 
