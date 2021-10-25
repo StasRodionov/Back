@@ -1,56 +1,39 @@
 package com.trade_accounting.utils.mapper;
 
-import com.trade_accounting.models.Acceptance;
-import com.trade_accounting.models.AcceptanceProduction;
-import com.trade_accounting.models.InvoiceProduct;
-import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Revenue;
 import com.trade_accounting.models.dto.RevenueDto;
 import org.mapstruct.Mapper;
-
-import java.time.format.DateTimeFormatter;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 
 @Mapper(componentModel = "spring")
 public interface RevenueMapper {
-    default RevenueDto toDto(Revenue revenue) {
-        RevenueDto revenueDto = new RevenueDto();
-        if (revenue == null) {
-            return null;
-        } else {
-            revenueDto.setId(revenue.getId());
 
-            Product product = revenue.getProduct();
-            if (product == null) {
-                return null;
-            } else {
-                revenueDto.setIdProduct(product.getId());
-                revenueDto.setDescription(product.getDescription());
-                revenueDto.setUnitId(product.getUnit().getId());
+    @Mappings({
+            @Mapping(target = "product.id", source = "productId"),
+            @Mapping(target = "product.description", source = "description"),
+            @Mapping(target = "product.unit.id", source = "unitId"),
+            @Mapping(target = "acceptanceProduction.id", source = "acceptanceProductionId"),
+            @Mapping(target = "acceptanceProduction.amount", source = "amountAcceptance"),
+			@Mapping(target = "acceptance.id", source = "acceptanceId"),
+            @Mapping(target = "acceptance.incomingNumberDate", source = "incomingNumberDate", dateFormat = "yyyy-MM-dd HH:mm"),
+            @Mapping(target = "invoiceProduct.id", source = "invoiceProductId"),
+            @Mapping(target = "invoiceProduct.amount", source = "amountShipment")
+    })
+	Revenue toModel(RevenueDto revenueDto);
 
-                AcceptanceProduction acceptanceProduction = revenue.getAcceptanceProduction();
-                if (acceptanceProduction == null) {
-                    return null;
-                } else {
-                    revenueDto.setAmountAcceptance(acceptanceProduction.getAmount());
+	@Mappings({
+			@Mapping(source = "product.id", target = "productId"),
+			@Mapping(source = "product.description", target = "description"),
+			@Mapping(source = "product.unit.id", target = "unitId"),
+			@Mapping(source = "acceptanceProduction.id", target = "acceptanceProductionId"),
+			@Mapping(source = "acceptanceProduction.amount", target = "amountAcceptance"),
+			@Mapping(source = "acceptance.id", target = "acceptanceId"),
+			@Mapping(source = "acceptance.incomingNumberDate", target = "incomingNumberDate", dateFormat = "yyyy-MM-dd HH:mm"),
+			@Mapping(source = "invoiceProduct.id", target = "invoiceProductId"),
+			@Mapping(source = "invoiceProduct.amount", target = "amountShipment")
+	})
+	RevenueDto toDto(Revenue revenue);
 
-                    Acceptance acceptance = revenue.getAcceptance();
-                    if (acceptance == null) {
-                        return null;
-                    } else {
-                        revenueDto.setIncomingNumberDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(
-                                acceptance.getIncomingNumberDate()));
-
-                        InvoiceProduct invoiceProduct = revenue.getInvoiceProduct();
-                        if (invoiceProduct == null) {
-                            return null;
-                        } else {
-                            revenueDto.setAmountShipment(invoiceProduct.getAmount());
-                            return revenueDto;
-                        }
-                    }
-                }
-            }
-        }
-    }
 }

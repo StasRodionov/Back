@@ -15,18 +15,24 @@ public class RevenueDto {
 
     private Long id;
 
-    private Long idProduct;
+    private Integer itemNumber;
 
-    private String description;
+    private Long productId;                 // Product
 
-    private Long unitId;
+    private String description;             // Product
 
-    private int itemNumber;
+    private Long unitId;                    // Product
 
-    private Long amountAcceptance;
+    private Long acceptanceProductionId;    // AcceptanceProduction
 
-    private String incomingNumberDate;
+    private Long amountAcceptance;          // AcceptanceProduction
 
-    private BigDecimal amountShipment;
+    private Long acceptanceId;              // Acceptance
+
+    private String incomingNumberDate;      // Acceptance
+
+    private Long invoiceProductId;          // InvoiceProduct
+
+    private BigDecimal amountShipment;      // InvoiceProduct
 
 }
