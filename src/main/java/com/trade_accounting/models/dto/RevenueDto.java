@@ -15,13 +15,13 @@ public class RevenueDto {
 
     private Long id;
 
-    private Long idProduct;
+    private Long productId;
 
     private String description;
 
     private Long unitId;
 
-    private int itemNumber;
+    private Integer itemNumber;
 
     private Long amountAcceptance;
 
