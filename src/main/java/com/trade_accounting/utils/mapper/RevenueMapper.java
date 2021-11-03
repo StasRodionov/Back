@@ -17,7 +17,7 @@ public interface RevenueMapper {
             @Mapping(target = "acceptanceProduction.id", source = "acceptanceProductionId"),
             @Mapping(target = "acceptanceProduction.amount", source = "amountAcceptance"),
 			@Mapping(target = "acceptance.id", source = "acceptanceId"),
-            @Mapping(target = "acceptance.incomingNumberDate", source = "incomingNumberDate", dateFormat = "yyyy-MM-dd HH:mm"),
+            @Mapping(target = "acceptance.date", source = "date", dateFormat = "yyyy-MM-dd HH:mm"),
             @Mapping(target = "invoiceProduct.id", source = "invoiceProductId"),
             @Mapping(target = "invoiceProduct.amount", source = "amountShipment")
     })
@@ -30,7 +30,7 @@ public interface RevenueMapper {
 			@Mapping(source = "acceptanceProduction.id", target = "acceptanceProductionId"),
 			@Mapping(source = "acceptanceProduction.amount", target = "amountAcceptance"),
 			@Mapping(source = "acceptance.id", target = "acceptanceId"),
-			@Mapping(source = "acceptance.incomingNumberDate", target = "incomingNumberDate", dateFormat = "yyyy-MM-dd HH:mm"),
+			@Mapping(source = "acceptance.date", target = "date", dateFormat = "yyyy-MM-dd HH:mm"),
 			@Mapping(source = "invoiceProduct.id", target = "invoiceProductId"),
 			@Mapping(source = "invoiceProduct.amount", target = "amountShipment")
 	})

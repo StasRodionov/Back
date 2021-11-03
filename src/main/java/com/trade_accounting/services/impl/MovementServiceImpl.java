@@ -71,19 +71,18 @@ public class MovementServiceImpl implements MovementService {
 
     private MovementDto saveOrUpdate(MovementDto dto) {
         Movement movement = movementMapper.toModel(dto);
-        Warehouse warehouseFrom = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseFromId()));
+        Warehouse warehouseFrom = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseId()));
         Warehouse warehouseTo = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseToId()));
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         // настроить подтягивание employee
         Employee employeeChanged = employeeRepository.getOne(1L);
-        //хз что такое project
         Project project = projectRepository.getOne(1L);
         LocalDateTime date = LocalDateTime.parse(dto.getDate().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
         List<MovementProduct> movementProducts = dto.getMovementProductsIds().stream()
                 .map(id -> movementProductRepository.findById(id).orElse(null)).collect(Collectors.toList());
 
-        movement.setWarehouseFrom(warehouseFrom);
+        movement.setWarehouse(warehouseFrom);
         movement.setWarehouseTo(warehouseTo);
         movement.setCompany(company);
         movement.setDate(date);

@@ -54,7 +54,7 @@ public class AcceptanceRestControllerTest {
                 .id(3L)
                 .comment("comment3")
                 .incomingNumber("3")
-                .incomingNumberDate("2021-07-03").contractorId(3L)
+                .date("2021-07-03").contractorId(3L)
                 .warehouseId(3L)
                 .contractId(3L)
                 .build());
@@ -73,7 +73,7 @@ public class AcceptanceRestControllerTest {
                 .id(4L)
                 .comment("comment3")
                 .incomingNumber("333")
-                .incomingNumberDate("2021-07-03")
+                .date("2021-07-03")
                 .contractorId(4L)
                 .warehouseId(4L)
                 .contractId(4L)
@@ -101,7 +101,7 @@ public class AcceptanceRestControllerTest {
                 .id(3L)
                 .comment("comment3")
                 .incomingNumber("333")
-                .incomingNumberDate("2021-07-03").contractorId(3L)
+                .date("2021-07-03").contractorId(3L)
                 .warehouseId(3L)
                 .contractId(3L)
                 .build();

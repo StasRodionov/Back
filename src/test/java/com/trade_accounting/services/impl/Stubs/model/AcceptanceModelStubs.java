@@ -4,6 +4,7 @@ import com.trade_accounting.models.Acceptance;
 import com.trade_accounting.models.Project;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static com.trade_accounting.services.impl.Stubs.ModelStubs.*;
@@ -17,7 +18,7 @@ public class AcceptanceModelStubs {
                 .contractor(getContractor(1L))
                 .comment("Комментарий " + id)
                 .incomingNumber("100")
-                .incomingNumberDate(LocalDate.now())
+                .date(LocalDateTime.now())
                 .warehouse(getWarehouse(1L))
                 .build();
     }
