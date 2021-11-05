@@ -1,2 +1,2 @@
 INSERT INTO hibernate_sequences (sequence_name, next_val)
-VALUES ('default', 41);
+VALUES ('default', 44);

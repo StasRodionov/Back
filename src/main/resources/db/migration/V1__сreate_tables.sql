@@ -880,8 +880,10 @@ create table supplier_accounts
 (
     id            int8    not null,
     comment       varchar(255),
-    date          varchar(255)    not null,
+    date          timestamp,
     is_spend         boolean default false,
+    is_print        boolean default false,
+    is_sent         boolean default false,
     company_id    int8         not null,
     contract_id   int8         not null,
     contractor_id int8         not null,
@@ -1053,7 +1055,7 @@ create table shipments
     company_id              int8         not null,
     paid                    numeric(19, 2),
     is_print                boolean      default false,
-    is_send                 boolean      default false,
+    is_sent                boolean      default false,
     is_spend                boolean      default false,
     comment                 varchar(255),
     primary key (id)

@@ -539,7 +539,7 @@ public class ModelStubs {
                 .contract(getContract(1L))
                 .contractor(getContractor(1L))
                 .company(getCompany(1L))
-                .date(LocalDateTime.now().toString())
+                .date(LocalDateTime.now())
                 .comment("Комментарий")
                 .isSpend(false)
                 .build();

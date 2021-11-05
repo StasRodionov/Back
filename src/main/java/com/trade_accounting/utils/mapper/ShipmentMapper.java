@@ -2,12 +2,10 @@ package com.trade_accounting.utils.mapper;
 
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contractor;
-import com.trade_accounting.models.LossProduct;
 import com.trade_accounting.models.Shipment;
 import com.trade_accounting.models.ShipmentProduct;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.ShipmentDto;
-import com.trade_accounting.repositories.ShipmentProductRepository;
 import org.mapstruct.Mapper;
 
 import java.math.BigDecimal;
@@ -33,7 +31,7 @@ public interface ShipmentMapper {
         shipmentDto.warehouseId( shipmentWarehouseId( shipment ) );
         shipmentDto.paid(shipment.getPaid());
         shipmentDto.isSpend(shipment.getIsSpend());
-        shipmentDto.isSend(shipment.getIsSend());
+        shipmentDto.isSend(shipment.getIsSent());
         shipmentDto.isPrint(shipment.getIsPrint());
         shipmentDto.comment( shipment.getComment() );
         shipmentDto.shipmentProductsIds(
@@ -63,7 +61,7 @@ public interface ShipmentMapper {
         shipment.warehouse(shipmentDtoToWarehouse(emp));
         shipment.paid(emp.getPaid());
         shipment.isSpend(emp.getIsSpend());
-        shipment.isSend(emp.getIsSend());
+        shipment.isSent(emp.getIsSend());
         shipment.isPrint(emp.getIsPrint());
         shipment.comment(emp.getComment());
 

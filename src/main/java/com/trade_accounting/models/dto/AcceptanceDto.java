@@ -42,4 +42,6 @@ public class AcceptanceDto {
     Boolean isSpend;
 
     private List<AcceptanceProductionDto> acceptanceProduction;
+
+    private List<Long> acceptenceProductIds;
 }

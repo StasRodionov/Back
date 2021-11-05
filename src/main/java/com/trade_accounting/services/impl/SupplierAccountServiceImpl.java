@@ -15,8 +15,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -33,7 +35,8 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
 
     @Override
     public List<SupplierAccountDto> getAll() {
-        return supplierAccountRepository.getAll();
+        return supplierAccountRepository.getAll().stream()
+                .map(supplierAccountMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
@@ -44,7 +47,7 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
 
     @Override
     public SupplierAccountDto create(SupplierAccountDto createSupplier) {
-        SupplierAccount saveInvoices = SupplierAccount.builder().id(createSupplier.getId()).date(createSupplier.getDate())
+        SupplierAccount saveInvoices = SupplierAccount.builder().id(createSupplier.getId()).date(LocalDateTime.parse(createSupplier.getDate()))
                 .comment(createSupplier.getComment()).isSpend(createSupplier.getIsSpend())
                 .company(companyRepository.getCompaniesById(createSupplier.getCompanyId()))
                 .warehouse(warehouseMapper.toModel(warehouseRepository.getById(createSupplier.getWarehouseId())))
@@ -70,9 +73,9 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
         if(nameFilter.matches("[0-9]+")) {
             List<SupplierAccountDto> searchForNumber = supplierAccountRepository.searchById(Long.parseLong(nameFilter));
             return searchForNumber;
-        } else if ("null".equals(nameFilter) || nameFilter.isEmpty()) {
-            List<SupplierAccountDto> supplierAccountList = supplierAccountRepository.getAll();
-            return supplierAccountList;
+//        } else if ("null".equals(nameFilter) || nameFilter.isEmpty()) {
+//            List<SupplierAccountDto> supplierAccountList = supplierAccountRepository.getAll();
+//            return supplierAccountList;
         } else {
             List<SupplierAccountDto> supplierAccountListDto = supplierAccountRepository.searchByNameFilter(nameFilter);
             return supplierAccountListDto;
