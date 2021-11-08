@@ -4,7 +4,7 @@ import com.trade_accounting.models.ReturnFromBuyers;
 import com.trade_accounting.models.dto.ReturnFromBuyersDto;
 import com.trade_accounting.repositories.ReturnFromBuyersRepository;
 import com.trade_accounting.services.interfaces.ReturnFromBuyersService;
-import com.trade_accounting.utils.mapper.ReturnFromBuyersMapperImpl;
+import com.trade_accounting.utils.mapper.ReturnFromBuyersMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.List;
 public class ReturnFromBuyersServiceImpl implements ReturnFromBuyersService {
 
     private final ReturnFromBuyersRepository returnFromBuyersRepository;
-    private final ReturnFromBuyersMapperImpl returnFromBuyersMapper;
+    private final ReturnFromBuyersMapper returnFromBuyersMapper;
 
     @Override
     public List<ReturnFromBuyersDto> getAll() {

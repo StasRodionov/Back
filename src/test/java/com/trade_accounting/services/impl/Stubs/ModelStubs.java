@@ -83,7 +83,7 @@ public class ModelStubs {
                 .paymentMethods(PaymentMethods.BANK)
                 .number("100")
                 .sum(BigDecimal.valueOf(100L))
-                .time(LocalDateTime.now())
+                .date(LocalDateTime.now())
                 .typeOfPayment(TypeOfPayment.INCOMING)
                 .project(Project.builder()
                         .id(1L)
@@ -450,9 +450,13 @@ public class ModelStubs {
 
     public static Correction getCorrection(Long id) {
         return new Correction(
-                id, LocalDateTime.now(), getWarehouse(), getCompany(id),
-                false, false, false,
-                "Комментарий 1",
+//                id,
+//                LocalDateTime.now(),
+                getWarehouse(),
+//                getCompany(id),
+//                false, false,
+                false,
+//                "Комментарий 1",
                 List.of(getCorrectionProduct(1L),
                         getCorrectionProduct(2L),
                         getCorrectionProduct(3L))
@@ -470,12 +474,12 @@ public class ModelStubs {
 
     public static Inventarization getInventarization(Long id) {
         return new Inventarization(
-                id,
-                LocalDateTime.now(),
+//                id,
+//                LocalDateTime.now(),
                 getWarehouse(id),
-                getCompany(id),
+//                getCompany(id),
                 false,
-                "Комментарий 1",
+//                "Комментарий 1",
                 List.of(getInventarizationProduct(1L),
                         getInventarizationProduct(2L),
                         getInventarizationProduct(3L))
@@ -535,7 +539,7 @@ public class ModelStubs {
                 .contract(getContract(1L))
                 .contractor(getContractor(1L))
                 .company(getCompany(1L))
-                .date(LocalDateTime.now().toString())
+                .date(LocalDateTime.now())
                 .comment("Комментарий")
                 .isSpend(false)
                 .build();

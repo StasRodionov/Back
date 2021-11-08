@@ -7,12 +7,18 @@ create table acceptance_productions
     primary key (id)
 );
 
+create table hibernate_sequences
+(
+    sequence_name varchar(255),
+    next_val int8
+);
+
 create table acceptances
 (
     id                   bigserial not null,
     comment              varchar(255),
     incoming_number      varchar(255),
-    incoming_number_date date    default current_date,
+    date                 timestamp    default current_date,
     when_changed_date    date    default current_date,
     is_print             boolean default false,
     is_sent              boolean default false,
@@ -342,6 +348,19 @@ create table file
     primary key (id)
 );
 
+
+
+create table operations
+(
+    id bigserial not null,
+    company_id int8 not null,
+    date         timestamp not null,
+    is_print     boolean default false,
+    is_sent      boolean default false,
+    comment varchar(255)
+
+);
+
 create table images
 (
     id          bigserial not null,
@@ -392,8 +411,11 @@ create table inventarizations
     comment      varchar(255),
     date         timestamp not null,
     status       boolean default false,
+    is_print     boolean default false,
+    is_sent      boolean default false,
     company_id   int8      not null,
     warehouse_id int8      not null,
+
     primary key (id)
 );
 
@@ -407,8 +429,10 @@ create table invoice
 (
     id              bigserial not null,
     comment         varchar(255),
-    data            timestamp not null,
+    date            timestamp not null,
     is_spend        boolean default false,
+    is_print     boolean default false,
+    is_sent      boolean default false,
     type_of_invoice int4      not null,
     company_id      int8      not null,
     contractor_id   int8      not null,
@@ -501,7 +525,7 @@ create table movement
     company_id          int8      not null,
     project_id          int8      not null,
     employee_changed_id int8      not null,
-    warehouse_from_id   int8      not null,
+    warehouse_id   int8      not null,
     warehouse_to_id     int8      not null,
     primary key (id)
 );
@@ -542,13 +566,17 @@ create table payments
     number          varchar(255) default 00001 not null,
     payment_methods varchar(255),
     sum             numeric(19, 2),
-    time            timestamp,
+    date          timestamp,
+    time          timestamp,
     type_of_payment varchar(255),
     expense_item    varchar(255),
     company_id      int8                       not null,
     contract_id     int8,
     contractor_id   int8                       not null,
     project_id      int8,
+    comment             varchar(255),
+    is_sent             boolean default false,
+    is_print            boolean default false,
     primary key (id)
 );
 
@@ -852,8 +880,10 @@ create table supplier_accounts
 (
     id            int8    not null,
     comment       varchar(255),
-    date          varchar(255) not null,
-    is_spend      boolean default false,
+    date          timestamp,
+    is_spend         boolean default false,
+    is_print        boolean default false,
+    is_sent         boolean default false,
     company_id    int8         not null,
     contract_id   int8         not null,
     contractor_id int8         not null,
@@ -1025,7 +1055,7 @@ create table shipments
     company_id              int8         not null,
     paid                    numeric(19, 2),
     is_print                boolean      default false,
-    is_send                 boolean      default false,
+    is_sent                boolean      default false,
     is_spend                boolean      default false,
     comment                 varchar(255),
     primary key (id)
@@ -1447,7 +1477,7 @@ alter table if exists movement
     add constraint FKmw69c00bls7o0l2sjn4amvvtp foreign key (company_id) references companies;
 
 alter table if exists movement
-    add constraint FKnqykedj900w609dsqkhur85w6 foreign key (warehouse_from_id) references warehouses;
+    add constraint FKnqykedj900w609dsqkhur85w6 foreign key (warehouse_id) references warehouses;
 
 alter table if exists movement
     add constraint FKerexspoex4yny4yh9n9ceut6i foreign key (warehouse_to_id) references warehouses;

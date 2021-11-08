@@ -29,7 +29,7 @@ public class RevenueDto {
 
     private Long acceptanceId;              // Acceptance
 
-    private String incomingNumberDate;      // Acceptance
+    private String date;      // Acceptance
 
     private Long invoiceProductId;          // InvoiceProduct
 

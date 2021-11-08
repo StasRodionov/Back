@@ -3,11 +3,10 @@ package com.trade_accounting.utils.mapper;
 import com.trade_accounting.models.TechnicalCard;
 import com.trade_accounting.models.TechnicalCardProduction;
 import com.trade_accounting.models.dto.TechnicalCardDto;
-import org.mapstruct.InheritInverseConfiguration;
 import com.trade_accounting.models.TechnicalCard.TechnicalCardBuilder;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+
+
 
 import java.util.ArrayList;
 import java.util.List;

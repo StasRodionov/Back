@@ -1,7 +1,5 @@
 package com.trade_accounting.models.dto;
 
-import com.trade_accounting.models.CorrectionProduct;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,7 +23,7 @@ public class MovementDto {
     private String whenChangedDate;
 
     @NotNull
-    private Long warehouseFromId;
+    private Long warehouseId;
 
     private BigDecimal sum;
 

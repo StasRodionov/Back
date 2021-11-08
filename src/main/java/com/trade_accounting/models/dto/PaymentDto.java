@@ -29,6 +29,8 @@ public class PaymentDto {
 
     private String time;
 
+    private String date;
+
     @NotNull
     private Long companyId;
 

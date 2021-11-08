@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface MovementMapper {
+public interface MovementMapper{
     //    Movement
     default MovementDto toDto(Movement movement) {
         MovementDto movementDto = new MovementDto();
@@ -32,12 +32,12 @@ public interface MovementMapper {
 
             movementDto.setSum(sum);
             movementDto.setEmployeeChangedId(movement.getEmployeeChanged().getId());
-            Warehouse warehouseFrom = movement.getWarehouseFrom();
+            Warehouse warehouseFrom = movement.getWarehouse();
             Warehouse warehouseTo = movement.getWarehouseTo();
             if (warehouseFrom == null) {
                 return null;
             } else {
-                movementDto.setWarehouseFromId(warehouseFrom.getId());
+                movementDto.setWarehouseId(warehouseFrom.getId());
                 if (warehouseTo == null){
                     return null;
                 } else {

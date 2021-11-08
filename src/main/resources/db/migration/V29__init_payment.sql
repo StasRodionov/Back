@@ -1,4 +1,4 @@
-INSERT INTO payments (id, number, payment_methods, sum, time, type_of_payment, expense_item, company_id, contract_id, contractor_id,
+INSERT INTO payments (id, number, payment_methods, sum, date, type_of_payment, expense_item, company_id, contract_id, contractor_id,
                       project_id)
 VALUES (1, '00001', 'CASH', 100.00, '2021-08-10 09:03:50.000000', 'INCOMING', null, 1, 1, 1, 1),
        (2, '00002', 'BANK', 50.00, '2021-08-10 09:03:50.000000', 'OUTGOING', 'RENTAL', 1, 1, 1, 1),

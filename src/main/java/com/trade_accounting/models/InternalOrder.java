@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Entity;
@@ -24,37 +25,20 @@ import java.util.List;
  * @version 1.0.0
  */
 
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "internal_order")
-public class InternalOrder {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class InternalOrder extends OperationsAbstract {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<InternalOrderProduct> internalOrderProducts;
 
     @NotNull
-    private LocalDateTime date;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Company company;
-
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Warehouse warehouse;
 
-    @ColumnDefault("false")
-    private Boolean isSent = null;
-
-    @ColumnDefault("false")
-    private Boolean isPrint = null;
-
-    private String comment;
 }

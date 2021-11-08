@@ -12,9 +12,17 @@ import static com.trade_accounting.services.impl.Stubs.model.MovementProductMode
 public class MovementModelStubs {
     public static Movement getMovement(Long id) {
         return new Movement(
-                id, LocalDateTime.now(), LocalDate.now(), getWarehouse(), getWarehouse(), getCompany(id), getProject(id), getEmployee(id),
-                false, false, false,
-                "Комментарий 1",
+//                id,
+//                LocalDateTime.now(),
+                LocalDate.now(),
+                getWarehouse(),
+                getWarehouse(),
+//                getCompany(id),
+                getProject(id),
+                getEmployee(id),
+//                false, false,
+                false,
+//                "Комментарий 1",
                 List.of(getMovementProduct(1L),
                         getMovementProduct(2L),
                         getMovementProduct(3L))

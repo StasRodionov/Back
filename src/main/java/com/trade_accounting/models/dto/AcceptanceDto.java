@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -20,7 +19,7 @@ public class AcceptanceDto {
 
     private String comment;
 
-    private String incomingNumberDate;
+    private String date;
 
     private String whenСhangedDate;
 
@@ -43,4 +42,6 @@ public class AcceptanceDto {
     Boolean isSpend;
 
     private List<AcceptanceProductionDto> acceptanceProduction;
+
+    private List<Long> acceptenceProductIds;
 }

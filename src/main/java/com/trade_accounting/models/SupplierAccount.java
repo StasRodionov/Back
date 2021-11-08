@@ -3,37 +3,23 @@ package com.trade_accounting.models;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "supplier_accounts")
-public class SupplierAccount {
-
-    @Id
-    @NotNull
-    private Long id;
-
-    @NotNull
-    private String date;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Company company;
+public class SupplierAccount extends OperationsAbstract{
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -49,9 +35,5 @@ public class SupplierAccount {
 
     @ColumnDefault("false")
     private Boolean isSpend;
-
-    private String comment;
-
-
 
 }
