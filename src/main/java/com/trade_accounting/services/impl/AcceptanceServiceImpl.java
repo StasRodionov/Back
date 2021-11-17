@@ -72,7 +72,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         acceptance.setWarehouse(warehouseRepository.getOne(dto.getWarehouseId()));
         acceptance.setCompany(companyRepository.getOne(dto.getCompanyId()));
         acceptance.setProject(projectRepository.getOne(dto.getProjectId()));
-        acceptance.setWhenСhangedDate(LocalDate.now());
+        acceptance.setWhenChangedDate(LocalDate.now());
 
         //Что работало в Postman, закомментить следующую строчку
         acceptance.setEmployeeChanged((Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal());

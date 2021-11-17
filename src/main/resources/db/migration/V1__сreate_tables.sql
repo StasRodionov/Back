@@ -4,6 +4,7 @@ create table acceptance_productions
     price      numeric(19,2),
     amount     int8,
     product_id int8,
+    acceptance_id int8,
     primary key (id)
 );
 
@@ -30,12 +31,6 @@ create table acceptances
     project_id           int8,
     contract_id          int8,
     primary key (id)
-);
-
-create table acceptances_acceptance_production
-(
-    acceptance_id            int8 not null,
-    acceptance_production_id int8 not null
 );
 
 create table access_parameters
@@ -1221,8 +1216,8 @@ ALTER TABLE stages
 ALTER TABLE stages
     ADD CONSTRAINT FK_STAGES_ON_EMPLOYEE FOREIGN KEY (employee_id) REFERENCES employees (id);
 
-alter table if exists acceptances_acceptance_production
-    add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);
+-- alter table if exists acceptances_acceptance_production
+--     add constraint UK_k24cuhwej1auh77h7plrfbani unique (acceptance_production_id);
 
 alter table if exists companies
     add constraint UK_ikuvd8d97wjjvpvyn5y525g6r unique (inn);
@@ -1275,6 +1270,9 @@ alter table if exists file
 alter table if exists acceptance_productions
     add constraint FKg7kb2cae2ujgi6ykgs0rwp9dj foreign key (product_id) references products;
 
+alter table if exists acceptance_productions
+    add constraint FKg7kb2cae2ujgi6ykgs0rwp9djasdas foreign key (acceptance_id) references acceptances;
+
 alter table if exists acceptances
     add constraint FKpao7pn3tqmxa3a9wle050l0ne foreign key (contract_id) references contracts;
 
@@ -1292,12 +1290,6 @@ alter table if exists acceptances
 
 alter table if exists acceptances
     add constraint FKpao7pn3tq335futurmxa0l0ne foreign key (company_id) references companies;
-
-alter table if exists acceptances_acceptance_production
-    add constraint FKn31hdaa68ln19beyu4mf8ih6x foreign key (acceptance_production_id) references acceptance_productions;
-
-alter table if exists acceptances_acceptance_production
-    add constraint FKcah177os00b548th6ujildjpb foreign key (acceptance_id) references acceptances;
 
 alter table if exists access_parameters
     add constraint FKmmt9baknvckxx1a7n8xy4a481 foreign key (department_id) references departments;
