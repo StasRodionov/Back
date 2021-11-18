@@ -23,4 +23,13 @@ public class ImageDto {
         this.id = id;
         this.sortNumber = sortNumber;
     }
+
+    @Override
+    public String toString() {
+        return "ImageDto(" +
+                "id=" + id +
+                ", fileExtension='" + fileExtension + '\'' +
+                ", sortNumber='" + sortNumber + '\'' +
+                ')';
+    }
 }
