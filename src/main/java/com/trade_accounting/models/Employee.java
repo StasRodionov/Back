@@ -70,36 +70,8 @@ public class Employee implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Image image;
-
-//    public Employee(String lastName,
-//                    String firstName,
-//                    String middleName,
-//                    String sortNumber,
-//                    String phone,
-//                    @Pattern(regexp = "([0-9]+){12}") String inn,
-//                    String description,
-//                    String email,
-//                    String password,
-//                    Department department,
-//                    Position position,
-//                    Set<Role> roles,
-//                    Image image) {
-//        this.lastName = lastName;
-//        this.firstName = firstName;
-//        this.middleName = middleName;
-//        this.sortNumber = sortNumber;
-//        this.phone = phone;
-//        this.inn = inn;
-//        this.description = description;
-//        this.email = email;
-//        this.password = password;
-//        this.department = department;
-//        this.position = position;
-//        this.roles = roles;
-//        this.image = image;
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

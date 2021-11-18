@@ -4,23 +4,28 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
+import java.io.IOException;
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Slf4j
 @Table(name = "images")
-public class Image {
+public class Image implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "image_url")
@@ -37,5 +42,17 @@ public class Image {
     public Image(Long id, String sortNumber) {
         this.id = id;
         this.sortNumber = sortNumber;
+    }
+
+    @PreRemove
+    private void deleteFile() {
+        Path path = Paths.get(imageUrl);
+        try {
+            Files.deleteIfExists(path);
+            log.info("Удален файл по url={}", imageUrl);
+            log.info("Удален экземпляр ImageDto с id={}", id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
