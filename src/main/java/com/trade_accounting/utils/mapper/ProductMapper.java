@@ -1,11 +1,20 @@
 package com.trade_accounting.utils.mapper;
 
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.ProductPrice;
+import com.trade_accounting.models.Role;
 import com.trade_accounting.models.dto.ProductDto;
+import com.trade_accounting.models.dto.ProductPriceDto;
+import com.trade_accounting.repositories.ProductPriceRepository;
+import com.trade_accounting.services.impl.ProductPriceServiceImpl;
+import com.trade_accounting.services.interfaces.ProductPriceService;
 import org.mapstruct.Mapper;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
@@ -25,6 +34,7 @@ public interface ProductMapper {
                 .archive(productDto.getArchive())
                 .service(productDto.getService())
                 .purchasePrice(productDto.getPurchasePrice())
+                //.productPrices(productDto.getProductPriceIds().stream().map().collect(Collectors.toList()));  // в map нужно как-то получить productPrice
                 .build();
     }
 
@@ -43,6 +53,7 @@ public interface ProductMapper {
             productDto.setArchive(product.getArchive());
             productDto.setService(product.getService());
             productDto.setPurchasePrice(product.getPurchasePrice());
+            productDto.setProductPriceIds(product.getProductPrices().stream().map(ProductPrice::getId).collect(Collectors.toList()));
             if (product.getUnit()==null){
                 return null;
             } else {
