@@ -29,4 +29,6 @@ public class TechnicalOperationsDto {
 
     private Long warehouse;
 
+    private Long companyId;
+
 }
