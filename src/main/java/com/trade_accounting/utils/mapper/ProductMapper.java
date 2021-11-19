@@ -1,11 +1,13 @@
 package com.trade_accounting.utils.mapper;
 
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.dto.ProductDto;
 import org.mapstruct.Mapper;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
@@ -43,6 +45,7 @@ public interface ProductMapper {
             productDto.setArchive(product.getArchive());
             productDto.setService(product.getService());
             productDto.setPurchasePrice(product.getPurchasePrice());
+            productDto.setProductPriceIds(product.getProductPrices().stream().map(ProductPrice::getId).collect(Collectors.toList()));
             if (product.getUnit()==null){
                 return null;
             } else {
