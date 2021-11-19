@@ -39,11 +39,13 @@ public class ProductionTargets { // класс "Производственные
     @Column
     private LocalDateTime deliveryPlannedMoment; // поле "Планируемая дата производства"
 
-    @Column
-    private String materialWarehouse; //Заглушка для поля "Склад для материалов"
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Warehouse materialWarehouse; //Заглушка для поля "Склад для материалов"
 
-    @Column
-    private String productionWarehouse; // Заглушка для поля "Склад для продукции"
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Warehouse productionWarehouse; // Заглушка для поля "Склад для продукции"
 
     @Column
     private LocalDateTime productionStart; // поле "начало производства"
