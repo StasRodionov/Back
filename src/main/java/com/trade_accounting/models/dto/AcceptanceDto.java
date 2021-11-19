@@ -21,7 +21,7 @@ public class AcceptanceDto {
 
     private String date;
 
-    private String whenСhangedDate;
+    private String whenChangedDate;
 
     private Long contractorId;
 
@@ -43,5 +43,5 @@ public class AcceptanceDto {
 
     private List<AcceptanceProductionDto> acceptanceProduction;
 
-    private List<Long> acceptenceProductIds;
+    private List<Long> acceptanceProductIds;
 }

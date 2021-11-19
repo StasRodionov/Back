@@ -48,12 +48,12 @@ public class Acceptance extends OperationsAbstract {
     private Employee employeeChanged;
 
     @Column(name = "when_changed_date")
-    private LocalDate whenСhangedDate;
+    private LocalDate whenChangedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Project project;
 
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "acceptance", fetch = FetchType.LAZY)
     private List<AcceptanceProduction> acceptanceProduction;
 }
