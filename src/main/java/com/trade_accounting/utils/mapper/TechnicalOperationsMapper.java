@@ -21,7 +21,7 @@ public interface TechnicalOperationsMapper {
         }
 
         return TechnicalOperations.builder()
-                .id(technicalOperationsDto.getId())
+//                .id(technicalOperationsDto.getId())
 //                .number(technicalOperationsDto.getNumber())
                 .volume(technicalOperationsDto.getVolume())
                 .build();
@@ -44,6 +44,7 @@ public interface TechnicalOperationsMapper {
         technicalOperationsDto.setTechnicalCard(technicalOperations.getTechnicalCard().getId());
         technicalOperationsDto.setVolume(technicalOperations.getVolume());
         technicalOperationsDto.setWarehouse(technicalOperations.getWarehouse().getId());
+        technicalOperationsDto.setCompanyId(technicalOperations.getCompany().getId());
 
         return technicalOperationsDto;
     }

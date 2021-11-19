@@ -9,6 +9,7 @@ import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.models.dto.TechnicalOperationsDto;
+import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.TechnicalCardRepository;
 import com.trade_accounting.repositories.TechnicalOperationsRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
@@ -34,6 +35,7 @@ public class TechnicalOperationsServiceImpl implements TechnicalOperationsServic
     private final TechnicalOperationsMapper technicalOperationsMapper;
     private final TechnicalCardRepository technicalCardRepository;
     private final WarehouseRepository warehouseRepository;
+    private final CompanyRepository companyRepository;
 
 //    @Override
 //    public List<TechnicalOperationsDto> search(Specification<TechnicalOperations> spec) {
@@ -96,6 +98,7 @@ public class TechnicalOperationsServiceImpl implements TechnicalOperationsServic
         technicalOperations.setComment(dto.getComment());
         technicalOperations.setIsPrint(dto.getIsPrint());
         technicalOperations.setIsSent(dto.getIsSent());
+        technicalOperations.setCompany(companyRepository.getCompaniesById(dto.getCompanyId()));
 
         return technicalOperationsMapper.toDto(technicalOperationsRepository.save(technicalOperations));
     }
