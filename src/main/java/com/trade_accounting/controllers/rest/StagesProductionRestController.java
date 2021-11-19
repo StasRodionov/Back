@@ -1,6 +1,9 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.StagesProduction;
+import com.trade_accounting.models.TechnicalOperations;
 import com.trade_accounting.models.dto.StagesProductionDto;
+import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import com.trade_accounting.repositories.StagesProductionRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.StagesProductionService;
@@ -11,6 +14,10 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,13 +27,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@Tag(name = "Role Rest Controller", description = "CRUD операции с этапами производства")
-@Api(tags = "Role Rest Controller")
+@Tag(name = "Stages Production Rest Controller", description = "CRUD операции с этапами производства")
+@Api(tags = "Stages Production Rest Controller")
 @RequestMapping("api/stagesproduction")
 @RequiredArgsConstructor
 public class StagesProductionRestController {
@@ -75,8 +83,9 @@ public class StagesProductionRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")}
     )
+
     public ResponseEntity<?> create(@ApiParam(name = "stagesProductionDto",
-            value = "DTO роли, которую необходимо создать") @RequestBody StagesProductionDto stagesProductionDto) {
+            value = "DTO этапа, который необходимо создать") @RequestBody StagesProductionDto stagesProductionDto) {
         return ResponseEntity.ok().body(stagesProductionService.create(stagesProductionDto));
     }
 
@@ -114,6 +123,30 @@ public class StagesProductionRestController {
         checkEntityService.checkExists((JpaRepository) stagesProductionRepository, id);
         stagesProductionService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "search", notes = "Получение списка этапов по заданным параметрам")
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка технических операции по заданным параметрам"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<StagesProductionDto>> getAll(@RequestParam("query") String value) {
+        return ResponseEntity.ok(stagesProductionService.search(value));
+    }
+
+    @GetMapping("searchStageProduction")
+    @ApiOperation(value = "searchTechnicalOperations", notes = "Получение списка этапов по заданным параметрам")
+    public ResponseEntity<List<StagesProductionDto>> getAllFilter(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "name", params = "name", spec = Equal.class),
+                    @Spec(path = "description", params = "description", spec = Equal.class)
+
+            }) Specification<StagesProduction> spec) {
+        return ResponseEntity.ok(stagesProductionService.search(spec));
     }
 
 }
