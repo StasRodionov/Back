@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.MutualSettlements;
 import com.trade_accounting.models.dto.MutualSettlementsDto;
 import com.trade_accounting.services.interfaces.MutualSettlementsService;
 import io.swagger.annotations.Api;
@@ -8,6 +9,11 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +50,22 @@ public class MutualSettlementsRestController {
         List<MutualSettlementsDto> mutualSettlements = mutualSettlementsService.getAll();
         return ResponseEntity.ok(mutualSettlements);
     }
+
+    @GetMapping("/searchByFilter")
+    @ApiOperation(value = "searchByFilter", notes = "Получение списка Взаиморасчетов по фильтру")
+    public ResponseEntity<List<MutualSettlementsDto>> searchByFilter(
+            @And({
+                    @Spec(path = "contractor.id", params = "contractorId", spec = Equal.class),
+                    @Spec(path = "employee.id", params = "employeeId", spec = Equal.class),
+                    @Spec(path = "initialBalance", params = "initialBalance", spec = Like.class),
+                    @Spec(path = "income", params = "income", spec = Like.class),
+                    @Spec(path = "expenses", params = "expenses", spec = Like.class),
+                    @Spec(path = "finalBalance", params = "finalBalance", spec = Like.class),
+            })Specification<MutualSettlements> spec){
+        return  ResponseEntity.ok(mutualSettlementsService.search(spec));
+    }
+
+
 
     @ApiOperation(value = "getById", notes = "Возвращает определенный взаиморасчёт по Id")
     @GetMapping("/{id}")
@@ -102,5 +124,4 @@ public class MutualSettlementsRestController {
         mutualSettlementsService.deleteById(id);
         return ResponseEntity.ok().build();
     }
-
 }
