@@ -5,7 +5,6 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Role;
-import com.trade_accounting.models.dto.BuyersReturnDto;
 import com.trade_accounting.models.dto.EmployeeDto;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.repositories.DepartmentRepository;
@@ -88,6 +87,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         Department department = departmentRepository.getDepartmentById(employeeDto.getDepartmentDtoId());
         Position position = positionRepository.getPositionById(employeeDto.getPositionDtoId());
         Image image = imageRepository.getImageById(employeeDto.getImageDtoId());
+        if (image == null || employeeDto.getImageDtoId() == 1) {
+            image = imageRepository.save(Image.builder()
+                    .id(employeeDto.getImageDtoId())
+                    .imageUrl("src/main/resources/file/employee_image.png")
+                    .build());
+        }
 
         Set<Role> roles = employeeDto.getRoleDtoIds().stream()
                 .map(roleRepository::getRoleById)

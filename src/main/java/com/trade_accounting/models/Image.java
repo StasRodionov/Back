@@ -46,11 +46,14 @@ public class Image implements Serializable {
 
     @PreRemove
     private void deleteFile() {
+        log.info("Удален экземпляр ImageDto с id={}", id);
         Path path = Paths.get(imageUrl);
+        if (imageUrl.equals("src/main/resources/file/employee_image.png")) {
+            return;
+        }
         try {
             Files.deleteIfExists(path);
             log.info("Удален файл по url={}", imageUrl);
-            log.info("Удален экземпляр ImageDto с id={}", id);
         } catch (IOException e) {
             e.printStackTrace();
         }
