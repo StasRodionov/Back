@@ -57,10 +57,10 @@ public class MutualSettlementsRestController {
             @And({
                     @Spec(path = "contractor.id", params = "contractorId", spec = Equal.class),
                     @Spec(path = "employee.id", params = "employeeId", spec = Equal.class),
-                    @Spec(path = "initialBalance", params = "initialBalance", spec = Like.class),
-                    @Spec(path = "income", params = "income", spec = Like.class),
-                    @Spec(path = "expenses", params = "expenses", spec = Like.class),
-                    @Spec(path = "finalBalance", params = "finalBalance", spec = Like.class),
+                    @Spec(path = "initialBalance", params = "initialBalance", spec = Equal.class),
+                    @Spec(path = "income", params = "income", spec = Equal.class),
+                    @Spec(path = "expenses", params = "expenses", spec = Equal.class),
+                    @Spec(path = "finalBalance", params = "finalBalance", spec = Equal.class),
             })Specification<MutualSettlements> spec){
         return  ResponseEntity.ok(mutualSettlementsService.search(spec));
     }
