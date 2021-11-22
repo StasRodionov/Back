@@ -5,6 +5,7 @@ import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.ProductionTargets;
 import org.springframework.data.jpa.domain.Specification;
 
 public class SpecificationStubs {
@@ -24,6 +25,10 @@ public class SpecificationStubs {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
     public static Specification<Product> getProductSpecificationStub() {
+        return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+
+    public static Specification<ProductionTargets> getProductionTargetsSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
 }

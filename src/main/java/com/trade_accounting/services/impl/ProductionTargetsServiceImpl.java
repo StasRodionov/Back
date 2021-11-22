@@ -84,7 +84,7 @@ public class ProductionTargetsServiceImpl implements ProductionTargetsService {
         LocalDateTime deliveryPlannedMoment = LocalDateTime.parse(dto.getDeliveryPlannedMoment().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         LocalDateTime productionStart = LocalDateTime.parse(dto.getProductionStart().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         LocalDateTime productionEnd = LocalDateTime.parse(dto.getProductionEnd().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        LocalDateTime updated = LocalDateTime.parse(dto.getUpdated().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        LocalDateTime updated = LocalDateTime.parse(dto.getUpdated().substring(0, 16).replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
         productionTargets.setId(dto.getId());
         productionTargets.setDate(date);
