@@ -24,6 +24,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.contractor.id," +
             "e.warehouse.id," +
             "e.isSpend," +
+            "e.isSent," +
+            "e.isPrint," +
             "e.comment," +
             "e.invoicesStatus.id) from Invoice e")
     List<InvoiceDto> getAll();
@@ -36,6 +38,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.contractor.id," +
             "e.warehouse.id," +
             "e.isSpend," +
+            "e.isSent," +
+            "e.isPrint," +
             "e.comment," +
             "e.invoicesStatus.id) from Invoice e where e.contractor.id = :id")
     List<InvoiceDto> findByContractorId(Long id);
@@ -49,6 +53,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.contractor.id," +
             "e.warehouse.id," +
             "e.isSpend," +
+            "e.isSent," +
+            "e.isPrint," +
             "e.comment," +
             "e.invoicesStatus.id) from Invoice e where lower(concat(e.id, e.comment, e.company.name, e.warehouse.name, e.invoicesStatus.statusName)) " +
             "like concat('%', :search, '%') and e.typeOfInvoice = :typeOfInvoice")
@@ -63,6 +69,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.contractor.id," +
             "e.warehouse.id," +
             "e.isSpend," +
+            "e.isSent," +
+            "e.isPrint," +
             "e.comment," +
             "e.invoicesStatus.id) from Invoice e where e.id = :id")
     InvoiceDto getById(@Param("id") Long id);
@@ -75,6 +83,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.contractor.id," +
             "e.warehouse.id," +
             "e.isSpend," +
+            "e.isSent," +
+            "e.isPrint," +
             "e.comment," +
             "e.invoicesStatus.id) from Invoice e " +
             "where lower(concat(e.id, e.comment)) like lower(concat('%', :query,'%')) and e.typeOfInvoice = :typeOfInvoice")
