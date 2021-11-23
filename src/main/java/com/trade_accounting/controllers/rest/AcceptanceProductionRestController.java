@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.AcceptanceProductionDto;
+import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.repositories.AcceptanceProductionRepository;
 import com.trade_accounting.services.interfaces.AcceptanceProductionService;
 import com.trade_accounting.services.interfaces.CheckEntityService;
@@ -61,6 +62,25 @@ public class AcceptanceProductionRestController {
 
         return ResponseEntity.ok(acceptanceProductionService.getById(id));
     }
+
+//    @ApiOperation(value = "getByAcceptanceId", notes = "Возвращает список товаров в приемке по Acceptance.id")
+//    @GetMapping("/acceptance_product/{id}")
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "Товар в приемке найден"),
+//            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+//            @ApiResponse(code = 403, message = "Операция запрещена"),
+//            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+//    )
+//    public ResponseEntity<List<AcceptanceProductionDto>> getByAcceptanceId(@ApiParam(
+//            name = "id",
+//            type = "Long",
+//            value = "Переданный ID  в URL по которому необходимо список товаров в накладной",
+//            example = "1",
+//            required = true) @PathVariable(name = "id") Long id) {
+//        List<AcceptanceProductionDto> invoiceProductDtoList = acceptanceProductionService.searchByInvoiceId(id);
+//        return ResponseEntity.ok(invoiceProductDtoList);
+//    }
+
 
     @PostMapping
     @ApiOperation(value = "create", notes = "Добавление новой приемки товара")

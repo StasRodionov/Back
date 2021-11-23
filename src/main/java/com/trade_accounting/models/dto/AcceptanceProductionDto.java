@@ -15,6 +15,8 @@ public class AcceptanceProductionDto {
 
     private Long id;
 
+    private Long acceptanceId;
+
     private Long amount;
 
     private Long productId;

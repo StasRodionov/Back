@@ -1,7 +1,10 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.AcceptanceProduction;
+import com.trade_accounting.models.InvoiceProduct;
+import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.AcceptanceProductionDto;
+import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.repositories.AcceptanceProductionRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.AcceptanceProductionService;
@@ -9,7 +12,9 @@ import com.trade_accounting.utils.mapper.AcceptanceProductionMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,14 +48,18 @@ public class AcceptanceProductionServiceImpl implements AcceptanceProductionServ
                 acceptanceProductionRepository.getOne(id)
         );
     }
-
     @Override
-    public AcceptanceProductionDto create(AcceptanceProductionDto dto) {
-        AcceptanceProduction acceptanceProduction = acceptanceProductionMapper.toModel(dto);
-        acceptanceProduction.setProduct(productRepository.getOne(dto.getProductId()));
-        return acceptanceProductionMapper.toDto(acceptanceProductionRepository
-                .save(acceptanceProduction));
+    public AcceptanceProductionDto create(@NotNull AcceptanceProductionDto dto) {
+        return saveOrUpdate(dto);
     }
+
+//    @Override
+//    public AcceptanceProductionDto create(AcceptanceProductionDto dto) {
+//        AcceptanceProduction acceptanceProduction = acceptanceProductionMapper.toModel(dto);
+//        acceptanceProduction.setProduct(productRepository.getOne(dto.getProductId()));
+//        return acceptanceProductionMapper.toDto(acceptanceProductionRepository
+//                .save(acceptanceProduction));
+//    }
 
     @Override
     public AcceptanceProductionDto update(AcceptanceProductionDto dto) {
@@ -60,5 +69,17 @@ public class AcceptanceProductionServiceImpl implements AcceptanceProductionServ
     @Override
     public void deleteById(Long id) {
         acceptanceProductionRepository.deleteById(id);
+    }
+
+
+
+    private AcceptanceProductionDto saveOrUpdate(AcceptanceProductionDto dto) {
+        Optional<Product> product = productRepository.findById(dto.getProductId());
+
+        AcceptanceProduction acceptanceProduction = acceptanceProductionMapper.toModel(dto);
+
+        acceptanceProduction.setProduct(product.orElse(null));
+
+        return acceptanceProductionMapper.toDto(acceptanceProductionRepository.save(acceptanceProduction));
     }
 }
