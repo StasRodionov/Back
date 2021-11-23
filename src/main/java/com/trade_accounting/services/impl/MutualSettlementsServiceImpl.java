@@ -6,6 +6,7 @@ import com.trade_accounting.repositories.MutualSettlementsRepository;
 import com.trade_accounting.services.interfaces.MutualSettlementsService;
 import com.trade_accounting.utils.mapper.MutualSettlementsMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,5 +49,10 @@ public class MutualSettlementsServiceImpl implements MutualSettlementsService {
     @Override
     public void deleteById(Long id) {
         mutualSettlementsRepository.deleteById(id);
+    }
+
+    @Override
+    public List<MutualSettlementsDto> search(Specification<MutualSettlements> spec) {
+        return executeSearch(mutualSettlementsRepository, mutualSettlementsMapper::toDto, spec) ;
     }
 }
