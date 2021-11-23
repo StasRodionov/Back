@@ -6,10 +6,12 @@ import com.trade_accounting.repositories.StagesProductionRepository;
 import com.trade_accounting.services.interfaces.StagesProductionService;
 import com.trade_accounting.utils.mapper.StagesProductionMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,5 +57,28 @@ public class StagesProductionImpl implements StagesProductionService {
         stagesProductionRepository.deleteById(id);
     }
 
+    @Override
+    public List<StagesProductionDto> search(Specification<StagesProduction> spec) {
+        List<StagesProduction> stagesProductionList = stagesProductionRepository.findAll(spec);
+
+        List<StagesProductionDto> stagesProductionDtoList = new ArrayList<>();
+        for (StagesProduction sp : stagesProductionList) {
+            stagesProductionDtoList.add(stagesProductionMapper.toDto(sp));
+        }
+
+        return stagesProductionDtoList;
+    }
+
+    @Override
+    public List<StagesProductionDto> search(String searchTerm) {
+
+        if(searchTerm.equals("null") || searchTerm.isEmpty()) {
+            List<StagesProduction> all = stagesProductionRepository.findAll();
+            return all.stream().map(stagesProductionMapper::toDto).collect(Collectors.toList());
+        } else {
+            List<StagesProduction> list = stagesProductionRepository.search(searchTerm);
+            return list.stream().map(stagesProductionMapper::toDto).collect(Collectors.toList());
+        }
+    }
 }
 

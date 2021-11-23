@@ -11,7 +11,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
@@ -30,7 +29,7 @@ public interface ImageMapper {
 
     default Image toModel(ImageDto imageDto, String imageDir) {
         String url = uploadImage(imageDto.getContent(), imageDir,
-                new Date().getTime() + imageDto.getFileExtension());
+                imageDto.getId() + imageDto.getFileExtension());
         return Image.builder()
                 .id(imageDto.getId())
                 .imageUrl(url)

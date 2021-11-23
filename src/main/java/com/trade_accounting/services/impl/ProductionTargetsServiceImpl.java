@@ -2,9 +2,11 @@ package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.ProductionTargets;
+import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.ProductionTargetsDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ProductionTargetsRepository;
+import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.ProductionTargetsService;
 import com.trade_accounting.utils.mapper.ProductionTargetsMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class ProductionTargetsServiceImpl implements ProductionTargetsService {
     private final ProductionTargetsRepository productionTargetsRepository;
     private final ProductionTargetsMapper productionTargetsMapper;
     private final CompanyRepository companyRepository;
+    private final WarehouseRepository warehouseRepository;
 
 
     @Override
@@ -75,18 +78,20 @@ public class ProductionTargetsServiceImpl implements ProductionTargetsService {
         ProductionTargets productionTargets = new ProductionTargets();
 
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
+        Warehouse materialWarehouse = warehouseRepository.getWarehouseById(dto.getMaterialWarehouse());
+        Warehouse productionWarehouse = warehouseRepository.getWarehouseById(dto.getProductionWarehouse());
         LocalDateTime date = LocalDateTime.parse(dto.getDate().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         LocalDateTime deliveryPlannedMoment = LocalDateTime.parse(dto.getDeliveryPlannedMoment().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         LocalDateTime productionStart = LocalDateTime.parse(dto.getProductionStart().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         LocalDateTime productionEnd = LocalDateTime.parse(dto.getProductionEnd().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        LocalDateTime updated = LocalDateTime.parse(dto.getUpdated().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        LocalDateTime updated = LocalDateTime.parse(dto.getUpdated().substring(0, 16).replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
         productionTargets.setId(dto.getId());
         productionTargets.setDate(date);
         productionTargets.setCompany(company);
         productionTargets.setDeliveryPlannedMoment(deliveryPlannedMoment);
-        productionTargets.setMaterialWarehouse(dto.getMaterialWarehouse());
-        productionTargets.setProductionWarehouse(dto.getProductionWarehouse());
+        productionTargets.setMaterialWarehouse(materialWarehouse);
+        productionTargets.setProductionWarehouse(productionWarehouse);
         productionTargets.setProductionStart(productionStart);
         productionTargets.setProductionEnd(productionEnd);
         productionTargets.setShared(dto.getShared());

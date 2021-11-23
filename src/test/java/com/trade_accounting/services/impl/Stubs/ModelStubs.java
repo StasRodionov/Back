@@ -28,6 +28,7 @@ import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Production;
+import com.trade_accounting.models.ProductionTargets;
 import com.trade_accounting.models.Project;
 import com.trade_accounting.models.RequestsProductions;
 import com.trade_accounting.models.RetailStore;
@@ -608,6 +609,12 @@ public class ModelStubs {
                 .expenses(111)
                 .finalBalance(111)
                 .build();
+    }
+
+    public static ProductionTargets getProductionTargets(Long id) {
+        return new ProductionTargets(id, LocalDateTime.now(), getCompany(id), LocalDateTime.now(), getWarehouse(id),
+                getWarehouse(id), LocalDateTime.now(), LocalDateTime.now(), false, "owner", "owner",
+                false, false, "comment", LocalDateTime.now(), "Name");
     }
 }
 

@@ -2,11 +2,15 @@ package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.StagesProduction;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public interface StagesProductionRepository extends JpaRepository <StagesProduction, Long> {
+public interface StagesProductionRepository extends JpaRepository <StagesProduction, Long>, JpaSpecificationExecutor<StagesProduction> {
 
     /**
      * Find a Stages of production by ID which contains in input set of IDs
@@ -25,6 +29,12 @@ public interface StagesProductionRepository extends JpaRepository <StagesProduct
                 .filter(stagesProduction -> ids.contains(stagesProduction.getId()))
                 .collect(Collectors.toSet());
     }
+
+    @Query("from StagesProduction s " +
+            "where lower(concat(s.name, ' ', s.description)) " +
+            "like lower(concat('%', :req, '%'))")
+    List<StagesProduction> search(@Param("req") String request);
+
 }
 
 // Этапы
