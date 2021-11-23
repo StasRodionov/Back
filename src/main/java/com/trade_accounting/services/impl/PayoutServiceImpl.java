@@ -5,6 +5,8 @@ import com.trade_accounting.models.dto.PayoutDto;
 import com.trade_accounting.repositories.PayoutRepository;
 import com.trade_accounting.services.interfaces.PayoutService;
 import com.trade_accounting.utils.mapper.PayoutMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,16 +15,13 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class PayoutServiceImpl implements PayoutService {
 
     private final PayoutRepository payoutRepository;
 
     private final PayoutMapper payoutMapper;
 
-    public PayoutServiceImpl(PayoutRepository payoutRepository, PayoutMapper payoutMapper) {
-        this.payoutRepository = payoutRepository;
-        this.payoutMapper = payoutMapper;
-    }
 
     @Override
     public List<PayoutDto> getAll() {
@@ -64,5 +63,10 @@ public class PayoutServiceImpl implements PayoutService {
             List<Payout> list = payoutRepository.search(searchTerm);
             return list.stream().map(payoutMapper::toDto).collect(Collectors.toList());
         }
+    }
+
+    @Override
+    public List<PayoutDto> search(Specification<Payout> spec) {
+        return executeSearch(payoutRepository, payoutMapper::toDto, spec);
     }
 }
