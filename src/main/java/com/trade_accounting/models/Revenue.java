@@ -49,4 +49,28 @@ public class Revenue {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private InvoiceProduct invoiceProduct;
+
+    @NotNull
+    private Integer startOfPeriodAmount;
+
+    @NotNull
+    private Integer startOfPeriodSumOfPrice;
+
+    @NotNull
+    private Integer endOfPeriodAmount;
+
+    @NotNull
+    private Integer endOfPeriodSumOfPrice;
+
+    @NotNull
+    private Integer comingAmount;
+
+    @NotNull
+    private Integer comingSumOfPrice;
+
+    @NotNull
+    private Integer spendingAmount;
+
+    @NotNull
+    private Integer spendingSumOfPrice;
 }

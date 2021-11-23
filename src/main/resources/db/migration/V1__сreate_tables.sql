@@ -1087,17 +1087,25 @@ create table retail_returns
 
 create table revenue
 (
-    id                      bigserial    not null,
-    product_id              bigserial    not null,
-    unit_id                 bigserial    not null,
-    description             varchar(255),
-    item_number             int4,
-    amount_acceptance       numeric(19, 2) default 0 not null,
-    incoming_number_date    timestamp    not null,
-    amount_shipment         numeric(19, 2) default 0 not null,
-    acceptance_id           int8,
-    acceptance_production_id int8,
-    invoice_product_id      int8,
+    id                           bigserial    not null,
+    product_id                   bigserial    not null,
+    unit_id                      bigserial    not null,
+    description                  varchar(255),
+    item_number                  int4,
+    amount_acceptance            numeric(19, 2) default 0 not null,
+    incoming_number_date         timestamp    not null,
+    amount_shipment              numeric(19, 2) default 0 not null,
+    acceptance_id                int8,
+    acceptance_production_id     int8,
+    invoice_product_id           int8,
+    start_of_period_amount       int4,
+    start_of_period_sum_of_price int4,
+    end_of_period_amount         int4,
+    end_of_period_sum_of_price   int4,
+    coming_amount                int4,
+    coming_sum_of_price          int4,
+    spending_amount              int4,
+    spending_sum_of_price        int4,
     primary key (id)
 );
 
