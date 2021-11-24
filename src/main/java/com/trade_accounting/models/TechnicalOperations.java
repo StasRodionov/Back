@@ -22,27 +22,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "technical_operations")
-public class TechnicalOperations {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column
-    private String comment;
-
-    @Column
-    @ColumnDefault("false")
-    private Boolean isPrint = false;
-
-    @Column
-    @ColumnDefault("false")
-    private Boolean isSent = false;
+public class TechnicalOperations extends OperationsAbstract{
 
     @Column
     private Integer volume;
-
-    @Column
-    private LocalDateTime date;
 
     @OneToOne(fetch = FetchType.LAZY)
     private TechnicalCard technicalCard;
