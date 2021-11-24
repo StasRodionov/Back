@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
@@ -29,10 +30,25 @@ public class RevenueDto {
 
     private Long acceptanceId;              // Acceptance
 
-    private String date;      // Acceptance
+    private String date;                     // Acceptance
 
     private Long invoiceProductId;          // InvoiceProduct
 
     private BigDecimal amountShipment;      // InvoiceProduct
 
+    private Integer startOfPeriodAmount;
+
+    private Integer startOfPeriodSumOfPrice;
+
+    private Integer endOfPeriodAmount;
+
+    private Integer endOfPeriodSumOfPrice;
+
+    private Integer comingAmount;
+
+    private Integer comingSumOfPrice;
+
+    private Integer spendingAmount;
+
+    private Integer spendingSumOfPrice;
 }
