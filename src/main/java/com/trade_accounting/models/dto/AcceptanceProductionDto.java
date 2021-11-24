@@ -19,5 +19,7 @@ public class AcceptanceProductionDto {
 
     private Long productId;
 
+    private Long acceptanceId;
+
     private BigDecimal price;
 }
