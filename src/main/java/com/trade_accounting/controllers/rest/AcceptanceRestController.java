@@ -76,6 +76,7 @@ public class AcceptanceRestController {
     public ResponseEntity<AcceptanceDto> create(@ApiParam(name = "acceptanceDto",
             value = "DTO приемки товара, которое необходимо создать")
                                                 @RequestBody AcceptanceDto acceptanceDto) {
+        System.out.println("REQUEST!!!!!!!!!!!!!!!!!!!!   " + acceptanceDto);
         return ResponseEntity.ok(acceptanceService.create(acceptanceDto));
     }
 
