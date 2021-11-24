@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PayoutRepository extends JpaRepository<Payout, Long>, JpaSpecificationExecutor<Contractor> {
+public interface PayoutRepository extends JpaRepository<Payout, Long>, JpaSpecificationExecutor<Payout> {
 
     @Query(
             "from payouts p LEFT OUTER JOIN RetailStore AS rs " +
