@@ -10,12 +10,14 @@ import com.trade_accounting.services.interfaces.TechnicalProcessService;
 import com.trade_accounting.utils.mapper.TechnicalProcessMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TechnicalProcessServiceImpl implements TechnicalProcessService {
 
     private final TechnicalProcessRepository technicalProcessRepository;
