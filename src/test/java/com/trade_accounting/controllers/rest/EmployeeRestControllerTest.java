@@ -14,6 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Set;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
@@ -44,7 +45,7 @@ public class EmployeeRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(5)))
+                .andExpect(jsonPath("$", hasSize(4)))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
     @Test
@@ -80,6 +81,10 @@ public class EmployeeRestControllerTest {
                 .description("created")
                 .email("created")
                 .password("created")
+                .departmentDtoId(4L)
+                .imageDtoId(1L)
+                .positionDtoId(4L)
+                .roleDtoIds(Set.of(2L))
                 .build();
         String createdEmployeeJson = new Gson().toJson(createdEmployee);
         mockMvc.perform(post("/api/employee").contentType(MediaType.APPLICATION_JSON)
@@ -93,7 +98,7 @@ public class EmployeeRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(6)));
+                .andExpect(jsonPath("$", hasSize(5)));
     }
     @Test
     public void testUpdate() throws Exception {
@@ -108,6 +113,10 @@ public class EmployeeRestControllerTest {
                 .description("updated")
                 .email("updated")
                 .password("updated")
+                .departmentDtoId(4L)
+                .imageDtoId(1L)
+                .positionDtoId(4L)
+                .roleDtoIds(Set.of(2L))
                 .build();
         String updatedEmployeeJson = new Gson().toJson(updatedEmployee);
         mockMvc.perform(put("/api/employee").contentType(MediaType.APPLICATION_JSON)
@@ -130,6 +139,6 @@ public class EmployeeRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(4)));
+                .andExpect(jsonPath("$", hasSize(3)));
     }
 }
