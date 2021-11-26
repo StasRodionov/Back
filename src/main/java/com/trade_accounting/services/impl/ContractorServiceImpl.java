@@ -15,6 +15,7 @@ import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ContractorService;
 import com.trade_accounting.utils.mapper.ContractorMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +39,6 @@ public class ContractorServiceImpl implements ContractorService {
     private final ContractorMapper contractorMapper;
     private final ContractorStatusRepository contractorStatusRepository;
 
-
     @Override
     public List<ContractorDto> search(Specification<Contractor> specification) {
         return executeSearch(contractorRepository, contractorMapper::contractorToContractorDto, specification);
@@ -46,7 +46,9 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<ContractorDto> getAll() {
-        List<Contractor> list = contractorRepository.findAll();
+        List<Contractor> list = contractorRepository.findAll(
+                Sort.by(Sort.Direction.ASC, "id"));
+
         return list.stream()
                 .map(contractorMapper::contractorToContractorDto)
                 .collect(Collectors.toList());
