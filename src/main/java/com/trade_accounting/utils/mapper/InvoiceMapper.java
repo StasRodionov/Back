@@ -57,6 +57,8 @@ public interface InvoiceMapper {
             invoiceDto.typeOfInvoice(invoice.getTypeOfInvoice().name());
         }
         invoiceDto.isSpend(invoice.getIsSpend());
+        invoiceDto.isSent(invoice.getIsSent());
+        invoiceDto.isPrint(invoice.getIsPrint());
         invoiceDto.invoicesStatusId(invoiceStatusId(invoice));
 
         return invoiceDto.build();
@@ -81,6 +83,8 @@ public interface InvoiceMapper {
             invoice.typeOfInvoice(Enum.valueOf(TypeOfInvoice.class, emp.getTypeOfInvoice()));
         }
         invoice.isSpend(emp.getIsSpend());
+        invoice.isSent(emp.getIsSent());
+        invoice.isPrint(emp.getIsPrint());
         invoice.comment(emp.getComment());
         invoice.invoicesStatus(invoiceDtoToInvoicesStatus(emp));
         return invoice.build();

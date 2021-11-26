@@ -30,10 +30,11 @@ public class InvoiceDto {
     @NotNull
     private Long invoicesStatusId;
     private Boolean isSpend;
+    private Boolean isSent;
+    private Boolean isPrint;
 
-    public InvoiceDto(Long id, String date,
-                      String typeOfInvoice, Long companyId,
-                      Long contractorId, Long warehouseId, boolean isSpend, String comment, Long invoicesStatusId) {
+    public InvoiceDto(Long id, String date, String typeOfInvoice, Long companyId, Long contractorId, Long warehouseId,
+                      boolean isSpend, boolean isSent, boolean isPrint, String comment, Long invoicesStatusId) {
         this.id = id;
         this.date = date;
         this.typeOfInvoice = typeOfInvoice;
@@ -41,6 +42,8 @@ public class InvoiceDto {
         this.contractorId = contractorId;
         this.warehouseId = warehouseId;
         this.isSpend = isSpend;
+        this.isSent = isSent;
+        this.isPrint = isPrint;
         this.comment = comment;
         this.invoicesStatusId = invoicesStatusId;
     }
@@ -52,6 +55,8 @@ public class InvoiceDto {
                       Long contractorId,
                       Long warehouseId,
                       Boolean isSpend,
+                      Boolean isSent,
+                      Boolean isPrint,
                       String comment,
                       Long invoicesStatusId) {
         this.id = id;
@@ -61,6 +66,8 @@ public class InvoiceDto {
         this.contractorId = contractorId;
         this.warehouseId = warehouseId;
         this.isSpend = isSpend;
+        this.isSent = isSent;
+        this.isPrint = isPrint;
         this.comment = comment;
         this.invoicesStatusId = invoicesStatusId;
     }
