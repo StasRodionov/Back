@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.dto.InvoiceProductDto;
 import com.trade_accounting.repositories.InvoiceProductRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
@@ -11,6 +12,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,6 +40,19 @@ public class InvoiceProductRestController {
     private final InvoiceProductService invoiceProductService;
     private final CheckEntityService checkEntityService;
     private final InvoiceProductRepository invoiceProductRepository;
+
+    @GetMapping("/search")
+    @ApiOperation(value = "search", notes = "Получение списка товаров в накладной по заданным параметрамз фильтра")
+    public ResponseEntity<List<InvoiceProductDto>> getAll(
+            @And({
+                    @Spec(path = "product.name", params = "productDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "amount", params = "amount", spec = Equal.class),
+                    @Spec(path = "price", params = "price", spec = Equal.class),
+                    @Spec(path = "product.purchasePrice", params = "costPrice", spec = Equal.class),
+                    @Spec(path = "product.description", params = "description", spec = LikeIgnoreCase.class)
+            }) Specification<InvoiceProduct> spec) {
+        return ResponseEntity.ok(invoiceProductService.search(spec));
+    }
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех товаров в накладной")
     @GetMapping

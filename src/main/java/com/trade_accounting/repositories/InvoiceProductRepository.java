@@ -29,14 +29,6 @@ public interface InvoiceProductRepository extends JpaRepository<InvoiceProduct, 
             "e.price) from InvoiceProduct e where e.id =:id")
     InvoiceProductDto getById(@Param("id") Long id);
 
-//    @Query("select new com.trade_accounting.models.dto.InvoiceProductDto(" +
-//            "e.id," +
-//            "e.invoice.id," +
-//            "e.product.id," +
-//            "e.amount," +
-//            "e.price) from InvoiceProduct e where e.invoice.id =:id")
-//    List<InvoiceProductDto> getByInvoiceId(@Param("id") Long id);
-
     @Query("select ip from InvoiceProduct ip where ip.invoice.id =:id")
     List<InvoiceProduct> getByInvoiceId(@Param("id") Long id);
 
