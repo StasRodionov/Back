@@ -883,6 +883,8 @@ create table supplier_accounts
     contract_id   int8         not null,
     contractor_id int8         not null,
     warehouse_id  int8         not null,
+    type_of_invoice int4      not null,
+    planned_date_payment    timestamp,
     primary key (id)
 );
 

@@ -1,6 +1,7 @@
 package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.SupplierAccount;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -26,6 +27,7 @@ public interface SupplierAccountRepository extends JpaRepository<SupplierAccount
     @Query("SELECT s FROM SupplierAccount s")
     List<SupplierAccount> getAll();
 
+    //List<SupplierAccount> findByTypeOfInvoice(TypeOfInvoice typeOfInvoice); //раскоментировать, когда будут реализованы фильтры
 
 //    @Query("select new com.trade_accounting.models.dto.SupplierAccountDto (" +
 //            "e.id," +
@@ -67,4 +69,11 @@ public interface SupplierAccountRepository extends JpaRepository<SupplierAccount
 //    )
     @Query("SELECT s FROM SupplierAccount s WHERE s.id = :nameFilter  ")
     List<SupplierAccountDto> searchById(@Param("nameFilter") Long nameFilter);
+
+    List<SupplierAccount> findByTypeOfInvoice(TypeOfInvoice typeOfInvoice);
+
+    @Query("SELECT s FROM SupplierAccount s where lower(concat(s.id, s.comment, s.company.name, s.warehouse.name)) " +
+            "like concat('%', :search, '%') and s.typeOfInvoice = :typeOfInvoice")
+    List<SupplierAccountDto> findBySearchAndTypeOfInvoice(@Param("search") String search,
+                                                  @Param("typeOfInvoice") TypeOfInvoice typeOfInvoice);
 }

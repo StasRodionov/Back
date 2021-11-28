@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.SupplierAccount;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -40,19 +42,6 @@ public class SupplierAccountRestController {
     private final SupplierAccountService invoices;
     private final CheckEntityService checkEntityService;
     private final SupplierAccountRepository supplierAccountRepository;
-
-    @GetMapping
-    @ApiOperation(value = "getAll", notes = "Получение списка всех счетов поставщиков")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение счетов поставщиков"),
-            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
-            @ApiResponse(code = 403, message = "Операция запрещена"),
-            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
-    )
-    public ResponseEntity<List<SupplierAccountDto>> getAll() {
-        List<SupplierAccountDto> getAll = invoices.getAll();
-        return ResponseEntity.ok(getAll);
-    }
 
     @GetMapping("/search/{nameFilter}")
     @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых счетов")
@@ -144,6 +133,24 @@ public class SupplierAccountRestController {
                     @Spec(path = "warehouse.name", params = "warehouseDto", spec = LikeIgnoreCase.class),
             })Specification<SupplierAccount> supplier) {
         return ResponseEntity.ok(invoices.search(supplier));
+    }
+
+    @GetMapping
+    @ApiOperation(value = "getAll", notes = "Получение списка всех накладных")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка накладных"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<SupplierAccountDto>> getAll(@RequestParam(required = false) String typeOfInvoice) {
+        List<SupplierAccountDto> invoiceDtoList;
+        if (typeOfInvoice != null) {
+            invoiceDtoList = invoices.getAll(typeOfInvoice);
+        } else {
+            invoiceDtoList = invoices.getAll();
+        }
+        return ResponseEntity.ok(invoiceDtoList);
     }
 
 

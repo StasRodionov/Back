@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class SupplierAccountDto {
 
-    @NotNull
+
     private Long id;
 
     @NotNull
@@ -30,8 +30,28 @@ public class SupplierAccountDto {
     @NotNull
     private Long contractorId;
 
+    @NotNull
+    private String typeOfInvoice;
+
+    private String plannedDatePayment;
+
     private Boolean isSpend;
 
     private String comment;
 
+    public SupplierAccountDto(Long id, String date, Long companyId,
+                              Long warehouseId, Long contractId, Long contractorId,
+                              String typeOfInvoice, String plannedDatePayment,
+                              boolean isSpend, String comment) {
+        this.id = id;
+        this.date = date;
+        this.companyId = companyId;
+        this.warehouseId = warehouseId;
+        this.contractId = contractId;
+        this.contractorId = contractorId;
+        this.typeOfInvoice = typeOfInvoice;
+        this.plannedDatePayment = plannedDatePayment;
+        this.isSpend = isSpend;
+        this.comment = comment;
+    }
 }
