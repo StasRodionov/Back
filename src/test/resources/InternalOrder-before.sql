@@ -1,6 +1,9 @@
 TRUNCATE internal_order CASCADE;
+TRUNCATE internal_order_products CASCADE;
 TRUNCATE companies CASCADE;
 TRUNCATE warehouses CASCADE;
+
+ALTER TABLE internal_order_products DROP CONSTRAINT IF EXISTS fk9t9i5pfy3byj13yyhnhen84sj;
 
 INSERT INTO companies (id, chief_accountant, chief_accountant_signature, comment_to_address, email, fax, inn,
                               leader, leader_manager_position, leader_signature, name, payer_vat, phone, sort_number,
@@ -25,6 +28,12 @@ INSERT INTO internal_order (id, comment, date, is_print, is_sent, company_id, wa
 VALUES (1, 'Комментарий 1', '1234-12-12 12:34', false, false, 1, 1),
        (2, 'Комментарий 2', '1234-12-12 12:34', true, false, 2, 1),
        (3, 'Комментарий 3', '1234-12-12 12:34', false, true, 3, 1);
+
+INSERT INTO internal_order_products (id, amount, price, product_id)
+VALUES (1, 10, 100, 1),
+       (2, 20, 100, 2),
+       (3, 30, 100, 3);
+
 
 SELECT setval('internal_order_id_seq', max(id))
 FROM internal_order;
