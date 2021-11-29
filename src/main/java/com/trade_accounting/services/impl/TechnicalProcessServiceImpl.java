@@ -9,9 +9,11 @@ import com.trade_accounting.repositories.TechnicalProcessRepository;
 import com.trade_accounting.services.interfaces.TechnicalProcessService;
 import com.trade_accounting.utils.mapper.TechnicalProcessMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,5 +71,15 @@ public class TechnicalProcessServiceImpl implements TechnicalProcessService {
     @Override
     public TechnicalProcessDto getByName(String name) {
         return technicalProcessMapper.toDto(technicalProcessRepository.getByName(name).orElse(null));
+    }
+
+    @Override
+    public List<TechnicalProcessDto> search(Specification<TechnicalProcess> spec) {
+        List<TechnicalProcess> technicalProcessList = technicalProcessRepository.findAll(spec);
+        List<TechnicalProcessDto> technicalProcessDtoList = new ArrayList<>();
+        for (TechnicalProcess tp : technicalProcessList) {
+            technicalProcessDtoList.add(technicalProcessMapper.toDto(tp));
+        }
+        return technicalProcessDtoList;
     }
 }

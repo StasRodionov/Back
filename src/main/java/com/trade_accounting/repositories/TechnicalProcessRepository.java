@@ -2,6 +2,7 @@ package com.trade_accounting.repositories;
 
 import com.trade_accounting.models.TechnicalProcess;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -9,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-public interface TechnicalProcessRepository extends JpaRepository<TechnicalProcess, Long> {
+public interface TechnicalProcessRepository extends JpaRepository<TechnicalProcess, Long>, JpaSpecificationExecutor<TechnicalProcess> {
 
     Optional<TechnicalProcess> getByName(@NotNull String name);
 
