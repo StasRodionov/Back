@@ -42,7 +42,7 @@ public class InvoiceProductRestController {
     private final InvoiceProductRepository invoiceProductRepository;
 
     @GetMapping("/search")
-    @ApiOperation(value = "search", notes = "Получение списка товаров в накладной по заданным параметрамз фильтра")
+    @ApiOperation(value = "search", notes = "Получение списка товаров в накладной по заданным параметрам из фильтра")
     public ResponseEntity<List<InvoiceProductDto>> getAll(
             @And({
                     @Spec(path = "product.name", params = "productDto", spec = LikeIgnoreCase.class),
