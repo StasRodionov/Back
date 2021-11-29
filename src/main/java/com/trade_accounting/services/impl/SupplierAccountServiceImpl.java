@@ -1,6 +1,14 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Company;
+import com.trade_accounting.models.Contract;
+import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.InvoicesStatus;
 import com.trade_accounting.models.SupplierAccount;
+import com.trade_accounting.models.TypeOfInvoice;
+import com.trade_accounting.models.Warehouse;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractRepository;
@@ -8,6 +16,8 @@ import com.trade_accounting.repositories.ContractorRepository;
 import com.trade_accounting.repositories.SupplierAccountRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.SupplierAccountService;
+import com.trade_accounting.utils.mapper.CompanyMapper;
+import com.trade_accounting.utils.mapper.ContractorMapper;
 import com.trade_accounting.utils.mapper.SupplierAccountMapper;
 import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +42,8 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
     private final ContractorRepository contractorRepository;
     private final ContractRepository contractRepository;
     private final WarehouseRepository warehouseRepository;
+    private final CompanyMapper companyMapper;
+    private final ContractorMapper contractorMapper;
 
     @Override
     public List<SupplierAccountDto> getAll() {
@@ -47,14 +59,16 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
 
     @Override
     public SupplierAccountDto create(SupplierAccountDto createSupplier) {
-        SupplierAccount saveInvoices = SupplierAccount.builder().id(createSupplier.getId()).date(LocalDateTime.parse(createSupplier.getDate()))
-                .comment(createSupplier.getComment()).isSpend(createSupplier.getIsSpend())
-                .company(companyRepository.getCompaniesById(createSupplier.getCompanyId()))
-                .warehouse(warehouseMapper.toModel(warehouseRepository.getById(createSupplier.getWarehouseId())))
-                .contract(contractRepository.getById(createSupplier.getContractId()))
-                .contractor((contractorRepository.getOne(createSupplier.getContractorId())))
-                .build();
-        return supplierAccountMapper.toDto(supplierAccountRepository.save(saveInvoices));
+        SupplierAccount invoiceSaved = supplierAccountMapper.toModel(createSupplier);
+        Company company = companyRepository.getCompaniesById(createSupplier.getCompanyId());
+        Contractor contractor = contractorRepository.getContractorById(createSupplier.getContractorId());
+        Warehouse warehouse = warehouseRepository.getOne(createSupplier.getWarehouseId());
+        Contract contract = contractRepository.getById(createSupplier.getContractId());
+        invoiceSaved.setCompany(company);
+        invoiceSaved.setContractor(contractor);
+        invoiceSaved.setWarehouse(warehouse);
+        invoiceSaved.setContract(contract);
+        return supplierAccountMapper.toDto(supplierAccountRepository.save(invoiceSaved));
     }
 
     @Override
@@ -85,5 +99,19 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
     @Override
     public List<SupplierAccountDto> search(Specification<SupplierAccount> spec) {
         return executeSearch(supplierAccountRepository, supplierAccountMapper::toDto, spec);
+    }
+
+    @Override
+    public List<SupplierAccountDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice) {
+        List<SupplierAccountDto> invoiceDtoList = supplierAccountRepository.findBySearchAndTypeOfInvoice(search, typeOfInvoice);
+        for (SupplierAccountDto invoice : invoiceDtoList) {
+            invoice.setCompanyId(companyMapper.toDto(companyRepository.getCompaniesById(invoice.getCompanyId())).getId());
+            invoice.setContractorId(contractorMapper.contractorToContractorDto(
+                    contractorRepository.getOne(invoice.getContractorId())).getId());
+            invoice.setWarehouseId(warehouseRepository.getById(invoice.getWarehouseId()).getId());
+            invoice.setContractId(contractRepository.getById(invoice.getContractId()).getId());
+
+        }
+        return invoiceDtoList;
     }
 }

@@ -7,11 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Data
 @SuperBuilder
@@ -36,4 +38,10 @@ public class SupplierAccount extends OperationsAbstract{
     @ColumnDefault("false")
     private Boolean isSpend;
 
+    @NotNull
+    @Column(name = "type_of_invoice")
+    private TypeOfInvoice typeOfInvoice;
+
+    @Column(name = "planned_date_payment")
+    private LocalDateTime plannedDatePayment;
 }

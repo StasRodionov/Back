@@ -4,21 +4,17 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.SupplierAccount;
+import com.trade_accounting.models.TypeOfInvoice;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Mapper(componentModel = "spring")
 public interface SupplierAccountMapper {
-    // SupplierAccounts
-//    @Mappings({
-//            @Mapping(source = "company.id", target = "companyId"),
-//            @Mapping(source = "contract.id", target = "contractId"),
-//            @Mapping(source = "contractor.id", target = "contractorId"),
-//            @Mapping(source = "warehouse.id", target = "warehouseId"),
-//    })
+
     default SupplierAccountDto toDto(SupplierAccount supplierAccount){
             SupplierAccountDto supplierAccountDto = new SupplierAccountDto();
             if(supplierAccount==null) {
@@ -27,12 +23,15 @@ public interface SupplierAccountMapper {
                 supplierAccountDto.setId(supplierAccount.getId());
                 supplierAccountDto.setIsSpend(supplierAccount.getIsSpend());
                 supplierAccountDto.setComment(supplierAccount.getComment());
-                supplierAccountDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                        .format(supplierAccount.getDate()));
+                supplierAccountDto.setDate(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(supplierAccount.getDate()));
+                supplierAccountDto.setTypeOfInvoice(supplierAccount.getTypeOfInvoice().name());
+                supplierAccountDto.setPlannedDatePayment(DateTimeFormatter.ISO_LOCAL_DATE
+                        .format(supplierAccount.getPlannedDatePayment()));
                 Warehouse warehouse = supplierAccount.getWarehouse();
                 Company company = supplierAccount.getCompany();
                 Contractor contractor = supplierAccount.getContractor();
                 Contract contract = supplierAccount.getContract();
+
                 if (warehouse==null){
                     return null;
                 } else {
@@ -57,12 +56,78 @@ public interface SupplierAccountMapper {
             }
         }
 
-//    @Mappings({
-//            @Mapping(source = "companyId", target = "company.id"),
-//            @Mapping(source = "contractId", target = "contract.id"),
-//            @Mapping(source = "contractorId", target = "contractor.id"),
-//            @Mapping(source = "warehouseId", target = "warehouse.id"),
-//    })
     @Mapping(target = "date", ignore = true)
-    SupplierAccount toModel(SupplierAccountDto supplierAccountDto);
+    default SupplierAccount toModel(SupplierAccountDto supplierAccountDto) {
+            if (supplierAccountDto == null) {
+                return null;
+            }
+
+            SupplierAccount.SupplierAccountBuilder supplier = SupplierAccount.builder();
+
+            supplier.company(supplierAccountDtoToCompany(supplierAccountDto));
+            supplier.contractor(supplierAccountDtoToContractor(supplierAccountDto));
+            supplier.warehouse(supplierAccountDtoToWarehouse(supplierAccountDto));
+            supplier.contract(supplierAccountDtoToContract(supplierAccountDto));
+            supplier.id(supplierAccountDto.getId());
+            if (supplierAccountDto.getDate() != null) {
+                supplier.date(LocalDateTime.parse(supplierAccountDto.getDate()));
+            }
+            if (supplierAccountDto.getPlannedDatePayment() != null) {
+                supplier.plannedDatePayment(LocalDateTime.parse(supplierAccountDto.getPlannedDatePayment() + "T00:00"));
+            }
+            if (supplierAccountDto.getTypeOfInvoice() != null) {
+                supplier.typeOfInvoice(Enum.valueOf(TypeOfInvoice.class, supplierAccountDto.getTypeOfInvoice()));
+            }
+            supplier.isSpend(supplierAccountDto.getIsSpend());
+            supplier.comment(supplierAccountDto.getComment());
+            return supplier.build();
+    }
+
+    default Company supplierAccountDtoToCompany(SupplierAccountDto supplierAccountDto) {
+        if (supplierAccountDto == null) {
+            return null;
+        }
+
+        Company company = new Company();
+
+        company.setId(supplierAccountDto.getCompanyId());
+
+        return company;
+    }
+
+    default Contractor supplierAccountDtoToContractor(SupplierAccountDto supplierAccountDto) {
+        if (supplierAccountDto == null) {
+            return null;
+        }
+
+        Contractor contractor = new Contractor();
+
+        contractor.setId(supplierAccountDto.getContractorId());
+
+        return contractor;
+    }
+
+    default Warehouse supplierAccountDtoToWarehouse(SupplierAccountDto supplierAccountDto) {
+        if (supplierAccountDto == null) {
+            return null;
+        }
+
+        Warehouse.WarehouseBuilder warehouse = Warehouse.builder();
+
+        warehouse.id(supplierAccountDto.getWarehouseId());
+
+        return warehouse.build();
+    }
+
+    default Contract supplierAccountDtoToContract(SupplierAccountDto supplierAccountDto) {
+        if (supplierAccountDto == null) {
+            return null;
+        }
+
+        Contract.ContractBuilder contract = Contract.builder();
+
+        contract.id(supplierAccountDto.getContractId());
+
+        return contract.build();
+    }
 }
