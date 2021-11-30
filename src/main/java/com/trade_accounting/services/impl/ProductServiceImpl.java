@@ -1,6 +1,7 @@
 package com.trade_accounting.services.impl;
 
 import javax.validation.constraints.NotNull;
+
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.PageDto;
@@ -13,6 +14,7 @@ import com.trade_accounting.utils.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +35,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getAll() {
-        return productRepository.findAll().stream().map(productMapper::toDto).collect(Collectors.toList());
+        return productRepository
+                .findAll(Sort.by(Sort.Direction.ASC, "id"))
+                .stream()
+                .map(productMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
