@@ -24,13 +24,15 @@ public class RevenueDto {
 
     private Long unitId;                    // Product
 
+    private String unitShortName;
+
     private Long acceptanceProductionId;    // AcceptanceProduction
 
     private Long amountAcceptance;          // AcceptanceProduction
 
     private Long acceptanceId;              // Acceptance
 
-    private String date;                     // Acceptance
+    private String incomingNumberDate;                     // Acceptance
 
     private Long invoiceProductId;          // InvoiceProduct
 
