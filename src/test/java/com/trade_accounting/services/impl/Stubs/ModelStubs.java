@@ -6,6 +6,7 @@ import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BalanceAdjustment;
 import com.trade_accounting.models.BankAccount;
+import com.trade_accounting.models.BuyersReturn;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
@@ -615,6 +616,10 @@ public class ModelStubs {
         return new ProductionTargets(id, LocalDateTime.now(), getCompany(id), LocalDateTime.now(), getWarehouse(id),
                 getWarehouse(id), LocalDateTime.now(), LocalDateTime.now(), false, "owner", "owner",
                 false, false, "comment", LocalDateTime.now(), "Name");
+    }
+
+    public static BuyersReturn getBuyersReturn(Long id) {
+        return new BuyersReturn(id, LocalDateTime.now(), getWarehouse(id), getContractor(id), getCompany(id), new BigDecimal(1000), false, false, "comment");
     }
 }
 
