@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.TechnicalProcess;
 import com.trade_accounting.models.dto.TechnicalProcessDto;
 import com.trade_accounting.services.interfaces.TechnicalProcessService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,10 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -110,5 +115,17 @@ public class TechnicalProcessRestController {
             value = "ID тех.процееса, который необходимо удалить") @PathVariable(name = "id") Long id) {
         technicalProcessService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("searchTechnicalProcess")
+    @ApiOperation(value = "searchTechnicalProcess", notes = "Получение списка тех процессов по заданным параметрам")
+    public ResponseEntity<List<TechnicalProcessDto>> getAllFilter (
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "name", params = "name", spec = Equal.class),
+                    @Spec(path = "description", params = "description", spec = Equal.class),
+                    @Spec(path = "dateOfChanged", params = "dateOfChanged", spec = Equal.class)
+            }) Specification<TechnicalProcess> spec) {
+                return ResponseEntity.ok(technicalProcessService.search(spec));
     }
 }
