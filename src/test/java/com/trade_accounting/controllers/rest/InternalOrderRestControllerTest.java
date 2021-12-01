@@ -9,12 +9,15 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -33,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/InternalOrder-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@WithUserDetails(value = "karimogon@mail.ru")
+@WithUserDetails(value = "vasyaogon@mail.ru")
 @RequiredArgsConstructor
 @AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
 class InternalOrderRestControllerTest {
@@ -145,4 +148,38 @@ class InternalOrderRestControllerTest {
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
+
+    @Test
+    void getAllByFilter() throws Exception {
+        mockMvc.perform(get("/api/internalorder/searchByFilter")
+                        .param("print", String.valueOf(false))
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+
+        mockMvc.perform(get("/api/internalorder/searchByFilter")
+                                .param("print", String.valueOf(false))
+                                .param("sent", String.valueOf(false))
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+
+        mockMvc.perform(get("/api/internalorder/searchByFilter")
+                        .param("comment", "Комм")
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+
+
+    }
+
 }
