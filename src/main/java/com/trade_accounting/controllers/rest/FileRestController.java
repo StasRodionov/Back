@@ -60,7 +60,7 @@ public class FileRestController {
     }
 
     @GetMapping("/search")
-    @ApiOperation(value = "search", notes = "Получение списка компаний по заданным параметрам")
+    @ApiOperation(value = "search", notes = "Получение списка файлов по заданным параметрам")
     public ResponseEntity<List<FileDto>> getAll(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
@@ -82,7 +82,7 @@ public class FileRestController {
     public ResponseEntity<FileDto> getById(@ApiParam(
             name = "id",
             type = "Long",
-            value = "Переданный ID  в URL по которому необходимо найти фото",
+            value = "Переданный ID  в URL по которому необходимо найти файл",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
         checkEntityService.checkExists((JpaRepository) fileRepository, id);
