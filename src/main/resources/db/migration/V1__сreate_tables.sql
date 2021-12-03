@@ -337,9 +337,11 @@ create table file
 (
     id          bigserial not null,
     name        varchar(255),
-    size        int8,
+    extension   varchar(255),
+    placement   varchar(255),
+    employee    varchar(255),
     key         varchar(255),
-    upload_date date default current_date,
+    upload_date_time timestamp default current_timestamp,
     primary key (id)
 );
 
