@@ -99,18 +99,18 @@ public class BuyersReturnRestController {
         return ResponseEntity.ok(buyersReturnService.findBySearch(search));
     }
 
-    @GetMapping("/search")
+    @GetMapping("/searchByFilter")
     @ApiOperation(value = "search", notes = "Получение списка счетов по заданным параметрам")
     public ResponseEntity<List<BuyersReturnDto>> getAll(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "date", params = "date", spec = GreaterThanOrEqual.class),
-                    @Spec(path = "company.name", params = "companyDto", spec = Like.class),
-                    @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
-                    @Spec(path = "warehouse.name", params = "warehouseDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "company.name", params = "company", spec = Like.class),
+                    @Spec(path = "contractor.name", params = "contractor", spec = LikeIgnoreCase.class),
+                    @Spec(path = "warehouse.name", params = "warehouse", spec = LikeIgnoreCase.class),
                     @Spec(path = "sum", params = "sum", spec = Equal.class),
-                    @Spec(path = "isSent", params = "sent", spec = Equal.class),
-                    @Spec(path = "isPrint", params = "print", spec = Equal.class),
+                    @Spec(path = "isSent", params = "isSent", spec = Equal.class),
+                    @Spec(path = "isPrint", params = "isPrint", spec = Equal.class),
                     @Spec(path = "comment", params = "comment", spec = Equal.class),
             }) Specification<BuyersReturn> spec) {
         return ResponseEntity.ok(buyersReturnService.search(spec));
