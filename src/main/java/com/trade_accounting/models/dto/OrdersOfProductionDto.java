@@ -24,7 +24,7 @@ public class OrdersOfProductionDto {
 
     private Integer produce;
 
-    private String PlannedProductionDate;
+    private String plannedProductionDate;
 
     private Boolean isSent = false;
 

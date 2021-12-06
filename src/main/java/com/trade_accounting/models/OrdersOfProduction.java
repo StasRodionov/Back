@@ -48,7 +48,7 @@ public class OrdersOfProduction {
     private Integer produce;
 
     @Column
-    private LocalDateTime PlannedProductionDate;
+    private LocalDateTime plannedProductionDate;
 
     @Column
     @ColumnDefault("false")
