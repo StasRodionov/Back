@@ -6,6 +6,7 @@ import com.trade_accounting.models.AgentReports;
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.BalanceAdjustment;
 import com.trade_accounting.models.BankAccount;
+import com.trade_accounting.models.BuyersReturn;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contact;
 import com.trade_accounting.models.Contract;
@@ -619,16 +620,8 @@ public class ModelStubs {
                 false, false, "comment", LocalDateTime.now(), "Name");
     }
 
-    public static File getFile(Long id) {
-        return File.builder()
-                .id(id)
-                .name("name")
-                .employee("Employee")
-                .placement("Placement")
-                .uploadDateTime(LocalDateTime.now())
-                .key(UUID.randomUUID().toString())
-                .extension(".ext")
-                .build();
+    public static BuyersReturn getBuyersReturn(Long id) {
+        return new BuyersReturn(id, LocalDateTime.now(), getWarehouse(id), getContractor(id), getCompany(id), new BigDecimal(1000), false, false, "comment");
     }
 }
 

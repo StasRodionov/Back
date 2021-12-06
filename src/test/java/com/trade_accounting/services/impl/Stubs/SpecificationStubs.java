@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.BuyersReturn;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Currency;
@@ -29,6 +30,10 @@ public class SpecificationStubs {
     }
 
     public static Specification<ProductionTargets> getProductionTargetsSpecificationStub() {
+        return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+
+    public static Specification<BuyersReturn> getBuyersReturnSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
 }

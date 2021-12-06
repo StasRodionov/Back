@@ -42,7 +42,7 @@ class ProductionTargetsServiceImplTest {
     private CompanyRepository companyRepository;
 
     @Mock
-    WarehouseRepository warehouseRepository;
+    private WarehouseRepository warehouseRepository;
 
     @Spy
     private ProductionTargetsMapperImpl productionTargetsMapper;
