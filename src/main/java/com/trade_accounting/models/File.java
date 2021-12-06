@@ -3,9 +3,7 @@ package com.trade_accounting.models;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Builder(toBuilder = true)
 @Data
@@ -23,7 +21,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class File {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,11 +29,17 @@ public class File {
     private String name;
 
     @Column
-    private Long size;
+    private String extension;
+
+    @Column
+    private String placement;
+
+    @Column
+    private String employee;
 
     @Column(unique = true)
     private String key;
 
-    @Column(name = "upload_date")
-    private LocalDate uploadDate;
+    @Column(name = "upload_date_time")
+    private LocalDateTime uploadDateTime;
 }
