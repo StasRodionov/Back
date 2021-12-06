@@ -51,6 +51,20 @@ public class InternalOrderServiceImpl implements InternalOrderService {
     }
 
     @Override
+    public void moveToRecyclebin(long id) {
+        InternalOrder internalOrder = internalOrderRepository.getById(id);
+        internalOrder.setIsRecyclebin(true);
+        internalOrderRepository.save(internalOrder);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        InternalOrder internalOrder = internalOrderRepository.getById(id);
+        internalOrder.setIsRecyclebin(false);
+        internalOrderRepository.save(internalOrder);
+    }
+
+    @Override
     public InternalOrderDto getById(Long id) {
         return internalOrderMapper.toDto(internalOrderRepository.getOne(id));
     }

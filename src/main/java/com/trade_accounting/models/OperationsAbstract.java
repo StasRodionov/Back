@@ -49,4 +49,7 @@ public abstract class OperationsAbstract {
     @Column(name = "comment")
     private String comment;
 
+    @Column(name = "is_recyclebin")
+    @ColumnDefault("false")
+    private Boolean isRecyclebin = false;
 }

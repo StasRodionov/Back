@@ -35,4 +35,6 @@ public class CorrectionDto {
     private String comment;
 
     private List<Long> correctionProductIds;
+
+    private Boolean isRecyclebin;
 }

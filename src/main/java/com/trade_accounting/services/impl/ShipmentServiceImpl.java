@@ -81,4 +81,18 @@ public class ShipmentServiceImpl implements ShipmentService {
     public void deleteById(Long id) {
         shipmentRepository.deleteById(id);
     }
+
+    @Override
+    public void moveToRecyclebin(long id) {
+        Shipment shipment = shipmentRepository.getOne(id);
+        shipment.setIsRecyclebin(true);
+        shipmentRepository.save(shipment);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        Shipment shipment = shipmentRepository.getOne(id);
+        shipment.setIsRecyclebin(false);
+        shipmentRepository.save(shipment);
+    }
 }

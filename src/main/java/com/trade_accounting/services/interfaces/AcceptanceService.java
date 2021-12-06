@@ -8,4 +8,7 @@ import java.util.List;
 public interface AcceptanceService extends AbstractService<AcceptanceDto>, SearchableService<Acceptance, AcceptanceDto>{
 
         List<AcceptanceDto> searchByNumberAndComment (String searchTerm);
+
+        void moveToRecyclebin(long id);
+        void restoreFromRecyclebin(long id);
 }

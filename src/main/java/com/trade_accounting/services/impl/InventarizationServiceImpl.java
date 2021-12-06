@@ -82,4 +82,18 @@ public class InventarizationServiceImpl implements InventarizationService {
 
         return inventarizationMapper.toDto(inventarizationRepository.save(inventarization));
     }
+
+    @Override
+    public void moveToRecyclebin(long id) {
+        Inventarization inventarization = inventarizationRepository.getOne(id);
+        inventarization.setIsRecyclebin(true);
+        inventarizationRepository.save(inventarization);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        Inventarization inventarization = inventarizationRepository.getOne(id);
+        inventarization.setIsRecyclebin(false);
+        inventarizationRepository.save(inventarization);
+    }
 }

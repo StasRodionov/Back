@@ -76,5 +76,19 @@ public class CorrectionServiceImpl implements CorrectionService {
 
         return correctionMapper.toDto(correctionRepository.save(correction));
     }
+
+    @Override
+    public void moveToRecyclebin(long id) {
+        Correction correction = correctionRepository.getCorrectionById(id);
+        correction.setIsRecyclebin(true);
+        correctionRepository.save(correction);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        Correction correction = correctionRepository.getCorrectionById(id);
+        correction.setIsRecyclebin(false);
+        correctionRepository.save(correction);
+    }
 }
 

@@ -24,6 +24,7 @@ public interface CorrectionMapper {
             correctionDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(correction.getDate()));
             correctionDto.setIsSent(correction.getIsSent());
             correctionDto.setIsPrint(correction.getIsPrint());
+            correctionDto.setIsRecyclebin(correction.getIsRecyclebin());
             correctionDto.setWriteOffProduct(correction.getWriteOffProduct());
             correctionDto.setComment(correction.getComment());
 

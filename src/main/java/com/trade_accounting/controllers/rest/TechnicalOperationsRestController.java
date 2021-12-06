@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.TechnicalOperations;
+import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import com.trade_accounting.repositories.TechnicalOperationsRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
@@ -144,4 +145,41 @@ public class TechnicalOperationsRestController {
             }) Specification<TechnicalOperations> spec) {
         return ResponseEntity.ok(technicalOperationsService.search(spec));
     }
+
+    @PutMapping("/moveToIsRecyclebin/{id}")
+    @ApiOperation(value = "moveToIsRecyclebin", notes = "Перенос в корзину тех операции по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Тех операция перенесена в корзину"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<MovementDto> moveToIsRecyclebin(@ApiParam(name = "id", type = "Long",
+            value = "Переданный id, по которому необходимо переместить тех операцию")
+                                                          @PathVariable("id") Long id) {
+        checkEntityService.checkExists((JpaRepository) technicalOperationsRepository, id);
+        technicalOperationsService.moveToRecyclebin(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/restoreFromIsRecyclebin/{id}")
+    @ApiOperation(value = "restoreFromIsRecyclebin", notes = "Восстановление тех операции по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Тех операция восстановленна"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<MovementDto> restoreFromIsRecyclebin(@ApiParam(name = "id", type = "Long",
+            value = "Переданный id, по которому необходимо восстановить тех операцию")
+                                                               @PathVariable("id") Long id) {
+        checkEntityService.checkExists((JpaRepository) technicalOperationsRepository, id);
+        technicalOperationsService.restoreFromRecyclebin(id);
+        return ResponseEntity.ok().build();
+    }
+
+
 }

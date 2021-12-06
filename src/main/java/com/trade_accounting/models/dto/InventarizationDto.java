@@ -33,4 +33,6 @@ public class InventarizationDto {
     private String comment;
 
     private List<Long> inventarizationProductIds;
+
+    private Boolean isRecyclebin;
 }

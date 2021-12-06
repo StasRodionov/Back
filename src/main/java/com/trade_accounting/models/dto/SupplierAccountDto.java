@@ -39,6 +39,8 @@ public class SupplierAccountDto {
 
     private String comment;
 
+    private Boolean isRecyclebin;
+
     public SupplierAccountDto(Long id, String date, Long companyId,
                               Long warehouseId, Long contractId, Long contractorId,
                               String typeOfInvoice, String plannedDatePayment,

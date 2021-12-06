@@ -114,4 +114,18 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
         }
         return invoiceDtoList;
     }
+
+    @Override
+    public void moveToRecyclebin(long id) {
+        SupplierAccount supplierAccount = supplierAccountRepository.getOne(id);
+        supplierAccount.setIsRecyclebin(true);
+        supplierAccountRepository.save(supplierAccount);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        SupplierAccount supplierAccount = supplierAccountRepository.getOne(id);
+        supplierAccount.setIsRecyclebin(false);
+        supplierAccountRepository.save(supplierAccount);
+    }
 }

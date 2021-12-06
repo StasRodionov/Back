@@ -44,4 +44,6 @@ public class AcceptanceDto {
     private List<AcceptanceProductionDto> acceptanceProduction;
 
     private List<Long> acceptanceProductIds;
+
+    private Boolean isRecyclebin;
 }

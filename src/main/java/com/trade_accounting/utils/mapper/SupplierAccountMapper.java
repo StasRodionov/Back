@@ -23,6 +23,7 @@ public interface SupplierAccountMapper {
                 supplierAccountDto.setId(supplierAccount.getId());
                 supplierAccountDto.setIsSpend(supplierAccount.getIsSpend());
                 supplierAccountDto.setComment(supplierAccount.getComment());
+                supplierAccountDto.setIsRecyclebin(supplierAccount.getIsRecyclebin());
                 supplierAccountDto.setDate(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(supplierAccount.getDate()));
                 supplierAccountDto.setTypeOfInvoice(supplierAccount.getTypeOfInvoice().name());
                 supplierAccountDto.setPlannedDatePayment(DateTimeFormatter.ISO_LOCAL_DATE
@@ -79,6 +80,7 @@ public interface SupplierAccountMapper {
                 supplier.typeOfInvoice(Enum.valueOf(TypeOfInvoice.class, supplierAccountDto.getTypeOfInvoice()));
             }
             supplier.isSpend(supplierAccountDto.getIsSpend());
+            supplier.isRecyclebin(supplierAccountDto.getIsRecyclebin());
             supplier.comment(supplierAccountDto.getComment());
             return supplier.build();
     }

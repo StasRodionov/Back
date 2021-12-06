@@ -37,6 +37,7 @@ public interface TechnicalOperationsMapper {
         technicalOperationsDto.setComment(technicalOperations.getComment());
         technicalOperationsDto.setIsPrint(technicalOperations.getIsPrint());
         technicalOperationsDto.setIsSent(technicalOperations.getIsSent());
+        technicalOperationsDto.setIsRecyclebin(technicalOperations.getIsRecyclebin());
 //        if(technicalOperations.getDate() != null){
 //            technicalOperationsDto.setDate(DateTimeFormatter.ISO_LOCAL_DATE.format(technicalOperations.getDate()));
 //        }

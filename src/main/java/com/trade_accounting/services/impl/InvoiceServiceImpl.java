@@ -71,6 +71,20 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    public void moveToRecyclebin(long id) {
+        Invoice invoice = invoiceRepository.getOne(id);
+        invoice.setIsRecyclebin(true);
+        invoiceRepository.save(invoice);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        Invoice invoice = invoiceRepository.getOne(id);
+        invoice.setIsRecyclebin(false);
+        invoiceRepository.save(invoice);
+    }
+
+    @Override
     public InvoiceDto getById(Long id) {
         Optional<Invoice> invoice = invoiceRepository.findById(id);
         return invoiceMapper.toDto(invoice.orElse(new Invoice()));

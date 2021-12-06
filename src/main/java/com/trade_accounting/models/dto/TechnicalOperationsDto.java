@@ -31,4 +31,5 @@ public class TechnicalOperationsDto {
 
     private Long companyId;
 
+    private Boolean isRecyclebin;
 }

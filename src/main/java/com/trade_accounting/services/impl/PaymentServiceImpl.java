@@ -70,6 +70,20 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public void moveToRecyclebin(long id) {
+        Payment payment = paymentRepository.getOne(id);
+        payment.setIsRecyclebin(true);
+        paymentRepository.save(payment);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        Payment payment = paymentRepository.getOne(id);
+        payment.setIsRecyclebin(false);
+        paymentRepository.save(payment);
+    }
+
+    @Override
     public List<PaymentDto> filter(Specification<Payment> specification) {
         return paymentRepository.findAll(specification).stream().
                 map(paymentMapper::toDto).collect(Collectors.toList());
