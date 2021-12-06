@@ -5,3 +5,6 @@ VALUES (1, 'src/main/resources/file/employee_image.png', '1'),
        (4, 'src/main/resources/file/employee_image.png', '4'),
        (5, 'src/main/resources/file/employee_image.png', '5'),
        (6, 'src/main/resources/file/employee_image.png', '6');
+
+SELECT setval('images_id_seq', max(id))
+FROM images

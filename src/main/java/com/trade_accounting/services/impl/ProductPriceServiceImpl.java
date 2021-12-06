@@ -40,7 +40,8 @@ public class ProductPriceServiceImpl implements ProductPriceService {
     public ProductPriceDto create(@NotNull ProductPriceDto dto) {
         ProductPrice productPrice = productPriceMapper.toModel(dto);
         productPriceRepository.save(productPrice);
-        return dto;    }
+        return dto;
+    }
 
     @Override
     public ProductPriceDto update(ProductPriceDto dto) {

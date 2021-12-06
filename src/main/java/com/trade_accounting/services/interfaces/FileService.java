@@ -1,18 +1,17 @@
 package com.trade_accounting.services.interfaces;
 
 import com.trade_accounting.models.File;
-import org.springframework.core.io.Resource;
-import org.springframework.web.multipart.MultipartFile;
+import com.trade_accounting.models.dto.FileDto;
 
-import java.io.IOException;
+import java.util.List;
 
-public interface FileService  {
+public interface FileService extends AbstractService<File>, SearchableService<File, FileDto>  {
 
-    File create(MultipartFile resource) throws IOException;
+    List<File> getAll();
 
-    Resource download(String key) throws IOException;
+    FileDto create(FileDto fileDto);
 
     File getById(Long fileId);
 
-    void delete(Long fileId) throws IOException;
+    void delete(Long fileId);
 }

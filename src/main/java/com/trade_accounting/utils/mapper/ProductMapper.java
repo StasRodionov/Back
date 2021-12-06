@@ -1,8 +1,14 @@
 package com.trade_accounting.utils.mapper;
 
+import com.trade_accounting.models.AttributeOfCalculationObject;
+import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.TaxSystem;
+import com.trade_accounting.models.Unit;
+import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.repositories.ProductPriceRepository;
@@ -10,6 +16,7 @@ import com.trade_accounting.services.impl.ProductPriceServiceImpl;
 import com.trade_accounting.services.interfaces.ProductPriceService;
 import org.mapstruct.Mapper;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -23,19 +30,28 @@ public interface ProductMapper {
             return null;
         }
 
-        return Product.builder()
-                .id(productDto.getId())
-                .name(productDto.getName())
-                .volume(productDto.getVolume())
-                .weight(productDto.getWeight())
-                .saleTax(productDto.getSaleTax())
-                .countryOrigin(productDto.getCountryOrigin())
-                .description(productDto.getDescription())
-                .archive(productDto.getArchive())
-                .service(productDto.getService())
-                .purchasePrice(productDto.getPurchasePrice())
-                //.productPrices(productDto.getProductPriceIds().stream().map().collect(Collectors.toList()));  // в map нужно как-то получить productPrice
-                .build();
+        Product.ProductBuilder product = Product.builder();
+
+        product.id(productDto.getId());
+        product.archive(productDto.getArchive());
+        product.countryOrigin(productDto.getCountryOrigin());
+        product.description(productDto.getDescription());
+        product.itemNumber(productDto.getItemNumber());
+        product.minimumBalance(productDto.getMinimumBalance());
+        product.name(productDto.getName());
+        product.purchasePrice(productDto.getPurchasePrice());
+        product.saleTax(productDto.getSaleTax());
+        product.service(productDto.getService());
+        product.volume(productDto.getVolume());
+        product.weight(productDto.getWeight());
+        product.attributeOfCalculationObject(productDtoToAttributeOfCalculationObject(productDto));
+        product.contractor(productDtoToContractor(productDto));
+        product.productGroup(productDtoToProductGroup(productDto));
+        product.taxSystem(productDtoToTaxSystem(productDto));
+        product.unit(productDtoToUnit(productDto));
+        product.productPrices(productDtoToProductPrice(productDto));
+
+        return product.build();
     }
 
     default ProductDto toDto(Product product) {
@@ -44,15 +60,17 @@ public interface ProductMapper {
             return null;
         } else {
             productDto.setId(product.getId());
-            productDto.setName(product.getName());
-            productDto.setVolume(product.getVolume());
-            productDto.setWeight(product.getWeight());
-            productDto.setSaleTax(product.getSaleTax());
+            productDto.setArchive(product.getArchive());
             productDto.setCountryOrigin(product.getCountryOrigin());
             productDto.setDescription(product.getDescription());
-            productDto.setArchive(product.getArchive());
-            productDto.setService(product.getService());
+            productDto.setItemNumber(product.getItemNumber());
+            productDto.setMinimumBalance(product.getMinimumBalance());
+            productDto.setName(product.getName());
             productDto.setPurchasePrice(product.getPurchasePrice());
+            productDto.setSaleTax(product.getSaleTax());
+            productDto.setService(product.getService());
+            productDto.setVolume(product.getVolume());
+            productDto.setWeight(product.getWeight());
             productDto.setProductPriceIds(product.getProductPrices().stream().map(ProductPrice::getId).collect(Collectors.toList()));
             if (product.getUnit()==null){
                 return null;
@@ -80,8 +98,67 @@ public interface ProductMapper {
                     }
                 }
             }
-
         }
+    }
+
+    default Contractor productDtoToContractor(ProductDto productDto) {
+        if (productDto == null) {
+            return null;
+        }
+        Contractor contractor = new Contractor();
+        contractor.setId(productDto.getContractorId());
+        return contractor;
+    }
+
+    default AttributeOfCalculationObject productDtoToAttributeOfCalculationObject(ProductDto productDto) {
+        if (productDto == null) {
+            return null;
+        }
+        AttributeOfCalculationObject attribute = new AttributeOfCalculationObject();
+        attribute.setId(productDto.getAttributeOfCalculationObjectId());
+        return attribute;
+    }
+
+    default ProductGroup productDtoToProductGroup(ProductDto productDto) {
+        if (productDto == null) {
+            return null;
+        }
+        ProductGroup productGroup = new ProductGroup();
+        productGroup.setId(productDto.getProductGroupId());
+        return productGroup;
+    }
+
+    default TaxSystem productDtoToTaxSystem(ProductDto productDto) {
+        if (productDto == null) {
+            return null;
+        }
+        TaxSystem taxSystem = new TaxSystem();
+        taxSystem.setId(productDto.getTaxSystemId());
+        return taxSystem;
+    }
+
+    default Unit productDtoToUnit(ProductDto productDto) {
+        if (productDto == null) {
+            return null;
+        }
+        Unit unit = new Unit();
+        unit.setId(productDto.getUnitId());
+        return unit;
+    }
+
+    default List<ProductPrice> productDtoToProductPrice(ProductDto productDto) {
+        if (productDto == null) {
+            return null;
+        }
+        List<ProductPrice> list = new ArrayList<>();
+        for (Long l : productDto.getProductPriceIds()){
+            ProductPrice productPrice = new ProductPrice();
+            productPrice.setId(l);
+
+            list.add(productPrice);
+        }
+
+        return list;
     }
 
     List<ProductDto> toListDto(Collection<Product> products);
