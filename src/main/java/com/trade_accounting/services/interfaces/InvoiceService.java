@@ -19,4 +19,6 @@ public interface InvoiceService extends AbstractService<InvoiceDto>, SearchableS
     }
 
     List<InvoiceDto> getByContractorId(Long id);
+    void moveToRecyclebin(long id);
+    void restoreFromRecyclebin(long id);
 }

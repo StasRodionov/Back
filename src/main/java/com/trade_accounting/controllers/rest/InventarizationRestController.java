@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.dto.InventarizationDto;
+import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.repositories.InventarizationRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.InventarizationService;
@@ -112,4 +113,40 @@ public class InventarizationRestController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/moveToIsRecyclebin/{id}")
+    @ApiOperation(value = "moveToIsRecyclebin", notes = "Перенос в корзину инвентаризации по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Инвентаризация перенесена в корзину"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<MovementDto> moveToIsRecyclebin(@ApiParam(name = "id", type = "Long",
+            value = "Переданный id, по которому необходимо переместить инвентаризацию")
+                                                          @PathVariable("id") Long id) {
+        checkEntityService.checkExists((JpaRepository) inventarizationRepository, id);
+        inventarizationService.moveToRecyclebin(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/restoreFromIsRecyclebin/{id}")
+    @ApiOperation(value = "restoreFromIsRecyclebin", notes = "Восстановление инвентаризации по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Инвентаризация восстановленна"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<MovementDto> restoreFromIsRecyclebin(@ApiParam(name = "id", type = "Long",
+            value = "Переданный id, по которому необходимо восстановить инвентаризацию")
+                                                               @PathVariable("id") Long id) {
+        checkEntityService.checkExists((JpaRepository) inventarizationRepository, id);
+        inventarizationService.restoreFromRecyclebin(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

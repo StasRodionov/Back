@@ -81,6 +81,20 @@ public class TechnicalOperationsServiceImpl implements TechnicalOperationsServic
         }
     }
 
+    @Override
+    public void moveToRecyclebin(long id) {
+        TechnicalOperations technicalOperations = technicalOperationsRepository.getOne(id);
+        technicalOperations.setIsRecyclebin(true);
+        technicalOperationsRepository.save(technicalOperations);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        TechnicalOperations technicalOperations = technicalOperationsRepository.getOne(id);
+        technicalOperations.setIsRecyclebin(false);
+        technicalOperationsRepository.save(technicalOperations);
+    }
+
 
     private TechnicalOperationsDto saveOrUpdate(TechnicalOperationsDto dto) {
         TechnicalOperations technicalOperations = new TechnicalOperations();

@@ -26,6 +26,7 @@ public interface MovementMapper{
             movementDto.setIsSent(movement.getIsSent());
             movementDto.setIsPrint(movement.getIsPrint());
             movementDto.setComment(movement.getComment());
+            movementDto.setIsRecyclebin(movement.getIsRecyclebin());
             BigDecimal sum = movement.getMovementProducts().stream()
                     .map(x -> x.getAmount().multiply(x.getPrice()))
                     .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);

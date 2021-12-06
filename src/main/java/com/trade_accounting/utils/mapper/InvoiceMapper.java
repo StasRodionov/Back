@@ -49,6 +49,7 @@ public interface InvoiceMapper {
         invoiceDto.contractorId(invoiceContractorId(invoice));
         invoiceDto.warehouseId(invoiceWarehouseId(invoice));
         invoiceDto.id(invoice.getId());
+        invoiceDto.isRecyclebin(invoice.getIsRecyclebin());
         invoiceDto.comment(invoice.getComment());
         if (invoice.getDate() != null) {
             invoiceDto.date(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(invoice.getDate()));
@@ -87,6 +88,7 @@ public interface InvoiceMapper {
         invoice.isPrint(emp.getIsPrint());
         invoice.comment(emp.getComment());
         invoice.invoicesStatus(invoiceDtoToInvoicesStatus(emp));
+        invoice.isRecyclebin(emp.getIsRecyclebin());
         return invoice.build();
     }
 

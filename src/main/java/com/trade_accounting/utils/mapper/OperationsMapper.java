@@ -20,6 +20,7 @@ public interface OperationsMapper {
             operationsAbstractDto.setIsSent(operationsAbstract.getIsSent());
             operationsAbstractDto.setIsPrint(operationsAbstract.getIsPrint());
             operationsAbstractDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(operationsAbstract.getDate()));
+            operationsAbstractDto.setIsRecyclebin(operationsAbstract.getIsRecyclebin());
             Company company = operationsAbstract.getCompany();
             if (operationsAbstract.getCompany() == null) {
                 return null;

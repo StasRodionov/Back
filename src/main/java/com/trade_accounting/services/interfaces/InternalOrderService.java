@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface InternalOrderService extends AbstractService<InternalOrderDto>, SearchableService<InternalOrder, InternalOrderDto> {
     List<InternalOrderDto> getAll(String searchItem);
+    void moveToRecyclebin(long id);
+    void restoreFromRecyclebin(long id);
 }

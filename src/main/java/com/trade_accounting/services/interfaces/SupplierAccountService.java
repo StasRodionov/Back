@@ -18,4 +18,8 @@ public interface SupplierAccountService extends AbstractService<SupplierAccountD
         return search((root, query, builder)
                 -> builder.equal(root.get("typeOfInvoice"), TypeOfInvoice.valueOf(typeOfInvoice)));
     }
+
+    void moveToRecyclebin(long id);
+    void restoreFromRecyclebin(long id);
+
 }

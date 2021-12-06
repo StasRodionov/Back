@@ -21,6 +21,7 @@ public interface LossMapper {
                 .isSent(lossDto.getIsSent())
                 .isPrint(lossDto.getIsPrint())
                 .comment(lossDto.getComment())
+                .isRecyclebin(lossDto.getIsRecyclebin())
                 .build();
     }
 
@@ -35,6 +36,7 @@ public interface LossMapper {
             lossDto.setIsSent(loss.getIsSent());
             lossDto.setIsPrint(loss.getIsPrint());
             lossDto.setComment(loss.getComment());
+            lossDto.setIsRecyclebin(loss.getIsRecyclebin());
             lossDto.setLossProductsIds(
                     loss.getLossProducts().stream()
                             .map(LossProduct::getId)

@@ -33,6 +33,7 @@ public interface ShipmentMapper {
         shipmentDto.isSpend(shipment.getIsSpend());
         shipmentDto.isSend(shipment.getIsSent());
         shipmentDto.isPrint(shipment.getIsPrint());
+        shipmentDto.isRecyclebin(shipment.getIsRecyclebin());
         shipmentDto.comment( shipment.getComment() );
         shipmentDto.shipmentProductsIds(
                 shipment.getShipmentProducts().stream()
@@ -63,6 +64,7 @@ public interface ShipmentMapper {
         shipment.isSpend(emp.getIsSpend());
         shipment.isSent(emp.getIsSend());
         shipment.isPrint(emp.getIsPrint());
+        shipment.isRecyclebin(emp.getIsRecyclebin());
         shipment.comment(emp.getComment());
 
         return shipment.build();

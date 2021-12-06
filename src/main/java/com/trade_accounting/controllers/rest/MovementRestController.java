@@ -111,5 +111,39 @@ public class MovementRestController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/moveToIsRecyclebin/{id}")
+    @ApiOperation(value = "moveToIsRecyclebin", notes = "Перенос в корзину перемещения по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Перемещение перенесено в корзину"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<MovementDto> moveToIsRecyclebin(@ApiParam(name = "id", type = "Long",
+            value = "Переданный id, по которому необходимо переместить перемещение")
+                                                  @PathVariable("id") Long id) {
+        checkEntityService.checkExists((JpaRepository) movementRepository, id);
+        movementService.moveToRecyclebin(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/restoreFromIsRecyclebin/{id}")
+    @ApiOperation(value = "restoreFromIsRecyclebin", notes = "Восстановление перемещения по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Перемещение восстановленно"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<MovementDto> restoreFromIsRecyclebin(@ApiParam(name = "id", type = "Long",
+            value = "Переданный id, по которому необходимо восстановить перемещение")
+                                                  @PathVariable("id") Long id) {
+        checkEntityService.checkExists((JpaRepository) movementRepository, id);
+        movementService.restoreFromRecyclebin(id);
+        return ResponseEntity.ok().build();
+    }
 
 }

@@ -25,6 +25,7 @@ public interface InventarizationMapper {
             inventarizationDto.setId(inventarization.getId());
             inventarizationDto.setDate(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(inventarization.getDate()));
             inventarizationDto.setStatus(inventarization.getStatus());
+            inventarizationDto.setIsRecyclebin(inventarization.getIsRecyclebin());
             inventarizationDto.setComment(inventarization.getComment());
 
             Warehouse warehouse = inventarization.getWarehouse();

@@ -12,4 +12,7 @@ public interface TechnicalOperationsService extends AbstractService<TechnicalOpe
      List<TechnicalOperationsDto> search(String searchTerm);
 
 //     List<TechnicalOperationsDto> searchByString(String nameFilter);
+
+     void moveToRecyclebin(long id);
+     void restoreFromRecyclebin(long id);
 }

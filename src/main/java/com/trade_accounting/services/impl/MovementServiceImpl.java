@@ -95,4 +95,19 @@ public class MovementServiceImpl implements MovementService {
 
         return movementMapper.toDto(movementRepository.save(movement));
     }
+
+
+    @Override
+    public void moveToRecyclebin(long id) {
+        Movement movement = movementRepository.getMovementById(id);
+        movement.setIsRecyclebin(true);
+        movementRepository.save(movement);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        Movement movement = movementRepository.getMovementById(id);
+        movement.setIsRecyclebin(false);
+        movementRepository.save(movement);
+    }
 }

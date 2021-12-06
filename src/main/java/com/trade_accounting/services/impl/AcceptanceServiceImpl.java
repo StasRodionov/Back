@@ -103,6 +103,20 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     }
 
     @Override
+    public void moveToRecyclebin(long id) {
+        Acceptance acceptance = acceptanceRepository.getOne(id);
+        acceptance.setIsRecyclebin(true);
+        acceptanceRepository.save(acceptance);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        Acceptance acceptance = acceptanceRepository.getOne(id);
+        acceptance.setIsRecyclebin(false);
+        acceptanceRepository.save(acceptance);
+    }
+
+    @Override
     public List<AcceptanceDto> search(Specification<Acceptance> spec) {
         return executeSearch(acceptanceRepository, acceptanceMapper::toDto, spec);
     }

@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.Payment;
+import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.models.dto.PaymentDto;
 import com.trade_accounting.repositories.PaymentRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
@@ -148,4 +149,40 @@ public class PaymentRestController {
         List<PaymentDto> paymentDtoList = paymentService.search(search);
         return ResponseEntity.ok(paymentDtoList);
     }
+
+    @PutMapping("/moveToIsRecyclebin/{id}")
+    @ApiOperation(value = "moveToIsRecyclebin", notes = "Перенос в корзину платежа по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Платеж перенесен в корзину"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<MovementDto> moveToIsRecyclebin(@ApiParam(name = "id", type = "Long",
+            value = "Переданный id, по которому необходимо переместить платеж")
+                                                          @PathVariable("id") Long id) {
+        checkEntityService.checkExists((JpaRepository) paymentRepository, id);
+        paymentService.moveToRecyclebin(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/restoreFromIsRecyclebin/{id}")
+    @ApiOperation(value = "restoreFromIsRecyclebin", notes = "Восстановление платежа по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Платеж восстановлен"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<MovementDto> restoreFromIsRecyclebin(@ApiParam(name = "id", type = "Long",
+            value = "Переданный id, по которому необходимо восстановить платеж")
+                                                               @PathVariable("id") Long id) {
+        checkEntityService.checkExists((JpaRepository) paymentRepository, id);
+        paymentService.restoreFromRecyclebin(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

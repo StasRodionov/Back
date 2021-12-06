@@ -11,4 +11,7 @@ public interface PaymentService extends AbstractService<PaymentDto> {
     List<PaymentDto> filter(Specification<Payment> specification);
 
     List<PaymentDto> search(String search);
+
+    void moveToRecyclebin(long id);
+    void restoreFromRecyclebin(long id);
 }

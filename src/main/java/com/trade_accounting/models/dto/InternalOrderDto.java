@@ -38,4 +38,6 @@ public class InternalOrderDto {
     private Boolean isPrint = null;
 
     private String comment;
+
+    private Boolean isRecyclebin;
 }

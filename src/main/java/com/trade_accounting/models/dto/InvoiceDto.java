@@ -33,6 +33,8 @@ public class InvoiceDto {
     private Boolean isSent;
     private Boolean isPrint;
 
+    private Boolean isRecyclebin;
+
     public InvoiceDto(Long id, String date, String typeOfInvoice, Long companyId, Long contractorId, Long warehouseId,
                       boolean isSpend, boolean isSent, boolean isPrint, String comment, Long invoicesStatusId) {
         this.id = id;

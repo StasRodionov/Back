@@ -26,6 +26,7 @@ public interface InternalOrderMapper {
                 .id(internalOrderDto.getId())
                 .isSent(internalOrderDto.getIsSent())
                 .isPrint(internalOrderDto.getIsPrint())
+                .isRecyclebin(internalOrderDto.getIsRecyclebin())
                 .comment(internalOrderDto.getComment())
                 .build();
     }
@@ -43,6 +44,7 @@ public interface InternalOrderMapper {
             internalOrderDto.setIsSent(internalOrder.getIsSent());
             internalOrderDto.setIsPrint(internalOrder.getIsPrint());
             internalOrderDto.setComment(internalOrder.getComment());
+            internalOrderDto.setIsRecyclebin(internalOrder.getIsRecyclebin());
             internalOrderDto.setInternalOrderProductsIds(
                     internalOrder.getInternalOrderProducts().stream()
                             .map(InternalOrderProduct::getId)

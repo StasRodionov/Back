@@ -82,4 +82,18 @@ public class LossServiceImpl implements LossService {
     public List<LossDto> search(Specification<Loss> spec) {
         return executeSearch(lossRepository, lossMapper::toDto, spec);
     }
+
+    @Override
+    public void moveToRecyclebin(long id) {
+        Loss loss = lossRepository.getOne(id);
+        loss.setIsRecyclebin(true);
+        lossRepository.save(loss);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        Loss loss = lossRepository.getOne(id);
+        loss.setIsRecyclebin(false);
+        lossRepository.save(loss);
+    }
 }

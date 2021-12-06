@@ -28,4 +28,6 @@ public class OperationsDto {
 
     private Long warehouseId;
 
+    private Boolean isRecyclebin;
+
 }

@@ -5,4 +5,7 @@ import com.trade_accounting.models.dto.ShipmentDto;
 
 public interface ShipmentService extends AbstractService<ShipmentDto>, SearchableService<Shipment, ShipmentDto> {
 
+    void moveToRecyclebin(long id);
+    void restoreFromRecyclebin(long id);
+
 }
