@@ -36,6 +36,7 @@ import com.trade_accounting.models.RequestsProductions;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.StagesProduction;
 import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
@@ -620,8 +621,24 @@ public class ModelStubs {
                 false, false, "comment", LocalDateTime.now(), "Name");
     }
 
+    public static File getFile(Long id) {
+        return File.builder()
+                .id(id)
+                .name("name")
+                .employee("Employee")
+                .placement("Placement")
+                .uploadDateTime(LocalDateTime.now())
+                .key(UUID.randomUUID().toString())
+                .extension(".ext")
+                .build();
+    }
+
     public static BuyersReturn getBuyersReturn(Long id) {
         return new BuyersReturn(id, LocalDateTime.now(), getWarehouse(id), getContractor(id), getCompany(id), new BigDecimal(1000), false, false, "comment");
+    }
+
+    public static StagesProduction getStagesProduction(Long id) {
+        return  new StagesProduction(id, "name", "description", getDepartment(id), getEmployee(id));
     }
 }
 
