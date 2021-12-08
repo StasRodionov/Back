@@ -620,11 +620,6 @@ public class ModelStubs {
                 false, false, "comment", LocalDateTime.now(), "Name");
     }
 
-    public static BuyersReturn getBuyersReturn(Long id) {
-        return new BuyersReturn(id, LocalDateTime.now(), getWarehouse(id), getContractor(id), getCompany(id), new BigDecimal(1000), false, false, "comment");
-    }
-
-
     public static File getFile(Long id) {
         return File.builder()
                 .id(id)
@@ -636,5 +631,10 @@ public class ModelStubs {
                 .extension(".ext")
                 .build();
     }
+
+    public static BuyersReturn getBuyersReturn(Long id) {
+        return new BuyersReturn(id, LocalDateTime.now(), getWarehouse(id), getContractor(id), getCompany(id), new BigDecimal(1000), false, false, "comment");
+    }
+
 }
 
