@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -72,13 +73,26 @@ public class RetailReturnRestController {
         return ResponseEntity.ok(retailReturnService.getById(id));
     }
 
-    @GetMapping("/search")
     @ApiOperation(value = "search", notes = "Получение списка возвратов по заданным параметрам")
-    public ResponseEntity<List<RetailReturnDto>> getAll(
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка возвратов по заданным параметрам"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<List<RetailReturnDto>> getAll(@RequestParam("query") String value) {
+        return ResponseEntity.ok(retailReturnService.search(value));
+    }
+
+    @GetMapping("/searchRetailReturns")
+    @ApiOperation(value = "searchRetailReturns", notes = "Получение списка возвратов по заданным параметрам")
+    public ResponseEntity<List<RetailReturnDto>> getAllFilter(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "date", params = "date", spec = GreaterThanOrEqual.class),
-                    @Spec(path = "retailStore.name", params = "companyDto", spec = Like.class),
+                    @Spec(path = "retailStore.id", params = "retailStoreId", spec = Like.class),
+
                     @Spec(path = "cashAmount", params = "cashAmount", spec = Equal.class),
                     @Spec(path = "cashlessAmount", params = "cashlessAmount", spec = Equal.class),
                     @Spec(path = "totalAmount", params = "totalAmount", spec = Equal.class),

@@ -1,8 +1,10 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.RetailReturn;
+import com.trade_accounting.models.RetailSales;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.dto.RetailReturnDto;
+import com.trade_accounting.models.dto.RetailSalesDto;
 import com.trade_accounting.repositories.RetailReturnRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.services.interfaces.RetailReturnService;
@@ -12,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,7 +62,27 @@ public class RetailReturnServiceImpl implements RetailReturnService {
     }
 
     @Override
-    public List<RetailReturnDto> search(Specification<RetailReturn> spec) {
-        return executeSearch(retailReturnRepository, retailReturnMapper::toDto, spec);
+    public List<RetailReturnDto> search(String searchTerm) {
+        if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
+            List<RetailReturn> list = retailReturnRepository.findAll();
+            return list.stream().map(retailReturnMapper::toDto).collect(Collectors.toList());
+        } else {
+            List<RetailReturn> list = retailReturnRepository.search(searchTerm);
+            return list.stream().map(retailReturnMapper::toDto).collect(Collectors.toList());
+
+        }
     }
+
+
+    @Override
+    public List<RetailReturnDto> search(Specification<RetailReturn> spec) {
+        List<RetailReturn> retailReturnList = retailReturnRepository.findAll(spec);
+
+        List<RetailReturnDto> retailReturnDtoList = new ArrayList<>();
+        for(RetailReturn retailReturn : retailReturnList) {
+            retailReturnDtoList.add(retailReturnMapper.toDto(retailReturn));
+        }
+        return retailReturnDtoList;
+    }
+
 }
