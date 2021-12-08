@@ -1,7 +1,11 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.Department;
+import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.StagesProduction;
 import com.trade_accounting.models.dto.StagesProductionDto;
+import com.trade_accounting.repositories.DepartmentRepository;
+import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.StagesProductionRepository;
 import com.trade_accounting.services.interfaces.StagesProductionService;
 import com.trade_accounting.utils.mapper.StagesProductionMapper;
@@ -18,12 +22,11 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class StagesProductionImpl implements StagesProductionService {
+public class StagesProductionServiceImpl implements StagesProductionService {
 
     private final StagesProductionRepository stagesProductionRepository;
 
     private final StagesProductionMapper stagesProductionMapper;
-
 
     @Override
     public List<StagesProductionDto> getAll() {
@@ -40,11 +43,8 @@ public class StagesProductionImpl implements StagesProductionService {
 
     @Override
     public StagesProductionDto create(StagesProductionDto dto) {
-        StagesProduction stagesProduction = stagesProductionRepository.save(
-                stagesProductionMapper.toModel(dto)
-        );
-        dto.setId(stagesProduction.getId());
-        return stagesProductionMapper.toDto(stagesProduction);
+        dto.setId(stagesProductionMapper.toModel(dto).getId());
+        return stagesProductionMapper.toDto(stagesProductionRepository.save(stagesProductionMapper.toModel(dto)));
     }
 
     @Override
