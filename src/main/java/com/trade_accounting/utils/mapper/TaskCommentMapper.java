@@ -1,9 +1,12 @@
 package com.trade_accounting.utils.mapper;
 
+import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
 import com.trade_accounting.models.dto.TaskCommentDto;
 import org.mapstruct.Mapper;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Mapper(componentModel = "spring")
@@ -17,6 +20,9 @@ public interface TaskCommentMapper {
         return TaskComment.builder()
                 .id(taskCommentDto.getId())
                 .commentContent(taskCommentDto.getCommentContent())
+                .publishedDateTime(LocalDateTime.parse(taskCommentDto.getPublishedDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .publisher(publisher(taskCommentDto))
+                .task(task(taskCommentDto))
                 .build();
     }
 
@@ -42,5 +48,17 @@ public interface TaskCommentMapper {
                 }
             }
         }
+    }
+
+    default Employee publisher(TaskCommentDto taskCommentDto){
+        Employee employee = new Employee();
+        employee.setId(taskCommentDto.getPublisherId());
+        return employee;
+    }
+
+    default Task task(TaskCommentDto taskCommentDto){
+        Task task = new Task();
+        task.setId(taskCommentDto.getTaskId());
+        return task;
     }
 }

@@ -50,15 +50,6 @@ public class TaskCommentServiceImpl implements TaskCommentService {
     @Override
     public TaskCommentDto create(TaskCommentDto dto) {
         TaskComment taskComment = taskCommentMapper.toModel(dto);
-        Employee employee = employeeRepository.getOne(dto.getPublisherId());
-        Task task = taskRepository.getOne(dto.getTaskId());
-
-        LocalDateTime time = LocalDateTime.parse(dto.getPublishedDateTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-        taskComment.setPublisher(employee);
-        taskComment.setTask(task);
-        taskComment.setPublishedDateTime(time);
-
         return taskCommentMapper.toDto(taskCommentRepository.save(taskComment));
 
     }
