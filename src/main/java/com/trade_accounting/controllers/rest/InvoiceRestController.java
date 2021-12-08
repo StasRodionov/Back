@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -89,6 +90,12 @@ public class InvoiceRestController {
                     @Spec(path = "comment", params = "comment", spec = Equal.class),
             }) Specification<Invoice> spec) {
         return ResponseEntity.ok(invoiceService.search(spec));
+    }
+
+    @GetMapping("getFromDateTime")
+    @ApiOperation(value = "search", notes = "Получение списка счетов по заданным параметрам")
+    public ResponseEntity<List<InvoiceDto>> searchByDate(@RequestParam("date") String date) {
+        return ResponseEntity.ok(invoiceService.getFromDateTime(LocalDateTime.parse(date)));
     }
 
     @GetMapping("/searchByString")

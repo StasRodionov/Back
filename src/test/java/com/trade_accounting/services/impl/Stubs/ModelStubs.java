@@ -623,5 +623,18 @@ public class ModelStubs {
     public static BuyersReturn getBuyersReturn(Long id) {
         return new BuyersReturn(id, LocalDateTime.now(), getWarehouse(id), getContractor(id), getCompany(id), new BigDecimal(1000), false, false, "comment");
     }
+
+
+    public static File getFile(Long id) {
+        return File.builder()
+                .id(id)
+                .name("name")
+                .employee("Employee")
+                .placement("Placement")
+                .uploadDateTime(LocalDateTime.now())
+                .key(UUID.randomUUID().toString())
+                .extension(".ext")
+                .build();
+    }
 }
 

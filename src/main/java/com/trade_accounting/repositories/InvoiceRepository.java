@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -29,6 +30,22 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.comment," +
             "e.invoicesStatus.id) from Invoice e")
     List<InvoiceDto> getAll();
+
+
+    @Query("select new com.trade_accounting.models.dto.InvoiceDto(" +
+            "e.id," +
+            "e.date," +
+            "e.typeOfInvoice," +
+            "e.company.id," +
+            "e.contractor.id," +
+            "e.warehouse.id," +
+            "e.isSpend," +
+            "e.isSent," +
+            "e.isPrint," +
+            "e.comment," +
+            "e.invoicesStatus.id) from Invoice e where e.date >= :dateTime")
+    List<InvoiceDto> getFromDateTime(LocalDateTime dateTime);
+
 
     @Query("select new com.trade_accounting.models.dto.InvoiceDto(" +
             "e.id," +

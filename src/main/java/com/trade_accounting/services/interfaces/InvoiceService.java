@@ -6,6 +6,7 @@ import com.trade_accounting.models.dto.InvoiceDto;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface InvoiceService extends AbstractService<InvoiceDto>, SearchableService<Invoice, InvoiceDto> {
@@ -17,6 +18,8 @@ public interface InvoiceService extends AbstractService<InvoiceDto>, SearchableS
         return search((root, query, builder)
                 -> builder.equal(root.get("typeOfInvoice"), TypeOfInvoice.valueOf(typeOfInvoice)));
     }
+
+    List<InvoiceDto> getFromDateTime(LocalDateTime dateTime);
 
     List<InvoiceDto> getByContractorId(Long id);
     void moveToRecyclebin(long id);
