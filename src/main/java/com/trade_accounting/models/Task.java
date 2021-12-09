@@ -57,7 +57,7 @@ public class Task {
 
     private boolean completed;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "task")
     private List<TaskComment> taskComments;
 
 }

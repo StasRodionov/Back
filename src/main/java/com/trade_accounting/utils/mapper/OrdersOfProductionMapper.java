@@ -1,9 +1,7 @@
 package com.trade_accounting.utils.mapper;
 
 import com.trade_accounting.models.OrdersOfProduction;
-import com.trade_accounting.models.TechnicalOperations;
 import com.trade_accounting.models.dto.OrdersOfProductionDto;
-import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import org.mapstruct.Mapper;
 
 import java.time.format.DateTimeFormatter;

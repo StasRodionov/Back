@@ -36,6 +36,7 @@ import com.trade_accounting.models.RequestsProductions;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.ReturnToSupplier;
 import com.trade_accounting.models.Role;
+import com.trade_accounting.models.StagesProduction;
 import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.Task;
 import com.trade_accounting.models.TaskComment;
@@ -636,5 +637,8 @@ public class ModelStubs {
         return new BuyersReturn(id, LocalDateTime.now(), getWarehouse(id), getContractor(id), getCompany(id), new BigDecimal(1000), false, false, "comment");
     }
 
+    public static StagesProduction getStagesProduction(Long id) {
+        return  new StagesProduction(id, "name", "description", getDepartment(id), getEmployee(id));
+    }
 }
 

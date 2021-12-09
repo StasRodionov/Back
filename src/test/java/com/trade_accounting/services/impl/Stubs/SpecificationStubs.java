@@ -7,6 +7,7 @@ import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.ProductionTargets;
+import com.trade_accounting.models.StagesProduction;
 import org.springframework.data.jpa.domain.Specification;
 
 public class SpecificationStubs {
@@ -34,6 +35,10 @@ public class SpecificationStubs {
     }
 
     public static Specification<BuyersReturn> getBuyersReturnSpecificationStub() {
+        return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+
+    public static Specification<StagesProduction> getStagesProductionSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
 }

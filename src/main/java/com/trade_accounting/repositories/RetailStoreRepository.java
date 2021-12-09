@@ -1,5 +1,6 @@
 package com.trade_accounting.repositories;
 
+import com.trade_accounting.models.RetailSales;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import org.springframework.data.jpa.repository.JpaRepository;
