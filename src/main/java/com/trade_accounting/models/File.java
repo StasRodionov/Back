@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Builder(toBuilder = true)
 @Data
@@ -64,5 +65,24 @@ public class File {
         this.employee = employee;
         this.key = key;
         this.uploadDateTime = uploadDateTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        File file = (File) o;
+        return Objects.equals(getId(), file.getId()) &&
+                Objects.equals(getName(), file.getName()) &&
+                Objects.equals(getExtension(), file.getExtension()) &&
+                Objects.equals(getPlacement(), file.getPlacement()) &&
+                Objects.equals(getEmployee(), file.getEmployee()) &&
+                Objects.equals(getKey(), file.getKey()) &&
+                Objects.equals(getUploadDateTime(), file.getUploadDateTime());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getExtension(), getPlacement(), getEmployee(), getKey(), getUploadDateTime());
     }
 }
