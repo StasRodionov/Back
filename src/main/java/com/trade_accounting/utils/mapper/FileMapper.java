@@ -11,6 +11,8 @@ import java.nio.file.Paths;
 
 @Mapper(componentModel = "spring")
 public interface FileMapper {
+    String fs = java.io.File.separator;
+    String UPLOAD_DIR = "src" + fs +"main" + fs +"resources" + fs +"file" + fs;
 
     default FileDto toDto(File file) {
         if (file == null) {
@@ -29,6 +31,7 @@ public interface FileMapper {
     }
 
     default File toModel(FileDto fileDto) {
+        fileDto.setPlacement(UPLOAD_DIR);
         uploadFile(fileDto.getContent(), fileDto.getKey(), fileDto.getExtension());
         return File.builder()
                 .id(fileDto.getId())
@@ -43,8 +46,6 @@ public interface FileMapper {
 
     @SneakyThrows
     default void uploadFile(byte[] content, String key, String extension) {
-        String fs = java.io.File.separator;
-        final String UPLOAD_DIR = "src" + fs +"main" + fs +"resources" + fs +"file" + fs;
         Path path = Paths.get(UPLOAD_DIR + key + extension);
         if (content != null) {
             Files.write(path, content);
@@ -53,8 +54,7 @@ public interface FileMapper {
 
     @SneakyThrows
     default byte[] downloadFile(String key, String extension) {
-        String fs = java.io.File.separator;
-        Path path = Paths.get("src" + fs +"main" + fs +"resources" + fs +"file" + fs + key + extension);
+        Path path = Paths.get(UPLOAD_DIR + key + extension);
         if (Files.exists(path)) {
             return Files.readAllBytes(path);
         } else {
