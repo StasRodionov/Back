@@ -1,0 +1,1 @@
+ALTER table file ADD COLUMN IF NOT EXISTS  product_id BIGINT;

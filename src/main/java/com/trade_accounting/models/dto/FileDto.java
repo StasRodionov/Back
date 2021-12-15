@@ -9,7 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -36,6 +35,8 @@ public class FileDto {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime uploadDateTime;
 
+    private long productId;
+
     @Override
     public String toString() {
         return "FileDto{" +
@@ -46,6 +47,7 @@ public class FileDto {
                 ", placement='" + placement + '\'' +
                 ", employee='" + employee + '\'' +
                 ", uploadDateTime=" + uploadDateTime +
+                ", productId=" + productId +
                 '}';
     }
 }

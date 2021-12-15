@@ -1,9 +1,11 @@
 package com.trade_accounting.utils.mapper;
 
 import com.trade_accounting.models.File;
+import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.FileDto;
 import lombok.SneakyThrows;
 import org.mapstruct.Mapper;
+import org.springframework.security.core.parameters.P;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,6 +29,7 @@ public interface FileMapper {
                 .content(downloadFile(file.getKey(), file.getExtension()))
                 .uploadDateTime(file.getUploadDateTime())
                 .key(file.getKey())
+                .productId(file.getProduct().getId())
                 .build();
     }
 
@@ -41,7 +44,17 @@ public interface FileMapper {
                 .employee(fileDto.getEmployee())
                 .uploadDateTime(fileDto.getUploadDateTime())
                 .key(fileDto.getKey())
+                .product(fileDtoToProduct(fileDto))
                 .build();
+    }
+
+    default Product fileDtoToProduct(FileDto fileDto) {
+        if (fileDto == null) {
+            return null;
+        }
+        Product product = new Product();
+        product.setId(fileDto.getId());
+        return product;
     }
 
     @SneakyThrows
