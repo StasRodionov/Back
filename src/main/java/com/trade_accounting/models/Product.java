@@ -68,7 +68,7 @@ public class Product {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Image> images;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<File> files;
 
     @ManyToOne(fetch = FetchType.LAZY)

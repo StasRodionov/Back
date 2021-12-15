@@ -1,8 +1,11 @@
 package com.trade_accounting.utils.mapper;
 
 import com.trade_accounting.models.File;
+import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.FileDto;
+import com.trade_accounting.models.dto.ImageDto;
+import com.trade_accounting.models.dto.ProductDto;
 import lombok.SneakyThrows;
 import org.mapstruct.Mapper;
 import org.springframework.security.core.parameters.P;
@@ -10,6 +13,9 @@ import org.springframework.security.core.parameters.P;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface FileMapper {
@@ -75,4 +81,16 @@ public interface FileMapper {
         }
     }
 
+    default List<File> toListModel(Collection<FileDto> fileDtos) {
+        if (fileDtos == null) {
+            return new ArrayList<>();
+        }
+        List<File> list = new ArrayList<>(fileDtos.size());
+        for (FileDto fileDto : fileDtos) {
+            list.add(toModel(fileDto));
+        }
+        return list;
+    }
+
+    List<FileDto> toListDto(Collection<File> files);
 }

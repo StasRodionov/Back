@@ -2,13 +2,16 @@ package com.trade_accounting.services.impl;
 
 import javax.validation.constraints.NotNull;
 
+import com.trade_accounting.models.File;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.models.dto.ProductDto;
+import com.trade_accounting.repositories.FileRepository;
 import com.trade_accounting.repositories.ImageRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.ProductService;
+import com.trade_accounting.utils.mapper.FileMapper;
 import com.trade_accounting.utils.mapper.ImageMapper;
 import com.trade_accounting.utils.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +32,11 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
+    private final FileRepository fileRepository;
 
     private final ImageMapper imageMapper;
     private final ProductMapper productMapper;
+    private final FileMapper fileMapper;
 
     @Override
     public List<ProductDto> getAll() {
@@ -56,8 +61,11 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto create(@NotNull ProductDto dto) {
         List<Image> preparedImages = imageMapper.toListModel(dto.getImageDtos(), "product");
         List<Image> savedImages = imageRepository.saveAll(preparedImages);
+        List<File> preparedFiles = fileMapper.toListModel(dto.getFileDtos());
+        List<File> savedFiles = fileRepository.saveAll(preparedFiles);
         Product product = productMapper.toModel(dto);
         product.setImages(savedImages);
+        product.setFiles(savedFiles);
         productRepository.saveAndFlush(product);
         return dto;
     }
@@ -67,8 +75,11 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto update(ProductDto dto) {
         List<Image> preparedImages = imageMapper.toListModel(dto.getImageDtos(), "product");
         List<Image> savedImages = imageRepository.saveAll(preparedImages);
+        List<File> preparedFiles = fileMapper.toListModel(dto.getFileDtos());
+        List<File> savedFiles = fileRepository.saveAll(preparedFiles);
         Product product = productMapper.toModel(dto);
         product.setImages(savedImages);
+        product.setFiles(savedFiles);
         productRepository.saveAndFlush(product);
         return dto;
     }
