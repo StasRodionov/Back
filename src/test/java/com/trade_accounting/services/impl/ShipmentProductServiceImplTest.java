@@ -1,11 +1,20 @@
 package com.trade_accounting.services.impl;
 
+import com.trade_accounting.models.RetailSales;
+import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.ShipmentProduct;
+import com.trade_accounting.models.StagesProduction;
 import com.trade_accounting.models.dto.RetailSalesDto;
 import com.trade_accounting.models.dto.RetailStoreDto;
 import com.trade_accounting.models.dto.ShipmentProductDto;
+import com.trade_accounting.models.dto.StagesProductionDto;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.repositories.ShipmentProductRepository;
+import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.dto.RetailSalesDtoStubs;
+import com.trade_accounting.services.impl.Stubs.dto.RetailStoreDtoStubs;
+import com.trade_accounting.services.impl.Stubs.dto.ShipmentProductDtoStubs;
+import com.trade_accounting.services.impl.Stubs.dto.StagesProductionDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.RetailSalesModelStubs;
 import com.trade_accounting.services.impl.Stubs.model.RetailStoreModelStubs;
 import com.trade_accounting.services.impl.Stubs.model.ShipmentProductModelStubs;
@@ -18,9 +27,13 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,8 +58,57 @@ public class ShipmentProductServiceImplTest {
         );
 
         List<ShipmentProductDto> listInv = shimpentProductService.getAll();
-        assertNotNull(listInv, "failure - expected that a list of bankAccountDto not null");
-        assertEquals(1, listInv.size(), "failure - expected that a list of bankAccountDto grater than 0");
+        assertNotNull(listInv, "failure - expected that a list of ShipmentProductDto not null");
+        assertEquals(1, listInv.size(), "failure - expected that a list of ShipmentProductDto grater than 0");
     }
+
+    @Test
+    void getById(){
+
+        when(shipmentProductRepository.getOne(anyLong()))
+                .thenReturn(ShipmentProductModelStubs.getShipmentProduct(1L));
+
+        ShipmentProductDto shipmentProductDto = shimpentProductService.getById(1L);
+
+        ShipmentProductDtoIsCorrectlyInited(shipmentProductDto);
+    }
+
+    @Test
+    void create(){
+
+            saveOrUpdate();
+
+    }
+
+    @Test
+    void update(){
+        saveOrUpdate();
+    }
+
+    @Test
+    void deleteById(){
+        shipmentProductRepository.deleteById(anyLong());
+        verify(shipmentProductRepository).deleteById(anyLong());
+    }
+
+    private void ShipmentProductDtoIsCorrectlyInited(ShipmentProductDto shipmentProductDto) {
+        assertNotNull(shipmentProductDto, "failure - fail in passed shipmentProductDto");
+        assertNotNull(shipmentProductDto.getId(), "failure - fail in field 'id' into shipmentProductDto");
+        assertNotNull(shipmentProductDto.getAmount(), "failure - fail in field 'amount' into shipmentProductDto");
+        assertNotNull(shipmentProductDto.getPrice(), "failure - fail in field 'price' into shipmentProductDto");
+        assertNotNull(shipmentProductDto.getProductId(), "failure - fail in field 'productId' into shipmentProductDto");
+    }
+
+    private void saveOrUpdate() {
+        when(shipmentProductRepository.save(any(ShipmentProduct.class))).thenReturn(ShipmentProductModelStubs.getShipmentProduct(1L));
+        ShipmentProductDto shipmentProductDto = shimpentProductService.create(ShipmentProductDtoStubs.getDto(1L));
+        assertEquals(1,shipmentProductDto.getId());
+        verify(shipmentProductRepository).save(any(ShipmentProduct.class));
+    }
+
+//    when(retailSalesRepository.save(any(RetailSales.class))).thenReturn(RetailSalesModelStubs.getRetailSales(1L));
+//    RetailSalesDto retailSalesDto = retailSalesService.create(RetailSalesDtoStubs.getDto(1L));
+//    assertEquals(1,retailSalesDto.getId());
+//    verify(retailSalesRepository).save(any(RetailSales.class));
 
 }
