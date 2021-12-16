@@ -50,7 +50,7 @@ public interface FileMapper {
                 .employee(fileDto.getEmployee())
                 .uploadDateTime(fileDto.getUploadDateTime())
                 .key(fileDto.getKey())
-                .product(fileDtoToProduct(fileDto))
+                //.product(fileDtoToProduct(fileDto))
                 .build();
     }
 

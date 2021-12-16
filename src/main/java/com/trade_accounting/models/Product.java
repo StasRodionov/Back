@@ -59,13 +59,13 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.DETACH})
     private List<ProductPrice> productPrices;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private TaxSystem taxSystem;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Image> images;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -131,6 +131,23 @@ public class Product {
         this.itemNumber = itemNumber;
         this.saleTax = saleTax;
         this.minimumBalance = minimumBalance;
+    }
+
+    public Product(String name, BigDecimal weight, BigDecimal volume, BigDecimal purchasePrice, String description, Unit unit, Boolean archive, Contractor contractor, List<ProductPrice> productPrices, TaxSystem taxSystem, List<Image> images, List<File> files, ProductGroup productGroup, AttributeOfCalculationObject attributeOfCalculationObject) {
+        this.name = name;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.unit = unit;
+        this.archive = archive;
+        this.contractor = contractor;
+        this.productPrices = productPrices;
+        this.taxSystem = taxSystem;
+        this.images = images;
+        this.files = files;
+        this.productGroup = productGroup;
+        this.attributeOfCalculationObject = attributeOfCalculationObject;
     }
 
     public Product(String name,

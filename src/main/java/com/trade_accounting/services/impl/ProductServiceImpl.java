@@ -15,6 +15,7 @@ import com.trade_accounting.utils.mapper.FileMapper;
 import com.trade_accounting.utils.mapper.ImageMapper;
 import com.trade_accounting.utils.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,6 +23,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,6 +57,7 @@ public class ProductServiceImpl implements ProductService {
 
         ProductDto productDto = productMapper.toDto(product);
         productDto.setImageDtos(imageMapper.toListDto(product.getImages()));
+        productDto.setFileDtos(fileMapper.toListDto(product.getFiles()));
 
         return productDto;
     }
@@ -65,6 +70,7 @@ public class ProductServiceImpl implements ProductService {
         List<File> savedFiles = fileRepository.saveAll(preparedFiles);
         Product product = productMapper.toModel(dto);
         product.setImages(savedImages);
+        savedFiles.forEach(file -> file.setProduct(product));
         product.setFiles(savedFiles);
         productRepository.saveAndFlush(product);
         return dto;
@@ -79,6 +85,7 @@ public class ProductServiceImpl implements ProductService {
         List<File> savedFiles = fileRepository.saveAll(preparedFiles);
         Product product = productMapper.toModel(dto);
         product.setImages(savedImages);
+        savedFiles.forEach(file -> file.setProduct(product));
         product.setFiles(savedFiles);
         productRepository.saveAndFlush(product);
         return dto;
@@ -86,7 +93,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteById(Long id) {
+        Product product = productRepository.getOne(id);
         productRepository.deleteById(id);
+        product.getFiles().forEach(file -> {
+            try {
+                Files.deleteIfExists(Path.of(file.getPlacement() + file.getKey() + file.getExtension()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 
