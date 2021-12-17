@@ -5,10 +5,12 @@ import javax.validation.constraints.NotNull;
 import com.trade_accounting.models.File;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Product;
+import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.repositories.FileRepository;
 import com.trade_accounting.repositories.ImageRepository;
+import com.trade_accounting.repositories.ProductPriceRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.ProductService;
 import com.trade_accounting.utils.mapper.FileMapper;
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +40,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
     private final FileRepository fileRepository;
+    private final ProductPriceRepository productPriceRepository;
 
     private final ImageMapper imageMapper;
     private final ProductMapper productMapper;
@@ -72,6 +76,10 @@ public class ProductServiceImpl implements ProductService {
         product.setImages(savedImages);
         savedFiles.forEach(file -> file.setProduct(product));
         product.setFiles(savedFiles);
+        List<ProductPrice> prices = new ArrayList<>();
+        product.getProductPrices()
+                .forEach(productPrice -> prices.add(productPriceRepository.getOne(productPrice.getId())));
+        product.setProductPrices(prices);
         productRepository.saveAndFlush(product);
         return dto;
     }
@@ -87,6 +95,10 @@ public class ProductServiceImpl implements ProductService {
         product.setImages(savedImages);
         savedFiles.forEach(file -> file.setProduct(product));
         product.setFiles(savedFiles);
+        List<ProductPrice> prices = new ArrayList<>();
+        product.getProductPrices()
+                .forEach(productPrice -> prices.add(productPriceRepository.getOne(productPrice.getId())));
+        product.setProductPrices(prices);
         productRepository.saveAndFlush(product);
         return dto;
     }

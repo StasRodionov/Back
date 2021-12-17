@@ -59,7 +59,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private Contractor contractor;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.DETACH})
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductPrice> productPrices;
 
     @ManyToOne(fetch = FetchType.LAZY)
