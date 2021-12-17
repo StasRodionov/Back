@@ -35,7 +35,7 @@ public interface FileMapper {
                 .content(downloadFile(file.getKey(), file.getExtension()))
                 .uploadDateTime(file.getUploadDateTime())
                 .key(file.getKey())
-                .productId(file.getProduct().getId())
+                .productId(file.getProduct() != null ? file.getProduct().getId() : 0L)
                 .build();
     }
 

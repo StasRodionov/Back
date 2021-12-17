@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,8 +48,10 @@ public class File {
     @Column(name = "upload_date_time")
     private LocalDateTime uploadDateTime;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
+    @ToString.Exclude
     private Product product;
 
     public File(Long id,
