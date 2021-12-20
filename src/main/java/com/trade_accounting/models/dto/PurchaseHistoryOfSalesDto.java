@@ -1,6 +1,5 @@
 package com.trade_accounting.models.dto;
 
-import com.trade_accounting.models.ProductPrice;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
