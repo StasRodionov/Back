@@ -20,7 +20,7 @@ public class PurchaseHistoryOfSalesDto {
 
     private BigDecimal sumOfProducts;
 
-    private ProductPrice productPrice;
+    private Long productPriceId;
 
     private BigDecimal productMargin;
 

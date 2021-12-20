@@ -2,6 +2,7 @@ package com.trade_accounting.models;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "product_prises")
 public class ProductPrice {
 
@@ -32,4 +34,5 @@ public class ProductPrice {
 
     @Column(name = "value", scale = 2)
     private BigDecimal value;
+
 }
