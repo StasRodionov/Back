@@ -27,7 +27,7 @@ public class ProductPrice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     private TypeOfPrice typeOfPrice;
 
     @Column(name = "value", scale = 2)

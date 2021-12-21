@@ -41,6 +41,8 @@ public class ProductDto {
 
     private List<ImageDto> imageDtos;
 
+    private List<FileDto> fileDtos;
+
     private Long productGroupId;
 
     private Long attributeOfCalculationObjectId;
@@ -112,5 +114,27 @@ public class ProductDto {
         this.imageDtos = imageDtos;
         this.productGroupId = productGroupId;
         this.attributeOfCalculationObjectId = attributeOfCalculationObjectId;
+    }
+
+    public ProductDto(Long id, String name, BigDecimal weight, BigDecimal volume, BigDecimal purchasePrice, String description, Long unitId, Boolean archive, Boolean service, Long contractorId, List<Long> productPriceIds, Long taxSystemId, List<ImageDto> imageDtos, Long productGroupId, Long attributeOfCalculationObjectId, String countryOrigin, int itemNumber, String saleTax, int minimumBalance) {
+        this.id = id;
+        this.name = name;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.unitId = unitId;
+        this.archive = archive;
+        this.service = service;
+        this.contractorId = contractorId;
+        this.productPriceIds = productPriceIds;
+        this.taxSystemId = taxSystemId;
+        this.imageDtos = imageDtos;
+        this.productGroupId = productGroupId;
+        this.attributeOfCalculationObjectId = attributeOfCalculationObjectId;
+        this.countryOrigin = countryOrigin;
+        this.itemNumber = itemNumber;
+        this.saleTax = saleTax;
+        this.minimumBalance = minimumBalance;
     }
 }

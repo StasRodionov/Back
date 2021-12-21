@@ -65,8 +65,11 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private TaxSystem taxSystem;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Image> images;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<File> files;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductGroup productGroup;
@@ -90,6 +93,62 @@ public class Product {
     @Column(name = "minimumBalance")
     private int minimumBalance;
 
+    public Product(Long id,
+                   String name,
+                   BigDecimal weight,
+                   BigDecimal volume,
+                   BigDecimal purchasePrice,
+                   String description,
+                   Unit unit,
+                   Boolean archive,
+                   Boolean service,
+                   Contractor contractor,
+                   List<ProductPrice> productPrices,
+                   TaxSystem taxSystem,
+                   List<Image> images,
+                   ProductGroup productGroup,
+                   AttributeOfCalculationObject attributeOfCalculationObject,
+                   String countryOrigin,
+                   int itemNumber,
+                   String saleTax,
+                   int minimumBalance) {
+        this.id = id;
+        this.name = name;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.unit = unit;
+        this.archive = archive;
+        this.service = service;
+        this.contractor = contractor;
+        this.productPrices = productPrices;
+        this.taxSystem = taxSystem;
+        this.images = images;
+        this.productGroup = productGroup;
+        this.attributeOfCalculationObject = attributeOfCalculationObject;
+        this.countryOrigin = countryOrigin;
+        this.itemNumber = itemNumber;
+        this.saleTax = saleTax;
+        this.minimumBalance = minimumBalance;
+    }
+
+    public Product(String name, BigDecimal weight, BigDecimal volume, BigDecimal purchasePrice, String description, Unit unit, Boolean archive, Contractor contractor, List<ProductPrice> productPrices, TaxSystem taxSystem, List<Image> images, List<File> files, ProductGroup productGroup, AttributeOfCalculationObject attributeOfCalculationObject) {
+        this.name = name;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.description = description;
+        this.unit = unit;
+        this.archive = archive;
+        this.contractor = contractor;
+        this.productPrices = productPrices;
+        this.taxSystem = taxSystem;
+        this.images = images;
+        this.files = files;
+        this.productGroup = productGroup;
+        this.attributeOfCalculationObject = attributeOfCalculationObject;
+    }
 
     public Product(String name,
                    BigDecimal purchasePrice,
@@ -119,7 +178,13 @@ public class Product {
         this.productPrices = productPrices;
     }
 
-    public Product(Long id, String name, BigDecimal weight, BigDecimal volume, BigDecimal purchasePrice, String description, Boolean archive) {
+    public Product(Long id,
+                   String name,
+                   BigDecimal weight,
+                   BigDecimal volume,
+                   BigDecimal purchasePrice,
+                   String description,
+                   Boolean archive) {
         this.id = id;
         this.name = name;
         this.weight = weight;
@@ -129,7 +194,17 @@ public class Product {
         this.archive = archive;
     }
 
-    public Product(String name, BigDecimal purchasePrice, String description, Unit unit, Boolean archive, Boolean service, List<ProductPrice> productPrices, TaxSystem taxSystem, List<Image> images, ProductGroup productGroup, AttributeOfCalculationObject attributeOfCalculationObject) {
+    public Product(String name,
+                   BigDecimal purchasePrice,
+                   String description,
+                   Unit unit,
+                   Boolean archive,
+                   Boolean service,
+                   List<ProductPrice> productPrices,
+                   TaxSystem taxSystem,
+                   List<Image> images,
+                   ProductGroup productGroup,
+                   AttributeOfCalculationObject attributeOfCalculationObject) {
         this.name = name;
         this.purchasePrice = purchasePrice;
         this.description = description;
@@ -143,7 +218,12 @@ public class Product {
         this.attributeOfCalculationObject = attributeOfCalculationObject;
     }
 
-    public Product(Long id, String name, BigDecimal purchasePrice, String description, Boolean archive, Boolean service) {
+    public Product(Long id,
+                   String name,
+                   BigDecimal purchasePrice,
+                   String description,
+                   Boolean archive,
+                   Boolean service) {
         this.id = id;
         this.name = name;
         this.purchasePrice = purchasePrice;

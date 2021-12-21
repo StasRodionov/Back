@@ -2,12 +2,14 @@ package com.trade_accounting.utils.mapper;
 
 import com.trade_accounting.models.AttributeOfCalculationObject;
 import com.trade_accounting.models.Contractor;
+import com.trade_accounting.models.File;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.ProductGroup;
 import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.TaxSystem;
 import com.trade_accounting.models.Unit;
+import com.trade_accounting.models.dto.FileDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.ProductDto;
 import com.trade_accounting.models.dto.ProductPriceDto;
@@ -51,8 +53,10 @@ public interface ProductMapper {
         product.unit(productDtoToUnit(productDto));
         product.productPrices(productDtoToProductPrice(productDto));
 
+
         return product.build();
     }
+
 
     default ProductDto toDto(Product product) {
         ProductDto productDto = new ProductDto();
