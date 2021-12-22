@@ -1,24 +1,25 @@
 package com.trade_accounting.services.impl;
 
-import com.trade_accounting.models.Department;
 import com.trade_accounting.models.PrepaymentReturn;
-import com.trade_accounting.models.RetailSales;
 import com.trade_accounting.models.dto.PrepaymentReturnDto;
 import com.trade_accounting.repositories.PrepaymentReturnRepository;
 import com.trade_accounting.services.impl.Stubs.ModelStubs;
+import com.trade_accounting.services.impl.Stubs.SpecificationStubs;
 import com.trade_accounting.services.impl.Stubs.dto.PrepaymentReturnDtoStubs;
 import com.trade_accounting.services.impl.Stubs.model.PrepaymentReturnModelStubs;
-import com.trade_accounting.services.impl.Stubs.model.RetailSalesModelStubs;
 import com.trade_accounting.utils.mapper.PrepaymentReturnMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -57,9 +58,7 @@ class PrepaymentReturnServiceImplTest {
             .thenReturn(PrepaymentReturnModelStubs.getPrepaymentReturn(1L));
 
         PrepaymentReturnDto prepaymentReturnDto = prepaymentReturnService.getById(1L);
-        System.out.println(prepaymentReturnDto);
         PrepaymentReturnDtoIsCorrectlyInited(prepaymentReturnDto);
-        assertNotNull(prepaymentReturnDto, "failure - fail in passed prepaymentReturnDto");
     }
 
     @Test
@@ -74,10 +73,30 @@ class PrepaymentReturnServiceImplTest {
 
     @Test
     void deleteById() {
+        prepaymentReturnRepository.deleteById(anyLong());
+        verify(prepaymentReturnRepository).deleteById(anyLong());
     }
 
     @Test
     void search() {
+        when(prepaymentReturnRepository.findAll(Mockito.<Specification<PrepaymentReturn>>any()))
+                .thenReturn(
+                        Stream.of(
+                                ModelStubs.getPrepaymentReturn(1L),
+                                ModelStubs.getPrepaymentReturn(2L),
+                                ModelStubs.getPrepaymentReturn(3L)
+                        ).collect(Collectors.toList())
+                );
+
+        List<PrepaymentReturnDto> prepaymentReturnDtos = prepaymentReturnService
+                .search(SpecificationStubs.getPrepaymentReturnSpecificationStub());
+
+        assertNotNull(prepaymentReturnDtos, "failure - expected that a list of PrepaymentReturnDtos not null");
+        assertTrue(prepaymentReturnDtos.size() > 0, "failure - expected that a list of PrepaymentReturnDtos greater than 0");
+
+        for (PrepaymentReturnDto prepaymentReturnDto : prepaymentReturnDtos) {
+            PrepaymentReturnDtoIsCorrectlyInited(prepaymentReturnDto);
+        }
     }
 
     private void saveOrUpdate() {

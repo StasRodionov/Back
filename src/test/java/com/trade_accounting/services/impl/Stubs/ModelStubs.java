@@ -28,6 +28,7 @@ import com.trade_accounting.models.MutualSettlements;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.PaymentMethods;
 import com.trade_accounting.models.Position;
+import com.trade_accounting.models.PrepaymentReturn;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.ProductionTargets;
@@ -639,6 +640,10 @@ public class ModelStubs {
 
     public static StagesProduction getStagesProduction(Long id) {
         return  new StagesProduction(id, "name", "description", getDepartment(id), getEmployee(id));
+    }
+
+    public static PrepaymentReturn getPrepaymentReturn(Long id) {
+        return new PrepaymentReturn(id, "", getRetailStore(id), getContractor(id), getCompany(id), new BigDecimal(1000), new BigDecimal(500), true, true, "comment");
     }
 }
 

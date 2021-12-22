@@ -32,7 +32,9 @@ public class PrepaymentReturnServiceImpl implements PrepaymentReturnService {
 
     @Override
     public PrepaymentReturnDto getById(Long id) {
-        return prepaymentReturnMapper.toDto(prepaymentReturnRepository.findById(id).orElse(new PrepaymentReturn()));
+        //return prepaymentReturnMapper.toDto(prepaymentReturnRepository.findById(id).orElse(new PrepaymentReturn()));
+        PrepaymentReturn prepaymentReturn = prepaymentReturnRepository.getOne(id);
+        return prepaymentReturnMapper.toDto(prepaymentReturn);
     }
 
     @Override
