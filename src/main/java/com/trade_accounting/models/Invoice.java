@@ -11,9 +11,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Класс-модель накладной
@@ -54,4 +56,7 @@ public class Invoice extends OperationsAbstract {
     @OneToOne
     @ColumnDefault("1")
     private InvoicesStatus invoicesStatus;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<InvoiceProduct> invoiceProducts;
 }
