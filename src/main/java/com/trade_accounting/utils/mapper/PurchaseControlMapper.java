@@ -14,7 +14,11 @@ public interface PurchaseControlMapper {
     /**
      * @return PurchaseControl
      */
-
+//    @Mappings({
+//            @Mapping(source = "historyOfSalesId", target = "historyOfSales.id"),
+//            @Mapping(source = "currentBalanceId", target = "currentBalance.id"),
+//            @Mapping(source = "forecastId", target = "forecast.id")
+//    })
     default PurchaseControl toModel(PurchaseControlDto purchaseControlDto) {
         if ( purchaseControlDto == null ) {
             return null;

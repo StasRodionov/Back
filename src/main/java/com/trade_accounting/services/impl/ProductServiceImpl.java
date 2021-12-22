@@ -2,22 +2,16 @@ package com.trade_accounting.services.impl;
 
 import javax.validation.constraints.NotNull;
 
-import com.trade_accounting.models.File;
 import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Product;
-import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.dto.PageDto;
 import com.trade_accounting.models.dto.ProductDto;
-import com.trade_accounting.repositories.FileRepository;
 import com.trade_accounting.repositories.ImageRepository;
-import com.trade_accounting.repositories.ProductPriceRepository;
 import com.trade_accounting.repositories.ProductRepository;
 import com.trade_accounting.services.interfaces.ProductService;
-import com.trade_accounting.utils.mapper.FileMapper;
 import com.trade_accounting.utils.mapper.ImageMapper;
 import com.trade_accounting.utils.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -25,10 +19,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,12 +29,9 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
-    private final FileRepository fileRepository;
-    private final ProductPriceRepository productPriceRepository;
 
     private final ImageMapper imageMapper;
     private final ProductMapper productMapper;
-    private final FileMapper fileMapper;
 
     @Override
     public List<ProductDto> getAll() {
@@ -61,7 +48,6 @@ public class ProductServiceImpl implements ProductService {
 
         ProductDto productDto = productMapper.toDto(product);
         productDto.setImageDtos(imageMapper.toListDto(product.getImages()));
-        productDto.setFileDtos(fileMapper.toListDto(product.getFiles()));
 
         return productDto;
     }
@@ -70,16 +56,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto create(@NotNull ProductDto dto) {
         List<Image> preparedImages = imageMapper.toListModel(dto.getImageDtos(), "product");
         List<Image> savedImages = imageRepository.saveAll(preparedImages);
-        List<File> preparedFiles = fileMapper.toListModel(dto.getFileDtos());
-        List<File> savedFiles = fileRepository.saveAll(preparedFiles);
         Product product = productMapper.toModel(dto);
         product.setImages(savedImages);
-        savedFiles.forEach(file -> file.setProduct(product));
-        product.setFiles(savedFiles);
-        List<ProductPrice> prices = new ArrayList<>();
-        product.getProductPrices()
-                .forEach(productPrice -> prices.add(productPriceRepository.getOne(productPrice.getId())));
-        product.setProductPrices(prices);
         productRepository.saveAndFlush(product);
         return dto;
     }
@@ -89,31 +67,15 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto update(ProductDto dto) {
         List<Image> preparedImages = imageMapper.toListModel(dto.getImageDtos(), "product");
         List<Image> savedImages = imageRepository.saveAll(preparedImages);
-        List<File> preparedFiles = fileMapper.toListModel(dto.getFileDtos());
-        List<File> savedFiles = fileRepository.saveAll(preparedFiles);
         Product product = productMapper.toModel(dto);
         product.setImages(savedImages);
-        savedFiles.forEach(file -> file.setProduct(product));
-        product.setFiles(savedFiles);
-        List<ProductPrice> prices = new ArrayList<>();
-        product.getProductPrices()
-                .forEach(productPrice -> prices.add(productPriceRepository.getOne(productPrice.getId())));
-        product.setProductPrices(prices);
         productRepository.saveAndFlush(product);
         return dto;
     }
 
     @Override
     public void deleteById(Long id) {
-        Product product = productRepository.getOne(id);
         productRepository.deleteById(id);
-        product.getFiles().forEach(file -> {
-            try {
-                Files.deleteIfExists(Path.of(file.getPlacement() + file.getKey() + file.getExtension()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
 

@@ -3,7 +3,6 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.ProductPrice;
 import com.trade_accounting.models.dto.ProductPriceDto;
 import com.trade_accounting.repositories.ProductPriceRepository;
-import com.trade_accounting.repositories.TypeOfPriceRepository;
 import com.trade_accounting.services.interfaces.ProductPriceService;
 import com.trade_accounting.utils.mapper.ProductPriceMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,6 @@ public class ProductPriceServiceImpl implements ProductPriceService {
 
     private final ProductPriceRepository productPriceRepository;
     private final ProductPriceMapper productPriceMapper;
-    private final TypeOfPriceRepository typeOfPriceRepository;
 
     @Override
     public List<ProductPriceDto> getAll() {
@@ -32,7 +30,7 @@ public class ProductPriceServiceImpl implements ProductPriceService {
     @Override
     public ProductPriceDto getById(Long id) {
         Optional<ProductPrice> productPrice = productPriceRepository.findById(id);
-        if (productPrice.isEmpty()) {
+        if (!productPrice.isPresent()) {
            throw  new NullPointerException("productPrice was not found");
         }
         return productPriceMapper.toDto(productPrice.orElse(new ProductPrice()));
@@ -41,7 +39,6 @@ public class ProductPriceServiceImpl implements ProductPriceService {
     @Override
     public ProductPriceDto create(@NotNull ProductPriceDto dto) {
         ProductPrice productPrice = productPriceMapper.toModel(dto);
-        productPrice.setTypeOfPrice(typeOfPriceRepository.getOne(productPrice.getTypeOfPrice().getId()));
         productPriceRepository.save(productPrice);
         return dto;
     }
@@ -49,7 +46,6 @@ public class ProductPriceServiceImpl implements ProductPriceService {
     @Override
     public ProductPriceDto update(ProductPriceDto dto) {
         ProductPrice productPrice = productPriceMapper.toModel(dto);
-        productPrice.setTypeOfPrice(typeOfPriceRepository.getOne(productPrice.getTypeOfPrice().getId()));
         productPriceRepository.save(productPrice);
         return dto;
     }

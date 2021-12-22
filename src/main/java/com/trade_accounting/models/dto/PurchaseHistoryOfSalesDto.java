@@ -1,5 +1,6 @@
 package com.trade_accounting.models.dto;
 
+import com.trade_accounting.models.ProductPrice;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class PurchaseHistoryOfSalesDto {
 
     private BigDecimal sumOfProducts;
 
-    private Long productPriceId;
+    private ProductPrice productPrice;
 
     private BigDecimal productMargin;
 
