@@ -41,7 +41,6 @@ public class InvoiceProduct {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Invoice invoice;
 
     @NotNull
