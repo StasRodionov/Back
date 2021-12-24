@@ -5,6 +5,7 @@ import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.PrepaymentReturn;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.ProductionTargets;
 import com.trade_accounting.models.StagesProduction;
@@ -39,6 +40,10 @@ public class SpecificationStubs {
     }
 
     public static Specification<StagesProduction> getStagesProductionSpecificationStub() {
+        return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+//
+    public static Specification<PrepaymentReturn> getPrepaymentReturnSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
 }
