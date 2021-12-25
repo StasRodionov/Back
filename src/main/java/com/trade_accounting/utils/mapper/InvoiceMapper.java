@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -212,9 +213,10 @@ public interface InvoiceMapper {
 
     default List<InvoiceProduct> invoiceDtoToInvoiceProducts(InvoiceDto invoiceDto) {
         if (invoiceDto == null) {
-            return null;
+            return new ArrayList<>();
         }
         return invoiceDto.getInvoiceProductsIds().stream()
+                .map(Objects::requireNonNull)
                 .map(id -> {
                     InvoiceProduct invoiceProduct = new InvoiceProduct();
                     invoiceProduct.setId(id);
