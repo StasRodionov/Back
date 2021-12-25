@@ -1,6 +1,9 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Movement;
+import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.dto.MovementDto;
+import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.repositories.MovementRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.MovementService;
@@ -11,6 +14,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -109,6 +117,19 @@ public class MovementRestController {
         movementService.deleteById(id);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/queryMovement")
+    @ApiOperation(value = "searchByFilter", notes = "Получение списка перемещений по заданным параметрам")
+    public ResponseEntity<List<MovementDto>> getByFilter(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "date", params = "date", spec = Equal.class),
+                    @Spec(path = "warehouse.name", params = "warehouseDto", spec = Equal.class),
+                    @Spec(path = "warehouseTo.name", params = "warehouseToDto", spec = Equal.class),
+                    @Spec(path = "company.name", params = "companyDto", spec = Equal.class),
+            }) Specification<Movement> spec) {
+        return ResponseEntity.ok(movementService.search(spec));
     }
 
     @PutMapping("/moveToIsRecyclebin/{id}")
