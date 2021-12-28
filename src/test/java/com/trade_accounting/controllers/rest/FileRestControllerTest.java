@@ -51,9 +51,10 @@ public class FileRestControllerTest {
         String modelJson = new Gson().toJson(File.builder()
                 .id(5L)
                 .name("test.docx")
-                .size(11431L)
+                .extension(".docx")
+                .placement("Файлы")
                 .key("2174d55e974a95f88d3894127ab55cf1")
-                .uploadDate(LocalDate.parse("2021-12-01"))
+                .employee("Сотрудник")
                 .build());
 
         mockMvc.perform(get("/api/file/5"))
@@ -70,9 +71,10 @@ public class FileRestControllerTest {
         String modelJson = new Gson().toJson(File.builder()
                 .id(5L)
                 .name("test.docx")
-                .size(11431L)
+                .extension(".docx")
+                .placement("Файлы")
                 .key("2174d55e974a95f88d3894127ab55cf1")
-                .uploadDate(LocalDate.parse("2021-12-01"))
+                .employee("Сотрудник")
                 .build());
 
         mockMvc.perform(post("/api/file")

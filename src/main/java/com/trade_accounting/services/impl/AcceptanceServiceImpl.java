@@ -66,17 +66,10 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     @Override
     public AcceptanceDto create(AcceptanceDto dto) {
-        Acceptance acceptance = acceptanceMapper.toModel(dto);
-        acceptance.setContract(contractRepository.getOne(dto.getContractId()));
-        acceptance.setContractor(contractorRepository.getOne(dto.getContractorId()));
-        acceptance.setWarehouse(warehouseRepository.getOne(dto.getWarehouseId()));
-        acceptance.setCompany(companyRepository.getOne(dto.getCompanyId()));
-        acceptance.setProject(projectRepository.getOne(dto.getProjectId()));
-        acceptance.setWhenChangedDate(LocalDate.now());
 
-        //Что работало в Postman, закомментить следующую строчку
-//        acceptance.setEmployeeChanged((Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return acceptanceMapper.toDto(acceptanceRepository.save(acceptance));
+        Acceptance acceptance = acceptanceRepository.save(acceptanceMapper.toModel(dto));
+        dto.setId(acceptance.getId());
+        return dto;
     }
 
     @Override

@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.domain.StartingWith;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
@@ -127,9 +128,9 @@ public class RetailSalesRestController {
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "date", params = "date", spec = Equal.class),
-                    @Spec(path = "retailStoreId.name", params = "retailStoreId", spec = Like.class),
-                    @Spec(path = "contractorId.name", params = "contractorId", spec = Like.class),
-                    @Spec(path = "companyId.name", params = "companyId", spec = Like.class),
+                    @Spec(path = "retailStore.id", params = "retailStoreId", spec = Equal.class),
+                    @Spec(path = "contractor.id", params = "contractorId", spec = Equal.class),
+                    @Spec(path = "company.name", params = "companyName", spec = StartingWith.class),
                     @Spec(path = "sumCash", params = "sumCash", spec = Equal.class),
                     @Spec(path = "sumNonСash", params = "sumNonСash", spec = Equal.class),
                     @Spec(path = "prepayment", params = "prepayment", spec = Equal.class),
