@@ -47,12 +47,6 @@ class InvoicesStatusServiceImplTest {
         testData.forEach(this::dataCorrectnessTesting);
     }
 
-    private void dataCorrectnessTesting(InvoicesStatusDto invoicesStatusDto) {
-        assertNotNull(invoicesStatusDto, "No data received");
-        assertNotNull(invoicesStatusDto.getId(), "Dto have no id");
-        assertNotNull(invoicesStatusDto.getStatusName(), "Dto have no statusName");
-    }
-
     @Test
     void getById() {
         when(statusRepository.getOne(anyLong())).thenReturn(InvoicesStatusStubs.getInvoicesStatus(1L));
@@ -87,5 +81,11 @@ class InvoicesStatusServiceImplTest {
         when(statusRepository.findByStatusName(anyString())).thenReturn(Optional.of(InvoicesStatusStubs.getInvoicesStatus(1L)));
         InvoicesStatusDto invoicesStatusDto = statusService.getByName("Новый1");
         dataCorrectnessTesting(invoicesStatusDto);
+    }
+
+    private void dataCorrectnessTesting(InvoicesStatusDto invoicesStatusDto) {
+        assertNotNull(invoicesStatusDto, "No data received");
+        assertNotNull(invoicesStatusDto.getId(), "Dto have no id");
+        assertNotNull(invoicesStatusDto.getStatusName(), "Dto have no statusName");
     }
 }
