@@ -84,16 +84,10 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
 
     @Override
     public List<SupplierAccountDto> searchByString(String nameFilter) {
-        if(nameFilter.matches("[0-9]+")) {
-            List<SupplierAccountDto> searchForNumber = supplierAccountRepository.searchById(Long.parseLong(nameFilter));
-            return searchForNumber;
-//        } else if ("null".equals(nameFilter) || nameFilter.isEmpty()) {
-//            List<SupplierAccountDto> supplierAccountList = supplierAccountRepository.getAll();
-//            return supplierAccountList;
-        } else {
-            List<SupplierAccountDto> supplierAccountListDto = supplierAccountRepository.searchByNameFilter(nameFilter);
-            return supplierAccountListDto;
-        }
+        return supplierAccountRepository.searchByIdAndNameFilter(nameFilter).stream()
+                .map(supplierAccountMapper::toDto)
+                .filter(supplierAccountDto -> supplierAccountDto.getTypeOfInvoice().equals(TypeOfInvoice.EXPENSE.toString()))
+                .collect(Collectors.toList());
     }
 
     @Override
