@@ -64,7 +64,7 @@ public class LossServiceImpl implements LossService {
 
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         Warehouse warehouse = warehouseRepository.getOne(dto.getWarehouseId());
-        LocalDateTime date = LocalDateTime.parse(dto.getDate().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        LocalDateTime date = LocalDateTime.parse(dto.getDate());
 
         List<LossProduct> lossProducts = dto.getLossProductsIds().stream()
                 .map(id -> lossProductRepository.findById(id).orElse(null))
