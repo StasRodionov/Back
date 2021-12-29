@@ -1,7 +1,10 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Correction;
+import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.dto.CorrectionDto;
 import com.trade_accounting.models.dto.MovementDto;
+import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.repositories.CorrectionRepository;
 import com.trade_accounting.services.interfaces.CheckEntityService;
 import com.trade_accounting.services.interfaces.CorrectionService;
@@ -12,6 +15,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -110,6 +118,18 @@ public class CorrectionRestController {
         correctionService.deleteById(id);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/search")
+    @ApiOperation(value = "searchByFilter", notes = "Получение списка счетов  по заданным параметрам")
+    public ResponseEntity<List<CorrectionDto>> getAllFilter(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "date", params = "date", spec = Equal.class),
+                    @Spec(path = "company.name", params = "companyDto", spec = Equal.class),
+                    @Spec(path = "warehouse.name", params = "warehouseDto", spec = Equal.class),
+            }) Specification<Correction> spec) {
+        return ResponseEntity.ok(correctionService.search(spec));
     }
 
     @PutMapping("/moveToIsRecyclebin/{id}")

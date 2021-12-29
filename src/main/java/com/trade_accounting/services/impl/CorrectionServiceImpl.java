@@ -3,8 +3,10 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.Company;
 import com.trade_accounting.models.Correction;
 import com.trade_accounting.models.CorrectionProduct;
+import com.trade_accounting.models.Loss;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.CorrectionDto;
+import com.trade_accounting.models.dto.LossDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.CorrectionProductRepository;
 import com.trade_accounting.repositories.CorrectionRepository;
@@ -13,6 +15,7 @@ import com.trade_accounting.services.interfaces.CorrectionService;
 import com.trade_accounting.utils.mapper.CorrectionMapper;
 import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +41,11 @@ public class CorrectionServiceImpl implements CorrectionService {
         return correctionRepository.getAll().stream()
                 .map(correctionMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CorrectionDto> search(Specification<Correction> spec) {
+        return executeSearch(correctionRepository, correctionMapper::toDto, spec);
     }
 
     @Override
