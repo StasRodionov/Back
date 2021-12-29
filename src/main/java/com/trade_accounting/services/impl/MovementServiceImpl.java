@@ -5,8 +5,10 @@ import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.Movement;
 import com.trade_accounting.models.MovementProduct;
 import com.trade_accounting.models.Project;
+import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.MovementDto;
+import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.EmployeeRepository;
 import com.trade_accounting.repositories.MovementProductRepository;
@@ -18,6 +20,7 @@ import com.trade_accounting.services.interfaces.MovementService;
 import com.trade_accounting.utils.mapper.MovementMapper;
 import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,6 +65,11 @@ public class MovementServiceImpl implements MovementService {
     @Override
     public MovementDto update(MovementDto dto) {
         return saveOrUpdate(dto);
+    }
+
+    @Override
+    public List<MovementDto> search(Specification<Movement> spec) {
+        return executeSearch(movementRepository, movementMapper::toDto, spec);
     }
 
     @Override
