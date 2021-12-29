@@ -57,6 +57,9 @@ public interface SupplierAccountRepository extends JpaRepository<SupplierAccount
             "like lower(concat('%', :nameFilter, '%')) ")
     List<SupplierAccountDto> searchByNameFilter(@Param("nameFilter") String nameFilter);
 
+    @Query("select s from SupplierAccount s where lower(concat(cast(s.id as java.lang.String), ' ', s.comment)) like lower(concat('%', :nameFilter, '%'))")
+    List<SupplierAccount> searchByIdAndNameFilter(@Param("nameFilter") String nameFilter);
+
 //    @Query("select new com.trade_accounting.models.dto.SupplierAccountDto (" +
 //            "e.id," +
 //            "e.date," +

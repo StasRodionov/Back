@@ -1,7 +1,9 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.BuyersReturn;
 import com.trade_accounting.models.Invoice;
 import com.trade_accounting.models.TypeOfInvoice;
+import com.trade_accounting.models.dto.BuyersReturnDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.repositories.InvoiceRepository;
