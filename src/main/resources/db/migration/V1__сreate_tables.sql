@@ -1222,6 +1222,19 @@ CREATE TABLE stages
     CONSTRAINT pk_stages PRIMARY KEY (id)
 );
 
+CREATE TABLE supplier_account_products_list(
+    id         bigserial                NOT NULL,
+    amount     NUMERIC(19, 2) DEFAULT 0 NOT NULL,
+    price      NUMERIC(19, 2) DEFAULT 0 NOT NULL,
+    sum        NUMERIC(19, 2) DEFAULT 0 NOT NULL,
+    percent_nds VARCHAR(255),
+    nds        NUMERIC(19, 2) DEFAULT 0 NOT NULL,
+    total      NUMERIC(19, 2) DEFAULT 0 NOT NULL,
+    supplier_account_id INT8            NOT NULL,
+    product_id          INT8            NOT NULL,
+    PRIMARY KEY (id)
+);
+
 ALTER TABLE stages
     ADD CONSTRAINT FK_STAGES_ON_DEPARTMENT FOREIGN KEY (department_id) REFERENCES departments (id);
 
