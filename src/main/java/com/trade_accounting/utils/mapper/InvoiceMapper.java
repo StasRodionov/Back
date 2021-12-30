@@ -5,6 +5,7 @@ import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.InternalOrder;
 import com.trade_accounting.models.InternalOrderProduct;
 import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.InvoicesStatus;
 import com.trade_accounting.models.Movement;
 import com.trade_accounting.models.TypeOfInvoice;
@@ -12,12 +13,17 @@ import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.models.dto.MovementDto;
+import com.trade_accounting.services.interfaces.InvoiceProductService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
@@ -43,24 +49,29 @@ public interface InvoiceMapper {
             return null;
         }
 
-        InvoiceDto.InvoiceDtoBuilder invoiceDto = InvoiceDto.builder();
+        InvoiceDto.InvoiceDtoBuilder invoiceDto = InvoiceDto.builder()
+                .companyId(invoiceCompanyId(invoice))
+                .contractorId(invoiceContractorId(invoice))
+                .warehouseId(invoiceWarehouseId(invoice))
+                .id(invoice.getId())
+                .invoiceProductsIds(
+                        invoice.getInvoiceProducts().stream()
+                                .filter(Objects::nonNull)
+                                .map(InvoiceProduct::getId)
+                                .collect(Collectors.toList()))
+                .isRecyclebin(invoice.getIsRecyclebin())
+                .comment(invoice.getComment())
+                .isSpend(invoice.getIsSpend())
+                .isSent(invoice.getIsSent())
+                .isPrint(invoice.getIsPrint())
+                .invoicesStatusId(invoiceStatusId(invoice));
 
-        invoiceDto.companyId(invoiceCompanyId(invoice));
-        invoiceDto.contractorId(invoiceContractorId(invoice));
-        invoiceDto.warehouseId(invoiceWarehouseId(invoice));
-        invoiceDto.id(invoice.getId());
-        invoiceDto.isRecyclebin(invoice.getIsRecyclebin());
-        invoiceDto.comment(invoice.getComment());
         if (invoice.getDate() != null) {
             invoiceDto.date(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(invoice.getDate()));
         }
         if (invoice.getTypeOfInvoice() != null) {
             invoiceDto.typeOfInvoice(invoice.getTypeOfInvoice().name());
         }
-        invoiceDto.isSpend(invoice.getIsSpend());
-        invoiceDto.isSent(invoice.getIsSent());
-        invoiceDto.isPrint(invoice.getIsPrint());
-        invoiceDto.invoicesStatusId(invoiceStatusId(invoice));
 
         return invoiceDto.build();
     }
@@ -71,24 +82,24 @@ public interface InvoiceMapper {
             return null;
         }
 
-        Invoice.InvoiceBuilder invoice = Invoice.builder();
-
-        invoice.company(invoiceDtoToCompany(emp));
-        invoice.contractor(invoiceDtoToContractor(emp));
-        invoice.warehouse(invoiceDtoToWarehouse(emp));
-        invoice.id(emp.getId());
+        Invoice.InvoiceBuilder invoice = Invoice.builder()
+                .company(invoiceDtoToCompany(emp))
+                .contractor(invoiceDtoToContractor(emp))
+                .warehouse(invoiceDtoToWarehouse(emp))
+                .id(emp.getId())
+                .isSpend(emp.getIsSpend())
+                .isSent(emp.getIsSent())
+                .isPrint(emp.getIsPrint())
+                .comment(emp.getComment())
+                .invoiceProducts(invoiceDtoToInvoiceProducts(emp))
+                .invoicesStatus(invoiceDtoToInvoicesStatus(emp))
+                .isRecyclebin(emp.getIsRecyclebin());
         if (emp.getDate() != null) {
             invoice.date(LocalDateTime.parse(emp.getDate()));
         }
         if (emp.getTypeOfInvoice() != null) {
             invoice.typeOfInvoice(Enum.valueOf(TypeOfInvoice.class, emp.getTypeOfInvoice()));
         }
-        invoice.isSpend(emp.getIsSpend());
-        invoice.isSent(emp.getIsSent());
-        invoice.isPrint(emp.getIsPrint());
-        invoice.comment(emp.getComment());
-        invoice.invoicesStatus(invoiceDtoToInvoicesStatus(emp));
-        invoice.isRecyclebin(emp.getIsRecyclebin());
         return invoice.build();
     }
 
@@ -198,6 +209,20 @@ public interface InvoiceMapper {
         invoicesStatus.setId(invoiceDto.getContractorId());
 
         return invoicesStatus;
+    }
+
+    default List<InvoiceProduct> invoiceDtoToInvoiceProducts(InvoiceDto invoiceDto) {
+        if (invoiceDto == null) {
+            return new ArrayList<>();
+        }
+        return invoiceDto.getInvoiceProductsIds().stream()
+                .map(Objects::requireNonNull)
+                .map(id -> {
+                    InvoiceProduct invoiceProduct = new InvoiceProduct();
+                    invoiceProduct.setId(id);
+                    return invoiceProduct;
+                })
+                .collect(Collectors.toList());
     }
 
 }

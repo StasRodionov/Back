@@ -438,6 +438,12 @@ create table invoice
     primary key (id)
 );
 
+create table invoice_invoice_products
+(
+    invoice_id          int8 not null,
+    invoice_products_id int8 not null
+);
+
 create table invoice_product
 (
     id         bigserial                not null,

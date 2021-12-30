@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -29,6 +30,8 @@ public class InvoiceDto {
     private Long warehouseId;
     @NotNull
     private Long invoicesStatusId;
+
+    private List<Long> invoiceProductsIds;
     private Boolean isSpend;
     private Boolean isSent;
     private Boolean isPrint;
