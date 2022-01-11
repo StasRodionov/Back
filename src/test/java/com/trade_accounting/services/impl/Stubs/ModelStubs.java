@@ -23,6 +23,7 @@ import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.InvoicesStatus;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.MutualSettlements;
 import com.trade_accounting.models.Payment;
@@ -347,6 +348,9 @@ public class ModelStubs {
                 .id(id)
                 .name("Новый")
                 .build();
+    }
+    public static InvoicesStatus getInvoicesStatus(Long id) {
+        return new InvoicesStatus(id,"новый");
     }
 
     public static Street getStreet(Long id) {
