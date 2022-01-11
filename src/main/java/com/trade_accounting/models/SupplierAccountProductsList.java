@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,29 +17,20 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-/**
- * Класс-модель список товаров накладной
- *
- * @param amount - количество товаров (дефолт = 0)
- * @param price  - цена (дефолт = 0)
- * @author Sanych
- */
-
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "invoice_product")
-public class InvoiceProduct {
-
+@Table(name = "supplier_account_products_list")
+public class SupplierAccountProductsList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    private Invoice invoice;
+    private SupplierAccount supplierAccount;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -57,11 +46,36 @@ public class InvoiceProduct {
     @ColumnDefault("0")
     private BigDecimal price;
 
-    public InvoiceProduct(@NotNull Invoice invoice, @NotNull Product product,
-                          @NotNull BigDecimal amount, @NotNull BigDecimal price) {
-        this.invoice = invoice;
+    @NotNull
+    @Column(name = "sum")
+    @ColumnDefault("0")
+    private BigDecimal sum;
+
+    @NotNull
+    @Column(name = "percentNds")
+    @ColumnDefault("20")
+    private String percentNds;
+
+    @NotNull
+    @Column(name = "nds")
+    @ColumnDefault("0")
+    private BigDecimal nds;
+
+    @NotNull
+    @Column(name = "total")
+    @ColumnDefault("0")
+    private BigDecimal total;
+
+    public SupplierAccountProductsList(@NotNull SupplierAccount supplierAccount,@NotNull Product product,
+                                       @NotNull BigDecimal amount,@NotNull BigDecimal price,@NotNull BigDecimal sum,
+                                       @NotNull String percentNds,@NotNull BigDecimal nds,@NotNull BigDecimal total) {
+        this.supplierAccount = supplierAccount;
         this.product = product;
         this.amount = amount;
         this.price = price;
+        this.sum = sum;
+        this.percentNds = percentNds;
+        this.nds = nds;
+        this.total = total;
     }
 }

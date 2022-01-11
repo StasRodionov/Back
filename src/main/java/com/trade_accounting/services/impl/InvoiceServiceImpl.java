@@ -10,9 +10,11 @@ import com.trade_accounting.models.Warehouse;
 import com.trade_accounting.models.dto.InvoiceDto;
 import com.trade_accounting.repositories.CompanyRepository;
 import com.trade_accounting.repositories.ContractorRepository;
+import com.trade_accounting.repositories.InvoiceProductRepository;
 import com.trade_accounting.repositories.InvoiceRepository;
 import com.trade_accounting.repositories.InvoicesStatusRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
+import com.trade_accounting.services.interfaces.InvoiceProductService;
 import com.trade_accounting.services.interfaces.InvoiceService;
 import com.trade_accounting.utils.mapper.CompanyMapper;
 import com.trade_accounting.utils.mapper.ContractorMapper;
@@ -38,6 +40,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final WarehouseRepository warehouseRepository;
     private final ContractorMapper contractorMapper;
     private final InvoicesStatusRepository invoicesStatusRepository;
+    private final InvoiceProductRepository invoiceProductRepository;
     private final CompanyMapper companyMapper;
     private final InvoiceMapper invoiceMapper;
 
@@ -106,6 +109,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         Warehouse warehouse = warehouseRepository.getOne(invoiceDto.getWarehouseId());
         InvoicesStatus invoicesStatus = invoicesStatusRepository.getInvoicesStatusById(invoiceDto.getInvoicesStatusId());
         invoiceSaved.setCompany(company);
+        invoiceSaved.setInvoiceProducts(
+                invoiceDto.getInvoiceProductsIds().stream()
+                        .map(id -> invoiceProductRepository.findById(id).orElse(null))
+                        .collect(Collectors.toList()));
         invoiceSaved.setContractor(contractor);
         invoiceSaved.setWarehouse(warehouse);
         invoiceSaved.setInvoicesStatus(invoicesStatus);

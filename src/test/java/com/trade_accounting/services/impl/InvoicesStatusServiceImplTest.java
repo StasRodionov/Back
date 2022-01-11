@@ -3,101 +3,89 @@ package com.trade_accounting.services.impl;
 import com.trade_accounting.models.InvoicesStatus;
 import com.trade_accounting.models.dto.InvoicesStatusDto;
 import com.trade_accounting.repositories.InvoicesStatusRepository;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.InvoicesStatusDtoStubs;
-import com.trade_accounting.utils.mapper.InvoicesStatusMapper;
+import com.trade_accounting.services.impl.Stubs.model.InvoicesStatusStubs;
+import com.trade_accounting.utils.mapper.InvoicesStatusMapperImpl;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-
 class InvoicesStatusServiceImplTest {
 
     @InjectMocks
-    private InvoicesStatusServiceImpl invoicesStatusService;
+    private InvoicesStatusServiceImpl statusService;
+
     @Mock
-    private InvoicesStatusRepository invoicesStatusRepository;
+    private InvoicesStatusRepository statusRepository;
+
     @Spy
-    private InvoicesStatusMapper invoicesStatusMapper;
+    private InvoicesStatusMapperImpl statusMapper;
+
     @Test
     void getAll() {
-        when(invoicesStatusRepository.findAll()).
-                thenReturn(
-                Stream.of(
-                        ModelStubs.getInvoicesStatus(1L),
-                        ModelStubs.getInvoicesStatus(2L),
-                        ModelStubs.getInvoicesStatus(3L)
-                ).collect(Collectors.toList()));
-
-        List<InvoicesStatusDto> invoicesStatusDtos = invoicesStatusService.getAll();
-        assertEquals(3, invoicesStatusDtos.size());
+        when(statusRepository.findAll()).thenReturn(Stream.of(
+                InvoicesStatusStubs.getInvoicesStatus(1L),
+                InvoicesStatusStubs.getInvoicesStatus(2L),
+                InvoicesStatusStubs.getInvoicesStatus(3L)
+        ).collect(Collectors.toList()));
+        List<InvoicesStatusDto> testData = statusService.getAll();
+        assertNotNull(testData, "failure - expected that a list of InvoicesStatusDto not null");
+        assertTrue(testData.size() > 0, "failure - expected that a list of InvoicesStatusDto grater than 0");
+        testData.forEach(this::dataCorrectnessTesting);
     }
-
 
     @Test
     void getById() {
-        when(invoicesStatusRepository.getOne(anyLong()))
-                .thenReturn(ModelStubs.getInvoicesStatus(1L));
-
-        InvoicesStatusDto invoicesStatusDto = invoicesStatusService.getById(1L);
-
-        invoicesStatusIsCorrectlyInited(invoicesStatusDto);
+        when(statusRepository.getOne(anyLong())).thenReturn(InvoicesStatusStubs.getInvoicesStatus(1L));
+        InvoicesStatusDto testDto = statusService.getById(1L);
+        dataCorrectnessTesting(testDto);
     }
 
     @Test
     void create() {
-        saveOrUpdate();
+        when(statusRepository.save(any(InvoicesStatus.class))).thenReturn(InvoicesStatusStubs.getInvoicesStatus(1L));
+        InvoicesStatusDto invoicesStatusDto = statusService.create(statusMapper.toDto(InvoicesStatusStubs.getInvoicesStatus(1L)));
+        verify(statusRepository).save(any(InvoicesStatus.class));
+        dataCorrectnessTesting(invoicesStatusDto);
     }
 
     @Test
     void update() {
-        saveOrUpdate();
+        when(statusRepository.save(any(InvoicesStatus.class))).thenReturn(InvoicesStatusStubs.getInvoicesStatus(1L));
+        InvoicesStatusDto invoicesStatusDto = statusService.update(statusMapper.toDto(InvoicesStatusStubs.getInvoicesStatus(1L)));
+        verify(statusRepository).save(any(InvoicesStatus.class));
+        dataCorrectnessTesting(invoicesStatusDto);
     }
 
     @Test
     void deleteById() {
-        invoicesStatusRepository.deleteById(anyLong());
-        verify(invoicesStatusRepository).deleteById(anyLong());
+        statusService.deleteById(1L);
+        verify(statusRepository, times(1)).deleteById(anyLong());
     }
 
     @Test
     void getByName() {
-        Optional<InvoicesStatus> invoicesStatusOptional = Optional.of(ModelStubs.getInvoicesStatus(1L));
-
-        when(invoicesStatusRepository.findByStatusName(anyString()))
-                .thenReturn(invoicesStatusOptional);
-
-        InvoicesStatusDto invoicesStatusDto = invoicesStatusService.getByName("новый");
-
-        assertNotNull(invoicesStatusDto, "failure - expected that invoicesStatusDto not null.");
-        invoicesStatusIsCorrectlyInited(invoicesStatusDto);
+        when(statusRepository.findByStatusName(anyString())).thenReturn(Optional.of(InvoicesStatusStubs.getInvoicesStatus(1L)));
+        InvoicesStatusDto invoicesStatusDto = statusService.getByName("Новый1");
+        dataCorrectnessTesting(invoicesStatusDto);
     }
 
-    void  invoicesStatusIsCorrectlyInited(InvoicesStatusDto invoicesStatusDto) {
-        assertNotNull(invoicesStatusDto, "Fail in passed invoicesStatus");
-        assertNotNull(invoicesStatusDto.getId(), "Fail in field 'id' of invoicesStatus");
-        assertNotNull(invoicesStatusDto.getStatusName(), "Fail in field 'status' of invoicesStatus");
-    }
-
-    private void saveOrUpdate() {
-        when(invoicesStatusRepository.save(any(InvoicesStatus.class))).thenReturn(ModelStubs.getInvoicesStatus(1L));
-        InvoicesStatusDto invoicesStatusDto = invoicesStatusService.create(InvoicesStatusDtoStubs.getInvoicesStatusDto(1L));
-        assertEquals(1,invoicesStatusDto.getId());
-        verify(invoicesStatusRepository).save(any(InvoicesStatus.class));
+    private void dataCorrectnessTesting(InvoicesStatusDto invoicesStatusDto) {
+        assertNotNull(invoicesStatusDto, "No data received");
+        assertNotNull(invoicesStatusDto.getId(), "Dto have no id");
+        assertNotNull(invoicesStatusDto.getStatusName(), "Dto have no statusName");
     }
 }
