@@ -9,11 +9,9 @@ import java.util.List;
 
 public interface PurchaseCurrentBalanceRepository extends JpaRepository<PurchaseCurrentBalance, Long> {
 
-
     @Query("SELECT c FROM PurchaseCurrentBalance c")
     List<PurchaseCurrentBalance> findAll();
 
-
-    @Query("SELECT c FROM PurchaseHistoryOfSales c WHERE c.id = :id")
+    @Query("SELECT c FROM PurchaseCurrentBalance c WHERE c.id = :id")
     PurchaseCurrentBalance getOne(@Param("id") Long id);
 }
