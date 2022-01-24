@@ -13,5 +13,6 @@ public interface PaymentService extends AbstractService<PaymentDto> {
     List<PaymentDto> search(String search);
 
     void moveToRecyclebin(long id);
+
     void restoreFromRecyclebin(long id);
 }

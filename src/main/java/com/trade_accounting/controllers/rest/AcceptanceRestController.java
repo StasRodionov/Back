@@ -5,6 +5,8 @@ import com.trade_accounting.models.Acceptance;
 import com.trade_accounting.models.SupplierAccount;
 import com.trade_accounting.models.dto.AcceptanceDto;
 import com.trade_accounting.models.dto.MovementDto;
+import com.trade_accounting.models.dto.PaymentDto;
+import com.trade_accounting.models.dto.ReturnToSupplierDto;
 import com.trade_accounting.models.dto.SupplierAccountDto;
 import com.trade_accounting.repositories.AcceptanceRepository;
 import com.trade_accounting.services.interfaces.AcceptanceService;
@@ -55,6 +57,21 @@ public class AcceptanceRestController {
     )
     public ResponseEntity<List<AcceptanceDto>> getAll() {
         return ResponseEntity.ok(acceptanceService.getAll());
+    }
+
+    @GetMapping("/search/{search}")
+    @ApiOperation(value = "search", notes = "Получение списка приемок по номеру или комментарию")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка приемок по номеру или комментарию"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<AcceptanceDto>> search(@ApiParam(name = "search",
+            value = "Переданный в URL search, по которому необходимо найти приемку")
+                                                      @PathVariable(name = "search") String search) {
+        List<AcceptanceDto> acceptanceDtoList = acceptanceService.search(search);
+        return ResponseEntity.ok(acceptanceDtoList);
     }
 
     @GetMapping("/{id}")

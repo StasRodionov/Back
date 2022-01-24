@@ -1,7 +1,6 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Acceptance;
-import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.dto.AcceptanceDto;
 import com.trade_accounting.repositories.AcceptanceRepository;
 import com.trade_accounting.repositories.CompanyRepository;
@@ -12,11 +11,9 @@ import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.AcceptanceService;
 import com.trade_accounting.utils.mapper.AcceptanceMapper;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,6 +90,13 @@ public class AcceptanceServiceImpl implements AcceptanceService {
                     .map(acceptanceMapper::toDto)
                     .collect(Collectors.toList());
         }
+    }
+
+    @Override
+    public List<AcceptanceDto> search(String search) {
+        return acceptanceRepository.search(search).stream()
+                .map(acceptanceMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
