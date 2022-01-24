@@ -36,10 +36,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDto> search(Specification<Task> specification) {
-        return taskRepository.findAll(specification).stream()
-                .map(taskMapper::taskToTaskDto)
-//                .peek(dto -> dto.setTaskCommentsIds(commentRepository.countTaskCommentByTaskId(dto.getId())))
-                .collect(Collectors.toList());
+        return executeSearch(taskRepository, taskMapper::taskToTaskDto, specification);
     }
 
     @Override
