@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Between;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.GreaterThan;
+import net.kaczmarzyk.spring.data.jpa.domain.LessThanOrEqual;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -63,10 +65,13 @@ public class TaskRestController {
     @GetMapping(value = "search")
     public ResponseEntity<List<TaskDto>> search(@And({
             @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
-            @Spec(path = "taskEmployee.id", params = "employeeId", spec = Equal.class),
+            @Spec(path = "taskEmployee.lastName", params = "employeeId", spec = Equal.class),
             @Spec(path = "taskAuthor.id", params = "taskAuthorId", spec = Equal.class),
             @Spec(path = "creationDateTime", params = {"lowerDate", "upperDate"}, spec = Between.class),
+            @Spec(path = "deadlineDateTime", params = "deadlineDateTime", spec = Equal.class),
             @Spec(path = "completed", params = "completed", spec = Equal.class),
+            @Spec(path = "id", params = "id", spec = Equal.class),
+            @Spec(path = "taskContractor.name", params = "contractorId", spec = LikeIgnoreCase.class),
     }) Specification<Task> spec) {
         return ResponseEntity.ok(taskService.search(spec));
     }
