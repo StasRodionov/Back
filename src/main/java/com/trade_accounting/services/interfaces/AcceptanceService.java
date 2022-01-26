@@ -5,10 +5,13 @@ import com.trade_accounting.models.dto.AcceptanceDto;
 
 import java.util.List;
 
-public interface AcceptanceService extends AbstractService<AcceptanceDto>, SearchableService<Acceptance, AcceptanceDto>{
+public interface AcceptanceService extends AbstractService<AcceptanceDto>, SearchableService<Acceptance, AcceptanceDto> {
 
-        List<AcceptanceDto> searchByNumberAndComment (String searchTerm);
+    List<AcceptanceDto> searchByNumberAndComment(String searchTerm);
 
-        void moveToRecyclebin(long id);
-        void restoreFromRecyclebin(long id);
+    List<AcceptanceDto> search(String search);
+
+    void moveToRecyclebin(long id);
+
+    void restoreFromRecyclebin(long id);
 }
