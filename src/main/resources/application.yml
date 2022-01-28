@@ -10,7 +10,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/trade_accounting
     username: postgres
-    password: root
+    password: 2T78ZNp2
     initialization-mode: always
 
   mail:
@@ -24,7 +24,7 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
