@@ -34,7 +34,6 @@ public abstract class OperationsAbstract {
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
-
     @Column(name = "date")
     private LocalDateTime date;
 
