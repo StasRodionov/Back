@@ -13,11 +13,13 @@ import com.trade_accounting.services.interfaces.InventarizationService;
 import com.trade_accounting.utils.mapper.InventarizationMapper;
 import com.trade_accounting.utils.mapper.WarehouseMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,11 +38,9 @@ public class InventarizationServiceImpl implements InventarizationService {
 
     @Override
     public List<InventarizationDto> getAll() {
-        List<InventarizationDto> listInventarizationDto = inventarizationRepository.findAll()
-                .stream()
+        return inventarizationRepository.findAll().stream()
                 .map(inventarizationMapper::toDto)
                 .collect(Collectors.toList());
-        return listInventarizationDto;
     }
 
     @Override
@@ -81,6 +81,23 @@ public class InventarizationServiceImpl implements InventarizationService {
         inventarization.setInventarizationProducts(inventarizationProducts);
 
         return inventarizationMapper.toDto(inventarizationRepository.save(inventarization));
+    }
+
+    @Override
+    public List<InventarizationDto> search(Specification<Inventarization> spec) {
+        List<Inventarization> inventarizationList = inventarizationRepository.findAll(spec);
+        List<InventarizationDto> inventarizationDtoList = new ArrayList<>();
+        for (Inventarization io : inventarizationList) {
+            inventarizationDtoList.add(inventarizationMapper.toDto(io));
+        }
+        return inventarizationDtoList;
+    }
+
+    @Override
+    public List<InventarizationDto> search(String search) {
+        return inventarizationRepository.search(search).stream()
+                .map(inventarizationMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -49,6 +49,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         return executeSearch(invoiceRepository, invoiceMapper::toDto, specification);
     }
 
+
     @Override
     public List<InvoiceDto> findBySearchAndTypeOfInvoice(String search, TypeOfInvoice typeOfInvoice) {
         List<InvoiceDto> invoiceDtoList = invoiceRepository.findBySearchAndTypeOfInvoice(search, typeOfInvoice);
@@ -69,12 +70,10 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .collect(Collectors.toList());
     }
 
-
     @Override
     public List<InvoiceDto> getFromDateTime(LocalDateTime dateTime) {
         return invoiceRepository.getFromDateTime(dateTime);
     }
-
 
     @Override
     public List<InvoiceDto> getByContractorId(Long id) {

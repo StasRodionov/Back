@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.dto.InventarizationDto;
 import com.trade_accounting.models.dto.MovementDto;
 import com.trade_accounting.repositories.InventarizationRepository;
@@ -12,6 +13,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,6 +54,36 @@ public class InventarizationRestController {
         return ResponseEntity.ok(inventarizationService.getAll());
     }
 
+    @GetMapping("/searchByFilter")
+    @ApiOperation(value = "searchByFilter", notes = "Получение списка инвентаризаций по заданным параметрам")
+    public ResponseEntity<List<InventarizationDto>> getAllFilter(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "date", params = "date", spec = Equal.class),
+                    @Spec(path = "company.name", params = "companyId", spec = Like.class),
+                    @Spec(path = "warehouse.name", params = "warehouseId", spec = Like.class),
+                    @Spec(path = "comment", params = "comment", spec = Like.class),
+                    @Spec(path = "status", params = "sent", spec = Equal.class),
+                    @Spec(path = "status", params = "print", spec = Equal.class),
+            }) Specification<Inventarization> spec) {
+        return ResponseEntity.ok(inventarizationService.search(spec));
+    }
+
+    @GetMapping("/search/{search}")
+    @ApiOperation(value = "search", notes = "Получение списка инвентаризаций по номеру или комментарию")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка инвентаризаций по номеру или комментарию"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<InventarizationDto>> search(@ApiParam(name = "search",
+            value = "Переданный в URL search, по которому необходимо найти приемку")
+                                                           @PathVariable(name = "search") String search) {
+        List<InventarizationDto> inventarizationDtoList = inventarizationService.search(search);
+        return ResponseEntity.ok(inventarizationDtoList);
+    }
+
     @GetMapping("/{id}")
     @ApiOperation(value = "getById", notes = "Получение конкретной инвентаризации")
     @ApiResponses(value = {
@@ -58,7 +94,7 @@ public class InventarizationRestController {
     )
     public ResponseEntity<InventarizationDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти инвентаризацию")
-                                                          @PathVariable(name = "id") Long id)  {
+                                                      @PathVariable(name = "id") Long id) {
         checkEntityService.checkExists((JpaRepository) inventarizationRepository, id);
 
         return ResponseEntity.ok(inventarizationService.getById(id));
@@ -75,7 +111,7 @@ public class InventarizationRestController {
     )
     public ResponseEntity<InventarizationDto> create(@ApiParam(name = "inventarizationDto",
             value = "DTO инвентаризации, которое необходимо создать")
-                                                @RequestBody InventarizationDto inventarizationDto) {
+                                                     @RequestBody InventarizationDto inventarizationDto) {
 
         return ResponseEntity.ok(inventarizationService.create(inventarizationDto));
     }
@@ -91,7 +127,7 @@ public class InventarizationRestController {
     )
     public ResponseEntity<InventarizationDto> update(@ApiParam(name = "inventarizationDto",
             value = "DTO инвентаризации, которое необходимо обновить")
-                                                         @RequestBody InventarizationDto inventarizationDto) {
+                                                     @RequestBody InventarizationDto inventarizationDto) {
 
         return ResponseEntity.ok(inventarizationService.update((inventarizationDto)));
     }
@@ -107,7 +143,7 @@ public class InventarizationRestController {
     )
     public ResponseEntity<InventarizationDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить инвентаризацию")
-                                                             @PathVariable(name = "id") Long id) {
+                                                         @PathVariable(name = "id") Long id) {
         checkEntityService.checkExists((JpaRepository) inventarizationRepository, id);
         inventarizationService.deleteById(id);
 
