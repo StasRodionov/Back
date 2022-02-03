@@ -62,4 +62,12 @@ public class RetailMakingServiceImpl implements RetailMakingService {
     public List<RetailMakingDto> search(Specification<RetailMaking> spec) {
         return executeSearch(retailMakingRepository, retailMakingMapper::toDto, spec);
     }
+
+    @Override
+    public List<RetailMakingDto> search(String search) {
+        return retailMakingRepository.search(search).stream()
+                .map(retailMakingMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
 }
