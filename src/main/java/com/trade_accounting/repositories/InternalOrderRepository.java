@@ -15,15 +15,19 @@ public interface InternalOrderRepository extends JpaRepository<InternalOrder, Lo
     @Query("SELECT i FROM InternalOrder i WHERE i.id = :id")
     InternalOrder getById(@Param("id") Long id);
 
-    @Query(
-            "from InternalOrder i LEFT OUTER JOIN Company as c on i.company.id = c.id" +
-                    " LEFT outer join Warehouse as w on i.warehouse.id = w.id " +
-                    "where lower(i.comment) like lower (concat('%', :searchItem, '%')) " +
-                    "or lower(w.name) like lower(concat('%', :searchItem,'%'))" +
-                    "or lower(c.name) like lower(concat('%', :searchItem,'%'))"
+    /*В случае необходимости поиска по компании, складу и комментарию разкоммитить*/
+    //    @Query(
+//            "from InternalOrder i LEFT OUTER JOIN Company as c on i.company.id = c.id" +
+//                    " LEFT outer join Warehouse as w on i.warehouse.id = w.id " +
+//                    "where lower(i.comment) like lower (concat('%', :searchItem, '%')) " +
+//                    "or lower(w.name) like lower(concat('%', :searchItem,'%'))" +
+//                    "or lower(c.name) like lower(concat('%', :searchItem,'%'))"
+//
+//
+//    )
 
-
-    )
-
+    @Query("from InternalOrder a" +
+            " where lower(concat(a.id, ' ', a.comment))" +
+            " like lower(concat('%', :searchItem, '%'))")
     List<InternalOrder> search(@Param("searchItem") String searchItem);
 }
