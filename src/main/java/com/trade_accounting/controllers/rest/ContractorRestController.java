@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest;
 
+import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Contractor;
 import com.trade_accounting.models.dto.ContractorDto;
 import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
@@ -16,8 +17,12 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.In;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Conjunction;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Or;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -118,23 +123,53 @@ public class ContractorRestController {
     @GetMapping("/searchContractor")
     @ApiOperation(value = "searchContractor", notes = "Получение списка контрактов по заданным параметрам")
     public ResponseEntity<List<ContractorDto>> getAllFilter(
-            @And({
-                    @Spec(path = "id", params = "id", spec = Equal.class),
+//            @And({
+//                    @Spec(path = "id", params = "id", spec = Equal.class),
+//                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "sortNumber", params = "sortNumber", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "fax", params = "fax", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
+////                    @Spec(path = "address", params = "address", spec = Equal.class),
+//                    @Spec(path = "contractor.addressId", params = "address", spec = Equal.class),
+//                    @Spec(path = "commentToAddress", params = "commentToAddress", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "contractorGroup.name", params = "contractorGroupDto", spec = Equal.class),
+////                    @Spec(path = "contractor.typeOfContractor", params = "typeOfContractorDto", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "typeOfPrice.name", params = "typeOfPriceDto", spec = LikeIgnoreCase.class),
+//                    @Spec(path = "legalDetail.inn", params = "legalDetailDto", spec = LikeIgnoreCase.class),
+////                    @Spec(path = "contractor.legalDetail", params = "legalDetail", spec = Equal.class),
+//            }) Specification<Contractor> spec)
+
+            @Conjunction(value = {
+                    @Or({@Spec(path = "address.index", params = "address", spec = In.class),
+                            @Spec(path = "address.country", params = "address", spec = In.class),
+                            @Spec(path = "address.region", params = "address", spec = LikeIgnoreCase.class),
+                            @Spec(path = "address.city", params = "address", spec = LikeIgnoreCase.class),
+                            @Spec(path = "address.street", params = "address", spec = LikeIgnoreCase.class),
+                            @Spec(path = "address.house", params = "address", spec = LikeIgnoreCase.class),
+                            @Spec(path = "address.apartment", params = "address", spec = LikeIgnoreCase.class),
+                    }
+                    )},
+                    and = {
+                            @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
                     @Spec(path = "sortNumber", params = "sortNumber", spec = LikeIgnoreCase.class),
                     @Spec(path = "phone", params = "phone", spec = LikeIgnoreCase.class),
                     @Spec(path = "fax", params = "fax", spec = LikeIgnoreCase.class),
                     @Spec(path = "email", params = "email", spec = LikeIgnoreCase.class),
-                    @Spec(path = "address", params = "address", spec = LikeIgnoreCase.class),
                     @Spec(path = "commentToAddress", params = "commentToAddress", spec = LikeIgnoreCase.class),
                     @Spec(path = "comment", params = "comment", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "contractor.contractorGroup", params = "contractorGroupDto", spec = Like.class),
-//                    @Spec(path = "contractor.typeOfContractor", params = "typeOfContractorDto", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "contractor.typeOfPrice", params = "typeOfPriceDto", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "contractor.bankAccounts", params = "bankAccountsDto", spec = LikeIgnoreCase.class),
-//                    @Spec(path = "contractor.legalDetail", params = "legalDetail", spec = Equal.class),
-            }) Specification<Contractor> spec) {
-        return ResponseEntity.ok(contractorService.search(spec));
+                    @Spec(path = "contractorGroup.name", params = "contractorGroupDto", spec = Equal.class),
+                    @Spec(path = "typeOfPrice.name", params = "typeOfPriceDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "legalDetail.inn", params = "legalDetailDto", spec = LikeIgnoreCase.class),
+
+                    }) Specification<Contractor> specification
+    )
+
+
+    {
+        return ResponseEntity.ok(contractorService.search(specification));
     }
 
     @GetMapping("/{id}")
