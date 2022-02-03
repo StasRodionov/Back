@@ -68,4 +68,10 @@ public class OperationsRestController {
     public ResponseEntity<List<OperationsDto>> quickSearch(@RequestParam("search") String search) {
         return ResponseEntity.ok(operationService.quickSearch(search));
     }
+
+    @GetMapping("/quickSearchRecycle")
+    @ApiOperation(value = "search", notes = "Получение списка документов в корзине из строки быстрого поиска")
+    public ResponseEntity<List<OperationsDto>> quickSearchRecycle(@RequestParam("searchDeleted") String search) {
+        return ResponseEntity.ok(operationService.quickSearchRecycle(search));
+    }
 }
