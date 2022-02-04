@@ -67,6 +67,7 @@ class TechnicalCardProductionServiceImplTest {
         TechnicalCardProductionDto technicalCardProductionDto = technicalCardProductionService.getById(1L);
 
         technicalCardProductionDtoIsCorrectlyInited(technicalCardProductionDto);
+
 //        assertEquals(1,  technicalCardProductionDto.getId());
 
     }
