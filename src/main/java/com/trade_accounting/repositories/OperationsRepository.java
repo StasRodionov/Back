@@ -16,4 +16,8 @@ public interface OperationsRepository extends JpaRepository<OperationsAbstract,L
             "like lower(concat('%', :symbols, '%'))")
     List<OperationsAbstract> getBySearch(@Param("symbols") String search);
 
+    @Query("from OperationsAbstract o " +
+            "where lower ( concat(o.id, ' ', o.company.name)) " +
+            "like lower(concat('%', :symbols, '%'))")
+    List<OperationsAbstract> getBySearchDeleted(@Param("symbols") String search);
 }

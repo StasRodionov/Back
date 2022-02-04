@@ -58,4 +58,13 @@ public class OperationsServiceImpl implements OperationsService {
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    public List<OperationsDto> quickSearchRecycle(String text) {
+        return operationsRepository.getBySearchDeleted(text).stream()
+                .map(operationsMapper::toDto)
+                .filter(OperationsDto::getIsRecyclebin)
+                                .collect(Collectors.toList());
+
+    }
 }

@@ -10,4 +10,6 @@ public interface OperationsService extends AbstractService<OperationsDto>,
 
     List<OperationsDto> quickSearch(String text);
 
+    List<OperationsDto> quickSearchRecycle(String text);
+
 }
