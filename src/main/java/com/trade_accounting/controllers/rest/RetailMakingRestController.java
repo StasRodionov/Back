@@ -56,20 +56,36 @@ public class RetailMakingRestController {
         return ResponseEntity.ok(retailMakingService.getAll());
     }
 
-    @GetMapping("/search")
-    @ApiOperation(value = "search", notes = "Получение списка внесений по заданным параметрам")
-    public ResponseEntity<List<RetailMakingDto>> getAll(
+    @GetMapping("/searchByFilter")
+    @ApiOperation(value = "searchByFilter", notes = "Получение списка внесений по заданным параметрам")
+    public ResponseEntity<List<RetailMakingDto>> getAllFilter(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
-                    @Spec(path = "date", params = "date", spec = GreaterThanOrEqual.class),
-                    @Spec(path = "retailStore.name", params = "retailStoreDto", spec = Like.class),
-                    @Spec(path = "company.name", params = "companyDto", spec = Like.class),
+                    @Spec(path = "date", params = "date", spec = Equal.class),
+                    @Spec(path = "company.name", params = "company_id", spec = Like.class),
+                    @Spec(path = "retailStore.name", params = "retail_store_id", spec = Like.class),
+                    @Spec(path = "fromWhom", params = "fromWhom", spec = Like.class),
+                    @Spec(path = "comment", params = "comment", spec = Like.class),
                     @Spec(path = "sum", params = "sum", spec = Equal.class),
-                    @Spec(path = "isSend", params = "send", spec = Equal.class),
+                    @Spec(path = "isSent", params = "sent", spec = Equal.class),
                     @Spec(path = "isPrint", params = "print", spec = Equal.class),
-                    @Spec(path = "comment", params = "comment", spec = Equal.class),
             }) Specification<RetailMaking> spec) {
         return ResponseEntity.ok(retailMakingService.search(spec));
+    }
+
+    @GetMapping("/search/{search}")
+    @ApiOperation(value = "search", notes = "Получение списка внесений по номеру или комментарию")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка внесений по номеру или комментарию"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<RetailMakingDto>> search(@ApiParam(name = "search",
+            value = "Переданный в URL search, по которому необходимо найти приемку")
+                                                        @PathVariable(name = "search") String search) {
+        List<RetailMakingDto> retailMakingDtoList = retailMakingService.search(search);
+        return ResponseEntity.ok(retailMakingDtoList);
     }
 
     @GetMapping("/{id}")
@@ -80,9 +96,9 @@ public class RetailMakingRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<RetailMakingDto> getById(@ApiParam(name = "id" , type = "Long",
+    public ResponseEntity<RetailMakingDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти информацию о внесении")
-                                             @PathVariable Long id) {
+                                                   @PathVariable Long id) {
 
         checkEntityService.checkExists((JpaRepository) retailMakingRepository, id);
 
@@ -100,7 +116,7 @@ public class RetailMakingRestController {
     )
     public ResponseEntity<RetailMakingDto> create(@ApiParam(name = "payoutDto",
             value = "DTO внесения, которую необходимо создать")
-                                            @RequestBody RetailMakingDto retailMakingDto) {
+                                                  @RequestBody RetailMakingDto retailMakingDto) {
         return ResponseEntity.ok(retailMakingService.create(retailMakingDto));
     }
 
@@ -115,7 +131,7 @@ public class RetailMakingRestController {
     )
     public ResponseEntity<RetailMakingDto> update(@ApiParam(name = "payoutDto",
             value = "DTO внесения, которую необходимо обновить")
-                                            @RequestBody RetailMakingDto retailMakingDto) {
+                                                  @RequestBody RetailMakingDto retailMakingDto) {
         return ResponseEntity.ok(retailMakingService.update(retailMakingDto));
     }
 
@@ -130,7 +146,7 @@ public class RetailMakingRestController {
     )
     public ResponseEntity<RetailMakingDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить внесение")
-                                                @PathVariable Long id) {
+                                                      @PathVariable Long id) {
 
         checkEntityService.checkExists((JpaRepository) retailMakingRepository, id);
         retailMakingService.deleteById(id);
