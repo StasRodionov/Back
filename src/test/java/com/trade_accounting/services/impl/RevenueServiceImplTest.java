@@ -33,6 +33,7 @@ class RevenueServiceImplTest {
 
 
     //Класс не реализован во фронте и де-факто пустой.
+
     @InjectMocks
     private RevenueServiceImpl revenueService;
     @Mock
@@ -89,6 +90,7 @@ class RevenueServiceImplTest {
         RevenueDto revenueDto = revenueService.create(RevenueDtoStubs.getDto(1L));
         assertEquals(1,revenueDto.getId());
         verify(revenueRepository).save(any(Revenue.class));
+
     }
 
 

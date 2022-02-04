@@ -94,6 +94,7 @@ public class ShipmentServiceImplTest {
         ShipmentDto shipmentDto = shipmentService.getById(1L);
 
         ShipmentDtoIsCorrectlyInited(shipmentDto);
+
     }
 
     @Test
@@ -127,12 +128,9 @@ public class ShipmentServiceImplTest {
 
 
     private void ShipmentDtoIsCorrectlyInited(ShipmentDto shipmentDto) {
-        assertNotNull(shipmentDto, "failure - fail in passed shipmentProductDto");
-        assertNotNull(shipmentDto.getId(), "failure - fail in field 'id' into shipmentProductDto");
-//        assertNotNull(shipmentDto.getShipmentProductsIds(), "failure - fail in field 'amount' into shipmentProductDto");
-//        assertNotNull(shipmentDto.getContractorId(), "failure - fail in field 'price' into shipmentProductDto");
-//        assertNotNull(shipmentDto.getWarehouseId(), "failure - fail in field 'productId' into shipmentProductDto");
-//        assertNotNull(shipmentDto.getPaid(), "failure - fail in field 'productId' into shipmentProductDto");
+        assertNotNull(shipmentDto, "failure - fail in passed shipmentDto");
+        assertNotNull(shipmentDto.getId(), "failure - fail in field 'id' into shipmentDto");
+
 
 
     }
