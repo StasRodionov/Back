@@ -13,13 +13,19 @@ import java.util.List;
 @Repository
 public interface PayoutRepository extends JpaRepository<Payout, Long>, JpaSpecificationExecutor<Payout> {
 
-    @Query(
-            "from payouts p LEFT OUTER JOIN RetailStore AS rs " +
-                    "ON p.retailStore.id =  rs.id " +
-                    "LEFT OUTER JOIN Company as com " +
-                    "ON p.company.id =  com.id " +
-                    " where p.whoWasPaid like concat('%', :searchTerm, '%') " +
-                    "      or p.comment like concat('%', :searchTerm, '%')"
-    )
+    /*Разкоммитить в случае необходимости быстрого поиска по "Кому" и "Комментарий"*/
+//    @Query(
+//            "from payouts p LEFT OUTER JOIN RetailStore AS rs " +
+//                    "ON p.retailStore.id =  rs.id " +
+//                    "LEFT OUTER JOIN Company as com " +
+//                    "ON p.company.id =  com.id " +
+//                    " where p.whoWasPaid like concat('%', :searchTerm, '%') " +
+//                    "      or p.comment like concat('%', :searchTerm, '%')"
+//    )
+
+    @Query("from payouts a" +
+            " where lower(concat(a.id, ' ', a.comment))" +
+            " like lower(concat('%', :searchTerm, '%'))")
+
     List<Payout> search(@Param("searchTerm") String searchTerm);
 }
