@@ -151,5 +151,4 @@ public class PayoutRestController {
         return  ResponseEntity.ok(payoutService.search(spec));
     }
 
-
 }
