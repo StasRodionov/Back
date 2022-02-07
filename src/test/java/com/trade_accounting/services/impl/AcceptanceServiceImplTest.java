@@ -69,7 +69,8 @@ public class AcceptanceServiceImplTest {
 
     @Test
     public void getById() {
-        when(acceptanceRepository.getOne(anyLong())).thenReturn(AcceptanceModelStubs.getAcceptance(1L));
+        when(acceptanceRepository.getOne(anyLong()))
+                .thenReturn(AcceptanceModelStubs.getAcceptance(1L));
         AcceptanceDto acceptanceDto = acceptanceService.getById(1L);
 
         AcceptanceDtoIsCorrectlyInited(acceptanceDto);

@@ -55,24 +55,24 @@ class SupplierAccountServiceImplTest {
         assertNotNull(repository, "Repository is not filled");
     }
 
-//    @Test
-//    void getAll_shouldReturnListFilledSupplierAccountDto() {
-//        when(repository.getAll())
-//                .thenReturn(
-//                        List.of(SupplierAccountDtoStubs.getSupplierAccountDto(1L),
-//                                SupplierAccountDtoStubs.getSupplierAccountDto(2L),
-//                                SupplierAccountDtoStubs.getSupplierAccountDto(3L)));
-//        List<SupplierAccountDto> list = service.getAll();
-//        assertNotNull(list, "list is not filled");
-//        assertEquals(3, list.size());
-//    }
+    @Test
+    void getAll_shouldReturnListFilledSupplierAccountDto() {
+        when(repository.findAll())
+                .thenReturn(
+                        List.of(ModelStubs.getSupplierAccount(1L)));
+        List<SupplierAccountDto> list = service.getAll();
+        assertNotNull(list, "list is not filled");
+        assertEquals(1, list.size());
+    }
 
     @Test
     void getById_shouldReturnFilledSupplierAccount() {
         when(repository.findById(anyLong()))
-                .thenReturn(Optional.of(ModelStubs.getSupplierAccount(anyLong())));
+                .thenReturn(Optional.of(ModelStubs.getSupplierAccount(1L)));
         SupplierAccountDto dto = service.getById(1L);
         assertNotNull(dto, "dto is not filled");
+
+
     }
 
     @Test
