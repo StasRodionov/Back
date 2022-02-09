@@ -1,10 +1,10 @@
 package com.trade_accounting.services.impl.fias;
 
 import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
-import com.trade_accounting.models.fias.FiasAddressModel;
+import com.trade_accounting.models.entity.fias.FiasAddressModel;
 import com.trade_accounting.repositories.fias.AddressDbRepository;
 import com.trade_accounting.services.interfaces.fias.FiasDbService;
-import com.trade_accounting.utils.mapper.FiasAddressModelMapper;
+import com.trade_accounting.utils.mapper.fias.FiasAddressModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

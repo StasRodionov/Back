@@ -2,11 +2,11 @@ package com.trade_accounting.services.impl.fias;
 
 
 import com.trade_accounting.models.dto.fias.FiasAddressModelDto;
-import com.trade_accounting.models.fias.FiasAddressModel;
+import com.trade_accounting.models.entity.fias.FiasAddressModel;
 import com.trade_accounting.repositories.fias.AddressDbRepository;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.FiasAddressModelDtoStubs;
-import com.trade_accounting.utils.mapper.FiasAddressModelMapper;
+import com.trade_accounting.Stubs.ModelStubs;
+import com.trade_accounting.Stubs.dto.fias.FiasAddressModelDtoStubs;
+import com.trade_accounting.utils.mapper.fias.FiasAddressModelMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -1,14 +1,14 @@
 package com.trade_accounting.utils;
 
-import com.trade_accounting.models.ProductGroup;
-import com.trade_accounting.models.Task;
-import com.trade_accounting.models.TaskComment;
-import com.trade_accounting.models.dto.ProductGroupDto;
-import com.trade_accounting.models.dto.TaskCommentDto;
-import com.trade_accounting.models.dto.TaskDto;
-import com.trade_accounting.utils.mapper.ProductGroupMapperImpl;
-import com.trade_accounting.utils.mapper.TaskCommentMapperImpl;
-import com.trade_accounting.utils.mapper.TaskMapperImpl;
+import com.trade_accounting.models.entity.warehouse.ProductGroup;
+import com.trade_accounting.models.entity.util.Task;
+import com.trade_accounting.models.entity.util.TaskComment;
+import com.trade_accounting.models.dto.warehouse.ProductGroupDto;
+import com.trade_accounting.models.dto.util.TaskCommentDto;
+import com.trade_accounting.models.dto.util.TaskDto;
+import com.trade_accounting.utils.mapper.util.TaskCommentMapperImpl;
+import com.trade_accounting.utils.mapper.util.TaskMapperImpl;
+import com.trade_accounting.utils.mapper.warehouse.ProductGroupMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
