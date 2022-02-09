@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -100,6 +101,7 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
                     .map(x -> x.getAmount().multiply(acceptanceProduction.getPrice()))
                     .reduce(BigDecimal::add).orElse(BigDecimal.ZERO));
         }
+
         moneySPL.setCostPrice(costPrice);
 
         //Gross profit (Валовая прибыль)
