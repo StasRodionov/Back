@@ -3,7 +3,6 @@ package com.trade_accounting.controllers.rest;
 
 import com.trade_accounting.models.RetailShift;
 import com.trade_accounting.models.RetailStore;
-import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.models.dto.RetailShiftDto;
 import com.trade_accounting.repositories.InternalOrderRepository;
 import com.trade_accounting.repositories.RetailShiftRepository;
@@ -17,6 +16,10 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -65,7 +68,7 @@ public class RetailShiftRestController {
     )
     public ResponseEntity<RetailShiftDto> getById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id, по которому необходимо найти внутренний заказ")
-                                                    @PathVariable(name = "id") Long id) {
+                                                  @PathVariable(name = "id") Long id) {
         checkEntityService.checkExists((JpaRepository) retailShiftRepository, id);
 
         return ResponseEntity.ok(retailShiftService.getById(id));
@@ -82,7 +85,7 @@ public class RetailShiftRestController {
     )
     public ResponseEntity<RetailShiftDto> create(@ApiParam(name = "internalOrderDto",
             value = "DTO внутреннего заказа, которое необходимо создать")
-                                                   @RequestBody RetailShiftDto retailShiftDto) {
+                                                 @RequestBody RetailShiftDto retailShiftDto) {
         return ResponseEntity.ok(retailShiftService.create(retailShiftDto));
     }
 
@@ -97,7 +100,7 @@ public class RetailShiftRestController {
     )
     public ResponseEntity<RetailShiftDto> update(@ApiParam(name = "internalOrderDto",
             value = "DTO внутреннего заказа, которую необходимо обновить")
-                                                   @RequestBody RetailShiftDto retailShiftDto) {
+                                                 @RequestBody RetailShiftDto retailShiftDto) {
         return ResponseEntity.ok(retailShiftService.update(retailShiftDto));
     }
 
@@ -112,7 +115,7 @@ public class RetailShiftRestController {
     )
     public ResponseEntity<RetailShiftDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо удалить внутренний заказ")
-                                                       @PathVariable("id") Long id) {
+                                                     @PathVariable("id") Long id) {
         checkEntityService.checkExists((JpaRepository) retailShiftRepository, id);
         retailShiftService.deleteById(id);
 
@@ -130,4 +133,27 @@ public class RetailShiftRestController {
     public ResponseEntity<List<RetailShiftDto>> getAll(@RequestParam("query") String value) {
         return ResponseEntity.ok(retailShiftService.search(value));
     }
+
+    @GetMapping("/searchByFilter")
+    @ApiOperation(value = "searchByFilter", notes = "Получение списка смен по фильтру")
+    public ResponseEntity<List<RetailShiftDto>> searchByFilter(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "dataOpen", params = "dataOpen", spec = Equal.class),
+                    @Spec(path = "dataClose", params = "dataClose", spec = Equal.class),
+                    @Spec(path = "retailStore.name", params = "retailStoreDto", spec = Equal.class),
+                    @Spec(path = "warehouse.name", params = "warehouseDto", spec = Equal.class),
+                    @Spec(path = "company.name", params = "companyDto", spec = Equal.class),
+                    @Spec(path = "bank", params = "bank", spec = Equal.class),
+                    @Spec(path = "revenuePerShift", params = "revenuePerShift", spec = Equal.class),
+                    @Spec(path = "received", params = "received", spec = Equal.class),
+                    @Spec(path = "amountOfDiscounts", params = "amountOfDiscounts", spec = Equal.class),
+                    @Spec(path = "commission_amount", params = "commission_amount", spec = Equal.class),
+                    @Spec(path = "sent", params = "sent", spec = Equal.class),
+                    @Spec(path = "printed", params = "printed", spec = Equal.class),
+                    @Spec(path = "comment", params = "comment", spec = Equal.class),
+            }) Specification<RetailShift> spec) {
+        return ResponseEntity.ok(retailShiftService.search(spec));
+    }
+
 }

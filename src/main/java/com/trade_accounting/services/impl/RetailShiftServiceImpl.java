@@ -1,23 +1,15 @@
 package com.trade_accounting.services.impl;
 
 import com.trade_accounting.models.Company;
-import com.trade_accounting.models.InternalOrder;
-import com.trade_accounting.models.InternalOrderProduct;
 import com.trade_accounting.models.RetailShift;
 import com.trade_accounting.models.RetailStore;
-import com.trade_accounting.models.TechnicalOperations;
 import com.trade_accounting.models.Warehouse;
-import com.trade_accounting.models.dto.InternalOrderDto;
 import com.trade_accounting.models.dto.RetailShiftDto;
-import com.trade_accounting.models.dto.TechnicalOperationsDto;
 import com.trade_accounting.repositories.CompanyRepository;
-import com.trade_accounting.repositories.InternalOrderProductRepository;
-import com.trade_accounting.repositories.InternalOrderRepository;
 import com.trade_accounting.repositories.RetailShiftRepository;
 import com.trade_accounting.repositories.RetailStoreRepository;
 import com.trade_accounting.repositories.WarehouseRepository;
 import com.trade_accounting.services.interfaces.RetailShiftService;
-import com.trade_accounting.utils.mapper.InternalOrderMapper;
 import com.trade_accounting.utils.mapper.RetailShiftMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -86,7 +78,7 @@ public class RetailShiftServiceImpl implements RetailShiftService {
     }
 
     @Override
-    public List<RetailShiftDto> search(String searchTerm){
+    public List<RetailShiftDto> search(String searchTerm) {
         if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
             List<RetailShift> all = retailShiftRepository.findAll();
             return all.stream().map(retailShiftMapper::toDto).collect(Collectors.toList());
@@ -94,6 +86,11 @@ public class RetailShiftServiceImpl implements RetailShiftService {
             List<RetailShift> list = retailShiftRepository.search(searchTerm);
             return list.stream().map(retailShiftMapper::toDto).collect(Collectors.toList());
         }
+    }
+
+    @Override
+    public List<RetailShiftDto> search(Specification<RetailShift> spec) {
+        return executeSearch(retailShiftRepository, retailShiftMapper::toDto, spec);
     }
 
 //    @Override
