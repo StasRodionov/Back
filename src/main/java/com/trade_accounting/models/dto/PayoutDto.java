@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -28,19 +29,25 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PayoutDto {
 
+    @NotNull
     Long id;
 
+    @NotNull
     String date;
 
+    @NotNull
     Long retailStoreId;
 
+    @NotNull
     String whoWasPaid;
 
+    @NotNull
     Long companyId;
 
     Boolean isSent;
 
     Boolean isPrint;
 
+    @NotNull
     String comment;
 }

@@ -6,6 +6,7 @@ import com.trade_accounting.models.Contract;
 import com.trade_accounting.models.Currency;
 import com.trade_accounting.models.Employee;
 import com.trade_accounting.models.PrepaymentReturn;
+import com.trade_accounting.models.Prepayout;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.ProductionTargets;
 import com.trade_accounting.models.StagesProduction;
@@ -45,5 +46,9 @@ public class SpecificationStubs {
 //
     public static Specification<PrepaymentReturn> getPrepaymentReturnSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+
+    public static Specification<Prepayout> getPrepayoutSpecificationStub() {
+        return (root, query, criteriaBuilder) -> null;
     }
 }

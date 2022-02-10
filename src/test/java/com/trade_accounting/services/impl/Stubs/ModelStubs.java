@@ -1,5 +1,7 @@
 package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.Acceptance;
+import com.trade_accounting.models.AcceptanceProduction;
 import com.trade_accounting.models.AccessParameters;
 import com.trade_accounting.models.Address;
 import com.trade_accounting.models.AgentReports;
@@ -23,13 +25,16 @@ import com.trade_accounting.models.Image;
 import com.trade_accounting.models.Inventarization;
 import com.trade_accounting.models.InventarizationProduct;
 import com.trade_accounting.models.Invoice;
+import com.trade_accounting.models.InvoiceProduct;
 import com.trade_accounting.models.InvoicesStatus;
 import com.trade_accounting.models.LegalDetail;
 import com.trade_accounting.models.MutualSettlements;
 import com.trade_accounting.models.Payment;
 import com.trade_accounting.models.PaymentMethods;
+import com.trade_accounting.models.Payout;
 import com.trade_accounting.models.Position;
 import com.trade_accounting.models.PrepaymentReturn;
+import com.trade_accounting.models.Prepayout;
 import com.trade_accounting.models.Product;
 import com.trade_accounting.models.Production;
 import com.trade_accounting.models.ProductionTargets;
@@ -37,6 +42,7 @@ import com.trade_accounting.models.Project;
 import com.trade_accounting.models.RequestsProductions;
 import com.trade_accounting.models.RetailStore;
 import com.trade_accounting.models.ReturnToSupplier;
+import com.trade_accounting.models.Revenue;
 import com.trade_accounting.models.Role;
 import com.trade_accounting.models.StagesProduction;
 import com.trade_accounting.models.SupplierAccount;
@@ -263,6 +269,27 @@ public class ModelStubs {
 
     public static Role getRole(Long id) {
         return new Role(id, "name", "00001");
+    }
+
+    public static Revenue getRevenue(Long id) {
+        return Revenue.builder()
+                .id(id)
+                .product(getProduct(id))
+                .description("description")
+                .itemNumber(32)
+                .amountAcceptance(new BigDecimal(4344))
+                .acceptance(new Acceptance())
+                .acceptanceProduction(new AcceptanceProduction())
+                .invoiceProduct(new InvoiceProduct())
+                .startOfPeriodAmount(33)
+                .startOfPeriodSumOfPrice(43)
+                .endOfPeriodAmount(21)
+                .endOfPeriodSumOfPrice(18)
+                .comingAmount(74)
+                .comingSumOfPrice(83)
+                .spendingAmount(199)
+                .spendingSumOfPrice(288).build();
+
     }
 
 //    public static Invoice getInvoice(Long id) {
@@ -648,6 +675,10 @@ public class ModelStubs {
 
     public static PrepaymentReturn getPrepaymentReturn(Long id) {
         return new PrepaymentReturn(id, "", getRetailStore(id), getContractor(id), getCompany(id), new BigDecimal(1000), new BigDecimal(500), true, true, "comment");
+    }
+
+    public static Prepayout getPrepayout(Long id) {
+        return new Prepayout(id, LocalDateTime.now(), getRetailStore(id), getContractor(id), getCompany(id), new BigDecimal(243), new BigDecimal(323), new BigDecimal(445), new BigDecimal(877), false, false, "comment");
     }
 }
 
