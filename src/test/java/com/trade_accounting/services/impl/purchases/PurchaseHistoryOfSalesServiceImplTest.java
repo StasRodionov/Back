@@ -1,11 +1,11 @@
-package com.trade_accounting.services.impl;
+package com.trade_accounting.services.impl.purchases;
 
-import com.trade_accounting.models.PurchaseHistoryOfSales;
-import com.trade_accounting.models.dto.PurchaseHistoryOfSalesDto;
-import com.trade_accounting.repositories.PurchaseHistoryOfSalesRepository;
-import com.trade_accounting.services.impl.Stubs.dto.PurchaseHistoryOfSalesDtoStubs;
-import com.trade_accounting.services.impl.Stubs.model.PurchaseHistoryOfSalesStubs;
-import com.trade_accounting.utils.mapper.PurchaseHistoryOfSalesMapper;
+import com.trade_accounting.Stubs.dto.finance.PurchaseHistoryOfSalesDtoStubs;
+import com.trade_accounting.Stubs.model.purchases.PurchaseHistoryOfSalesStubs;
+import com.trade_accounting.models.dto.purchases.PurchaseHistoryOfSalesDto;
+import com.trade_accounting.models.entity.purchases.PurchaseHistoryOfSales;
+import com.trade_accounting.repositories.purchases.PurchaseHistoryOfSalesRepository;
+import com.trade_accounting.utils.mapper.purchases.PurchaseHistoryOfSalesMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

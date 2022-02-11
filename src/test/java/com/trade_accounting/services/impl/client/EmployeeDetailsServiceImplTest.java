@@ -1,8 +1,8 @@
-package com.trade_accounting.services.impl;
+package com.trade_accounting.services.impl.client;
 
-import com.trade_accounting.models.Employee;
-import com.trade_accounting.models.dto.EmployeeDto;
-import com.trade_accounting.repositories.EmployeeRepository;
+import com.trade_accounting.models.dto.client.EmployeeDto;
+import com.trade_accounting.models.entity.client.Employee;
+import com.trade_accounting.repositories.client.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

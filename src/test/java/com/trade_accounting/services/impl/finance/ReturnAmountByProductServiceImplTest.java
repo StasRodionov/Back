@@ -1,7 +1,7 @@
-package com.trade_accounting.services.impl;
+package com.trade_accounting.services.impl.finance;
 
-import com.trade_accounting.repositories.ReturnAmountByProductRepository;
-import com.trade_accounting.utils.mapper.ReturnAmountByProductMapper;
+import com.trade_accounting.repositories.finance.ReturnAmountByProductRepository;
+import com.trade_accounting.utils.mapper.finance.ReturnAmountByProductMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

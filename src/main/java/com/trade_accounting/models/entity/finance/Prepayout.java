@@ -71,5 +71,4 @@ public class Prepayout {
 
     @Column(name = "comment")
     private String comment;
-
 }
