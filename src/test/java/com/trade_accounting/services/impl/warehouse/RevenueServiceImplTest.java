@@ -8,7 +8,6 @@ import com.trade_accounting.repositories.warehouse.AcceptanceRepository;
 import com.trade_accounting.repositories.warehouse.ProductRepository;
 import com.trade_accounting.repositories.warehouse.RevenueRepository;
 import com.trade_accounting.Stubs.dto.warehouse.RevenueDtoStubs;
-import com.trade_accounting.Stubs.model.warehouse.RevenueModelStubs;
 import com.trade_accounting.utils.mapper.warehouse.RevenueMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,10 +16,15 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -48,47 +52,73 @@ class RevenueServiceImplTest {
 
 
     @Test
-    void getAll() {
+    void getAll_shouldReturnListFilledRevenueDto() {
         when(revenueRepository.findAll())
                 .thenReturn(
-                        List.of(RevenueModelStubs.getRevenue(1L))
+                        Stream.of(
+                                com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(1L),
+                                com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(2L),
+                                com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(3L)
+                        ).collect(Collectors.toList())
                 );
+
+        List<RevenueDto> revenues = revenueService.getAll();
+
+        assertNotNull(revenues, "failure - expected that a list of revenueDto not null");
+        assertTrue(revenues.size() > 0, "failure - excpected that a list of revenueDto grater than 0");
+
+        for(RevenueDto revenueDto : revenues) {
+            RevenueDtoIsCorrectlyInited(revenueDto);
+        }
+    }
+
+    @Test
+    void getAll_shouldReturnEmptyListRevenueDto() {
+        when(revenueRepository.findAll())
+                .thenReturn(new ArrayList<>());
+
         List<RevenueDto> revenueDtos = revenueService.getAll();
-        assertNotNull(revenueDtos, "failure - expected that a list of ShipmentProductDto not null");
-        assertEquals(1, revenueDtos.size(), "failure - expected that a list of ShipmentProductDto grater than 0");
+
+        assertNotNull(revenueDtos, "failure - expected that a list of revenueDto not null");
+        assertEquals(0, revenueDtos.size(), "failure - expected that a list of revenueDto equals 0");
     }
 
     @Test
     void getById() {
-//        when(revenueRepository.getOne(anyLong())).
-//                thenReturn(RevenueModelStubs.getRevenue(1L));
-//        RevenueDto revenueDto= revenueService.getById(1L);
-//        RevenueDtoIsCorrectlyInited(revenueDto);
+        Optional<Revenue> revenueFromRepo = Optional.of(com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(1L));
 
-        System.out.println(revenueService.getById(3L));
-        assertEquals(1, 1);
+        when(revenueRepository.findById(anyLong()))
+                .thenReturn(revenueFromRepo);
+
+        RevenueDto revenueDto = revenueService.getById(1L);
+
+        assertNotNull(revenueDto, "failure - expected that a list of revenueDto not null");
+        RevenueDtoIsCorrectlyInited(revenueDto);
     }
 
     @Test
-    void create() {saveOrUpdate();
+    void create() {
+        revenueService.create(
+                RevenueDtoStubs.getDto(1L)
+        );
+
+        verify(revenueRepository).save(any(Revenue.class));
     }
 
     @Test
-    void update() {saveOrUpdate();
+    void update() {
+        revenueService.update(
+                RevenueDtoStubs.getDto(1L)
+        );
+
+        verify(revenueRepository).save(any(Revenue.class));
     }
 
     @Test
     void deleteById() {
+        revenueService.deleteById(1L);
+        verify(revenueRepository).deleteById(1L);
     }
-
-    private void saveOrUpdate() {
-        when(revenueRepository.save(any(Revenue.class))).thenReturn(RevenueModelStubs.getRevenue(1L));
-        RevenueDto revenueDto = revenueService.create(RevenueDtoStubs.getDto(1L));
-        assertEquals(1,revenueDto.getId());
-        verify(revenueRepository).save(any(Revenue.class));
-
-    }
-
 
     private void RevenueDtoIsCorrectlyInited(RevenueDto revenueDto) {
         assertNotNull(revenueDto, "failure - fail in passed shipmentProductDto1");

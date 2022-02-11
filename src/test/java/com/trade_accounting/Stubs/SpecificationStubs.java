@@ -1,5 +1,6 @@
 package com.trade_accounting.Stubs;
 
+import com.trade_accounting.models.entity.finance.Prepayout;
 import com.trade_accounting.models.entity.warehouse.BuyersReturn;
 import com.trade_accounting.models.entity.company.Company;
 import com.trade_accounting.models.entity.company.Contract;
@@ -14,6 +15,10 @@ import org.springframework.data.jpa.domain.Specification;
 public class SpecificationStubs {
     public static Specification<Employee> getEmployeeSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+
+    public static Specification<Prepayout> getPrepayoutSpecificationStub() {
+        return (root, query, criteriaBuilder) -> null;
     }
 
     public static Specification<Company> getCompanySpecificationStub() {

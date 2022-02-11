@@ -1,61 +1,66 @@
-package com.trade_accounting.Stubs;
+package com.trade_accounting.services.impl.Stubs;
 
+import com.trade_accounting.models.dto.util.ImageDto;
+import com.trade_accounting.models.dto.warehouse.ProductDto;
+import com.trade_accounting.models.entity.client.Department;
+import com.trade_accounting.models.entity.client.Employee;
+import com.trade_accounting.models.entity.client.Position;
+import com.trade_accounting.models.entity.client.Role;
 import com.trade_accounting.models.entity.company.AccessParameters;
 import com.trade_accounting.models.entity.company.Address;
-import com.trade_accounting.models.entity.finance.AgentReports;
-import com.trade_accounting.models.entity.warehouse.AttributeOfCalculationObject;
-import com.trade_accounting.models.entity.finance.BalanceAdjustment;
 import com.trade_accounting.models.entity.company.BankAccount;
-import com.trade_accounting.models.entity.warehouse.BuyersReturn;
 import com.trade_accounting.models.entity.company.Company;
 import com.trade_accounting.models.entity.company.Contact;
 import com.trade_accounting.models.entity.company.Contract;
 import com.trade_accounting.models.entity.company.Contractor;
 import com.trade_accounting.models.entity.company.ContractorGroup;
 import com.trade_accounting.models.entity.company.ContractorStatus;
-import com.trade_accounting.models.entity.finance.Correction;
-import com.trade_accounting.models.entity.finance.CorrectionProduct;
-import com.trade_accounting.models.entity.units.Currency;
-import com.trade_accounting.models.entity.client.Department;
-import com.trade_accounting.models.entity.client.Employee;
-import com.trade_accounting.models.entity.util.File;
-import com.trade_accounting.models.entity.util.Image;
-import com.trade_accounting.models.entity.warehouse.Inventarization;
-import com.trade_accounting.models.entity.warehouse.InventarizationProduct;
-import com.trade_accounting.models.entity.invoice.InvoicesStatus;
 import com.trade_accounting.models.entity.company.LegalDetail;
-import com.trade_accounting.models.entity.finance.MutualSettlements;
-import com.trade_accounting.models.entity.finance.Payment;
-import com.trade_accounting.models.entity.finance.PaymentMethods;
-import com.trade_accounting.models.entity.client.Position;
-import com.trade_accounting.models.entity.finance.PrepaymentReturn;
-import com.trade_accounting.models.entity.warehouse.Product;
-import com.trade_accounting.models.entity.production.Production;
-import com.trade_accounting.models.entity.production.ProductionTargets;
-import com.trade_accounting.models.entity.util.Project;
-import com.trade_accounting.models.entity.production.RequestsProductions;
-import com.trade_accounting.models.entity.retail.RetailStore;
-import com.trade_accounting.models.entity.finance.ReturnToSupplier;
-import com.trade_accounting.models.entity.client.Role;
-import com.trade_accounting.models.entity.production.StagesProduction;
 import com.trade_accounting.models.entity.company.SupplierAccount;
-import com.trade_accounting.models.entity.util.Task;
-import com.trade_accounting.models.entity.util.TaskComment;
 import com.trade_accounting.models.entity.company.TaxSystem;
-import com.trade_accounting.models.entity.production.TechnicalCard;
-import com.trade_accounting.models.entity.production.TechnicalCardGroup;
-import com.trade_accounting.models.entity.production.TechnicalCardProduction;
 import com.trade_accounting.models.entity.company.TypeOfContractor;
-import com.trade_accounting.models.entity.finance.TypeOfPayment;
 import com.trade_accounting.models.entity.company.TypeOfPrice;
-import com.trade_accounting.models.entity.warehouse.Warehouse;
-import com.trade_accounting.models.dto.util.ImageDto;
-import com.trade_accounting.models.dto.warehouse.ProductDto;
 import com.trade_accounting.models.entity.fias.City;
 import com.trade_accounting.models.entity.fias.District;
 import com.trade_accounting.models.entity.fias.FiasAddressModel;
 import com.trade_accounting.models.entity.fias.Region;
 import com.trade_accounting.models.entity.fias.Street;
+import com.trade_accounting.models.entity.finance.AgentReports;
+import com.trade_accounting.models.entity.finance.BalanceAdjustment;
+import com.trade_accounting.models.entity.finance.Correction;
+import com.trade_accounting.models.entity.finance.CorrectionProduct;
+import com.trade_accounting.models.entity.finance.MutualSettlements;
+import com.trade_accounting.models.entity.finance.Payment;
+import com.trade_accounting.models.entity.finance.PaymentMethods;
+import com.trade_accounting.models.entity.finance.PrepaymentReturn;
+import com.trade_accounting.models.entity.finance.Prepayout;
+import com.trade_accounting.models.entity.finance.ReturnToSupplier;
+import com.trade_accounting.models.entity.finance.TypeOfPayment;
+import com.trade_accounting.models.entity.invoice.InvoiceProduct;
+import com.trade_accounting.models.entity.invoice.InvoicesStatus;
+import com.trade_accounting.models.entity.production.Production;
+import com.trade_accounting.models.entity.production.ProductionTargets;
+import com.trade_accounting.models.entity.production.RequestsProductions;
+import com.trade_accounting.models.entity.production.StagesProduction;
+import com.trade_accounting.models.entity.production.TechnicalCard;
+import com.trade_accounting.models.entity.production.TechnicalCardGroup;
+import com.trade_accounting.models.entity.production.TechnicalCardProduction;
+import com.trade_accounting.models.entity.retail.RetailStore;
+import com.trade_accounting.models.entity.units.Currency;
+import com.trade_accounting.models.entity.util.File;
+import com.trade_accounting.models.entity.util.Image;
+import com.trade_accounting.models.entity.util.Project;
+import com.trade_accounting.models.entity.util.Task;
+import com.trade_accounting.models.entity.util.TaskComment;
+import com.trade_accounting.models.entity.warehouse.Acceptance;
+import com.trade_accounting.models.entity.warehouse.AcceptanceProduction;
+import com.trade_accounting.models.entity.warehouse.AttributeOfCalculationObject;
+import com.trade_accounting.models.entity.warehouse.BuyersReturn;
+import com.trade_accounting.models.entity.warehouse.Inventarization;
+import com.trade_accounting.models.entity.warehouse.InventarizationProduct;
+import com.trade_accounting.models.entity.warehouse.Product;
+import com.trade_accounting.models.entity.warehouse.Revenue;
+import com.trade_accounting.models.entity.warehouse.Warehouse;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -259,6 +264,27 @@ public class ModelStubs {
 
     public static Role getRole(Long id) {
         return new Role(id, "name", "00001");
+    }
+
+    public static Revenue getRevenue(Long id) {
+        return Revenue.builder()
+                .id(id)
+                .product(getProduct(id))
+                .description("description")
+                .itemNumber(32)
+                .amountAcceptance(new BigDecimal(4344))
+                .acceptance(new Acceptance())
+                .acceptanceProduction(new AcceptanceProduction())
+                .invoiceProduct(new InvoiceProduct())
+                .startOfPeriodAmount(33)
+                .startOfPeriodSumOfPrice(43)
+                .endOfPeriodAmount(21)
+                .endOfPeriodSumOfPrice(18)
+                .comingAmount(74)
+                .comingSumOfPrice(83)
+                .spendingAmount(199)
+                .spendingSumOfPrice(288).build();
+
     }
 
 //    public static Invoice getInvoice(Long id) {
@@ -644,6 +670,10 @@ public class ModelStubs {
 
     public static PrepaymentReturn getPrepaymentReturn(Long id) {
         return new PrepaymentReturn(id, "", getRetailStore(id), getContractor(id), getCompany(id), new BigDecimal(1000), new BigDecimal(500), true, true, "comment");
+    }
+
+    public static Prepayout getPrepayout(Long id) {
+        return new Prepayout(id, LocalDateTime.now(), getRetailStore(id), getContractor(id), getCompany(id), new BigDecimal(243), new BigDecimal(323), new BigDecimal(445), new BigDecimal(877), false, false, "comment");
     }
 }
 
