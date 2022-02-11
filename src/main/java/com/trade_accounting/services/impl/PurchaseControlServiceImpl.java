@@ -6,6 +6,7 @@ import com.trade_accounting.repositories.PurchaseControlRepository;
 import com.trade_accounting.services.interfaces.PurchaseControlService;
 import com.trade_accounting.utils.mapper.PurchaseControlMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,13 +41,16 @@ public class PurchaseControlServiceImpl implements PurchaseControlService {
 
     @Override
     public PurchaseControlDto update(PurchaseControlDto dto) {
-        PurchaseControl purchaseControl = purchaseControlMapper.toModel(dto);
-        purchaseControlRepository.save(purchaseControl);
-        return dto;
+        return create(dto);
     }
 
     @Override
     public void deleteById(Long id) {
         purchaseControlRepository.deleteById(id);
+    }
+
+    @Override
+    public List<PurchaseControlDto> search(Specification<PurchaseControl> spec) {
+        return executeSearch(purchaseControlRepository, purchaseControlMapper::toDto, spec);
     }
 }
