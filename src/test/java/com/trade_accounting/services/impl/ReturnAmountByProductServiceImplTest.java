@@ -1,5 +1,4 @@
 package com.trade_accounting.services.impl;
-
 import com.trade_accounting.repositories.ReturnAmountByProductRepository;
 import com.trade_accounting.utils.mapper.ReturnAmountByProductMapper;
 import org.junit.jupiter.api.Test;
