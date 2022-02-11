@@ -1,11 +1,11 @@
 package com.trade_accounting.services.impl.fias;
 
 import com.trade_accounting.models.dto.fias.StreetDto;
-import com.trade_accounting.models.fias.Street;
+import com.trade_accounting.models.entity.fias.Street;
 import com.trade_accounting.repositories.fias.StreetRepository;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.StreetDtoStubs;
-import com.trade_accounting.utils.mapper.StreetMapper;
+import com.trade_accounting.Stubs.ModelStubs;
+import com.trade_accounting.Stubs.dto.fias.StreetDtoStubs;
+import com.trade_accounting.utils.mapper.fias.StreetMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

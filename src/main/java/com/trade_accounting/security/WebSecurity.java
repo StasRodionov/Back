@@ -1,6 +1,6 @@
 package com.trade_accounting.security;
 
-import com.trade_accounting.services.impl.EmployeeDetailsServiceImpl;
+import com.trade_accounting.services.impl.client.EmployeeDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;

@@ -1,11 +1,11 @@
 package com.trade_accounting.services.impl.fias;
 
 import com.trade_accounting.models.dto.fias.DistrictDto;
-import com.trade_accounting.models.fias.District;
+import com.trade_accounting.models.entity.fias.District;
 import com.trade_accounting.repositories.fias.DistrictRepository;
-import com.trade_accounting.services.impl.Stubs.ModelStubs;
-import com.trade_accounting.services.impl.Stubs.dto.DistrictDtoStubs;
-import com.trade_accounting.utils.mapper.DistrictMapper;
+import com.trade_accounting.Stubs.ModelStubs;
+import com.trade_accounting.Stubs.dto.fias.DistrictDtoStubs;
+import com.trade_accounting.utils.mapper.fias.DistrictMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

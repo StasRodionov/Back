@@ -1,6 +1,6 @@
 package com.trade_accounting.repositories.fias;
 
-import com.trade_accounting.models.fias.City;
+import com.trade_accounting.models.entity.fias.City;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
