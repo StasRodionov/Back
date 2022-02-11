@@ -1,6 +1,6 @@
 package com.trade_accounting.utils.fias;
 
-import com.trade_accounting.models.fias.FiasAddressModel;
+import com.trade_accounting.models.entity.fias.FiasAddressModel;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;

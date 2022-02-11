@@ -2,7 +2,7 @@ package com.trade_accounting.controllers.rest;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.trade_accounting.models.Employee;
+import com.trade_accounting.models.entity.client.Employee;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;

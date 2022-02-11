@@ -1,11 +1,11 @@
 package com.trade_accounting.services.impl.fias;
 
 import com.trade_accounting.models.dto.fias.StreetDto;
-import com.trade_accounting.models.fias.Street;
+import com.trade_accounting.models.entity.fias.Street;
 import com.trade_accounting.repositories.fias.CityRepository;
 import com.trade_accounting.repositories.fias.StreetRepository;
 import com.trade_accounting.services.interfaces.fias.StreetService;
-import com.trade_accounting.utils.mapper.StreetMapper;
+import com.trade_accounting.utils.mapper.fias.StreetMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
