@@ -1,4 +1,4 @@
-package com.trade_accounting.services.impl.Stubs;
+package com.trade_accounting.Stubs;
 
 import com.trade_accounting.models.dto.util.ImageDto;
 import com.trade_accounting.models.dto.warehouse.ProductDto;
