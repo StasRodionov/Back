@@ -29,7 +29,7 @@ public interface LossMapper {
 
         return Loss.builder()
                 .id(lossDto.getId())
-                .date(LocalDateTime.parse(lossDto.getDate()))
+                .date(LocalDateTime.parse(lossDto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .warehouse(Warehouse.builder().id(lossDto.getWarehouseId()).build())
                 .company(Company.builder().id(lossDto.getCompanyId()).build())
                 .isSent(lossDto.getIsSent())
