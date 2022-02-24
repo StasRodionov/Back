@@ -40,6 +40,14 @@ public class ShipmentServiceImpl implements ShipmentService {
     }
 
     @Override
+    public List<ShipmentDto> searchByString(String nameFilter) {
+        return shipmentRepository.searchByIdAndNameFilter(nameFilter).stream()
+                .map(shipmentMapper::toDto)
+                //.filter(shipmentDto -> shipmentDto.getTypeOfInvoice().equals(TypeOfInvoice.EXPENSE.toString()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<ShipmentDto> getAll() {
         return shipmentRepository.findAll().stream()
                 .map(shipmentMapper::toDto)
