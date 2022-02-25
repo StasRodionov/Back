@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.warehouse;
 
+import com.trade_accounting.Stubs.ModelStubs;
 import com.trade_accounting.models.entity.warehouse.Revenue;
 import com.trade_accounting.models.dto.warehouse.RevenueDto;
 import com.trade_accounting.repositories.invoice.InvoiceProductRepository;
@@ -56,9 +57,9 @@ class RevenueServiceImplTest {
         when(revenueRepository.findAll())
                 .thenReturn(
                         Stream.of(
-                                com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(1L),
-                                com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(2L),
-                                com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(3L)
+                                ModelStubs.getRevenue(1L),
+                                ModelStubs.getRevenue(2L),
+                                ModelStubs.getRevenue(3L)
                         ).collect(Collectors.toList())
                 );
 
@@ -85,7 +86,7 @@ class RevenueServiceImplTest {
 
     @Test
     void getById() {
-        Optional<Revenue> revenueFromRepo = Optional.of(com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(1L));
+        Optional<Revenue> revenueFromRepo = Optional.of(ModelStubs.getRevenue(1L));
 
         when(revenueRepository.findById(anyLong()))
                 .thenReturn(revenueFromRepo);

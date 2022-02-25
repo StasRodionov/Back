@@ -2,8 +2,8 @@ package com.trade_accounting.controllers.rest.client;
 
 import com.trade_accounting.models.dto.client.RoleDto;
 import com.trade_accounting.repositories.client.RoleRepository;
-import com.trade_accounting.services.interfaces.util.CheckEntityService;
 import com.trade_accounting.services.interfaces.client.RoleService;
+import com.trade_accounting.services.interfaces.util.CheckEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
