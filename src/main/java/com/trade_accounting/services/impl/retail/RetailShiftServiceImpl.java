@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +41,9 @@ public class RetailShiftServiceImpl implements RetailShiftService {
 
     @Override
     public RetailShiftDto getById(Long id) {
-        return retailShiftMapper.toDto(retailShiftRepository.getOne(id));
+        Optional<RetailShift> retailShift = retailShiftRepository.findById(id);
+        return retailShiftMapper.toDto(retailShift.orElse(new RetailShift()));
+
     }
 
     @Override

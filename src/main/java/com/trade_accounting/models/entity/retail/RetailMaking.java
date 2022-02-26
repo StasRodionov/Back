@@ -34,12 +34,15 @@ public class RetailMaking {
     @Column(name = "date")
     private LocalDateTime date;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private RetailStore retailStore;
 
+    @NotNull
     @Column(name = "from_whom")
     String fromWhom;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
