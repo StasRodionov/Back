@@ -73,7 +73,8 @@ public class RetailReturnServiceImplTest {
     }
 
     private void saveOrUpdate() {
-        when(retailReturnRepository.save(any(RetailReturn.class))).thenReturn(RetailReturnModelStubs.getRetailReturn(1L));
+        when(retailReturnRepository.save(any(RetailReturn.class))).
+                thenReturn(RetailReturnModelStubs.getRetailReturn(1L));
 
         RetailReturnDto retailReturnDto = retailReturnService.create(RetailReturnDtoStubs.getDto(1L));
         assertEquals(1,retailReturnDto.getId());
