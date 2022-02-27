@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
+import net.kaczmarzyk.spring.data.jpa.domain.LessThan;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -78,7 +79,7 @@ public class ShipmentRestController {
     public ResponseEntity<List<ShipmentDto>> getAll(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
-                    @Spec(path = "date", params = "date", spec = GreaterThanOrEqual.class),
+                    @Spec(path = "date", params = "date", spec = GreaterThanOrEqual.class, config="yyyy-MM-dd'T'HH:mm:ss.000000"),
                     @Spec(path = "company.name", params = "companyDto", spec = Like.class),
                     @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "warehouse.name", params = "warehouseDto", spec = LikeIgnoreCase.class),
@@ -157,7 +158,7 @@ public class ShipmentRestController {
     @PutMapping("/restoreFromIsRecyclebin/{id}")
     @ApiOperation(value = "restoreFromIsRecyclebin", notes = "Восстановление отгрузки по id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Отгрузка восстановленна"),
+            @ApiResponse(code = 200, message = "Отгрузка восстановлена"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
@@ -173,29 +174,30 @@ public class ShipmentRestController {
 
     @GetMapping("/queryShipment")
     @ApiOperation(value = "searchByFilter", notes = "Получение списка отгрузок по заданным параметрам")
-    public ResponseEntity<List<ShipmentDto>> getAllFilter(
+    public ResponseEntity<List<ShipmentDto>> searchByFilter(
             @And({
                     @Spec(path = "id", params = "id", spec = Equal.class),
-                    @Spec(path = "date", params = "date", spec = Equal.class),
-                    @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
-                    @Spec(path = "company.name", params = "companyDto", spec = LikeIgnoreCase.class),
-                    @Spec(path = "warehouse.name", params = "warehouseDto", spec = LikeIgnoreCase.class),
-            })Specification<Shipment> shipment) {
-        return ResponseEntity.ok(shipmentService.search(shipment));
+                    @Spec(path = "date", params = "date", spec = Equal.class, config="yyyy-MM-dd'T'HH:mm"),
+                    @Spec(path = "company.name", params = "companyId", spec = Like.class),
+                    @Spec(path = "contractor.name", params = "contractorId", spec = LikeIgnoreCase.class),
+                    @Spec(path = "warehouse.name", params = "warehouseId", spec = LikeIgnoreCase.class),
+            }) Specification<Shipment> spec ) {
+        List<ShipmentDto> listShipment = shipmentService.search(spec);
+         return ResponseEntity.ok(listShipment);
     }
 
-    @GetMapping("/search/{nameFilter}")
-    @ApiOperation(value = "searchTerm", notes = "Получение списка некоторых счетов")
+    @GetMapping("/search/{search}")
+    @ApiOperation(value = "search", notes = "Получение списка некоторых отгрузок")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение отф. списка контрагентов"),
+            @ApiResponse(code = 200, message = "Успешное получение отф. списка"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<List<ShipmentDto>> searchByNameFilter(@ApiParam(name ="nameFilter",
-            value = "Переданный в URL searchTerm, по которому необходимо найти контрагента")
-                                                                       @PathVariable(name = "nameFilter") String nameFilter) {
-        List<ShipmentDto> listShipment = shipmentService.searchByString(nameFilter);
+    public ResponseEntity<List<ShipmentDto>> searchByString(@ApiParam(name ="search",
+            value = "Переданный в URL searchTerm, по которому необходимо найти отгрузку")
+                                                                       @PathVariable(name = "search") String search) {
+        List<ShipmentDto> listShipment = shipmentService.searchString(search);
         return ResponseEntity.ok(listShipment);
 
     }

@@ -16,6 +16,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +63,7 @@ public class ShipmentRestControllerTest {
         String modelJson = new Gson().toJson(ShipmentDto.builder()
                 .id(1L)
                 .date("2021-08-10T12:15:00")
+                //.date(LocalDateTime.of(2019, Month.MAY, 15, 12, 15, 00))
                 .warehouseId(1L)
                 .contractorId(1L)
                 .companyId(1L)
@@ -85,6 +88,7 @@ public class ShipmentRestControllerTest {
         String modelJson = new Gson().toJson(ShipmentDto.builder()
                 .id(1L)
                 .date("2021-08-10T12:15:00")
+                //.date(LocalDateTime.of(2022, Month.MAY, 15, 12, 15, 00))
                 .warehouseId(1L)
                 .contractorId(1L)
                 .companyId(1L)
@@ -117,6 +121,7 @@ public class ShipmentRestControllerTest {
         String modelJson = new Gson().toJson(ShipmentDto.builder()
                 .id(1L)
                 .date("2021-08-10T12:15:00")
+                //.date(LocalDateTime.of(2019, Month.MAY, 15, 12, 15, 00))
                 .warehouseId(1L)
                 .contractorId(1L)
                 .companyId(1L)
