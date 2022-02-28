@@ -61,19 +61,6 @@ public class LossServiceImpl implements LossService {
     private LossDto saveOrUpdate(LossDto dto) {
         Loss loss = lossMapper.toModel(dto);
 
-        Company company = companyRepository.getCompaniesById(dto.getCompanyId());
-        Warehouse warehouse = warehouseRepository.getOne(dto.getWarehouseId());
-        LocalDateTime date = LocalDateTime.parse(dto.getDate());
-
-        List<LossProduct> lossProducts = dto.getLossProductsIds().stream()
-                .map(id -> lossProductRepository.findById(id).orElse(null))
-                .collect(Collectors.toList());
-
-        loss.setCompany(company);
-        loss.setWarehouse(warehouse);
-        loss.setDate(date);
-        loss.setLossProducts(lossProducts);
-
         return lossMapper.toDto(lossRepository.save(loss));
     }
 

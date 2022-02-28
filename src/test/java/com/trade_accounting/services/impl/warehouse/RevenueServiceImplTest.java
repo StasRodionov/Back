@@ -56,9 +56,9 @@ class RevenueServiceImplTest {
         when(revenueRepository.findAll())
                 .thenReturn(
                         Stream.of(
-                                com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(1L),
-                                com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(2L),
-                                com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(3L)
+                                com.trade_accounting.Stubs.ModelStubs.getRevenue(1L),
+                                com.trade_accounting.Stubs.ModelStubs.getRevenue(2L),
+                                com.trade_accounting.Stubs.ModelStubs.getRevenue(3L)
                         ).collect(Collectors.toList())
                 );
 
@@ -85,7 +85,7 @@ class RevenueServiceImplTest {
 
     @Test
     void getById() {
-        Optional<Revenue> revenueFromRepo = Optional.of(com.trade_accounting.services.impl.Stubs.ModelStubs.getRevenue(1L));
+        Optional<Revenue> revenueFromRepo = Optional.of(com.trade_accounting.Stubs.ModelStubs.getRevenue(1L));
 
         when(revenueRepository.findById(anyLong()))
                 .thenReturn(revenueFromRepo);
