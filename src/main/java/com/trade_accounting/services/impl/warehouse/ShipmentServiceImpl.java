@@ -40,6 +40,13 @@ public class ShipmentServiceImpl implements ShipmentService {
     }
 
     @Override
+    public List<ShipmentDto> searchString(String search) {
+        return shipmentRepository.searchString(search).stream()
+                .map(shipmentMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<ShipmentDto> getAll() {
         return shipmentRepository.findAll().stream()
                 .map(shipmentMapper::toDto)
