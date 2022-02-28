@@ -29,9 +29,6 @@ public class RetailMakingServiceImplTest {
     @Mock
     private RetailMakingRepository retailMakingRepository;
 
-//    @Mock
-//    private RetailMakingMapper retailMakingMapper;
-
     @Mock
     private RetailStoreRepository retailStoreRepository;
 
@@ -65,29 +62,6 @@ public class RetailMakingServiceImplTest {
         assertEquals(1, retailMakingDto.getId());
     }
 
-//    @Test
-//    void create(){
-//        retailMakingService.create(RetailMakingDtoStubs.getDto(1L));
-//
-//        verify(retailMakingRepository).save(any(RetailMaking.class));
-//    }
-
-//    @Test
-//    void create() {
-//
-//       when(retailMakingMapper.toModel(any(RetailMakingDto.class))).thenReturn(RetailMakingModelStubs.getRetailMakingModelStub(1L));
-//        RetailMakingDto retailMakingDto = retailMakingService.create(RetailMakingDtoStubs.getDto(1L));
-//        assertEquals(RetailMakingDtoStubs.getDto(1L), retailMakingDto);
-//
-////        when(retailStoreRepository.)
-//
-//    }
-//    @Test
-//    void create_shouldPassInstructionsSuccessfulCreate() {
-//        productionTargetsService.create(ProductionTargetsDtoStubs.getProductionTargetsDto(1L));
-//
-//        verify(productionTargetsRepository).save(any(ProductionTargets.class));
-//    }
     @Test
     void create(){saveOrUpdate();}
 

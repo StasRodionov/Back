@@ -35,8 +35,7 @@ import java.util.List;
 @Api(tags = "Invoice Product Rest Controller")
 @RequestMapping("/api/invoice/product")
 @RequiredArgsConstructor
-public class
-InvoiceProductRestController {
+public class InvoiceProductRestController {
 
     private final InvoiceProductService invoiceProductService;
     private final CheckEntityService checkEntityService;

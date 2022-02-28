@@ -3,8 +3,12 @@ package com.trade_accounting.services.impl.retail;
 import com.trade_accounting.Stubs.dto.retail.RetailCloudCheckDtoStubs;
 import com.trade_accounting.Stubs.model.retail.RetailCloudCheckModelStubs;
 import com.trade_accounting.models.dto.retail.RetailCloudCheckDto;
+import com.trade_accounting.models.entity.client.Employee;
 import com.trade_accounting.models.entity.retail.RetailCloudCheck;
+import com.trade_accounting.models.entity.retail.RetailStore;
+import com.trade_accounting.repositories.client.EmployeeRepository;
 import com.trade_accounting.repositories.retail.RetailCloudCheckRepository;
+import com.trade_accounting.repositories.retail.RetailStoreRepository;
 import com.trade_accounting.utils.mapper.retail.RetailCloudCheckMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +18,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,6 +31,12 @@ public class RetailCloudCheckServiceImplTest {
 
     @Mock
     private RetailCloudCheckRepository retailCloudCheckRepository;
+
+    @Mock
+    private RetailStoreRepository retailStoreRepository;
+
+    @Mock
+    private EmployeeRepository employeeRepository;
 
     @InjectMocks
     private RetailCloudCheckServiceImpl retailCloudCheckService;
@@ -68,6 +79,8 @@ public class RetailCloudCheckServiceImplTest {
     }
 
         private void saveOrUpdate() {
+        when(retailStoreRepository.findById(anyLong())).thenReturn(Optional.of(new RetailStore()));
+        when(employeeRepository.findById(anyLong())).thenReturn(Optional.of(new Employee()));
         when(retailCloudCheckRepository.save(any(RetailCloudCheck.class))).thenReturn(RetailCloudCheckModelStubs.getRetailCloudCheckModelStubs(1L));
         RetailCloudCheckDto retailCloudCheckDto = retailCloudCheckService.create(RetailCloudCheckDtoStubs.getDto(1L));
         assertEquals(1, retailCloudCheckDto.getId());

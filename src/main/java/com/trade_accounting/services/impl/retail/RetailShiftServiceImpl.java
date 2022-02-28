@@ -95,14 +95,4 @@ public class RetailShiftServiceImpl implements RetailShiftService {
         return executeSearch(retailShiftRepository, retailShiftMapper::toDto, spec);
     }
 
-//    @Override
-//    public List<RetailShiftDto> search(Specification<RetailShift> spec) {
-//        List<RetailShift> retailShiftList = retailShiftRepository.findAll(spec);
-//
-//        List<RetailShiftDto> retailShiftDtoList = new ArrayList<>();
-//        for(RetailShift io : retailShiftList) {
-//            retailShiftDtoList.add(retailShiftMapper.toDto(io));
-//        }
-//        return retailShiftDtoList;
-//    }
 }

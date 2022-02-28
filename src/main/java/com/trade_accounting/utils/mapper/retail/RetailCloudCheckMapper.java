@@ -10,24 +10,6 @@ import java.time.LocalDateTime;
 
 @Mapper(componentModel = "spring")
 public interface RetailCloudCheckMapper {
-    //RetailMaking
-//    @Mappings({
-//            @Mapping(source = "date", target = "date"),
-//            @Mapping(source = "initiator.id", target = "initiatorId"),
-//            @Mapping(source = "fiscalizationPoint.id", target = "fiscalizationPointId"),
-//            @Mapping(source = "currency.id", target = "currencyId"),
-//            @Mapping(source = "cashier.id", target = "cashierId")
-//    })
-//    RetailCloudCheckDto toDto(RetailCloudCheck retailCloudCheck);
-//
-//    @Mappings({
-//            @Mapping(source = "date", target = "date"),
-//            @Mapping(source = "initiatorId", target = "initiator.id"),
-//            @Mapping(source = "fiscalizationPointId", target = "fiscalizationPoint.id"),
-//            @Mapping(source = "currencyId", target = "currency.id"),
-//            @Mapping(source = "cashierId", target = "cashier.id")
-//    })
-//    RetailCloudCheck toModel(RetailCloudCheckDto retailCloudCheckDto);
 
     default RetailCloudCheckDto toDto(RetailCloudCheck retailCloudCheck) {
         if (retailCloudCheck == null) {

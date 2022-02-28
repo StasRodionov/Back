@@ -12,22 +12,6 @@ import java.time.format.DateTimeFormatter;
 @Mapper(componentModel = "spring")
 public interface RetailShiftMapper {
 
-//    @Mappings({
-//            @Mapping(source = "retailStore.id", target = "retailStoreId"),
-//            @Mapping(source = "warehouse.id", target = "warehouseId"),
-//            @Mapping(source = "company.id", target = "companyId")
-//    })
-//    RetailShiftDto toDto(RetailShift retailShift);
-//
-//
-//    @Mappings({
-//            @Mapping(source = "retailStoreId", target = "retailStore.id"),
-//            @Mapping(source = "warehouseId", target = "warehouse.id"),
-//            @Mapping(source = "companyId", target = "company.id")
-//
-//    })
-//    RetailShift toModel(RetailShiftDto retailShiftDto);
-
     default RetailShiftDto toDto(RetailShift retailShift) {
         if ( retailShift == null ) {
             return null;
@@ -66,12 +50,12 @@ public interface RetailShiftMapper {
 
         RetailShift.RetailShiftBuilder retailShift = RetailShift.builder();
 
-        /*retailShift.retailStore( retailShiftDtoToRetailStore( retailShiftDto ) );
+        retailShift.retailStore( retailShiftDtoToRetailStore( retailShiftDto ) );
         retailShift.warehouse( retailShiftDtoToWarehouse( retailShiftDto ) );
-        retailShift.company( retailShiftDtoToCompany( retailShiftDto ) );*/
+        retailShift.company( retailShiftDtoToCompany( retailShiftDto ) );
         retailShift.id( retailShiftDto.getId() );
-        /*retailShift.dataOpen( retailShiftDto.getDataOpen() );
-        retailShift.dataClose( retailShiftDto.getDataClose() );*/
+//        retailShift.dataOpen( retailShiftDto.getDataOpen() );
+//        retailShift.dataClose( retailShiftDto.getDataClose() );
         retailShift.bank( retailShiftDto.getBank() );
         retailShift.revenuePerShift( retailShiftDto.getRevenuePerShift() );
         retailShift.received( retailShiftDto.getReceived() );
@@ -129,30 +113,30 @@ public interface RetailShiftMapper {
         return id;
     }
 
-//    private RetailStore retailShiftDtoToRetailStore(RetailShiftDto retailShiftDto) {
-//        if ( retailShiftDto == null ) {
-//            return null;
-//        }
-//        RetailStore.RetailStoreBuilder retailStore = RetailStore.builder();
-//        retailStore.id( retailShiftDto.getRetailStoreId() );
-//        return retailStore.build();
-//    }
-//
-//    private Warehouse retailShiftDtoToWarehouse(RetailShiftDto retailShiftDto) {
-//        if ( retailShiftDto == null ) {
-//            return null;
-//        }
-//        Warehouse.WarehouseBuilder warehouse = Warehouse.builder();
-//        warehouse.id( retailShiftDto.getWarehouseId() );
-//        return warehouse.build();
-//    }
-//
-//    private Company retailShiftDtoToCompany(RetailShiftDto retailShiftDto) {
-//        if ( retailShiftDto == null ) {
-//            return null;
-//        }
-//        Company company = new Company();
-//        company.setId( retailShiftDto.getCompanyId() );
-//        return company;
-//    }
+    private RetailStore retailShiftDtoToRetailStore(RetailShiftDto retailShiftDto) {
+        if ( retailShiftDto == null ) {
+            return null;
+        }
+        RetailStore.RetailStoreBuilder retailStore = RetailStore.builder();
+        retailStore.id( retailShiftDto.getRetailStoreId() );
+        return retailStore.build();
+    }
+
+    private Warehouse retailShiftDtoToWarehouse(RetailShiftDto retailShiftDto) {
+        if ( retailShiftDto == null ) {
+            return null;
+        }
+        Warehouse.WarehouseBuilder warehouse = Warehouse.builder();
+        warehouse.id( retailShiftDto.getWarehouseId() );
+        return warehouse.build();
+    }
+
+    private Company retailShiftDtoToCompany(RetailShiftDto retailShiftDto) {
+        if ( retailShiftDto == null ) {
+            return null;
+        }
+        Company company = new Company();
+        company.setId( retailShiftDto.getCompanyId() );
+        return company;
+    }
 }

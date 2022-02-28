@@ -10,22 +10,6 @@ import java.time.LocalDateTime;
 
 @Mapper(componentModel = "spring")
 public interface RetailMakingMapper {
-    //RetailMaking
-//    @Mappings({
-//            @Mapping(source = "date", target = "date"),
-//            @Mapping(source = "retailStore.id", target = "retailStoreId"),
-//            @Mapping(source = "company.id", target = "companyId")
-//    })
-//    RetailMakingDto toDto(RetailMaking retailMakingCheck);
-//
-//    @Mappings({
-//            @Mapping(source = "date", target = "date"),
-//            @Mapping(source = "retailStoreId", target = "retailStore.id"),
-//            @Mapping(source = "companyId", target = "company.id")
-//    })
-//    RetailMaking toModel(RetailMakingDto retailMakingDto);
-
-
 
     default RetailMakingDto toDto(RetailMaking retailMaking){
         if(retailMaking == null) {

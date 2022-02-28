@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
@@ -16,19 +15,14 @@ public class RetailMakingDto {
 
     Long id;
 
-    @NotNull
     String date;
 
-    @NotNull
     Long retailStoreId;
 
-    @NotNull
     String fromWhom;
 
-    @NotNull
     Long companyId;
 
-    @NotNull
     BigDecimal sum;
 
     Boolean isPrint;

@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
@@ -18,10 +17,8 @@ public class RetailCloudCheckDto {
 
     private String date;
 
-    @NotNull
     private Long initiatorId;
 
-    @NotNull
     private Long fiscalizationPointId;
 
     private String status;
@@ -30,9 +27,7 @@ public class RetailCloudCheckDto {
 
     private BigDecimal total;
 
-    @NotNull
     private Long currencyId;
 
-    @NotNull
     private Long cashierId;
 }
