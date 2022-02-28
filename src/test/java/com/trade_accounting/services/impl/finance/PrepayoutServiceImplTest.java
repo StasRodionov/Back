@@ -1,5 +1,6 @@
 package com.trade_accounting.services.impl.finance;
 
+import com.trade_accounting.Stubs.ModelStubs;
 import com.trade_accounting.Stubs.SpecificationStubs;
 import com.trade_accounting.Stubs.dto.finance.PrepayoutDtoStubs;
 import com.trade_accounting.Stubs.model.finance.PrepayoutModelStubs;
@@ -9,7 +10,6 @@ import com.trade_accounting.repositories.company.CompanyRepository;
 import com.trade_accounting.repositories.company.ContractorRepository;
 import com.trade_accounting.repositories.finance.PrepayoutRepository;
 import com.trade_accounting.repositories.retail.RetailStoreRepository;
-import com.trade_accounting.Stubs.ModelStubs;
 import com.trade_accounting.utils.mapper.finance.PrepayoutMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
