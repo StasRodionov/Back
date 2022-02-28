@@ -1,4 +1,4 @@
-package com.trade_accounting.services.impl.Stubs;
+package com.trade_accounting.Stubs;
 
 import com.trade_accounting.models.dto.util.ImageDto;
 import com.trade_accounting.models.dto.warehouse.ProductDto;
@@ -38,6 +38,7 @@ import com.trade_accounting.models.entity.finance.ReturnToSupplier;
 import com.trade_accounting.models.entity.finance.TypeOfPayment;
 import com.trade_accounting.models.entity.invoice.InvoiceProduct;
 import com.trade_accounting.models.entity.invoice.InvoicesStatus;
+import com.trade_accounting.models.entity.production.OrdersOfProduction;
 import com.trade_accounting.models.entity.production.Production;
 import com.trade_accounting.models.entity.production.ProductionTargets;
 import com.trade_accounting.models.entity.production.RequestsProductions;
@@ -92,6 +93,7 @@ public class ModelStubs {
                 .number("100")
                 .sum(BigDecimal.valueOf(100L))
                 .date(LocalDateTime.now())
+                .isRecyclebin(id % 2 == 0)
                 .typeOfPayment(TypeOfPayment.INCOMING)
                 .project(Project.builder()
                         .id(1L)
@@ -674,6 +676,21 @@ public class ModelStubs {
 
     public static Prepayout getPrepayout(Long id) {
         return new Prepayout(id, LocalDateTime.now(), getRetailStore(id), getContractor(id), getCompany(id), new BigDecimal(243), new BigDecimal(323), new BigDecimal(445), new BigDecimal(877), false, false, "comment");
+    }
+
+    public static OrdersOfProduction getOrdersOfProduction(Long id) {
+        return OrdersOfProduction.builder()
+                .id(id)
+                .date(LocalDateTime.now())
+                .company(getCompany(1L))
+                .technicalCard(getTechnicalCard(1L))
+                .volume(10)
+                .produce(10)
+                .plannedProductionDate(LocalDateTime.now())
+                .isSent(id % 2 == 0)
+                .isPrint(id % 2 == 0)
+                .comment("Comment " + id)
+                .build();
     }
 }
 
