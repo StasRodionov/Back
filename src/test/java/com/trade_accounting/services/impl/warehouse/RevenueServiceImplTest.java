@@ -85,7 +85,6 @@ class RevenueServiceImplTest {
 
     @Test
     void getById() {
-
         Optional<Revenue> revenueFromRepo = Optional.of(com.trade_accounting.Stubs.ModelStubs.getRevenue(1L));
 
         when(revenueRepository.findById(anyLong()))
