@@ -65,4 +65,11 @@ public class InvoiceReceivedServiceImpl implements InvoiceReceivedService {
     public void deleteById(Long id) {
         invoiceReceivedRepository.deleteById(id);
     }
+
+    @Override
+    public List<InvoiceReceivedDto> searchString(String search) {
+        return invoiceReceivedRepository.searchString(search).stream()
+                .map(invoiceReceivedMapper::toDto)
+                .collect(Collectors.toList());
+    }
 }
