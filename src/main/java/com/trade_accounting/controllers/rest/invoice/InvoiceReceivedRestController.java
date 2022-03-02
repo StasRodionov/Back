@@ -107,4 +107,20 @@ public class InvoiceReceivedRestController {
         invoiceReceivedService.deleteById(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/search/{search}")
+    @ApiOperation(value = "search", notes = "Получение списка некоторых отгрузок")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение отф. списка"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<InvoiceReceivedDto>> searchByString(@ApiParam(name ="search",
+            value = "Переданный в URL searchTerm, по которому необходимо найти отгрузку")
+                                                                   @PathVariable(name = "search") String search) {
+        List<InvoiceReceivedDto> listShipment = invoiceReceivedService.searchString(search);
+        return ResponseEntity.ok(listShipment);
+
+    }
 }
