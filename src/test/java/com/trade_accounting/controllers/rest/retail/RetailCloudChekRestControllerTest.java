@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest.retail;
 
 import com.google.gson.Gson;
-import com.trade_accounting.controllers.rest.retail.RetailCloudChekRestController;
 import com.trade_accounting.models.dto.retail.RetailCloudCheckDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,12 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -61,7 +61,7 @@ public class RetailCloudChekRestControllerTest {
                 .fiscalizationPointId(1L)
                 .status("Хранение")
                 .cheskStatus("Оплачен")
-                .total(Long.valueOf(80000))
+                .total(BigDecimal.valueOf(80000))
                 .currencyId(1L)
                 .cashierId(1L)
                 .build());
@@ -83,7 +83,7 @@ public class RetailCloudChekRestControllerTest {
                 .fiscalizationPointId(1L)
                 .status("Хранение")
                 .cheskStatus("Оплачен")
-                .total(Long.valueOf(80000))
+                .total(BigDecimal.valueOf(80000))
                 .currencyId(1L)
                 .cashierId(1L)
                 .build());
@@ -112,7 +112,7 @@ public class RetailCloudChekRestControllerTest {
                 .fiscalizationPointId(1L)
                 .status("Хранение")
                 .cheskStatus("Оплачен")
-                .total(Long.valueOf(80000))
+                .total(BigDecimal.valueOf(80000))
                 .currencyId(1L)
                 .cashierId(1L)
                 .build());
