@@ -50,7 +50,7 @@ public class MoneySubCashFlowServiceImpl implements MoneySubCashFlowService {
 
         //Получение всех платежей, которые имеют статус "Проведён"
         List<PaymentDto> paymentDtos = paymentService.getAll().stream()
-                .filter(PaymentDto::getIsConducted).collect(Collectors.toList());
+                .filter(PaymentDto::isConducted).collect(Collectors.toList());
 
         //Получение Листа с датами платежей
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -182,11 +182,11 @@ public class MoneySubCashFlowServiceImpl implements MoneySubCashFlowService {
 
         //Получение всех платежей, которые имеют статус "Проведён"
         List<PaymentDto> paymentDtos = paymentService.getAll().stream()
-                .filter(PaymentDto::getIsConducted).collect(Collectors.toList());
+                .filter(PaymentDto::isConducted).collect(Collectors.toList());
 
-        paymentDtos = paymentDtos.stream().filter(c -> projectId == null || c.getProjectId().equals(projectId))
-                .filter(c -> companyId == null || c.getCompanyId().equals(companyId))
-                .filter(c -> contractorId == null || c.getContractorId().equals(contractorId))
+        paymentDtos = paymentDtos.stream().filter(c -> projectId == null || c.getProjectId() == projectId)
+                .filter(c -> companyId == null || c.getCompanyId() == companyId)
+                .filter(c -> contractorId == null || c.getContractorId() == contractorId)
                 .collect(Collectors.toList());
 
         //Получение Листа с датами платежей
