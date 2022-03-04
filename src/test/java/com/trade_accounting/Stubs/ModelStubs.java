@@ -484,17 +484,17 @@ public class ModelStubs {
 
     public static Correction getCorrection(Long id) {
         return new Correction(
-//                id,
-//                LocalDateTime.now(),
+                id,
+                LocalDateTime.now(),
                 getWarehouse(),
-//                getCompany(id),
-//                false, false,
+                getCompany(id),
+                false, false,
                 false,
-//                "Комментарий 1",
+                "Комментарий 1",
                 List.of(getCorrectionProduct(1L),
                         getCorrectionProduct(2L),
-                        getCorrectionProduct(3L))
-        );
+                        getCorrectionProduct(3L)),
+        false);
     }
 
     public static InventarizationProduct getInventarizationProduct(Long id) {
