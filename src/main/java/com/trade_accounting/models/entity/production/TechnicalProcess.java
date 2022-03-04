@@ -2,7 +2,6 @@ package com.trade_accounting.models.entity.production;
 
 import com.trade_accounting.models.entity.client.Department;
 import com.trade_accounting.models.entity.client.Employee;
-import com.trade_accounting.models.entity.production.StagesProduction;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
