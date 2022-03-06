@@ -1,4 +1,4 @@
-package com.trade_accounting.models.entity.Indicators;
+package com.trade_accounting.models.entity.indicators;
 
 import com.trade_accounting.models.entity.client.Employee;
 import lombok.AllArgsConstructor;
@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Getter
@@ -26,6 +27,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @ToString
+@Table(name = "audit")
 public class Audit {
 	
 	@Id
@@ -34,14 +36,13 @@ public class Audit {
 	
 	private String description;
 	
-	private LocalDateTime localDateTime;
+	private LocalDateTime date;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="emploee_id", nullable=false)
-	
+	@JoinColumn(name="employee_id", nullable=false)
 	private Employee employee;
 	
 	@Enumerated(EnumType.STRING)
 	private TypeOfAudit typeOfAudit;
-	
+
 }
