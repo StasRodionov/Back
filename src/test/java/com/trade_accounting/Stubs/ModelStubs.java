@@ -36,6 +36,8 @@ import com.trade_accounting.models.entity.finance.PrepaymentReturn;
 import com.trade_accounting.models.entity.finance.Prepayout;
 import com.trade_accounting.models.entity.finance.ReturnToSupplier;
 import com.trade_accounting.models.entity.finance.TypeOfPayment;
+import com.trade_accounting.models.entity.indicators.Audit;
+import com.trade_accounting.models.entity.indicators.TypeOfAudit;
 import com.trade_accounting.models.entity.invoice.InvoiceProduct;
 import com.trade_accounting.models.entity.invoice.InvoicesStatus;
 import com.trade_accounting.models.entity.production.Production;
@@ -700,5 +702,16 @@ public class ModelStubs {
                 .employeeWhoLastChanged(ModelStubs.getEmployee(1L))
                 .build();
     }
+
+    public static Audit getAudit(Long id){
+        return Audit.builder()
+                .id(id)
+                .date(LocalDateTime.now())
+                .description("description")
+                .employee(ModelStubs.getEmployee(1L))
+                .typeOfAudit(TypeOfAudit.CREATE)
+                .build();
+    }
+
 }
 
