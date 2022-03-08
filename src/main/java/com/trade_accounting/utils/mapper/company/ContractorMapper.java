@@ -18,6 +18,7 @@ public interface ContractorMapper {
         } else {
             dto.setId(contractor.getId());
             dto.setName(contractor.getName());
+            dto.setShortname(contractor.getShortname());
             dto.setSortNumber(contractor.getSortNumber());
             dto.setPhone(contractor.getPhone());
             dto.setFax(contractor.getFax());
@@ -97,6 +98,7 @@ public interface ContractorMapper {
 
         contractor.setId(contractorDto.getId());
         contractor.setName(contractorDto.getName());
+        contractor.setShortname(contractorDto.getShortname());
         contractor.setSortNumber(contractorDto.getSortNumber());
         contractor.setPhone(contractorDto.getPhone());
         contractor.setFax(contractorDto.getFax());

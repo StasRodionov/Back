@@ -33,6 +33,9 @@ public class Contractor {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "shortname")
+    private String shortname;
+
     @Column(name = "sort_number")
     private String sortNumber;
 
