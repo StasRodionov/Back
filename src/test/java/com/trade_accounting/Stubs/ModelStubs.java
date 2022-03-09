@@ -46,6 +46,8 @@ import com.trade_accounting.models.entity.production.StagesProduction;
 import com.trade_accounting.models.entity.production.TechnicalCard;
 import com.trade_accounting.models.entity.production.TechnicalCardGroup;
 import com.trade_accounting.models.entity.production.TechnicalCardProduction;
+import com.trade_accounting.models.entity.production.TechnicalOperations;
+import com.trade_accounting.models.entity.production.TechnicalProcess;
 import com.trade_accounting.models.entity.retail.RetailStore;
 import com.trade_accounting.models.entity.units.Currency;
 import com.trade_accounting.models.entity.util.File;
@@ -68,6 +70,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -677,19 +680,26 @@ public class ModelStubs {
     public static Prepayout getPrepayout(Long id) {
         return new Prepayout(id, LocalDateTime.now(), getRetailStore(id), getContractor(id), getCompany(id), new BigDecimal(243), new BigDecimal(323), new BigDecimal(445), new BigDecimal(877), false, false, "comment");
     }
-
-    public static OrdersOfProduction getOrdersOfProduction(Long id) {
-        return OrdersOfProduction.builder()
+    
+    public static TechnicalOperations getTechnicalOperations(Long id) {
+        return TechnicalOperations.builder()
+                .volume(id.intValue())
+                .technicalCard(ModelStubs.getTechnicalCard(1L))
+                .warehouse(ModelStubs.getWarehouse(1L))
+                .build();
+    }
+    public static TechnicalProcess getTechnicalProcess(Long id) {
+        return TechnicalProcess.builder()
                 .id(id)
-                .date(LocalDateTime.now())
-                .company(getCompany(1L))
-                .technicalCard(getTechnicalCard(1L))
-                .volume(10)
-                .produce(10)
-                .plannedProductionDate(LocalDateTime.now())
-                .isSent(id % 2 == 0)
-                .isPrint(id % 2 == 0)
-                .comment("Comment " + id)
+                .name("name")
+                .description("description")
+                .stagesProductionSet(Set.of(ModelStubs.getStagesProduction(1L)))
+                .isArchived(false)
+                .isShared(true)
+                .departmentOwner(ModelStubs.getDepartment(1L))
+                .employeeOwner(ModelStubs.getEmployee(1L))
+                .dateOfChanged(LocalDateTime.of(2014, 9, 19, 14, 5))
+                .employeeWhoLastChanged(ModelStubs.getEmployee(1L))
                 .build();
     }
 }
