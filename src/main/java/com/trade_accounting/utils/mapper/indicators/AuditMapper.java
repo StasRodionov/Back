@@ -1,7 +1,7 @@
 package com.trade_accounting.utils.mapper.indicators;
 
 import com.trade_accounting.models.dto.indicators.AuditDto;
-import com.trade_accounting.models.entity.Indicators.Audit;
+import com.trade_accounting.models.entity.indicators.Audit;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

@@ -1,3 +1,13 @@
+create table audit
+(
+    id          bigserial not null,
+    description varchar(255),
+    date        timestamp default current_date,
+    employee_id bigserial not null,
+    type_of_audit varchar(255),
+    primary key (id)
+);
+
 create table acceptance_productions
 (
     id         bigserial not null,

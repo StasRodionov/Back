@@ -1,15 +1,13 @@
 package com.trade_accounting.models.dto.indicators;
 
 import com.trade_accounting.models.dto.client.EmployeeDto;
-import com.trade_accounting.models.entity.Indicators.TypeOfAudit;
+import com.trade_accounting.models.entity.indicators.TypeOfAudit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 @Builder
 @Getter
@@ -23,9 +21,9 @@ public class AuditDto {
 	
 	private String description;
 	
-	private LocalDateTime localDateTime;
+	private String date;
 
-	private EmployeeDto employeeDto;
+	private Long employeeId;
 
 	private TypeOfAudit typeOfAudit;
 }
