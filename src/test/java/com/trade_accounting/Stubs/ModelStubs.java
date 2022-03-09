@@ -38,6 +38,7 @@ import com.trade_accounting.models.entity.finance.ReturnToSupplier;
 import com.trade_accounting.models.entity.finance.TypeOfPayment;
 import com.trade_accounting.models.entity.invoice.InvoiceProduct;
 import com.trade_accounting.models.entity.invoice.InvoicesStatus;
+import com.trade_accounting.models.entity.production.OrdersOfProduction;
 import com.trade_accounting.models.entity.production.Production;
 import com.trade_accounting.models.entity.production.ProductionTargets;
 import com.trade_accounting.models.entity.production.RequestsProductions;
@@ -95,6 +96,7 @@ public class ModelStubs {
                 .number("100")
                 .sum(BigDecimal.valueOf(100L))
                 .date(LocalDateTime.now())
+                .isRecyclebin(id % 2 == 0)
                 .typeOfPayment(TypeOfPayment.INCOMING)
                 .project(Project.builder()
                         .id(1L)
@@ -485,17 +487,17 @@ public class ModelStubs {
 
     public static Correction getCorrection(Long id) {
         return new Correction(
-//                id,
-//                LocalDateTime.now(),
+                id,
+                LocalDateTime.now(),
                 getWarehouse(),
-//                getCompany(id),
-//                false, false,
+                getCompany(id),
+                false, false,
                 false,
-//                "Комментарий 1",
+                "Комментарий 1",
                 List.of(getCorrectionProduct(1L),
                         getCorrectionProduct(2L),
-                        getCorrectionProduct(3L))
-        );
+                        getCorrectionProduct(3L)),
+        false);
     }
 
     public static InventarizationProduct getInventarizationProduct(Long id) {

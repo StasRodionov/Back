@@ -1,6 +1,8 @@
 package com.trade_accounting.Stubs;
 
 import com.trade_accounting.models.entity.finance.Prepayout;
+import com.trade_accounting.models.entity.production.OrdersOfProduction;
+import com.trade_accounting.models.entity.util.OperationsAbstract;
 import com.trade_accounting.models.entity.warehouse.BuyersReturn;
 import com.trade_accounting.models.entity.company.Company;
 import com.trade_accounting.models.entity.company.Contract;
@@ -49,6 +51,14 @@ public class SpecificationStubs {
     }
 //
     public static Specification<PrepaymentReturn> getPrepaymentReturnSpecificationStub() {
+        return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+
+    public static Specification<OperationsAbstract> getOperationSpecificationStub() {
+        return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+
+    public static Specification<OrdersOfProduction> getOrdersOfProductionStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
 }

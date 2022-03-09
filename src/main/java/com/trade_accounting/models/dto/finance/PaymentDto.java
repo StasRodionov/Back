@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class PaymentDto {
 
-    private Long id;
+    private long id;
 
     private String typeOfPayment;
 
@@ -32,18 +32,18 @@ public class PaymentDto {
     private String date;
 
     @NotNull
-    private Long companyId;
+    private long companyId;
 
     @NotNull
-    private Long contractorId;
+    private long contractorId;
 
-    private Long contractId;
+    private long contractId;
 
-    private Long projectId;
+    private long projectId;
 
     private BigDecimal sum;
 
-    private Boolean isConducted;
+    private boolean isConducted;
 
-    private Boolean isRecyclebin;
+    private boolean isRecyclebin;
 }

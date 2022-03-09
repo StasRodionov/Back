@@ -12,6 +12,7 @@ import com.trade_accounting.repositories.invoice.InvoiceReceivedRepository;
 import com.trade_accounting.services.interfaces.invoice.InvoiceReceivedService;
 import com.trade_accounting.utils.mapper.invoice.InvoiceReceivedMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,4 +66,17 @@ public class InvoiceReceivedServiceImpl implements InvoiceReceivedService {
     public void deleteById(Long id) {
         invoiceReceivedRepository.deleteById(id);
     }
+
+    @Override
+    public List<InvoiceReceivedDto> searchString(String search) {
+        return invoiceReceivedRepository.searchString(search).stream()
+                .map(invoiceReceivedMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<InvoiceReceivedDto> search(Specification<InvoiceReceived> spec) {
+        return executeSearch(invoiceReceivedRepository, invoiceReceivedMapper::toDto, spec);
+    }
+
 }

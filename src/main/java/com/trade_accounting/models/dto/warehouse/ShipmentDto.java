@@ -42,7 +42,12 @@ public class ShipmentDto {
 
     private Boolean isRecyclebin;
 
-    public ShipmentDto(Long id, LocalDateTime date, Long warehouseId, Long companyId, Long contractorId, BigDecimal sum, BigDecimal paid, Boolean isSpend, Boolean isSend, Boolean isPrint, String comment, List<Long> shipmentProductsIds) {
+    public ShipmentDto(Long id, LocalDateTime date,
+                       Long warehouseId, Long companyId,
+                       Long contractorId, BigDecimal sum,
+                       BigDecimal paid, Boolean isSpend,
+                       Boolean isSend, Boolean isPrint,
+                       String comment, List<Long> shipmentProductsIds) {
         this.id = id;
         this.date = date.toString();
         this.warehouseId = warehouseId;
