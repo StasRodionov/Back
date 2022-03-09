@@ -1,6 +1,5 @@
 package com.trade_accounting.controllers.rest.indecators;
 
-import com.trade_accounting.models.dto.client.RoleDto;
 import com.trade_accounting.models.dto.indicators.AuditDto;
 import com.trade_accounting.services.interfaces.indicators.AuditService;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +35,7 @@ public class AuditController {
 		return ResponseEntity.ok(auditService.getAll());
 	}
 	
+	
 	@ApiOperation(value = "deleteById", notes = "Удаляет аудит на основе переданного ID")
 	@DeleteMapping("/{id}")
 	@ApiResponses(value = {
@@ -45,7 +45,7 @@ public class AuditController {
 			@ApiResponse(code = 403, message = "Операция запрещена"),
 			@ApiResponse(code = 404, message = "Данный контролер не найден")}
 	)
-	public ResponseEntity<RoleDto> deleteById(@ApiParam(
+	public ResponseEntity<AuditDto> deleteById(@ApiParam(
 			name = "id",
 			type = "Long",
 			value = "Переданный ID  в URL по которому необходимо удалить аудит",
