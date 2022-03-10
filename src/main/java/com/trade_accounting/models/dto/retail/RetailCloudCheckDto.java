@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -23,7 +25,7 @@ public class RetailCloudCheckDto {
 
     private String cheskStatus;
 
-    private Long total;
+    private BigDecimal total;
 
     private Long currencyId;
 

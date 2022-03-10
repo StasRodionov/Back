@@ -99,8 +99,11 @@ public class ProductDto {
         this.service = service;
     }
 
-    public ProductDto(Long id, String name, BigDecimal weight, BigDecimal volume, BigDecimal purchasePrice, String description,
-                      Long unitId, Boolean archive, Long contractorId, List<Long> productPriceIds, Long taxSystemId, List<ImageDto> imageDtos,
+    public ProductDto(Long id, String name, BigDecimal weight,
+                      BigDecimal volume, BigDecimal purchasePrice,
+                      String description, Long unitId, Boolean archive,
+                      Long contractorId, List<Long> productPriceIds,
+                      Long taxSystemId, List<ImageDto> imageDtos,
                       Long productGroupId, Long attributeOfCalculationObjectId) {
         this.id = id;
         this.name = name;
@@ -118,7 +121,14 @@ public class ProductDto {
         this.attributeOfCalculationObjectId = attributeOfCalculationObjectId;
     }
 
-    public ProductDto(Long id, String name, BigDecimal weight, BigDecimal volume, BigDecimal purchasePrice, String description, Long unitId, Boolean archive, Boolean service, Long contractorId, List<Long> productPriceIds, Long taxSystemId, List<ImageDto> imageDtos, Long productGroupId, Long attributeOfCalculationObjectId, String countryOrigin, int itemNumber, String saleTax, int minimumBalance) {
+    public ProductDto(Long id, String name, BigDecimal weight,
+                      BigDecimal volume, BigDecimal purchasePrice,
+                      String description, Long unitId, Boolean archive,
+                      Boolean service, Long contractorId,
+                      List<Long> productPriceIds, Long taxSystemId,
+                      List<ImageDto> imageDtos, Long productGroupId,
+                      Long attributeOfCalculationObjectId, String countryOrigin,
+                      int itemNumber, String saleTax, int minimumBalance) {
         this.id = id;
         this.name = name;
         this.weight = weight;

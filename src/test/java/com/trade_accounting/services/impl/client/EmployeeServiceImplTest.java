@@ -60,7 +60,7 @@ class EmployeeServiceImplTest {
         when(employeeRepository.findAll())
                 .thenReturn(
                         Stream.of(
-                                ModelStubs.getEmployee(1L),
+                               ModelStubs.getEmployee(1L),
                                 ModelStubs.getEmployee(2L),
                                 ModelStubs.getEmployee(1L)
                         ).collect(Collectors.toList())

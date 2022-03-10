@@ -31,10 +31,4 @@ public class Production {
     @ManyToOne(fetch = FetchType.LAZY)
     private RequestsProductions requestsProductions;
 
-/*
-    @ManyToOne(fetch = FetchType.LAZY)
-    private TechnicalOperations technicalOperations;
-
- */
-
 }
