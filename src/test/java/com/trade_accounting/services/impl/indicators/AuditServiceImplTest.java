@@ -4,6 +4,7 @@ import com.trade_accounting.Stubs.ModelStubs;
 import com.trade_accounting.models.dto.indicators.AuditDto;
 import com.trade_accounting.models.entity.indicators.Audit;
 import com.trade_accounting.repositories.indicators.AuditRepository;
+import com.trade_accounting.services.impl.indicators.audit.AuditServiceImpl;
 import com.trade_accounting.utils.mapper.indicators.AuditMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

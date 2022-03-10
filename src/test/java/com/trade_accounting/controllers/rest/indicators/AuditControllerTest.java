@@ -1,4 +1,4 @@
-package com.trade_accounting.controllers.rest.indecators;
+package com.trade_accounting.controllers.rest.indicators;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ class AuditControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$", hasSize(2)))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 }

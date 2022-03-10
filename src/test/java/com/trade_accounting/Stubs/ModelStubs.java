@@ -38,7 +38,6 @@ import com.trade_accounting.models.entity.finance.Prepayout;
 import com.trade_accounting.models.entity.finance.ReturnToSupplier;
 import com.trade_accounting.models.entity.finance.TypeOfPayment;
 import com.trade_accounting.models.entity.indicators.Audit;
-import com.trade_accounting.models.entity.indicators.TypeOfAudit;
 import com.trade_accounting.models.entity.invoice.InvoiceProduct;
 import com.trade_accounting.models.entity.invoice.InvoicesStatus;
 import com.trade_accounting.models.entity.production.Production;
@@ -729,7 +728,6 @@ public class ModelStubs {
                 .date(LocalDateTime.now())
                 .description("description")
                 .employee(ModelStubs.getEmployee(1L))
-                .typeOfAudit(TypeOfAudit.CREATE)
                 .build();
     }
 
@@ -739,7 +737,6 @@ public class ModelStubs {
                 .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
                 .description("description")
                 .employeeId(1L)
-                .typeOfAudit(TypeOfAudit.CREATE)
                 .build();
     }
 
