@@ -1,8 +1,8 @@
-package com.trade_accounting.services.impl.indicators;
+package com.trade_accounting.services.impl.indicators.audit;
 
 import com.trade_accounting.models.dto.indicators.AuditDto;
 import com.trade_accounting.repositories.indicators.AuditRepository;
-import com.trade_accounting.services.interfaces.indicators.AuditService;
+import com.trade_accounting.services.interfaces.indicators.audit.AuditService;
 import com.trade_accounting.utils.mapper.indicators.AuditMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

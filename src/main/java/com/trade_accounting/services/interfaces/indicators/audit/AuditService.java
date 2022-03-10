@@ -1,4 +1,4 @@
-package com.trade_accounting.services.interfaces.indicators;
+package com.trade_accounting.services.interfaces.indicators.audit;
 
 import com.trade_accounting.models.dto.indicators.AuditDto;
 

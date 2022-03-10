@@ -1,7 +1,5 @@
 package com.trade_accounting.models.dto.indicators;
 
-import com.trade_accounting.models.dto.client.EmployeeDto;
-import com.trade_accounting.models.entity.indicators.TypeOfAudit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +22,4 @@ public class AuditDto {
 	private String date;
 
 	private Long employeeId;
-
-	private TypeOfAudit typeOfAudit;
 }
