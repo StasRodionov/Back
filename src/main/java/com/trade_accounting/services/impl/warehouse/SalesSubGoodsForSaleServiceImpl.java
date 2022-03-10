@@ -41,6 +41,7 @@ public class SalesSubGoodsForSaleServiceImpl implements SalesSubGoodsForSaleServ
         SalesSubGoodsForSale savedSalesSubGoodsForSale = salesSubGoodsForSaleRepository.save(
                 salesSubGoodsForSaleMapper.toModel(dto)
         );
+        dto.setId(savedSalesSubGoodsForSale.getId());
         return salesSubGoodsForSaleMapper.toDto(
                 savedSalesSubGoodsForSale
         );

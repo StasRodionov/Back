@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest.warehouse;
 
 import com.trade_accounting.models.dto.warehouse.SalesSubGoodsForSaleDto;
+import com.trade_accounting.models.entity.warehouse.SalesSubGoodsForSale;
 import com.trade_accounting.repositories.warehouse.SalesSubGoodsForSaleRepository;
 import com.trade_accounting.services.interfaces.util.CheckEntityService;
 import com.trade_accounting.services.interfaces.warehouse.SalesSubGoodsForSaleService;
@@ -11,6 +12,10 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +32,7 @@ import java.util.List;
 @RestController
 @Tag(name = "SalesSubGoodsForSale Rest Controller", description = "CRUD операции с товарами на реализации")
 @Api(tags = "SalesSubGoodsForSale Rest Controller")
-@RequestMapping("/api/sales-sub-goods-for-sale")
+@RequestMapping("api/goodsForSale")
 @RequiredArgsConstructor
 public class SalesSubGoodsForSaleRestController {
 
@@ -44,7 +49,8 @@ public class SalesSubGoodsForSaleRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     public ResponseEntity<List<SalesSubGoodsForSaleDto>> getAll() {
-        return ResponseEntity.ok(salesSubGoodsForSaleService.getAll());
+        List<SalesSubGoodsForSaleDto> salesSubGoodsForSaleDtos = salesSubGoodsForSaleService.getAll();
+        return ResponseEntity.ok(salesSubGoodsForSaleDtos);
     }
 
     @ApiOperation(value = "getById", notes = "Возвращает товары на реализации по ID")
@@ -74,7 +80,7 @@ public class SalesSubGoodsForSaleRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<SalesSubGoodsForSaleDto> create(@ApiParam(name = "revenueDto",
+    public ResponseEntity<SalesSubGoodsForSaleDto> create(@ApiParam(name = "salesSubGoodsForSaleDto",
             value = "DTO товаров на реализации, которую необходимо создать") @RequestBody SalesSubGoodsForSaleDto salesDto) {
         return ResponseEntity.ok().body(salesSubGoodsForSaleService.create(salesDto));
     }
@@ -88,7 +94,7 @@ public class SalesSubGoodsForSaleRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<SalesSubGoodsForSaleDto> update(@ApiParam(name = "revenueDto",
+    public ResponseEntity<SalesSubGoodsForSaleDto> update(@ApiParam(name = "salesSubGoodsForSaleDto",
             value = "DTO остатка, который необходимо обновить") @RequestBody SalesSubGoodsForSaleDto salesDto) {
         checkEntityService.checkExists((JpaRepository) salesSubGoodsForSaleRepository, salesDto.getId());
         return ResponseEntity.ok().body(salesSubGoodsForSaleService.update(salesDto));
@@ -113,19 +119,16 @@ public class SalesSubGoodsForSaleRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/search/{search}")
-    @ApiOperation(value = "search", notes = "Получение списка некоторых товаров на реализации")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение отф. списка"),
-            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
-            @ApiResponse(code = 403, message = "Операция запрещена"),
-            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
-    )
-    public ResponseEntity<List<SalesSubGoodsForSaleDto>> searchByFilter(@ApiParam(name ="search",
-            value = "Переданный в URL searchTerm, по которому необходимо найти товары на реализации")
-                                                            @PathVariable(name = "search") String search) {
-        List<SalesSubGoodsForSaleDto> listSalesSubGoodsForSaleDto = salesSubGoodsForSaleService.searchByFilter(search);
-        return ResponseEntity.ok(listSalesSubGoodsForSaleDto);
-
+    @GetMapping("/searchByFilter")
+    @ApiOperation(value = "searchByFilter", notes = "Получение списка товаров на реализации по фильтру")
+    public ResponseEntity<List<SalesSubGoodsForSaleDto>> searchByFilter(
+            @And({
+                    @Spec(path = "product.id", params = "productId", spec = Equal.class),
+                    @Spec(path = "code", params = "code", spec = Equal.class),
+                    @Spec(path = "vendorCode", params = "vendorCode", spec = Equal.class),
+                    @Spec(path = "transferred", params = "transferred", spec = Equal.class),
+                    @Spec(path = "accepted", params = "accepted", spec = Equal.class),
+            }) Specification<SalesSubGoodsForSale> spec) {
+        return ResponseEntity.ok(salesSubGoodsForSaleService.search(spec));
     }
 }

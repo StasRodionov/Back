@@ -1,15 +1,15 @@
 package com.trade_accounting.utils.mapper.warehouse;
 
+import com.trade_accounting.models.dto.warehouse.ShipmentDto;
 import com.trade_accounting.models.entity.company.Company;
 import com.trade_accounting.models.entity.company.Contractor;
 import com.trade_accounting.models.entity.warehouse.Shipment;
 import com.trade_accounting.models.entity.warehouse.ShipmentProduct;
 import com.trade_accounting.models.entity.warehouse.Warehouse;
-import com.trade_accounting.models.dto.warehouse.ShipmentDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
@@ -47,28 +47,31 @@ public interface ShipmentMapper {
         return shipmentDto.build();
     }
 
-    default Shipment toModel(ShipmentDto emp){
-        if( emp == null){
-            return null;
-        }
-        Shipment.ShipmentBuilder shipment = Shipment.builder();
+    @Mapping(target = "date", ignore = true)
+    Shipment toModel(ShipmentDto emp);
 
-        shipment.id(emp.getId());
-        if (emp.getDate() != null ) {
-            shipment.date(LocalDateTime.parse(emp.getDate()));
-        }
-        shipment.company(shipmentDtoToCompany(emp));
-        shipment.contractor(shipmentDtoToContractor(emp));
-        shipment.warehouse(shipmentDtoToWarehouse(emp));
-        shipment.paid(emp.getPaid());
-        shipment.isSpend(emp.getIsSpend());
-        shipment.isSent(emp.getIsSend());
-        shipment.isPrint(emp.getIsPrint());
-        shipment.isRecyclebin(emp.getIsRecyclebin());
-        shipment.comment(emp.getComment());
-
-        return shipment.build();
-    }
+//    default Shipment toModel(ShipmentDto emp){
+//        if( emp == null){
+//            return null;
+//        }
+//        Shipment.ShipmentBuilder shipment = Shipment.builder();
+//
+//        shipment.id(emp.getId());
+//        if (emp.getDate() != null ) {
+//            shipment.date(LocalDateTime.parse(emp.getDate()));
+//        }
+//        shipment.company(shipmentDtoToCompany(emp));
+//        shipment.contractor(shipmentDtoToContractor(emp));
+//        shipment.warehouse(shipmentDtoToWarehouse(emp));
+//        shipment.paid(emp.getPaid());
+//        shipment.isSpend(emp.getIsSpend());
+//        shipment.isSent(emp.getIsSend());
+//        shipment.isPrint(emp.getIsPrint());
+//        shipment.isRecyclebin(emp.getIsRecyclebin());
+//        shipment.comment(emp.getComment());
+//
+//        return shipment.build();
+//    }
 
 
 

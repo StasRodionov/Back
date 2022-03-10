@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
@@ -19,7 +20,8 @@ public class SalesSubGoodsForSaleDto {
 
     private Long id;
 
-    private String name;
+    @NotNull
+    private Long productId;
 
     private Long code;
 
