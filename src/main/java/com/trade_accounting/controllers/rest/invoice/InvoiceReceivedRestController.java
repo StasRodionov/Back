@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest.invoice;
 
 import com.trade_accounting.models.dto.invoice.InvoiceReceivedDto;
+import com.trade_accounting.models.entity.invoice.InvoiceReceived;
 import com.trade_accounting.repositories.invoice.InvoiceReceivedRepository;
 import com.trade_accounting.services.interfaces.util.CheckEntityService;
 import com.trade_accounting.services.interfaces.invoice.InvoiceReceivedService;
@@ -11,6 +12,12 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -122,5 +129,18 @@ public class InvoiceReceivedRestController {
         List<InvoiceReceivedDto> listShipment = invoiceReceivedService.searchString(search);
         return ResponseEntity.ok(listShipment);
 
+    }
+
+    @GetMapping("/queryInvoiceReceived")
+    @ApiOperation(value = "searchByFilter", notes = "Получение списка счетов-фактур полученных по заданным параметрам")
+    public ResponseEntity<List<InvoiceReceivedDto>> searchByFilter(
+            @And({
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "data", params = "data", spec = Equal.class, config="yyyy-MM-dd'T'HH:mm"),
+                    @Spec(path = "company.name", params = "companyDto", spec = Like.class),
+                    @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
+            }) Specification<InvoiceReceived> spec ) {
+        List<InvoiceReceivedDto> listInvoice = invoiceReceivedService.search(spec);
+        return ResponseEntity.ok(listInvoice);
     }
 }

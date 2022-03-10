@@ -99,6 +99,7 @@ public class ModelStubs {
                 .number("100")
                 .sum(BigDecimal.valueOf(100L))
                 .date(LocalDateTime.now())
+                .isRecyclebin(id % 2 == 0)
                 .typeOfPayment(TypeOfPayment.INCOMING)
                 .project(Project.builder()
                         .id(1L)
@@ -106,6 +107,21 @@ public class ModelStubs {
                         .code("code")
                         .description("description")
                         .build())
+                .build();
+    }
+
+    public static OrdersOfProduction getOrdersOfProduction(Long id) {
+        return OrdersOfProduction.builder()
+                .id(id)
+                .date(LocalDateTime.now())
+                .company(getCompany(1L))
+                .technicalCard(getTechnicalCard(1L))
+                .volume(10)
+                .produce(10)
+                .plannedProductionDate(LocalDateTime.now())
+                .isSent(id % 2 == 0)
+                .isPrint(id % 2 == 0)
+                .comment("Comment " + id)
                 .build();
     }
 
