@@ -11,6 +11,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/trade_accounting
     username: postgres
     password: root
+
     initialization-mode: always
 
   mail:
