@@ -5,47 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-
-import java.security.PrivateKey;
 
 @Aspect
 @Slf4j
 @Component
-public class ServiceLayerLogging {
-
-    /**
-     * Pointcuts
-     */
-
-    @Pointcut("within(com.trade_accounting.services..*)")
-    public void inServiceLayer() {
-    }
-
-    @Pointcut("execution(* getAll*(..))")
-    public void getAllExecution() {
-    }
-
-    @Pointcut("execution(* getBy*(..))")
-    public void getByExecution() {
-    }
-
-    @Pointcut("execution(* create(..))")
-    public void createExecution() {
-    }
-
-    @Pointcut("execution(* update(..))")
-    public void updateExecution() {
-    }
-
-    @Pointcut("execution(* deleteById(..))")
-    public void deleteExecution() {
-    }
-
-    @Pointcut("execution(* search*(..))")
-    public void searchExecution() {
-    }
+public class ServiceLayerLogging extends ServiceLayerAspect {
 
     /**
      * Advices
