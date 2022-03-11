@@ -144,7 +144,7 @@ public class ModelStubs {
 
     public static Contractor getContractor(Long id) {
         return new Contractor(
-                id, "name",
+                id, "name","shortname",
                 "sortNumber",
                 "12345678901", "324234234",
                 "email", getAddress(1L),
