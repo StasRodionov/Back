@@ -107,6 +107,21 @@ public class ModelStubs {
                 .build();
     }
 
+    public static OrdersOfProduction getOrdersOfProduction(Long id) {
+        return OrdersOfProduction.builder()
+                .id(id)
+                .date(LocalDateTime.now())
+                .company(getCompany(1L))
+                .technicalCard(getTechnicalCard(1L))
+                .volume(10)
+                .produce(10)
+                .plannedProductionDate(LocalDateTime.now())
+                .isSent(id % 2 == 0)
+                .isPrint(id % 2 == 0)
+                .comment("Comment " + id)
+                .build();
+    }
+
     public static Company getCompany(Long id) {
         return new Company(
                 id, "name",
