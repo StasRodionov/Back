@@ -40,6 +40,7 @@ import com.trade_accounting.models.entity.finance.TypeOfPayment;
 import com.trade_accounting.models.entity.indicators.Audit;
 import com.trade_accounting.models.entity.invoice.InvoiceProduct;
 import com.trade_accounting.models.entity.invoice.InvoicesStatus;
+import com.trade_accounting.models.entity.production.OrdersOfProduction;
 import com.trade_accounting.models.entity.production.Production;
 import com.trade_accounting.models.entity.production.ProductionTargets;
 import com.trade_accounting.models.entity.production.RequestsProductions;
