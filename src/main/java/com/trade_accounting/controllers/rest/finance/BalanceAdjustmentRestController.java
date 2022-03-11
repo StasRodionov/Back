@@ -132,6 +132,11 @@ public class BalanceAdjustmentRestController {
                     @Spec(path = "date", params = "date", spec = Equal.class),
                     @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "company.name", params = "companyDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "account", params = "account", spec = Equal.class),
+                    @Spec(path = "cashOffice", params = "cashOffice", spec = Equal.class),
+                    @Spec(path = "comment", params = "comment", spec = Equal.class),
+                    @Spec(path = "dateChanged", params = "dateChanged", spec = Equal.class),
+                    @Spec(path = "whoChanged", params = "whoChanged", spec = Equal.class),
             }) Specification<BalanceAdjustment> supplier) {
         return ResponseEntity.ok(balanceAdjustmentService.search(supplier));
     }
