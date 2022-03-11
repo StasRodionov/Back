@@ -1,4 +1,4 @@
-package com.trade_accounting.Stubs.dto.finance;
+package com.trade_accounting.Stubs.dto.purchases;
 
 import com.trade_accounting.Stubs.model.purchases.PurchaseHistoryOfSalesStubs;
 import com.trade_accounting.models.dto.purchases.PurchaseHistoryOfSalesDto;

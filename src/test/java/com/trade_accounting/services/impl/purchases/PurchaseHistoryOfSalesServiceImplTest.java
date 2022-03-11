@@ -1,6 +1,6 @@
 package com.trade_accounting.services.impl.purchases;
 
-import com.trade_accounting.Stubs.dto.finance.PurchaseHistoryOfSalesDtoStubs;
+import com.trade_accounting.Stubs.dto.purchases.PurchaseHistoryOfSalesDtoStubs;
 import com.trade_accounting.Stubs.model.purchases.PurchaseHistoryOfSalesStubs;
 import com.trade_accounting.models.dto.purchases.PurchaseHistoryOfSalesDto;
 import com.trade_accounting.models.entity.purchases.PurchaseHistoryOfSales;
