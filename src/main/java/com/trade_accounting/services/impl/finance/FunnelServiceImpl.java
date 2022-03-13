@@ -40,15 +40,15 @@ public class FunnelServiceImpl implements FunnelService {
     @Override
     public List<FunnelDto> getAll() {
         List<FunnelDto> funnelDtoList = new ArrayList<>();
-        funnelDtoList.add(new FunnelDto(1L, "Новый(заказ)", countByInvoiceStatusId(1L), getOrdersTime(1L), "", getOrdersPrice(1L)));
-        funnelDtoList.add(new FunnelDto(2L, "Подтвержден", countByInvoiceStatusId(2L), getOrdersTime(2L), calcOrdersConversion(2L), getOrdersPrice(2L)));
-        funnelDtoList.add(new FunnelDto(3L, "Собран", countByInvoiceStatusId(3L), getOrdersTime(3L), calcOrdersConversion(3L), getOrdersPrice(3L)));
-        funnelDtoList.add(new FunnelDto(4L, "Отгружен", countByInvoiceStatusId(4L), getOrdersTime(4L), calcOrdersConversion(4L), getOrdersPrice(4L)));
-        funnelDtoList.add(new FunnelDto(5L, "Новый(Контрагент)", countByContractorStatusId(1L), ""));
-        funnelDtoList.add(new FunnelDto(6L, "Выслано предложение", countByContractorStatusId(2L), calcContractorsConversion(2L)));
-        funnelDtoList.add(new FunnelDto(7L, "Переговоры", countByContractorStatusId(3L), calcContractorsConversion(3L)));
-        funnelDtoList.add(new FunnelDto(8L, "Сделка заключена", countByContractorStatusId(4L), calcContractorsConversion(4L)));
-        funnelDtoList.add(new FunnelDto(9L, "Сделка не заключена", countByContractorStatusId(5L), calcContractorsConversion(5L)));
+        funnelDtoList.add(new FunnelDto(1L, "Новый", countByInvoiceStatusId(1L), getOrdersTime(1L), "", getOrdersPrice(1L), "invoice"));
+        funnelDtoList.add(new FunnelDto(2L, "Подтвержден", countByInvoiceStatusId(2L), getOrdersTime(2L), calcOrdersConversion(2L), getOrdersPrice(2L), "invoice"));
+        funnelDtoList.add(new FunnelDto(3L, "Собран", countByInvoiceStatusId(3L), getOrdersTime(3L), calcOrdersConversion(3L), getOrdersPrice(3L), "invoice"));
+        funnelDtoList.add(new FunnelDto(4L, "Отгружен", countByInvoiceStatusId(4L), getOrdersTime(4L), calcOrdersConversion(4L), getOrdersPrice(4L), "invoice"));
+        funnelDtoList.add(new FunnelDto(5L, "Новый", countByContractorStatusId(1L), "", "contractor"));
+        funnelDtoList.add(new FunnelDto(6L, "Выслано предложение", countByContractorStatusId(2L), calcContractorsConversion(2L), "contractor"));
+        funnelDtoList.add(new FunnelDto(7L, "Переговоры", countByContractorStatusId(3L), calcContractorsConversion(3L),"contractor"));
+        funnelDtoList.add(new FunnelDto(8L, "Сделка заключена", countByContractorStatusId(4L), calcContractorsConversion(4L),"contractor"));
+        funnelDtoList.add(new FunnelDto(9L, "Сделка не заключена", countByContractorStatusId(5L), calcContractorsConversion(5L),"contractor"));
         Long i = 0L;
         for (FunnelDto funnelDto : funnelDtoList) {
             if (getById(i) != null) {
@@ -58,6 +58,7 @@ public class FunnelServiceImpl implements FunnelService {
         }
         return funnelDtoList;
     }
+
 
     @Override
     public FunnelDto getById(Long id) {
@@ -85,7 +86,7 @@ public class FunnelServiceImpl implements FunnelService {
     public List<FunnelDto> search(Specification<Funnel> spec) {
         return executeSearch(funnelRepository, funnelMapper::toDto, spec);
     }
-
+///////
     public Long countByInvoiceStatusId(Long statusId) {
         Long i = 0L;
         for (InvoiceDto dto : invoiceRepository.getAll()) {

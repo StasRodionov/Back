@@ -6,5 +6,6 @@ create table funnel
     count int8,
     conversion varchar(255),
     price varchar(255),
+    type varchar(255),
     primary key (id)
 );

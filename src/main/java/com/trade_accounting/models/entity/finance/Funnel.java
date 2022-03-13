@@ -21,11 +21,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -46,4 +51,23 @@ public class Funnel {
     private String conversion;
     @Column
     private String price;
+    @Column(name = "type")
+    private String type;
+
+    @ManyToMany
+    @JoinTable(
+            name = "funnel_contractors",
+            joinColumns = @JoinColumn(name = "funnel_id"),
+            inverseJoinColumns = @JoinColumn(name = "contractor_id")
+    )
+    private List<Contractor> contractorList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "funnel_invoices",
+            joinColumns = @JoinColumn(name = "funnel_id"),
+            inverseJoinColumns = @JoinColumn(name = "invoice_id")
+    )
+    private List<Invoice> invoiceList;
+
 }

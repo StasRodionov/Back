@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest.finance;
 
 import com.trade_accounting.models.dto.finance.FunnelDto;
-import com.trade_accounting.models.dto.invoice.InvoiceDto;
 import com.trade_accounting.models.entity.finance.Funnel;
 import com.trade_accounting.repositories.finance.FunnelRepository;
 import com.trade_accounting.services.interfaces.finance.FunnelService;

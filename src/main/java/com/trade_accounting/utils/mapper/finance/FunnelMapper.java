@@ -1,19 +1,8 @@
 package com.trade_accounting.utils.mapper.finance;
 
 import com.trade_accounting.models.dto.finance.FunnelDto;
-import com.trade_accounting.models.dto.invoice.InvoiceDto;
 import com.trade_accounting.models.entity.finance.Funnel;
-import com.trade_accounting.models.entity.invoice.Invoice;
-import com.trade_accounting.models.entity.invoice.InvoiceProduct;
-import com.trade_accounting.models.entity.invoice.TypeOfInvoice;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface FunnelMapper {
@@ -27,7 +16,8 @@ public interface FunnelMapper {
                 .count(funnel.getCount())
                 .time(funnel.getTime())
                 .conversion(funnel.getConversion())
-                .price(funnel.getPrice());
+                .price(funnel.getPrice())
+                .type(funnel.getType());
         return funnelDtoBuilder.build();
     }
 
@@ -42,7 +32,9 @@ public interface FunnelMapper {
                 .time(emp.getTime())
                 .count(emp.getCount())
                 .conversion(emp.getConversion())
-                .price(emp.getPrice());
+                .price(emp.getPrice())
+                .type(emp.getType());
+
         return funnelBuilder.build();
     }
 }
