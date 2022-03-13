@@ -16,6 +16,8 @@ public class ContractorDto {
 
     private String name;
 
+    private String shortname;
+
     private String sortNumber;
 
     private String phone;

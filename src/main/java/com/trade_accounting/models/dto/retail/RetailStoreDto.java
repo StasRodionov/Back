@@ -36,4 +36,5 @@ public class RetailStoreDto {
     private String orderTaxationSystem;
 
     private List<Long> cashiersIds;
+
 }

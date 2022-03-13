@@ -1,5 +1,6 @@
 package com.trade_accounting.Stubs;
 
+import com.trade_accounting.models.dto.indicators.AuditDto;
 import com.trade_accounting.models.dto.util.ImageDto;
 import com.trade_accounting.models.dto.warehouse.ProductDto;
 import com.trade_accounting.models.entity.client.Department;
@@ -36,6 +37,7 @@ import com.trade_accounting.models.entity.finance.PrepaymentReturn;
 import com.trade_accounting.models.entity.finance.Prepayout;
 import com.trade_accounting.models.entity.finance.ReturnToSupplier;
 import com.trade_accounting.models.entity.finance.TypeOfPayment;
+import com.trade_accounting.models.entity.indicators.Audit;
 import com.trade_accounting.models.entity.invoice.InvoiceProduct;
 import com.trade_accounting.models.entity.invoice.InvoicesStatus;
 import com.trade_accounting.models.entity.production.OrdersOfProduction;
@@ -68,6 +70,7 @@ import com.trade_accounting.models.entity.warehouse.Warehouse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -142,7 +145,7 @@ public class ModelStubs {
 
     public static Contractor getContractor(Long id) {
         return new Contractor(
-                id, "name",
+                id, "name","shortname",
                 "sortNumber",
                 "12345678901", "324234234",
                 "email", getAddress(1L),
@@ -506,13 +509,15 @@ public class ModelStubs {
                 LocalDateTime.now(),
                 getWarehouse(),
                 getCompany(id),
-                false, false,
+                false,
+                false,
                 false,
                 "Комментарий 1",
                 List.of(getCorrectionProduct(1L),
                         getCorrectionProduct(2L),
                         getCorrectionProduct(3L)),
-        false);
+                false
+        );
     }
 
     public static InventarizationProduct getInventarizationProduct(Long id) {
@@ -717,5 +722,24 @@ public class ModelStubs {
                 .employeeWhoLastChanged(ModelStubs.getEmployee(1L))
                 .build();
     }
+
+    public static Audit getAudit(Long id){
+        return Audit.builder()
+                .id(id)
+                .date(LocalDateTime.now())
+                .description("description")
+                .employee(ModelStubs.getEmployee(1L))
+                .build();
+    }
+
+    public static AuditDto getAuditDto(Long id){
+        return AuditDto.builder()
+                .id(id)
+                .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
+                .description("description")
+                .employeeId(1L)
+                .build();
+    }
+
 }
 
