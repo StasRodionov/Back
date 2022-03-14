@@ -123,7 +123,7 @@ public class FunnelServiceImpl implements FunnelService {
         if (statusId == 1L) {
             return "";
         } else if (statusId > 1L && countByInvoiceStatusId(statusId) > 0) {
-            res = ((double) countByInvoiceStatusId(statusId) / (double) countByInvoiceStatusId(statusId - 1) * 100);
+            res = (countByInvoiceStatusId(statusId) / countByInvoiceStatusId(statusId - 1) * 100);
         }
         return String.format("%s%%", res);
     }
@@ -158,7 +158,7 @@ public class FunnelServiceImpl implements FunnelService {
         if (statusId == 1L) {
             return "";
         } else if (statusId > 1L && countByContractorStatusId(statusId) > 0) {
-            res = ((double) countByContractorStatusId(statusId) / (double) countByContractorStatusId(statusId - 1) * 100);
+            res = (countByContractorStatusId(statusId) / countByContractorStatusId(statusId - 1) * 100);
         }
         return String.format("%s%%", res);
     }
