@@ -32,4 +32,6 @@ public interface InvoiceProductRepository extends JpaRepository<InvoiceProduct, 
     @Query("select ip from InvoiceProduct ip where ip.invoice.id =:id")
     List<InvoiceProduct> getByInvoiceId(@Param("id") Long id);
 
+    List<InvoiceProduct> getAllByProductId(Long id);
+
 }
