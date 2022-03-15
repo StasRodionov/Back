@@ -53,21 +53,4 @@ public class Funnel {
     private String price;
     @Column(name = "type")
     private String type;
-
-    @ManyToMany
-    @JoinTable(
-            name = "funnel_contractors",
-            joinColumns = @JoinColumn(name = "funnel_id"),
-            inverseJoinColumns = @JoinColumn(name = "contractor_id")
-    )
-    private List<Contractor> contractorList;
-
-    @ManyToMany
-    @JoinTable(
-            name = "funnel_invoices",
-            joinColumns = @JoinColumn(name = "funnel_id"),
-            inverseJoinColumns = @JoinColumn(name = "invoice_id")
-    )
-    private List<Invoice> invoiceList;
-
 }

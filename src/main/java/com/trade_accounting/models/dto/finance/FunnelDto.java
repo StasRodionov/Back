@@ -35,16 +35,6 @@ public class FunnelDto {
 
     private String type;
 
-    //Конструктор для listOrdersDataView
-    public FunnelDto(Long id, String statusName, Long count, String time, String conversion, String price, String type) {
-        this.id = id;
-        this.statusName = statusName;
-        this.count = count;
-        this.time = time;
-        this.conversion = conversion;
-        this.price = price;
-        this.type = type;
-    }
 
     //Конструктор для listContractorsDataView
     public FunnelDto(Long id, String statusName, Long count, String conversion, String type) {
