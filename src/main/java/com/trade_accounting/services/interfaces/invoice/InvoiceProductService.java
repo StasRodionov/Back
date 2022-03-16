@@ -20,4 +20,6 @@ public interface InvoiceProductService extends AbstractService<InvoiceProductDto
 
     @Transactional
     List<InvoiceProductDto> search(Specification<InvoiceProduct> specification);
+
+    List<InvoiceProductDto> getAllByProductId(Long id);
 }

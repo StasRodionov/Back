@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface FunnelMapper {
+
     default FunnelDto toDto(Funnel funnel) {
         if (funnel == null) {
             return null;
@@ -21,8 +22,7 @@ public interface FunnelMapper {
         return funnelDtoBuilder.build();
     }
 
-
-    default Funnel toModel(FunnelDto emp) {
+        default Funnel toModel(FunnelDto emp) {
         if (emp == null) {
             return null;
         }
