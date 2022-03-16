@@ -1,7 +1,6 @@
 package com.trade_accounting.models.entity.warehouse;
 
 import com.trade_accounting.models.entity.company.SupplierAccount;
-import com.trade_accounting.models.entity.warehouse.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

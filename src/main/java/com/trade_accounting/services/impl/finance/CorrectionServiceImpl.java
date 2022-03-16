@@ -70,11 +70,11 @@ public class CorrectionServiceImpl implements CorrectionService {
         Correction correction = correctionMapper.toModel(dto);
         Warehouse warehouse = warehouseMapper.toModel(warehouseRepository.getById(dto.getWarehouseId()));
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
-        LocalDateTime date = LocalDateTime.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        LocalDateTime date = LocalDateTime.parse(dto.getDate());
 
         List<CorrectionProduct> correctionProducts = dto.getCorrectionProductIds().stream()
                 .map(id -> correctionProductRepository.findById(id).orElse(null)).collect(Collectors.toList());
-
+        correction.setId(dto.getId());
         correction.setWarehouse(warehouse);
         correction.setCompany(company);
         correction.setDate(date);

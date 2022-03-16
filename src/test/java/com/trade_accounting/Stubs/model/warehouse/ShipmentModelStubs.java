@@ -11,7 +11,6 @@ import static com.trade_accounting.Stubs.ModelStubs.getWarehouse;
 public class ShipmentModelStubs {
     public static Shipment getShipment(Long id){
         return Shipment.builder()
-                .id(id)
                 .contractor(getContractor(id))
                 .warehouse(getWarehouse(id))
                 .paid(new BigDecimal(198))
