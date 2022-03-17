@@ -4,6 +4,7 @@ import com.trade_accounting.models.dto.retail.RetailCloudCheckDto;
 import com.trade_accounting.models.entity.client.Employee;
 import com.trade_accounting.models.entity.retail.RetailCloudCheck;
 import com.trade_accounting.models.entity.retail.RetailStore;
+import com.trade_accounting.models.entity.units.Currency;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ public interface RetailCloudCheckMapper {
         retailCloudCheckDtoBuilder.status(retailCloudCheck.getStatus());
         retailCloudCheckDtoBuilder.cheskStatus(retailCloudCheck.getCheskStatus());
         retailCloudCheckDtoBuilder.total(retailCloudCheck.getTotal());
-//        retailCloudCheckDtoBuilder.currencyId(retailCloudCheck.getId());
+        retailCloudCheckDtoBuilder.currencyId(retailCloudCheck.getId());
         retailCloudCheckDtoBuilder.cashierId(retailCloudCheck.getId());
 
         return retailCloudCheckDtoBuilder.build();
@@ -44,7 +45,7 @@ public interface RetailCloudCheckMapper {
         retailCloudCheckBuilder.status(retailCloudCheckDto.getStatus());
         retailCloudCheckBuilder.cheskStatus(retailCloudCheckDto.getCheskStatus());
         retailCloudCheckBuilder.total(retailCloudCheckDto.getTotal());
-//            retailCloudCheckBuilder.currency(retailCloudCheckBuilder.currency());
+        retailCloudCheckBuilder.currency(retailCloudCheckDtoToCurrency(retailCloudCheckDto));
         retailCloudCheckBuilder.cashier(retailCloudCheckDtoToEmployee(retailCloudCheckDto));
 
         return retailCloudCheckBuilder.build();
@@ -75,6 +76,15 @@ public interface RetailCloudCheckMapper {
         Employee employee = new Employee();
         employee.setId( retailCloudCheckDto.getCashierId() );
         return employee;
+    }
+
+    private Currency retailCloudCheckDtoToCurrency (RetailCloudCheckDto retailCloudCheckDto) {
+        if ( retailCloudCheckDto == null ) {
+            return null;
+        }
+        Currency currency = new Currency();
+        currency.setId( retailCloudCheckDto.getCurrencyId() );
+        return currency;
     }
 }
 
