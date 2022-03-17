@@ -1,10 +1,12 @@
 package com.trade_accounting.services.impl.indicators.audit;
 
 import com.trade_accounting.models.dto.indicators.AuditDto;
+import com.trade_accounting.models.entity.indicators.Audit;
 import com.trade_accounting.repositories.indicators.AuditRepository;
 import com.trade_accounting.services.interfaces.indicators.audit.AuditService;
 import com.trade_accounting.utils.mapper.indicators.AuditMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,12 +43,31 @@ public class AuditServiceImpl implements AuditService {
 		return saveOrUpdate(auditDto);
 	}
 	
-	private AuditDto saveOrUpdate(AuditDto auditDto) {
+	public AuditDto saveOrUpdate(AuditDto auditDto) {
 		return auditMapper.auditToAuditDto(auditRepository.save(auditMapper.auditDtoToAudit(auditDto)));
 	}
 	
 	@Override
 	public void deleteById(Long id) {
 		auditRepository.deleteById(id);
+	}
+
+	@Override
+	public List<AuditDto> search(Specification<Audit> spec) {
+		return executeSearch(auditRepository, auditMapper::auditToAuditDto, spec);
+	}
+
+	@Override
+	public List<AuditDto> searchByString(String text) {
+		return auditRepository.getBySearch(text).stream()
+				.map(auditMapper::auditToAuditDto)
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<AuditDto> searchByFilter(String search) {
+		return auditRepository.searchString(search).stream()
+				.map(auditMapper::auditToAuditDto)
+				.collect(Collectors.toList());
 	}
 }
