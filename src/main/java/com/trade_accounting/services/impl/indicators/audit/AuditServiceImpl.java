@@ -43,7 +43,7 @@ public class AuditServiceImpl implements AuditService {
 		return saveOrUpdate(auditDto);
 	}
 	
-	public AuditDto saveOrUpdate(AuditDto auditDto) {
+	private AuditDto saveOrUpdate(AuditDto auditDto) {
 		return auditMapper.auditToAuditDto(auditRepository.save(auditMapper.auditDtoToAudit(auditDto)));
 	}
 	
