@@ -17,7 +17,8 @@ public interface FunnelMapper {
                 .count(funnel.getCount())
                 .time(funnel.getTime())
                 .conversion(funnel.getConversion())
-                .price(funnel.getPrice());
+                .price(funnel.getPrice())
+                .type(funnel.getType());
         return funnelDtoBuilder.build();
     }
 
@@ -31,7 +32,9 @@ public interface FunnelMapper {
                 .time(emp.getTime())
                 .count(emp.getCount())
                 .conversion(emp.getConversion())
-                .price(emp.getPrice());
+                .price(emp.getPrice())
+                .type(emp.getType());
+
         return funnelBuilder.build();
     }
 }
