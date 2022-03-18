@@ -175,7 +175,7 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
                                 LocalDate.parse(x.getDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).isAfter(startDatePeriod)))
                 .filter(x -> endDatePeriod == null ||
                         (LocalDate.parse(x.getDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).isEqual(endDatePeriod) ||
-                                LocalDate.parse(x.getDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).isAfter(endDatePeriod)))
+                                LocalDate.parse(x.getDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).isBefore(endDatePeriod)))
                 .flatMap(x -> x.getShipmentProductsIds().stream())
                 .map(shipmentProductRepository::getOne)
                 .map(x -> x.getAmount().multiply(x.getPrice()))
@@ -188,7 +188,7 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
                                 LocalDate.parse(x.getTime(), DateTimeFormatter.ISO_LOCAL_DATE).isAfter(startDatePeriod)))
                 .filter(x -> endDatePeriod == null ||
                         (LocalDate.parse(x.getTime(), DateTimeFormatter.ISO_LOCAL_DATE).isEqual(endDatePeriod) ||
-                                LocalDate.parse(x.getTime(), DateTimeFormatter.ISO_LOCAL_DATE).isAfter(endDatePeriod)))
+                                LocalDate.parse(x.getTime(), DateTimeFormatter.ISO_LOCAL_DATE).isBefore(endDatePeriod)))
                 .map(RetailSalesDto::getSum)
                 .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
 
@@ -198,8 +198,8 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
                                 LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isAfter(startDatePeriod)))
                 .filter(x -> endDatePeriod == null ||
                         (LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isEqual(endDatePeriod) ||
-                                LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isAfter(endDatePeriod)))
-                .filter(x -> x.getRetailStoreId() == null || (retailStoreService.getById(x.getRetailStoreId())).getCompanyId() == companyId)
+                                LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isBefore(endDatePeriod)))
+                .filter(x -> companyId == null || (retailStoreService.getById(x.getRetailStoreId())).getCompanyId() == companyId)
                 .map(RetailReturnDto::getTotalAmount)
                 .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
 
@@ -216,7 +216,7 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
                                 LocalDate.parse(x.getDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).isAfter(startDatePeriod)))
                 .filter(x -> endDatePeriod == null ||
                         (LocalDate.parse(x.getDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).isEqual(endDatePeriod) ||
-                                LocalDate.parse(x.getDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).isAfter(endDatePeriod)))
+                                LocalDate.parse(x.getDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).isBefore(endDatePeriod)))
                 .flatMap(x -> x.getShipmentProductsIds().stream())
                 .map(shipmentProductRepository::getOne)
                 .collect(Collectors.toList());
@@ -240,10 +240,6 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
         moneySPL.setGrossProfit(grossProfit);
 
         //Write-offs (Списания)
-//        writeOffs = lossProductService.getAll().stream()
-//                .filter()
-//                .map(l -> l.getPrice().multiply(l.getAmount()))
-//                .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
 
         writeOffs = lossService.getAll().stream()
                 .filter(x -> companyId == null || x.getCompanyId() == companyId)
@@ -252,7 +248,7 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
                                 LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isAfter(startDatePeriod)))
                 .filter(x -> endDatePeriod == null ||
                         (LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isEqual(endDatePeriod) ||
-                                LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isAfter(endDatePeriod)))
+                                LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isBefore(endDatePeriod)))
                 .flatMap(x -> x.getLossProductsIds().stream())
                 .map(x -> lossProductService.getById(x))
                 .map(l -> l.getPrice().multiply(l.getAmount()))
@@ -310,7 +306,7 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
                                 LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isAfter(startDatePeriod)))
                 .filter(x -> endDatePeriod == null ||
                         (LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isEqual(endDatePeriod) ||
-                                LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isAfter(endDatePeriod)))
+                                LocalDate.parse(x.getDate().substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE).isBefore(endDatePeriod)))
                 .filter(q -> q.getExpenseItem().equals(param))
                 .map(PaymentDto::getSum)
                 .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
