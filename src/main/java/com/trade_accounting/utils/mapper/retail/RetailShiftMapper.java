@@ -7,6 +7,7 @@ import com.trade_accounting.models.entity.retail.RetailStore;
 import com.trade_accounting.models.entity.warehouse.Warehouse;
 import org.mapstruct.Mapper;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Mapper(componentModel = "spring")
@@ -47,15 +48,15 @@ public interface RetailShiftMapper {
         if (retailShiftDto == null) {
             return null;
         }
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         RetailShift.RetailShiftBuilder retailShift = RetailShift.builder();
 
         /*retailShift.retailStore( retailShiftDtoToRetailStore( retailShiftDto ) );
         retailShift.warehouse( retailShiftDtoToWarehouse( retailShiftDto ) );
         retailShift.company( retailShiftDtoToCompany( retailShiftDto ) );*/
         retailShift.id(retailShiftDto.getId());
-        /*retailShift.dataOpen( retailShiftDto.getDataOpen() );
-        retailShift.dataClose( retailShiftDto.getDataClose() );*/
+        retailShift.dataOpen(LocalDateTime.parse(retailShiftDto.getDataOpen(), formatter));
+        retailShift.dataClose(LocalDateTime.parse(retailShiftDto.getDataClose(), formatter));
         retailShift.bank(retailShiftDto.getBank());
         retailShift.revenuePerShift(retailShiftDto.getRevenuePerShift());
         retailShift.received(retailShiftDto.getReceived());
