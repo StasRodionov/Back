@@ -90,7 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (image == null || employeeDto.getImageDtoId() == 1) {
             image = imageRepository.save(Image.builder()
                     .id(employeeDto.getImageDtoId())
-                    .imageUrl("src/main/resources/file/employee_image.png")
+                    .imageUrl("src/main/resources/file/male.ico")
                     .build());
         }
 
@@ -111,7 +111,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteById(Long id) {
         Optional<Employee> employee = employeeRepository.findById(id);
-        if (employee.isPresent() && !employee.get().getImage().getImageUrl().equals("src/main/resources/file/employee_image.png")) {
+        if (employee.isPresent() && !employee.get().getImage().getImageUrl().equals("src/main/resources/file/male.ico")) {
             Files.deleteIfExists(Paths.get(employee.get().getImage().getImageUrl()));
         }
         employee.get().setImage(null);
