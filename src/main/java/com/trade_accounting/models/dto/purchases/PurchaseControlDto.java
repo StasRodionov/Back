@@ -17,16 +17,19 @@ public class PurchaseControlDto {
     private Long id;
 
     @NotNull
-    private String productName;
+    private Long productNameId;
 
     @NotNull
     private Long productCode;
 
     @NotNull
+    private String date;
+
+    @NotNull
     private Long articleNumber;
 
     @NotNull
-    private String productMeasure;//они же еденицы измерения
+    private String productMeasure;//они же единицы измерения
 
     private Long productQuantity;
 
