@@ -75,7 +75,7 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
     @AfterReturning(value = "inServiceLayer() && deleteExecution() && args(id) && !auditService()")
     public void auditDelete(JoinPoint joinPoint, Long id) {
         String clazz = joinPoint.getClass().getSimpleName().replace("Dto", "");
-        String businessName = translator.translate(clazz, "en", "ru");
+        String businessName = translator.translate("en", "ru", clazz);
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Employee currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(email);
         auditService.create(AuditDto.builder()
