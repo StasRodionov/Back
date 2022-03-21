@@ -168,7 +168,6 @@ public class MoneySubProfitLossServiceImpl implements MoneySubProfitLossService 
 
         //Revenue (Выручка) = отгрузки + розничные продажи − возвраты
         revenue = shipmentService.getAll().stream()
-                .peek(x -> System.out.println(x.getDate() + " " + startDatePeriod + " " + endDatePeriod))
                 .filter(x -> companyId == null || x.getCompanyId() == companyId)
                 .filter(x -> startDatePeriod == null ||
                         (LocalDate.parse(x.getDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).isEqual(startDatePeriod) ||
