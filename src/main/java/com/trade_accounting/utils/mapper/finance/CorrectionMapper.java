@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,7 @@ public interface CorrectionMapper {
             correctionDto.setIsRecyclebin(correction.getIsRecyclebin());
             correctionDto.setWriteOffProduct(correction.getWriteOffProduct());
             correctionDto.setComment(correction.getComment());
+            correctionDto.setCorrectionProductIds(LongListProducts(correction));
 
             Warehouse warehouse = correction.getWarehouse();
             if (warehouse == null) {
@@ -48,6 +50,12 @@ public interface CorrectionMapper {
                 }
             }
         }
+    }
+
+    private List<Long> LongListProducts(Correction correction) {
+        List<Long> list = new ArrayList<>();
+        correction.getCorrectionProducts().stream().forEach(e -> list.add(e.getId()));
+        return list;
     }
 
     @Mapping(target = "date", ignore = true)
