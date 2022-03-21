@@ -22,7 +22,7 @@ import java.math.BigDecimal;
  * @param sumOfProducts      - сумма товаров
  * @param productPrice       - цена товара
  * @param productMargin      - прибыль, маржа
- * @param productSalesPerDay - колличество продаж в день
+ * @param productSalesPerDay - количество продаж в день
  */
 
 @Data
