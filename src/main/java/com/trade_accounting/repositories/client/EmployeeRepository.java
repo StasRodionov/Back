@@ -13,6 +13,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 
     Optional<Employee> findByEmail(String email);
 
+    Employee findByFirstName(String firstName);
+
     @Query("from Employee e " +
             "where lower ( concat(e.firstName, ' ', e.middleName, ' ', e.lastName, ' ', e.email, ' ', e.phone, ' ', e.department.name, ' ', e.position.name)) " +
             "like lower(concat('%', :symbols, '%'))")
