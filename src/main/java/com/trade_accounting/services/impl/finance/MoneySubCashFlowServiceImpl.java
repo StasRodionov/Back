@@ -191,7 +191,8 @@ public class MoneySubCashFlowServiceImpl implements MoneySubCashFlowService {
 
         //Получение Листа с датами платежей
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        List<LocalDate> date = paymentDtos.stream().map(c -> LocalDate.parse(c.getTime(), formatter)).distinct()
+        List<LocalDate> date = paymentDtos.stream().peek(x -> System.out.println(x.getTime())).map(c -> LocalDate.parse(c.getTime(), formatter)).distinct()
+                .peek(x -> System.out.println(x.toString() + startDatePeriod + startDatePeriod))
                 .filter(t -> startDatePeriod == null || (t.isEqual(startDatePeriod) || t.isAfter(startDatePeriod)))
                 .filter(t -> endDatePeriod == null || (t.isEqual(endDatePeriod) || t.isBefore(endDatePeriod)))
                 .sorted().collect(Collectors.toList());
