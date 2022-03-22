@@ -6,7 +6,7 @@ public class PurchaseControlModelStubs {
     public static PurchaseControl getPurchaseControl(Long id) {
         return PurchaseControl.builder()
                 .id(id)
-                .productName("test")
+                //.productName("test")
                 .productCode(10000L)
                 .articleNumber(1000L)
                 .productMeasure("test")

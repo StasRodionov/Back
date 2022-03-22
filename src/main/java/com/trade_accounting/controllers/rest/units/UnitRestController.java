@@ -84,7 +84,7 @@ public class UnitRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
     @PostMapping
-    public ResponseEntity<?> create(@ApiParam(
+    public ResponseEntity<UnitDto> create(@ApiParam(
             name = "unitDto",
             value = "DTO единицы измерения, которую необходимо создать") @RequestBody UnitDto unitDto) {
         return ResponseEntity.ok().body(unitService.create(unitDto));

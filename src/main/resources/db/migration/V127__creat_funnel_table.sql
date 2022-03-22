@@ -1,5 +1,4 @@
-create table funnel
-(
+create table if not exists funnel(
     id                    bigserial not null,
     status_name varchar(255),
     funnel_time varchar(255),

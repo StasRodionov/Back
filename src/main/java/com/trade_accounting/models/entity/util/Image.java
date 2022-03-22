@@ -51,7 +51,7 @@ public class Image implements Serializable {
     private void deleteFile() {
         log.info("Удален экземпляр ImageDto с id={}", id);
         Path path = Paths.get(imageUrl);
-        if (imageUrl.equals("src/main/resources/file/employee_image.png")) {
+        if (imageUrl.equals("src/main/resources/file/male.ico")) {
             return;
         }
         try {
