@@ -25,7 +25,7 @@ public interface UnitMapper {
                 .employeeOwner(unitDto.getEmployeeOwner())
                 .generalAccess(unitDto.isGeneralAccess())
                 .employeeChange(unitDto.getEmployeeChange())
-
+                .isRecyclebin(unitDto.getIsRecyclebin())
                 .dateOfChange(LocalDateTime.parse(unitDto.getDateOfChange()))
                 .build();
     }
@@ -45,6 +45,7 @@ public interface UnitMapper {
             unitDto.setDateOfChange(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(unit.getDateOfChange()));
             unitDto.setEmployeeChange(unit.getEmployeeChange());
             unitDto.setSortNumber(unit.getSortNumber());
+            unitDto.setIsRecyclebin(unit.getIsRecyclebin());
             return unitDto;
         }
 

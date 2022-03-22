@@ -11,4 +11,5 @@ public interface UnitService extends AbstractService<UnitDto>, SearchableService
 
     List<UnitDto> searchByString(String text);
 
+    void moveToRecyclebin(long id);
 }
