@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest.purchases;
 
 import com.trade_accounting.models.dto.purchases.PurchaseControlDto;
-import com.trade_accounting.models.entity.purchases.PurchaseControl;
 import com.trade_accounting.repositories.purchases.PurchaseControlRepository;
 import com.trade_accounting.services.interfaces.purchases.PurchaseControlService;
 import com.trade_accounting.services.interfaces.util.CheckEntityService;
@@ -12,11 +11,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import net.kaczmarzyk.spring.data.jpa.domain.Equal;
-import net.kaczmarzyk.spring.data.jpa.domain.Like;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Tag(name = "Purchase Control Rest Controller", description = "CRUD операции с управлением закупками")
@@ -117,18 +112,18 @@ public class PurchaseControlRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/searchPurchaseControlByFilter")
-    @ApiOperation(value = "searchPurchaseControlByFilter", notes = "Получение списка закупок по заданным параметрам")
-    public ResponseEntity<List<PurchaseControlDto>> getAllFilter(
-            @And({
-                    @Spec(path = "date", params = "date", spec = Equal.class),
-                    @Spec(path = "product.name", params = "product_name", spec = Equal.class),
-                    @Spec(path = "currentBalance.restOfTheWarehouse", params = "rest_of_the_warehouse", spec = Equal.class),
-                    @Spec(path = "currentBalance.productsAvailableForOrder", params = "products_available_for_order", spec = Equal.class),
-                    @Spec(path = "forecast.ordered", params = "ordered", spec = Equal.class),
-            }) Specification<PurchaseControl> spec) {
-        return ResponseEntity.ok(purchaseControlService.search(spec));
-    }
+//    @GetMapping("/searchPurchaseControlByFilter")
+//    @ApiOperation(value = "searchPurchaseControlByFilter", notes = "Получение списка закупок по заданным параметрам")
+//    public ResponseEntity<List<PurchaseControlDto>> getAllFilter(
+//            @And({
+//                    @Spec(path = "date", params = "date", spec = Equal.class),
+//                    @Spec(path = "product.name", params = "product_name", spec = Equal.class),
+//                    @Spec(path = "currentBalance.restOfTheWarehouse", params = "rest_of_the_warehouse", spec = Equal.class),
+//                    @Spec(path = "currentBalance.productsAvailableForOrder", params = "products_available_for_order", spec = Equal.class),
+//                    @Spec(path = "forecast.ordered", params = "ordered", spec = Equal.class),
+//            }) Specification<PurchaseControl> spec) {
+//        return ResponseEntity.ok(purchaseControlService.search(spec));
+//    }
 
     @ApiOperation(value = "search", notes = "Получение списка продаж по заданным параметрам")
     @GetMapping("/search")
@@ -141,4 +136,19 @@ public class PurchaseControlRestController {
     public ResponseEntity<List<PurchaseControlDto>> getAll(@RequestParam("query") String value) {
         return ResponseEntity.ok(purchaseControlService.search(value));
     }
+
+    @GetMapping("/filter")
+    @ApiOperation(value = "newfilter", notes = "Получение списка некоторых отгрузок")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение отф. списка"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<PurchaseControlDto>> getAllForFilter(@ApiParam(name = "map", type = "Map<String,String>")
+                                                                        @RequestParam Map<String, String> map) {
+        List<PurchaseControlDto> priceListDtoList = purchaseControlService.getAllForFilter(map);
+        return ResponseEntity.ok(priceListDtoList);
+    }
+
 }

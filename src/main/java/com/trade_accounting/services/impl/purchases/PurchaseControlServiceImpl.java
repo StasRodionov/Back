@@ -3,6 +3,7 @@ package com.trade_accounting.services.impl.purchases;
 import com.trade_accounting.models.dto.purchases.PurchaseControlDto;
 import com.trade_accounting.models.entity.purchases.PurchaseControl;
 import com.trade_accounting.repositories.purchases.PurchaseControlRepository;
+import com.trade_accounting.services.interfaces.company.CompanyService;
 import com.trade_accounting.services.interfaces.purchases.PurchaseControlService;
 import com.trade_accounting.utils.mapper.purchases.PurchaseControlMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 public class PurchaseControlServiceImpl implements PurchaseControlService {
     private final PurchaseControlRepository purchaseControlRepository;
     private final PurchaseControlMapper purchaseControlMapper;
+    private final CompanyService companyService;
+
 
 
     @Override
@@ -65,5 +69,16 @@ public class PurchaseControlServiceImpl implements PurchaseControlService {
     @Override
     public List<PurchaseControlDto> search(Specification<PurchaseControl> spec) {
         return executeSearch(purchaseControlRepository, purchaseControlMapper::toDto, spec);
+    }
+
+    @Override
+    public List<PurchaseControlDto> getAllForFilter(Map<String, String> map) {
+
+        List<PurchaseControlDto> list = getAll();
+//                .stream()
+//                .filter(e-> companyService.getById(e.getCompanyId()).getName().equals(string))
+//                .forEach(e -> listFilter.add(e));;
+
+        return list;
     }
 }
