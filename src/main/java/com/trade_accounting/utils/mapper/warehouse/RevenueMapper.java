@@ -6,10 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-
 @Mapper(componentModel = "spring")
 public interface RevenueMapper {
-
+	//Revenue
     @Mappings({
             @Mapping(target = "product.id", source = "productId"),
             @Mapping(target = "product.description", source = "description"),
@@ -36,5 +35,4 @@ public interface RevenueMapper {
 			@Mapping(source = "invoiceProduct.amount", target = "amountShipment")
 	})
 	RevenueDto toDto(Revenue revenue);
-
 }

@@ -8,15 +8,15 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface AcceptanceProductionMapper {
+    //AcceptanceProduction
+    @Mappings({
+            @Mapping(source = "acceptanceId", target = "acceptance.id"),
+            @Mapping(source = "productId", target = "product.id")
+    })    AcceptanceProduction toModel(AcceptanceProductionDto acceptanceProductionDto);
 
     @Mappings({
             @Mapping(source = "acceptance.id", target = "acceptanceId"),
             @Mapping(source = "product.id", target = "productId")
     })
     AcceptanceProductionDto toDto(AcceptanceProduction acceptanceProduction);
-
-    @Mappings({
-            @Mapping(source = "acceptanceId", target = "acceptance.id"),
-            @Mapping(source = "productId", target = "product.id")
-    })    AcceptanceProduction toModel(AcceptanceProductionDto acceptanceProductionDto);
 }

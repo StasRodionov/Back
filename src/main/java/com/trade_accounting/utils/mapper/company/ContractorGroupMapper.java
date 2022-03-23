@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ContractorGroupMapper {
     //ContractorGroup
-    ContractorGroupDto toDto(ContractorGroup contractorGroup);
-
     ContractorGroup toModel(ContractorGroupDto contractorGroupDto);
+
+    ContractorGroupDto toDto(ContractorGroup contractorGroup);
 }

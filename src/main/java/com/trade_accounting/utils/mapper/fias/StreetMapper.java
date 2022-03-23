@@ -8,6 +8,7 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface StreetMapper {
+    //Street
     @Mappings({
             @Mapping(source = "cityDto", target = "city")
     })

@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface FiasAddressModelMapper {
+    //FiasAddress
     FiasAddressModel toModel(FiasAddressModelDto dto);
 
     FiasAddressModelDto toDto(FiasAddressModel model);

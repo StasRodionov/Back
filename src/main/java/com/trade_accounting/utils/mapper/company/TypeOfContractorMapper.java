@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface TypeOfContractorMapper {
     //TypeOfContractor
-    TypeOfContractorDto toDto(TypeOfContractor typeOfContractor);
-
     TypeOfContractor toModel(TypeOfContractorDto typeOfContractorDto);
+
+    TypeOfContractorDto toDto(TypeOfContractor typeOfContractor);
 }

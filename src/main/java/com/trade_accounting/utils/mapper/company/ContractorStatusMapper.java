@@ -6,9 +6,9 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ContractorStatusMapper {
+    //Contractors
+    ContractorStatus toModel(ContractorStatusDto status);
 
     ContractorStatusDto toDto(ContractorStatus contractorStatus);
-
-    ContractorStatus toModel(ContractorStatusDto status);
 
 }

@@ -8,13 +8,14 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface RemainMapper {
-    @Mappings({
-            @Mapping(source = "unit.id", target = "unitId")
-    })
-    RemainDto toDto(Remain remain);
-
+    //Remain
     @Mappings({
             @Mapping(source = "unitId", target = "unit.id")
     })
     Remain toModel(RemainDto remainDto);
+
+    @Mappings({
+            @Mapping(source = "unit.id", target = "unitId")
+    })
+    RemainDto toDto(Remain remain);
 }

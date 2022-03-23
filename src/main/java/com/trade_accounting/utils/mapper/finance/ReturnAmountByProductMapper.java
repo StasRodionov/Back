@@ -6,9 +6,9 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ReturnAmountByProductMapper {
+    //ReturnAmountByProduct
+    ReturnAmountByProduct toModel(ReturnAmountByProductDto returnAmountByProductDto);
 
     ReturnAmountByProductDto toDto(ReturnAmountByProduct returnAmountByProduct);
 
-    ReturnAmountByProduct toModel(ReturnAmountByProductDto returnAmountByProductDto);
-    
 }

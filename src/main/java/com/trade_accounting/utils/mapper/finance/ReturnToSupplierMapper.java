@@ -8,15 +8,7 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface ReturnToSupplierMapper {
-    // ReturnToSupplier
-    @Mappings({
-            @Mapping(source = "company.id", target = "companyId"),
-            @Mapping(source = "contract.id", target = "contractId"),
-            @Mapping(source = "contractor.id", target = "contractorId"),
-            @Mapping(source = "warehouse.id", target = "warehouseId"),
-    })
-    ReturnToSupplierDto toDto(ReturnToSupplier returnToSupplier);
-
+    //ReturnToSupplier
     @Mappings({
             @Mapping(source = "companyId", target = "company.id"),
             @Mapping(source = "contractId", target = "contract.id"),
@@ -24,4 +16,12 @@ public interface ReturnToSupplierMapper {
             @Mapping(source = "warehouseId", target = "warehouse.id"),
     })
     ReturnToSupplier toModel(ReturnToSupplierDto returnToSupplierDto);
+
+    @Mappings({
+            @Mapping(source = "company.id", target = "companyId"),
+            @Mapping(source = "contract.id", target = "contractId"),
+            @Mapping(source = "contractor.id", target = "contractorId"),
+            @Mapping(source = "warehouse.id", target = "warehouseId"),
+    })
+    ReturnToSupplierDto toDto(ReturnToSupplier returnToSupplier);
 }

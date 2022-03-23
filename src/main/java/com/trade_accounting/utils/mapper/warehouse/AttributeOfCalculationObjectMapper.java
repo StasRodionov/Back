@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface AttributeOfCalculationObjectMapper {
     //AttributeOfCalculationObjectDto
-    AttributeOfCalculationObjectDto toDto(AttributeOfCalculationObject attributeOfCalculationObject);
-
     AttributeOfCalculationObject toModel(AttributeOfCalculationObjectDto attributeOfCalculationObjectDto);
+
+    AttributeOfCalculationObjectDto toDto(AttributeOfCalculationObject attributeOfCalculationObject);
 }

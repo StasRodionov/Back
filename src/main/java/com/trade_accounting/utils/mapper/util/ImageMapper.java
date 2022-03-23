@@ -16,6 +16,15 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ImageMapper {
     //Image
+    default Image toModel(ImageDto imageDto, String imageDir) {
+        String url = uploadImage(imageDto.getContent(), imageDir,
+                imageDto.getId() + imageDto.getFileExtension());
+        return Image.builder()
+                .id(imageDto.getId())
+                .imageUrl(url)
+                .build();
+    }
+
     default ImageDto toDto(Image image) {
         if (image == null) {
             return null;
@@ -24,15 +33,6 @@ public interface ImageMapper {
                 .id(image.getId())
                 .content(downloadImage(image.getImageUrl()))
                 .sortNumber(image.getSortNumber())
-                .build();
-    }
-
-    default Image toModel(ImageDto imageDto, String imageDir) {
-        String url = uploadImage(imageDto.getContent(), imageDir,
-                imageDto.getId() + imageDto.getFileExtension());
-        return Image.builder()
-                .id(imageDto.getId())
-                .imageUrl(url)
                 .build();
     }
 

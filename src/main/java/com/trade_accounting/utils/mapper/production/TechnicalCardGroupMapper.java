@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface TechnicalCardGroupMapper {
     //TechnicalCardGroup
-    TechnicalCardGroupDto toDto(TechnicalCardGroup technicalCardGroup);
-
     TechnicalCardGroup toModel(TechnicalCardGroupDto technicalCardGroupDto);
+
+    TechnicalCardGroupDto toDto(TechnicalCardGroup technicalCardGroup);
 }

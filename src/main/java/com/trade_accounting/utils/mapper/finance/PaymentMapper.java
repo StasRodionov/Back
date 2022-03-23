@@ -8,7 +8,7 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface PaymentMapper {
-
+    //Payment
     @Mappings({
             @Mapping(source = "companyId", target = "company.id"),
             @Mapping(source = "contractorId", target = "contractor.id"),

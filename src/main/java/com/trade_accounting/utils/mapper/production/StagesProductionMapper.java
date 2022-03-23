@@ -9,16 +9,16 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface StagesProductionMapper {
+     //StagesProduction
+     @Mappings({
+             @Mapping(source = "departmentId", target = "department.id"),
+             @Mapping(source = "employeeId", target = "employee.id")
+     })
+     StagesProduction toModel(StagesProductionDto stagesProductionDto);
 
      @Mappings({
              @Mapping(source = "department.id", target = "departmentId"),
              @Mapping(source = "employee.id", target = "employeeId")
      })
      StagesProductionDto toDto(StagesProduction stagesProduction);
-
-     @Mappings({
-             @Mapping(source = "departmentId", target = "department.id"),
-             @Mapping(source = "employeeId", target = "employee.id")
-     })
-     StagesProduction toModel(StagesProductionDto stagesProductionDto);
 }

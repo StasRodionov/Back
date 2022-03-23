@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface TypeOfPriceMapper {
     //TypeOfPrice
-    TypeOfPriceDto toDto(TypeOfPrice typeOfPrice);
-
     TypeOfPrice toModel(TypeOfPriceDto typeOfPriceDto);
+
+    TypeOfPriceDto toDto(TypeOfPrice typeOfPrice);
 }

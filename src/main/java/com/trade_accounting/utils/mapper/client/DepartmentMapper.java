@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface DepartmentMapper {
     //Department
-    DepartmentDto toDto(Department department);
-
     Department toModel(DepartmentDto department);
+
+    DepartmentDto toDto(Department department);
 }

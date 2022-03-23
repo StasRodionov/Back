@@ -7,8 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface AccountMapper {
-
-
+    //AccountMapper
     Account toModel(AccountDto account);
 
     AccountDto toDto(Account account);
@@ -22,5 +21,4 @@ public interface AccountMapper {
     default Long employeeToId(Employee employee) {
         return employee.getId();
     }
-
 }

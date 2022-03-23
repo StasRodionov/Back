@@ -10,14 +10,14 @@ import org.mapstruct.Mappings;
 public interface InvoiceProductMapper {
     //InvoiceProduct
     @Mappings({
-            @Mapping(source = "invoice.id", target = "invoiceId"),
-            @Mapping(source = "product.id", target = "productId")
-    })
-    InvoiceProductDto toDto(InvoiceProduct invoiceProduct);
-
-    @Mappings({
             @Mapping(source = "invoiceId", target = "invoice.id"),
             @Mapping(source = "productId", target = "product.id")
     })
     InvoiceProduct toModel(InvoiceProductDto invoiceProductDto);
+
+    @Mappings({
+            @Mapping(source = "invoice.id", target = "invoiceId"),
+            @Mapping(source = "product.id", target = "productId")
+    })
+    InvoiceProductDto toDto(InvoiceProduct invoiceProduct);
 }
