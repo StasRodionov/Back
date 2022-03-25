@@ -2,9 +2,13 @@ package com.trade_accounting.utils.mapper.company;
 
 import com.trade_accounting.models.entity.company.PriceList;
 import com.trade_accounting.models.dto.company.PriceListDto;
+import com.trade_accounting.models.entity.warehouse.Product;
 import org.mapstruct.Mapper;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Andrey Melnikov and Pavel Andrusov
@@ -26,6 +30,7 @@ public interface PriceListMapper {
                 .sent(priceList.getSent())
                 .printed(priceList.getPrinted())
                 .commentary(priceList.getCommentary())
+                .productsIds(productIds(priceList))
                 .build();
     }
 
@@ -41,5 +46,15 @@ public interface PriceListMapper {
                 .printed(priceListDto.getPrinted())
                 .commentary(priceListDto.getCommentary())
                 .build();
+    }
+
+    private List<Long> productIds(PriceList priceList) {
+        if (priceList == null) {
+            return Collections.emptyList();
+        } else if (priceList.getProducts() == null) {
+            return Collections.emptyList();
+        } else {
+            return priceList.getProducts().stream().map(Product::getId).collect(Collectors.toList());
+        }
     }
 }
