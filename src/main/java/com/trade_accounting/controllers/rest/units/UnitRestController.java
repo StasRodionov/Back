@@ -1,5 +1,6 @@
 package com.trade_accounting.controllers.rest.units;
 
+import com.trade_accounting.models.dto.warehouse.MovementDto;
 import com.trade_accounting.models.entity.units.Unit;
 import com.trade_accounting.models.dto.units.UnitDto;
 import com.trade_accounting.repositories.units.UnitRepository;
@@ -13,6 +14,8 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -123,21 +126,44 @@ public class UnitRestController {
     }
 
     @GetMapping("/search")
-    @ApiOperation(value = "search", notes = "Получение списка единиц измерения по заданным параметрам")
+    @ApiOperation(value = "search", notes = "Получение списка единиц измерения по фильтру")
     public ResponseEntity<List<UnitDto>> getAll(
             @And({
-                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "unitType", params = "unitType", spec = LikeIgnoreCase.class),
                     @Spec(path = "shortName", params = "shortName", spec = LikeIgnoreCase.class),
                     @Spec(path = "fullName", params = "fullName", spec = LikeIgnoreCase.class),
-                    @Spec(path = "sortNumber", params = "sortNumber", spec = LikeIgnoreCase.class)
+                    @Spec(path = "sortNumber", params = "sortNumber", spec = Equal.class),
+                    @Spec(path = "generalAccess", params = "generalAccess", spec = Equal.class),
+                    @Spec(path = "departmentOwner", params = "departmentOwner", spec = LikeIgnoreCase.class),
+                    @Spec(path = "employeeOwner", params = "employeeOwner", spec = LikeIgnoreCase.class),
+                    @Spec(path = "dateOfChange", params = "dateOfChange", spec = GreaterThanOrEqual.class),
+                    @Spec(path = "employeeChange", params = "employeeChange", spec = LikeIgnoreCase.class)
             }) Specification<Unit> specification) {
 
         return ResponseEntity.ok(unitService.search(specification));
     }
 
     @GetMapping("/searchByString")
-    @ApiOperation(value = "search", notes = "Получение списка работников по заданным параметрам")
+    @ApiOperation(value = "search", notes = "Получение списка единиц измерения по заданным параметрам")
     public ResponseEntity<List<UnitDto>> searchByString(@RequestParam("search") String search) {
         return ResponseEntity.ok(unitService.searchByString(search));
+    }
+
+    @PutMapping("/moveToIsRecyclebin/{id}")
+    @ApiOperation(value = "moveToIsRecyclebin", notes = "Перенос в корзину единицы измерения по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Единица измерения перенесена в корзину"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<MovementDto> moveToIsRecyclebin(@ApiParam(name = "id", type = "Long",
+            value = "Переданный id, по которому необходимо переместить счет")
+                                                          @PathVariable("id") Long id) {
+        checkEntityService.checkExists((JpaRepository) unitRepository, id);
+        unitService.moveToRecyclebin(id);
+
+        return ResponseEntity.ok().build();
     }
 }
