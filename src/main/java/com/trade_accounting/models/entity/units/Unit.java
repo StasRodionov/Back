@@ -1,9 +1,12 @@
 package com.trade_accounting.models.entity.units;
 
+import com.trade_accounting.models.entity.util.OperationsAbstract;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "units")
-@Builder
+@SuperBuilder
 public class Unit {
 
     @Id
@@ -51,6 +54,10 @@ public class Unit {
 
     @Column(name = "employee_change")
     private String employeeChange;
+
+    @Column(name = "is_recyclebin")
+    @ColumnDefault("false")
+    private Boolean isRecyclebin;
 
     public Unit(String shortName, String fullName, String sortNumber) {
         this.shortName = shortName;

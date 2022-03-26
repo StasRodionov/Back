@@ -1,5 +1,7 @@
 package com.trade_accounting.models.entity.company;
 
+import com.trade_accounting.models.entity.warehouse.Product;
+import com.trade_accounting.models.entity.warehouse.ProductPrice;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +14,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @refactor by Andrey Melnikov - 06.08.2021
@@ -46,4 +50,7 @@ public class PriceList {
     private Boolean printed;
 
     private String commentary;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Product> products;
 }

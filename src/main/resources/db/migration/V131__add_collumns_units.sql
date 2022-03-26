@@ -1,3 +1,4 @@
+ALTER TABLE units ADD COLUMN IF NOT EXISTS is_recyclebin boolean default false;
 ALTER TABLE units ADD COLUMN IF NOT EXISTS unit_type varchar(255);
 UPDATE units SET unit_type = 'Системный' WHERE id<60;
 ALTER TABLE units ADD COLUMN IF NOT EXISTS general_access boolean;

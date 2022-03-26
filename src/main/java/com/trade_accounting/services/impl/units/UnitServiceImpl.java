@@ -2,6 +2,8 @@ package com.trade_accounting.services.impl.units;
 
 import com.trade_accounting.models.dto.client.EmployeeDto;
 import com.trade_accounting.models.entity.client.Employee;
+import com.trade_accounting.models.entity.company.SupplierAccount;
+import com.trade_accounting.models.entity.purchases.PurchaseForecast;
 import com.trade_accounting.models.entity.units.Unit;
 import com.trade_accounting.models.dto.units.UnitDto;
 import com.trade_accounting.repositories.client.DepartmentRepository;
@@ -29,9 +31,10 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class UnitServiceImpl implements UnitService {
+
     private final UnitRepository unitRepository;
     private final EmployeeRepository employeeRepository;
-private final EmployeeService employeeService;
+    private final EmployeeService employeeService;
     private final UnitMapper unitMapper;
 
     @Override
@@ -43,31 +46,23 @@ private final EmployeeService employeeService;
 
     @Override
     public UnitDto getById(Long id) {
-//        Optional<Unit> unit = unitRepository.findById(id);
-//        return unitMapper.toDto(
-//                unit.orElse(new Unit())
-//        );
         return unitMapper.toDto(unitRepository.findById(id).get());
     }
 
     @Override
     public UnitDto create(UnitDto unitDto) {
-        String principalFullName = "";
-        for (EmployeeDto employeeDto: employeeService.getAll()){
-            if (Objects.equals(getPrincipalName(), employeeDto.getEmail())){
-                principalFullName = employeeDto.getFirstName().concat(" ").concat(employeeDto.getLastName());
-            }
-        }
         Unit unit = unitMapper.toModel(unitDto);
         unit.setDepartmentOwner(employeeRepository.findByEmail(getPrincipalName()).get().getDepartment().getName());
-        unit.setEmployeeChange(principalFullName);
-        unit.setEmployeeOwner(principalFullName);
+        unit.setEmployeeChange(getPrincipalFullName());
+        unit.setEmployeeOwner(getPrincipalFullName());
         return unitMapper.toDto(unitRepository.save(unit));
     }
 
     @Override
     public UnitDto update(UnitDto unitDto) {
-        create(unitDto);
+        Unit unit = unitMapper.toModel(unitDto);
+        unit.setEmployeeChange(getPrincipalFullName());
+        unitRepository.save(unit);
         return unitDto;
     }
 
@@ -89,14 +84,31 @@ private final EmployeeService employeeService;
 
     }
 
-    public String getPrincipalName(){
+    private String getPrincipalName() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
         if (principal instanceof UserDetails) {
-            username= ((UserDetails)principal).getUsername();
+            username = ((UserDetails) principal).getUsername();
         } else {
-             username = principal.toString();
+            username = principal.toString();
         }
-    return username;
+        return username;
+    }
+
+    private String getPrincipalFullName(){
+        String principalFullName = "";
+        for (EmployeeDto employeeDto : employeeService.getAll()) {
+            if (Objects.equals(getPrincipalName(), employeeDto.getEmail())) {
+                principalFullName = employeeDto.getFirstName().concat(" ").concat(employeeDto.getLastName());
+            }
+        }
+        return principalFullName;
+    }
+
+    @Override
+    public void moveToRecyclebin(long id) {
+        Unit unit = unitRepository.getOne(id);
+        unit.setIsRecyclebin(true);
+        unitRepository.save(unit);
     }
 }
