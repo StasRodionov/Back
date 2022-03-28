@@ -4,6 +4,7 @@ import com.trade_accounting.models.entity.company.PriceList;
 import com.trade_accounting.models.dto.company.PriceListDto;
 import com.trade_accounting.repositories.company.CompanyRepository;
 import com.trade_accounting.repositories.company.PriceListRepository;
+import com.trade_accounting.services.interfaces.company.CompanyService;
 import com.trade_accounting.services.interfaces.company.PriceListService;
 import com.trade_accounting.utils.mapper.company.PriceListMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +25,7 @@ public class PriceListServiceImpl implements PriceListService {
     private final PriceListRepository priceListRepository;
     private final CompanyRepository companyRepository;
     private final PriceListMapper priceListMapper;
+    private final CompanyService companyService;
 
     @Override
     public List<PriceListDto> getAll() {
@@ -60,4 +63,15 @@ public class PriceListServiceImpl implements PriceListService {
     public void deleteById(Long id) {
         priceListRepository.deleteById(id);
     }
+
+    @Override
+    public List<PriceListDto> getAllForFilter(String string) {
+        List<PriceListDto> list = getAll();
+        List<PriceListDto> listFilter = new ArrayList<>();
+        list.stream()
+                .filter(e-> companyService.getById(e.getCompanyId()).getName().equals(string))
+                .forEach(e -> listFilter.add(e));
+        return listFilter;
+    }
+
 }

@@ -1,6 +1,9 @@
 package com.trade_accounting.models.entity.purchases;
 
+import com.trade_accounting.models.entity.company.Company;
+import com.trade_accounting.models.entity.company.Contractor;
 import com.trade_accounting.models.entity.warehouse.Product;
+import com.trade_accounting.models.entity.warehouse.Warehouse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -26,6 +30,8 @@ import java.time.LocalDateTime;
  * @param articleNumber   - артикул
  * @param productMeasure  - единицы измерения
  * @param productQuantity - число товаров
+ * @param company - компания
+ * @param warehouse - склад
  * @param historyOfSales  - история продаж
  * @param currentBalance  - текущий остаток
  * @param forecast        - число товаров
@@ -61,9 +67,17 @@ public class PurchaseControl {
 
     private Long productQuantity;
 
-//    @NotNull
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private Company company;
+    @NotNull
+    @OneToOne(fetch = FetchType.LAZY)
+    private Company company;
+
+    @NotNull
+    @OneToOne(fetch = FetchType.LAZY)
+    private Contractor contractor;
+
+    @NotNull
+    @OneToOne(fetch = FetchType.LAZY)
+    private Warehouse warehouse;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
