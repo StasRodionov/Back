@@ -10,13 +10,12 @@ import org.mapstruct.Mappings;
 public interface TechnicalCardProductionMapper {
     //TechnicalCardProduction
     @Mappings({
-            @Mapping(source = "product.id", target = "productId"),
-    })
-    TechnicalCardProductionDto toDto(TechnicalCardProduction technicalCardProduction);
-
-    @Mappings({
             @Mapping(target = "product", ignore = true)
     })
     TechnicalCardProduction toModel(TechnicalCardProductionDto technicalCardProductionDto);
 
+    @Mappings({
+            @Mapping(source = "product.id", target = "productId"),
+    })
+    TechnicalCardProductionDto toDto(TechnicalCardProduction technicalCardProduction);
 }

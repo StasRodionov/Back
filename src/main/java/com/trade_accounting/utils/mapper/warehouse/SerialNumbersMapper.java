@@ -8,7 +8,7 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface SerialNumbersMapper {
-
+        //SerialNumbersMapper
         @Mappings({
                 @Mapping(target = "product.id", source = "productId"),
                 @Mapping(target = "product.description", source = "description"),
@@ -23,5 +23,4 @@ public interface SerialNumbersMapper {
                 @Mapping(source = "warehouse.id", target = "warehouseId"),
         })
         SerialNumbersDto toDto(SerialNumbers serialNumbers);
-
-    }
+}

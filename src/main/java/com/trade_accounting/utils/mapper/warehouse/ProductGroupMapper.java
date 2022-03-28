@@ -11,13 +11,13 @@ public interface ProductGroupMapper {
     //ProductGroup
     //На момент написания не известно работает или нет из-за рекурсии
     @Mappings({
-            @Mapping(source = "productGroup.id", target = "parentId")
-    })
-    ProductGroupDto toDto(ProductGroup productGroup);
-
-    @Mappings({
             @Mapping(source = "parentId", target = "productGroup.id")
     })
     ProductGroup toModel(ProductGroupDto productGroupDto);
+
+    @Mappings({
+            @Mapping(source = "productGroup.id", target = "parentId")
+    })
+    ProductGroupDto toDto(ProductGroup productGroup);
 
 }

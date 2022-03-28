@@ -8,16 +8,16 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface SupplierAccountProductsListMapper {
+    //SupplierAccountProductsList
+    @Mappings({
+            @Mapping(source = "supplierAccountId", target = "supplierAccount.id"),
+            @Mapping(source = "productId", target = "product.id")
+    })
+    SupplierAccountProductsList toModel(SupplierAccountProductsListDto supplierAccountProductsListDto);
 
     @Mappings({
             @Mapping(source = "supplierAccount.id", target = "supplierAccountId"),
             @Mapping(source = "product.id", target = "productId")
     })
     SupplierAccountProductsListDto toDto(SupplierAccountProductsList supplierAccountProductsList);
-
-    @Mappings({
-            @Mapping(source = "supplierAccountId", target = "supplierAccount.id"),
-            @Mapping(source = "productId", target = "product.id")
-    })
-    SupplierAccountProductsList toModel(SupplierAccountProductsListDto supplierAccountProductsListDto);
 }

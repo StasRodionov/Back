@@ -18,6 +18,21 @@ public interface FileMapper {
     String fs = java.io.File.separator;
     String UPLOAD_DIR = "src" + fs +"main" + fs +"resources" + fs +"file" + fs;
 
+    default File toModel(FileDto fileDto) {
+        fileDto.setPlacement(UPLOAD_DIR);
+        uploadFile(fileDto.getContent(), fileDto.getKey(), fileDto.getExtension());
+        return File.builder()
+                .id(fileDto.getId())
+                .name(fileDto.getName())
+                .extension(fileDto.getExtension())
+                .placement(fileDto.getPlacement())
+                .employee(fileDto.getEmployee())
+                .uploadDateTime(fileDto.getUploadDateTime())
+                .key(fileDto.getKey())
+                .product(fileDtoToProduct(fileDto))
+                .build();
+    }
+
     default FileDto toDto(File file) {
         if (file == null) {
             return null;
@@ -32,21 +47,6 @@ public interface FileMapper {
                 .uploadDateTime(file.getUploadDateTime())
                 .key(file.getKey())
                 .productId(file.getProduct() != null ? file.getProduct().getId() : 0L)
-                .build();
-    }
-
-    default File toModel(FileDto fileDto) {
-        fileDto.setPlacement(UPLOAD_DIR);
-        uploadFile(fileDto.getContent(), fileDto.getKey(), fileDto.getExtension());
-        return File.builder()
-                .id(fileDto.getId())
-                .name(fileDto.getName())
-                .extension(fileDto.getExtension())
-                .placement(fileDto.getPlacement())
-                .employee(fileDto.getEmployee())
-                .uploadDateTime(fileDto.getUploadDateTime())
-                .key(fileDto.getKey())
-                //.product(fileDtoToProduct(fileDto))
                 .build();
     }
 

@@ -8,59 +8,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface MovementProductMapper {
-    //    MovementProduct
+    //MovementProduct
+    @Mapping(source = "productId", target = "product.id")
+    MovementProduct toModel(MovementProductDto movementProductDto);
 
     @Mapping(source = "product.id", target = "productId")
-    default MovementProductDto toDto(MovementProduct movementProduct) {
-       MovementProductDto movementProductDto = new MovementProductDto();
-        if (movementProduct == null) {
-            return null;
-        } else {
-            movementProductDto.setId(movementProduct.getId());
-            movementProductDto.setProductId( movementProductProductId( movementProduct ) );
-            movementProductDto.setPrice(movementProduct.getPrice());
-            movementProductDto.setAmount(movementProduct.getAmount());
-            return movementProductDto;
-        }
-    }
-
-    default MovementProduct toModel(MovementProductDto movementProductDto) {
-        if (movementProductDto == null) {
-            return null;
-        }
-        MovementProduct.MovementProductBuilder movementProduct = MovementProduct.builder();
-
-        movementProduct.product( movementProductDtoToProduct( movementProductDto ) );
-        movementProduct.id( movementProductDto.getId() );
-        movementProduct.amount( movementProductDto.getAmount() );
-        movementProduct.price( movementProductDto.getPrice() );
-        return movementProduct.build();
-    }
-
-    default Product movementProductDtoToProduct(MovementProductDto movementProductDto) {
-        if ( movementProductDto == null ) {
-            return null;
-        }
-
-        Product.ProductBuilder product = Product.builder();
-
-        product.id(movementProductDto.getProductId() );
-
-        return product.build();
-    }
-
-    default Long movementProductProductId(MovementProduct movementProduct) {
-        if ( movementProduct == null ) {
-            return null;
-        }
-        Product product = movementProduct.getProduct();
-        if ( product == null ) {
-            return null;
-        }
-        Long id = product.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
-    }
+    MovementProductDto toDto(MovementProduct movementProduct);
 }

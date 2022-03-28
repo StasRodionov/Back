@@ -8,6 +8,7 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface RegionMapper {
+    //Region
     @Mappings({
             @Mapping(source = "districtDtos", target = "districts")
     })

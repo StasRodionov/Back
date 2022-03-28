@@ -10,17 +10,17 @@ import org.mapstruct.Mappings;
 public interface LegalDetailMapper {
     //LegalDetail
     @Mappings({
-            @Mapping(source = "dateOfTheCertificate", target = "dateOfTheCertificate"),
-            @Mapping(source = "typeOfContractor.id", target = "typeOfContractorDtoId"),
-            @Mapping(source = "address.id", target = "addressDtoId")
-    })
-    LegalDetailDto toDto(LegalDetail legalDetail);
-
-    @Mappings({
             @Mapping(target = "dateOfTheCertificate", ignore = true),
             @Mapping(source = "typeOfContractorDtoId", target = "typeOfContractor.id"),
             @Mapping(source = "addressDtoId", target = "address.id")
     })
     LegalDetail toModel(LegalDetailDto legalDetailDto);
+
+    @Mappings({
+            @Mapping(source = "dateOfTheCertificate", target = "dateOfTheCertificate"),
+            @Mapping(source = "typeOfContractor.id", target = "typeOfContractorDtoId"),
+            @Mapping(source = "address.id", target = "addressDtoId")
+    })
+    LegalDetailDto toDto(LegalDetail legalDetail);
 
 }

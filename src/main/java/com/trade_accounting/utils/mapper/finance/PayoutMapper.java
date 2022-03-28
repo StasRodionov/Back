@@ -10,16 +10,16 @@ import org.mapstruct.Mappings;
 public interface PayoutMapper {
     //Payout
     @Mappings({
-            @Mapping(source = "retailStore.id", target = "retailStoreId"),
-            @Mapping(source = "company.id", target = "companyId")
-    })
-    PayoutDto toDto(Payout payout);
-
-    @Mappings({
             @Mapping(source = "retailStoreId", target = "retailStore.id"),
             @Mapping(source = "companyId", target = "company.id")
     })
     Payout toModel(PayoutDto payoutsDto);
+
+    @Mappings({
+            @Mapping(source = "retailStore.id", target = "retailStoreId"),
+            @Mapping(source = "company.id", target = "companyId")
+    })
+    PayoutDto toDto(Payout payout);
 
 }
 

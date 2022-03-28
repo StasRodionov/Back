@@ -8,11 +8,11 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface CorrectionProductMapper {
-    //    CorrectionProduct
+    //CorrectionProduct
+    CorrectionProduct toModel(CorrectionProductDto correctionDto);
+
     @Mappings({
             @Mapping(source = "product.id", target = "productId")
     })
     CorrectionProductDto toDto(CorrectionProduct correction);
-
-    CorrectionProduct toModel(CorrectionProductDto correctionDto);
 }

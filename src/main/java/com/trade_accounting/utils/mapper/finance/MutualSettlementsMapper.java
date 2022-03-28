@@ -8,8 +8,7 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface MutualSettlementsMapper {
-
-
+    //MutualSettlements
     @Mappings({
             @Mapping(source = "contractor.id", target = "contractorId"),
             @Mapping(source = "employee.id", target = "employeeId")

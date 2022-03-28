@@ -6,35 +6,8 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface FunnelMapper {
+    //Funnel
+    Funnel toModel(FunnelDto emp);
 
-    default FunnelDto toDto(Funnel funnel) {
-        if (funnel == null) {
-            return null;
-        }
-        FunnelDto.FunnelDtoBuilder funnelDtoBuilder = FunnelDto.builder()
-                .id(funnel.getId())
-                .statusName(funnel.getStatusName())
-                .count(funnel.getCount())
-                .time(funnel.getTime())
-                .conversion(funnel.getConversion())
-                .price(funnel.getPrice())
-                .type(funnel.getType());
-        return funnelDtoBuilder.build();
-    }
-
-        default Funnel toModel(FunnelDto emp) {
-        if (emp == null) {
-            return null;
-        }
-        Funnel.FunnelBuilder funnelBuilder = Funnel.builder()
-                .id(emp.getId())
-                .statusName(emp.getStatusName())
-                .time(emp.getTime())
-                .count(emp.getCount())
-                .conversion(emp.getConversion())
-                .price(emp.getPrice())
-                .type(emp.getType());
-
-        return funnelBuilder.build();
-    }
+    FunnelDto toDto(Funnel funnel);
 }
