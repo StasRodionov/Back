@@ -30,6 +30,4 @@ public class Account {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     @Singular
     List<Employee> employees;
-
-
 }
