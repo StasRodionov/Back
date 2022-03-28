@@ -1,12 +1,17 @@
 package com.trade_accounting.utils.mapper.purchases;
 
 import com.trade_accounting.models.dto.purchases.PurchaseControlDto;
+import com.trade_accounting.models.entity.company.Company;
+import com.trade_accounting.models.entity.company.Contractor;
 import com.trade_accounting.models.entity.purchases.PurchaseControl;
 import com.trade_accounting.models.entity.purchases.PurchaseCurrentBalance;
 import com.trade_accounting.models.entity.purchases.PurchaseForecast;
 import com.trade_accounting.models.entity.purchases.PurchaseHistoryOfSales;
 import com.trade_accounting.models.entity.warehouse.Product;
+import com.trade_accounting.models.entity.warehouse.Warehouse;
 import org.mapstruct.Mapper;
+
+import java.time.LocalDateTime;
 
 @Mapper(componentModel = "spring")
 public interface PurchaseControlMapper {
@@ -18,16 +23,21 @@ public interface PurchaseControlMapper {
         if (purchaseControlDto == null) {
             return null;
         }
-
+//        warehouseService
+//        contractorService
+//        companyService
         PurchaseControl.PurchaseControlBuilder purchaseControl = PurchaseControl.builder();
 
         purchaseControl.historyOfSales(purchaseControlDtoToPurchaseHistoryOfSales(purchaseControlDto));
         purchaseControl.currentBalance(purchaseControlDtoToPurchaseCurrentBalance(purchaseControlDto));
         purchaseControl.forecast(purchaseControlDtoToPurchaseForecast(purchaseControlDto));
-        purchaseControl.id(purchaseControlDto.getId());
-
         purchaseControl.product(purchaseControlDtoToProduct(purchaseControlDto));
+        purchaseControl.warehouse(purchaseControlDtoToWarehouse(purchaseControlDto));
+        purchaseControl.contractor(purchaseControlDtoToContractorService(purchaseControlDto));
+        purchaseControl.company(purchaseControlDtoToCompanyService(purchaseControlDto));
 
+        purchaseControl.id(purchaseControlDto.getId());
+        purchaseControl.date(LocalDateTime.parse(purchaseControlDto.getDate()));
         purchaseControl.productCode(purchaseControlDto.getProductCode());
         purchaseControl.articleNumber(purchaseControlDto.getArticleNumber());
         purchaseControl.productMeasure(purchaseControlDto.getProductMeasure());
@@ -71,6 +81,7 @@ public interface PurchaseControlMapper {
 
         return purchaseForecast.build();
     }
+
     private Product purchaseControlDtoToProduct(PurchaseControlDto purchaseControlDto) {
         if (purchaseControlDto == null) {
             return null;
@@ -78,6 +89,33 @@ public interface PurchaseControlMapper {
         Product.ProductBuilder productBuilder = Product.builder();
         productBuilder.id(purchaseControlDto.getProductNameId());
         return productBuilder.build();
+    }
+
+    private Warehouse purchaseControlDtoToWarehouse(PurchaseControlDto purchaseControlDto) {
+        if (purchaseControlDto == null) {
+            return null;
+        }
+        Warehouse.WarehouseBuilder warehouseBuilder = Warehouse.builder();
+        warehouseBuilder.id(purchaseControlDto.getWarehouseId());
+        return warehouseBuilder.build();
+    }
+
+    private Contractor purchaseControlDtoToContractorService(PurchaseControlDto purchaseControlDto) {
+        if (purchaseControlDto == null) {
+            return null;
+        }
+        Contractor.ContractorBuilder contractorBuilder = Contractor.builder();
+        contractorBuilder.id(purchaseControlDto.getContractorId());
+        return contractorBuilder.build();
+    }
+
+    private Company purchaseControlDtoToCompanyService(PurchaseControlDto purchaseControlDto) {
+        if (purchaseControlDto == null) {
+            return null;
+        }
+        Company.CompanyBuilder companyBuilder = Company.builder();
+        companyBuilder.id(purchaseControlDto.getCompanyId());
+        return companyBuilder.build();
     }
 
     /**
@@ -98,10 +136,13 @@ public interface PurchaseControlMapper {
         purchaseControlDto.historyOfSalesId(purchaseControlHistoryOfSalesId(purchaseControl));
         purchaseControlDto.currentBalanceId(purchaseControlCurrentBalanceId(purchaseControl));
         purchaseControlDto.forecastId(purchaseControlForecastId(purchaseControl));
-        purchaseControlDto.id(purchaseControl.getId());
-
         purchaseControlDto.productNameId(purchaseControlProductId(purchaseControl));
+        purchaseControlDto.warehouseId(purchaseControlWarehouseId(purchaseControl));
+        purchaseControlDto.contractorId(purchaseControlContractorId(purchaseControl));
+        purchaseControlDto.companyId(purchaseControlCompanyId(purchaseControl));
 
+        purchaseControlDto.id(purchaseControl.getId());
+        purchaseControlDto.date(String.valueOf(purchaseControl.getDate()));
         purchaseControlDto.productCode(purchaseControl.getProductCode());
         purchaseControlDto.articleNumber(purchaseControl.getArticleNumber());
         purchaseControlDto.productMeasure(purchaseControl.getProductMeasure());
@@ -164,6 +205,51 @@ public interface PurchaseControlMapper {
             return null;
         }
         Long id = forecast.getId();
+        if (id == null) {
+            return null;
+        }
+        return id;
+    }
+
+    private Long purchaseControlWarehouseId(PurchaseControl purchaseControl) {
+        if (purchaseControl == null) {
+            return null;
+        }
+        Warehouse warehouse = purchaseControl.getWarehouse();
+        if (warehouse == null) {
+            return null;
+        }
+        Long id = warehouse.getId();
+        if (id == null) {
+            return null;
+        }
+        return id;
+    }
+
+    private Long purchaseControlContractorId(PurchaseControl purchaseControl) {
+        if (purchaseControl == null) {
+            return null;
+        }
+        Contractor contractor = purchaseControl.getContractor();
+        if (contractor == null) {
+            return null;
+        }
+        Long id = contractor.getId();
+        if (id == null) {
+            return null;
+        }
+        return id;
+    }
+
+    private Long purchaseControlCompanyId(PurchaseControl purchaseControl) {
+        if (purchaseControl == null) {
+            return null;
+        }
+        Company company = purchaseControl.getCompany();
+        if (company == null) {
+            return null;
+        }
+        Long id = company.getId();
         if (id == null) {
             return null;
         }

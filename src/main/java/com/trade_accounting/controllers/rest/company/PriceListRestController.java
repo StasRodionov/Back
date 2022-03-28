@@ -100,5 +100,20 @@ public class PriceListRestController {
         priceListService.deleteById(id);
         return ResponseEntity.ok().build();
     }
-    
+
+
+    @GetMapping("/filter/{search}")
+    @ApiOperation(value = "search", notes = "Получение списка некоторых отгрузок")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение отф. списка"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<PriceListDto>> getAllForFilter(@ApiParam(name ="search", value = "")
+                                                                  @PathVariable(name = "search") String search) {
+        List<PriceListDto> priceListDtoList = priceListService.getAllForFilter(search);
+        return ResponseEntity.ok(priceListDtoList);
+    }
+
 }

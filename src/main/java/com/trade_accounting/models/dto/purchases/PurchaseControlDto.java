@@ -31,6 +31,12 @@ public class PurchaseControlDto {
     @NotNull
     private String productMeasure;//они же единицы измерения
 
+    private Long companyId;
+
+    private Long warehouseId;
+
+    private Long contractorId;
+
     private Long productQuantity;
 
     @NotNull
