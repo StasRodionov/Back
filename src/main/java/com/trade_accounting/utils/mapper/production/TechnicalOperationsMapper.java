@@ -10,14 +10,14 @@ import org.mapstruct.Mappings;
 public interface TechnicalOperationsMapper {
     //TechnicalOperations
     @Mappings({
-            @Mapping(source = "technicalCardId", target = "technicalCard.id"),
-            @Mapping(source = "warehouseId", target = "warehouse.id")
+            @Mapping(target = "technicalCard", ignore = true),
+            @Mapping(target = "warehouse", ignore = true)
     })
     TechnicalOperations toModel(TechnicalOperationsDto technicalOperationsDto);
 
     @Mappings({
-            @Mapping(source = "technicalCard.id", target = "technicalCardId"),
-            @Mapping(source = "warehouse.id", target = "warehouseId")
+            @Mapping(target = "technicalCard", ignore = true),
+            @Mapping(target = "warehouse", ignore = true)
     })
     TechnicalOperationsDto toDto(TechnicalOperations technicalOperations);
 }

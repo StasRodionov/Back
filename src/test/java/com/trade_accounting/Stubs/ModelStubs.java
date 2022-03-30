@@ -3,6 +3,7 @@ package com.trade_accounting.Stubs;
 import com.trade_accounting.models.dto.indicators.AuditDto;
 import com.trade_accounting.models.dto.util.ImageDto;
 import com.trade_accounting.models.dto.warehouse.ProductDto;
+import com.trade_accounting.models.entity.client.Account;
 import com.trade_accounting.models.entity.client.Department;
 import com.trade_accounting.models.entity.client.Employee;
 import com.trade_accounting.models.entity.client.Position;
@@ -246,7 +247,7 @@ public class ModelStubs {
                         getRole(id + 1),
                         getRole(id + 2)
                 ).collect(Collectors.toSet()),
-                getImage(id)
+                getImage(id), new Account()
         );
     }
 
