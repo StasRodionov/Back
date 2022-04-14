@@ -90,7 +90,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     }
 
 //    Encode the Password on Registration
-    //TODO implement method encode the password on registration
+    //TODO implement method encode the password on registration //
 
 //    Encode the Password on Authentication
     @Bean
