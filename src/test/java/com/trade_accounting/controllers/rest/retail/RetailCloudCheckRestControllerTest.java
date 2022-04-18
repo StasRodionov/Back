@@ -29,17 +29,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = "/retailCloudCheck-before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @WithUserDetails(value = "vasyaogon@mail.ru")
 @AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
-public class RetailCloudChekRestControllerTest {
+class RetailCloudCheckRestControllerTest {
 
     @Autowired
-    private RetailCloudChekRestController retailCloudChekRestController;
+    private RetailCloudCheckRestController retailCloudCheckRestController;
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     void testExistence() {
-        assertNotNull(retailCloudChekRestController, "ProductionTargets Rest Controller is null");
+        assertNotNull(retailCloudCheckRestController, "ProductionTargets Rest Controller is null");
     }
 
     @Test
