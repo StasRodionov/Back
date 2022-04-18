@@ -36,7 +36,7 @@ import java.util.List;
 @Api(tags = "RetailCloudCheck Rest Controller")
 @RequestMapping("/api/cloudcheck")
 @RequiredArgsConstructor
-public class RetailCloudChekRestController {
+public class RetailCloudCheckRestController {
     private final CheckEntityService checkEntityService;
 
     private final RetailCloudCheckRepository retailCloudCheckRepository;

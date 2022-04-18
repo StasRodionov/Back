@@ -31,9 +31,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyDto> getAll() {
-        List<Company> companys = companyRepository.findAll();
+        List<Company> companies = companyRepository.findAll();
         List<CompanyDto> companyDtos = new ArrayList<>();
-        for (Company company : companys) {
+        for (Company company : companies) {
             companyDtos.add(companyMapper.toDto(company));
         }
         return companyDtos;
@@ -67,8 +67,7 @@ public class CompanyServiceImpl implements CompanyService {
         company.setBankAccounts(
                 companyDto.getBankAccountDtoIds().stream()
                         .map(
-                                bankAccountId -> bankAccountRepository
-                                        .getOne(bankAccountId)
+                                bankAccountRepository::getOne
                         )
                         .collect(Collectors.toList())
         );
@@ -90,8 +89,7 @@ public class CompanyServiceImpl implements CompanyService {
         company.setBankAccounts(
                 companyDto.getBankAccountDtoIds().stream()
                         .map(
-                                bankAccountId -> bankAccountRepository
-                                        .getOne(bankAccountId)
+                                bankAccountRepository::getOne
                         )
                         .collect(Collectors.toList())
         );

@@ -1,8 +1,7 @@
 package com.trade_accounting.utils.mapper.retail;
 
-
-import com.trade_accounting.models.entity.retail.RetailSales;
 import com.trade_accounting.models.dto.retail.RetailSalesDto;
+import com.trade_accounting.models.entity.retail.RetailSales;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

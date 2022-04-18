@@ -2,19 +2,20 @@ package com.trade_accounting.utils.mapper.production;
 
 import com.trade_accounting.models.entity.production.TechnicalCard;
 import com.trade_accounting.models.dto.production.TechnicalCardDto;
+import com.trade_accounting.utils.mapper.util.TechnicalCardProductionToLongMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {TechnicalCardProductionToLongMapper.class})
 public interface TechnicalCardMapper {
     //TechnicalCard
-    @Mappings({
-            @Mapping(target = "technicalCardGroup", ignore = true),
-            @Mapping(target = "finalProduction", ignore = true),
-            @Mapping(target = "materials", ignore = true),
-    })
+    @Mapping(target = "technicalCardGroup", ignore = true)
+    @Mapping(target = "finalProduction", ignore = true)
+    @Mapping(target = "materials", ignore = true)
     TechnicalCard toModel(TechnicalCardDto technicalCardDto);
 
+    @Mapping(target = "technicalCardGroupId", source = "technicalCardGroup.id")
+    @Mapping(target = "finalProductionId", source = "finalProduction")
+    @Mapping(target = "materialsId", source = "materials")
     TechnicalCardDto toDto(TechnicalCard technicalCard);
 }
