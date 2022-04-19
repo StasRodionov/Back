@@ -33,8 +33,7 @@ public class AccountServiceImpl implements AccountService {
     private final EmployeeMapper employeeMapper;
 
     private final EmployeeRepository employeeRepository;
-    private final DepartmentRepository departmentRepository;
-    private final PositionRepository positionRepository;
+
 
     @Override
     public AccountDto create(AccountDto account, EmployeeDto employee) {
@@ -47,7 +46,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getByEmployee(Employee employee) {
-        return employee.getAccount();
+    Optional<Account> account  = accountRepository.findById(employee.getId());
+    return account.orElse(new Account());
     }
 
     @Override
@@ -66,20 +66,20 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public EmployeeDto create(EmployeeDto dto) {
-        Employee employee = employeeMapper.toModel(dto);
-        return employeeMapper.toDto(employeeRepository.save(employee));
+
+        dto.setId(employeeMapper.toModel(dto).getId());
+        return employeeMapper.toDto(
+                employeeRepository.save(employeeMapper.toModel(dto))
+        );
     }
 
     @Override
     public EmployeeDto update(EmployeeDto empDto) {
-
-      Employee emp = employeeMapper.toModel(empDto);
-         return null;
-
+      return create(empDto);
     }
 
     @Override
     public void deleteById(Long id) {
-
+        accountRepository.deleteById(id);
     }
 }

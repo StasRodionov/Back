@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest.client;
 
 import com.trade_accounting.models.dto.client.AccountDto;
+import com.trade_accounting.models.dto.client.DepartmentDto;
 import com.trade_accounting.models.dto.client.EmployeeDto;
 import com.trade_accounting.models.dto.util.PageDto;
 import com.trade_accounting.models.entity.client.Employee;
@@ -61,5 +62,62 @@ public class AccountRestController {
                                     @RequestBody AccountDto accountDto,
                                     @RequestBody EmployeeDto employeeDto) {
         return ResponseEntity.ok().body(accountService.create(accountDto, employeeDto));
+    }
+
+    @GetMapping
+    @ApiOperation(value = "getAll", notes = "Получить список всех работников")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка работников"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден")})
+
+    public ResponseEntity<List<EmployeeDto>> getAll() {
+        List<EmployeeDto> employeeDtos = accountService.getAll();
+        return ResponseEntity.ok(employeeDtos);
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "getById", notes = "получение работника по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Работник успешно найден"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные получены"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<EmployeeDto> getById(@PathVariable("id") Long id){
+        return ResponseEntity.ok().body(accountService.getById(id));
+    }
+
+    @PutMapping
+    @ApiOperation(value = "update", notes = "Обновление данных о работнике")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Информация о работнике успешно обновлена"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден")})
+    public ResponseEntity<?> update(@ApiParam(name = "employeeDto", value = "DTO работника, которого необходимо обновить") @RequestBody EmployeeDto employeeDto) {
+        return ResponseEntity.ok().body(accountService.update(employeeDto));
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "deleteById", notes = "Удаление информации о аккаунте по Id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Информация о аккаунте успешно удалена"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден")})
+
+    public ResponseEntity<?> deleteById(@ApiParam(
+            name = "id",
+            type = "Long",
+            value = "Переданный ID  в URL по которому необходимо удалить подразделение",
+            example = "1",
+            required = true) @PathVariable(name = "id") Long id) {
+        accountService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }
