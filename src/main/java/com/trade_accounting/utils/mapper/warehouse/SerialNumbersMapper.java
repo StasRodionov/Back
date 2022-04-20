@@ -8,19 +8,30 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface SerialNumbersMapper {
-        //SerialNumbersMapper
-        @Mappings({
-                @Mapping(target = "product.id", source = "productId"),
-                @Mapping(target = "product.description", source = "description"),
-                @Mapping(target = "warehouse.id", source = "warehouseId"),
+    //SerialNumbersMapper
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(target = "code", source = "code"),
+            @Mapping(target = "vendorCode", source = "vendorCode"),
+            @Mapping(target = "product.id", source = "productId"),
+            @Mapping(target = "warehouse.id", source = "warehouseId"),
+            @Mapping(target = "typeDocument", source = "typeDocument"),
+            @Mapping(target = "documentNumber", source = "documentNumber"),
+            @Mapping(target = "description", source = "description"),
 
-        })
-        SerialNumbers toModel(SerialNumbersDto serialNumbersDto);
+    })
+    SerialNumbers toModel(SerialNumbersDto serialNumbersDto);
 
-        @Mappings({
-                @Mapping(source = "product.id", target = "productId"),
-                @Mapping(source = "product.description", target = "description"),
-                @Mapping(source = "warehouse.id", target = "warehouseId"),
-        })
-        SerialNumbersDto toDto(SerialNumbers serialNumbers);
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(target = "code", source = "code"),
+            @Mapping(target = "vendorCode", source = "vendorCode"),
+            @Mapping(target = "productId", source = "product.id"),
+            @Mapping(target = "warehouseId", source = "warehouse.id"),
+            @Mapping(target = "typeDocument", source = "typeDocument"),
+            @Mapping(target = "documentNumber", source = "documentNumber"),
+            @Mapping(target = "description", source = "description"),
+
+    })
+    SerialNumbersDto toDto(SerialNumbers serialNumbers);
 }

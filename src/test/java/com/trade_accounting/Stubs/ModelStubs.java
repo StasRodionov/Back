@@ -66,6 +66,7 @@ import com.trade_accounting.models.entity.warehouse.Inventarization;
 import com.trade_accounting.models.entity.warehouse.InventarizationProduct;
 import com.trade_accounting.models.entity.warehouse.Product;
 import com.trade_accounting.models.entity.warehouse.Revenue;
+import com.trade_accounting.models.entity.warehouse.SerialNumbers;
 import com.trade_accounting.models.entity.warehouse.Warehouse;
 
 import java.math.BigDecimal;
@@ -146,7 +147,7 @@ public class ModelStubs {
 
     public static Contractor getContractor(Long id) {
         return new Contractor(
-                id, "name","shortname",
+                id, "name", "shortname",
                 "sortNumber",
                 "12345678901", "324234234",
                 "email", getAddress(1L),
@@ -175,18 +176,18 @@ public class ModelStubs {
     }
 
     public static Contract getContract(Long id) {
-            return Contract.builder()
-                    .id(id)
-                    .number("00000" + id)
-                    .contractDate(LocalDate.now())
-                    .company(getCompany(1L))
-                    .bankAccount(getBankAccount(3L))
-                    .contractor(getContractor(1L))
-                    .amount(BigDecimal.ONE)
-                    .archive(false)
-                    .comment("Comment " + id)
-                    .legalDetail(getLegalDetail(1L))
-                    .build();
+        return Contract.builder()
+                .id(id)
+                .number("00000" + id)
+                .contractDate(LocalDate.now())
+                .company(getCompany(1L))
+                .bankAccount(getBankAccount(3L))
+                .contractor(getContractor(1L))
+                .amount(BigDecimal.ONE)
+                .archive(false)
+                .comment("Comment " + id)
+                .legalDetail(getLegalDetail(1L))
+                .build();
     }
 
     public static Project getProject(Long id) {
@@ -232,7 +233,6 @@ public class ModelStubs {
     public static Position getPosition(Long id) {
         return new Position(id, "name", "00001");
     }
-
 
 
     public static Employee getEmployee(Long id) {
@@ -395,8 +395,9 @@ public class ModelStubs {
                 .name("Новый")
                 .build();
     }
+
     public static InvoicesStatus getInvoicesStatus(Long id) {
-        return new InvoicesStatus(id,"новый");
+        return new InvoicesStatus(id, "новый");
     }
 
     public static Street getStreet(Long id) {
@@ -627,10 +628,11 @@ public class ModelStubs {
                 .deadlineDateTime(LocalDateTime.now())
                 .completed(false)
                 .taskComments(List.of(getTaskComment(1L),
-                                    getTaskComment(2L),
-                                    getTaskComment(3L)))
+                        getTaskComment(2L),
+                        getTaskComment(3L)))
                 .build();
     }
+
     public static TaskComment getTaskComment(Long id) {
         return TaskComment.builder()
                 .id(id)
@@ -691,7 +693,7 @@ public class ModelStubs {
     }
 
     public static StagesProduction getStagesProduction(Long id) {
-        return  new StagesProduction(id, "name", "description", getDepartment(id), getEmployee(id));
+        return new StagesProduction(id, "name", "description", getDepartment(id), getEmployee(id));
     }
 
     public static PrepaymentReturn getPrepaymentReturn(Long id) {
@@ -701,7 +703,7 @@ public class ModelStubs {
     public static Prepayout getPrepayout(Long id) {
         return new Prepayout(id, LocalDateTime.now(), getRetailStore(id), getContractor(id), getCompany(id), new BigDecimal(243), new BigDecimal(323), new BigDecimal(445), new BigDecimal(877), false, false, "comment");
     }
-    
+
     public static TechnicalOperations getTechnicalOperations(Long id) {
         return TechnicalOperations.builder()
                 .volume(id.intValue())
@@ -709,6 +711,7 @@ public class ModelStubs {
                 .warehouse(ModelStubs.getWarehouse(1L))
                 .build();
     }
+
     public static TechnicalProcess getTechnicalProcess(Long id) {
         return TechnicalProcess.builder()
                 .id(id)
@@ -724,7 +727,7 @@ public class ModelStubs {
                 .build();
     }
 
-    public static Audit getAudit(Long id){
+    public static Audit getAudit(Long id) {
         return Audit.builder()
                 .id(id)
                 .date(LocalDateTime.now())
@@ -733,7 +736,7 @@ public class ModelStubs {
                 .build();
     }
 
-    public static AuditDto getAuditDto(Long id){
+    public static AuditDto getAuditDto(Long id) {
         return AuditDto.builder()
                 .id(id)
                 .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
@@ -742,5 +745,8 @@ public class ModelStubs {
                 .build();
     }
 
-}
 
+    public static SerialNumbers serialNumbers(Long id) {
+        return new SerialNumbers(id, 1L, 1L, getProduct(1L), getWarehouse(1L), "type", 1L, "описание");
+    }
+}
