@@ -9,13 +9,11 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface StreetMapper {
     //Street
-    @Mappings({
-            @Mapping(source = "cityDto", target = "city")
-    })
+
+    @Mapping(source = "cityDto", target = "city")
     Street toModel(StreetDto streetDto);
 
-    @Mappings({
-            @Mapping(source = "city", target = "cityDto")
-    })
+
+    @Mapping(source = "city", target = "cityDto")
     StreetDto toDto(Street street);
 }

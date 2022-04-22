@@ -9,16 +9,15 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface PayoutMapper {
     //Payout
-    @Mappings({
-            @Mapping(source = "retailStoreId", target = "retailStore.id"),
-            @Mapping(source = "companyId", target = "company.id")
-    })
+
+    @Mapping(source = "retailStoreId", target = "retailStore.id")
+    @Mapping(source = "companyId", target = "company.id")
+//    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     Payout toModel(PayoutDto payoutsDto);
 
-    @Mappings({
-            @Mapping(source = "retailStore.id", target = "retailStoreId"),
-            @Mapping(source = "company.id", target = "companyId")
-    })
+    @Mapping(source = "retailStore.id", target = "retailStoreId")
+    @Mapping(source = "company.id", target = "companyId")
+    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     PayoutDto toDto(Payout payout);
 
 }

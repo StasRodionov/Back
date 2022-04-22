@@ -9,19 +9,17 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface ReturnFromBuyersMapper {
     //ReturnFromBuyers
-    @Mappings({
-            @Mapping(source = "warehouseId", target = "warehouse.id"),
-            @Mapping(source = "contractorId", target = "contractor.id"),
-            @Mapping(source = "companyId", target = "company.id"),
-            @Mapping(source = "contractId", target = "contract.id")
-    })
+
+//    @Mapping(source = "warehouseId", target = "warehouse.id")
+//    @Mapping(source = "contractorId", target = "contractor.id")
+//    @Mapping(source = "companyId", target = "company.id")
+//    @Mapping(source = "contractId", target = "contract.id")
     ReturnFromBuyers toModel(ReturnFromBuyersDto returnFromBuyersDto);
 
-    @Mappings({
-            @Mapping(source = "company.id", target = "companyId"),
-            @Mapping(source = "contract.id", target = "contractId"),
-            @Mapping(source = "contractor.id", target = "contractorId"),
-            @Mapping(source = "warehouse.id", target = "warehouseId")
-    })
+
+    @Mapping(source = "company.id", target = "companyId")
+    @Mapping(source = "contract.id", target = "contractId")
+    @Mapping(source = "contractor.id", target = "contractorId")
+    @Mapping(source = "warehouse.id", target = "warehouseId")
     ReturnFromBuyersDto toDto(ReturnFromBuyers returnFromBuyers);
 }

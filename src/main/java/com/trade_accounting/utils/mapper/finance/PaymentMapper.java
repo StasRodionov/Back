@@ -9,20 +9,18 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface PaymentMapper {
     //Payment
-    @Mappings({
-            @Mapping(source = "companyId", target = "company.id"),
-            @Mapping(source = "contractorId", target = "contractor.id"),
-            @Mapping(source = "contractId", target = "contract.id"),
-            @Mapping(source = "projectId", target = "project.id")
-    })
+    @Mapping(source = "companyId", target = "company.id")
+    @Mapping(source = "contractorId", target = "contractor.id")
+    @Mapping(source = "contractId", target = "contract.id")
+    @Mapping(source = "projectId", target = "project.id")
+//    @Mapping(source = "time", target = "time", dateFormat = "yyyy-MM-dd HH:mm:ss")
     Payment toModel(PaymentDto paymentDto);
 
-    @Mappings({
-            @Mapping(source = "company.id", target = "companyId"),
-            @Mapping(source = "contractor.id", target = "contractorId"),
-            @Mapping(source = "contract.id", target = "contractId"),
-            @Mapping(source = "project.id", target = "projectId"),
-            @Mapping(source = "time", target = "time", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    })
+
+    @Mapping(source = "company.id", target = "companyId")
+    @Mapping(source = "contractor.id", target = "contractorId")
+    @Mapping(source = "contract.id", target = "contractId")
+    @Mapping(source = "project.id", target = "projectId")
+    @Mapping(source = "time", target = "time", dateFormat = "yyyy-MM-dd HH:mm:ss")
     PaymentDto toDto(Payment payment);
 }

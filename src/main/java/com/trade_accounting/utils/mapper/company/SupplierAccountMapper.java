@@ -16,7 +16,15 @@ import java.time.format.DateTimeFormatter;
 public interface SupplierAccountMapper {
     //Supplier
     @Mapping(target = "date", ignore = true)
+    @Mapping(source = "warehouseId", target = "warehouse.id")
+    @Mapping(source = "companyId", target = "company.id")
+    @Mapping(source = "contractorId", target = "contractor.id")
+    @Mapping(source = "contractId", target = "contract.id")
     SupplierAccount toModel(SupplierAccountDto supplierAccountDto);
 
+    @Mapping(target = "warehouseId", source = "warehouse.id")
+    @Mapping(target = "companyId", source = "company.id")
+    @Mapping(target = "contractorId", source = "contractor.id")
+    @Mapping(target = "contractId", source = "contract.id")
     SupplierAccountDto toDto(SupplierAccount supplierAccount);
 }

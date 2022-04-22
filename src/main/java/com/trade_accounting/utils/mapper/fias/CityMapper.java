@@ -8,15 +8,13 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface CityMapper {
-    @Mappings({
-            @Mapping(source = "districtDto", target = "district"),
-            @Mapping(source = "streetsDto", target = "streets")
-    })
+
+//    @Mapping(source = "districtDto", target = "district")
+//    @Mapping(source = "streetsDto", target = "streets")
     City toModel(CityDto cityDto);
 
-    @Mappings({
-            @Mapping(source = "district", target = "districtDto"),
-            @Mapping(source = "streets", target = "streetsDto")
-    })
+
+    @Mapping(source = "district", target = "districtDto")
+    @Mapping(source = "streets", target = "streetsDto")
     CityDto toDto(City city);
 }

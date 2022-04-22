@@ -9,10 +9,9 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface CorrectionProductMapper {
     //CorrectionProduct
+    @Mapping(source = "productId", target = "product.id")
     CorrectionProduct toModel(CorrectionProductDto correctionDto);
 
-    @Mappings({
-            @Mapping(source = "product.id", target = "productId")
-    })
+    @Mapping(target = "productId", source = "product.id")
     CorrectionProductDto toDto(CorrectionProduct correction);
 }

@@ -16,19 +16,16 @@ import java.time.format.DateTimeFormatter;
 @Mapper(componentModel = "spring")
 public interface PrepayoutMapper {
     //Prepayout
-    @Mappings({
-            @Mapping(source = "retailStoreId", target = "retailStore.id"),
-            @Mapping(source = "contractorId", target = "contractor.id"),
-            @Mapping(source = "companyId", target = "company.id"),
-            @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
-    })
+    @Mapping(source = "retailStoreId", target = "retailStore.id")
+    @Mapping(source = "contractorId", target = "contractor.id")
+    @Mapping(source = "companyId", target = "company.id")
+//    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     Prepayout toModel(PrepayoutDto emp);
 
-    @Mappings({
-            @Mapping(source = "retailStore.id", target = "retailStoreId"),
-            @Mapping(source = "contractor.id", target = "contractorId"),
-            @Mapping(source = "company.id", target = "companyId"),
-            @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
-    })
+
+    @Mapping(source = "retailStore.id", target = "retailStoreId")
+    @Mapping(source = "contractor.id", target = "contractorId")
+    @Mapping(source = "company.id", target = "companyId")
+    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     PrepayoutDto toDto(Prepayout prepayout);
 }

@@ -9,16 +9,13 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface BalanceAdjustmentMapper {
     //BalanceAdjustment
-    @Mappings({
-            @Mapping(source = "companyId", target = "company.id"),
-            @Mapping(source = "contractorId", target = "contractor.id"),
-    })
+    @Mapping(source = "companyId", target = "company.id")
+    @Mapping(source = "contractorId", target = "contractor.id")
     BalanceAdjustment toModel(BalanceAdjustmentDto balanceAdjustmentDto);
 
-    @Mappings({
-            @Mapping(source = "company.id", target = "companyId"),
-            @Mapping(source = "contractor.id", target = "contractorId"),
-    })
+
+    @Mapping(source = "company.id", target = "companyId")
+    @Mapping(source = "contractor.id", target = "contractorId")
     BalanceAdjustmentDto toDto(BalanceAdjustment balanceAdjustment);
 
 }

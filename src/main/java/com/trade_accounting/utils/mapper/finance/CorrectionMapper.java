@@ -9,8 +9,11 @@ import org.mapstruct.Mapping;
 public interface CorrectionMapper {
     //Correction
     @Mapping(target = "date", ignore = true)
+    @Mapping(source = "warehouseId", target = "warehouse.id")
+    @Mapping(source = "companyId", target = "company.id")
     Correction toModel(CorrectionDto correctionDto);
 
-    @Mapping(target = "date", ignore = true)
+    @Mapping(target = "warehouseId", source = "warehouse.id")
+    @Mapping(target = "companyId", source = "company.id")
     CorrectionDto toDto(Correction correction);
 }

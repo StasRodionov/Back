@@ -11,5 +11,6 @@ public interface InternalOrderProductMapper {
     @Mapping(source = "productId", target = "product.id")
     InternalOrderProduct toModel(InternalOrderProductsDto internalOrderProductsDto);
 
+    @Mapping(target = "productId", source = "product.id")
     InternalOrderProductsDto toDto(InternalOrderProduct internalOrderProduct);
 }
