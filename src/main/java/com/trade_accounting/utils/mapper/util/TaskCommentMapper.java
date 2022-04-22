@@ -8,10 +8,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface TaskCommentMapper {
     //TaskCommentMapper
-    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
+    @Mapping(source = "publishedDateTime", target = "publishedDateTime", dateFormat = "dd-MM-yyyy HH:mm")
     TaskComment toModel(TaskCommentDto taskCommentDto);
 
     @Mapping(target = "publisherId", source = "publisher.id")
-    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
+    @Mapping(source = "publishedDateTime", target = "publishedDateTime", dateFormat = "dd-MM-yyyy HH:mm")
     TaskCommentDto toDto(TaskComment taskComment);
 }

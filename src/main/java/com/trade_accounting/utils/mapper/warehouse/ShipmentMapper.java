@@ -13,14 +13,14 @@ public interface ShipmentMapper {
     @Mapping(source = "companyId", target = "company.id")
     @Mapping(source = "contractorId", target = "contractor.id")
     @Mapping(source = "warehouseId", target = "warehouse.id")
-    @Mapping(target = "shipmentProducts.id", source = "shipmentProductsIds")
+    @Mapping(target = "shipmentProducts", source = "shipmentProductsIds")
     Shipment toModel(ShipmentDto emp);
 
     @Mapping(target = "date", source = "date", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(target = "companyId", source = "company.id")
     @Mapping(target = "contractorId", source = "contractor.id")
     @Mapping(target = "warehouseId", source = "warehouse.id")
-    @Mapping(target = "shipmentProductsIds", source = "shipmentProducts.id")
+    @Mapping(target = "shipmentProductsIds", source = "shipmentProducts")
     ShipmentDto toDto(Shipment shipment);
 
     default Long shipmentProductToLong(ShipmentProduct shipmentProduct) {

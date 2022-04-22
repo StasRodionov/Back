@@ -12,7 +12,7 @@ public interface TechnicalProcessMapper {
     @Mapping(target = "dateOfChanged", source = "dateOfChanged", dateFormat = "yyyy-MM-dd HH:mm:ss")
     TechnicalProcess toModel(TechnicalProcessDto dto);
 
-    @Mapping(target = "stagesProductionSetIds", source = "stagesProductionSet")
+    @Mapping(target = "stagesProductionIds", source = "stagesProductionSet")
     @Mapping(target = "departmentOwnerId", source = "departmentOwner.id")
     @Mapping(target = "employeeOwnerId", source = "employeeOwner.id")
     @Mapping(target = "dateOfChanged", source = "dateOfChanged", dateFormat = "yyyy-MM-dd HH:mm:ss")

@@ -13,14 +13,14 @@ public interface TaskMapper {
     @Mapping(source = "taskAuthorId", target = "taskAuthor.id")
     @Mapping(source = "creationDateTime", target = "creationDateTime", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(source = "deadlineDateTime", target = "deadlineDateTime", dateFormat = "dd-MM-yyyy HH:mm")
-    @Mapping(source = "taskComments", target = "taskComments")
+    @Mapping(source = "taskCommentsIds", target = "taskComments")
     Task taskDtoToTask(TaskDto taskDto);
 
     @Mapping(source = "taskEmployee.id", target = "employeeId")
     @Mapping(source = "taskAuthor.id", target = "taskAuthorId")
     @Mapping(source = "creationDateTime", target = "creationDateTime", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(source = "deadlineDateTime", target = "deadlineDateTime", dateFormat = "dd-MM-yyyy HH:mm")
-    @Mapping(source = "taskComments", target = "taskComments")
+    @Mapping(source = "taskComments", target = "taskCommentsIds")
     TaskDto taskToTaskDto(Task task);
 
     default Long taskCommentsToLong(TaskComment taskComment) {

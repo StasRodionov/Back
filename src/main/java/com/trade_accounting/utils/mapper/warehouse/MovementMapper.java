@@ -10,13 +10,11 @@ import org.mapstruct.Mapping;
 public interface MovementMapper {
     //Movement
     @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
-    @Mapping(source = "whenСhangedDate", target = "whenСhangedDate", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(source = "warehouseToId", target = "warehouseTo.id")
     @Mapping(source = "projectId", target = "project.id")
     Movement toModel(MovementDto movementDto);
 
     @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
-    @Mapping(source = "whenСhangedDate", target = "whenСhangedDate", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(target = "companyId", source = "company.id")
     @Mapping(target = "warehouseId", source = "warehouse.id")
     @Mapping(target = "warehouseToId", source = "warehouseTo.id")

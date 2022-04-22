@@ -11,10 +11,8 @@ import org.mapstruct.Mapping;
 public interface ContractorMapper {
 
     @Mapping(source = "addressId", target = "address.id")
-    @Mapping(source = "contactIds", target = "contact")
     @Mapping(source = "contractorGroupId", target = "contractorGroup.id")
     @Mapping(source = "typeOfPriceId", target = "typeOfPrice.id")
-    @Mapping(source = "bankAccountIds", target = "bankAccounts")
     @Mapping(source = "legalDetailId", target = "legalDetail.id")
     @Mapping(source = "contractorStatusId", target = "contractorStatus.id")
     @Mapping(source = "accessParametersId", target = "accessParameters.id")
