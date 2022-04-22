@@ -8,12 +8,14 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface RetailCloudCheckMapper {
     //RetailCloudCheck
+
+    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(source = "initiatorId", target = "initiator.id")
     @Mapping(source = "fiscalizationPointId", target = "fiscalizationPoint.id")
     @Mapping(source = "currencyId", target = "currency.id")
-    @Mapping(source = "cashierId", target = "cashier.id")
     RetailCloudCheck toModel(RetailCloudCheckDto retailCloudCheckDto);
 
+    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(source = "initiator.id", target = "initiatorId")
     @Mapping(source = "fiscalizationPoint.id", target = "fiscalizationPointId")
     @Mapping(source = "currency.id", target = "currencyId")

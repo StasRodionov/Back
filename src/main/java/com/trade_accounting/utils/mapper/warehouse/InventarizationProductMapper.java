@@ -8,8 +8,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface InventarizationProductMapper {
     //InventarizationProduct
-    @Mapping(source = "productId", target = "product.id")
     InventarizationProduct toModel(InventarizationProductDto inventarizationProductDto);
 
+    @Mapping(target = "productId", source = "product.id")
     InventarizationProductDto toDto(InventarizationProduct inventarizationProduct);
 }

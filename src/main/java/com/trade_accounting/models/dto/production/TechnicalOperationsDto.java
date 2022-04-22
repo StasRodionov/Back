@@ -23,9 +23,9 @@ public class TechnicalOperationsDto {
 
     private String date;
 
-    private Long technicalCard;
+    private Long technicalCardId;
 
-    private Long warehouse;
+    private Long warehouseId;
 
     private Long companyId;
 

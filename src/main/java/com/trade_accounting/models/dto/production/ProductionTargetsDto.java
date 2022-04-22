@@ -19,9 +19,9 @@ public class ProductionTargetsDto { //Dto для "Производственны
 
     private String deliveryPlannedMoment; // поле "Планируемая дата производства"
 
-    private Long materialWarehouse; //Заглушка для поля "Склад для материалов"
+    private Long materialWarehouseId; //Заглушка для поля "Склад для материалов"
 
-    private Long productionWarehouse; // Заглушка для поля "Склад для продукции"
+    private Long productionWarehouseId; // Заглушка для поля "Склад для продукции"
 
     private String productionStart; // поле "начало производства"
 
@@ -29,7 +29,7 @@ public class ProductionTargetsDto { //Dto для "Производственны
 
     private Boolean shared = false; // поле "общий доступ"
 
-    private String Owner; // Заглушка для поля "Владелец-отдел"
+    private String owner; // Заглушка для поля "Владелец-отдел"
 
     private String employeeOwner; // Заглушка для поля "Владелец-сотрудник"
 

@@ -8,10 +8,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface RetailMakingMapper {
     //RetailMaking
-    @Mapping(source = "retailStoreId", target = "retailStore.id")
-    @Mapping(source = "companyId", target = "company.id")
+    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     RetailMaking toModel(RetailMakingDto retailMakingDto);
 
+    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(source = "retailStore.id", target = "retailStoreId")
     @Mapping(source = "company.id", target = "companyId")
     RetailMakingDto toDto(RetailMaking retailMaking);

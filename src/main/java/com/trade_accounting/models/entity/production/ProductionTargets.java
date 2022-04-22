@@ -60,7 +60,7 @@ public class ProductionTargets { // класс "Производственные
     private Boolean shared; // поле "общий доступ"
 
     @Column
-    private String Owner; // Заглушка для поля "Владелец-отдел"
+    private String owner; // Заглушка для поля "Владелец-отдел"
 
     @Column
     private String employeeOwner; // Заглушка для поля "Владелец-сотрудник"
