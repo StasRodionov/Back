@@ -33,10 +33,4 @@ public interface InvoiceMapper {
                 .build();
     }
 }
-//    Invoice toModel(InvoiceDto emp);
-//
-//    @Mapping(target = "companyId", source = "invoice.company.id")
-//    @Mapping(target = "contractorId", source = "invoice.contractor.id")
-//    @Mapping(target = "warehouseId", source = "invoice.warehouse.id")
-//    InvoiceDto toDto(Invoice invoice);
-//}
+

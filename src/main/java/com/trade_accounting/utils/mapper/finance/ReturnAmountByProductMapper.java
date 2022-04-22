@@ -8,9 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ReturnAmountByProductMapper {
     //ReturnAmountByProduct
-//    @Mapping(source = "productId", target = "product.id")
-//    @Mapping(source = "invoiceId", target = "invoice.id")
-//    @Mapping(source = "contractorId", target = "contractor.id")
+
     ReturnAmountByProduct toModel(ReturnAmountByProductDto returnAmountByProductDto);
 
 

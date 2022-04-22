@@ -10,10 +10,10 @@ import org.mapstruct.Mappings;
 public interface ReturnFromBuyersMapper {
     //ReturnFromBuyers
 
-//    @Mapping(source = "warehouseId", target = "warehouse.id")
-//    @Mapping(source = "contractorId", target = "contractor.id")
-//    @Mapping(source = "companyId", target = "company.id")
-//    @Mapping(source = "contractId", target = "contract.id")
+    @Mapping(source = "warehouseId", target = "warehouse.id")
+    @Mapping(source = "contractorId", target = "contractor.id")
+    @Mapping(source = "companyId", target = "company.id")
+    @Mapping(source = "contractId", target = "contract.id")
     ReturnFromBuyers toModel(ReturnFromBuyersDto returnFromBuyersDto);
 
 

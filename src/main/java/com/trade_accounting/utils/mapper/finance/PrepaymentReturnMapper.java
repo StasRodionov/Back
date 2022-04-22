@@ -12,7 +12,7 @@ public interface PrepaymentReturnMapper {
     @Mapping(source = "retailStoreId", target = "retailStore.id")
     @Mapping(source = "companyId", target = "company.id")
     @Mapping(source = "contractorId", target = "contractor.id")
-//    @Mapping(source = "time", target = "time", dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Mapping(source = "time", target = "time", dateFormat = "yyyy-MM-dd HH:mm:ss")
     PrepaymentReturn toModel(PrepaymentReturnDto prepaymentReturnDto);
 
     @Mapping(target = "retailStoreId", source = "retailStore.id")

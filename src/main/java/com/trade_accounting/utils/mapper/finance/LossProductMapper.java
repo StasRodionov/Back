@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface LossProductMapper {
     //LossProduct
-//    @Mapping(source = "productId", target = "product.id")
+    @Mapping(source = "productId", target = "product.id")
     LossProduct toModel(LossProductDto lossProductDto);
 
     @Mapping(target = "productId", source = "product.id")
