@@ -4,9 +4,11 @@ import com.trade_accounting.models.entity.fias.FiasAddressModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface AddressDbRepository extends JpaRepository<FiasAddressModel, Long> {
     @Query("from FiasAddressModel as address where address.aolevel like :level")
     List<FiasAddressModel> findAllByLevel(@Param("level") String level);

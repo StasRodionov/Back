@@ -7,7 +7,6 @@ import com.trade_accounting.models.dto.company.CompanyDto;
 import com.trade_accounting.models.entity.invoice.InternalOrderProduct;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface CompanyMapper {
