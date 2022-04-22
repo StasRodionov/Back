@@ -67,7 +67,6 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public EmployeeDto create(EmployeeDto dto) {
 
-        dto.setId(employeeMapper.toModel(dto).getId());
         return employeeMapper.toDto(
                 employeeRepository.save(employeeMapper.toModel(dto))
         );
