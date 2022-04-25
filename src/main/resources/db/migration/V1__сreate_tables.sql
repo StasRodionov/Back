@@ -728,7 +728,7 @@ create table purchase_current_balance
 create table purchase_forecast
 (
     id                int8 not null,
-    ordered           boolean default false,
+    ordered           int8,
     reserved_days     int8,
     reserved_products int8,
     primary key (id)

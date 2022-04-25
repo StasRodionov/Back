@@ -20,5 +20,5 @@ public class PurchaseForecastDto {
 
     private Long reservedProducts;
 
-    private Boolean ordered;
+    private Long ordered;
 }
