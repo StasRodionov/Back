@@ -1,5 +1,6 @@
 package com.trade_accounting.Stubs;
 
+import com.trade_accounting.models.dto.warehouse.SerialNumbersDto;
 import com.trade_accounting.models.entity.finance.Prepayout;
 import com.trade_accounting.models.entity.production.OrdersOfProduction;
 import com.trade_accounting.models.entity.util.OperationsAbstract;
@@ -12,6 +13,7 @@ import com.trade_accounting.models.entity.finance.PrepaymentReturn;
 import com.trade_accounting.models.entity.warehouse.Product;
 import com.trade_accounting.models.entity.production.ProductionTargets;
 import com.trade_accounting.models.entity.production.StagesProduction;
+import com.trade_accounting.models.entity.warehouse.SerialNumbers;
 import org.springframework.data.jpa.domain.Specification;
 
 public class SpecificationStubs {
@@ -59,6 +61,9 @@ public class SpecificationStubs {
     }
 
     public static Specification<OrdersOfProduction> getOrdersOfProductionStub() {
+        return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+    public static Specification<SerialNumbers> getSerialNumbersSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
 }
