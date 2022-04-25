@@ -9,15 +9,13 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface AuditMapper {
     //Audit
-    @Mappings({
-            @Mapping(source = "employeeId", target = "employee.id"),
-            @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
-    })
+
+    @Mapping(source = "employeeId", target = "employee.id")
+    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     Audit auditDtoToAudit(AuditDto auditDto);
 
-    @Mappings({
-            @Mapping(source = "employee.id", target = "employeeId"),
-            @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
-    })
+
+    @Mapping(source = "employee.id", target = "employeeId")
+    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     AuditDto auditToAuditDto(Audit audit);
 }

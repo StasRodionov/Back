@@ -9,18 +9,16 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface LegalDetailMapper {
     //LegalDetail
-    @Mappings({
-            @Mapping(target = "dateOfTheCertificate", ignore = true),
-            @Mapping(source = "typeOfContractorDtoId", target = "typeOfContractor.id"),
-            @Mapping(source = "addressDtoId", target = "address.id")
-    })
+
+    @Mapping(target = "dateOfTheCertificate", ignore = true)
+    @Mapping(source = "typeOfContractorDtoId", target = "typeOfContractor.id")
+    @Mapping(source = "addressDtoId", target = "address.id")
     LegalDetail toModel(LegalDetailDto legalDetailDto);
 
-    @Mappings({
-            @Mapping(source = "dateOfTheCertificate", target = "dateOfTheCertificate"),
-            @Mapping(source = "typeOfContractor.id", target = "typeOfContractorDtoId"),
-            @Mapping(source = "address.id", target = "addressDtoId")
-    })
+
+    @Mapping(source = "dateOfTheCertificate", target = "dateOfTheCertificate")
+    @Mapping(source = "typeOfContractor.id", target = "typeOfContractorDtoId")
+    @Mapping(source = "address.id", target = "addressDtoId")
     LegalDetailDto toDto(LegalDetail legalDetail);
 
 }

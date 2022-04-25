@@ -9,17 +9,15 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface InvoiceReceivedMapper {
     //InvoiceReceived
-    @Mappings({
-            @Mapping(source = "companyId", target = "company.id"),
-            @Mapping(source = "contractorId", target = "contractor.id"),
-            @Mapping(source = "acceptanceId", target = "acceptance.id")
-    })
+
+    @Mapping(source = "companyId", target = "company.id")
+    @Mapping(source = "contractorId", target = "contractor.id")
+    @Mapping(source = "acceptanceId", target = "acceptance.id")
     InvoiceReceived toModel(InvoiceReceivedDto invoiceReceivedDto);
 
-    @Mappings({
-            @Mapping(source = "company.id", target = "companyId"),
-            @Mapping(source = "contractor.id", target = "contractorId"),
-            @Mapping(source = "acceptance.id", target = "acceptanceId")
-    })
+
+    @Mapping(source = "company.id", target = "companyId")
+    @Mapping(source = "contractor.id", target = "contractorId")
+    @Mapping(source = "acceptance.id", target = "acceptanceId")
     InvoiceReceivedDto toDto(InvoiceReceived invoiceReceived);
 }
