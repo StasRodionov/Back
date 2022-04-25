@@ -106,10 +106,12 @@ public class InvoiceServiceImpl implements InvoiceService {
         Warehouse warehouse = warehouseRepository.getOne(invoiceDto.getWarehouseId());
         InvoicesStatus invoicesStatus = invoicesStatusRepository.getInvoicesStatusById(invoiceDto.getInvoicesStatusId());
         invoiceSaved.setCompany(company);
-        invoiceSaved.setInvoiceProducts(
-                invoiceDto.getInvoiceProductsIds().stream()
-                        .map(id -> invoiceProductRepository.findById(id).orElse(null))
-                        .collect(Collectors.toList()));
+        if (invoiceDto.getInvoiceProductsIds() != null) {
+            invoiceSaved.setInvoiceProducts(
+                    invoiceDto.getInvoiceProductsIds().stream()
+                            .map(id -> invoiceProductRepository.findById(id).orElse(null))
+                            .collect(Collectors.toList()));
+        }
         invoiceSaved.setContractor(contractor);
         invoiceSaved.setWarehouse(warehouse);
         invoiceSaved.setInvoicesStatus(invoicesStatus);

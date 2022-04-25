@@ -154,8 +154,8 @@ class ProductionTargetsServiceImplTest {
         assertNotNull(productionTargetsDto.getDeliveryPlannedMoment(), "failure - fail in field 'deliveryPlannedMoment' into productionTargetsDto");
         assertNotNull(productionTargetsDto.getProductionStart(), "failure - fail in field 'productionStart' into productionTargetsDto");
         assertNotNull(productionTargetsDto.getProductionEnd(), "failure - fail in field 'productionEnd' into productionTargetsDto");
-        assertNotNull(productionTargetsDto.getMaterialWarehouse(), "failure - fail in field 'materialWarehouse' into productionTargetsDto");
-        assertNotNull(productionTargetsDto.getProductionWarehouse(), "failure - fail in field 'productionWarehouse' into productionTargetsDto");
+        assertNotNull(productionTargetsDto.getMaterialWarehouseId(), "failure - fail in field 'materialWarehouse' into productionTargetsDto");
+        assertNotNull(productionTargetsDto.getProductionWarehouseId(), "failure - fail in field 'productionWarehouse' into productionTargetsDto");
         assertNotNull(productionTargetsDto.getOwner(), "failure - fail in field 'Owner' into productionTargetsDto");
         assertNotNull(productionTargetsDto.getEmployeeOwner(), "failure - fail in field 'employeeOwner' into productionTargetsDto");
         assertNotNull(productionTargetsDto.getUpdated(), "failure - fail in field 'updated' into productionTargetsDto");

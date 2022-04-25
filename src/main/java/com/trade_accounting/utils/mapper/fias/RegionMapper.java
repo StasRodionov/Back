@@ -9,13 +9,11 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface RegionMapper {
     //Region
-    @Mappings({
-            @Mapping(source = "districtDtos", target = "districts")
-    })
+
+    @Mapping(source = "districtDtos", target = "districts")
     Region toModel(RegionDto regionDto);
 
-    @Mappings({
-            @Mapping(source = "districts", target = "districtDtos")
-    })
+
+    @Mapping(source = "districts", target = "districtDtos")
     RegionDto toDto(Region region);
 }

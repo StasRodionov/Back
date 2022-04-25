@@ -9,15 +9,13 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface MutualSettlementsMapper {
     //MutualSettlements
-    @Mappings({
-            @Mapping(source = "contractor.id", target = "contractorId"),
-            @Mapping(source = "employee.id", target = "employeeId")
-    })
+    @Mapping(source = "contractorId", target = "contractor.id")
+    @Mapping(source = "employeeId", target = "employee.id")
+    MutualSettlements toModel(MutualSettlementsDto mutualSettlementsDto);
+
+    @Mapping(source = "contractor.id", target = "contractorId")
+    @Mapping(source = "employee.id", target = "employeeId")
     MutualSettlementsDto toDto(MutualSettlements mutualSettlements);
 
-    @Mappings({
-            @Mapping(source = "contractorId", target = "contractor.id"),
-            @Mapping(source = "employeeId", target = "employee.id")
-    })
-    MutualSettlements toModel(MutualSettlementsDto mutualSettlementsDto);
+
 }
