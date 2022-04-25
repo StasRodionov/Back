@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest.production;
 
 import com.google.gson.Gson;
-import com.trade_accounting.controllers.rest.production.TechnicalOperationsRestController;
 import com.trade_accounting.models.dto.production.TechnicalOperationsDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,8 +60,8 @@ public class TechnicalOperationsRestControllerTest {
                 .isSent(true)
                 .volume(12)
                 .date("2021-08-10 12:15")
-                .technicalCard(1L)
-                .warehouse(1L)
+                .technicalCardId(1L)
+                .warehouseId(1L)
                 .companyId(1L)
                 .build());
 
@@ -83,8 +82,8 @@ public class TechnicalOperationsRestControllerTest {
                 .isSent(true)
                 .volume(12)
                 .date("2021-08-10 12:15")
-                .technicalCard(1L)
-                .warehouse(1L)
+                .technicalCardId(1L)
+                .warehouseId(1L)
                 .companyId(1L)
                 .build());
 
@@ -112,8 +111,8 @@ public class TechnicalOperationsRestControllerTest {
                 .isSent(true)
                 .volume(12)
                 .date("2021-08-10 12:15")
-                .technicalCard(1L)
-                .warehouse(1L)
+                .technicalCardId(1L)
+                .warehouseId(1L)
                 .companyId(1L)
                 .build());
 

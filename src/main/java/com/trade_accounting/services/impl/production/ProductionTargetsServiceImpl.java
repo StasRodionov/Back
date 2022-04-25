@@ -78,8 +78,8 @@ public class ProductionTargetsServiceImpl implements ProductionTargetsService {
         ProductionTargets productionTargets = new ProductionTargets();
 
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
-        Warehouse materialWarehouse = warehouseRepository.getWarehouseById(dto.getMaterialWarehouse());
-        Warehouse productionWarehouse = warehouseRepository.getWarehouseById(dto.getProductionWarehouse());
+        Warehouse materialWarehouse = warehouseRepository.getWarehouseById(dto.getMaterialWarehouseId());
+        Warehouse productionWarehouse = warehouseRepository.getWarehouseById(dto.getProductionWarehouseId());
         LocalDateTime date = LocalDateTime.parse(dto.getDate().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         LocalDateTime deliveryPlannedMoment = LocalDateTime.parse(dto.getDeliveryPlannedMoment().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         LocalDateTime productionStart = LocalDateTime.parse(dto.getProductionStart().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
