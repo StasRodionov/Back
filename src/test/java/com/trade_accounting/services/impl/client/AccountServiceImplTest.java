@@ -1,13 +1,18 @@
 package com.trade_accounting.services.impl.client;
 
 import com.trade_accounting.Stubs.ModelStubs;
+import com.trade_accounting.Stubs.dto.client.AccountDtoStubs;
+import com.trade_accounting.Stubs.dto.client.DepartmentDtoStubs;
 import com.trade_accounting.Stubs.dto.client.EmployeeDtoStubs;
 import com.trade_accounting.models.dto.client.DepartmentDto;
 import com.trade_accounting.models.dto.client.EmployeeDto;
+import com.trade_accounting.models.entity.client.Account;
 import com.trade_accounting.models.entity.client.Department;
 import com.trade_accounting.models.entity.client.Employee;
 import com.trade_accounting.repositories.client.AccountRepository;
 import com.trade_accounting.repositories.client.EmployeeRepository;
+import com.trade_accounting.services.interfaces.client.EmployeeService;
+import com.trade_accounting.utils.mapper.client.AccountMapper;
 import com.trade_accounting.utils.mapper.client.EmployeeMapperImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -37,6 +42,10 @@ class AccountServiceImplTest {
     private AccountRepository accountRepository;
     @Mock
     private EmployeeRepository employeeRepository;
+    @Mock
+    private EmployeeService employeeService;
+    @Mock
+    private AccountMapper accountMapper;
 
     @Spy
     private EmployeeMapperImpl employeeMapper;
@@ -47,10 +56,17 @@ class AccountServiceImplTest {
 
     @Test
     void create_shouldPassInstructionsSuccessfulCreate(){
-        accountService.create(EmployeeDtoStubs.getEmployeeDto(1L));
 
-        verify(employeeRepository).save(any(Employee.class));
-        log.info("employee was save repository");
+        when(employeeService.create(EmployeeDtoStubs.getEmployeeDto(1L)))
+                .thenReturn( EmployeeDto.builder().build());
+
+        when(accountMapper.toModel(AccountDtoStubs.getAccountDto(1L)))
+                .thenReturn(Account.builder().build());
+
+        accountService.create(AccountDtoStubs.getAccountDto(1L),EmployeeDtoStubs.getEmployeeDto(1L));
+
+        verify(accountRepository).save(any(Account.class));
+        log.info("account was save repository");
     }
 
     @Test
@@ -99,6 +115,14 @@ class AccountServiceImplTest {
 
         employeeDtoIsCorrectlyInited(employeeDto);
         log.info("employee get from repository");
+    }
+    @Test
+    void create_shouldPassInstructionsSuccessfulCreateEmployee(){
+        accountService.create(EmployeeDtoStubs.getEmployeeDto(1L));
+
+        verify(employeeRepository).save(any(Employee.class));
+        log.info("was success creat");
+
     }
 
     @Test
