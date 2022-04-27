@@ -67,6 +67,7 @@ import com.trade_accounting.models.entity.warehouse.InventarizationProduct;
 import com.trade_accounting.models.entity.warehouse.Product;
 import com.trade_accounting.models.entity.warehouse.Revenue;
 import com.trade_accounting.models.entity.warehouse.SerialNumbers;
+import com.trade_accounting.models.entity.warehouse.SupplierAccountProductsList;
 import com.trade_accounting.models.entity.warehouse.Warehouse;
 
 import java.math.BigDecimal;
@@ -748,5 +749,8 @@ public class ModelStubs {
 
     public static SerialNumbers serialNumbers(Long id) {
         return new SerialNumbers(id, 1L, 1L, getProduct(1L), getWarehouse(1L), "type", 1L, "описание");
+    }
+    public static SupplierAccountProductsList getSupplierAccountProductsList(Long id){
+        return new SupplierAccountProductsList(id, getSupplierAccount(1L), getProduct(1L), new BigDecimal(1), new BigDecimal(1), new BigDecimal(1), "qwerty", new BigDecimal(1), new BigDecimal(1));
     }
 }

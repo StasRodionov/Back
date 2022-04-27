@@ -12,9 +12,9 @@ import java.math.BigDecimal;
 public class SupplierAccountProductsListDto {
     private Long id;
 
-    private Long SupplierAccountId;
+    private Long supplierAccountId;
 
-    private Long ProductId;
+    private Long productId;
 
     private BigDecimal amount;
 
