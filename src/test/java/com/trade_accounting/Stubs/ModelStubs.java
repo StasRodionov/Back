@@ -205,6 +205,24 @@ public class ModelStubs {
         );
     }
 
+    public static Account getAccount(Long id){
+        return Account.builder()
+                .id(id)
+                .employee(new Employee(  id, "lastName", "firstName",
+                        "middleName", "00001", "890304552535",
+                        "123456789012", "descript",
+                        "email.email@email.com", "pass",
+                        getDepartment(id), getPosition(id),
+                        Stream.of(
+                                getRole(id),
+                                getRole(id + 1),
+                                getRole(id + 2)
+                        ).collect(Collectors.toSet()),
+                        getImage(id), new Account()))
+                .build();
+
+    }
+
     public static ContractorGroup getContractorGroup(Long id) {
         return new ContractorGroup(id, "name", "00001");
     }
