@@ -8,20 +8,15 @@ import com.trade_accounting.services.interfaces.company.ContractorService;
 import com.trade_accounting.services.interfaces.purchases.PurchaseControlService;
 import com.trade_accounting.services.interfaces.purchases.PurchaseCurrentBalanceService;
 import com.trade_accounting.services.interfaces.purchases.PurchaseForecastService;
-import com.trade_accounting.services.interfaces.util.AbstractService;
 import com.trade_accounting.services.interfaces.warehouse.ProductService;
 import com.trade_accounting.services.interfaces.warehouse.WarehouseService;
 import com.trade_accounting.utils.mapper.purchases.PurchaseControlMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -60,9 +55,7 @@ public class PurchaseControlServiceImpl implements PurchaseControlService {
 
     @Override
     public PurchaseControlDto update(PurchaseControlDto dto) {
-        PurchaseControl purchaseControl = purchaseControlMapper.toModel(dto);
-        purchaseControlRepository.save(purchaseControl);
-        return dto;
+        return create(dto);
     }
 
     @Override
@@ -104,7 +97,7 @@ public class PurchaseControlServiceImpl implements PurchaseControlService {
         List<PurchaseControlDto> listResult = new ArrayList<>();
 
         list.stream()
-                .filter(e-> checkDate(e, map.get("startDate"), map.get("endDate")))
+                .filter(e -> checkDate(e, map.get("startDate"), map.get("endDate")))
                 .filter(e -> checkProduct(e, map.get("productId")))
                 .filter(e -> checkAvailable(e, map.get("available")))
                 .filter(e -> checkSold(e, map.get("sold")))
@@ -175,10 +168,10 @@ public class PurchaseControlServiceImpl implements PurchaseControlService {
         if (requestSold == null) {
             result = true;
         } else if (requestSold.equals("Только проданные") &&
-                (purchaseForecastService.getById(purchaseControlDto.getForecastId()).getOrdered())) {
+                (purchaseControlDto.getProductQuantity() > 0)) {
             result = true;
         } else if (requestSold.equals("Только непроданные") &&
-                (!purchaseForecastService.getById(purchaseControlDto.getForecastId()).getOrdered())) {
+                (purchaseControlDto.getProductQuantity() < 0)) {
             result = false;
         } else if (requestSold.equals("Все")) {
             result = true;

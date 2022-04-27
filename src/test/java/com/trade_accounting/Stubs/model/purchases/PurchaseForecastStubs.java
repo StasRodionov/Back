@@ -8,7 +8,7 @@ public class PurchaseForecastStubs {
                 .id(id)
                 .reservedDays(7L)
                 .reservedProducts(1L)
-                .ordered(true)
+                .ordered(10L)
                 .build();
     }
 }
