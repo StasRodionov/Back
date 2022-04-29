@@ -1,8 +1,9 @@
 package com.trade_accounting.services.interfaces.invoice;
 
+import com.trade_accounting.models.dto.invoice.InvoiceDto;
+import com.trade_accounting.models.dto.purchases.PurchaseCreateOrderDto;
 import com.trade_accounting.models.entity.invoice.Invoice;
 import com.trade_accounting.models.entity.invoice.TypeOfInvoice;
-import com.trade_accounting.models.dto.invoice.InvoiceDto;
 import com.trade_accounting.services.interfaces.util.AbstractService;
 import com.trade_accounting.services.interfaces.util.SearchableService;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,4 +26,5 @@ public interface InvoiceService extends AbstractService<InvoiceDto>, SearchableS
     List<InvoiceDto> getByContractorId(Long id);
     void moveToRecyclebin(long id);
     void restoreFromRecyclebin(long id);
+    void createAll(PurchaseCreateOrderDto purchaseCreateOrderDto);
 }

@@ -1,12 +1,8 @@
 package com.trade_accounting.services.impl.purchases;
 
-import com.trade_accounting.Stubs.dto.purchases.PurchaseCurrentBalanceDtoStubs;
 import com.trade_accounting.Stubs.dto.purchases.PurchaseForecastDtoStubs;
-import com.trade_accounting.Stubs.model.purchases.PurchaseCurrentBalanceStubs;
 import com.trade_accounting.Stubs.model.purchases.PurchaseForecastStubs;
-import com.trade_accounting.models.dto.purchases.PurchaseCurrentBalanceDto;
 import com.trade_accounting.models.dto.purchases.PurchaseForecastDto;
-import com.trade_accounting.models.entity.purchases.PurchaseCurrentBalance;
 import com.trade_accounting.models.entity.purchases.PurchaseForecast;
 import com.trade_accounting.repositories.purchases.PurchaseForecastRepository;
 import com.trade_accounting.utils.mapper.purchases.PurchaseForecastMapper;
@@ -83,7 +79,7 @@ class PurchaseForecastServiceImplTest {
                 .thenReturn(PurchaseForecastStubs.getPurchaseForecast(1L));
 
         PurchaseForecastDto purchaseForecastDto = purchaseForecastService
-                .create(PurchaseForecastDtoStubs.getDto(1L));
+                .create(PurchaseForecastDtoStubs.getPurchaseForecastDto(1L));
 
         assertEquals(1, purchaseForecastDto.getId());
         verify(purchaseForecastRepository).save(any(PurchaseForecast.class));

@@ -5,6 +5,7 @@ import com.trade_accounting.models.entity.util.OperationsAbstract;
 import com.trade_accounting.models.entity.warehouse.Warehouse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
@@ -36,13 +37,13 @@ import java.util.List;
 @Entity
 @Table(name = "invoice")
 @SuperBuilder
+@EqualsAndHashCode
 public class Invoice extends OperationsAbstract {
 
     @NotNull
     @Column(name = "type_of_invoice")
     private TypeOfInvoice typeOfInvoice;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     private Contractor contractor;

@@ -1,6 +1,7 @@
 package com.trade_accounting.services.interfaces.invoice;
 
 
+import com.trade_accounting.models.dto.purchases.PurchaseControlDto;
 import com.trade_accounting.models.entity.invoice.InvoiceProduct;
 import com.trade_accounting.models.dto.invoice.InvoiceProductDto;
 import com.trade_accounting.services.interfaces.util.AbstractService;
@@ -22,4 +23,6 @@ public interface InvoiceProductService extends AbstractService<InvoiceProductDto
     List<InvoiceProductDto> search(Specification<InvoiceProduct> specification);
 
     List<InvoiceProductDto> getAllByProductId(Long id);
+
+    void createAll(List<InvoiceProductDto> invoiceProductDtos);
 }

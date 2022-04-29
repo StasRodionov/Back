@@ -1,19 +1,20 @@
 package com.trade_accounting.services.impl.invoice;
 
-import com.trade_accounting.models.entity.company.Company;
-import com.trade_accounting.models.entity.company.Contractor;
-import com.trade_accounting.models.entity.invoice.Invoice;
-import com.trade_accounting.models.entity.invoice.InvoicesStatus;
-import com.trade_accounting.models.entity.invoice.TypeOfInvoice;
-import com.trade_accounting.models.entity.warehouse.Warehouse;
 import com.trade_accounting.models.dto.invoice.InvoiceDto;
+import com.trade_accounting.models.dto.invoice.InvoiceProductDto;
+import com.trade_accounting.models.dto.invoice.TypeOfOrder;
+import com.trade_accounting.models.dto.purchases.PurchaseControlDto;
+import com.trade_accounting.models.dto.purchases.PurchaseCreateOrderDto;
+import com.trade_accounting.models.entity.invoice.Invoice;
+import com.trade_accounting.models.entity.invoice.TypeOfInvoice;
 import com.trade_accounting.repositories.company.CompanyRepository;
 import com.trade_accounting.repositories.company.ContractorRepository;
-import com.trade_accounting.repositories.invoice.InvoiceProductRepository;
 import com.trade_accounting.repositories.invoice.InvoiceRepository;
-import com.trade_accounting.repositories.invoice.InvoicesStatusRepository;
 import com.trade_accounting.repositories.warehouse.WarehouseRepository;
+import com.trade_accounting.services.interfaces.invoice.InvoiceProductService;
 import com.trade_accounting.services.interfaces.invoice.InvoiceService;
+import com.trade_accounting.services.interfaces.purchases.PurchaseForecastService;
+import com.trade_accounting.services.interfaces.warehouse.ProductService;
 import com.trade_accounting.utils.mapper.company.CompanyMapper;
 import com.trade_accounting.utils.mapper.company.ContractorMapper;
 import com.trade_accounting.utils.mapper.invoice.InvoiceMapper;
@@ -22,8 +23,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -37,10 +41,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final ContractorRepository contractorRepository;
     private final WarehouseRepository warehouseRepository;
     private final ContractorMapper contractorMapper;
-    private final InvoicesStatusRepository invoicesStatusRepository;
-    private final InvoiceProductRepository invoiceProductRepository;
     private final CompanyMapper companyMapper;
     private final InvoiceMapper invoiceMapper;
+    private final InvoiceProductService invoiceProductService;
+    private final ProductService productService;
+    private final PurchaseForecastService purchaseForecastService;
 
     @Override
     public List<InvoiceDto> search(Specification<Invoice> specification) {
@@ -101,21 +106,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public InvoiceDto create(InvoiceDto invoiceDto) {
         Invoice invoiceSaved = invoiceMapper.toModel(invoiceDto);
-        Company company = companyRepository.getCompaniesById(invoiceDto.getCompanyId());
-        Contractor contractor = contractorRepository.getContractorById(invoiceDto.getContractorId());
-        Warehouse warehouse = warehouseRepository.getOne(invoiceDto.getWarehouseId());
-        InvoicesStatus invoicesStatus = invoicesStatusRepository.getInvoicesStatusById(invoiceDto.getInvoicesStatusId());
-        invoiceSaved.setCompany(company);
-        if (invoiceDto.getInvoiceProductsIds() != null) {
-            invoiceSaved.setInvoiceProducts(
-                    invoiceDto.getInvoiceProductsIds().stream()
-                            .map(id -> invoiceProductRepository.findById(id).orElse(null))
-                            .collect(Collectors.toList()));
-        }
-        invoiceSaved.setContractor(contractor);
-        invoiceSaved.setWarehouse(warehouse);
-        invoiceSaved.setInvoicesStatus(invoicesStatus);
-
         return invoiceMapper.toDto(invoiceRepository.save(invoiceSaved));
     }
 
@@ -129,5 +119,59 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public void deleteById(Long id) {
         invoiceRepository.deleteById(id);
+    }
+
+    public void createAll(PurchaseCreateOrderDto purchaseCreateOrderDto) {
+        List<PurchaseControlDto> purchaseControlDtoList = purchaseCreateOrderDto.getPurchaseControlDtoList();
+        TypeOfOrder typeOfOrder = purchaseCreateOrderDto.getTypeOfOrder();
+        if (typeOfOrder.equals(TypeOfOrder.GENERAL)) {
+            // для общего заказа создается одна накладная
+            Invoice invoice = createInvoice(purchaseControlDtoList.get(0), typeOfOrder);
+            // без установления значения поля contractor null возникает ошибка со стороны Hibernate
+            invoice.setContractor(null);
+
+            List<InvoiceProductDto> invoiceProductDtos = getInvoiceProductDtoList(invoice.getId(), purchaseControlDtoList);
+            invoiceProductService.createAll(invoiceProductDtos);
+        } else if (typeOfOrder.equals(TypeOfOrder.GROUPING_BY_CONTRACTOR)) {
+            //если у товаров один и тот же поставщик, для них создается одна накладная (invoiceDto)
+            Map<Long, List<PurchaseControlDto>> dtoGroupedByContractorId = purchaseControlDtoList.stream()
+                    .collect(
+                            Collectors.groupingBy(PurchaseControlDto::getContractorId)
+                    );
+            List<InvoiceProductDto> invoiceProductDtos = new ArrayList<>();
+            for (List<PurchaseControlDto> purchaseControlDtos : dtoGroupedByContractorId.values()) {
+                Invoice invoice = createInvoice(purchaseControlDtos.get(0), typeOfOrder);
+                invoiceProductDtos.addAll(getInvoiceProductDtoList(invoice.getId(), purchaseControlDtos));
+            }
+            invoiceProductService.createAll(invoiceProductDtos);
+        }
+    }
+
+    private Invoice createInvoice(PurchaseControlDto purchaseControlDto, TypeOfOrder typeOfOrder) {
+        InvoiceDto invoiceDto = new InvoiceDto();
+        invoiceDto.setDate(String.valueOf(LocalDateTime.now()));
+        invoiceDto.setCompanyId(purchaseControlDto.getCompanyId());
+        if (typeOfOrder.equals(TypeOfOrder.GROUPING_BY_CONTRACTOR)) {
+            invoiceDto.setContractorId(purchaseControlDto.getContractorId());
+        }
+        invoiceDto.setWarehouseId(purchaseControlDto.getWarehouseId());
+        invoiceDto.setInvoicesStatusId(1L);
+        invoiceDto.setTypeOfInvoice("EXPENSE");
+        invoiceDto.setIsPrint(false);
+        invoiceDto.setIsSent(false);
+        invoiceDto.setIsSpend(false);
+        return invoiceRepository.save(invoiceMapper.toModel(invoiceDto));
+    }
+
+    private List<InvoiceProductDto> getInvoiceProductDtoList(Long invoiceId, List<PurchaseControlDto> purchaseControlDtoList) {
+        return purchaseControlDtoList.stream()
+                .map(
+                        x -> InvoiceProductDto.builder()
+                                .invoiceId(invoiceId)
+                                .productId(x.getProductNameId())
+                                .price(productService.getById(x.getProductNameId()).getPurchasePrice())
+                                .amount(BigDecimal.valueOf(purchaseForecastService.getById(x.getForecastId()).getOrdered()))
+                                .build()
+                ).collect(Collectors.toList());
     }
 }

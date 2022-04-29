@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 public class PurchaseForecastDtoStubs {
     private static final PurchaseForecastMapper MAPPER = Mappers.getMapper(PurchaseForecastMapper.class);
 
-    public static PurchaseForecastDto getDto(Long id) {
+    public static PurchaseForecastDto getPurchaseForecastDto(Long id) {
         return MAPPER.toDto(PurchaseForecastStubs.getPurchaseForecast(id));
     }
 }

@@ -35,5 +35,4 @@ public class PurchaseForecast {
     private Long reservedProducts;
 
     private Long ordered;
-
 }
