@@ -76,7 +76,7 @@ public class AccountRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
     public ResponseEntity<Employee> update(@ApiParam(name = "employeeDto", value = "DTO работника, которого необходимо обновить") @RequestBody EmployeeDto employeeDto) {
-        return ResponseEntity.ok().body(accountService.createEmployee(employeeDto));
+        return ResponseEntity.ok().body(accountService.updateEmployee(employeeDto));
     }
 
     @DeleteMapping("/{id}")

@@ -112,7 +112,7 @@ class AccountServiceImplTest {
     }
     @Test
     void create_shouldPassInstructionsSuccessfulCreateEmployee(){
-        accountService.createEmployee(EmployeeDtoStubs.getEmployeeDto(1L));
+        accountService.updateEmployee(EmployeeDtoStubs.getEmployeeDto(1L));
 
         verify(employeeRepository).save(any(Employee.class));
         log.info("was success creat");
@@ -121,7 +121,7 @@ class AccountServiceImplTest {
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate(){
-        accountService.update(EmployeeDtoStubs.getEmployeeDto(1L));
+        accountService.updateEmployee(EmployeeDtoStubs.getEmployeeDto(1L));
 
         verify(employeeRepository).save(any(Employee.class));
         log.info("was succesfully update");

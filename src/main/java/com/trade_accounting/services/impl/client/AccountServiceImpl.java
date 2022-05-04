@@ -36,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Employee createEmployee(EmployeeDto employeeDto) {
+    public Employee updateEmployee(EmployeeDto employeeDto) {
         Account account = new Account();
         account.setEmployees(List.of(employeeMapper.toModel(employeeDto)));
         accountRepository.save(account);
@@ -63,10 +63,9 @@ public class AccountServiceImpl implements AccountService {
         return employeeMapper.toDto(employee.orElse(new Employee()));
     }
 
-    @Override
-    public Employee update(EmployeeDto empDto) {
-      return createEmployee(empDto);
-    }
-
+//    @Override
+//    public Employee update(EmployeeDto empDto) {
+//      return createEmployee(empDto);
+//    }
 
 }

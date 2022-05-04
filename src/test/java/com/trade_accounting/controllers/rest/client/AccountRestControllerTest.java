@@ -114,8 +114,8 @@ public class AccountRestControllerTest {
      void testUpdate() throws Exception {
 
        EmployeeDto createdEmployee = EmployeeDto.builder()
-               .lastName("petrov")
-               .firstName("ivan")
+               .lastName("sidorov")
+               .firstName("ilya")
                .middleName("ivanovich")
                .sortNumber("created")
                .phone("created")
@@ -130,8 +130,8 @@ public class AccountRestControllerTest {
                .build();
 
        Employee employee = Employee.builder()
-               .lastName("petrov")
-               .firstName("ivan")
+               .lastName("sidorov")
+               .firstName("ilya")
                .middleName("ivanovich")
                .sortNumber("created")
                .phone("created")

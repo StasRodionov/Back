@@ -13,8 +13,7 @@ public interface AccountService {
      List<EmployeeDto> getAll();
     EmployeeDto getById(Long id);
     Account createAccount(EmployeeDto employeeDto);
-    Employee createEmployee(EmployeeDto employeeDto);
-    Employee update(EmployeeDto empDto);
+    Employee updateEmployee(EmployeeDto employeeDto);
     void deleteAccountById(Long id);
 
 }
