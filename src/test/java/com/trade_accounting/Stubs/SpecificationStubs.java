@@ -1,19 +1,19 @@
 package com.trade_accounting.Stubs;
 
-import com.trade_accounting.models.dto.warehouse.SerialNumbersDto;
-import com.trade_accounting.models.entity.finance.Prepayout;
-import com.trade_accounting.models.entity.production.OrdersOfProduction;
-import com.trade_accounting.models.entity.util.OperationsAbstract;
-import com.trade_accounting.models.entity.warehouse.BuyersReturn;
+import com.trade_accounting.models.entity.client.Employee;
 import com.trade_accounting.models.entity.company.Company;
 import com.trade_accounting.models.entity.company.Contract;
-import com.trade_accounting.models.entity.units.Currency;
-import com.trade_accounting.models.entity.client.Employee;
 import com.trade_accounting.models.entity.finance.PrepaymentReturn;
-import com.trade_accounting.models.entity.warehouse.Product;
+import com.trade_accounting.models.entity.finance.Prepayout;
+import com.trade_accounting.models.entity.production.OrdersOfProduction;
 import com.trade_accounting.models.entity.production.ProductionTargets;
 import com.trade_accounting.models.entity.production.StagesProduction;
+import com.trade_accounting.models.entity.units.Currency;
+import com.trade_accounting.models.entity.util.OperationsAbstract;
+import com.trade_accounting.models.entity.warehouse.BuyersReturn;
+import com.trade_accounting.models.entity.warehouse.Product;
 import com.trade_accounting.models.entity.warehouse.SerialNumbers;
+import com.trade_accounting.models.entity.warehouse.SupplierAccountProductsList;
 import org.springframework.data.jpa.domain.Specification;
 
 public class SpecificationStubs {
@@ -36,6 +36,7 @@ public class SpecificationStubs {
     public static Specification<Currency> getCurrencySpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
+
     public static Specification<Product> getProductSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
@@ -51,7 +52,8 @@ public class SpecificationStubs {
     public static Specification<StagesProduction> getStagesProductionSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
-//
+
+    //
     public static Specification<PrepaymentReturn> getPrepaymentReturnSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
@@ -63,7 +65,12 @@ public class SpecificationStubs {
     public static Specification<OrdersOfProduction> getOrdersOfProductionStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
+
     public static Specification<SerialNumbers> getSerialNumbersSpecificationStub() {
+        return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+
+    public static Specification<SupplierAccountProductsList> getSupplierAccountProductsListSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
 }
