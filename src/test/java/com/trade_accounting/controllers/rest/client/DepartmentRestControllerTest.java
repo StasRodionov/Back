@@ -1,8 +1,8 @@
 package com.trade_accounting.controllers.rest.client;
 
 import com.google.gson.Gson;
-import com.trade_accounting.controllers.rest.client.DepartmentRestController;
 import com.trade_accounting.models.dto.client.DepartmentDto;
+import com.trade_accounting.models.entity.client.Department;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(properties = {"spring.config.location = src/test/resources/application-test.yml"})
 @Sql(value = "/department-before.sql")
 @WithMockUser
-@AutoConfigureRestDocs(outputDir = "target/snippets", uriScheme = "http", uriPort = 4444)
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 4444)
 public class DepartmentRestControllerTest {
 
     @Autowired
@@ -40,6 +40,7 @@ public class DepartmentRestControllerTest {
     public void testExistence() throws Exception {
         assertNotNull(departmentRestController, "Department Rest controller is null");
     }
+
     @Test
     public void testGetAll() throws Exception {
         mockMvc.perform(get("/api/department"))
@@ -49,6 +50,7 @@ public class DepartmentRestControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
+
     @Test
     public void testGetById() throws Exception {
         String departmentJson = new Gson().toJson(DepartmentDto.builder().id(3L).name("name3")
@@ -60,17 +62,20 @@ public class DepartmentRestControllerTest {
                 .andExpect(content().json(departmentJson))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
+
     @Test
     public void testCreate() throws Exception {
-        DepartmentDto createdDepartment = DepartmentDto.builder().id(4L).name("created")
-                .sortNumber("created").build();
+        DepartmentDto createdDepartment = DepartmentDto.builder().id(4L).name("Лев")
+                .sortNumber("Филиппов").build();
+        Department department = new Department("Лев", "Филиппов");
         String createdDepartmentJson = new Gson().toJson(createdDepartment);
+        String departmentJson = new Gson().toJson(department);
         mockMvc.perform(post("/api/department").contentType(MediaType.APPLICATION_JSON)
-                .content(createdDepartmentJson))
+                        .content(createdDepartmentJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(createdDepartmentJson))
+                .andExpect(content().json(departmentJson))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
         mockMvc.perform(get("/api/department"))
                 .andDo(print())
@@ -78,17 +83,20 @@ public class DepartmentRestControllerTest {
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(4)));
     }
+
     @Test
     public void testUpdate() throws Exception {
-        DepartmentDto updatedDepartment = DepartmentDto.builder().id(3L).name("updated")
-                .sortNumber("updated").build();
+        DepartmentDto updatedDepartment = DepartmentDto.builder().id(3L).name("Update")
+                .sortNumber("Update").build();
+        Department department = new Department("Update", "Update");
         String updatedDepartmentJson = new Gson().toJson(updatedDepartment);
+        String departmentJson = new Gson().toJson(department);
         mockMvc.perform(put("/api/department").contentType(MediaType.APPLICATION_JSON)
-                .content(updatedDepartmentJson))
+                        .content(updatedDepartmentJson))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(content().json(updatedDepartmentJson))
+                .andExpect(content().json(departmentJson))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
 

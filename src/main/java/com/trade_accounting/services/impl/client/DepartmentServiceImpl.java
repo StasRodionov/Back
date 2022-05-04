@@ -1,7 +1,7 @@
 package com.trade_accounting.services.impl.client;
 
-import com.trade_accounting.models.entity.client.Department;
 import com.trade_accounting.models.dto.client.DepartmentDto;
+import com.trade_accounting.models.entity.client.Department;
 import com.trade_accounting.repositories.client.DepartmentRepository;
 import com.trade_accounting.services.interfaces.client.DepartmentService;
 import com.trade_accounting.utils.mapper.client.DepartmentMapper;
@@ -45,13 +45,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDto create(DepartmentDto departmentDto) {
-        departmentDto.setId(departmentMapper.toModel(departmentDto).getId());
-        return departmentMapper.toDto(
-                departmentRepository.save(departmentMapper.toModel(departmentDto))
+        return departmentMapper.toDto(departmentRepository.save(departmentMapper.toModel(departmentDto))
         );
-
     }
-
 
     @Override
     public DepartmentDto update(DepartmentDto departmentDto) {
@@ -62,4 +58,21 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void deleteById(Long id) {
         departmentRepository.deleteById(id);
     }
+
+    @Override
+    public Department createDepartment(DepartmentDto departmentDto) {
+        return departmentRepository.save(departmentMapper.toModel(departmentDto));
+    }
+
+    @Override
+    public Department updateDepartment(DepartmentDto departmentDto) {
+        return departmentRepository.save(departmentMapper.toModel(departmentDto));
+    }
+
+    @Override
+    public void deleteByIdDepartment(Long id) {
+        departmentRepository.deleteById(id);
+    }
+
+
 }
