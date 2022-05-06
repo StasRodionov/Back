@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest.client;
 
 import com.trade_accounting.models.dto.client.DepartmentDto;
+import com.trade_accounting.models.entity.client.Department;
 import com.trade_accounting.repositories.client.DepartmentRepository;
 import com.trade_accounting.services.interfaces.util.CheckEntityService;
 import com.trade_accounting.services.interfaces.client.DepartmentService;
@@ -75,8 +76,8 @@ public class DepartmentRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
 
-    public ResponseEntity<?> create(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо создать") @RequestBody DepartmentDto departmentDto) {
-        return ResponseEntity.ok().body(departmentService.create(departmentDto));
+    public ResponseEntity<Department> createDepartment(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо создать") @RequestBody DepartmentDto departmentDto) {
+        return ResponseEntity.ok().body(departmentService.createDepartment(departmentDto));
     }
 
     @PutMapping
@@ -87,8 +88,8 @@ public class DepartmentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
-    public ResponseEntity<?> update(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо обновить") @RequestBody DepartmentDto departmentDto) {
-        return ResponseEntity.ok().body(departmentService.update(departmentDto));
+    public ResponseEntity<Department> updateDepartment(@ApiParam(name = "departmentDto", value = "DTO подразделения, который необходимо обновить") @RequestBody DepartmentDto departmentDto) {
+        return ResponseEntity.ok().body(departmentService.updateDepartment(departmentDto));
     }
 
     @DeleteMapping("/{id}")
@@ -99,13 +100,13 @@ public class DepartmentRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контролер не найден")})
-    public ResponseEntity<?> deleteById(@ApiParam(
+    public ResponseEntity<?> deleteByIdDepartment(@ApiParam(
             name = "id",
             type = "Long",
             value = "Переданный ID  в URL по которому необходимо удалить подразделение",
             example = "1",
             required = true) @PathVariable(name = "id") Long id) {
-        departmentService.deleteById(id);
+        departmentService.deleteByIdDepartment(id);
         return ResponseEntity.ok().build();
     }
 }

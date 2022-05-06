@@ -118,7 +118,6 @@ class BuyersReturnServiceImplTest {
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate() {
         buyersReturnService.update(BuyersReturnDtoStubs.getBuyersReturnDto(1L));
-
         verify(buyersReturnRepository).save(any(BuyersReturn.class));
     }
 
