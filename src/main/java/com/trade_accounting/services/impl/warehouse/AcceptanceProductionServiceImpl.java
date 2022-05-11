@@ -1,8 +1,8 @@
 package com.trade_accounting.services.impl.warehouse;
 
+import com.trade_accounting.models.dto.warehouse.AcceptanceProductionDto;
 import com.trade_accounting.models.entity.warehouse.AcceptanceProduction;
 import com.trade_accounting.models.entity.warehouse.Product;
-import com.trade_accounting.models.dto.warehouse.AcceptanceProductionDto;
 import com.trade_accounting.repositories.warehouse.AcceptanceProductionRepository;
 import com.trade_accounting.repositories.warehouse.ProductRepository;
 import com.trade_accounting.services.interfaces.warehouse.AcceptanceProductionService;
