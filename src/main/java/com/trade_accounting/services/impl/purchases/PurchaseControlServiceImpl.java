@@ -7,7 +7,6 @@ import com.trade_accounting.services.interfaces.company.CompanyService;
 import com.trade_accounting.services.interfaces.company.ContractorService;
 import com.trade_accounting.services.interfaces.purchases.PurchaseControlService;
 import com.trade_accounting.services.interfaces.purchases.PurchaseCurrentBalanceService;
-import com.trade_accounting.services.interfaces.purchases.PurchaseForecastService;
 import com.trade_accounting.services.interfaces.warehouse.ProductService;
 import com.trade_accounting.services.interfaces.warehouse.WarehouseService;
 import com.trade_accounting.utils.mapper.purchases.PurchaseControlMapper;
@@ -31,7 +30,6 @@ public class PurchaseControlServiceImpl implements PurchaseControlService {
     private final ProductService productService;
     private final WarehouseService warehouseService;
     private final PurchaseCurrentBalanceService purchaseCurrentBalanceService;
-    private final PurchaseForecastService purchaseForecastService;
     private final ContractorService contractorService;
     private final CompanyService companyService;
 
@@ -66,11 +64,9 @@ public class PurchaseControlServiceImpl implements PurchaseControlService {
     @Override
     public List<PurchaseControlDto> search(String searchTerm) {
         if ("null".equals(searchTerm) || searchTerm.isEmpty()) {
-            List<PurchaseControl> allStore = purchaseControlRepository.findAll();
-            return allStore.stream().map(purchaseControlMapper::toDto).collect(Collectors.toList());
+            return purchaseControlRepository.findAll().stream().map(purchaseControlMapper::toDto).collect(Collectors.toList());
         } else {
-            List<PurchaseControl> list = purchaseControlRepository.search(searchTerm);
-            return list.stream().map(purchaseControlMapper::toDto).collect(Collectors.toList());
+            return purchaseControlRepository.search(searchTerm).stream().map(purchaseControlMapper::toDto).collect(Collectors.toList());
         }
     }
 
@@ -91,6 +87,8 @@ public class PurchaseControlServiceImpl implements PurchaseControlService {
      * 8 - "contractorId"
      * 9 - "companyId"
      */
+//    TODO реализовать SQL запрос для валидной выборки в getAllForFilter
+//    тогда можно будет избавиться от лишней логики класса
     @Override
     public List<PurchaseControlDto> getAllForFilter(Map<String, String> map) {
         List<PurchaseControlDto> list = getAll();
@@ -126,17 +124,13 @@ public class PurchaseControlServiceImpl implements PurchaseControlService {
         return result;
     }
 
+
     private Boolean checkProduct(PurchaseControlDto purchaseControlDto, String requestIdProduct) {
-        boolean result = false;
-        if (requestIdProduct == null) {
-            result = true;
-        } else if (productService.getById(purchaseControlDto.getProductNameId()).getId() == Long.parseLong(requestIdProduct)) {
-            result = true;
-        } else {
-            result = false;
-        }
-        return result;
+
+        return requestIdProduct == null ||
+                productService.getById(purchaseControlDto.getProductNameId()).getId() == Long.parseLong(requestIdProduct);
     }
+
 
     private Boolean checkAvailable(PurchaseControlDto purchaseControlDto, String requestAvailable) {
         boolean result = false;
@@ -163,21 +157,13 @@ public class PurchaseControlServiceImpl implements PurchaseControlService {
         return result;
     }
 
+
     private Boolean checkSold(PurchaseControlDto purchaseControlDto, String requestSold) {
-        boolean result = false;
-        if (requestSold == null) {
-            result = true;
-        } else if (requestSold.equals("Только проданные") &&
-                (purchaseControlDto.getProductQuantity() > 0)) {
-            result = true;
-        } else if (requestSold.equals("Только непроданные") &&
-                (purchaseControlDto.getProductQuantity() < 0)) {
-            result = false;
-        } else if (requestSold.equals("Все")) {
-            result = true;
-        }
-        return result;
+        return requestSold == null ||
+                requestSold.equals("Только проданные") && purchaseControlDto.getProductQuantity() > 0 ||
+                requestSold.equals("Все");
     }
+
 
     private Boolean checkRemainder(PurchaseControlDto purchaseControlDto, String requestRemainder) {
         boolean result = false;
@@ -204,40 +190,20 @@ public class PurchaseControlServiceImpl implements PurchaseControlService {
         return result;
     }
 
+
     private Boolean checkWarehouse(PurchaseControlDto purchaseControlDto, String requestIdWarehouse) {
-        boolean result = false;
-        if (requestIdWarehouse == null) {
-            result = true;
-        } else if (warehouseService.getById(purchaseControlDto.getWarehouseId()).getId() == Long.parseLong(requestIdWarehouse)) {
-            result = true;
-        } else {
-            result = false;
-        }
-        return result;
+        return requestIdWarehouse == null ||
+                warehouseService.getById(purchaseControlDto.getWarehouseId()).getId() == Long.parseLong(requestIdWarehouse);
     }
 
     private Boolean checkContractor(PurchaseControlDto purchaseControlDto, String requestIdContractor) {
-        boolean result = false;
-        if (requestIdContractor == null) {
-            result = true;
-        } else if (contractorService.getById(purchaseControlDto.getContractorId()).getId() == Long.parseLong(requestIdContractor)) {
-            result = true;
-        } else {
-            result = false;
-        }
-        return result;
+        return requestIdContractor == null ||
+                contractorService.getById(purchaseControlDto.getContractorId()).getId() == Long.parseLong(requestIdContractor);
     }
 
     private Boolean checkCompany(PurchaseControlDto purchaseControlDto, String requestIdCompany) {
-        boolean result = false;
-        if (requestIdCompany == null) {
-            result = true;
-        } else if (companyService.getById(purchaseControlDto.getCompanyId()).getId() == Long.parseLong(requestIdCompany)) {
-            result = true;
-        } else {
-            result = false;
-        }
-        return result;
+        return requestIdCompany == null ||
+                companyService.getById(purchaseControlDto.getCompanyId()).getId() == Long.parseLong(requestIdCompany);
     }
 
     //TODO Переделать нижний метод за место трех верхних методов согласно принципу полиморфизма
