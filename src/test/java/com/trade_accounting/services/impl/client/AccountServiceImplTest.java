@@ -57,13 +57,7 @@ class AccountServiceImplTest {
     @Test
     void create_shouldPassInstructionsSuccessfulCreate(){
 
-        when(employeeService.create(EmployeeDtoStubs.getEmployeeDto(1L)))
-                .thenReturn( EmployeeDto.builder().build());
-
-        when(accountMapper.toModel(AccountDtoStubs.getAccountDto(1L)))
-                .thenReturn(Account.builder().build());
-
-        accountService.create(AccountDtoStubs.getAccountDto(1L),EmployeeDtoStubs.getEmployeeDto(1L));
+        accountService.createAccount(EmployeeDtoStubs.getEmployeeDto(1L));
 
         verify(accountRepository).save(any(Account.class));
         log.info("account was save repository");
@@ -118,7 +112,7 @@ class AccountServiceImplTest {
     }
     @Test
     void create_shouldPassInstructionsSuccessfulCreateEmployee(){
-        accountService.create(EmployeeDtoStubs.getEmployeeDto(1L));
+        accountService.updateEmployee(EmployeeDtoStubs.getEmployeeDto(1L));
 
         verify(employeeRepository).save(any(Employee.class));
         log.info("was success creat");
@@ -127,7 +121,7 @@ class AccountServiceImplTest {
 
     @Test
     void update_shouldPassInstructionsSuccessfulUpdate(){
-        accountService.update(EmployeeDtoStubs.getEmployeeDto(1L));
+        accountService.updateEmployee(EmployeeDtoStubs.getEmployeeDto(1L));
 
         verify(employeeRepository).save(any(Employee.class));
         log.info("was succesfully update");
@@ -136,7 +130,7 @@ class AccountServiceImplTest {
 
     @Test
     void deleteById_shouldPassInstructionsSuccessfulDelete() {
-        accountService.deleteById(1L);
+        accountService.deleteAccountById(1L);
 
         verify(accountRepository).deleteById(1L);
         log.info("was delete from repository");
