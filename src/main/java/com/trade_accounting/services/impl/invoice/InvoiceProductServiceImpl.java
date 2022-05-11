@@ -1,8 +1,8 @@
 package com.trade_accounting.services.impl.invoice;
 
+import com.trade_accounting.models.dto.invoice.InvoiceProductDto;
 import com.trade_accounting.models.entity.invoice.InvoiceProduct;
 import com.trade_accounting.models.entity.warehouse.Product;
-import com.trade_accounting.models.dto.invoice.InvoiceProductDto;
 import com.trade_accounting.repositories.invoice.InvoiceProductRepository;
 import com.trade_accounting.repositories.warehouse.ProductRepository;
 import com.trade_accounting.services.interfaces.invoice.InvoiceProductService;
@@ -74,4 +74,12 @@ public class InvoiceProductServiceImpl implements InvoiceProductService {
         return invoiceProductMapper.toDto(invoiceProductRepository.save(invoiceProduct));
     }
 
+    @Override
+    public void createAll(List<InvoiceProductDto> invoiceProductDtos) {
+        invoiceProductRepository.saveAll(
+                invoiceProductDtos.stream()
+                        .map(invoiceProductMapper::toModel)
+                        .collect(Collectors.toList())
+        );
+    }
 }

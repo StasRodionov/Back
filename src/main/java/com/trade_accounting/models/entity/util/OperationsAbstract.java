@@ -2,6 +2,7 @@ package com.trade_accounting.models.entity.util;
 
 
 import com.trade_accounting.models.entity.company.Company;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ import java.time.LocalDateTime;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "operations")
+@EqualsAndHashCode
 public abstract class OperationsAbstract {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

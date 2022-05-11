@@ -432,7 +432,7 @@ create table invoice
     is_sent      boolean default false,
     type_of_invoice int4      not null,
     company_id      int8      not null,
-    contractor_id   int8      not null,
+    contractor_id   int8      ,
     warehouse_id    int8      not null,
     invoices_status_id  int8      default 1,
     primary key (id)
@@ -702,15 +702,19 @@ create table projects
 
 create table purchase_control
 (
-    id                  int8         not null,
-    article_number      int8         not null,
-    product_code        int8         not null,
+    id                  bigint       not null,
+    date                timestamp default CURRENT_DATE,
+    article_number      bigint       not null,
+    product_code        bigint       not null,
     product_measure     varchar(255) not null,
-    product_name        varchar(255) not null,
-    product_quantity    int8,
-    current_balance_id  int8         not null,
-    forecast_id         int8         not null,
-    history_of_sales_id int8         not null,
+    product_name        bigint       not null,
+    company_id          bigint       not null,
+    warehouse_id        bigint       not null,
+    contractor_id       bigint       not null,
+    product_quantity    bigint       not null,
+    current_balance_id  bigint       not null,
+    forecast_id         bigint       not null,
+    history_of_sales_id bigint       not null,
     primary key (id)
 );
 

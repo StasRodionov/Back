@@ -24,7 +24,7 @@ public class InvoiceDto {
     private String typeOfInvoice;
     @NotNull
     private Long companyId;
-    @NotNull
+
     private Long contractorId;
     @NotNull
     private Long warehouseId;

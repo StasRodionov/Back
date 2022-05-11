@@ -1,19 +1,24 @@
 package com.trade_accounting.services.impl.invoice;
 
-import com.trade_accounting.models.entity.invoice.InvoiceProduct;
-import com.trade_accounting.models.dto.invoice.InvoiceProductDto;
-import com.trade_accounting.repositories.invoice.InvoiceProductRepository;
-import com.trade_accounting.repositories.warehouse.ProductRepository;
 import com.trade_accounting.Stubs.dto.invoice.InvoiceProductDtoStubs;
 import com.trade_accounting.Stubs.model.invoice.InvoiceProductModelStubs;
+import com.trade_accounting.models.dto.invoice.InvoiceProductDto;
+import com.trade_accounting.models.entity.invoice.Invoice;
+import com.trade_accounting.models.entity.invoice.InvoiceProduct;
+import com.trade_accounting.models.entity.warehouse.Product;
+import com.trade_accounting.repositories.invoice.InvoiceProductRepository;
+import com.trade_accounting.repositories.warehouse.ProductRepository;
 import com.trade_accounting.utils.mapper.invoice.InvoiceProductMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +45,9 @@ class InvoiceProductServiceImplTest {
 
     @Spy
     private InvoiceProductMapperImpl invoiceProductMapper;
+
+    @Captor
+    private ArgumentCaptor<List<InvoiceProduct>> invoiceProductListCaptor;
 
     @Test
     void getAll_shouldReturnListFilledInvoiceProductDto() {
@@ -129,5 +137,61 @@ class InvoiceProductServiceImplTest {
     void invoiceProductListDtoIsCorrectlyInited(InvoiceProductDto invoiceProductDto) {
         assertNotNull(invoiceProductDto, "Fail in passed invoiceDto");
         assertNotNull(invoiceProductDto.getId(), "Fail in field 'id' of invoiceDto");
+    }
+
+    @Test
+    void createAll() {
+        invoiceProductService.createAll(createInvoiceProductDtoList());
+
+        verify(invoiceProductRepository).saveAll(invoiceProductListCaptor.capture());
+        assertEquals(createInvoiceProductList(), invoiceProductListCaptor.getValue());
+    }
+
+    private List<InvoiceProductDto> createInvoiceProductDtoList() {
+        InvoiceProductDto invoiceProductDto1 = InvoiceProductDto.builder()
+                .invoiceId(1L)
+                .productId(1L)
+                .price(BigDecimal.ONE)
+                .amount(BigDecimal.valueOf(10L))
+                .build();
+
+        InvoiceProductDto invoiceProductDto2 = InvoiceProductDto.builder()
+                .invoiceId(2L)
+                .productId(2L)
+                .price(BigDecimal.TEN)
+                .amount(BigDecimal.valueOf(5L))
+                .build();
+
+        InvoiceProductDto invoiceProductDto3 = InvoiceProductDto.builder()
+                .invoiceId(3L)
+                .productId(3L)
+                .price(BigDecimal.TEN)
+                .amount(BigDecimal.valueOf(3L))
+                .build();
+
+        return List.of(invoiceProductDto1, invoiceProductDto2, invoiceProductDto3);
+    }
+
+    private List<InvoiceProduct> createInvoiceProductList() {
+        InvoiceProduct invoiceProduct1 = InvoiceProduct.builder()
+                .invoice(Invoice.builder().id(1L).build())
+                .product(Product.builder().id(1L).build())
+                .price(BigDecimal.ONE)
+                .amount(BigDecimal.valueOf(10L))
+                .build();
+        InvoiceProduct invoiceProduct2 = InvoiceProduct.builder()
+                .invoice(Invoice.builder().id(2L).build())
+                .product(Product.builder().id(2L).build())
+                .price(BigDecimal.TEN)
+                .amount(BigDecimal.valueOf(5L))
+                .build();
+        InvoiceProduct invoiceProduct3 = InvoiceProduct.builder()
+                .invoice(Invoice.builder().id(3L).build())
+                .product(Product.builder().id(3L).build())
+                .price(BigDecimal.TEN)
+                .amount(BigDecimal.valueOf(3L))
+                .build();
+
+        return List.of(invoiceProduct1, invoiceProduct2, invoiceProduct3);
     }
 }

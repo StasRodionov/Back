@@ -1,12 +1,15 @@
 package com.trade_accounting.controllers.rest.invoice;
 
+import com.trade_accounting.models.dto.invoice.InvoiceDto;
+import com.trade_accounting.models.dto.invoice.TypeOfOrder;
+import com.trade_accounting.models.dto.purchases.PurchaseControlDto;
+import com.trade_accounting.models.dto.purchases.PurchaseCreateOrderDto;
+import com.trade_accounting.models.dto.warehouse.MovementDto;
 import com.trade_accounting.models.entity.invoice.Invoice;
 import com.trade_accounting.models.entity.invoice.TypeOfInvoice;
-import com.trade_accounting.models.dto.invoice.InvoiceDto;
-import com.trade_accounting.models.dto.warehouse.MovementDto;
 import com.trade_accounting.repositories.invoice.InvoiceRepository;
-import com.trade_accounting.services.interfaces.util.CheckEntityService;
 import com.trade_accounting.services.interfaces.invoice.InvoiceService;
+import com.trade_accounting.services.interfaces.util.CheckEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -203,6 +206,22 @@ public class InvoiceRestController {
         checkEntityService.checkExists((JpaRepository) invoiceRepository, id);
         invoiceService.restoreFromRecyclebin(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/createAll")
+    @ApiOperation(value = "createAll", notes = "Добавление накладных, сформированных из закупок")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Накладные созданы"),
+            @ApiResponse(code = 201, message = "Запрос принят и накладные добавлены"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public void createAll(
+            @ApiParam(name = "purchaseCreateOrderDto", value = "Список закупок, из которых необходимо сформировать накладные")
+            @RequestBody PurchaseCreateOrderDto purchaseCreateOrderDto) {
+        invoiceService.createAll(purchaseCreateOrderDto);
+
     }
 
 }
