@@ -875,6 +875,15 @@ create table roles
     primary key (id)
 );
 
+create table scenario
+(
+    id bigserial not null,
+    name varchar (255),
+    comment varchar (255),
+    active_status boolean default false ,
+    primary key (id)
+);
+
 create table streets
 (
     id      bigserial not null,
