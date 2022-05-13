@@ -9,14 +9,12 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ShipmentMapper {
     //Shipment
-    @Mapping(source = "date", target = "date", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(source = "companyId", target = "company.id")
     @Mapping(source = "contractorId", target = "contractor.id")
     @Mapping(source = "warehouseId", target = "warehouse.id")
     @Mapping(target = "shipmentProducts", source = "shipmentProductsIds")
     Shipment toModel(ShipmentDto emp);
 
-    @Mapping(target = "date", source = "date", dateFormat = "dd-MM-yyyy HH:mm")
     @Mapping(target = "companyId", source = "company.id")
     @Mapping(target = "contractorId", source = "contractor.id")
     @Mapping(target = "warehouseId", source = "warehouse.id")
