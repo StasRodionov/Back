@@ -41,7 +41,7 @@ public class ProductPriceServiceImpl implements ProductPriceService {
     @Override
     public ProductPriceDto create(@NotNull ProductPriceDto dto) {
         ProductPrice productPrice = productPriceMapper.toModel(dto);
-        productPrice.setTypeOfPrice(typeOfPriceRepository.getOne(productPrice.getTypeOfPrice().getId()));
+        productPrice.setTypeOfPrice(typeOfPriceRepository.getOne(dto.getTypeOfPriceId()));
         productPriceRepository.save(productPrice);
         return dto;
     }

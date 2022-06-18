@@ -15,6 +15,7 @@ import com.trade_accounting.repositories.units.UnitRepository;
 import com.trade_accounting.repositories.util.FileRepository;
 import com.trade_accounting.repositories.util.ImageRepository;
 import com.trade_accounting.repositories.warehouse.AttributeOfCalculationObjectRepository;
+import com.trade_accounting.repositories.warehouse.ProductGroupRepository;
 import com.trade_accounting.repositories.warehouse.ProductPriceRepository;
 import com.trade_accounting.repositories.warehouse.ProductRepository;
 import com.trade_accounting.services.interfaces.warehouse.ProductService;
@@ -55,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
     private final ContractorRepository contractorRepository;
     private final TaxSystemRepository taxSystemRepository;
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
+    private final ProductGroupRepository productGroupRepository;
 
 
     @Override
@@ -91,10 +93,11 @@ public class ProductServiceImpl implements ProductService {
         product.setContractor(contractorRepository.getOne(dto.getContractorId()));
         List<ProductPrice> prices = new ArrayList<>();
         dto.getProductPriceIds()
-                .forEach(productPrice -> prices.add(productPriceRepository.getOne(productPrice)));
+                .forEach(productPriceId -> prices.add(productPriceRepository.getOne(productPriceId)));
         product.setProductPrices(prices);
         product.setTaxSystem(taxSystemRepository.getOne(dto.getTaxSystemId()));
         product.setAttributeOfCalculationObject(attributeOfCalculationObjectRepository.getOne(dto.getAttributeOfCalculationObjectId()));
+        product.setProductGroup(productGroupRepository.getOne(dto.getProductGroupId()));
 
         productRepository.saveAndFlush(product);
         return dto;
