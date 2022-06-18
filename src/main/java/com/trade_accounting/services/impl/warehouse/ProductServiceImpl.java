@@ -4,15 +4,22 @@ import javax.validation.constraints.NotNull;
 
 import com.trade_accounting.models.entity.util.File;
 import com.trade_accounting.models.entity.util.Image;
+import com.trade_accounting.models.entity.warehouse.AttributeOfCalculationObject;
 import com.trade_accounting.models.entity.warehouse.Product;
 import com.trade_accounting.models.entity.warehouse.ProductPrice;
 import com.trade_accounting.models.dto.util.PageDto;
 import com.trade_accounting.models.dto.warehouse.ProductDto;
+import com.trade_accounting.repositories.company.ContractorRepository;
+import com.trade_accounting.repositories.company.TaxSystemRepository;
+import com.trade_accounting.repositories.units.UnitRepository;
 import com.trade_accounting.repositories.util.FileRepository;
 import com.trade_accounting.repositories.util.ImageRepository;
+import com.trade_accounting.repositories.warehouse.AttributeOfCalculationObjectRepository;
 import com.trade_accounting.repositories.warehouse.ProductPriceRepository;
 import com.trade_accounting.repositories.warehouse.ProductRepository;
 import com.trade_accounting.services.interfaces.warehouse.ProductService;
+import com.trade_accounting.utils.mapper.company.ContractorMapper;
+import com.trade_accounting.utils.mapper.units.UnitMapper;
 import com.trade_accounting.utils.mapper.util.FileMapper;
 import com.trade_accounting.utils.mapper.util.ImageMapper;
 import com.trade_accounting.utils.mapper.warehouse.ProductMapper;
@@ -44,6 +51,11 @@ public class ProductServiceImpl implements ProductService {
     private final ImageMapper imageMapper;
     private final ProductMapper productMapper;
     private final FileMapper fileMapper;
+    private final UnitRepository unitRepository;
+    private final ContractorRepository contractorRepository;
+    private final TaxSystemRepository taxSystemRepository;
+    private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
+
 
     @Override
     public List<ProductDto> getAll() {
@@ -75,10 +87,15 @@ public class ProductServiceImpl implements ProductService {
         product.setImages(savedImages);
         savedFiles.forEach(file -> file.setProduct(product));
         product.setFiles(savedFiles);
+        product.setUnit(unitRepository.getOne(dto.getUnitId()));
+        product.setContractor(contractorRepository.getOne(dto.getContractorId()));
         List<ProductPrice> prices = new ArrayList<>();
-        product.getProductPrices()
-                .forEach(productPrice -> prices.add(productPriceRepository.getOne(productPrice.getId())));
+        dto.getProductPriceIds()
+                .forEach(productPrice -> prices.add(productPriceRepository.getOne(productPrice)));
         product.setProductPrices(prices);
+        product.setTaxSystem(taxSystemRepository.getOne(dto.getTaxSystemId()));
+        product.setAttributeOfCalculationObject(attributeOfCalculationObjectRepository.getOne(dto.getAttributeOfCalculationObjectId()));
+
         productRepository.saveAndFlush(product);
         return dto;
     }
