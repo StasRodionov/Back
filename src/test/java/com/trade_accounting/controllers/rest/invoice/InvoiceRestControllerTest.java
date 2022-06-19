@@ -188,7 +188,6 @@ public class InvoiceRestControllerTest {
                 .typeOfOrder(TypeOfOrder.GENERAL)
                 .build());
 
-
         mockMvc.perform(post("/api/invoice/createAll")
                         .contentType(MediaType.APPLICATION_JSON).content(purchaseCreateOrderDtoJson))
                 .andDo(print())

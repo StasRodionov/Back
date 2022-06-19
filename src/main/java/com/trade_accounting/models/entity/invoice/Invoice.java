@@ -58,16 +58,10 @@ public class Invoice extends OperationsAbstract {
     @ColumnDefault("false")
     private Boolean isSpend;
 
-    @OneToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE}
-    )
+    @OneToOne(cascade = {CascadeType.MERGE})
     @ColumnDefault("1")
     private InvoicesStatus invoicesStatus;
 
-    @OneToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.LAZY)
     private List<InvoiceProduct> invoiceProducts;
 }
