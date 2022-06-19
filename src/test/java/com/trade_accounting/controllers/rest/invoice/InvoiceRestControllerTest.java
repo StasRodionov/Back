@@ -3,6 +3,9 @@ package com.trade_accounting.controllers.rest.invoice;
 import com.google.gson.Gson;
 import com.trade_accounting.controllers.rest.invoice.InvoiceRestController;
 import com.trade_accounting.models.dto.invoice.InvoiceDto;
+import com.trade_accounting.models.dto.invoice.TypeOfOrder;
+import com.trade_accounting.models.dto.purchases.PurchaseControlDto;
+import com.trade_accounting.models.dto.purchases.PurchaseCreateOrderDto;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,9 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -141,4 +147,54 @@ public class InvoiceRestControllerTest {
                 .andExpect(jsonPath("$", hasSize(2)));
     }
 
+    @Test
+    void createAll() throws Exception {
+        PurchaseControlDto purchaseControlDto_1 = PurchaseControlDto.builder()
+                .id(4L)
+                .productNameId(0L)
+                .productCode(111L)
+                .date("2022-06-01T00:03:00")
+                .articleNumber(22L)
+                .productMeasure("kg")
+                .companyId(1L)
+                .warehouseId(0L)
+                .contractorId(0L)
+                .historyOfSalesId(0L)
+                .currentBalanceId(0L)
+                .forecastId(0L)
+                .build();
+
+        PurchaseControlDto purchaseControlDto_2 = PurchaseControlDto.builder()
+                .id(5L)
+                .productNameId(1L)
+                .productCode(222L)
+                .date("2022-06-01T00:04:00")
+                .articleNumber(33L)
+                .productMeasure("t")
+                .companyId(2L)
+                .warehouseId(0L)
+                .contractorId(0L)
+                .historyOfSalesId(0L)
+                .currentBalanceId(0L)
+                .forecastId(0L)
+                .build();
+
+        List<PurchaseControlDto> purchaseControlDtoList = new ArrayList<>();
+        purchaseControlDtoList.add(purchaseControlDto_1);
+        purchaseControlDtoList.add(purchaseControlDto_2);
+
+        String purchaseCreateOrderDtoJson = new Gson().toJson(PurchaseCreateOrderDto.builder()
+                .purchaseControlDtoList(purchaseControlDtoList)
+                .typeOfOrder(TypeOfOrder.GENERAL)
+                .build());
+
+
+        mockMvc.perform(post("/api/invoice/createAll")
+                        .contentType(MediaType.APPLICATION_JSON).content(purchaseCreateOrderDtoJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(authenticated())
+                .andExpect(content().json(purchaseCreateOrderDtoJson))
+                .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
+    }
 }
