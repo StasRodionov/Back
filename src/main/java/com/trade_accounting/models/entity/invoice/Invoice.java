@@ -11,12 +11,15 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -58,9 +61,11 @@ public class Invoice extends OperationsAbstract {
     private Boolean isSpend;
 
     @OneToOne
-    @ColumnDefault("1")
-    private InvoicesStatus invoicesStatus;
+//    @ColumnDefault("1")
+    @JoinColumn(name = "invoices_status_id")
+    private InvoicesStatus invoicesStatus = new InvoicesStatus(1L, "Новый");
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<InvoiceProduct> invoiceProducts;
+
 }

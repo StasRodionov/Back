@@ -86,7 +86,7 @@ public class InvoiceRestControllerTest {
                 .comment("comment 44")
                 .date("2222-11-01T00:01:00")
                 .typeOfInvoice("RECEIPT")
-                .invoicesStatusId(1L)
+//                .invoicesStatusId(1L)
                 .companyId(1L)
                 .contractorId(1L)
                 .warehouseId(1L)
