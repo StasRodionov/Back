@@ -63,5 +63,4 @@ public class Invoice extends OperationsAbstract {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<InvoiceProduct> invoiceProducts;
-
 }

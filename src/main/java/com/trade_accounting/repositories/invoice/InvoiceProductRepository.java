@@ -33,4 +33,5 @@ public interface InvoiceProductRepository extends JpaRepository<InvoiceProduct, 
     List<InvoiceProduct> getByInvoiceId(@Param("id") Long id);
 
     List<InvoiceProduct> getAllByProductId(Long id);
+
 }
