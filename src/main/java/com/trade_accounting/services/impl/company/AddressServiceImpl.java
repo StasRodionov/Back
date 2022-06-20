@@ -30,14 +30,15 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressDto getById(Long id) {
         Address address = addressRepository.getOne(id);
-        return addressMapper.toDto(address);
+        AddressDto dto = new AddressDto(address.getId(), address.getIndex(), address.getCountry(), address.getRegion(), address.getCity(), address.getStreet(), address.getHouse(), address.getApartment(), address.getAnother());
+        return dto;
     }
 
     @Override
     public AddressDto create(AddressDto addressDto) {
-        Address address = addressMapper.toModel(addressDto);
-        Address addressSaved = addressRepository.save(address);
-        addressDto.setId(addressSaved.getId());
+        Address address = new Address(addressDto.getId(), addressDto.getIndex(), addressDto.getCountry(), addressDto.getRegion(), addressDto.getCity(), addressDto.getStreet(), addressDto.getHouse(), addressDto.getApartment(), addressDto.getAnother());
+        addressRepository.save(address);
+        addressDto.setId(address.getId());
         return addressDto;
     }
 
