@@ -11,7 +11,6 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -58,7 +57,7 @@ public class Invoice extends OperationsAbstract {
     @ColumnDefault("false")
     private Boolean isSpend;
 
-    @OneToOne(cascade = {CascadeType.MERGE})
+    @OneToOne
     @ColumnDefault("1")
     private InvoicesStatus invoicesStatus;
 

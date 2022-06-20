@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest.invoice;
 
 import com.google.gson.Gson;
-import com.trade_accounting.controllers.rest.invoice.InvoiceRestController;
 import com.trade_accounting.models.dto.invoice.InvoiceDto;
 import com.trade_accounting.models.dto.invoice.TypeOfOrder;
 import com.trade_accounting.models.dto.purchases.PurchaseControlDto;
@@ -69,7 +68,6 @@ public class InvoiceRestControllerTest {
                 .isSpend(false)
                 .typeOfInvoice("EXPENSE")
                 .companyId(1L)
-
                 .contractorId(1L)
                 .warehouseId(1L)
                 .build());
@@ -85,10 +83,10 @@ public class InvoiceRestControllerTest {
     @Test
     void create() throws Exception {
         String invoiceDtoJson = new Gson().toJson(InvoiceDto.builder()
-                .id(2L)
-                .comment("comment 2")
+                .comment("comment 44")
                 .date("2222-11-01T00:01:00")
                 .typeOfInvoice("RECEIPT")
+                .invoicesStatusId(1L)
                 .companyId(1L)
                 .contractorId(1L)
                 .warehouseId(1L)
@@ -106,7 +104,7 @@ public class InvoiceRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)));
+                .andExpect(jsonPath("$", hasSize(4)));
     }
 
     @Test
@@ -117,6 +115,7 @@ public class InvoiceRestControllerTest {
                 .comment("comment 3")
                 .date("2222-11-01T00:03:00")
                 .typeOfInvoice("RECEIPT")
+                .invoicesStatusId(2L)
                 .companyId(1L)
                 .contractorId(1L)
                 .warehouseId(1L)
@@ -148,35 +147,35 @@ public class InvoiceRestControllerTest {
     }
 
     @Test
-    void createAll() throws Exception {
+    void createAllGeneralType() throws Exception {
         PurchaseControlDto purchaseControlDto_1 = PurchaseControlDto.builder()
-                .id(4L)
-                .productNameId(0L)
-                .productCode(111L)
+                .id(1L)
+                .productNameId(1L)
+                .productCode(1L)
                 .date("2022-06-01T00:03:00")
                 .articleNumber(22L)
                 .productMeasure("kg")
                 .companyId(1L)
-                .warehouseId(0L)
-                .contractorId(0L)
-                .historyOfSalesId(0L)
-                .currentBalanceId(0L)
-                .forecastId(0L)
+                .warehouseId(1L)
+                .contractorId(1L)
+                .historyOfSalesId(1L)
+                .currentBalanceId(1L)
+                .forecastId(1L)
                 .build();
 
         PurchaseControlDto purchaseControlDto_2 = PurchaseControlDto.builder()
-                .id(5L)
-                .productNameId(1L)
-                .productCode(222L)
+                .id(2L)
+                .productNameId(2L)
+                .productCode(2L)
                 .date("2022-06-01T00:04:00")
                 .articleNumber(33L)
                 .productMeasure("t")
-                .companyId(2L)
-                .warehouseId(0L)
-                .contractorId(0L)
-                .historyOfSalesId(0L)
-                .currentBalanceId(0L)
-                .forecastId(0L)
+                .companyId(1L)
+                .warehouseId(1L)
+                .contractorId(1L)
+                .historyOfSalesId(1L)
+                .currentBalanceId(1L)
+                .forecastId(1L)
                 .build();
 
         List<PurchaseControlDto> purchaseControlDtoList = new ArrayList<>();
