@@ -67,7 +67,7 @@ public class AddressServiceImplTest {
         when(addressRepository.save(any(Address.class)))
                 .thenReturn(AddressModelStubs.getAddress(1L));
 
-        AddressDto addressDto = addressService.create(AddressDtoStubs.getAddressDto(6L));
+        AddressDto addressDto = addressService.create(AddressDtoStubs.getAddressDto(1L));
 
         Assertions.assertEquals(1L, addressDto.getId());
         verify(addressRepository).save(any());
@@ -78,7 +78,7 @@ public class AddressServiceImplTest {
         when(addressRepository.save(any(Address.class)))
                 .thenReturn(AddressModelStubs.getAddress(1L));
 
-        AddressDto addressDto = addressService.create(AddressDtoStubs.getAddressDto(6L));
+        AddressDto addressDto = addressService.create(AddressDtoStubs.getAddressDto(1L));
 
         Assertions.assertEquals(1L, addressDto.getId());
         verify(addressRepository).save(any());
