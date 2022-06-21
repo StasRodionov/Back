@@ -48,8 +48,15 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
     public void auditCreate(Object dto) {
         String clazz = dto.getClass().getSimpleName().replace("Dto", "");
         String businessName = translator.translate("en", "ru", clazz);
-        Employee principal = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Employee currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(principal.getEmail());
+        Employee currentEmployee;
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof String) {
+            String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(email);
+        } else {
+            Employee principal = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(principal.getEmail());
+        }
+
         auditService.create(AuditDto.builder()
                 .description("Создание " + businessName)
                 .employeeId(currentEmployee.getId())
