@@ -20,5 +20,5 @@ public interface AuditService extends SearchableService<Audit, AuditDto> {
 
 	List<AuditDto> searchByFilter(String search);
 
-	List<AuditDto> searchByString(String text);
+	List<AuditDto> quickSearch(String text);
 }
