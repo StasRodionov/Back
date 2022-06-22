@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest.invoice;
 
 import com.google.gson.Gson;
-import com.trade_accounting.controllers.rest.invoice.InvoiceRestController;
 import com.trade_accounting.models.dto.invoice.InvoiceDto;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -63,7 +62,6 @@ public class InvoiceRestControllerTest {
                 .isSpend(false)
                 .typeOfInvoice("EXPENSE")
                 .companyId(1L)
-
                 .contractorId(1L)
                 .warehouseId(1L)
                 .build());
@@ -79,8 +77,7 @@ public class InvoiceRestControllerTest {
     @Test
     void create() throws Exception {
         String invoiceDtoJson = new Gson().toJson(InvoiceDto.builder()
-                .id(2L)
-                .comment("comment 2")
+                .comment("comment 44")
                 .date("2222-11-01T00:01:00")
                 .typeOfInvoice("RECEIPT")
                 .invoicesStatusId(1L)
@@ -101,7 +98,7 @@ public class InvoiceRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
-                .andExpect(jsonPath("$", hasSize(3)));
+                .andExpect(jsonPath("$", hasSize(4)));
     }
 
     @Test
@@ -142,5 +139,4 @@ public class InvoiceRestControllerTest {
                 .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
-
 }
