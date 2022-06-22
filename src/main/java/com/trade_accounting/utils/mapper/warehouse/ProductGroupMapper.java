@@ -7,12 +7,11 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ProductGroupMapper {
-    //ProductGroup
     //На момент написания не известно работает или нет из-за рекурсии
-    @Mapping(source = "parentId", target = "productGroup.id")
+    @Mapping(source = "parentId", target = "parent.id")
     ProductGroup toModel(ProductGroupDto productGroupDto);
 
-    @Mapping(source = "productGroup.id", target = "parentId")
+    @Mapping(source = "parent.id", target = "parentId")
     ProductGroupDto toDto(ProductGroup productGroup);
 
 }
