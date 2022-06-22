@@ -22,6 +22,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,6 +65,7 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
         invoiceSaved.setContractor(contractor);
         invoiceSaved.setWarehouse(warehouse);
         invoiceSaved.setContract(contract);
+        invoiceSaved.setDate(LocalDateTime.parse(createSupplier.getDate()));
         return supplierAccountMapper.toDto(supplierAccountRepository.save(invoiceSaved));
     }
 

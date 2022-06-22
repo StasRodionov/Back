@@ -34,7 +34,7 @@ class DtoMapperTest {
         productGroupDto.setParentId(1L);
 
         ProductGroup productGroup = productGroupMapper.toModel(productGroupDto);
-        assertEquals(productGroupDto.getParentId(), productGroup.getProductGroup().getId());
+        assertEquals(productGroupDto.getParentId(), productGroup.getParent().getId());
     }
 
     @Test
