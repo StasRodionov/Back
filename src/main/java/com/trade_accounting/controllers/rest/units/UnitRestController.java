@@ -66,16 +66,12 @@ public class UnitRestController {
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
 
-//    public ResponseEntity<UnitDto> getById(@ApiParam(
-//            name = "id",
-//            type = "Long",
-//            value = "ID переданный в URL по которому необходимо найти единицу измерения") @PathVariable Long id) {
-//        checkEntityService.checkExists((JpaRepository) unitRepository, id);
-//        return ResponseEntity.ok(unitService.getById(id));
-//    }
-    public ResponseEntity<UnitDto> getById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<UnitDto> getById(@ApiParam(
+            name = "id",
+            type = "Long",
+            value = "ID переданный в URL по которому необходимо найти единицу измерения") @PathVariable Long id) {
         checkEntityService.checkExists((JpaRepository) unitRepository, id);
-        return ResponseEntity.ok(unitRepository.getById(id));
+        return ResponseEntity.ok(unitService.getById(id));
     }
 
     @ApiOperation(value = "create", notes = "Регистрация новой единицы измерения")

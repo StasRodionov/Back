@@ -48,8 +48,8 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
     public void auditCreate(Object dto) {
         String clazz = dto.getClass().getSimpleName().replace("Dto", "");
         String businessName = translator.translate("en", "ru", clazz);
-        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Employee currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(email);
+        Employee principal = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Employee currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(principal.getEmail());
         auditService.create(AuditDto.builder()
                 .description("Создание " + businessName)
                 .employeeId(currentEmployee.getId())
@@ -62,8 +62,8 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
     public void auditUpdate(Object dto) {
         String clazz = dto.getClass().getSimpleName().replace("Dto", "");
         String businessName = translator.translate("en", "ru", clazz);
-        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Employee currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(email);
+        Employee principal = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Employee currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(principal.getEmail());
         auditService.create(AuditDto.builder()
                 .employeeId(currentEmployee.getId())
                 .description("Обновление объекта " + businessName)
@@ -76,8 +76,8 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
     public void auditDelete(JoinPoint joinPoint, Long id) {
         String clazz = joinPoint.getClass().getSimpleName().replace("Dto", "");
         String businessName = translator.translate("en", "ru", clazz);
-        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Employee currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(email);
+        Employee principal = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Employee currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(principal.getEmail());
         auditService.create(AuditDto.builder()
                 .description("Удаление " + businessName)
                 .employeeId(currentEmployee.getId())
