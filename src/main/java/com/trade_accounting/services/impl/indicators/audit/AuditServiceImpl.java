@@ -58,7 +58,7 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	public List<AuditDto> searchByString(String text) {
+	public List<AuditDto> quickSearch(String text) {
 		return auditRepository.getBySearch(text).stream()
 				.map(auditMapper::auditToAuditDto)
 				.collect(Collectors.toList());
