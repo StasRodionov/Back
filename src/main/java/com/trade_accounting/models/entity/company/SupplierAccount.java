@@ -47,4 +47,7 @@ public class SupplierAccount extends OperationsAbstract {
 
     @Column(name = "planned_date_payment")
     private LocalDateTime plannedDatePayment;
+
+    @Column(name = "date")
+    private LocalDateTime date;
 }
