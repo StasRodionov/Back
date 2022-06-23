@@ -219,7 +219,7 @@ public class ModelStubs {
                                 getRole(id + 1),
                                 getRole(id + 2)
                         ).collect(Collectors.toSet()),
-                        getImage(id), new Account()))
+                        getImage(id), new Account(), null))
                 .build();
 
     }
@@ -242,11 +242,11 @@ public class ModelStubs {
     }
 
     public static Department getDepartment(Long id) {
-        return new Department(id, "name", "00001");
+        return new Department(id, "name", "00001", null);
     }
 
     public static TaxSystem getTaxSystem(Long id) {
-        return new TaxSystem(id, "name", "00001");
+        return new TaxSystem(id, "name", "00001", null);
     }
 
     public static Position getPosition(Long id) {
@@ -266,7 +266,7 @@ public class ModelStubs {
                         getRole(id + 1),
                         getRole(id + 2)
                 ).collect(Collectors.toSet()),
-                getImage(id), new Account()
+                getImage(id), new Account(), null
         );
     }
 
