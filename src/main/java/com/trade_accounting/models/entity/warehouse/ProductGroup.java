@@ -88,5 +88,15 @@ public class ProductGroup {
         this.parent = parentGroup;
     }
 
-
+    public ProductGroup(String name, String sortNumber, Boolean serviceGroup, ProductGroup parent, String description, String saleTax, TaxSystem taxSystem, Employee employee, Department department) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+        this.serviceGroup = serviceGroup;
+        this.parent = parent;
+        this.description = description;
+        this.saleTax = saleTax;
+        this.taxSystem = taxSystem;
+        this.employee = employee;
+        this.department = department;
+    }
 }
