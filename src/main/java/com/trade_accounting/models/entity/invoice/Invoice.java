@@ -57,7 +57,8 @@ public class Invoice extends OperationsAbstract {
     @ColumnDefault("false")
     private Boolean isSpend;
 
-    @OneToOne
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
     @ColumnDefault("1")
     private InvoicesStatus invoicesStatus;
 
