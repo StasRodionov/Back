@@ -39,11 +39,9 @@ public class ProductGroupServiceImpl implements ProductGroupService {
         ProductGroup productGroup = productGroupMapper.toModel(dto);
 
         if (dto.getId() != null) {
-            productGroup.setProductGroup(
+            productGroup.setParent(
                     productGroupRepository.findById(dto.getParentId()).orElse(null)
             );
-        } else {
-            productGroup.setProductGroup(null);
         }
         productGroupRepository.save(productGroup);
 
