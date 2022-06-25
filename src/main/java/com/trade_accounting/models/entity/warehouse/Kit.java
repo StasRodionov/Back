@@ -1,6 +1,8 @@
 package com.trade_accounting.models.entity.warehouse;
 
 
+import com.trade_accounting.models.entity.client.Department;
+import com.trade_accounting.models.entity.client.Employee;
 import com.trade_accounting.models.entity.company.Contractor;
 import com.trade_accounting.models.entity.company.TaxSystem;
 import com.trade_accounting.models.entity.units.Unit;
@@ -18,6 +20,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -111,6 +114,14 @@ public class Kit {
     @Column(name = "marking")
     private String marking;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Employee employee;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Department department;
+
+    // Дополнительные расходы
+    @Column(name = "additional_expenses", scale = 2)
+    private BigDecimal additionalExpenses;
 
 }
