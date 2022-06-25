@@ -119,6 +119,9 @@ public class Kit {
     @ManyToOne(fetch = FetchType.LAZY)
     private Department department;
 
+    @Column(name = "access_all")
+    private Boolean accessAll = false;
+
     // Дополнительные расходы
     @Column(name = "additional_expenses", scale = 2)
     private BigDecimal additionalExpenses;
