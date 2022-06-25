@@ -50,7 +50,6 @@ public class File {
     @Column(name = "upload_date_time")
     private LocalDateTime uploadDateTime;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     @ToString.Exclude
@@ -67,6 +66,22 @@ public class File {
                 String employee,
                 String key,
                 LocalDateTime uploadDateTime) {
+        this.name = name;
+        this.extension = extension;
+        this.placement = placement;
+        this.employee = employee;
+        this.key = key;
+        this.uploadDateTime = uploadDateTime;
+    }
+
+    public File(Long id,
+                String name,
+                String extension,
+                String placement,
+                String employee,
+                String key,
+                LocalDateTime uploadDateTime) {
+        this.id = id;
         this.name = name;
         this.extension = extension;
         this.placement = placement;
