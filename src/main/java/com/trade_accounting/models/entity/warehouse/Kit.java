@@ -88,7 +88,7 @@ public class Kit {
 
     // Уникальный код, который используется при поиске и выводится в печатных формах
     @Column(name = "unique_code")
-    private String uniqueСode;
+    private String uniqueCode;
 
     // Штрихкод
     @Column(name = "barcode")
@@ -96,7 +96,7 @@ public class Kit {
 
     // Внешний код
     @Column(name = "external_code")
-    private String externalСode;
+    private String externalCode;
 
     //НДС
     @Column(name = "sale_tax")
