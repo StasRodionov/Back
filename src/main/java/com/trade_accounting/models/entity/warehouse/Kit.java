@@ -33,7 +33,7 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@Table(name = "kit")
+@Table(name = "kits")
 public class Kit {
 
     @Id
