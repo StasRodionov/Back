@@ -21,6 +21,16 @@ public class ProductGroupDto {
 
     private Long parentId;
 
+    private String description;
+
+    private String saleTax;
+
+    private Long taxSystemId;
+
+    private Long employeeId;
+
+    private Long departmentId;
+
     public ProductGroupDto(String name, String sortNumber) {
         this.name = name;
         this.sortNumber = sortNumber;
@@ -36,5 +46,17 @@ public class ProductGroupDto {
         this.name = name;
         this.sortNumber = sortNumber;
         this.parentId = parentId;
+    }
+
+    public ProductGroupDto(String name, String sortNumber, Boolean serviceGroup, Long parentId, String description, String saleTax, Long taxSystemId, Long employeeId, Long departmentId) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+        this.serviceGroup = serviceGroup;
+        this.parentId = parentId;
+        this.description = description;
+        this.saleTax = saleTax;
+        this.taxSystemId = taxSystemId;
+        this.employeeId = employeeId;
+        this.departmentId = departmentId;
     }
 }
