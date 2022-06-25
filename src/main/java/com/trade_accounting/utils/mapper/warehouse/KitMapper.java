@@ -33,5 +33,5 @@ public interface KitMapper {
     @Mapping(source = "products", target = "productDtos")
     @Mapping(source = "employee.id", target = "employeeId")
     @Mapping(source = "department.id", target = "departmentId")
-    Kit toDto(KitDto kitDto);
+    KitDto toDto(Kit kit);
 }
