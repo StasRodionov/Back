@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -93,4 +94,19 @@ public class KitRestController {
         return ResponseEntity.ok().body(kitService.update(kitDto));
     }
 
+    @ApiOperation(value = "deleteById", notes = "Удаляет набор на основе переданного ID")
+    @DeleteMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Набор успешно удален"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<ProductDto> deleteById(@ApiParam(name = "id",
+            value = "ID набора, который необходимо удалить")
+                                                 @PathVariable(name = "id") Long id) {
+        kitService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 }

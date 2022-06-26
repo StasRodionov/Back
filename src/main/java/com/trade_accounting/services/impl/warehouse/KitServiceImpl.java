@@ -27,6 +27,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -141,7 +144,15 @@ public class KitServiceImpl implements KitService {
 
     @Override
     public void deleteById(Long id) {
-
+        Kit kit = kitRepository.getOne(id);
+        kitRepository.deleteById(id);
+        kit.getFiles().forEach(file -> {
+            try {
+                Files.deleteIfExists(Path.of(file.getPlacement() + file.getKey() + file.getExtension()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
