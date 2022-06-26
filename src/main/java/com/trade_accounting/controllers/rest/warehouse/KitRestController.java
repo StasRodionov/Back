@@ -29,10 +29,10 @@ public class KitRestController {
 //    private final CheckEntityService checkEntityService;
 //    private final KitRepository kitRepository;
 
-    @ApiOperation(value = "getAll", notes = "Возвращает список всех наборов (лёгкое дто)")
+    @ApiOperation(value = "getAll", notes = "Возвращает список всех наборов")
     @GetMapping()
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка всех наборов (лёгкое дто)"),
+            @ApiResponse(code = 200, message = "Успешное получение списка всех наборов"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
