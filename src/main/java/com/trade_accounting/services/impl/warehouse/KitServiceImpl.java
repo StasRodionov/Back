@@ -89,15 +89,17 @@ public class KitServiceImpl implements KitService {
         List<File> savedFiles = fileRepository.saveAll(preparedFiles);
         Kit kit = kitMapper.toModel(dto);
         kit.setImages(savedImages);
+
         savedFiles.forEach(file -> file.setKit(kit));
         kit.setFiles(savedFiles);
+
         kit.setUnit(unitRepository.getOne(dto.getUnitId()));
         kit.setContractor((contractorRepository.getOne(dto.getContractorId())));
 
-        List<Product> product =new ArrayList<>();
+        List<Product> products =new ArrayList<>();
         dto.getProductIds()
-                .forEach(productPriceId -> product.add(productRepository.getOne(productPriceId)));
-        kit.setProducts(product);
+                .forEach(productId -> products.add(productRepository.getOne(productId)));
+        kit.setProducts(products);
 
         List<ProductPrice> prices = new ArrayList<>();
         dto.getProductPriceIds()

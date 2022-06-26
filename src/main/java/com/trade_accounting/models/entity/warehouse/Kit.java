@@ -127,11 +127,11 @@ public class Kit {
     private BigDecimal additionalExpenses;
 
     public Kit(String name,
-                  String description,
-                  BigDecimal weight,
-                  BigDecimal volume,
-                  BigDecimal purchasePrice,
-                  String saleTax) {
+               String description,
+               BigDecimal weight,
+               BigDecimal volume,
+               BigDecimal purchasePrice,
+               String saleTax) {
         this.name = name;
         this.description = description;
         this.weight = weight;
