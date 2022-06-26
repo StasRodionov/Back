@@ -3,6 +3,7 @@ package com.trade_accounting.utils.mapper.warehouse;
 
 import com.trade_accounting.models.dto.warehouse.KitDto;
 import com.trade_accounting.models.entity.warehouse.Kit;
+import com.trade_accounting.models.entity.warehouse.Product;
 import com.trade_accounting.utils.mapper.util.FileMapper;
 import com.trade_accounting.utils.mapper.util.ImageMapper;
 import org.mapstruct.Mapper;
@@ -34,4 +35,15 @@ public interface KitMapper {
     @Mapping(source = "employee.id", target = "employeeId")
     @Mapping(source = "department.id", target = "departmentId")
     KitDto toDto(Kit kit);
+
+
+    default Long productToLong(Product product) {
+        return product.getId();
+    }
+
+    default Product longToProduct(Long id) {
+        return Product.builder()
+                .id(id)
+                .build();
+    }
 }
