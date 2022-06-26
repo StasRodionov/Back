@@ -69,7 +69,14 @@ public class KitServiceImpl implements KitService {
 
     @Override
     public KitDto getById(Long id) {
-        return null;
+       Kit kit = kitRepository.getOne(id);
+
+       KitDto kitDto = kitMapper.toDto(kit);
+       kitDto.setImageDtos(imageMapper.toListDto(kit.getImages()));
+       kitDto.setFileDtos(fileMapper.toListDto(kit.getFiles()));
+       kitDto.setProductDtos(productMapper.toListDto(kit.getProducts()));
+
+        return kitDto;
     }
 
     @Override
