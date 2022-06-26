@@ -18,7 +18,7 @@ public interface KitMapper {
     @Mapping(source = "imageDtos", target = "images")
     @Mapping(source = "fileDtos", target = "files")
     @Mapping(source = "productGroupId", target = "productGroup.id")
-    @Mapping(source = "productDtos", target = "products")
+    @Mapping(source = "productIds", target = "products")
     @Mapping(source = "employeeId", target = "employee.id")
     @Mapping(source = "departmentId", target = "department.id")
     Kit toModel(KitDto kitDto);
@@ -30,7 +30,7 @@ public interface KitMapper {
     @Mapping(source = "images", target = "imageDtos")
     @Mapping(source = "files", target = "fileDtos")
     @Mapping(source = "productGroup.id", target = "productGroupId")
-    @Mapping(source = "products", target = "productDtos")
+    @Mapping(source = "products", target = "productIds")
     @Mapping(source = "employee.id", target = "employeeId")
     @Mapping(source = "department.id", target = "departmentId")
     KitDto toDto(Kit kit);
