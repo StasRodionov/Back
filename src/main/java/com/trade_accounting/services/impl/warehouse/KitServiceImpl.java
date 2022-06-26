@@ -56,8 +56,6 @@ public class KitServiceImpl implements KitService {
 
     private final ImageMapper imageMapper;
 
-    private final ProductMapper productMapper;
-
     private final FileMapper fileMapper;
 
     private final KitMapper kitMapper;
@@ -93,7 +91,7 @@ public class KitServiceImpl implements KitService {
         kit.setImages(savedImages);
         savedFiles.forEach(file -> file.setKit(kit));
         kit.setFiles(savedFiles);
-        kit.setUnit(unitRepository.getOne(dto.getId()));
+        kit.setUnit(unitRepository.getOne(dto.getUnitId()));
         kit.setContractor((contractorRepository.getOne(dto.getContractorId())));
 
         List<Product> product =new ArrayList<>();
@@ -109,7 +107,8 @@ public class KitServiceImpl implements KitService {
         kit.setTaxSystem(taxSystemRepository.getOne(dto.getTaxSystemId()));
         kit.setProductGroup(productGroupRepository.getOne(dto.getProductGroupId()));
 
-        return dto;
+        kitRepository.saveAndFlush(kit);
+        return kitMapper.toDto(kit);
     }
 
     @Override
