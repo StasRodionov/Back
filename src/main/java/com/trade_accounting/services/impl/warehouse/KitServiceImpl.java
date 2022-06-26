@@ -2,7 +2,11 @@ package com.trade_accounting.services.impl.warehouse;
 
 
 import com.trade_accounting.models.dto.warehouse.KitDto;
+import com.trade_accounting.models.entity.util.File;
+import com.trade_accounting.models.entity.util.Image;
 import com.trade_accounting.models.entity.warehouse.Kit;
+import com.trade_accounting.models.entity.warehouse.Product;
+import com.trade_accounting.models.entity.warehouse.ProductPrice;
 import com.trade_accounting.repositories.company.ContractorRepository;
 import com.trade_accounting.repositories.company.TaxSystemRepository;
 import com.trade_accounting.repositories.units.UnitRepository;
@@ -23,6 +27,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,8 +44,6 @@ public class KitServiceImpl implements KitService {
 
     private final ProductPriceRepository productPriceRepository;
 
-    private final ProductRepository productRepository;
-
     private final UnitRepository unitRepository;
 
     private final ContractorRepository contractorRepository;
@@ -48,6 +51,8 @@ public class KitServiceImpl implements KitService {
     private final TaxSystemRepository taxSystemRepository;
 
     private final ProductGroupRepository productGroupRepository;
+
+    private final ProductRepository productRepository;
 
     private final ImageMapper imageMapper;
 
@@ -74,14 +79,37 @@ public class KitServiceImpl implements KitService {
        KitDto kitDto = kitMapper.toDto(kit);
        kitDto.setImageDtos(imageMapper.toListDto(kit.getImages()));
        kitDto.setFileDtos(fileMapper.toListDto(kit.getFiles()));
-       kitDto.setProductDtos(productMapper.toListDto(kit.getProducts()));
 
         return kitDto;
     }
 
     @Override
     public KitDto create(KitDto dto) {
-        return null;
+        List<Image> preparedImages = imageMapper.toListModel(dto.getImageDtos(), "kit");
+        List<Image> savedImages = imageRepository.saveAll(preparedImages);
+        List<File> preparedFiles = fileMapper.toListModel(dto.getFileDtos());
+        List<File> savedFiles = fileRepository.saveAll(preparedFiles);
+        Kit kit = kitMapper.toModel(dto);
+        kit.setImages(savedImages);
+        savedFiles.forEach(file -> file.setKit(kit));
+        kit.setFiles(savedFiles);
+        kit.setUnit(unitRepository.getOne(dto.getId()));
+        kit.setContractor((contractorRepository.getOne(dto.getContractorId())));
+
+        List<Product> product =new ArrayList<>();
+        dto.getProductIds()
+                .forEach(productPriceId -> product.add(productRepository.getOne(productPriceId)));
+        kit.setProducts(product);
+
+        List<ProductPrice> prices = new ArrayList<>();
+        dto.getProductPriceIds()
+                .forEach(productPriceId -> prices.add(productPriceRepository.getOne(productPriceId)));
+        kit.setProductPrices(prices);
+
+        kit.setTaxSystem(taxSystemRepository.getOne(dto.getTaxSystemId()));
+        kit.setProductGroup(productGroupRepository.getOne(dto.getProductGroupId()));
+
+        return dto;
     }
 
     @Override

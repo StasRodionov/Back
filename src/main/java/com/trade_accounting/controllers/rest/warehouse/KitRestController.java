@@ -18,6 +18,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -59,5 +61,19 @@ public class KitRestController {
             value = "ID переданный в URL по которому необходимо найти набор") @PathVariable(name = "id") Long id) {
         checkEntityService.checkExists((JpaRepository) kitRepository, id);
         return ResponseEntity.ok(kitService.getById(id));
+    }
+
+    @ApiOperation(value = "create", notes = "Создает набор на основе переданных данных")
+    @PostMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Набор успешно создан"),
+            @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден")
+    })
+    public ResponseEntity<KitDto> create(@ApiParam(name = "kitDto", value = "DTO набора, который необходимо создать")
+                                             @RequestBody KitDto kitDto) {
+        return ResponseEntity.ok().body(kitService.create(kitDto));
     }
 }

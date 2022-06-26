@@ -57,7 +57,7 @@ public class KitDto {
 
     private String saleTax;
 
-    private List<ProductDto> productDtos;
+    private List<Long> productIds;
 
     private String indicationCalculation;
 
