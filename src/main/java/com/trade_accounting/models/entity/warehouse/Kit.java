@@ -126,4 +126,17 @@ public class Kit {
     @Column(name = "additional_expenses", scale = 2)
     private BigDecimal additionalExpenses;
 
+    public Kit(String name,
+                  String description,
+                  BigDecimal weight,
+                  BigDecimal volume,
+                  BigDecimal purchasePrice,
+                  String saleTax) {
+        this.name = name;
+        this.description = description;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.saleTax = saleTax;
+    }
 }

@@ -71,4 +71,17 @@ public class KitDto {
 
     private BigDecimal additionalExpenses;
 
+    public KitDto(String name,
+                  String description,
+                  BigDecimal weight,
+                  BigDecimal volume,
+                  BigDecimal purchasePrice,
+                  String saleTax) {
+        this.name = name;
+        this.description = description;
+        this.weight = weight;
+        this.volume = volume;
+        this.purchasePrice = purchasePrice;
+        this.saleTax = saleTax;
+    }
 }
