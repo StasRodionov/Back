@@ -5,6 +5,7 @@ import com.trade_accounting.repositories.util.DiscountRepository;
 import com.trade_accounting.services.interfaces.util.DiscountService;
 import com.trade_accounting.utils.mapper.util.DiscountMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,9 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class DiscountServiceImpl implements DiscountService {
+    @Autowired
     DiscountRepository discountRepository;
+    @Autowired
     DiscountMapper discountMapper;
 
     @Override
