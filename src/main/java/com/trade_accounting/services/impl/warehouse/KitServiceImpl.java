@@ -115,7 +115,28 @@ public class KitServiceImpl implements KitService {
 
     @Override
     public KitDto update(KitDto dto) {
-        return null;
+        List<Image> preparedImages = imageMapper.toListModel(dto.getImageDtos(), "kit");
+        List<Image> savedImages = imageRepository.saveAll(preparedImages);
+        List<File> preparedFiles = fileMapper.toListModel(dto.getFileDtos());
+        List<File> savedFiles = fileRepository.saveAll(preparedFiles);
+        Kit kit = kitMapper.toModel(dto);
+        kit.setImages(savedImages);
+
+        savedFiles.forEach(file -> file.setKit(kit));
+        kit.setFiles(savedFiles);
+
+        List<Product> products =new ArrayList<>();
+        dto.getProductIds()
+                .forEach(productId -> products.add(productRepository.getOne(productId)));
+        kit.setProducts(products);
+
+        List<ProductPrice> prices = new ArrayList<>();
+        dto.getProductPriceIds()
+                .forEach(productPriceId -> prices.add(productPriceRepository.getOne(productPriceId)));
+        kit.setProductPrices(prices);
+
+        kitRepository.saveAndFlush(kit);
+        return kitMapper.toDto(kit);
     }
 
     @Override
