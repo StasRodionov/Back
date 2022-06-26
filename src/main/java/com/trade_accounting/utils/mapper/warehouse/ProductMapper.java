@@ -9,7 +9,6 @@ import com.trade_accounting.utils.mapper.util.ImageMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
