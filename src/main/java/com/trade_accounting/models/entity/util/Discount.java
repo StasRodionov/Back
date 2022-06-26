@@ -2,11 +2,8 @@ package com.trade_accounting.models.entity.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
@@ -20,10 +17,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
