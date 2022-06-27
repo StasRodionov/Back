@@ -3,7 +3,6 @@ package com.trade_accounting.controllers.rest.warehouse;
 
 import com.google.gson.Gson;
 import com.trade_accounting.models.dto.warehouse.KitDto;
-import com.trade_accounting.models.dto.warehouse.ProductGroupDto;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,26 +85,5 @@ public class KitRestControllerTest {
                 .andExpect(content().json(kitDtoJson))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
-
-
-//    INSERT INTO kits (
-//    id,
-//    name,
-//    description,
-//    archive,
-//    weight,
-//    volume,
-//    purchase_price,
-//    unit_id,
-//    contractor_id,
-//    tax_system_id,
-//    item_number,
-//    sale_tax,
-//    employee_id,
-//    department_id,
-//    access_all)
-//VALUES (1, 'Джентельменский набор №1', 'Костюм тройка, туфли, галстук', false, 0, 0, 33.33, 1, 1, 1, 4, '20', 1, 1, false ),
-
-
 
 }
