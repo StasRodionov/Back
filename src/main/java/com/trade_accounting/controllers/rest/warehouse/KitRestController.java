@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@Tag(name = "Kit Rest Controller", description = "CRUD операции с наборами")
+@Tag(name = "Kit Rest Controller", description = "CRUD операции с комплентами")
 @Api(tags = "Kit Rest Controller")
 @RequestMapping("/api/kit")
 @RequiredArgsConstructor
@@ -38,10 +38,10 @@ public class KitRestController {
     private final CheckEntityService checkEntityService;
     private final KitRepository kitRepository;
 
-    @ApiOperation(value = "getAll", notes = "Возвращает список всех наборов")
+    @ApiOperation(value = "getAll", notes = "Возвращает список всех комплектов")
     @GetMapping()
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Успешное получение списка всех наборов"),
+            @ApiResponse(code = 200, message = "Успешное получение списка всех комплектов"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
@@ -51,60 +51,60 @@ public class KitRestController {
         return ResponseEntity.ok(kits);
     }
 
-    @ApiOperation(value = "getById", notes = "Возвращает определенный набор по Id")
+    @ApiOperation(value = "getById", notes = "Возвращает определенный комплект по Id")
     @GetMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Набор найден"),
+            @ApiResponse(code = 200, message = "Комплект найден"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<KitDto> getById(@ApiParam(name = "id",
-            value = "ID переданный в URL по которому необходимо найти набор") @PathVariable(name = "id") Long id) {
+            value = "ID переданный в URL по которому необходимо найти комплект") @PathVariable(name = "id") Long id) {
         checkEntityService.checkExists((JpaRepository) kitRepository, id);
         return ResponseEntity.ok(kitService.getById(id));
     }
 
-    @ApiOperation(value = "create", notes = "Создает набор на основе переданных данных")
+    @ApiOperation(value = "create", notes = "Создает комплект на основе переданных данных")
     @PostMapping
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Набор успешно создан"),
+            @ApiResponse(code = 200, message = "Комплект успешно создан"),
             @ApiResponse(code = 201, message = "Запрос принят и данные созданы"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
-    public ResponseEntity<KitDto> create(@ApiParam(name = "kitDto", value = "DTO набора, который необходимо создать")
+    public ResponseEntity<KitDto> create(@ApiParam(name = "kitDto", value = "DTO комплекта, который необходимо создать")
                                              @RequestBody KitDto kitDto) {
         return ResponseEntity.ok().body(kitService.create(kitDto));
     }
 
-    @ApiOperation(value = "update", notes = "Обновляет набор на основе переданных данных")
+    @ApiOperation(value = "update", notes = "Обновляет комплект на основе переданных данных")
     @PutMapping
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Набор успешно обновлен"),
+            @ApiResponse(code = 200, message = "Комплект успешно обновлен"),
             @ApiResponse(code = 201, message = "Запрос принят и данные обновлены"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<KitDto> update(@ApiParam(name = "kitDto",
-            value = "DTO набора, c обновленными данными")
+            value = "DTO комплекта, c обновленными данными")
                                              @RequestBody KitDto kitDto) {
         return ResponseEntity.ok().body(kitService.update(kitDto));
     }
 
-    @ApiOperation(value = "deleteById", notes = "Удаляет набор на основе переданного ID")
+    @ApiOperation(value = "deleteById", notes = "Удаляет комплект на основе переданного ID")
     @DeleteMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Набор успешно удален"),
+            @ApiResponse(code = 200, message = "Комплект успешно удален"),
             @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции"),
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<ProductDto> deleteById(@ApiParam(name = "id",
-            value = "ID набора, который необходимо удалить")
+            value = "ID комплекта, который необходимо удалить")
                                                  @PathVariable(name = "id") Long id) {
         kitService.deleteById(id);
         return ResponseEntity.ok().build();
