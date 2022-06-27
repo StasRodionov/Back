@@ -1,6 +1,5 @@
 package com.trade_accounting.utils.mapper.warehouse;
 
-
 import com.trade_accounting.models.entity.warehouse.Product;
 import com.trade_accounting.models.dto.warehouse.ProductDto;
 import com.trade_accounting.models.entity.warehouse.ProductPrice;
