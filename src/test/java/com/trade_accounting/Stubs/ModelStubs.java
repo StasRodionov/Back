@@ -53,6 +53,7 @@ import com.trade_accounting.models.entity.production.TechnicalOperations;
 import com.trade_accounting.models.entity.production.TechnicalProcess;
 import com.trade_accounting.models.entity.retail.RetailStore;
 import com.trade_accounting.models.entity.units.Currency;
+import com.trade_accounting.models.entity.units.SalesChannel;
 import com.trade_accounting.models.entity.util.File;
 import com.trade_accounting.models.entity.util.Image;
 import com.trade_accounting.models.entity.util.Project;
@@ -770,5 +771,9 @@ public class ModelStubs {
     }
     public static SupplierAccountProductsList getSupplierAccountProductsList(Long id){
         return new SupplierAccountProductsList(id, getSupplierAccount(1L), getProduct(1L), new BigDecimal(1), new BigDecimal(1), new BigDecimal(1), "qwerty", new BigDecimal(1), new BigDecimal(1));
+    }
+
+    public static SalesChannel getSalesChannel(Long id) {
+        return new SalesChannel(id, "name", "type", "description");
     }
 }
