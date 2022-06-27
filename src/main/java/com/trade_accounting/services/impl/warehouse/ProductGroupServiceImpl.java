@@ -38,16 +38,17 @@ public class ProductGroupServiceImpl implements ProductGroupService {
     public ProductGroupDto create(ProductGroupDto dto) {
         ProductGroup productGroup = productGroupMapper.toModel(dto);
 
-        if (dto.getId() != null) {
+        if (dto.getParentId() != null) {
             productGroup.setParent(
-                    productGroupRepository.findById(dto.getParentId()).orElse(null)
-            );
+                    productGroupRepository.findById(dto.getParentId()).orElse(null));
+        } else {
+            productGroup.setParent(null);
         }
+
         productGroupRepository.save(productGroup);
 
         return dto;
     }
-
 
     @Override
     public ProductGroupDto update(ProductGroupDto dto) {

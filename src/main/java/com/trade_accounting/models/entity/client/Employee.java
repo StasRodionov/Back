@@ -1,6 +1,7 @@
 package com.trade_accounting.models.entity.client;
 
 import com.trade_accounting.models.entity.util.Image;
+import com.trade_accounting.models.entity.warehouse.ProductGroup;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,10 +19,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -78,6 +81,10 @@ public class Employee implements UserDetails {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
+
+    @OneToMany(mappedBy = "employee")
+    private List<ProductGroup> productGroup;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

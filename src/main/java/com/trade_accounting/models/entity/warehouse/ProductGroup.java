@@ -1,5 +1,8 @@
 package com.trade_accounting.models.entity.warehouse;
 
+import com.trade_accounting.models.entity.client.Department;
+import com.trade_accounting.models.entity.client.Employee;
+import com.trade_accounting.models.entity.company.TaxSystem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +41,25 @@ public class ProductGroup {
     @JoinColumn(name = "main_group", referencedColumnName = "id")
     private ProductGroup parent;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "sale_tax")
+    private String saleTax;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tax_system_id", referencedColumnName = "id")
+    private TaxSystem taxSystem;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    private Employee employee;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private Department department;
+
+
     public ProductGroup(String name, String sortNumber, ProductGroup parentGroup) {
         this(name, sortNumber);
         this.parent = parentGroup;
@@ -66,5 +88,15 @@ public class ProductGroup {
         this.parent = parentGroup;
     }
 
-
+    public ProductGroup(String name, String sortNumber, Boolean serviceGroup, ProductGroup parent, String description, String saleTax, TaxSystem taxSystem, Employee employee, Department department) {
+        this.name = name;
+        this.sortNumber = sortNumber;
+        this.serviceGroup = serviceGroup;
+        this.parent = parent;
+        this.description = description;
+        this.saleTax = saleTax;
+        this.taxSystem = taxSystem;
+        this.employee = employee;
+        this.department = department;
+    }
 }
