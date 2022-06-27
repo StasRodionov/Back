@@ -84,6 +84,11 @@ public class ProductGroupRestControllerTest {
                 .sortNumber("4")
                 .serviceGroup(false)
                 .parentId(1L)
+                .departmentId(1L)
+                .description("Описание группы №4")
+                .employeeId(1L)
+                .saleTax("20")
+                .taxSystemId(1L)
                 .build();
 
         String productGroupDtoJson = new Gson().toJson(productGroupDto);
@@ -112,6 +117,11 @@ public class ProductGroupRestControllerTest {
                 .sortNumber("2")
                 .serviceGroup(false)
                 .parentId(1L)
+                .departmentId(1L)
+                .description("Описание группы №6")
+                .employeeId(1L)
+                .saleTax("10")
+                .taxSystemId(1L)
                 .build();
 
         String productGroupDtoJson = new Gson().toJson(productGroupDto);
