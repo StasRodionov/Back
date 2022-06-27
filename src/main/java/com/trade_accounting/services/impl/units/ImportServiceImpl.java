@@ -6,7 +6,6 @@ import com.trade_accounting.repositories.units.ImportRepository;
 import com.trade_accounting.services.interfaces.units.ImportService;
 import com.trade_accounting.utils.mapper.units.ImportMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,10 +18,10 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class ImportServiceImpl implements ImportService {
-    @Autowired
-    private ImportRepository importRepository;
 
-    private ImportMapper importMapper;
+    private final ImportRepository importRepository;
+
+    private final ImportMapper importMapper;
 
     @Override
     public List<ImportDto> getAll() {

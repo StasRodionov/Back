@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="import")
+@Table(name = "import")
 public class Import {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

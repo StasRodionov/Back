@@ -36,3 +36,4 @@ spring:
           timezone: UTC
   flyway:
     enabled: true
+    validateOnMigrate: false
