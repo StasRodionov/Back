@@ -1,5 +1,6 @@
 package com.trade_accounting.models.entity.util;
 
+import com.trade_accounting.models.entity.warehouse.Kit;
 import com.trade_accounting.models.entity.warehouse.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,11 +50,29 @@ public class File {
     @Column(name = "upload_date_time")
     private LocalDateTime uploadDateTime;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     @ToString.Exclude
     private Product product;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "kit_id")
+    @ToString.Exclude
+    private Kit kit;
+
+    public File(String name,
+                String extension,
+                String placement,
+                String employee,
+                String key,
+                LocalDateTime uploadDateTime) {
+        this.name = name;
+        this.extension = extension;
+        this.placement = placement;
+        this.employee = employee;
+        this.key = key;
+        this.uploadDateTime = uploadDateTime;
+    }
 
     public File(Long id,
                 String name,
