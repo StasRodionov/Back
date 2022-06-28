@@ -1,8 +1,6 @@
 package com.trade_accounting.models.entity.units;
 
-import com.trade_accounting.models.entity.util.OperationsAbstract;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
