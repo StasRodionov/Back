@@ -16,4 +16,9 @@ public class AccountDto {
     private Long id;
 
     private Set<Long> employeeIds;
+
+
+    private Set<Long> contractorIds;
+
+    private Set<Long> companyIds;
 }
