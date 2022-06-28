@@ -38,5 +38,4 @@ public class TypeOfProductRestController {
         List<TypeOfProductDto> typeOfContractorDtos = typeOfProductService.getAll();
         return ResponseEntity.ok(typeOfContractorDtos);
     }
-
 }
