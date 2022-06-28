@@ -15,16 +15,16 @@ import java.time.format.DateTimeFormatter;
 @Mapper(componentModel = "spring")
 public interface SupplierAccountMapper {
     //Supplier
-    @Mapping(target = "date", ignore = true)
-    @Mapping(source = "warehouseId", target = "warehouse.id")
+//    @Mapping(target = "date", ignore = true)
     @Mapping(source = "companyId", target = "company.id")
-    @Mapping(source = "contractorId", target = "contractor.id")
+    @Mapping(source = "warehouseId", target = "warehouse.id")
     @Mapping(source = "contractId", target = "contract.id")
+    @Mapping(source = "contractorId", target = "contractor.id")
     SupplierAccount toModel(SupplierAccountDto supplierAccountDto);
 
-    @Mapping(target = "warehouseId", source = "warehouse.id")
     @Mapping(target = "companyId", source = "company.id")
-    @Mapping(target = "contractorId", source = "contractor.id")
+    @Mapping(target = "warehouseId", source = "warehouse.id")
     @Mapping(target = "contractId", source = "contract.id")
+    @Mapping(target = "contractorId", source = "contractor.id")
     SupplierAccountDto toDto(SupplierAccount supplierAccount);
 }
