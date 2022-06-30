@@ -5,8 +5,12 @@ import com.trade_accounting.models.dto.company.PriceListDto;
 import com.trade_accounting.repositories.company.CompanyRepository;
 import com.trade_accounting.repositories.company.PriceListRepository;
 import com.trade_accounting.services.interfaces.company.CompanyService;
+import com.trade_accounting.services.interfaces.company.PriceListProductPercentsService;
+import com.trade_accounting.services.interfaces.company.PriceListProductService;
 import com.trade_accounting.services.interfaces.company.PriceListService;
 import com.trade_accounting.utils.mapper.company.PriceListMapper;
+import com.trade_accounting.utils.mapper.company.PriceListProductMapper;
+import com.trade_accounting.utils.mapper.company.PriceListProductPercentsMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +31,13 @@ public class PriceListServiceImpl implements PriceListService {
     private final PriceListMapper priceListMapper;
     private final CompanyService companyService;
 
+    private final PriceListProductService priceListProductService;
+
+    private final PriceListProductPercentsService priceListProductPercentsService;
+
+    private final PriceListProductMapper priceListProductMapper;
+
+    private final PriceListProductPercentsMapper priceListProductPercentsMapper;
     @Override
     public List<PriceListDto> getAll() {
         return priceListRepository.findAll().stream()
@@ -51,6 +62,11 @@ public class PriceListServiceImpl implements PriceListService {
         PriceList priceList = priceListMapper.toModel(dto);
         priceList.setCompany(companyRepository.getOne(dto.getCompanyId()));
         priceList.setTime(time);
+        priceList.setCommentary(dto.getCommentary());
+        priceList.setProducts(priceListProductService.searchByPriceListId(dto.getId()).stream()
+                .map(priceListProductMapper::toModel).collect(Collectors.toList()));
+        priceList.setPercents(priceListProductPercentsService.searchByPriceListId(dto.getId()).stream()
+                .map(priceListProductPercentsMapper::toModel).collect(Collectors.toList()));
         return priceListMapper.toDto(priceListRepository.save(priceList));
     }
 
