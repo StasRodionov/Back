@@ -6,6 +6,7 @@ import com.trade_accounting.repositories.util.ProjectRepository;
 import com.trade_accounting.services.interfaces.util.ProjectService;
 import com.trade_accounting.utils.mapper.util.ProjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,5 +53,17 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void deleteById(Long id) {
         projectRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ProjectDto> searchByString(String text) {
+        return projectRepository.getBySearch(text).stream()
+                .map(projectMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProjectDto> search(Specification<Project> spec) {
+        return executeSearch(projectRepository, projectMapper::toDto, spec);
     }
 }

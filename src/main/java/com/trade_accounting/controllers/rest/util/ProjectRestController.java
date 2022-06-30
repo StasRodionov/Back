@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest.util;
 
 import com.trade_accounting.models.dto.util.ProjectDto;
+import com.trade_accounting.models.entity.util.Project;
 import com.trade_accounting.repositories.util.ProjectRepository;
 import com.trade_accounting.services.interfaces.util.CheckEntityService;
 import com.trade_accounting.services.interfaces.util.ProjectService;
@@ -11,6 +12,10 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -46,6 +52,18 @@ public class ProjectRestController {
     public ResponseEntity<List<ProjectDto>> getAll() {
         List<ProjectDto> projectDtoList = projectService.getAll();
         return ResponseEntity.ok(projectDtoList);
+    }
+
+    @GetMapping("/search")
+    @ApiOperation(value = "search", notes = "Получение списка проектов по заданным параметрам")
+    public ResponseEntity<List<ProjectDto>> getAll(
+            @And({
+                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+                    @Spec(path = "code", params = "code", spec = LikeIgnoreCase.class),
+                    @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
+            }) Specification<Project> specification) {
+
+        return ResponseEntity.ok(projectService.search(specification));
     }
 
     @ApiOperation(value = "getById", notes = "Возвращает определенный проект по Id")
@@ -105,5 +123,11 @@ public class ProjectRestController {
                                                  @PathVariable(name = "id") Long id) {
         projectService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/searchByString")
+    @ApiOperation(value = "search", notes = "Получение списка проектов по заданным параметрам")
+    public ResponseEntity<List<ProjectDto>> searchByString(@RequestParam("search") String search) {
+        return ResponseEntity.ok(projectService.searchByString(search));
     }
 }
