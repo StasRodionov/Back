@@ -35,7 +35,7 @@ public class TypeOfProductRestController {
             @ApiResponse(code = 404, message = "Данный контроллер не найден")
     })
     public ResponseEntity<List<TypeOfProductDto>> getAll() {
-        List<TypeOfProductDto> typeOfContractorDtos = typeOfProductService.getAll();
-        return ResponseEntity.ok(typeOfContractorDtos);
+        List<TypeOfProductDto> typeOfProductDtos = typeOfProductService.getAll();
+        return ResponseEntity.ok(typeOfProductDtos);
     }
 }
