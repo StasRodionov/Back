@@ -57,6 +57,9 @@ public class ProductDto {
 
     private int minimumBalance;
 
+    private Long typeOfPackingId;
+
+
     public ProductDto(String name,
                       BigDecimal weight,
                       BigDecimal volume,
