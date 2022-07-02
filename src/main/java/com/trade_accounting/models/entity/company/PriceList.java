@@ -1,11 +1,14 @@
 package com.trade_accounting.models.entity.company;
 
+import com.trade_accounting.models.entity.util.OperationsAbstract;
 import com.trade_accounting.models.entity.warehouse.Product;
 import com.trade_accounting.models.entity.warehouse.ProductPrice;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.CascadeType;
@@ -26,41 +29,23 @@ import java.util.List;
  */
 
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "price_lists")
-public class PriceList {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EqualsAndHashCode
+public class PriceList extends OperationsAbstract {
 
     @NotNull
     @ColumnDefault(value = "00001")
     private String number;
-
-    private LocalDateTime time;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Company company;
-
-    @ColumnDefault("false")
-    private Boolean sent;
-
-    @ColumnDefault("false")
-    private Boolean printed;
-
-    private String commentary;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "priceList",
             cascade = {CascadeType.REFRESH, CascadeType.REMOVE})
     private List<PriceListProduct> products;
 
     private Boolean isSpend;
-
-    private Boolean isRecyclebin;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private TypeOfPrice typeOfPrice;

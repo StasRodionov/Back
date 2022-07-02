@@ -66,6 +66,8 @@ public class SupplierAccountServiceImpl implements SupplierAccountService {
         invoiceSaved.setWarehouse(warehouse);
         invoiceSaved.setContract(contract);
         invoiceSaved.setDate(LocalDateTime.parse(createSupplier.getDate()));
+        invoiceSaved.setIsSent(createSupplier.getIsSent());
+        invoiceSaved.setIsPrint(createSupplier.getIsPrint());
         return supplierAccountMapper.toDto(supplierAccountRepository.save(invoiceSaved));
     }
 
