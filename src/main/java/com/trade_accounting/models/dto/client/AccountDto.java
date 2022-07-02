@@ -17,7 +17,6 @@ public class AccountDto {
 
     private Set<Long> employeeIds;
 
-
     private Set<Long> contractorIds;
 
     private Set<Long> companyIds;

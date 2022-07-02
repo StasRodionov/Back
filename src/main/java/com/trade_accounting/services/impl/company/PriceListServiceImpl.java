@@ -56,13 +56,13 @@ public class PriceListServiceImpl implements PriceListService {
      */
     @Override
     public PriceListDto create(PriceListDto dto) {
-        LocalDateTime time = LocalDateTime.parse(dto.getTime().replace("T"," ")
+        LocalDateTime time = LocalDateTime.parse(dto.getDate().replace("T"," ")
                 , DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
         PriceList priceList = priceListMapper.toModel(dto);
         priceList.setCompany(companyRepository.getOne(dto.getCompanyId()));
-        priceList.setTime(time);
-        priceList.setCommentary(dto.getCommentary());
+        priceList.setDate(time);
+        priceList.setComment(dto.getComment());
         priceList.setProducts(priceListProductService.searchByPriceListId(dto.getId()).stream()
                 .map(priceListProductMapper::toModel).collect(Collectors.toList()));
         priceList.setPercents(priceListProductPercentsService.searchByPriceListId(dto.getId()).stream()
@@ -88,6 +88,20 @@ public class PriceListServiceImpl implements PriceListService {
                 .filter(e-> companyService.getById(e.getCompanyId()).getName().equals(string))
                 .forEach(e -> listFilter.add(e));
         return listFilter;
+    }
+
+    @Override
+    public void moveToRecyclebin(long id) {
+        PriceList priceList = priceListRepository.getOne(id);
+        priceList.setIsRecyclebin(true);
+        priceListRepository.save(priceList);
+    }
+
+    @Override
+    public void restoreFromRecyclebin(long id) {
+        PriceList priceList = priceListRepository.getOne(id);
+        priceList.setIsRecyclebin(false);
+        priceListRepository.save(priceList);
     }
 
 }

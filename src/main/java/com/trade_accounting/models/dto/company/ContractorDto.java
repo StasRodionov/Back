@@ -48,5 +48,5 @@ public class ContractorDto {
 
     private Long accessParametersId;
 
-    private Account account;
+    private Long accountId;
 }
