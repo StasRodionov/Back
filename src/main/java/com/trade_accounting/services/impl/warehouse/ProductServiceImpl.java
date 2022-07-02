@@ -1,14 +1,12 @@
 package com.trade_accounting.services.impl.warehouse;
 
-import javax.validation.constraints.NotNull;
 
-import com.trade_accounting.models.entity.util.File;
-import com.trade_accounting.models.entity.util.Image;
-import com.trade_accounting.models.entity.warehouse.AttributeOfCalculationObject;
-import com.trade_accounting.models.entity.warehouse.Product;
-import com.trade_accounting.models.entity.warehouse.ProductPrice;
 import com.trade_accounting.models.dto.util.PageDto;
 import com.trade_accounting.models.dto.warehouse.ProductDto;
+import com.trade_accounting.models.entity.util.File;
+import com.trade_accounting.models.entity.util.Image;
+import com.trade_accounting.models.entity.warehouse.Product;
+import com.trade_accounting.models.entity.warehouse.ProductPrice;
 import com.trade_accounting.repositories.company.ContractorRepository;
 import com.trade_accounting.repositories.company.TaxSystemRepository;
 import com.trade_accounting.repositories.units.UnitRepository;
@@ -18,9 +16,8 @@ import com.trade_accounting.repositories.warehouse.AttributeOfCalculationObjectR
 import com.trade_accounting.repositories.warehouse.ProductGroupRepository;
 import com.trade_accounting.repositories.warehouse.ProductPriceRepository;
 import com.trade_accounting.repositories.warehouse.ProductRepository;
+import com.trade_accounting.repositories.warehouse.TypeOfPackingRepository;
 import com.trade_accounting.services.interfaces.warehouse.ProductService;
-import com.trade_accounting.utils.mapper.company.ContractorMapper;
-import com.trade_accounting.utils.mapper.units.UnitMapper;
 import com.trade_accounting.utils.mapper.util.FileMapper;
 import com.trade_accounting.utils.mapper.util.ImageMapper;
 import com.trade_accounting.utils.mapper.warehouse.ProductMapper;
@@ -32,6 +29,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -48,7 +46,6 @@ public class ProductServiceImpl implements ProductService {
     private final ImageRepository imageRepository;
     private final FileRepository fileRepository;
     private final ProductPriceRepository productPriceRepository;
-
     private final ImageMapper imageMapper;
     private final ProductMapper productMapper;
     private final FileMapper fileMapper;
@@ -57,6 +54,7 @@ public class ProductServiceImpl implements ProductService {
     private final TaxSystemRepository taxSystemRepository;
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
     private final ProductGroupRepository productGroupRepository;
+    private final TypeOfPackingRepository typeOfPackingRepository;
 
 
     @Override
@@ -98,6 +96,7 @@ public class ProductServiceImpl implements ProductService {
         product.setTaxSystem(taxSystemRepository.getOne(dto.getTaxSystemId()));
         product.setAttributeOfCalculationObject(attributeOfCalculationObjectRepository.getOne(dto.getAttributeOfCalculationObjectId()));
         product.setProductGroup(productGroupRepository.getOne(dto.getProductGroupId()));
+        product.setTypeOfPacking(typeOfPackingRepository.getOne(dto.getTypeOfPackingId()));
 
         productRepository.saveAndFlush(product);
         return dto;
