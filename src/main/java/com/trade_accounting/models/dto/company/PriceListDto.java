@@ -34,4 +34,12 @@ public class PriceListDto {
     private String commentary;
 
     private List<Long> productsIds;
+
+    private Boolean isSpend;
+
+    private Boolean isRecyclebin;
+
+    private Long typeOfPriceId;
+
+    private List<Long> percentsIds;
 }
