@@ -144,7 +144,7 @@ public class ModelStubs {
                         getBankAccount(2L),
                         getBankAccount(3L)
                 ).collect(Collectors.toList()),
-                getImage(id), new Account()
+                new Account()
         );
     }
 
@@ -171,7 +171,7 @@ public class ModelStubs {
                 getLegalDetail(id),
                 getStatus(id),
                 getAccessParameters(id),
-                getImage(id), new Account()
+                new Account()
         );
     }
 
