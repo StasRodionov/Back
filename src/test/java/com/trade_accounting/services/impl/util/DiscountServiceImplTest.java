@@ -4,9 +4,12 @@ import com.trade_accounting.Stubs.model.util.DiscountModelStubs;
 import com.trade_accounting.models.dto.util.DiscountDto;
 import com.trade_accounting.models.entity.util.Discount;
 import com.trade_accounting.repositories.util.DiscountRepository;
+import com.trade_accounting.utils.mapper.util.DiscountMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -23,8 +26,11 @@ public class DiscountServiceImplTest {
     @Mock
     private DiscountRepository discountRepository;
 
-    @Mock
+    @InjectMocks
     private DiscountServiceImpl discountService;
+
+    @Spy
+    private DiscountMapper discountMapper;
 
     @Test
     void getAll() {
