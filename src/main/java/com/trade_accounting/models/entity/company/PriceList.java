@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -45,12 +46,26 @@ public class PriceList {
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
+    @ColumnDefault("false")
     private Boolean sent;
 
+    @ColumnDefault("false")
     private Boolean printed;
 
     private String commentary;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Product> products;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "priceList",
+            cascade = {CascadeType.REFRESH, CascadeType.REMOVE})
+    private List<PriceListProduct> products;
+
+    private Boolean isSpend;
+
+    private Boolean isRecyclebin;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TypeOfPrice typeOfPrice;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "priceList",
+            cascade = CascadeType.REMOVE)
+    private List<PriceListProductPercents> percents;
 }

@@ -30,16 +30,15 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public ContactDto getById(Long id) {
         Contact contact = contactRepository.getOne(id);
-        return contactMapper.toDto(contact);
+        return new ContactDto(contact.getId(),contact.getFullName(), contact.getPosition(), contact.getPhone(), contact.getEmail(), contact.getComment());
     }
 
     @Override
-    public ContactDto create(ContactDto ContactDto) {
+    public ContactDto create(ContactDto contactDto) {
 
-        Contact contact = contactMapper.toModel(ContactDto);
-        Contact contactSaved = contactRepository.save(contact);
-        ContactDto.setId(contactSaved.getId());
-        return ContactDto;
+        Contact contact = new Contact(contactDto.getId(),contactDto.getFullName(), contactDto.getPosition(), contactDto.getPhone(), contactDto.getEmail(), contactDto.getComment());
+        contactRepository.save(contact);
+        return contactDto;
     }
 
     @Override

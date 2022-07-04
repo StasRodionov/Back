@@ -106,6 +106,7 @@ public class Kit {
     private List<Product> products;
 
     //Признак предмета расчёта
+    // Есть основание полагать, что для этих целей созадана сущность AttributeOfCalculationObject
     @Column(name = "indication_calculation")
     private String indicationCalculation;
 

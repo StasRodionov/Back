@@ -1,5 +1,7 @@
 package com.trade_accounting.models.entity.client;
 
+import com.trade_accounting.models.entity.company.Company;
+import com.trade_accounting.models.entity.company.Contractor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,4 +32,12 @@ public class Account {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     @Singular
     List<Employee> employees;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @Singular
+    List<Company> companies;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @Singular
+    List<Contractor> contractors;
 }
