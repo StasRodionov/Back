@@ -24,6 +24,7 @@ public interface ProductMapper {
     @Mapping(target = "fileDtos", source = "files")
     @Mapping(target = "productGroupId", source = "productGroup.id")
     @Mapping(target = "attributeOfCalculationObjectId", source = "attributeOfCalculationObject.id")
+    @Mapping(target = "typeOfPackingId", source = "typeOfPacking.id")
     ProductDto toDto(Product product);
 
     default Long productPriceToLong(ProductPrice productPrice) {

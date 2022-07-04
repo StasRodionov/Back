@@ -98,6 +98,10 @@ public class Product {
     @Column(name = "minimumBalance")
     private int minimumBalance;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TypeOfPacking typeOfPacking;
+
+
     public Product(Long id,
                    String name,
                    BigDecimal weight,
