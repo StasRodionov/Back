@@ -41,6 +41,10 @@ public class SupplierAccountDto {
 
     private Boolean isRecyclebin;
 
+    private Boolean isSent;
+
+    private Boolean isPrint;
+
     public SupplierAccountDto(Long id, String date, Long companyId,
                               Long warehouseId, Long contractId, Long contractorId,
                               String typeOfInvoice, String plannedDatePayment,

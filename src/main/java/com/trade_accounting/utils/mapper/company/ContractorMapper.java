@@ -16,6 +16,7 @@ public interface ContractorMapper {
     @Mapping(source = "legalDetailId", target = "legalDetail.id")
     @Mapping(source = "contractorStatusId", target = "contractorStatus.id")
     @Mapping(source = "accessParametersId", target = "accessParameters.id")
+    @Mapping(source = "accountId", target = "account.id")
     Contractor contractorDtoToContractor(ContractorDto contractorDto);
 
     @Mapping(target = "addressId", source = "address.id")
@@ -26,6 +27,7 @@ public interface ContractorMapper {
     @Mapping(target = "legalDetailId", source = "legalDetail.id")
     @Mapping(target = "contractorStatusId", source = "contractorStatus.id")
     @Mapping(target = "accessParametersId", source = "accessParameters.id")
+    @Mapping(source = "account.id", target = "accountId")
     ContractorDto contractorToContractorDto(Contractor contractor);
 
     default Long bankAccountToLong(BankAccount bankAccount) {
