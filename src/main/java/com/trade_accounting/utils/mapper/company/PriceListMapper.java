@@ -4,8 +4,6 @@ import com.trade_accounting.models.entity.company.PriceList;
 import com.trade_accounting.models.dto.company.PriceListDto;
 import com.trade_accounting.models.entity.company.PriceListProduct;
 import com.trade_accounting.models.entity.company.PriceListProductPercents;
-import com.trade_accounting.models.entity.invoice.InternalOrderProduct;
-import com.trade_accounting.models.entity.warehouse.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

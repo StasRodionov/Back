@@ -14,12 +14,14 @@ public interface CompanyMapper {
     @Mapping(source = "addressId", target = "address.id")
     @Mapping(source = "legalDetailDtoId", target = "legalDetail.id")
     @Mapping(source = "bankAccountDtoIds", target = "bankAccounts")
+    @Mapping(source = "accountId", target = "account.id")
     Company toModel(CompanyDto companyDto);
 
 
     @Mapping(source = "address.id", target = "addressId")
     @Mapping(source = "legalDetail.id", target = "legalDetailDtoId")
     @Mapping(source = "bankAccounts", target = "bankAccountDtoIds")
+    @Mapping(source = "account.id", target = "accountId")
     CompanyDto toDto(Company company);
 
     default Long bankAccountToLong(BankAccount bankAccount) {

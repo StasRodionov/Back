@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface PriceListService extends AbstractService<PriceListDto> {
     List<PriceListDto> getAllForFilter(String string);
+
+    void moveToRecyclebin(long id);
+
+    void restoreFromRecyclebin(long id);
 }

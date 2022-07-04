@@ -49,5 +49,5 @@ public class CompanyDto {
 
     private List<Long> bankAccountDtoIds;
 
-    private Account account;
+    private Long accountId;
 }

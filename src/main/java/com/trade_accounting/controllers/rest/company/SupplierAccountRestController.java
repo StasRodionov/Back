@@ -162,7 +162,7 @@ public class SupplierAccountRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<MovementDto> moveToIsRecyclebin(@ApiParam(name = "id", type = "Long",
+    public ResponseEntity<SupplierAccountDto> moveToIsRecyclebin(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо переместить счет")
                                                           @PathVariable("id") Long id) {
         checkEntityService.checkExists((JpaRepository) supplierAccountRepository, id);
@@ -180,7 +180,7 @@ public class SupplierAccountRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<MovementDto> restoreFromIsRecyclebin(@ApiParam(name = "id", type = "Long",
+    public ResponseEntity<SupplierAccountDto> restoreFromIsRecyclebin(@ApiParam(name = "id", type = "Long",
             value = "Переданный id, по которому необходимо восстановить счет")
                                                                @PathVariable("id") Long id) {
         checkEntityService.checkExists((JpaRepository) supplierAccountRepository, id);
