@@ -14,6 +14,7 @@ public interface InvoiceMapper {
     @Mapping(source = "warehouseId", target = "warehouse.id")
     @Mapping(source = "invoicesStatusId", target = "invoicesStatus.id")
     @Mapping(source = "invoiceProductsIds", target = "invoiceProducts")
+    @Mapping(source = "projectId", target = "project.id")
     Invoice toModel(InvoiceDto emp);
 
     @Mapping(target = "companyId", source = "company.id")
@@ -21,6 +22,7 @@ public interface InvoiceMapper {
     @Mapping(target = "warehouseId", source = "warehouse.id")
     @Mapping(target = "invoicesStatusId", source = "invoicesStatus.id")
     @Mapping(target = "invoiceProductsIds", source = "invoiceProducts")
+    @Mapping(target = "projectId", source = "project.id")
     InvoiceDto toDto(Invoice invoice);
 
     default Long invoiceProductToLong(InvoiceProduct invoiceProduct) {
