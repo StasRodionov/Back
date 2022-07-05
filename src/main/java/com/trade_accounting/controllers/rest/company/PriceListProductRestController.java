@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -57,13 +58,24 @@ public class PriceListProductRestController {
     @ApiOperation(value = "search", notes = "Получение списка прайс-листов по заданным параметрам из фильтра")
     public ResponseEntity<List<PriceListProductDto>> getAll(
             @And({
-                    @Spec(path = "products.name", params = "productDto", spec = LikeIgnoreCase.class),
-                    @Spec(path = "percent", params = "percent", spec = Equal.class),
+                    @Spec(path = "products.id", params = "productID", spec = Equal.class),
+                    @Spec(path = "products.name", params = "productName", spec = LikeIgnoreCase.class),
                     @Spec(path = "price", params = "price", spec = Equal.class),
-                    @Spec(path = "products.purchasePrice", params = "costPrice", spec = Equal.class),
-                    @Spec(path = "products.description", params = "description", spec = LikeIgnoreCase.class)
+                    @Spec(path = "products.productGroup.name", params = "groupName", spec = LikeIgnoreCase.class)
             }) Specification<PriceListProduct> spec) {
         return ResponseEntity.ok(priceListProductService.search(spec));
+    }
+
+    @ApiOperation(value = "quickSearch", notes = "Получение списка прайс-листов по заданным параметрам - название и комментарий")
+    @GetMapping("/quickSearch")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка прайс-листов по заданным параметрам"),
+            @ApiResponse(code = 404, message = "Данный контролер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<PriceListProductDto>> quickSearch(@RequestParam("search") String search) {
+        return ResponseEntity.ok(priceListProductService.quickSearch(search));
     }
 
     @ApiOperation(value = "getById", notes = "Возвращает товар в прайс-листе по Id")
@@ -167,3 +179,4 @@ public class PriceListProductRestController {
         return ResponseEntity.ok(priceListProductDtoList);
     }
 }
+
