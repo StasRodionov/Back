@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -41,19 +42,20 @@ public class SalesChannelServiceImpl implements SalesChannelService {
 
     @Override
     public SalesChannelDto create(SalesChannelDto dto) {
-//        SalesChannel salesChannel = salesChannelMapper.toModel(dto);
-//        salesChannel.setDepartmentOwner(employeeRepository.findByEmail(getPrincipalName()).get().getDepartment().getName());
-//        salesChannel.setEmployeeOwner(getPrincipalFullName());
-//        salesChannel.setDateOfChange(nowLocalDateTime);
-//        salesChannel.setEmployeeChange(getPrincipalFullName());
+        SalesChannel salesChannel = salesChannelMapper.toModel(dto);
+        salesChannel.setGeneralAccess(false);
+        salesChannel.setDepartmentOwner(employeeRepository.findByEmail(getPrincipalName()).get().getDepartment().getName());
+        salesChannel.setEmployeeOwner(getPrincipalFullName());
+        salesChannel.setDateOfChange(LocalDateTime.now().toString());
+        salesChannel.setEmployeeChange(getPrincipalFullName());
         return salesChannelMapper.toDto(salesChannelRepository.save(salesChannelMapper.toModel(dto)));
     }
 
     @Override
     public SalesChannelDto update(SalesChannelDto dto) {
         SalesChannel salesChannel = salesChannelMapper.toModel(dto);
-//        salesChannel.setDateOfChange(nowLocalDateTime);
-//        salesChannel.setEmployeeChange(getPrincipalName());
+        salesChannel.setDateOfChange(LocalDateTime.now().toString());
+        salesChannel.setEmployeeChange(getPrincipalName());
         return salesChannelMapper.toDto(salesChannelRepository.save(salesChannel));
     }
 

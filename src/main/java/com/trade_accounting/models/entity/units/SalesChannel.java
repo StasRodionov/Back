@@ -30,6 +30,20 @@ public class SalesChannel {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "general_access")
+    private boolean generalAccess;
+
+    @Column(name = "department_owner")
+    private String departmentOwner;
+
+    @Column(name = "employee_owner")
+    private String employeeOwner;
+
+    @Column(name = "date_of_change")
+    private String dateOfChange;
+
+    @Column(name = "employee_change")
+    private String employeeChange;
 
     public SalesChannel(String name, String type, String description) {
         this.name = name;
