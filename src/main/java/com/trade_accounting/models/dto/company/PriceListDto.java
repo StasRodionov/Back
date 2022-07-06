@@ -1,7 +1,5 @@
 package com.trade_accounting.models.dto.company;
 
-import com.trade_accounting.models.dto.warehouse.ProductPriceDto;
-import com.trade_accounting.models.entity.warehouse.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,16 +20,24 @@ public class PriceListDto {
     private String number;
 
     @NotNull
-    private String time;
+    private String date;
 
     @NotNull
     private Long companyId;
 
-    private Boolean sent;
+    private Boolean isSent;
 
-    private Boolean printed;
+    private Boolean isPrint;
 
-    private String commentary;
+    private String comment;
 
     private List<Long> productsIds;
+
+    private Boolean isSpend;
+
+    private Boolean isRecyclebin;
+
+    private Long typeOfPriceId;
+
+    private List<Long> percentsIds;
 }

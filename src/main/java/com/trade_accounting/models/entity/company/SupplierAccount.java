@@ -7,6 +7,7 @@ import com.trade_accounting.models.entity.warehouse.Warehouse;
 import com.trade_accounting.models.entity.invoice.TypeOfInvoice;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "supplier_accounts")
+@EqualsAndHashCode
 public class SupplierAccount extends OperationsAbstract {
 
     @NotNull
@@ -47,7 +49,4 @@ public class SupplierAccount extends OperationsAbstract {
 
     @Column(name = "planned_date_payment")
     private LocalDateTime plannedDatePayment;
-
-    @Column(name = "date")
-    private LocalDateTime date;
 }

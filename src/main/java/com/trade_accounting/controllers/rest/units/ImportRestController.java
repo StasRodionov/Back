@@ -1,9 +1,6 @@
 package com.trade_accounting.controllers.rest.units;
 
-import com.trade_accounting.models.dto.units.CurrencyDto;
 import com.trade_accounting.models.dto.units.ImportDto;
-import com.trade_accounting.models.dto.units.ScenarioDto;
-import com.trade_accounting.models.entity.units.Currency;
 import com.trade_accounting.models.entity.units.Import;
 import com.trade_accounting.repositories.units.ImportRepository;
 import com.trade_accounting.services.interfaces.units.ImportService;

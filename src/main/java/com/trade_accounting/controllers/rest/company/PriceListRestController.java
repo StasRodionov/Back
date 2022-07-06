@@ -1,7 +1,9 @@
 package com.trade_accounting.controllers.rest.company;
 
 import com.trade_accounting.models.dto.company.PriceListDto;
+import com.trade_accounting.repositories.company.PriceListRepository;
 import com.trade_accounting.services.interfaces.company.PriceListService;
+import com.trade_accounting.services.interfaces.util.CheckEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -9,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +32,10 @@ import java.util.List;
 public class PriceListRestController {
 
     private final PriceListService priceListService;
+
+    private final CheckEntityService checkEntityService;
+
+    private final PriceListRepository priceListRepository;
 
     @ApiOperation(value = "getAll", notes = "Возвращает список всех прайс-листов")
     @GetMapping
@@ -114,6 +121,41 @@ public class PriceListRestController {
                                                                   @PathVariable(name = "search") String search) {
         List<PriceListDto> priceListDtoList = priceListService.getAllForFilter(search);
         return ResponseEntity.ok(priceListDtoList);
+    }
+
+    @PutMapping("/moveToIsRecyclebin/{id}")
+    @ApiOperation(value = "moveToIsRecyclebin", notes = "Перенос в корзину счета по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Счет перенесен в корзину"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<PriceListDto> moveToIsRecyclebin(@ApiParam(name = "id", type = "Long",
+            value = "Переданный id, по которому необходимо переместить счет")
+                                                           @PathVariable("id") Long id) {
+        checkEntityService.checkExists((JpaRepository) priceListRepository, id);
+        priceListService.moveToRecyclebin(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/restoreFromIsRecyclebin/{id}")
+    @ApiOperation(value = "restoreFromIsRecyclebin", notes = "Восстановление счета по id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Счет восстановлен"),
+            @ApiResponse(code = 204, message = "Запрос получен и обработан, данных для возврата нет"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<PriceListDto> restoreFromIsRecyclebin(@ApiParam(name = "id", type = "Long",
+            value = "Переданный id, по которому необходимо восстановить счет")
+                                                                @PathVariable("id") Long id) {
+        checkEntityService.checkExists((JpaRepository) priceListRepository, id);
+        priceListService.restoreFromRecyclebin(id);
+        return ResponseEntity.ok().build();
     }
 
 }

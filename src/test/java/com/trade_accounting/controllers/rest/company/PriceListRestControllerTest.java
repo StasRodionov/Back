@@ -1,7 +1,6 @@
 package com.trade_accounting.controllers.rest.company;
 
 import com.google.gson.Gson;
-import com.trade_accounting.controllers.rest.company.PriceListRestController;
 import com.trade_accounting.models.dto.company.PriceListDto;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.Matchers;
@@ -61,11 +60,11 @@ public class PriceListRestControllerTest {
         PriceListDto priceListDto = PriceListDto.builder()
                 .id(1L)
                 .number("number1")
-                .time("1234-12-12 12:34")
+                .date("1234-12-12 12:34")
                 .companyId(1L)
-                .sent(false)
-                .printed(false)
-                .commentary("comment1")
+                .isSent(false)
+                .isPrint(false)
+                .comment("comment1")
                 .build();
 
         String dtoJson = new Gson().toJson(priceListDto);
@@ -81,11 +80,11 @@ public class PriceListRestControllerTest {
     void create() throws Exception {
         PriceListDto priceListDto = PriceListDto.builder()
                 .number("number1")
-                .time("1234-12-12 12:34")
+                .date("1234-12-12 12:34")
                 .companyId(1L)
-                .sent(false)
-                .printed(false)
-                .commentary("comment1")
+                .isSent(false)
+                .isPrint(false)
+                .comment("comment1")
                 .build();
 
         String dtoJson = new Gson().toJson(priceListDto);
@@ -108,11 +107,11 @@ public class PriceListRestControllerTest {
         PriceListDto priceListDto = PriceListDto.builder()
                 .id(2L)
                 .number("UPDATED")
-                .time("1234-12-12 12:34")
+                .date("1234-12-12 12:34")
                 .companyId(2L)
-                .sent(true)
-                .printed(true)
-                .commentary("UPDATED")
+                .isSent(true)
+                .isPrint(true)
+                .comment("UPDATED")
                 .build();
 
         String dtoJson = new Gson().toJson(priceListDto);
