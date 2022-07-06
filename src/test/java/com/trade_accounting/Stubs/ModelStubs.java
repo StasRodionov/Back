@@ -52,6 +52,7 @@ import com.trade_accounting.models.entity.production.TechnicalCardProduction;
 import com.trade_accounting.models.entity.production.TechnicalOperations;
 import com.trade_accounting.models.entity.production.TechnicalProcess;
 import com.trade_accounting.models.entity.retail.RetailStore;
+import com.trade_accounting.models.entity.units.Country;
 import com.trade_accounting.models.entity.units.Currency;
 import com.trade_accounting.models.entity.units.SalesChannel;
 import com.trade_accounting.models.entity.util.File;
@@ -777,5 +778,9 @@ public class ModelStubs {
 
     public static SalesChannel getSalesChannel(Long id) {
         return new SalesChannel(id, "name", "type", "description");
+    }
+
+    public static Country getCountry(Long id) {
+        return new Country(id, "sampleType", "sampleShortName", "sampleFullName", "sampleDigitCode", "sampleTwoLetterCode", "sampleThreeLetterCode");
     }
 }
