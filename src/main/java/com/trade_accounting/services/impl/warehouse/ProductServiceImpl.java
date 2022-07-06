@@ -114,11 +114,13 @@ public class ProductServiceImpl implements ProductService {
         savedFiles.forEach(file -> file.setProduct(product));
         product.setFiles(savedFiles);
         List<ProductPrice> prices = new ArrayList<>();
+
         try {
             product.getProductPrices()
                     .forEach(productPrice -> prices.add(productPriceRepository.getOne(productPrice.getId())));
             product.setProductPrices(prices);
         } catch (NullPointerException ignored) {}
+
         productRepository.saveAndFlush(product);
         return dto;
     }
