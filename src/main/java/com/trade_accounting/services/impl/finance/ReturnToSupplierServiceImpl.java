@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,6 +31,13 @@ public class ReturnToSupplierServiceImpl implements ReturnToSupplierService {
     public ReturnToSupplierDto getById(Long id) {
         Optional<ReturnToSupplier> returnsToSuppliersById = returnsToSuppliersRepository.findById(id);
         return returnToSupplierMapper.toDto(returnsToSuppliersById.orElse(new ReturnToSupplier()));
+    }
+
+    @Override
+    public List<ReturnToSupplierDto> getByProjectId(Long id) {
+        return returnsToSuppliersRepository.findByProjectId(id).stream()
+                .map(returnToSupplierMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override

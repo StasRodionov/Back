@@ -86,6 +86,18 @@ public class AcceptanceRestController {
         return ResponseEntity.ok(acceptanceService.getById(id));
     }
 
+    @GetMapping("/getByProjectId{id}")
+    @ApiOperation(value = "getByProjectId", notes = "Получение списка всех приёмок по проекту")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка приёмок"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<AcceptanceDto>> getByProjectId(@PathVariable Long id) {
+        return ResponseEntity.ok(acceptanceService.getByProjectId(id));
+    }
+
     @PostMapping
     @ApiOperation(value = "create", notes = "Добавление новой приемки")
     @ApiResponses(value = {

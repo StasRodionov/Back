@@ -39,6 +39,9 @@ public interface ReturnToSupplierRepository extends JpaRepository<ReturnToSuppli
             "e.comment) from ReturnToSupplier  e where  e.id = :id")
     ReturnToSupplierDto getById(@Param("id") Long id);
 
+    @Query("from ReturnToSupplier r where r.project.id = :id")
+    List<ReturnToSupplier> findByProjectId(@Param("id") Long id);
+
     @Query(
             "select new com.trade_accounting.models.dto.finance.ReturnToSupplierDto (" +
                     "e.id," +

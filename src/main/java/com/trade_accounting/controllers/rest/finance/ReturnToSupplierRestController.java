@@ -54,6 +54,18 @@ public class ReturnToSupplierRestController {
         return ResponseEntity.ok(returnToSupplierService.getAll());
     }
 
+    @GetMapping("/getByProjectId{id}")
+    @ApiOperation(value = "getByProjectId", notes = "Получение списка всех возвратов поставщикам по проекту")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение возвратов поставщикам"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<ReturnToSupplierDto>> getByProjectId(@PathVariable Long id) {
+        return ResponseEntity.ok(returnToSupplierService.getByProjectId(id));
+    }
+
     @GetMapping("/search/{nameFilter}")
     @ApiOperation(value = "searchByNameFilter", notes = "Получение списка всех возвратов поставщикам")
     @ApiResponses(value = {
