@@ -13,7 +13,16 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {ImageMapper.class, FileMapper.class})
 public interface ProductMapper {
-    //Product
+
+    @Mapping(target = "unit.id", source = "unitId")
+    @Mapping(target = "contractor.id", source = "contractorId")
+    @Mapping(target = "productPrices", source = "productPriceIds")
+    @Mapping(target = "taxSystem.id", source = "taxSystemId")
+    @Mapping(target = "images", source = "imageDtos")
+    @Mapping(target = "files", source = "fileDtos")
+    @Mapping(target = "productGroup.id", source = "productGroupId")
+    @Mapping(target = "attributeOfCalculationObject.id", source = "attributeOfCalculationObjectId")
+    @Mapping(target = "typeOfPacking.id", source = "typeOfPackingId")
     Product toModel(ProductDto productDto);
 
     @Mapping(target = "unitId", source = "unit.id")
