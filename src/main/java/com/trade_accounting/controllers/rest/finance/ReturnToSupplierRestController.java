@@ -134,6 +134,7 @@ public class ReturnToSupplierRestController {
                     @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "company.name", params = "companyDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "warehouse.name", params = "warehouseDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "project.name", params = "projectDto", spec = LikeIgnoreCase.class),
                     @Spec(path = "isSend", params = "send", spec = Equal.class),
                     @Spec(path = "isPrint", params = "print", spec = Equal.class)
             }) Specification<ReturnToSupplier> supplier) {

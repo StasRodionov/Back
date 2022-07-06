@@ -41,8 +41,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentDto create(PaymentDto paymentDto) {
         Payment payment = paymentRepository.save(paymentMapper.toModel(paymentDto));
-        paymentDto.setId(payment.getId());
-        return paymentDto;
+        return paymentMapper.toDto(payment);
     }
 
     @Override

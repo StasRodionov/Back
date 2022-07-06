@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
@@ -110,6 +111,7 @@ public class AcceptanceRestController {
                     @Spec(path = "contractor.name", params = "contractorDto", spec = Equal.class),
                     @Spec(path = "company.name", params = "companyDto", spec = Equal.class),
                     @Spec(path = "warehouse.name", params = "warehouseDto", spec = Equal.class),
+                    @Spec(path = "project.name", params = "projectDto", spec = LikeIgnoreCase.class),
             }) Specification<Acceptance> spec) {
         return ResponseEntity.ok(acceptanceService.search(spec));
     }

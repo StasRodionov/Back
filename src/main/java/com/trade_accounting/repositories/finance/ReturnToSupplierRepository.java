@@ -20,8 +20,9 @@ public interface ReturnToSupplierRepository extends JpaRepository<ReturnToSuppli
             "e.company.id," +
             "e.contractor.id," +
             "e.contract.id," +
+            "e.project.id," +
             "e.isSend," +
-            "e.isPrint, " +
+            "e.isPrint," +
             "e.comment) from ReturnToSupplier  e")
     List<ReturnToSupplierDto> getAll();
 
@@ -32,8 +33,9 @@ public interface ReturnToSupplierRepository extends JpaRepository<ReturnToSuppli
             "e.company.id," +
             "e.contractor.id," +
             "e.contract.id," +
+            "e.project.id," +
             "e.isSend," +
-            "e.isPrint, " +
+            "e.isPrint," +
             "e.comment) from ReturnToSupplier  e where  e.id = :id")
     ReturnToSupplierDto getById(@Param("id") Long id);
 
@@ -45,8 +47,9 @@ public interface ReturnToSupplierRepository extends JpaRepository<ReturnToSuppli
                     "e.company.id," +
                     "e.contractor.id," +
                     "e.contract.id," +
+                    "e.project.id," +
                     "e.isSend," +
-                    "e.isPrint, " +
+                    "e.isPrint," +
                     "e.comment) from ReturnToSupplier  e where  lower(e.comment) " +
                     "                                   like lower(concat('%', :nameFilter,'%'))"
     )
@@ -59,6 +62,7 @@ public interface ReturnToSupplierRepository extends JpaRepository<ReturnToSuppli
             "e.company.id," +
             "e.contractor.id," +
             "e.contract.id," +
+            "e.project.id, " +
             "e.isSend," +
             "e.isPrint, " +
             "e.comment) from ReturnToSupplier  e where  e.id = :nameFilter "
