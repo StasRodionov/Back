@@ -14,11 +14,11 @@ public class PriceListModelStubs {
         return PriceList.builder()
                 .id(id)
                 .number("NumberOne")
-                .time(LocalDateTime.parse(LocalDateTime.now().toString()))
+                //.time(LocalDateTime.parse(LocalDateTime.now().toString()))
                 .company(ModelStubs.getCompany(id))
-                .sent(false)
-                .printed(false)
-                .commentary("comment" + id)
+                //.sent(false)
+                //.printed(false)
+                //.commentary("comment" + id)
                 .build();
     }
 }
