@@ -58,7 +58,15 @@ public class PriceListProductServiceImpl implements PriceListProductService {
 
     @Override
     public List<PriceListProductDto> search(Specification<PriceListProduct> spec) {
-        return executeSearch(priceListProductRepository, priceListProductMapper::toDto, spec);
+        return priceListProductRepository.findAll(spec).stream()
+                .map(priceListProductMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PriceListProductDto> quickSearch(String text) {
+        return priceListProductRepository.getBySearch(text).stream()
+                .map(priceListProductMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
