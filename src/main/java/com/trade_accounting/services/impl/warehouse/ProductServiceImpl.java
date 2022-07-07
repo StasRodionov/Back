@@ -114,7 +114,8 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (dto.getAttributeOfCalculationObjectId() != null) {
-            product.setAttributeOfCalculationObject(attributeOfCalculationObjectRepository.getOne(dto.getAttributeOfCalculationObjectId()));
+            product.setAttributeOfCalculationObject(
+                    attributeOfCalculationObjectRepository.getOne(dto.getAttributeOfCalculationObjectId()));
         } else {
             product.setAttributeOfCalculationObject(null);
         }
