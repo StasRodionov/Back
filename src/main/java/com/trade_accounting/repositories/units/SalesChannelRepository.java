@@ -1,6 +1,5 @@
 package com.trade_accounting.repositories.units;
 
-import com.trade_accounting.models.dto.units.CurrencyDto;
 import com.trade_accounting.models.dto.units.SalesChannelDto;
 import com.trade_accounting.models.entity.units.SalesChannel;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,4 +29,8 @@ public interface SalesChannelRepository extends JpaRepository<SalesChannel, Long
     @Query("select new com.trade_accounting.models.dto.units.SalesChannelDto(sc.id, sc.name, sc.type, sc.description, sc.generalAccess, sc.departmentOwner, sc.employeeOwner, sc.dateOfChange, sc.employeeChange) from SalesChannel sc where sc.id = :id")
     SalesChannelDto getById(@Param("id") Long id);
 
+    @Query("from SalesChannel sc " +
+    "where lower ( concat(sc.id, ' ', sc.name, ' ', sc.type, ' ', sc.description, ' ', sc.generalAccess, ' ', sc.departmentOwner, ' ', sc.employeeOwner, ' ', sc.dateOfChange, ' ', sc.employeeChange)) " +
+    "like lower (concat('%', :symbols, '$')) ")
+    List<SalesChannel> getBySearch(@Param("symbols") String search);
 }

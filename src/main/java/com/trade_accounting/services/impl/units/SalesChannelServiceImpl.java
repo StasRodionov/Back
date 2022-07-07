@@ -3,7 +3,6 @@ package com.trade_accounting.services.impl.units;
 
 import com.trade_accounting.models.dto.client.EmployeeDto;
 import com.trade_accounting.models.dto.units.SalesChannelDto;
-import com.trade_accounting.models.entity.client.Employee;
 import com.trade_accounting.models.entity.units.SalesChannel;
 import com.trade_accounting.repositories.client.EmployeeRepository;
 import com.trade_accounting.repositories.units.SalesChannelRepository;
@@ -11,16 +10,16 @@ import com.trade_accounting.services.interfaces.client.EmployeeService;
 import com.trade_accounting.services.interfaces.units.SalesChannelService;
 import com.trade_accounting.utils.mapper.units.SalesChannelMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -89,6 +88,17 @@ public class SalesChannelServiceImpl implements SalesChannelService {
             }
         }
         return principalFullName;
+    }
+
+
+    @Override
+    public List<SalesChannelDto> searchByString(String text) {
+        return salesChannelRepository.getBySearch(text).stream().map(salesChannelMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SalesChannelDto> search(Specification<SalesChannel> spec) {
+        return executeSearch(salesChannelRepository, salesChannelMapper::toDto, spec);
     }
 }
 
