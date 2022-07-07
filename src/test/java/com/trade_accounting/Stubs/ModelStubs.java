@@ -776,6 +776,6 @@ public class ModelStubs {
     }
 
     public static SalesChannel getSalesChannel(Long id) {
-        return new SalesChannel(id, "name", "type", "description");
+        return new SalesChannel(id, "name", "type", "description", false, "departmentOwner", "employeeOwner", "dateOfChange", "employeeChange");
     }
 }

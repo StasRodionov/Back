@@ -45,10 +45,10 @@ public class SalesChannel {
     @Column(name = "employee_change")
     private String employeeChange;
 
-    public SalesChannel(String name, String type, String description) {
-        this.name = name;
-        this.type = type;
-        this.description = description;
-    }
+//    public SalesChannel(String name, String type, String description) {
+//        this.name = name;
+//        this.type = type;
+//        this.description = description;
+//    }
 
 }

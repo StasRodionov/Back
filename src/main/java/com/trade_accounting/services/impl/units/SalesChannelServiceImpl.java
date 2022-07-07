@@ -3,6 +3,7 @@ package com.trade_accounting.services.impl.units;
 
 import com.trade_accounting.models.dto.client.EmployeeDto;
 import com.trade_accounting.models.dto.units.SalesChannelDto;
+import com.trade_accounting.models.entity.client.Employee;
 import com.trade_accounting.models.entity.units.SalesChannel;
 import com.trade_accounting.repositories.client.EmployeeRepository;
 import com.trade_accounting.repositories.units.SalesChannelRepository;
@@ -10,6 +11,7 @@ import com.trade_accounting.services.interfaces.client.EmployeeService;
 import com.trade_accounting.services.interfaces.units.SalesChannelService;
 import com.trade_accounting.utils.mapper.units.SalesChannelMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -48,14 +50,17 @@ public class SalesChannelServiceImpl implements SalesChannelService {
         salesChannel.setEmployeeOwner(getPrincipalFullName());
         salesChannel.setDateOfChange(LocalDateTime.now().toString());
         salesChannel.setEmployeeChange(getPrincipalFullName());
-        return salesChannelMapper.toDto(salesChannelRepository.save(salesChannelMapper.toModel(dto)));
+//        return salesChannelMapper.toDto(salesChannelRepository.save(salesChannelMapper.toModel(dto)));
+        return salesChannelMapper.toDto(salesChannelRepository.save(salesChannel));
     }
 
     @Override
     public SalesChannelDto update(SalesChannelDto dto) {
         SalesChannel salesChannel = salesChannelMapper.toModel(dto);
+        salesChannel.setDepartmentOwner(salesChannel.getDepartmentOwner());
+        salesChannel.setEmployeeOwner(salesChannel.getEmployeeOwner());
         salesChannel.setDateOfChange(LocalDateTime.now().toString());
-        salesChannel.setEmployeeChange(getPrincipalName());
+        salesChannel.setEmployeeChange(getPrincipalFullName());
         return salesChannelMapper.toDto(salesChannelRepository.save(salesChannel));
     }
 
@@ -79,8 +84,8 @@ public class SalesChannelServiceImpl implements SalesChannelService {
         String principalFullName = "";
         for (EmployeeDto employeeDto : employeeService.getAll()) {
             if (Objects.equals(employeeDto.getEmail(), getPrincipalName())) {
-                principalFullName = employeeDto.getLastName() + " " + employeeDto.getFirstName().substring(0, 0) + ". "
-                        + employeeDto.getMiddleName().substring(0, 0) + ".";
+                principalFullName = employeeDto.getLastName() + " " + employeeDto.getFirstName().substring(0, 1) + ". "
+                        + employeeDto.getMiddleName().substring(0, 1) + ".";
             }
         }
         return principalFullName;

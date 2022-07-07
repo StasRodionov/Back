@@ -18,11 +18,16 @@ public interface SalesChannelRepository extends JpaRepository<SalesChannel, Long
             "salesChannel.id, " +
             "salesChannel.name, " +
             "salesChannel.type," +
-            "salesChannel.description" +
+            "salesChannel.description," +
+            "salesChannel.generalAccess," +
+            "salesChannel.departmentOwner," +
+            "salesChannel.employeeOwner," +
+            "salesChannel.dateOfChange," +
+            "salesChannel.employeeChange" +
             ") from SalesChannel salesChannel")
     List<SalesChannelDto> getAll();
 
-    @Query("select new com.trade_accounting.models.dto.units.SalesChannelDto(sc.id, sc.name, sc.type, sc.description) from SalesChannel sc where sc.id = :id")
+    @Query("select new com.trade_accounting.models.dto.units.SalesChannelDto(sc.id, sc.name, sc.type, sc.description, sc.generalAccess, sc.departmentOwner, sc.employeeOwner, sc.dateOfChange, sc.employeeChange) from SalesChannel sc where sc.id = :id")
     SalesChannelDto getById(@Param("id") Long id);
 
 }
