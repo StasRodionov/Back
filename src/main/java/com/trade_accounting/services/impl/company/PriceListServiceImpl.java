@@ -12,6 +12,7 @@ import com.trade_accounting.utils.mapper.company.PriceListMapper;
 import com.trade_accounting.utils.mapper.company.PriceListProductMapper;
 import com.trade_accounting.utils.mapper.company.PriceListProductPercentsMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,9 +86,15 @@ public class PriceListServiceImpl implements PriceListService {
         List<PriceListDto> list = getAll();
         List<PriceListDto> listFilter = new ArrayList<>();
         list.stream()
-                .filter(e-> companyService.getById(e.getCompanyId()).getName().equals(string))
-                .forEach(e -> listFilter.add(e));
+                .filter(e -> companyService.getById(e.getCompanyId()).getName().equals(string))
+                .forEach(listFilter::add);
         return listFilter;
+    }
+
+    @Override
+    public List<PriceListDto> search(Specification<PriceList> spec) {
+        return priceListRepository.findAll(spec).stream().map(priceListMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -102,6 +109,13 @@ public class PriceListServiceImpl implements PriceListService {
         PriceList priceList = priceListRepository.getOne(id);
         priceList.setIsRecyclebin(false);
         priceListRepository.save(priceList);
+    }
+
+    @Override
+    public List<PriceListDto> quickSearch(String text) {
+        return priceListRepository.getBySearch(text).stream()
+                .map(priceListMapper::toDto)
+                .collect(Collectors.toList());
     }
 
 }
