@@ -14,6 +14,7 @@ public interface PriceListProductService extends AbstractService<PriceListProduc
     @Transactional
     List<PriceListProductDto> search(Specification<PriceListProduct> specification);
     List<PriceListProductDto> getAllByProductId(Long id);
+    List<PriceListProductDto> quickSearch(String text);
     @Transactional
     default List<PriceListProductDto> searchByPriceListId(Long id) {
         return search((root, query, builder) -> builder.equal(root.get("priceList").get("id"), id));
