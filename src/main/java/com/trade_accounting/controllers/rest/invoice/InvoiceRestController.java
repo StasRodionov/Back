@@ -2,7 +2,6 @@ package com.trade_accounting.controllers.rest.invoice;
 
 import com.trade_accounting.models.dto.invoice.InvoiceDto;
 import com.trade_accounting.models.dto.invoice.TypeOfOrder;
-import com.trade_accounting.models.dto.purchases.PurchaseControlDto;
 import com.trade_accounting.models.dto.purchases.PurchaseCreateOrderDto;
 import com.trade_accounting.models.dto.warehouse.MovementDto;
 import com.trade_accounting.models.entity.invoice.Invoice;
@@ -79,6 +78,18 @@ public class InvoiceRestController {
         return ResponseEntity.ok(invoiceService.getByContractorId(id));
     }
 
+    @GetMapping("/getByProjectId{id}")
+    @ApiOperation(value = "getByProjectId", notes = "Получение списка всех накладных по проекту")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка накладных"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<InvoiceDto>> getByProjectId(@PathVariable Long id) {
+        return ResponseEntity.ok(invoiceService.getByProjectId(id));
+    }
+
     @GetMapping("/search")
     @ApiOperation(value = "search", notes = "Получение списка счетов по заданным параметрам")
     public ResponseEntity<List<InvoiceDto>> getAll(
@@ -86,9 +97,10 @@ public class InvoiceRestController {
                     @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "date", params = "date", spec = GreaterThanOrEqual.class),
                     @Spec(path = "typeOfInvoice", params = "typeOfInvoice", spec = Equal.class),
-                    @Spec(path = "company.name", params = "companyDto", spec = Like.class),
-                    @Spec(path = "contractor.name", params = "contractorDto", spec = LikeIgnoreCase.class),
-                    @Spec(path = "warehouse.name", params = "warehouseDto", spec = LikeIgnoreCase.class),
+                    @Spec(path = "company.name", params = "companyDto", spec = Equal.class),
+                    @Spec(path = "contractor.name", params = "contractorDto", spec = Equal.class),
+                    @Spec(path = "warehouse.name", params = "warehouseDto", spec = Equal.class),
+                    @Spec(path = "project.name", params = "projectDto", spec = Equal.class),
                     @Spec(path = "isSpend", params = "spend", spec = Equal.class),
                     @Spec(path = "comment", params = "comment", spec = Equal.class),
             }) Specification<Invoice> spec) {

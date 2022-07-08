@@ -1,5 +1,6 @@
 package com.trade_accounting.repositories.finance;
 
+import com.trade_accounting.models.dto.finance.PaymentDto;
 import com.trade_accounting.models.entity.finance.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -19,5 +20,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpec
             " like lower(concat('%', :req, '%'))")
     List<Payment> search(@Param("req") String request);
 
-
+    @Query("from Payment p where p.project.id = :id")
+    List<Payment> findByProjectId(@Param("id") Long id);
 }
