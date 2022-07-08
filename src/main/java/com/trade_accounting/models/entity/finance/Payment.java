@@ -8,9 +8,12 @@ import com.trade_accounting.models.entity.company.Contract;
 import com.trade_accounting.models.entity.company.Contractor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +32,7 @@ import java.time.LocalDateTime;
 @Entity
 @SuperBuilder
 @Table(name = "payments")
+@EqualsAndHashCode
 public class Payment extends OperationsAbstract {
 
     @Column(name = "type_of_payment")
@@ -62,6 +66,7 @@ public class Payment extends OperationsAbstract {
     private Contract contract;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
     private Project project;
 
     @Column(name = "sum")

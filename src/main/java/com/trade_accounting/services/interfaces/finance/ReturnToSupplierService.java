@@ -12,4 +12,6 @@ public interface ReturnToSupplierService extends AbstractService<ReturnToSupplie
 
     List<ReturnToSupplierDto> searchByString(String nameFilter);
 
+    List<ReturnToSupplierDto> getByProjectId(Long id);
+
 }

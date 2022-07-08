@@ -84,6 +84,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    public List<InvoiceDto> getByProjectId(Long id) {
+        return invoiceRepository.findByProjectId(id);
+    }
+
+    @Override
     public void moveToRecyclebin(long id) {
         Invoice invoice = invoiceRepository.getOne(id);
         invoice.setIsRecyclebin(true);
@@ -105,10 +110,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public InvoiceDto create(InvoiceDto invoiceDto) {
-        Invoice invoiceSaved = invoiceMapper.toModel(invoiceDto);
-        return invoiceMapper.toDto(invoiceRepository.save(invoiceSaved));
+        Invoice invoice = invoiceRepository.save(invoiceMapper.toModel(invoiceDto));
+        return invoiceMapper.toDto(invoice);
     }
-
 
     @Override
     public InvoiceDto update(InvoiceDto invoiceDto) {
