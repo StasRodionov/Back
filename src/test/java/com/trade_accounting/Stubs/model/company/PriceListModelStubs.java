@@ -4,6 +4,7 @@ import com.trade_accounting.models.entity.company.PriceList;
 import com.trade_accounting.Stubs.ModelStubs;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * @author Andrey Melnikov and Pavel Andrusov
@@ -14,11 +15,12 @@ public class PriceListModelStubs {
         return PriceList.builder()
                 .id(id)
                 .number("NumberOne")
-                //.time(LocalDateTime.parse(LocalDateTime.now().toString()))
+                .date(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .company(ModelStubs.getCompany(id))
-                //.sent(false)
-                //.printed(false)
-                //.commentary("comment" + id)
+                .isSent(false)
+                .isPrint(false)
+                .comment("comment" + id)
+                .typeOfPrice(ModelStubs.getTypeOfPrice(1L))
                 .build();
     }
 }

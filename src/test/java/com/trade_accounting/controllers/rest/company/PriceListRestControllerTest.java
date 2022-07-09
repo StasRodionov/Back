@@ -60,7 +60,7 @@ public class PriceListRestControllerTest {
         PriceListDto priceListDto = PriceListDto.builder()
                 .id(1L)
                 .number("number1")
-                .date("1234-12-12 12:34")
+                .date("1234-12-12T12:34:00")
                 .companyId(1L)
                 .isSent(false)
                 .isPrint(false)
@@ -80,11 +80,12 @@ public class PriceListRestControllerTest {
     void create() throws Exception {
         PriceListDto priceListDto = PriceListDto.builder()
                 .number("number1")
-                .date("1234-12-12 12:34")
+                .date("1234-12-12T12:34:00")
                 .companyId(1L)
                 .isSent(false)
                 .isPrint(false)
                 .comment("comment1")
+                .typeOfPriceId(1L)
                 .build();
 
         String dtoJson = new Gson().toJson(priceListDto);
@@ -107,11 +108,12 @@ public class PriceListRestControllerTest {
         PriceListDto priceListDto = PriceListDto.builder()
                 .id(2L)
                 .number("UPDATED")
-                .date("1234-12-12 12:34")
+                .date("1234-12-12T12:34:00")
                 .companyId(2L)
                 .isSent(true)
                 .isPrint(true)
                 .comment("UPDATED")
+                .typeOfPriceId(1L)
                 .build();
 
         String dtoJson = new Gson().toJson(priceListDto);

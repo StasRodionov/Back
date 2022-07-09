@@ -1,18 +1,23 @@
 package com.trade_accounting.services.impl.company;
 
+import com.trade_accounting.Stubs.SpecificationStubs;
 import com.trade_accounting.models.entity.company.PriceList;
 import com.trade_accounting.models.dto.company.PriceListDto;
 import com.trade_accounting.repositories.company.CompanyRepository;
 import com.trade_accounting.repositories.company.PriceListRepository;
 import com.trade_accounting.Stubs.dto.company.PriceListDtoStubs;
 import com.trade_accounting.Stubs.model.company.PriceListModelStubs;
-import com.trade_accounting.utils.mapper.company.PriceListMapper;
+import com.trade_accounting.repositories.company.TypeOfPriceRepository;
+import com.trade_accounting.utils.mapper.company.PriceListMapperImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +33,7 @@ import static org.mockito.Mockito.*;
  * @since 05.08.2021
  */
 
+@ContextConfiguration(classes = PriceListServiceImpl.class)
 @ExtendWith(MockitoExtension.class)
 public class PriceListServiceImplTest {
 
@@ -37,8 +43,11 @@ public class PriceListServiceImplTest {
     @Mock
     private CompanyRepository companyRepository;
 
+    @Mock
+    private TypeOfPriceRepository typeOfPriceRepository;
+
     @Spy
-    private PriceListMapper priceListMapper;
+    private PriceListMapperImpl priceListMapper;
 
     @InjectMocks
     private PriceListServiceImpl priceListService;
@@ -81,29 +90,47 @@ public class PriceListServiceImplTest {
 
     @Test
     void create() {
-        when(priceListRepository.save(any(PriceList.class)))
-                .thenReturn(PriceListModelStubs.getPriceList(1L));
-
-        PriceListDto priceListDto = priceListService.create(PriceListDtoStubs.getDto(1L));
-
-        assertEquals(1, priceListDto.getId());
-        verify(priceListRepository).save(any());
+        priceListService.create(PriceListDtoStubs.getDto(1L));
+        verify(priceListRepository).save(any(PriceList.class));
     }
 
     @Test
     void update() {
-        when(priceListRepository.save(any(PriceList.class)))
-                .thenReturn(PriceListModelStubs.getPriceList(1L));
-
-        PriceListDto priceListDto = priceListService.create(PriceListDtoStubs.getDto(anyLong()));
-
-        assertEquals(1, priceListDto.getId());
-        verify(priceListRepository).save(any());
+        priceListService.create(PriceListDtoStubs.getDto(anyLong()));
+        verify(priceListRepository).save(any(PriceList.class));
     }
 
     @Test
     void delete() {
         priceListService.deleteById(1L);
         verify(priceListRepository).deleteById(any());
+    }
+
+    @Test
+    void search() {
+        when(priceListRepository.findAll(Mockito.<Specification<PriceList>>any()))
+                .thenReturn(
+                        Stream.of(
+                                PriceListModelStubs.getPriceList(1L),
+                                PriceListModelStubs.getPriceList(2L),
+                                PriceListModelStubs.getPriceList(3L)
+                        ).collect(Collectors.toList())
+                );
+        List<PriceListDto> priceLists = priceListService.search(SpecificationStubs.getPriceListSpecificationStub());
+        assertNotNull(priceLists);
+        assertEquals(3, priceLists.size());
+    }
+
+    @Test
+    void quickSearch() {
+        String searchValue = "value";
+        List<PriceList> stubProductList = Stream.of(PriceListModelStubs.getPriceList(1L)).collect(Collectors.toList());
+        when(priceListRepository.getBySearch(searchValue)).thenReturn(stubProductList);
+
+        List<PriceListDto> expectedCollect = Stream.of(PriceListDtoStubs.getDto(1L)).collect(Collectors.toList());
+
+        List<PriceListDto> factCollect = priceListService.quickSearch(searchValue);
+        verify(priceListMapper).toDto(stubProductList.get(0));
+        assertEquals(expectedCollect, factCollect);
     }
 }
