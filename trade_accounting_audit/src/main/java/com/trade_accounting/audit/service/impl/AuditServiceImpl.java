@@ -6,11 +6,13 @@ import com.trade_accounting.audit.repository.AuditRepository;
 import com.trade_accounting.audit.service.interfaces.AuditService;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class AuditServiceImpl implements AuditService {
 
 private final AuditRepository auditRepository;
