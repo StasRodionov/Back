@@ -3,6 +3,7 @@ package com.trade_accounting.Stubs;
 import com.trade_accounting.models.entity.client.Employee;
 import com.trade_accounting.models.entity.company.Company;
 import com.trade_accounting.models.entity.company.Contract;
+import com.trade_accounting.models.entity.company.PriceList;
 import com.trade_accounting.models.entity.finance.PrepaymentReturn;
 import com.trade_accounting.models.entity.finance.Prepayout;
 import com.trade_accounting.models.entity.production.OrdersOfProduction;
@@ -71,6 +72,10 @@ public class SpecificationStubs {
     }
 
     public static Specification<SupplierAccountProductsList> getSupplierAccountProductsListSpecificationStub() {
+        return (root, criteriaQuery, criteriaBuilder) -> null;
+    }
+
+    public static Specification<PriceList> getPriceListSpecificationStub() {
         return (root, criteriaQuery, criteriaBuilder) -> null;
     }
 }

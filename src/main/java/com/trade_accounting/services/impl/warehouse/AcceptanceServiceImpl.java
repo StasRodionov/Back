@@ -62,8 +62,14 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     }
 
     @Override
-    public AcceptanceDto create(AcceptanceDto dto) {
+    public List<AcceptanceDto> getByProjectId(Long id) {
+        return acceptanceRepository.findByProjectId(id).stream()
+                .map(acceptanceMapper::toDto)
+                .collect(Collectors.toList());
+    }
 
+    @Override
+    public AcceptanceDto create(AcceptanceDto dto) {
         Acceptance acceptance = acceptanceRepository.save(acceptanceMapper.toModel(dto));
         dto.setId(acceptance.getId());
         return dto;

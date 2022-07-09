@@ -1,6 +1,7 @@
 package com.trade_accounting.models.entity.finance;
 
 
+import com.trade_accounting.models.entity.util.Project;
 import com.trade_accounting.models.entity.warehouse.Warehouse;
 import com.trade_accounting.models.entity.company.Company;
 import com.trade_accounting.models.entity.company.Contract;
@@ -63,6 +64,9 @@ public class ReturnToSupplier {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Contract contract;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Project project;
 
     @ColumnDefault("false")
     private Boolean isSend;

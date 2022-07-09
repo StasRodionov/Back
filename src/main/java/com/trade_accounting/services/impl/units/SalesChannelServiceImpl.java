@@ -10,6 +10,7 @@ import com.trade_accounting.services.interfaces.client.EmployeeService;
 import com.trade_accounting.services.interfaces.units.SalesChannelService;
 import com.trade_accounting.utils.mapper.units.SalesChannelMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,19 +43,23 @@ public class SalesChannelServiceImpl implements SalesChannelService {
 
     @Override
     public SalesChannelDto create(SalesChannelDto dto) {
-//        SalesChannel salesChannel = salesChannelMapper.toModel(dto);
-//        salesChannel.setDepartmentOwner(employeeRepository.findByEmail(getPrincipalName()).get().getDepartment().getName());
-//        salesChannel.setEmployeeOwner(getPrincipalFullName());
-//        salesChannel.setDateOfChange(nowLocalDateTime);
-//        salesChannel.setEmployeeChange(getPrincipalFullName());
-        return salesChannelMapper.toDto(salesChannelRepository.save(salesChannelMapper.toModel(dto)));
+        SalesChannel salesChannel = salesChannelMapper.toModel(dto);
+        salesChannel.setGeneralAccess(false);
+        salesChannel.setDepartmentOwner(employeeRepository.findByEmail(getPrincipalName()).get().getDepartment().getName());
+        salesChannel.setEmployeeOwner(getPrincipalFullName());
+        salesChannel.setDateOfChange(LocalDateTime.now().toString());
+        salesChannel.setEmployeeChange(getPrincipalFullName());
+//        return salesChannelMapper.toDto(salesChannelRepository.save(salesChannelMapper.toModel(dto)));
+        return salesChannelMapper.toDto(salesChannelRepository.save(salesChannel));
     }
 
     @Override
     public SalesChannelDto update(SalesChannelDto dto) {
         SalesChannel salesChannel = salesChannelMapper.toModel(dto);
-//        salesChannel.setDateOfChange(nowLocalDateTime);
-//        salesChannel.setEmployeeChange(getPrincipalName());
+        salesChannel.setDepartmentOwner(salesChannel.getDepartmentOwner());
+        salesChannel.setEmployeeOwner(salesChannel.getEmployeeOwner());
+        salesChannel.setDateOfChange(LocalDateTime.now().toString());
+        salesChannel.setEmployeeChange(getPrincipalFullName());
         return salesChannelMapper.toDto(salesChannelRepository.save(salesChannel));
     }
 
@@ -77,11 +83,22 @@ public class SalesChannelServiceImpl implements SalesChannelService {
         String principalFullName = "";
         for (EmployeeDto employeeDto : employeeService.getAll()) {
             if (Objects.equals(employeeDto.getEmail(), getPrincipalName())) {
-                principalFullName = employeeDto.getLastName() + " " + employeeDto.getFirstName().substring(0, 0) + ". "
-                        + employeeDto.getMiddleName().substring(0, 0) + ".";
+                principalFullName = employeeDto.getLastName() + " " + employeeDto.getFirstName().substring(0, 1) + ". "
+                        + employeeDto.getMiddleName().substring(0, 1) + ".";
             }
         }
         return principalFullName;
+    }
+
+
+    @Override
+    public List<SalesChannelDto> searchByString(String text) {
+        return salesChannelRepository.getBySearch(text).stream().map(salesChannelMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SalesChannelDto> search(Specification<SalesChannel> spec) {
+        return executeSearch(salesChannelRepository, salesChannelMapper::toDto, spec);
     }
 }
 

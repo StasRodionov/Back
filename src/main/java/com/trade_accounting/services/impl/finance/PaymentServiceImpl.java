@@ -41,10 +41,8 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentDto create(PaymentDto paymentDto) {
         Payment payment = paymentRepository.save(paymentMapper.toModel(paymentDto));
-        paymentDto.setId(payment.getId());
-        return paymentDto;
+        return paymentMapper.toDto(payment);
     }
-
 
     @Override
     public PaymentDto update(PaymentDto paymentDto) {
@@ -59,6 +57,13 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<PaymentDto> search(String search) {
         return paymentRepository.search(search).stream()
+                .map(paymentMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PaymentDto> getByProjectId(Long id) {
+        return paymentRepository.findByProjectId(id).stream()
                 .map(paymentMapper::toDto)
                 .collect(Collectors.toList());
     }

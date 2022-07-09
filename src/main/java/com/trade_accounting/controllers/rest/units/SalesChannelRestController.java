@@ -1,6 +1,7 @@
 package com.trade_accounting.controllers.rest.units;
 
 import com.trade_accounting.models.dto.units.SalesChannelDto;
+import com.trade_accounting.models.entity.units.SalesChannel;
 import com.trade_accounting.repositories.units.SalesChannelRepository;
 import com.trade_accounting.services.interfaces.units.SalesChannelService;
 import com.trade_accounting.services.interfaces.util.CheckEntityService;
@@ -10,6 +11,12 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
+import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -107,5 +115,28 @@ public class SalesChannelRestController {
             value = "ID переданный в URL по которому необходимо удалить канал продаж") @PathVariable("id") Long id) {
         salesChannelService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/search")
+    @ApiOperation(value = "search", notes = "Получение списка каналов продаж по фильтру")
+    public ResponseEntity<List<SalesChannelDto>> getAll(
+            @And({
+                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+                    @Spec(path = "type", params = "type", spec = LikeIgnoreCase.class),
+                    @Spec(path = "description", params = "description", spec = LikeIgnoreCase.class),
+                    @Spec(path = "generalAccess", params = "generalAccess", spec = Equal.class),
+                    @Spec(path = "departmentOwner", params = "departmentOwner", spec = LikeIgnoreCase.class),
+                    @Spec(path = "employeeOwner", params = "employeeOwner", spec = LikeIgnoreCase.class),
+                    @Spec(path = "dateOfChange", params = "dateOfChange", spec = GreaterThanOrEqual.class),
+                    @Spec(path = "employeeChange", params = "employeeChange", spec = LikeIgnoreCase.class)
+            }) Specification<SalesChannel> specification) {
+
+        return ResponseEntity.ok(salesChannelService.search(specification));
+    }
+
+    @GetMapping("/searchByString")
+    @ApiOperation(value = "search", notes = "Получение списка каналов продаж по заданным параметрам")
+    public ResponseEntity<List<SalesChannelDto>> searchByString(@RequestParam("search") String search) {
+        return ResponseEntity.ok(salesChannelService.searchByString(search));
     }
 }

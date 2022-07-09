@@ -71,6 +71,18 @@ public class PaymentRestController {
         return ResponseEntity.ok(paymentService.getById(id));
     }
 
+    @GetMapping("/getByProjectId{id}")
+    @ApiOperation(value = "getByProjectId", notes = "Получение списка всех платежей по проекту")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Успешное получение списка платежей"),
+            @ApiResponse(code = 404, message = "Данный контроллер не найден"),
+            @ApiResponse(code = 403, message = "Операция запрещена"),
+            @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
+    )
+    public ResponseEntity<List<PaymentDto>> getByProjectId(@PathVariable Long id) {
+        return ResponseEntity.ok(paymentService.getByProjectId(id));
+    }
+
     @PostMapping
     @ApiOperation(value = "create", notes = "Добавление нового платежа")
     @ApiResponses(value = {
@@ -80,7 +92,7 @@ public class PaymentRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> create(@ApiParam(name = "paymentDto", value = "DTO платежа, который необходимо создать")
+    public ResponseEntity<PaymentDto> create(@ApiParam(name = "paymentDto", value = "DTO платежа, который необходимо создать")
                                     @RequestBody PaymentDto paymentDto) {
         return ResponseEntity.ok().body(paymentService.create(paymentDto));
     }
@@ -94,7 +106,7 @@ public class PaymentRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> update(@ApiParam(name = "paymentDto", value = "DTO платежа, который необходимо обновить")
+    public ResponseEntity<PaymentDto> update(@ApiParam(name = "paymentDto", value = "DTO платежа, который необходимо обновить")
                                     @RequestBody PaymentDto paymentDto) {
         return ResponseEntity.ok().body(paymentService.update(paymentDto));
     }
@@ -108,7 +120,7 @@ public class PaymentRestController {
             @ApiResponse(code = 403, message = "Операция запрещена"),
             @ApiResponse(code = 401, message = "Нет доступа к данной операции")}
     )
-    public ResponseEntity<?> deleteById(@ApiParam(name = "id", type = "Long",
+    public ResponseEntity<PaymentDto> deleteById(@ApiParam(name = "id", type = "Long",
             value = "Переданный в URL id по которому необходимо удалить платеж")
                                         @PathVariable(name = "id") Long id) {
         paymentService.deleteById(id);
