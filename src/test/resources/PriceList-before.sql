@@ -51,10 +51,10 @@ VALUES (1, 'Сергеев Петр Сергеевич', 'chief signature', 'som
         '543-23-1234543221', '3453123000', 'Сергеева Ксения Андреевна', 'Project manager', 'leader signature',
         'OOO "Организация №3"', true, '799123786542', '00003', 'stamp', 3, 1);
 
-INSERT INTO price_lists (id, commentary, number, printed, sent, time, company_id)
-VALUES (1, 'comment1', 'number1', false, false, '1234-12-12 12:34', 1),
-       (2, 'comment2', 'number2', false, false, '1234-12-12 12:34', 2),
-       (3, 'comment3', 'number3', false, false, '1234-12-12 12:34', 3);
+INSERT INTO price_lists (id, comment, number, is_print, is_sent, is_recyclebin, date, company_id, type_of_price_id)
+VALUES (1, 'comment1', 'number1', false, false, false,'1234-12-12 12:34', 1, 1),
+       (2, 'comment2', 'number2', false, false, false,'1234-12-12 12:34', 2, 2),
+       (3, 'comment3', 'number3', false, false, false,'1234-12-12 12:34', 3, 1);
 
 SELECT setval('price_lists_id_seq', max(id))
 FROM price_lists;

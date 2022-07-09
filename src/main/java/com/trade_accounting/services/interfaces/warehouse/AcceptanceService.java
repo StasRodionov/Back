@@ -13,6 +13,8 @@ public interface AcceptanceService extends AbstractService<AcceptanceDto>, Searc
 
     List<AcceptanceDto> search(String search);
 
+    List<AcceptanceDto> getByProjectId(Long id);
+
     void moveToRecyclebin(long id);
 
     void restoreFromRecyclebin(long id);

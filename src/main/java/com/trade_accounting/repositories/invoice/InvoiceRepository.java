@@ -58,8 +58,24 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.isSent," +
             "e.isPrint," +
             "e.comment," +
-            "e.invoicesStatus.id) from Invoice e where e.contractor.id = :id")
+            "e.invoicesStatus.id," +
+            "e.project.id) from Invoice e where e.contractor.id = :id")
     List<InvoiceDto> findByContractorId(Long id);
+
+    @Query("select new com.trade_accounting.models.dto.invoice.InvoiceDto(" +
+            "e.id," +
+            "e.date," +
+            "e.typeOfInvoice," +
+            "e.company.id," +
+            "e.contractor.id," +
+            "e.warehouse.id," +
+            "e.isSpend," +
+            "e.isSent," +
+            "e.isPrint," +
+            "e.comment," +
+            "e.invoicesStatus.id," +
+            "e.project.id) from Invoice e where e.project.id = :id")
+    List<InvoiceDto> findByProjectId(Long id);
 
 
     @Query("select new com.trade_accounting.models.dto.invoice.InvoiceDto(" +
@@ -73,7 +89,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.isSent," +
             "e.isPrint," +
             "e.comment," +
-            "e.invoicesStatus.id) from Invoice e where lower(concat(e.id, e.comment, e.company.name, e.warehouse.name, e.invoicesStatus.statusName)) " +
+            "e.invoicesStatus.id," +
+            "e.project.id) from Invoice e where lower(concat(e.id, e.comment, e.company.name, e.warehouse.name, e.invoicesStatus.statusName)) " +
             "like concat('%', :search, '%') and e.typeOfInvoice = :typeOfInvoice")
     List<InvoiceDto> findBySearchAndTypeOfInvoice(@Param("search") String search,
                                                   @Param("typeOfInvoice") TypeOfInvoice typeOfInvoice);
@@ -89,7 +106,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.isSent," +
             "e.isPrint," +
             "e.comment," +
-            "e.invoicesStatus.id) from Invoice e where e.id = :id")
+            "e.invoicesStatus.id," +
+            "e.project.id) from Invoice e where e.id = :id")
     InvoiceDto getById(@Param("id") Long id);
 
     @Query("SELECT new com.trade_accounting.models.dto.invoice.InvoiceDto(" +
@@ -103,7 +121,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.isSent," +
             "e.isPrint," +
             "e.comment," +
-            "e.invoicesStatus.id) from Invoice e " +
+            "e.invoicesStatus.id," +
+            "e.project.id) from Invoice e " +
             "where lower(concat(e.id, e.comment)) like lower(concat('%', :query,'%')) and e.typeOfInvoice = :typeOfInvoice")
     List<InvoiceDto> search(@Param("query") String query, @Param("typeOfInvoice") TypeOfInvoice typeOfInvoice);
 
