@@ -55,7 +55,7 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
                 AuditDto.builder()
                 .description("Создание " + businessName)
                 .employeeId(currentEmployee.getId())
-                .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
+                .date(LocalDateTime.now().toString())
                 .build()
         );
     }
@@ -77,7 +77,7 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
                 AuditDto.builder()
                         .description("Изменение " + businessName)
                         .employeeId(currentEmployee.getId())
-                        .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
+                        .date(LocalDateTime.now().toString())
                         .build()
         );
     }
@@ -98,7 +98,7 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
                 AuditDto.builder()
                         .description("Удаление " + businessName)
                         .employeeId(currentEmployee.getId())
-                        .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
+                        .date(LocalDateTime.now().toString())
                         .build()
         );
     }

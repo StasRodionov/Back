@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 @Slf4j
 public class ActiveMQListener {
@@ -22,7 +24,7 @@ public class ActiveMQListener {
         Audit audit = Audit.builder()
                 .id(auditDto.getId())
                 .description(auditDto.getDescription())
-                .date(DateParser.fromStringFieldInDto(auditDto.getDate()))
+                .date(LocalDateTime.parse(auditDto.getDate()))
                 .employeeId(auditDto.getEmployeeId())
                 .build();
         log.info(audit.toString());
