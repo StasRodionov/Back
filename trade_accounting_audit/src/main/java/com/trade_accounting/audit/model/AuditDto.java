@@ -1,4 +1,4 @@
-package com.trade_accounting.models.dto.indicators;
+package com.trade_accounting.audit.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,12 +16,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 public class AuditDto implements Serializable {
-
-	private Long id;
-	
-	private String description;
-	
-	private String date;
-
-	private Long employeeId;
+    private Long id;
+    private String description;
+    private String date;
+    private Long employeeId;
 }

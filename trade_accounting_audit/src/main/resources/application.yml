@@ -2,6 +2,10 @@ server:
   port: 4446
 
 spring:
+  activemq:
+    broker-url: tcp://localhost:61616/
+    user: admin
+    password: admin
   servlet:
     multipart:
       max-file-size: 10MB

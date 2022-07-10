@@ -10,9 +10,9 @@ public interface AuditService {
 
     Audit getById(Long id);
 
-    Audit create(Audit auditDto);
+    Audit create(Audit audit);
 
-    Audit update(Audit auditDto);
+    Audit update(Audit audit);
 
     void deleteById(Long id);
 

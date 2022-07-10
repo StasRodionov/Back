@@ -3,18 +3,17 @@ package com.trade_accounting.aspects;
 import com.trade_accounting.models.dto.indicators.AuditDto;
 import com.trade_accounting.models.entity.client.Employee;
 import com.trade_accounting.services.impl.client.EmployeeDetailsServiceImpl;
-import com.trade_accounting.services.interfaces.indicators.audit.AuditService;
 import com.trade_accounting.utils.translator.Translator;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.security.Principal;
+import javax.jms.Queue;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,30 +22,23 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class ServiceLayerAuditing extends ServiceLayerAspect {
 
-    private final AuditService auditService;
     private final EmployeeDetailsServiceImpl employeeDetailsService;
     private final Translator translator;
+    private final JmsTemplate jmsTemplate;
+    private final Queue queue;
 
-    public ServiceLayerAuditing(AuditService auditService, EmployeeDetailsServiceImpl employeeDetailsService, Translator translator) {
-        this.auditService = auditService;
+    public ServiceLayerAuditing(EmployeeDetailsServiceImpl employeeDetailsService, Translator translator, JmsTemplate jmsTemplate, @Qualifier("auditCreateOrUpdateQueue") Queue queue) {
+        this.jmsTemplate = jmsTemplate;
+        this.queue = queue;
         this.employeeDetailsService = employeeDetailsService;
         this.translator = translator;
     }
 
     /**
-     * pointcuts
-     */
-
-    @Pointcut("within(com.trade_accounting.services.impl.indicators.audit..*)")
-    public void auditService() {
-    }
-
-
-    /**
      * Advices
      */
 
-    @AfterReturning(value = "inServiceLayer() && createExecution() && args(dto) && !auditService()")
+    @AfterReturning(value = "inServiceLayer() && createExecution() && args(dto)")
     public void auditCreate(Object dto) {
         String clazz = dto.getClass().getSimpleName().replace("Dto", "");
         String businessName = translator.translate("en", "ru", clazz);
@@ -58,8 +50,9 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
             Employee principal = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
              currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(principal.getEmail());
         }
-
-        auditService.create(AuditDto.builder()
+        log.info("Поймано создание " + clazz);
+        jmsTemplate.convertAndSend(queue,
+                AuditDto.builder()
                 .description("Создание " + businessName)
                 .employeeId(currentEmployee.getId())
                 .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
@@ -67,7 +60,7 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
         );
     }
 
-    @AfterReturning(value = "inServiceLayer() && updateExecution() && args(dto) && !auditService()")
+    @AfterReturning(value = "inServiceLayer() && updateExecution() && args(dto)")
     public void auditUpdate(Object dto) {
         String clazz = dto.getClass().getSimpleName().replace("Dto", "");
         String businessName = translator.translate("en", "ru", clazz);
@@ -79,15 +72,17 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
             Employee principal = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(principal.getEmail());
         }
-        auditService.create(AuditDto.builder()
-                .employeeId(currentEmployee.getId())
-                .description("Обновление объекта " + businessName)
-                .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
-                .build()
+        log.info("Поймано изменение " + clazz);
+        jmsTemplate.convertAndSend(queue,
+                AuditDto.builder()
+                        .description("Изменение " + businessName)
+                        .employeeId(currentEmployee.getId())
+                        .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
+                        .build()
         );
     }
 
-    @AfterReturning(value = "inServiceLayer() && deleteExecution() && args(id) && !auditService()")
+    @AfterReturning(value = "inServiceLayer() && deleteExecution() && args(id)")
     public void auditDelete(JoinPoint joinPoint, Long id) {
         String clazz = joinPoint.getClass().getSimpleName().replace("Dto", "");
         String businessName = translator.translate("en", "ru", clazz);
@@ -99,11 +94,12 @@ public class ServiceLayerAuditing extends ServiceLayerAspect {
             Employee principal = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             currentEmployee = (Employee) employeeDetailsService.loadUserByUsername(principal.getEmail());
         }
-        auditService.create(AuditDto.builder()
-                .description("Удаление " + businessName)
-                .employeeId(currentEmployee.getId())
-                .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
-                .build()
+        jmsTemplate.convertAndSend(queue,
+                AuditDto.builder()
+                        .description("Удаление " + businessName)
+                        .employeeId(currentEmployee.getId())
+                        .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
+                        .build()
         );
     }
 }
