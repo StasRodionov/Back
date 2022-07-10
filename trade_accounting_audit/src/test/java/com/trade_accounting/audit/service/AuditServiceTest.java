@@ -1,7 +1,6 @@
 package com.trade_accounting.audit.service;
 
 import com.trade_accounting.audit.model.Audit;
-import com.trade_accounting.audit.model.Employee;
 import com.trade_accounting.audit.repository.AuditRepository;
 import com.trade_accounting.audit.service.impl.AuditServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +33,7 @@ public class AuditServiceTest {
                 .id(1L)
                 .description("audit 1")
                 .date(LocalDateTime.of(2022, 2, 24, 5, 2))
-                .employee(new Employee())
+                .employeeId(1L)
                 .build();
     }
 
@@ -45,7 +44,7 @@ public class AuditServiceTest {
                 .id(2L)
                 .description("audit 1")
                 .date(LocalDateTime.of(2022, 2, 24, 5, 2))
-                .employee(new Employee())
+                .employeeId(2L)
                 .build();
 
         given(auditRepository.findAll()).willReturn(List.of(audit, audit1));

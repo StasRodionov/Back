@@ -1,7 +1,6 @@
 package com.trade_accounting.audit.service.impl;
 
 import com.trade_accounting.audit.model.Audit;
-import com.trade_accounting.audit.model.Employee;
 import com.trade_accounting.audit.repository.AuditRepository;
 import com.trade_accounting.audit.service.interfaces.AuditService;
 import org.springframework.data.jpa.domain.Specification;
@@ -72,14 +71,9 @@ private final AuditRepository auditRepository;
     }
 
     private String stringifyAudit(Audit audit) {
-        Employee employee = audit.getEmployee();
         return audit.getId().toString() + " " +
                 audit.getDescription() + " " +
                 audit.getDate().toString() + " " +
-                employee.getId().toString() + " " +
-                employee.getFirstName() + " " +
-                employee.getMiddleName() + " " +
-                employee.getLastName() + " " +
-                employee.getEmail();
+                audit.getEmployeeId().toString();
     }
 }

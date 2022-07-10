@@ -9,7 +9,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -26,7 +25,7 @@ public class AuditControllerTest {
     private AuditRestController auditController;
 
     @Test
-    public void contextLoads() throws Exception {
+    public void contextLoads() {
         assertThat(auditController).isNotNull();
     }
 
@@ -35,7 +34,6 @@ public class AuditControllerTest {
         mockMvc.perform(get("/api/audit"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(authenticated())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andDo(MockMvcRestDocumentation.document("{class-name}/{method-name}"));
     }
