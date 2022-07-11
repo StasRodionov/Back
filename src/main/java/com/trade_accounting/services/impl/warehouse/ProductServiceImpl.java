@@ -90,17 +90,55 @@ public class ProductServiceImpl implements ProductService {
         product.setImages(savedImages);
         savedFiles.forEach(file -> file.setProduct(product));
         product.setFiles(savedFiles);
-        product.setUnit(unitRepository.getOne(dto.getUnitId()));
-        product.setContractor(contractorRepository.getOne(dto.getContractorId()));
-        product.setCountry(countryRepository.getOne(dto.getCountryId()));
         List<ProductPrice> prices = new ArrayList<>();
-        dto.getProductPriceIds()
-                .forEach(productPriceId -> prices.add(productPriceRepository.getOne(productPriceId)));
-        product.setProductPrices(prices);
-        product.setTaxSystem(taxSystemRepository.getOne(dto.getTaxSystemId()));
-        product.setAttributeOfCalculationObject(attributeOfCalculationObjectRepository.getOne(dto.getAttributeOfCalculationObjectId()));
-        product.setProductGroup(productGroupRepository.getOne(dto.getProductGroupId()));
-        product.setTypeOfPacking(typeOfPackingRepository.getOne(dto.getTypeOfPackingId()));
+        try {
+            product.getProductPrices()
+                    .forEach(productPrice -> prices.add(productPriceRepository.getOne(productPrice.getId())));
+            product.setProductPrices(prices);
+        } catch (NullPointerException ignored) {}
+
+        if (dto.getUnitId() != null) {
+            product.setUnit(unitRepository.getOne(dto.getUnitId()));
+        } else {
+            product.setUnit(null);
+        }
+
+        if (dto.getContractorId() != null) {
+            product.setContractor(contractorRepository.getOne(dto.getContractorId()));
+        } else {
+            product.setContractor(null);
+        }
+
+        if (dto.getCountryId() != null) {
+            product.setCountry(countryRepository.getOne(dto.getCountryId()));
+        } else {
+            product.setCountry(null);
+        }
+
+        if (dto.getTaxSystemId() != null) {
+            product.setTaxSystem(taxSystemRepository.getOne(dto.getTaxSystemId()));
+        } else {
+            product.setTaxSystem(null);
+        }
+
+        if (dto.getAttributeOfCalculationObjectId() != null) {
+            product.setAttributeOfCalculationObject(
+                    attributeOfCalculationObjectRepository.getOne(dto.getAttributeOfCalculationObjectId()));
+        } else {
+            product.setAttributeOfCalculationObject(null);
+        }
+
+        if (dto.getProductGroupId() != null) {
+            product.setProductGroup(productGroupRepository.getOne(dto.getProductGroupId()));
+        } else {
+            product.setProductGroup(null);
+        }
+
+        if (dto.getTypeOfPackingId() != null) {
+            product.setTypeOfPacking(typeOfPackingRepository.getOne(dto.getTypeOfPackingId()));
+        } else {
+            product.setTypeOfPacking(null);
+        }
 
         productRepository.saveAndFlush(product);
         return dto;
@@ -117,13 +155,49 @@ public class ProductServiceImpl implements ProductService {
         product.setImages(savedImages);
         savedFiles.forEach(file -> file.setProduct(product));
         product.setFiles(savedFiles);
-        List<ProductPrice> prices = new ArrayList<>();
 
+        List<ProductPrice> prices = new ArrayList<>();
         try {
             product.getProductPrices()
                     .forEach(productPrice -> prices.add(productPriceRepository.getOne(productPrice.getId())));
             product.setProductPrices(prices);
         } catch (NullPointerException ignored) {}
+
+        if (dto.getUnitId() != null) {
+            product.setUnit(unitRepository.getOne(dto.getUnitId()));
+        } else {
+            product.setUnit(null);
+        }
+
+        if (dto.getContractorId() != null) {
+            product.setContractor(contractorRepository.getOne(dto.getContractorId()));
+        } else {
+            product.setContractor(null);
+        }
+
+        if (dto.getTaxSystemId() != null) {
+            product.setTaxSystem(taxSystemRepository.getOne(dto.getTaxSystemId()));
+        } else {
+            product.setTaxSystem(null);
+        }
+
+        if (dto.getAttributeOfCalculationObjectId() != null) {
+            product.setAttributeOfCalculationObject(attributeOfCalculationObjectRepository.getOne(dto.getAttributeOfCalculationObjectId()));
+        } else {
+            product.setAttributeOfCalculationObject(null);
+        }
+
+        if (dto.getProductGroupId() != null) {
+            product.setProductGroup(productGroupRepository.getOne(dto.getProductGroupId()));
+        } else {
+            product.setProductGroup(null);
+        }
+
+        if (dto.getTypeOfPackingId() != null) {
+            product.setTypeOfPacking(typeOfPackingRepository.getOne(dto.getTypeOfPackingId()));
+        } else {
+            product.setTypeOfPacking(null);
+        }
 
         productRepository.saveAndFlush(product);
         return dto;

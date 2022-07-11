@@ -69,7 +69,7 @@ class InternalOrderRestControllerTest {
                 .companyId(1L)
                 .warehouseId(1L)
                 .comment("Комментарий 1")
-                .date("1234-12-12 12:34")
+                .date("1234-12-12T12:34:00")
                 .build());
 
         mockMvc.perform(get("/api/internalorder/1"))
@@ -83,7 +83,7 @@ class InternalOrderRestControllerTest {
     @Test
     void create() throws Exception {
         String internalOrderDtoJson = new Gson().toJson(InternalOrderDto.builder()
-                .date("1234-12-12 12:34")
+                .date("1234-12-12T12:34:00")
                 .isSent(true)
                 .isPrint(true)
                 .companyId(2L)
@@ -112,7 +112,7 @@ class InternalOrderRestControllerTest {
     void update() throws Exception {
         String internalOrderDtoJson = new Gson().toJson(InternalOrderDto.builder()
                 .id(3L)
-                .date("1234-12-12 12:34")
+                .date("1234-12-12T12:34:00")
                 .isSent(false)
                 .isPrint(true)
                 .comment("Комментарий 3 _UPDATED_")
