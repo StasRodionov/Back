@@ -24,23 +24,17 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public List<CountryDto> getAll() {
-        return countryRepository.findAll()
-                .stream()
-                .map(countryMapper::toDto)
-                .collect(Collectors.toList());
+        return countryRepository.getAll();
     }
 
     @Override
     public CountryDto getById(Long id) {
-        Optional<Country> countryOptional = countryRepository.findById(id);
-        return countryMapper.toDto(countryOptional.orElse(new Country()));
+        return countryRepository.getById(id);
     }
 
     @Override
     public CountryDto create(CountryDto dto) {
-        Country country = countryRepository.save(countryMapper.toModel(dto));
-        dto.setId(country.getId());
-        return countryMapper.toDto(country);
+        return countryMapper.toDto(countryRepository.save(countryMapper.toModel(dto)));
     }
 
     @Override

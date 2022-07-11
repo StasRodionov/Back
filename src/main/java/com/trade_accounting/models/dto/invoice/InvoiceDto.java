@@ -38,6 +38,8 @@ public class InvoiceDto {
 
     private Boolean isRecyclebin;
 
+    private Long projectId;
+
     public InvoiceDto(Long id, String date, String typeOfInvoice, Long companyId, Long contractorId, Long warehouseId,
                       boolean isSpend, boolean isSent, boolean isPrint, String comment, Long invoicesStatusId) {
         this.id = id;
@@ -51,6 +53,22 @@ public class InvoiceDto {
         this.isPrint = isPrint;
         this.comment = comment;
         this.invoicesStatusId = invoicesStatusId;
+    }
+
+    public InvoiceDto(Long id, String date, String typeOfInvoice, Long companyId, Long contractorId, Long warehouseId,
+                      boolean isSpend, boolean isSent, boolean isPrint, String comment, Long invoicesStatusId, Long projectId) {
+        this.id = id;
+        this.date = date;
+        this.typeOfInvoice = typeOfInvoice;
+        this.companyId = companyId;
+        this.contractorId = contractorId;
+        this.warehouseId = warehouseId;
+        this.isSpend = isSpend;
+        this.isSent = isSent;
+        this.isPrint = isPrint;
+        this.comment = comment;
+        this.invoicesStatusId = invoicesStatusId;
+        this.projectId = projectId;
     }
 
     public InvoiceDto(Long id,
@@ -75,5 +93,31 @@ public class InvoiceDto {
         this.isPrint = isPrint;
         this.comment = comment;
         this.invoicesStatusId = invoicesStatusId;
+    }
+
+    public InvoiceDto(Long id,
+                      LocalDateTime date,
+                      TypeOfInvoice typeOfInvoice,
+                      Long companyId,
+                      Long contractorId,
+                      Long warehouseId,
+                      Boolean isSpend,
+                      Boolean isSent,
+                      Boolean isPrint,
+                      String comment,
+                      Long invoicesStatusId,
+                      Long projectId) {
+        this.id = id;
+        this.date = date.toString();
+        this.typeOfInvoice = typeOfInvoice.toString();
+        this.companyId = companyId;
+        this.contractorId = contractorId;
+        this.warehouseId = warehouseId;
+        this.isSpend = isSpend;
+        this.isSent = isSent;
+        this.isPrint = isPrint;
+        this.comment = comment;
+        this.invoicesStatusId = invoicesStatusId;
+        this.projectId = projectId;
     }
 }

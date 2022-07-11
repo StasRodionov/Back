@@ -13,7 +13,7 @@ public interface PaymentMapper {
     @Mapping(source = "contractorId", target = "contractor.id")
     @Mapping(source = "contractId", target = "contract.id")
     @Mapping(source = "projectId", target = "project.id")
-    @Mapping(source = "time", target = "time", dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @Mapping(source = "time", target = "time", dateFormat = "yyyy-MM-dd'T'HH:mm")
     Payment toModel(PaymentDto paymentDto);
 
 

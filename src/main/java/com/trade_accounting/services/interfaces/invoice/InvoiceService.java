@@ -24,6 +24,7 @@ public interface InvoiceService extends AbstractService<InvoiceDto>, SearchableS
     List<InvoiceDto> getFromDateTime(LocalDateTime dateTime);
 
     List<InvoiceDto> getByContractorId(Long id);
+    List<InvoiceDto> getByProjectId(Long id);
     void moveToRecyclebin(long id);
     void restoreFromRecyclebin(long id);
     void createAll(PurchaseCreateOrderDto purchaseCreateOrderDto);

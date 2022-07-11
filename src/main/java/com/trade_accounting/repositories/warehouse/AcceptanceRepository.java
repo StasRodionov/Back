@@ -15,4 +15,8 @@ public interface AcceptanceRepository extends JpaRepository<Acceptance, Long>, J
             " where lower(concat(a.id, ' ', a.comment))" +
             " like lower(concat('%', :req, '%'))")
     List<Acceptance> search(@Param("req") String request);
+
+
+    @Query("from Acceptance a where a.project.id = :id")
+    List<Acceptance> findByProjectId(@Param("id") Long id);
 }
