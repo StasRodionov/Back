@@ -8,6 +8,7 @@ import com.trade_accounting.models.entity.util.Image;
 import com.trade_accounting.models.entity.warehouse.Product;
 import com.trade_accounting.models.entity.warehouse.ProductPrice;
 import com.trade_accounting.repositories.company.ContractorRepository;
+import com.trade_accounting.repositories.company.SaleTaxRepository;
 import com.trade_accounting.repositories.company.TaxSystemRepository;
 import com.trade_accounting.repositories.units.UnitRepository;
 import com.trade_accounting.repositories.util.FileRepository;
@@ -55,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
     private final ProductGroupRepository productGroupRepository;
     private final TypeOfPackingRepository typeOfPackingRepository;
+    private final SaleTaxRepository saleTaxRepository;
 
 
     @Override
@@ -132,6 +134,12 @@ public class ProductServiceImpl implements ProductService {
             product.setTypeOfPacking(null);
         }
 
+        if (dto.getSaleTaxId() != null) {
+            product.setSaleTaxEntity(saleTaxRepository.getOne(dto.getSaleTaxId()));
+        } else {
+            product.setSaleTaxEntity(null);
+        }
+
         productRepository.saveAndFlush(product);
         return dto;
     }
@@ -187,6 +195,12 @@ public class ProductServiceImpl implements ProductService {
 
         if (dto.getTypeOfPackingId() != null) {
             product.setTypeOfPacking(typeOfPackingRepository.getOne(dto.getTypeOfPackingId()));
+        } else {
+            product.setTypeOfPacking(null);
+        }
+
+        if (dto.getSaleTaxId() != null) {
+            product.setSaleTaxEntity(saleTaxRepository.getOne(dto.getSaleTaxId()));
         } else {
             product.setTypeOfPacking(null);
         }
