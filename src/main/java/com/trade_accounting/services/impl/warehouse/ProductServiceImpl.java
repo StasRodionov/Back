@@ -202,19 +202,7 @@ public class ProductServiceImpl implements ProductService {
         if (dto.getSaleTaxId() != null) {
             product.setSaleTaxEntity(saleTaxRepository.getOne(dto.getSaleTaxId()));
         } else {
-            product.setSaleTaxEntity(null);
-        }
-
-        if (dto.getSaleTaxId() != null) {
-            product.setSaleTaxEntity(saleTaxRepository.getOne(dto.getSaleTaxId()));
-        } else {
-            product.setSaleTaxEntity(null);
-        }
-
-        if (dto.getSaleTaxId() != null) {
-            product.setSaleTaxEntity(saleTaxRepository.getOne(dto.getSaleTaxId()));
-        } else {
-            product.setSaleTaxEntity(null);
+            product.setTypeOfPacking(null);
         }
 
         if (dto.getSaleTaxId() != null) {
