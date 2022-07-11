@@ -89,7 +89,7 @@ public class InternalOrderServiceImpl implements InternalOrderService {
 
         Company company = companyRepository.getCompaniesById(dto.getCompanyId());
         Warehouse warehouse = warehouseRepository.getOne(dto.getWarehouseId());
-        LocalDateTime date = LocalDateTime.parse(dto.getDate().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        LocalDateTime date = LocalDateTime.parse(dto.getDate().replace("T", " "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         List<InternalOrderProduct> internalOrderProducts = dto.getInternalOrderProductsIds().stream()
                 .map(id -> internalOrderProductRepository.findById(id).orElse(null))
