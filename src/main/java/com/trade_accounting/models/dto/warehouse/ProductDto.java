@@ -49,7 +49,7 @@ public class ProductDto {
 
     private Long attributeOfCalculationObjectId;
 
-    private String countryOrigin;
+    private Long countryId;
 
     private int itemNumber;
 
@@ -130,7 +130,7 @@ public class ProductDto {
                       Boolean service, Long contractorId,
                       List<Long> productPriceIds, Long taxSystemId,
                       List<ImageDto> imageDtos, Long productGroupId,
-                      Long attributeOfCalculationObjectId, String countryOrigin,
+                      Long attributeOfCalculationObjectId, Long countryOriginId,
                       int itemNumber, String saleTax, int minimumBalance) {
         this.id = id;
         this.name = name;
@@ -147,7 +147,7 @@ public class ProductDto {
         this.imageDtos = imageDtos;
         this.productGroupId = productGroupId;
         this.attributeOfCalculationObjectId = attributeOfCalculationObjectId;
-        this.countryOrigin = countryOrigin;
+        this.countryId = countryId;
         this.itemNumber = itemNumber;
         this.saleTax = saleTax;
         this.minimumBalance = minimumBalance;
