@@ -1,6 +1,7 @@
 package com.trade_accounting.models.entity.invoice;
 
 import com.trade_accounting.models.entity.company.Contractor;
+import com.trade_accounting.models.entity.units.SalesChannel;
 import com.trade_accounting.models.entity.util.OperationsAbstract;
 import com.trade_accounting.models.entity.util.Project;
 import com.trade_accounting.models.entity.warehouse.Warehouse;
@@ -76,5 +77,8 @@ public class Invoice extends OperationsAbstract {
 //            + " ELSE id"
 //            + " END")
     private Project project;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private SalesChannel salesChannel;
 
 }
