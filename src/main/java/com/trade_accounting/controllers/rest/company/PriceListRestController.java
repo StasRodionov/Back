@@ -124,10 +124,9 @@ public class PriceListRestController {
     @ApiOperation(value = "searchByFilter", notes = "Получение списка прайс-листов по фильтру")
     public ResponseEntity<List<PriceListDto>> getAllByFilter(
             @Join(path = "products", alias = "p")
-            @Join(path = "p.products", alias = "pr")
-            @Spec(path = "pr.name", params = "productName", spec = Like.class)
             @And(
                     {
+                            @Spec(path = "p.products.name", params = "productName", spec = Like.class),
                             @Spec(path = "date",
                                     params = "date",
                                     spec = GreaterThanOrEqual.class),
@@ -148,9 +147,8 @@ public class PriceListRestController {
     @ApiOperation(value = "searchByBetweenDataFilter", notes = "Получение списка прайс-листов по фильтру")
     public ResponseEntity<List<PriceListDto>> getAllBetweenDateFilter(
             @Join(path = "products", alias = "p")
-            @Join(path = "p.products", alias = "pr")
-            @Spec(path = "pr.name", params = "productName", spec = Like.class)
             @And({
+                    @Spec(path = "p.products.name", params = "productName", spec = Like.class),
                     @Spec(
                             path = "date",
                             params = {"date", "dateBefore"},
