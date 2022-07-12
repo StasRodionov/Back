@@ -42,8 +42,8 @@ public class RetailReturn {
     @Column(name = "cashless_amount")
     private BigDecimal cashlessAmount;
 
-//    @Column(name = "total_amount")
-//    private BigDecimal totalAmount;
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
 
     @Column(name = "is_spend")
     @ColumnDefault("false")

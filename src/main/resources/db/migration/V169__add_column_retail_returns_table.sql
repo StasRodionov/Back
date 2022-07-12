@@ -1,0 +1,1 @@
+ALTER TABLE retail_returns ADD COLUMN IF NOT EXISTS total_amount numeric NOT NULL DEFAULT 0;
