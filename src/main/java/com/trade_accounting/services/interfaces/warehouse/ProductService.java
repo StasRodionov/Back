@@ -27,6 +27,12 @@ public interface ProductService extends AbstractService<ProductDto>, SearchableS
                 builder.equal(root.get("contractor").get("id"), id));
     }
 
+    @Transactional
+    default List<ProductDto> getAllByCountryId(Long id) {
+        return search((root, query, builder) ->
+                builder.equal(root.get("country").get("id"), id));
+    }
+
     PageDto<ProductDto> search(Specification<Product> specification, Pageable page);
 
     List<ProductDto> search(String value);
