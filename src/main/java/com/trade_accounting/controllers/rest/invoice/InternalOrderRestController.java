@@ -1,11 +1,11 @@
 package com.trade_accounting.controllers.rest.invoice;
 
-import com.trade_accounting.models.entity.invoice.InternalOrder;
 import com.trade_accounting.models.dto.invoice.InternalOrderDto;
 import com.trade_accounting.models.dto.warehouse.MovementDto;
+import com.trade_accounting.models.entity.invoice.InternalOrder;
 import com.trade_accounting.repositories.invoice.InternalOrderRepository;
-import com.trade_accounting.services.interfaces.util.CheckEntityService;
 import com.trade_accounting.services.interfaces.invoice.InternalOrderService;
+import com.trade_accounting.services.interfaces.util.CheckEntityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -13,7 +13,10 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Between;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
+import net.kaczmarzyk.spring.data.jpa.domain.LessThanOrEqual;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -126,16 +129,40 @@ public class InternalOrderRestController {
     @ApiOperation(value = "searchByFilter", notes = "Получение списка заказов по фильтру")
     public ResponseEntity<List<InternalOrderDto>> getAllByFilter(
             @And({
+                    @Spec(path = "date",
+                            params = "dateAfter",
+                            spec = GreaterThanOrEqual.class),
+                    @Spec(path = "date",
+                            params = "dateBefore",
+                            spec = LessThanOrEqual.class),
                     @Spec(path = "id", params = "id", spec = Equal.class),
-                    @Spec(path = "date", params = "date", spec = Equal.class),
                     @Spec(path = "comment", params = "comment", spec = Like.class),
                     @Spec(path = "company.name", params = "company", spec = Like.class),
                     @Spec(path = "warehouse.name", params = "warehouse", spec = Like.class),
                     @Spec(path = "isSent", params = "sent", spec = Equal.class),
                     @Spec(path = "isPrint", params = "print", spec = Equal.class),
-            })Specification<InternalOrder> spec) {
-                return ResponseEntity.ok(internalOrderService.search(spec));
-            }
+            }) Specification<InternalOrder> spec) {
+        return ResponseEntity.ok(internalOrderService.search(spec));
+    }
+
+    @GetMapping("/searchByBetweenDataFilter")
+    @ApiOperation(value = "searchByFilter", notes = "Получение списка заказов по фильтру")
+    public ResponseEntity<List<InternalOrderDto>> getAllByBetweenDataFilter(
+            @And({
+                    @Spec(
+                            path = "date",
+                            params = {"dateAfter", "dateBefore"},
+                            spec = Between.class
+                    ),
+                    @Spec(path = "id", params = "id", spec = Equal.class),
+                    @Spec(path = "comment", params = "comment", spec = Like.class),
+                    @Spec(path = "company.name", params = "company", spec = Like.class),
+                    @Spec(path = "warehouse.name", params = "warehouse", spec = Like.class),
+                    @Spec(path = "isSent", params = "sent", spec = Equal.class),
+                    @Spec(path = "isPrint", params = "print", spec = Equal.class),
+            }) Specification<InternalOrder> spec) {
+        return ResponseEntity.ok(internalOrderService.search(spec));
+    }
 
     @GetMapping("/search/{searchItem}")
     @ApiOperation(value = "searchItem", notes = "Получение списка некоторых внутренних заказов")
