@@ -29,4 +29,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     @Query("from Product p where concat(p.id, ' ', p.name, ' ', p.description) like concat('%', :query, '%') and p.service = false")
     List<Product> searchService(@Param("query") String query);
+
+    @Query("from Product p where p.country.id = :id and p.service = false")
+    List<Product> getAllByCountryId(@Param("id") Long id);
 }

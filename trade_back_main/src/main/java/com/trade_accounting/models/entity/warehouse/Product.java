@@ -3,6 +3,7 @@ package com.trade_accounting.models.entity.warehouse;
 
 import com.trade_accounting.models.entity.company.Contractor;
 import com.trade_accounting.models.entity.company.TaxSystem;
+import com.trade_accounting.models.entity.units.Country;
 import com.trade_accounting.models.entity.units.Unit;
 import com.trade_accounting.models.entity.util.File;
 import com.trade_accounting.models.entity.util.Image;
@@ -83,8 +84,8 @@ public class Product {
     private AttributeOfCalculationObject attributeOfCalculationObject;
 
     //Страна происхождения
-    @Column(name = "Country")
-    private String countryOrigin;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Country country;
 
     //Артикул(код товара присваеваемый производителем)
     @Column(name = "itemNubmber")
@@ -117,7 +118,7 @@ public class Product {
                    List<Image> images,
                    ProductGroup productGroup,
                    AttributeOfCalculationObject attributeOfCalculationObject,
-                   String countryOrigin,
+                   Country country,
                    int itemNumber,
                    String saleTax,
                    int minimumBalance) {
@@ -136,7 +137,7 @@ public class Product {
         this.images = images;
         this.productGroup = productGroup;
         this.attributeOfCalculationObject = attributeOfCalculationObject;
-        this.countryOrigin = countryOrigin;
+        this.country = country;
         this.itemNumber = itemNumber;
         this.saleTax = saleTax;
         this.minimumBalance = minimumBalance;
