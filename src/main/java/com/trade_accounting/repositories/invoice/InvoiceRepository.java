@@ -54,6 +54,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.company.id," +
             "e.contractor.id," +
             "e.warehouse.id," +
+            "e.salesChannel.id," +
             "e.isSpend," +
             "e.isSent," +
             "e.isPrint," +
@@ -69,6 +70,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.company.id," +
             "e.contractor.id," +
             "e.warehouse.id," +
+            "e.salesChannel.id," +
             "e.isSpend," +
             "e.isSent," +
             "e.isPrint," +
@@ -85,6 +87,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.company.id," +
             "e.contractor.id," +
             "e.warehouse.id," +
+            "e.salesChannel.id," +
             "e.isSpend," +
             "e.isSent," +
             "e.isPrint," +
@@ -102,6 +105,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.company.id," +
             "e.contractor.id," +
             "e.warehouse.id," +
+            "e.salesChannel.id," +
             "e.isSpend," +
             "e.isSent," +
             "e.isPrint," +
@@ -117,6 +121,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long>, JpaSpec
             "e.company.id," +
             "e.contractor.id," +
             "e.warehouse.id," +
+            "e.salesChannel.id," +
             "e.isSpend," +
             "e.isSent," +
             "e.isPrint," +

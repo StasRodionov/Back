@@ -2,12 +2,14 @@ package com.trade_accounting.services.impl.warehouse;
 
 import com.trade_accounting.models.entity.company.Company;
 import com.trade_accounting.models.entity.company.Contractor;
+import com.trade_accounting.models.entity.units.SalesChannel;
 import com.trade_accounting.models.entity.warehouse.Shipment;
 import com.trade_accounting.models.entity.warehouse.ShipmentProduct;
 import com.trade_accounting.models.entity.warehouse.Warehouse;
 import com.trade_accounting.models.dto.warehouse.ShipmentDto;
 import com.trade_accounting.repositories.company.CompanyRepository;
 import com.trade_accounting.repositories.company.ContractorRepository;
+import com.trade_accounting.repositories.units.SalesChannelRepository;
 import com.trade_accounting.repositories.warehouse.ShipmentProductRepository;
 import com.trade_accounting.repositories.warehouse.ShipmentRepository;
 import com.trade_accounting.repositories.warehouse.WarehouseRepository;
@@ -33,6 +35,8 @@ public class ShipmentServiceImpl implements ShipmentService {
     private final WarehouseRepository warehouseRepository;
     private final ShipmentMapper shipmentMapper;
     private final ShipmentProductRepository shipmentProductRepository;
+
+    private final SalesChannelRepository salesChannelRepository;
 
     @Override
     public List<ShipmentDto> search(Specification<Shipment> spec) {
@@ -69,11 +73,13 @@ public class ShipmentServiceImpl implements ShipmentService {
         List<ShipmentProduct> shipmentProductList = shipmentDto.getShipmentProductsIds().stream()
                 .map(shipmentProductRepository::getOne)
                 .collect(Collectors.toList());
+        SalesChannel salesChannel = salesChannelRepository.getOne(shipmentDto.getSalesChannelId());
 
         shipmentSaved.setShipmentProducts(shipmentProductList);
         shipmentSaved.setCompany(company);
         shipmentSaved.setContractor(contractor);
         shipmentSaved.setWarehouse(warehouse);
+        shipmentSaved.setSalesChannel(salesChannel);
 
         return shipmentMapper.toDto(shipmentRepository.save(shipmentSaved));
     }

@@ -1,5 +1,6 @@
 package com.trade_accounting.models.entity.warehouse;
 
+import com.trade_accounting.models.entity.units.SalesChannel;
 import com.trade_accounting.models.entity.util.OperationsAbstract;
 import com.trade_accounting.models.entity.company.Contractor;
 import lombok.AllArgsConstructor;
@@ -46,6 +47,9 @@ public class Shipment extends OperationsAbstract {
     @Column(name = "is_spend")
     @ColumnDefault("false")
     private Boolean isSpend;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private SalesChannel salesChannel;
 
 
 }

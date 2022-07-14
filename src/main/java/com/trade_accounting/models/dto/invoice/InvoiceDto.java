@@ -39,6 +39,7 @@ public class InvoiceDto {
     private Boolean isRecyclebin;
 
     private Long projectId;
+    private Long salesChannelId;
 
     public InvoiceDto(Long id, String date, String typeOfInvoice, Long companyId, Long contractorId, Long warehouseId,
                       boolean isSpend, boolean isSent, boolean isPrint, String comment, Long invoicesStatusId) {
@@ -55,7 +56,7 @@ public class InvoiceDto {
         this.invoicesStatusId = invoicesStatusId;
     }
 
-    public InvoiceDto(Long id, String date, String typeOfInvoice, Long companyId, Long contractorId, Long warehouseId,
+    public InvoiceDto(Long id, String date, String typeOfInvoice, Long companyId, Long contractorId, Long warehouseId, Long salesChannelId,
                       boolean isSpend, boolean isSent, boolean isPrint, String comment, Long invoicesStatusId, Long projectId) {
         this.id = id;
         this.date = date;
@@ -63,12 +64,14 @@ public class InvoiceDto {
         this.companyId = companyId;
         this.contractorId = contractorId;
         this.warehouseId = warehouseId;
+        this.salesChannelId = salesChannelId;
         this.isSpend = isSpend;
         this.isSent = isSent;
         this.isPrint = isPrint;
         this.comment = comment;
         this.invoicesStatusId = invoicesStatusId;
         this.projectId = projectId;
+
     }
 
     public InvoiceDto(Long id,
@@ -101,6 +104,7 @@ public class InvoiceDto {
                       Long companyId,
                       Long contractorId,
                       Long warehouseId,
+                      Long salesChannelId,
                       Boolean isSpend,
                       Boolean isSent,
                       Boolean isPrint,
@@ -113,6 +117,7 @@ public class InvoiceDto {
         this.companyId = companyId;
         this.contractorId = contractorId;
         this.warehouseId = warehouseId;
+        this.salesChannelId = salesChannelId;
         this.isSpend = isSpend;
         this.isSent = isSent;
         this.isPrint = isPrint;

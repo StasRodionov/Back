@@ -26,6 +26,8 @@ public class ShipmentDto {
     @NotNull
     private Long contractorId;
 
+    private Long salesChannelId;
+
     private List<Long> shipmentProductsIds;
 
     private BigDecimal sum;
@@ -44,7 +46,7 @@ public class ShipmentDto {
 
     public ShipmentDto(Long id, LocalDateTime date,
                        Long warehouseId, Long companyId,
-                       Long contractorId, BigDecimal sum,
+                       Long contractorId, Long salesChannelId, BigDecimal sum,
                        BigDecimal paid, Boolean isSpend,
                        Boolean isSend, Boolean isPrint,
                        String comment, List<Long> shipmentProductsIds) {
@@ -53,6 +55,7 @@ public class ShipmentDto {
         this.warehouseId = warehouseId;
         this.companyId = companyId;
         this.contractorId = contractorId;
+        this.salesChannelId = salesChannelId;
         this.sum = sum;
         this.paid = paid;
         this.isSpend = isSpend;

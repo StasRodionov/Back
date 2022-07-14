@@ -17,6 +17,7 @@ public interface InvoiceMapper {
     @Mapping(source = "invoicesStatusId", target = "invoicesStatus.id")
     @Mapping(source = "invoiceProductsIds", target = "invoiceProducts")
     @Mapping(source = "invoiceDto", target = "project", qualifiedByName = "projectConverter")
+    @Mapping(source = "salesChannelId", target = "salesChannel.id")
     Invoice toModel(InvoiceDto invoiceDto);
 
     @Mapping(target = "companyId", source = "company.id")
@@ -25,6 +26,7 @@ public interface InvoiceMapper {
     @Mapping(target = "invoicesStatusId", source = "invoicesStatus.id")
     @Mapping(target = "invoiceProductsIds", source = "invoiceProducts")
     @Mapping(target = "projectId", source = "project.id")
+    @Mapping(target = "salesChannelId", source = "salesChannel.id")
     InvoiceDto toDto(Invoice invoice);
 
     @Named("projectConverter")

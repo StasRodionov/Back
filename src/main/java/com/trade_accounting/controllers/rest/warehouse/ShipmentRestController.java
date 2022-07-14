@@ -89,6 +89,7 @@ public class ShipmentRestController {
                     @Spec(path = "isSend", params = "send", spec = Equal.class),
                     @Spec(path = "isPrint", params = "print", spec = Equal.class),
                     @Spec(path = "comment", params = "comment", spec = Equal.class),
+                    @Spec(path = "salesChannel.name", params = "salesChannelDto", spec = Like.class)
             }) Specification<Shipment> spec) {
         return ResponseEntity.ok(shipmentService.search(spec));
     }
@@ -181,6 +182,7 @@ public class ShipmentRestController {
                     @Spec(path = "company.name", params = "companyId", spec = Like.class),
                     @Spec(path = "contractor.name", params = "contractorId", spec = LikeIgnoreCase.class),
                     @Spec(path = "warehouse.name", params = "warehouseId", spec = LikeIgnoreCase.class),
+                    @Spec(path = "salesChannel.name", params = "salesChannelId", spec = Like.class)
             }) Specification<Shipment> spec ) {
         List<ShipmentDto> listShipment = shipmentService.search(spec);
          return ResponseEntity.ok(listShipment);

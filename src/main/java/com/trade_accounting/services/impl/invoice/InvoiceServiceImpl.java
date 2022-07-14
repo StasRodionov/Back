@@ -10,10 +10,12 @@ import com.trade_accounting.models.entity.invoice.TypeOfInvoice;
 import com.trade_accounting.repositories.company.CompanyRepository;
 import com.trade_accounting.repositories.company.ContractorRepository;
 import com.trade_accounting.repositories.invoice.InvoiceRepository;
+import com.trade_accounting.repositories.units.SalesChannelRepository;
 import com.trade_accounting.repositories.warehouse.WarehouseRepository;
 import com.trade_accounting.services.interfaces.invoice.InvoiceProductService;
 import com.trade_accounting.services.interfaces.invoice.InvoiceService;
 import com.trade_accounting.services.interfaces.purchases.PurchaseForecastService;
+import com.trade_accounting.services.interfaces.units.SalesChannelService;
 import com.trade_accounting.services.interfaces.warehouse.ProductService;
 import com.trade_accounting.utils.mapper.company.CompanyMapper;
 import com.trade_accounting.utils.mapper.company.ContractorMapper;
@@ -46,6 +48,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceProductService invoiceProductService;
     private final ProductService productService;
     private final PurchaseForecastService purchaseForecastService;
+    private final SalesChannelRepository salesChannelRepository;
 
     @Override
     public List<InvoiceDto> search(Specification<Invoice> specification) {
@@ -159,6 +162,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoiceDto.setContractorId(purchaseControlDto.getContractorId());
         }
         invoiceDto.setWarehouseId(purchaseControlDto.getWarehouseId());
+        invoiceDto.setSalesChannelId(purchaseControlDto.getSalesChannelId());
         invoiceDto.setInvoicesStatusId(1L);
         invoiceDto.setTypeOfInvoice("EXPENSE");
         invoiceDto.setIsPrint(false);
