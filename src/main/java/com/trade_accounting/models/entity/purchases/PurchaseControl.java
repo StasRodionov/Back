@@ -2,6 +2,7 @@ package com.trade_accounting.models.entity.purchases;
 
 import com.trade_accounting.models.entity.company.Company;
 import com.trade_accounting.models.entity.company.Contractor;
+import com.trade_accounting.models.entity.units.SalesChannel;
 import com.trade_accounting.models.entity.warehouse.Product;
 import com.trade_accounting.models.entity.warehouse.Warehouse;
 import lombok.AllArgsConstructor;
@@ -90,4 +91,7 @@ public class PurchaseControl {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private PurchaseForecast forecast;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private SalesChannel salesChannel;
 }
