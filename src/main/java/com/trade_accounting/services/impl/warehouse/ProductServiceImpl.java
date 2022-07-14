@@ -214,12 +214,6 @@ public class ProductServiceImpl implements ProductService {
             product.setSaleTaxEntity(null);
         }
 
-        if (dto.getSaleTaxId() != null) {
-            product.setSaleTaxEntity(saleTaxRepository.getOne(dto.getSaleTaxId()));
-        } else {
-            product.setSaleTaxEntity(null);
-        }
-
         productRepository.saveAndFlush(product);
         return dto;
     }
