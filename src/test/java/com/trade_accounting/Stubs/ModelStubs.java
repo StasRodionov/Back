@@ -54,6 +54,7 @@ import com.trade_accounting.models.entity.production.TechnicalProcess;
 import com.trade_accounting.models.entity.retail.RetailStore;
 import com.trade_accounting.models.entity.units.Country;
 import com.trade_accounting.models.entity.units.Currency;
+import com.trade_accounting.models.entity.units.OnlineStore;
 import com.trade_accounting.models.entity.units.SalesChannel;
 import com.trade_accounting.models.entity.util.File;
 import com.trade_accounting.models.entity.util.Image;
@@ -782,5 +783,9 @@ public class ModelStubs {
 
     public static Country getCountry(Long id) {
         return new Country(id, "sampleType", "sampleShortName", "sampleFullName", "sampleDigitCode", "sampleTwoLetterCode", "sampleThreeLetterCode");
+    }
+
+    public static OnlineStore getOnlineStore(Long id) {
+        return new OnlineStore(id, "name", "type", "orders", "remains");
     }
 }
