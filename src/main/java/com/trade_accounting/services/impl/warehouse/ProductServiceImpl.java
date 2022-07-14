@@ -3,6 +3,7 @@ package com.trade_accounting.services.impl.warehouse;
 
 import com.trade_accounting.models.dto.util.PageDto;
 import com.trade_accounting.models.dto.warehouse.ProductDto;
+import com.trade_accounting.models.entity.units.Country;
 import com.trade_accounting.models.entity.util.File;
 import com.trade_accounting.models.entity.util.Image;
 import com.trade_accounting.models.entity.warehouse.Product;
@@ -10,6 +11,7 @@ import com.trade_accounting.models.entity.warehouse.ProductPrice;
 import com.trade_accounting.repositories.company.ContractorRepository;
 import com.trade_accounting.repositories.company.SaleTaxRepository;
 import com.trade_accounting.repositories.company.TaxSystemRepository;
+import com.trade_accounting.repositories.units.CountryRepository;
 import com.trade_accounting.repositories.units.UnitRepository;
 import com.trade_accounting.repositories.util.FileRepository;
 import com.trade_accounting.repositories.util.ImageRepository;
@@ -56,6 +58,7 @@ public class ProductServiceImpl implements ProductService {
     private final AttributeOfCalculationObjectRepository attributeOfCalculationObjectRepository;
     private final ProductGroupRepository productGroupRepository;
     private final TypeOfPackingRepository typeOfPackingRepository;
+    private final CountryRepository countryRepository;
     private final SaleTaxRepository saleTaxRepository;
 
 
@@ -107,6 +110,12 @@ public class ProductServiceImpl implements ProductService {
             product.setContractor(contractorRepository.getOne(dto.getContractorId()));
         } else {
             product.setContractor(null);
+        }
+
+        if (dto.getCountryId() != null) {
+            product.setCountry(countryRepository.getOne(dto.getCountryId()));
+        } else {
+            product.setCountry(null);
         }
 
         if (dto.getTaxSystemId() != null) {
