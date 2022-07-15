@@ -2,6 +2,7 @@ package com.trade_accounting.models.entity.util;
 
 import com.trade_accounting.models.entity.warehouse.Kit;
 import com.trade_accounting.models.entity.warehouse.Product;
+import com.trade_accounting.models.entity.warehouse.Services;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -60,6 +61,11 @@ public class File {
     @ToString.Exclude
     private Kit kit;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "services_id")
+    @ToString.Exclude
+    private Services services;
+
     public File(String name,
                 String extension,
                 String placement,
@@ -108,4 +114,5 @@ public class File {
     public int hashCode() {
         return Objects.hash(getId(), getName(), getExtension(), getPlacement(), getEmployee(), getKey(), getUploadDateTime());
     }
+
 }
