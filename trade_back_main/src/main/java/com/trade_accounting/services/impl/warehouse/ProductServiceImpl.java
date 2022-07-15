@@ -9,6 +9,7 @@ import com.trade_accounting.models.entity.util.Image;
 import com.trade_accounting.models.entity.warehouse.Product;
 import com.trade_accounting.models.entity.warehouse.ProductPrice;
 import com.trade_accounting.repositories.company.ContractorRepository;
+import com.trade_accounting.repositories.company.SaleTaxRepository;
 import com.trade_accounting.repositories.company.TaxSystemRepository;
 import com.trade_accounting.repositories.units.CountryRepository;
 import com.trade_accounting.repositories.units.UnitRepository;
@@ -58,6 +59,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductGroupRepository productGroupRepository;
     private final TypeOfPackingRepository typeOfPackingRepository;
     private final CountryRepository countryRepository;
+    private final SaleTaxRepository saleTaxRepository;
 
 
     @Override
@@ -90,6 +92,7 @@ public class ProductServiceImpl implements ProductService {
         product.setImages(savedImages);
         savedFiles.forEach(file -> file.setProduct(product));
         product.setFiles(savedFiles);
+
         List<ProductPrice> prices = new ArrayList<>();
         try {
             product.getProductPrices()
@@ -138,6 +141,12 @@ public class ProductServiceImpl implements ProductService {
             product.setTypeOfPacking(typeOfPackingRepository.getOne(dto.getTypeOfPackingId()));
         } else {
             product.setTypeOfPacking(null);
+        }
+
+        if (dto.getSaleTaxId() != null) {
+            product.setSaleTaxEntity(saleTaxRepository.getOne(dto.getSaleTaxId()));
+        } else {
+            product.setSaleTaxEntity(null);
         }
 
         productRepository.saveAndFlush(product);
@@ -197,6 +206,12 @@ public class ProductServiceImpl implements ProductService {
             product.setTypeOfPacking(typeOfPackingRepository.getOne(dto.getTypeOfPackingId()));
         } else {
             product.setTypeOfPacking(null);
+        }
+
+        if (dto.getSaleTaxId() != null) {
+            product.setSaleTaxEntity(saleTaxRepository.getOne(dto.getSaleTaxId()));
+        } else {
+            product.setSaleTaxEntity(null);
         }
 
         productRepository.saveAndFlush(product);

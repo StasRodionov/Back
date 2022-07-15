@@ -55,6 +55,8 @@ public class ProductDto {
 
     private String saleTax;
 
+    private Long saleTaxId;
+
     private int minimumBalance;
 
     private Long typeOfPackingId;
