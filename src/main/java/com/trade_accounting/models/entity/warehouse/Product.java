@@ -2,7 +2,9 @@ package com.trade_accounting.models.entity.warehouse;
 
 
 import com.trade_accounting.models.entity.company.Contractor;
+import com.trade_accounting.models.entity.company.SaleTax;
 import com.trade_accounting.models.entity.company.TaxSystem;
+import com.trade_accounting.models.entity.units.Country;
 import com.trade_accounting.models.entity.units.Unit;
 import com.trade_accounting.models.entity.util.File;
 import com.trade_accounting.models.entity.util.Image;
@@ -18,6 +20,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -83,16 +86,22 @@ public class Product {
     private AttributeOfCalculationObject attributeOfCalculationObject;
 
     //Страна происхождения
-    @Column(name = "Country")
-    private String countryOrigin;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Country country;
 
     //Артикул(код товара присваеваемый производителем)
     @Column(name = "itemNubmber")
     private int itemNumber;
 
     //НДС
+    // Данное поле оставил, так как там уже хранится ранее введённая информация, её надо будет перенести в новое поле
     @Column(name = "saleTax")
     private String saleTax;
+
+    //НДС, берется из предопределённого списка. Новое, целевое поле.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sale_tax_id")
+    private SaleTax saleTaxEntity;
 
     //Неснижаемый остаток
     @Column(name = "minimumBalance")
@@ -117,7 +126,7 @@ public class Product {
                    List<Image> images,
                    ProductGroup productGroup,
                    AttributeOfCalculationObject attributeOfCalculationObject,
-                   String countryOrigin,
+                   Country country,
                    int itemNumber,
                    String saleTax,
                    int minimumBalance) {
@@ -136,7 +145,7 @@ public class Product {
         this.images = images;
         this.productGroup = productGroup;
         this.attributeOfCalculationObject = attributeOfCalculationObject;
-        this.countryOrigin = countryOrigin;
+        this.country = country;
         this.itemNumber = itemNumber;
         this.saleTax = saleTax;
         this.minimumBalance = minimumBalance;

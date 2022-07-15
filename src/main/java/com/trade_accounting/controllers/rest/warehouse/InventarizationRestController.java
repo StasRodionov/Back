@@ -13,7 +13,10 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Between;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
+import net.kaczmarzyk.spring.data.jpa.domain.LessThanOrEqual;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -58,8 +61,32 @@ public class InventarizationRestController {
     @ApiOperation(value = "searchByFilter", notes = "Получение списка инвентаризаций по заданным параметрам")
     public ResponseEntity<List<InventarizationDto>> getAllFilter(
             @And({
+                    @Spec(path = "date",
+                            params = "dateAfter",
+                            spec = GreaterThanOrEqual.class),
+                    @Spec(path = "date",
+                            params = "dateBefore",
+                            spec = LessThanOrEqual.class),
                     @Spec(path = "id", params = "id", spec = Equal.class),
-                    @Spec(path = "date", params = "date", spec = Equal.class),
+                    @Spec(path = "company.name", params = "companyId", spec = Like.class),
+                    @Spec(path = "warehouse.name", params = "warehouseId", spec = Like.class),
+                    @Spec(path = "comment", params = "comment", spec = Like.class),
+                    @Spec(path = "status", params = "sent", spec = Equal.class),
+                    @Spec(path = "status", params = "print", spec = Equal.class),
+            }) Specification<Inventarization> spec) {
+        return ResponseEntity.ok(inventarizationService.search(spec));
+    }
+
+    @GetMapping("/searchByBetweenDataFilter")
+    @ApiOperation(value = "searchByFilter", notes = "Получение списка инвентаризаций по заданным параметрам")
+    public ResponseEntity<List<InventarizationDto>> getAllByBetweenDataFilter(
+            @And({
+                    @Spec(
+                            path = "date",
+                            params = {"dateAfter", "dateBefore"},
+                            spec = Between.class
+                    ),
+                    @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "company.name", params = "companyId", spec = Like.class),
                     @Spec(path = "warehouse.name", params = "warehouseId", spec = Like.class),
                     @Spec(path = "comment", params = "comment", spec = Like.class),

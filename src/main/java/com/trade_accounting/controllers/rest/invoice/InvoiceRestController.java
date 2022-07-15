@@ -103,6 +103,7 @@ public class InvoiceRestController {
                     @Spec(path = "project.name", params = "projectDto", spec = Equal.class),
                     @Spec(path = "isSpend", params = "spend", spec = Equal.class),
                     @Spec(path = "comment", params = "comment", spec = Equal.class),
+                    @Spec(path = "salesChannel.name", params = "salesChannelDto", spec = Equal.class),
             }) Specification<Invoice> spec) {
         return ResponseEntity.ok(invoiceService.search(spec));
     }

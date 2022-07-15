@@ -24,6 +24,8 @@ public interface ProductMapper {
     @Mapping(target = "productGroup.id", source = "productGroupId")
     @Mapping(target = "attributeOfCalculationObject.id", source = "attributeOfCalculationObjectId")
     @Mapping(target = "typeOfPacking.id", source = "typeOfPackingId")
+    @Mapping(target = "country.id", source = "countryId")
+    @Mapping(target = "saleTaxEntity.id", source = "saleTaxId")
     Product toModel(ProductDto productDto);
 
     @Mapping(target = "unitId", source = "unit.id")
@@ -35,6 +37,8 @@ public interface ProductMapper {
     @Mapping(target = "productGroupId", source = "productGroup.id")
     @Mapping(target = "attributeOfCalculationObjectId", source = "attributeOfCalculationObject.id")
     @Mapping(target = "typeOfPackingId", source = "typeOfPacking.id")
+    @Mapping(target = "countryId", source = "country.id")
+    @Mapping(target = "saleTaxId", source = "saleTaxEntity.id")
     ProductDto toDto(Product product);
 
     default Long productPriceToLong(ProductPrice productPrice) {
