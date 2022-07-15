@@ -13,7 +13,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Between;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.GreaterThanOrEqual;
+import net.kaczmarzyk.spring.data.jpa.domain.LessThanOrEqual;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.jpa.domain.Specification;
@@ -117,12 +121,33 @@ public class CorrectionRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/search")
+    @GetMapping("/searchByFilter")
     @ApiOperation(value = "searchByFilter", notes = "Получение списка счетов  по заданным параметрам")
     public ResponseEntity<List<CorrectionDto>> getAllFilter(
             @And({
+                    @Spec(path = "date",
+                            params = "dateAfter",
+                            spec = GreaterThanOrEqual.class),
+                    @Spec(path = "date",
+                            params = "dateBefore",
+                            spec = LessThanOrEqual.class),
                     @Spec(path = "id", params = "id", spec = Equal.class),
-                    @Spec(path = "date", params = "date", spec = Equal.class),
+                    @Spec(path = "company.name", params = "companyDto", spec = Equal.class),
+                    @Spec(path = "warehouse.name", params = "warehouseDto", spec = Equal.class)
+            }) Specification<Correction> spec) {
+        return ResponseEntity.ok(correctionService.search(spec));
+    }
+
+    @GetMapping("/searchByBetweenDataFilter")
+    @ApiOperation(value = "searchByBetweenDataFilter", notes = "Получение списка счетов  по заданным параметрам")
+    public ResponseEntity<List<CorrectionDto>> getAllByBetweenDataFilter(
+            @And({
+                    @Spec(
+                            path = "date",
+                            params = {"dateAfter", "dateBefore"},
+                            spec = Between.class
+                    ),
+                    @Spec(path = "id", params = "id", spec = Equal.class),
                     @Spec(path = "company.name", params = "companyDto", spec = Equal.class),
                     @Spec(path = "warehouse.name", params = "warehouseDto", spec = Equal.class)
             }) Specification<Correction> spec) {

@@ -128,7 +128,7 @@ public class PriceListRestController {
                     {
                             @Spec(path = "p.products.name", params = "productName", spec = Like.class),
                             @Spec(path = "date",
-                                    params = "date",
+                                    params = "dateAfter",
                                     spec = GreaterThanOrEqual.class),
                             @Spec(path = "date",
                                     params = "dateBefore",
@@ -151,7 +151,7 @@ public class PriceListRestController {
                     @Spec(path = "p.products.name", params = "productName", spec = Like.class),
                     @Spec(
                             path = "date",
-                            params = {"date", "dateBefore"},
+                            params = {"dateAfter", "dateBefore"},
                             spec = Between.class
                     ),
                     @Spec(path = "number", params = "number", spec = EqualIgnoreCase.class),
